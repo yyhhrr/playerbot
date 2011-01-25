@@ -182,14 +182,6 @@ void Map::RemoveFromGrid(Creature* obj, NGridType *grid, Cell const& cell)
     }
 }
 
-template<class T>
-void Map::DeleteFromWorld(T* obj)
-{
-    // Note: In case resurrectable corpse and pet its removed from global lists in own destructor
-    delete obj;
-}
-
-template<>
 void Map::DeleteFromWorld(Player* pl)
 {
     sObjectAccessor.RemoveObject(pl);
@@ -275,7 +267,7 @@ bool Map::EnsureGridLoaded(const Cell &cell)
         //otherwise there is a possibility of infinity chain (grid loading will be called many times for the same grid)
         //possible scenario:
         //active object A(loaded with loader.LoadN call and added to the  map)
-        //summons some active object B, while B added to map grid loading called again and so on.. 
+        //summons some active object B, while B added to map grid loading called again and so on..
         setGridObjectDataLoaded(true,cell.GridX(), cell.GridY());
         ObjectGridLoader loader(*grid, this, cell);
         loader.LoadN();
@@ -658,9 +650,11 @@ Map::Remove(T *obj, bool remove)
     if( remove )
     {
         // if option set then object already saved at this moment
-        if(!sWorld.getConfig(CONFIG_BOOL_SAVE_RESPAWN_TIME_IMMEDIATLY))
+        if(!sWorld.getConfig(CONFIG_BOOL_SAVE_RESPAWN_TIME_IMMEDIATELY))
             obj->SaveRespawnTime();
-        DeleteFromWorld(obj);
+
+        // Note: In case resurrectable corpse and pet its removed from global lists in own destructor
+        delete obj;
     }
 }
 
