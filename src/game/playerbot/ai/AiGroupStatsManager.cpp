@@ -43,7 +43,7 @@ float AiGroupStatsManager::CalculateBalancePercent()
 
 	for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
 	{  
-		Creature* creature = sObjectAccessor.GetCreatureInWorld(i->first);
+		Creature* creature = master->GetMap()->GetCreature(i->first);
 		if (!creature || !creature->isAlive())
 			continue;
 

@@ -524,9 +524,9 @@ void AiInventoryManager::Reward(const char* link)
 	const ObjectGuid &questRewarder = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
 	uint64 questRewarderGUID = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     bot->SetSelectionGuid(questRewarder);
-	Object* pNpc = ObjectAccessor::GetGameObjectInWorld(questRewarder);
+	Object* pNpc = bot->GetMap()->GetGameObject(questRewarder);
 	if (!pNpc)
-		pNpc = ObjectAccessor::GetUnitInWorld(*bot, questRewarder);
+		pNpc = ObjectAccessor::GetUnit(*bot, questRewarder);
 
 	if (!pNpc)
 		return;
