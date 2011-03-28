@@ -108,7 +108,9 @@ void AiMoveManager::Follow(Unit* target, float distance)
 	if (target->IsFriendlyTo(bot) && bot->IsMounted())
 		distance += angle;
 
-    bot->GetMotionMaster()->MoveFollow(target, distance, angle);
+	MotionMaster &mm = *bot->GetMotionMaster();
+	mm.Clear();
+    mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
@@ -120,7 +122,9 @@ void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return;
 
-    bot->GetMotionMaster()->MovePoint(mapId, x, y, z);
+	MotionMaster &mm = *bot->GetMotionMaster();
+	mm.Clear( true, true );
+    mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
 }
 
@@ -136,6 +140,7 @@ bool AiMoveManager::Flee(Unit* target, float distance)
 	if (!manager.CalculateDestination(&rx, &ry, &rz)) 
         return false;
 
+	bot->GetMotionMaster()->Clear( true, true );
 	bot->GetMotionMaster()->MovePoint(0, rx, ry, rz);
     WaitForReach(bot->GetDistance(rx, ry, rz));
 	return true;
@@ -147,7 +152,7 @@ void AiMoveManager::Stay()
     if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
         return;
 
-	mm.Clear( true );
+	mm.Clear( true, true );
 	bot->clearUnitState( UNIT_STAT_CHASE );
 	bot->clearUnitState( UNIT_STAT_FOLLOW );
 
