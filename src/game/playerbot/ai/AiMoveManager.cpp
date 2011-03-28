@@ -23,6 +23,12 @@ void AiMoveManager::MoveTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return;
 
+	if (distance < SPELL_DISTANCE) 
+	{
+		Follow(target, distance);
+		return;
+	}
+
     float bx = bot->GetPositionX();
     float by = bot->GetPositionY();
     float bz = bot->GetPositionZ();
@@ -123,7 +129,7 @@ void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
         return;
 
 	MotionMaster &mm = *bot->GetMotionMaster();
-	mm.Clear( true, true );
+	mm.Clear();
     mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
 }
@@ -140,7 +146,6 @@ bool AiMoveManager::Flee(Unit* target, float distance)
 	if (!manager.CalculateDestination(&rx, &ry, &rz)) 
         return false;
 
-	bot->GetMotionMaster()->Clear( true, true );
 	bot->GetMotionMaster()->MovePoint(0, rx, ry, rz);
     WaitForReach(bot->GetDistance(rx, ry, rz));
 	return true;
@@ -152,7 +157,7 @@ void AiMoveManager::Stay()
     if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
         return;
 
-	mm.Clear( true, true );
+	mm.Clear();
 	bot->clearUnitState( UNIT_STAT_CHASE );
 	bot->clearUnitState( UNIT_STAT_FOLLOW );
 
