@@ -9,9 +9,6 @@ typedef multimap<spellEffectPair, Aura*> AuraMap;
 
 AiSpellManager::AiSpellManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
-	lastSpellId = 0;
-	lastSpellTarget = 0;
-	lastCastTime = 0;
 }
 
 
@@ -324,7 +321,7 @@ void AiSpellManager::SpellInterrupted(uint32 spellid)
 		ai->SetNextCheckDelay(1);
 
 	lastSpellId = 0;
-	lastSpellTarget = 0;
+	lastSpellTarget.Set(0);
 	lastCastTime = 0;
 }
 

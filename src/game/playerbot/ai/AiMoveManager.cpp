@@ -10,7 +10,6 @@ using namespace std;
 
 AiMoveManager::AiMoveManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
-    taxiMaster = 0;
 }
 
 float AiMoveManager::GetDistanceTo(Unit* target)
