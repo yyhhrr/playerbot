@@ -32,13 +32,13 @@ void LootManager::AddLoot(ObjectGuid guid)
 	}
 
 	GameObject* go = bot->GetMap()->GetGameObject(guid);
-	if (!go || !go->isSpawned())
+	if (go && !go->isSpawned())
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: invalid game object");
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: game object not spawned");
 		return;
 	}
 
-	if (!CheckSkill(go->GetGOInfo()->GetLockId()))
+	if (go && !CheckSkill(go->GetGOInfo()->GetLockId()))
 	{
 		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: insufficient skill");
 		return;
