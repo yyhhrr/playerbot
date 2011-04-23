@@ -12,6 +12,7 @@ namespace ai
 	public:
 		AiSocialManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 		{
+			logLevel = LOG_LVL_BASIC;
 		}
 
 	public:
