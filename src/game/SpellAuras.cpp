@@ -1973,6 +1973,14 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                     case 43873:                             // Headless Horseman Laugh
                         target->PlayDistanceSound(11965);
                         return;
+                    case 45963:                             // Call Alliance Deserter
+                    {
+                        // Escorting Alliance Deserter
+                        if (target->GetMiniPet())
+                            target->CastSpell(target, 45957, true);
+
+                        return;
+                    }
                     case 46699:                             // Requires No Ammo
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             // not use ammo and not allow use
@@ -2376,6 +2384,12 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 // Kill target if dispelled
                 if (m_removeMode==AURA_REMOVE_BY_DISPEL)
                     target->DealDamage(target, target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                return;
+            }
+            case 45963:                                     // Call Alliance Deserter
+            {
+                // Escorting Alliance Deserter
+                target->RemoveAurasDueToSpell(45957);
                 return;
             }
             case 46308:                                     // Burning Winds
@@ -7927,27 +7941,31 @@ void Aura::HandleAuraControlVehicle(bool apply, bool Real)
         return;
 
     Unit* target = GetTarget();
-    if (target->GetTypeId() != TYPEID_UNIT || !((Creature*)target)->IsVehicle())
+    if (!target->IsVehicle())
         return;
-    Vehicle* vehicle = (Vehicle*)target;
+
+    // TODO: Check for free seat
 
     Unit *caster = GetCaster();
-    if (!caster || caster->GetTypeId() != TYPEID_PLAYER)
+    if (!caster)
         return;
 
     if (apply)
     {
-        ((Player*)caster)->RemovePet(PET_SAVE_AS_CURRENT);
-        ((Player*)caster)->EnterVehicle(vehicle);
+        if (caster->GetTypeId() == TYPEID_PLAYER)
+            ((Player*)caster)->RemovePet(PET_SAVE_AS_CURRENT);
+
+        //caster->EnterVehicle(target);
     }
     else
     {
-        SpellEntry const *spell = GetSpellProto();
-
         // some SPELL_AURA_CONTROL_VEHICLE auras have a dummy effect on the player - remove them
-        caster->RemoveAurasDueToSpell(spell->Id);
+        caster->RemoveAurasDueToSpell(GetId());
 
-        ((Player*)caster)->ExitVehicle(vehicle);
+        //caster->ExitVehicle();
+
+        if (caster->GetTypeId() == TYPEID_PLAYER)
+            ((Player*)caster)->ResummonPetTemporaryUnSummonedIfAny();
     }
 }
 
