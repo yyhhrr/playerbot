@@ -6,9 +6,9 @@ using namespace std;
 
 #define MAX_LOOT_OBJECT_COUNT 10
 
-LootObject::LootObject(Player* bot, uint64 guid)
+LootObject::LootObject(Player* bot, ObjectGuid guid)
+	: guid(guid)
 {
-    this->guid = guid;
     worldObject = NULL;
     loot = NULL;
 
@@ -41,7 +41,7 @@ LootObjectStack::LootObjectStack(Player* bot)
     this->bot = bot;
 }
 
-void LootObjectStack::Add(uint64 guid)
+void LootObjectStack::Add(ObjectGuid guid)
 {
     availableLoot.insert(guid);
     if (availableLoot.size() < MAX_LOOT_OBJECT_COUNT)
@@ -52,7 +52,7 @@ void LootObjectStack::Add(uint64 guid)
         Remove(ordered[i].guid);
 }
 
-void LootObjectStack::Remove(uint64 guid)
+void LootObjectStack::Remove(ObjectGuid guid)
 {
     availableLoot.erase(availableLoot.find(guid));
 }
@@ -76,9 +76,9 @@ LootObject LootObjectStack::GetLoot(float maxDistance)
 vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
 {
     map<float, LootObject> sortedMap;
-    for (set<uint64>::iterator i = availableLoot.begin(); i != availableLoot.end(); i++)
+    for (set<ObjectGuid>::iterator i = availableLoot.begin(); i != availableLoot.end(); i++)
     {
-        uint64 guid = *i;
+        ObjectGuid guid = *i;
         LootObject lootObject(bot, guid);
         if (lootObject.IsEmpty())
             continue;

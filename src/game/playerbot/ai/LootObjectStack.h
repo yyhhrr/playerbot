@@ -8,14 +8,14 @@ namespace ai
     {
     public:
         LootObject() {}
-        LootObject(Player* bot, uint64 guid);
+        LootObject(Player* bot, ObjectGuid guid);
         LootObject(const LootObject& other);
 
     public:
         bool IsEmpty() { return !worldObject || !loot; }
         WorldObject* worldObject;
         Loot* loot;
-        uint64 guid;
+        ObjectGuid guid;
     };
 
     class LootObjectStack
@@ -24,8 +24,8 @@ namespace ai
         LootObjectStack(Player* bot);
 
     public:
-        void Add(uint64 guid);
-        void Remove(uint64 guid);
+        void Add(ObjectGuid guid);
+        void Remove(ObjectGuid guid);
         void Clear();
         bool CanLoot(float maxDistance);
         LootObject GetLoot(float maxDistance = 0);
@@ -35,7 +35,7 @@ namespace ai
 
     private:
         Player* bot;
-        set<uint64> availableLoot;
+        set<ObjectGuid> availableLoot;
     };
 
 };

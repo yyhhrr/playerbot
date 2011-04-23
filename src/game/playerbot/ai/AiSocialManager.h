@@ -17,12 +17,20 @@ namespace ai
 	public:
 		virtual void Emote(uint32 emote);
 		virtual void TellMaster(const char* text);
+		virtual void TellMaster(LogLevel level, const char* text);
 		virtual void LeaveGroup();
 		virtual void AcceptInvitation();
 	
 	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
+
+	private:
+		string GetLogLevel(LogLevel level);
+		void SetLogLevel(string level);
+
+	private:
+		LogLevel logLevel;
 	};
 
 };

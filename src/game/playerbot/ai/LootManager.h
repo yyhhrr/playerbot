@@ -25,7 +25,7 @@ namespace ai
 
 	public:
 		virtual void ClearLoot();
-        virtual void AddLoot(uint64 guid);
+        virtual void AddLoot(ObjectGuid guid);
 		virtual void AddLootItem(uint32 itemid);
 		virtual void RemoveLootItem(uint32 itemid);
 		virtual bool CanLoot();

@@ -23,14 +23,26 @@ void LootManager::ClearLoot()
 	lootItems.clear();
 }
 
-void LootManager::AddLoot(uint64 guid)
+void LootManager::AddLoot(ObjectGuid guid)
 {
 	if (!bot->GetMapId())
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: not in a map");
 		return;
+	}
 
 	GameObject* go = bot->GetMap()->GetGameObject(guid);
-	if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
+	if (!go || !go->isSpawned())
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: invalid game object");
 		return;
+	}
+
+	if (!CheckSkill(go->GetGOInfo()->GetLockId()))
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: insufficient skill");
+		return;
+	}
 
 	availableLoot->Add(guid);
 }
@@ -80,6 +92,10 @@ void LootManager::DoLoot()
         LootObject lootObject = availableLoot->GetLoot(BOTLOOT_DISTANCE);
         DoLoot(lootObject);
     }
+	else
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: nothing more available");
+	}
 }
 
 void LootManager::DoLoot(LootObject &lootObject)
@@ -95,6 +111,8 @@ void LootManager::DoLoot(LootObject &lootObject)
 	
 	if (isLooted)
 		StoreLootItems(lootObject, LOOT_SKINNING);
+	else
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not yet looted");
     
 	availableLoot->Remove(lootObject.guid);
 }
@@ -124,11 +142,17 @@ Item* LootManager::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, ui
 {
     ItemPosCountVec dest;
     if( bot->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, item->itemid, item->count ) != EQUIP_ERR_OK )
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: cannot store item");
         return NULL;
+	}
 
     Item * newitem = bot->StoreNewItem( dest, item->itemid, true, item->randomPropertyId);
 	if (!newitem)
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: store unsuccessful");
 		return NULL;
+	}
 
 	bot->SendNewItem( newitem, uint32(item->count), false, false, true );
 	bot->GetAchievementMgr().UpdateAchievementCriteria( ACHIEVEMENT_CRITERIA_TYPE_LOOT_ITEM, item->itemid, item->count );
@@ -177,15 +201,24 @@ void LootManager::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTy
     LootItem *item = loot->LootItemInSlot( lootIndex, bot, &qitem, &ffaitem, &conditem );
 
 	if (!item || !item->AllowedForPlayer(bot))
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
 		return;
+	}
 
 	GameObject* go = bot->GetMap()->GetGameObject(lootObject.guid);
 	if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
 		return;
+	}
 
 	Creature* creature = bot->GetMap()->GetCreature(lootObject.guid);
 	if (lootType == LOOT_SKINNING && creature && !CheckLevelBasedSkill(creature->GetCreatureInfo()->GetRequiredLootSkill(), creature->getLevel()))
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
 		return;
+	}
 
 	if (!IsLootAllowed(item))
 		return;
@@ -272,22 +305,35 @@ bool LootManager::IsLootAllowed(LootItem * item)
 
 	ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
 	if (!proto)
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: invalid item");
 		return false;
+	}
 
 	if (item->needs_quest || proto->Bonding == BIND_QUEST_ITEM || proto->Bonding == BIND_QUEST_ITEM1)
 		return true;
 
 	if (lootStrategy == LOOTSTRATEGY_QUEST)
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a quest item");
 		return false;
+	}
 
 	if (lootStrategy == LOOTSTRATEGY_GRAY && proto->Quality == ITEM_QUALITY_POOR)
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a gray item");
 		return true;
+	}
 
 	if (proto->Bonding == BIND_WHEN_PICKED_UP)
+	{
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: item is BOP");
 		return false;
+	}
 
 	if (item->freeforall || item->is_underthreshold)
 		return true;
 
+	bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: unknown");
 	return false;
 }

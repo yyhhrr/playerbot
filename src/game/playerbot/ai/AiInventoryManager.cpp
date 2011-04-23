@@ -753,7 +753,7 @@ void AiInventoryManager::HandleMasterIncomingPacket(const WorldPacket& packet)
         p.rpos(0); // reset reader
         uint64 guid;
         p >> guid;
-        AddLoot(guid);
+        AddLoot(ObjectGuid(guid));
         break;
     }
 }

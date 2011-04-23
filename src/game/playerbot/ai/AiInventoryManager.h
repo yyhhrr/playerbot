@@ -95,7 +95,7 @@ namespace ai
 		virtual void FindAndUse(const char* item, uint8 delay = 0);
 		
         virtual void ClearLoot() { lootManager->ClearLoot(); }
-        virtual void AddLoot(uint64 guid) { lootManager->AddLoot(guid); }
+        virtual void AddLoot(ObjectGuid guid) { lootManager->AddLoot(guid); }
         virtual bool CanLoot() { return lootManager->CanLoot(); }
         virtual void DoLoot() { lootManager->DoLoot(); }
 		virtual void AddAllLoot();
