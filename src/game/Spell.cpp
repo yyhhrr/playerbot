@@ -4363,7 +4363,11 @@ void Spell::HandleEffects(Unit *pUnitTarget,Item *pItemTarget,GameObject *pGOTar
 
     damage = int32(CalculateDamage(i, unitTarget) * DamageMultiplier);
 
-    DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell %u Effect%d : %u", m_spellInfo->Id, i, eff);
+    DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell %u Effect%d : %u Targets: %s, %s, %s",
+        m_spellInfo->Id, i, eff,
+        unitTarget ? unitTarget->GetGuidStr().c_str() : "-",
+        itemTarget ? itemTarget->GetGuidStr().c_str() : "-",
+        gameObjTarget ? gameObjTarget->GetGuidStr().c_str() : "-");
 
     if(eff < TOTAL_SPELL_EFFECTS)
     {
@@ -6240,7 +6244,7 @@ SpellCastResult Spell::CheckItems()
                     }
 
                     ItemPosCountVec dest;
-                    uint8 msg = p_caster->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, m_spellInfo->EffectItemType[i], 1 );
+                    InventoryResult msg = p_caster->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, m_spellInfo->EffectItemType[i], 1 );
                     if (msg != EQUIP_ERR_OK )
                     {
                         p_caster->SendEquipError( msg, NULL, NULL, m_spellInfo->EffectItemType[i] );
@@ -6270,7 +6274,7 @@ SpellCastResult Spell::CheckItems()
                 if (isVellumTarget && m_spellInfo->EffectItemType[i])
                 {
                     ItemPosCountVec dest;
-                    uint8 msg = p_caster->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, m_spellInfo->EffectItemType[i], 1 );
+                    InventoryResult msg = p_caster->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, m_spellInfo->EffectItemType[i], 1 );
                     if (msg != EQUIP_ERR_OK)
                     {
                         p_caster->SendEquipError( msg, NULL, NULL );
