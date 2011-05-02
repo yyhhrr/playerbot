@@ -17,24 +17,12 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericShamanStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai, 60, 40),
-        NextAction::array(0, new NextAction("chain heal on party", 25.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai),
-        NextAction::array(0, new NextAction("riptide on party", 25.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 60, 40),
-        NextAction::array(0, new NextAction("chain heal", 26.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai),
-        NextAction::array(0, new NextAction("riptide", 26.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         new ShamanWeaponTrigger(ai), 
         NextAction::array(0, new NextAction("earthliving weapon", 22.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new WaterShieldTrigger(ai), 
+		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
 
 ActionNode* HealShamanStrategy::createAction(const char* name)
@@ -42,77 +30,14 @@ ActionNode* HealShamanStrategy::createAction(const char* name)
     ActionNode* node = GenericShamanStrategy::createAction(name);
     if (node)
         return node;
-
-    if (!strcmp("healing wave", name)) 
-    {
-        return new ActionNode (new CastHealingWaveAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("lesser healing wave", name)) 
-    {
-        return new ActionNode (new CastLesserHealingWaveAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("healing wave"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("healing wave on party", name)) 
-    {
-        return new ActionNode (new CastHealingWaveOnPartyAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("lesser healing wave on party", name)) 
-    {
-        return new ActionNode (new CastLesserHealingWaveOnPartyAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("earth shield", name)) 
-    {
-        return new ActionNode (new CastEarthShieldAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("earth shield on party", name)) 
-    {
-        return new ActionNode (new CastEarthShieldOnPartyAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("chain heal", name)) 
-    {
-        return new ActionNode (new CastChainHealAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("lesser healing wave"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("riptide", name)) 
-    {
-        return new ActionNode (new CastRiptideAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("healing wave"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("chain heal on party", name)) 
-    {
-        return new ActionNode (new CastChainHealOnPartyAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("lesser healing wave on party"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("riptide on party", name)) 
-    {
-        return new ActionNode (new CastRiptideOnPartyAction(ai),  
-            /*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL), 
-            /*C*/ NULL);
-    }
+	
+	if (!strcmp("earthliving weapon", name)) 
+	{
+		return new ActionNode (new CastEarthlivingWeaponAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL), 
+			/*C*/ NULL);
+	}
 
     return NULL;
 }

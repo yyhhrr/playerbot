@@ -787,6 +787,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\MeleeShamanTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\ShamanNonCombatTestCase.cpp"
 				>
 			</File>

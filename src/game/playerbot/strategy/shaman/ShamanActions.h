@@ -66,6 +66,10 @@ namespace ai
         CastWaterShieldAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "water shield") {}
     };
 
+	class CastLightningShieldAction : public CastBuffSpellAction {
+	public:
+		CastLightningShieldAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "lightning shield") {}
+	};
 
     class CastEarthlivingWeaponAction : public CastBuffSpellAction {
     public:
@@ -153,5 +157,15 @@ namespace ai
 	{
 	public:
 		CastPurgeAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "purge") {}
+	};
+
+	class CastStormstrikeAction : public CastMeleeSpellAction {
+	public:
+		CastStormstrikeAction(AiManagerRegistry* const ai) : CastMeleeSpellAction(ai, "stormstrike") {}
+	};
+
+	class CastLavaLashAction : public CastMeleeSpellAction {
+	public:
+		CastLavaLashAction(AiManagerRegistry* const ai) : CastMeleeSpellAction(ai, "lava lash") {}
 	};
 }

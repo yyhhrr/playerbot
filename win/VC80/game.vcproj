@@ -2520,6 +2520,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanActionFactory.cpp"
 						>
 					</File>

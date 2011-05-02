@@ -12,10 +12,6 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new WaterShieldTrigger(ai), 
-        NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         new WindfuryTotemTrigger(ai), 
         NextAction::array(0, new NextAction("windfury totem", 18.0f), NULL)));
 
@@ -38,6 +34,22 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		new TargetAuraDispelTrigger(ai, "purge", DISPEL_MAGIC),
 		NextAction::array(0, new NextAction("purge", 10.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new PartyMemberLowHealthTrigger(ai, 60, 40),
+		NextAction::array(0, new NextAction("chain heal on party", 25.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new PartyMemberLowHealthTrigger(ai),
+		NextAction::array(0, new NextAction("riptide on party", 25.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new LowHealthTrigger(ai, 60, 40),
+		NextAction::array(0, new NextAction("chain heal", 26.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new LowHealthTrigger(ai),
+		NextAction::array(0, new NextAction("riptide", 26.0f), NULL)));
 }
 
 void GenericShamanStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
@@ -121,13 +133,6 @@ ActionNode* GenericShamanStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("earthliving weapon", name)) 
-    {
-        return new ActionNode (new CastEarthlivingWeaponAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL), 
-            /*C*/ NULL);
-    }
     else if (!strcmp("rockbiter weapon", name)) 
     {
         return new ActionNode (new CastRockbiterWeaponAction(ai),  
@@ -161,6 +166,76 @@ ActionNode* GenericShamanStrategy::createAction(const char* name)
 		return new ActionNode (new CastPurgeAction(ai),  
 			/*P*/ NULL,
 			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("healing wave", name)) 
+	{
+		return new ActionNode (new CastHealingWaveAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("lesser healing wave", name)) 
+	{
+		return new ActionNode (new CastLesserHealingWaveAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("healing wave"), NULL), 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("healing wave on party", name)) 
+	{
+		return new ActionNode (new CastHealingWaveOnPartyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("lesser healing wave on party", name)) 
+	{
+		return new ActionNode (new CastLesserHealingWaveOnPartyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL), 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("earth shield", name)) 
+	{
+		return new ActionNode (new CastEarthShieldAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("earth shield on party", name)) 
+	{
+		return new ActionNode (new CastEarthShieldOnPartyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("chain heal", name)) 
+	{
+		return new ActionNode (new CastChainHealAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("lesser healing wave"), NULL), 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("riptide", name)) 
+	{
+		return new ActionNode (new CastRiptideAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("healing wave"), NULL), 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("chain heal on party", name)) 
+	{
+		return new ActionNode (new CastChainHealOnPartyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("lesser healing wave on party"), NULL), 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("riptide on party", name)) 
+	{
+		return new ActionNode (new CastRiptideOnPartyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL), 
 			/*C*/ NULL);
 	}
     return NULL;
