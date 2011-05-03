@@ -1605,7 +1605,7 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     {
                         m_caster->CastSpell(unitTarget, pSpell, true);
 
-                        if (const SpellEntry *pSpellCredit = sSpellStore.LookupEntry(pSpell->EffectMiscValue[EFFECT_INDEX_0]))
+                        if (const SpellEntry *pSpellCredit = sSpellStore.LookupEntry(pSpell->EffectTriggerSpell[EFFECT_INDEX_0]))
                             ((Player*)m_caster)->KilledMonsterCredit(pSpellCredit->EffectMiscValue[EFFECT_INDEX_0]);
 
                         ((Creature*)unitTarget)->ForcedDespawn();
@@ -1625,12 +1625,14 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                 }
                 case 46797:                                 // Quest - Borean Tundra - Set Explosives Cart
                 {
-                    if (!unitTarget)
+                    if (!unitTarget || m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
 
+                    ((Player*)m_caster)->KilledMonsterCredit(unitTarget->GetEntry(), unitTarget->GetObjectGuid());
+
                     // Quest - Borean Tundra - Summon Explosives Cart
-                    unitTarget->CastSpell(unitTarget,46798,true,m_CastItem,NULL,m_originalCasterGUID);
-                    break;
+                    unitTarget->CastSpell(unitTarget, 46798, true);
+                    return;
                 }
                 case 47110:                                 // Summon Drakuru's Image
                 {
@@ -8066,6 +8068,9 @@ void Spell::EffectSummonObject(SpellEffectIndex eff_idx)
     m_caster->m_ObjectSlot[slot] = pGameObj->GetGUID();
 
     pGameObj->SummonLinkedTrapIfAny();
+
+    if (m_caster->GetTypeId() == TYPEID_UNIT && ((Creature*)m_caster)->AI())
+        ((Creature*)m_caster)->AI()->JustSummoned(pGameObj);
 }
 
 void Spell::EffectResurrect(SpellEffectIndex /*eff_idx*/)
