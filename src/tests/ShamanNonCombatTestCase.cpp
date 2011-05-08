@@ -9,7 +9,6 @@ using namespace ai;
 class ShamanNonCombatTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( ShamanNonCombatTestCase );
-    CPPUNIT_TEST( buff );
 	CPPUNIT_TEST( ressurect );
     CPPUNIT_TEST_SUITE_END();
 
@@ -21,13 +20,6 @@ public:
     }
 
 protected:
-    void buff()
-    {
-		tick();
-
-		assertActions(">S:water shield");
-    }
-
 	void ressurect()
 	{
 		tickWithDeadPartyMember();

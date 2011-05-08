@@ -14,6 +14,7 @@ namespace ai
         virtual NextAction** getDefaultActions();
         virtual const char* getName() { return "heal"; }
         virtual ActionNode* createAction(const char* name);
+		virtual string GetIncompatibleStrategies() { return "-dps"; }
 
     };
 }

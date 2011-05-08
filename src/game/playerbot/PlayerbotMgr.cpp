@@ -264,7 +264,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
 						uint32 GuildId = bot->GetGuildId();
 						if (!GuildId)
 							return;
-						Guild *pGuild = sObjectMgr.GetGuildById(GuildId);
+						Guild *pGuild = sGuildMgr.GetGuildById(GuildId);
 						if (!pGuild)
 							return;
 						pGuild->LogBankEvent(GUILD_BANK_LOG_REPAIR_MONEY, 0, bot->GetGUIDLow(), TotalCost);

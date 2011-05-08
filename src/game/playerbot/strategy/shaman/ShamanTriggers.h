@@ -3,8 +3,6 @@
 
 namespace ai
 {
-    BUFF_TRIGGER(WaterShieldTrigger, "water shield", "water shield")
-
     class ShamanWeaponTrigger : public BuffTrigger {
     public:
         ShamanWeaponTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "rockbiter weapon") {}
