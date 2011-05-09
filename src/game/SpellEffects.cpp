@@ -887,6 +887,37 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     }
                     return;
                 }
+                case 14537:                                 // Six Demon Bag
+                {
+                    if (!unitTarget)
+                        return;
+
+                    Unit* newTarget = unitTarget;
+                    uint32 spell_id = 0;
+                    uint32 roll = urand(0, 99);
+                    if (roll < 25)                          // Fireball (25% chance)
+                        spell_id = 15662;
+                    else if (roll < 50)                     // Frostbolt (25% chance)
+                        spell_id = 11538;
+                    else if (roll < 70)                     // Chain Lighting (20% chance)
+                        spell_id = 21179;
+                    else if (roll < 80)                     // Polymorph (10% chance)
+                    {
+                        spell_id = 14621;
+                        if (urand(0, 9) < 3)                // 30% chance to self-cast
+                            newTarget = m_caster;
+                    }
+                    else if (roll < 95)                     // Enveloping Winds (15% chance)
+                        spell_id = 25189;
+                    else                                    // Summon Felhund minion (5% chance)
+                    {
+                        spell_id = 14642;
+                        newTarget = m_caster;
+                    }
+
+                    m_caster->CastSpell(newTarget, spell_id, true, m_CastItem);
+                    return;
+                }
                 case 15998:                                 // Capture Worg Pup
                 case 29435:                                 // Capture Female Kaliri Hatchling
                 {
@@ -6498,7 +6529,7 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     if (m_caster->GetTypeId() != TYPEID_UNIT || !unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
                         return;
 
-                    if (Item* pItem = ((Player*)unitTarget)->GetWeaponForAttack(BASE_ATTACK))
+                    if (Item* pItem = ((Player*)unitTarget)->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND))
                     {
                         ((Creature*)m_caster)->SetVirtualItem(VIRTUAL_ITEM_SLOT_0, pItem->GetEntry());
 
@@ -6620,7 +6651,7 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     if (m_caster->GetTypeId() != TYPEID_UNIT || !unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
                         return;
 
-                    if (Item* pItem = ((Player*)unitTarget)->GetWeaponForAttack(OFF_ATTACK))
+                    if (Item* pItem = ((Player*)unitTarget)->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_OFFHAND))
                     {
                         ((Creature*)m_caster)->SetVirtualItem(VIRTUAL_ITEM_SLOT_1, pItem->GetEntry());
 
@@ -6884,12 +6915,12 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     switch(eff_idx)
                     {
                         case EFFECT_INDEX_1:
-                            if (((Player*)m_originalCaster)->GetWeaponForAttack(BASE_ATTACK))
+                            if (((Player*)m_originalCaster)->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND))
                                 unitTarget->CastSpell(m_originalCaster, m_spellInfo->CalculateSimpleValue(eff_idx), true);
 
                             return;
                         case EFFECT_INDEX_2:
-                            if (((Player*)m_originalCaster)->GetWeaponForAttack(OFF_ATTACK))
+                            if (((Player*)m_originalCaster)->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_OFFHAND))
                                 unitTarget->CastSpell(m_originalCaster, m_spellInfo->CalculateSimpleValue(eff_idx), true);
 
                             return;

@@ -9206,6 +9206,16 @@ Item* Player::GetItemByPos( uint8 bag, uint8 slot ) const
     return NULL;
 }
 
+uint32 Player::GetItemDisplayIdInSlot(uint8 bag, uint8 slot) const
+{
+    const Item* pItem = GetItemByPos(bag, slot);
+
+    if (!pItem)
+        return 0;
+
+    return pItem->GetProto()->DisplayInfoID;
+}
+
 Item* Player::GetWeaponForAttack(WeaponAttackType attackType, bool nonbroken, bool useable) const
 {
     uint8 slot;
@@ -13750,7 +13760,7 @@ void Player::AddQuest( Quest const *pQuest, Object *questGiver )
     }
 
     // remove start item if not need
-    if (questGiver && questGiver->isType(TYPEID_ITEM))
+    if (questGiver && questGiver->isType(TYPEMASK_ITEM))
     {
         // destroy not required for quest finish quest starting item
         bool notRequiredItem = true;
