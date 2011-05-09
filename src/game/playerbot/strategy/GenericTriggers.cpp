@@ -7,7 +7,7 @@ using namespace ai;
 bool LowManaTrigger::IsActive() 
 {
 	Unit* target = targetManager->GetSelf();
-	return statsManager->HasMana(target) && statsManager->GetManaPercent(target) < EAT_DRINK_PERCENT;
+	return statsManager->HasMana(target) && statsManager->GetManaPercent(target) < LOW_HEALTH_PERCENT;
 }
 
 

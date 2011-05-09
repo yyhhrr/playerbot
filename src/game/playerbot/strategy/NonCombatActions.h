@@ -11,7 +11,7 @@ namespace ai
             ai->GetInventoryManager()->UseDrink();
         }
         virtual bool isUseful() {
-            return ai->GetStatsManager()->GetManaPercent(ai->GetTargetManager()->GetSelf()) < EAT_DRINK_PERCENT && ai->GetInventoryManager()->HasDrink();
+            return ai->GetStatsManager()->GetManaPercent(ai->GetTargetManager()->GetSelf()) < LOW_HEALTH_PERCENT && ai->GetInventoryManager()->HasDrink();
         }
     };
 
@@ -22,7 +22,7 @@ namespace ai
             ai->GetInventoryManager()->UseFood();
         }
         virtual bool isUseful() {
-            return ai->GetStatsManager()->GetHealthPercent(ai->GetTargetManager()->GetSelf()) < EAT_DRINK_PERCENT && 
+            return ai->GetStatsManager()->GetHealthPercent(ai->GetTargetManager()->GetSelf()) < LOW_HEALTH_PERCENT && 
 				ai->GetInventoryManager()->HasFood();
         }
     };

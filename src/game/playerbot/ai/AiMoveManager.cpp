@@ -82,7 +82,10 @@ bool AiMoveManager::IsMovingAllowed(Unit* target)
         return false;
 
     if (bot->GetDistance(target) > BOT_REACT_DISTANCE)
+	{
+		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
         return false;
+	}
 
     return IsMovingAllowed();
 }
@@ -90,7 +93,10 @@ bool AiMoveManager::IsMovingAllowed(Unit* target)
 bool AiMoveManager::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
     if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE)
+	{
+		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
         return false;
+	}
 
     return IsMovingAllowed();
 }

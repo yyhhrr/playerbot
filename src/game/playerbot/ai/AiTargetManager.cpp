@@ -311,9 +311,9 @@ list<Unit*> AiTargetManager::FindPossibleTargets()
 {
 	list<Unit *> targets;
 
-	MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, BOT_REACT_DISTANCE);
+	MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, BOT_GRIND_DISTANCE);
 	MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_REACT_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
 
 	for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
 	{
@@ -399,7 +399,7 @@ Unit* AiTargetManager::FindTargetForGrinding(int assistCount)
 			if( !member || !member->isAlive())
 				continue;
 
-			if (GetMaster()->GetDistance(unit) >= BOT_REACT_DISTANCE)
+			if (GetMaster()->GetDistance(unit) >= BOT_GRIND_DISTANCE)
 				continue;
 
 			float d = member->GetDistance(unit);

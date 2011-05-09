@@ -460,6 +460,7 @@ void AiSpellManager::Mount(int32 master_speed1, int32 master_speed2)
     RemoveAura("flight form");
     RemoveAura("swift flight form");
     RemoveAura("aquatic form");
+	RemoveAura("ghost wolf");
 
 	uint32 spellMount = 0;
 	for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)

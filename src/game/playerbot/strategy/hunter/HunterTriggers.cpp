@@ -25,5 +25,5 @@ bool HuntersPetDeadTrigger::IsActive()
 bool HuntersPetLowHealthTrigger::IsActive()
 {
 	Unit* pet = targetManager->GetPet();
-    return pet && statsManager->GetHealthPercent(pet) < EAT_DRINK_PERCENT && !statsManager->IsDead(pet) && !ai->GetStatsManager()->IsMounted();
+    return pet && statsManager->GetHealthPercent(pet) < LOW_HEALTH_PERCENT && !statsManager->IsDead(pet) && !ai->GetStatsManager()->IsMounted();
 }

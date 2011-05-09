@@ -30,8 +30,9 @@ protected:
 		tickInMeleeRange();
 		tick();
 		tick();
+		tick();
         
-		assertActions(">reach melee>T:stormstrike>T:lava lash>melee");
+		assertActions(">reach melee>melee>T:stormstrike>T:lava lash>melee");
     }
 
     void buff()

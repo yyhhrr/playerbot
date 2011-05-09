@@ -9,7 +9,7 @@ using namespace ai;
 
 NextAction** MeleeShamanStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("stormstrike", 10.0f), new NextAction("lava lash", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("melee", 10.0f), new NextAction("stormstrike", 10.0f), new NextAction("lava lash", 10.0f), NULL);
 }
 
 void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

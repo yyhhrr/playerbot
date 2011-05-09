@@ -31,7 +31,7 @@ namespace ai
 
     class LowHealthTrigger : public HealthInRangeTrigger {
     public:
-        LowHealthTrigger(AiManagerRegistry* const ai, float value = EAT_DRINK_PERCENT, float minValue = 0) :
+        LowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "low health", value, minValue) {}
 
 		virtual Unit* GetTarget();
@@ -39,7 +39,7 @@ namespace ai
 
     class PartyMemberLowHealthTrigger : public HealthInRangeTrigger {
     public:
-        PartyMemberLowHealthTrigger(AiManagerRegistry* const ai, float value = EAT_DRINK_PERCENT, float minValue = 0) :
+        PartyMemberLowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "party member low health", value, minValue) {}
         virtual Unit* GetTarget();
     };
