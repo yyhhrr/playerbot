@@ -124,6 +124,51 @@ public:
     }
 };
 
+class FindItemsByQualityVisitor : public IterateItemsVisitor
+{
+public:
+	FindItemsByQualityVisitor(uint32 quality, int count) : IterateItemsVisitor() 
+	{
+		this->quality = quality;
+		this->count = count;
+	}
+
+	virtual bool Visit(Item* item)
+	{
+		if (item->GetProto()->Quality != quality)
+			return true;
+
+		if (result.size() >= count)
+			return false;
+
+		result.push_back(item);
+		return true;
+	}
+
+	list<Item*> GetResult() 
+	{
+		return result;
+	}
+
+private:
+	uint32 quality;
+	int count;
+	list<Item*> result;
+};
+
+class FindItemsToTradeByQualityVisitor : public FindItemsByQualityVisitor
+{
+public:
+	FindItemsToTradeByQualityVisitor(uint32 quality, int count) : FindItemsByQualityVisitor(quality, count) {}
+
+	virtual bool Visit(Item* item)
+	{
+		if (item->IsSoulBound())
+			return true;
+
+		return FindItemsByQualityVisitor::Visit(item);
+	}
+};
 
 class QueryItemCountVisitor : public IterateItemsVisitor 
 {
@@ -1041,6 +1086,32 @@ void AiInventoryManager::Trade(const char* text)
 
     int8 slot = !strncmp(text, "nt ", 3) ? TRADE_SLOT_NONTRADED : -1;
 
+	uint32 quality = MAX_ITEM_QUALITY;
+	if (strstr(text, "poor") || strstr(text, "gray"))
+		quality = ITEM_QUALITY_POOR;
+	else if (strstr(text, "normal") || strstr(text, "white"))
+		quality = ITEM_QUALITY_NORMAL;
+	else if (strstr(text, "uncommon") || strstr(text, "green"))
+		quality = ITEM_QUALITY_UNCOMMON;
+	else if (strstr(text, "rare") || strstr(text, "blue"))
+		quality = ITEM_QUALITY_RARE;
+	else if (strstr(text, "epic") || strstr(text, "violet"))
+		quality = ITEM_QUALITY_EPIC;
+
+	if (quality != MAX_ITEM_QUALITY) 
+	{
+		const char* pos = strchr(text, ' ');
+		int count = pos ? atoi(pos + 1) : TRADE_SLOT_TRADED_COUNT;
+		if (count < 1) count = 1;
+		else if (count > TRADE_SLOT_TRADED_COUNT) count = TRADE_SLOT_TRADED_COUNT;
+		FindItemsToTradeByQualityVisitor visitor(quality, count);
+		IterateItems(&visitor);
+		list<Item*> found = visitor.GetResult();
+		for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
+			TradeItem(**i, slot);
+		return;
+	}
+
     list<uint32> ids; /* = */ extractItemIds(text, ids);
     for (list<uint32>::iterator i = ids.begin(); i != ids.end(); i++)
         TradeItem(&FindItemByIdVisitor(*i), slot);
@@ -1060,20 +1131,37 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 		return false;
 
 	int8 tradeSlot = -1;
+	Item* itemPtr = const_cast<Item*>(&item);
 
 	TradeData* pTrade = bot->GetTradeData();
 	if ((slot >= 0 && slot < TRADE_SLOT_COUNT) && pTrade->GetItem(TradeSlots(slot)) == NULL)
 		tradeSlot = slot;
-	else
-		for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
+	
+	for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
+	{
+		if (pTrade->GetItem(TradeSlots(i)) == itemPtr)
 		{
-			if (pTrade->GetItem(TradeSlots(i)) == NULL)
-			{
-				tradeSlot = i;
-				// reserve trade slot to allow multiple items to be traded
-				pTrade->SetItem(TradeSlots(i), const_cast<Item*>(&item));
-			}
+			tradeSlot = i;
+
+			WorldPacket* const packet = new WorldPacket(CMSG_CLEAR_TRADE_ITEM, 1);
+			*packet << (uint8) tradeSlot;
+			bot->GetSession()->QueuePacket(packet);
+			pTrade->SetItem(TradeSlots(i), NULL);
+			return true;
 		}
+	}
+
+	for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
+	{
+		if (pTrade->GetItem(TradeSlots(i)) == NULL)
+		{
+			pTrade->SetItem(TradeSlots(i), itemPtr);
+			tradeSlot = i;
+		}
+	}
+
+	if (slot == TRADE_SLOT_NONTRADED)
+		pTrade->SetItem(TRADE_SLOT_NONTRADED, itemPtr);
 
 	if (tradeSlot == -1) return false;
 
