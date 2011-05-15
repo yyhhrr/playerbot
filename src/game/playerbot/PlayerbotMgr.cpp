@@ -357,26 +357,26 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
         m_master->GetGroup()->ChangeLeader(masterGuid);
 }
 
-bool processBotCommand(WorldSession* session, string cmdStr, uint64 guid)
+bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 {
-    if (guid == 0 || (guid == session->GetPlayer()->GetGUID()))
+    if (guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
         return false;
 
     PlayerbotMgr* mgr = session->GetPlayer()->GetPlayerbotMgr();
 
     if (cmdStr == "add" || cmdStr == "login")
     {
-        if (mgr->GetPlayerBot(guid)) 
+        if (mgr->GetPlayerBot(guid.GetRawValue())) 
             return false;
         
-        mgr->AddPlayerBot(guid, session);
+        mgr->AddPlayerBot(guid.GetRawValue(), session);
     }
     else if (cmdStr == "remove" || cmdStr == "logout")
     {
-        if (! mgr->GetPlayerBot(guid))
+        if (! mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
         
-        mgr->LogoutPlayerBot(guid);
+        mgr->LogoutPlayerBot(guid.GetRawValue());
     }
 
     return true;
@@ -441,10 +441,14 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         Group::MemberSlotList slots = group->GetMemberSlots();
         for (Group::member_citerator i = slots.begin(); i != slots.end(); i++) 
         {
-            uint64 member = i->guid.GetRawValue();
+			uint64 member = i->guid.GetRawValue();
+			
+			if (member == m_session->GetPlayer()->GetObjectGuid().GetRawValue())
+				continue;
+
             if (member != player->GetGUID() && !processBotCommand(m_session, cmdStr, member))
             {
-                PSendSysMessage("Error processing bot command");
+                PSendSysMessage("Error processing bot command for %s", i->name.c_str());
                 SetSentErrorMessage(true);
                 res = false;
             }
@@ -457,10 +461,10 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     for (vector<string>::iterator i = chars.begin(); i != chars.end(); i++)
     {
         string s = *i;
-        res &= processBotCommand(m_session, cmdStr, sObjectMgr.GetPlayerGUIDByName(s.c_str()));
+        res &= processBotCommand(m_session, cmdStr, sObjectMgr.GetPlayerGuidByName(s.c_str()));
         if (!res)
         {
-            PSendSysMessage("Error processing bot command");
+            PSendSysMessage("Error processing bot command for %s", s.c_str());
             SetSentErrorMessage(true);
         }
     }

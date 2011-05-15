@@ -144,8 +144,8 @@ bool AiTargetManager::IsTargetOfResurrectSpell(Player* target) {
 bool AiTargetManager::IsTargetOfSpellCast(Player* target, SpellEntryPredicate predicate) 
 {
 	Group* group = bot->GetGroup();
-	uint64 targetGuid = target ? target->GetGUID() : bot->GetGUID();
-    uint64 corpseGuid = target && target->GetCorpse() ? target->GetCorpse()->GetGUID() : 0;
+	ObjectGuid targetGuid = target ? target->GetObjectGuid() : bot->GetObjectGuid();
+    ObjectGuid corpseGuid = target && target->GetCorpse() ? target->GetCorpse()->GetObjectGuid() : ObjectGuid();
 
 	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
 	{
@@ -158,12 +158,12 @@ bool AiTargetManager::IsTargetOfSpellCast(Player* target, SpellEntryPredicate pr
 			for (int type = CURRENT_GENERIC_SPELL; type < CURRENT_MAX_SPELL; type++) {
 				Spell* spell = player->GetCurrentSpell((CurrentSpellTypes)type);
                 if (spell && (this->*predicate)(spell->m_spellInfo)) { 
-                    uint64 unitTarget = spell->m_targets.getUnitTargetGUID();
-                    if (unitTarget && unitTarget == targetGuid)
+                    ObjectGuid unitTarget = spell->m_targets.getUnitTargetGuid();
+                    if (unitTarget == targetGuid)
                         return true;
                     
-                    uint64 corpseTarget = spell->m_targets.getCorpseTargetGUID();
-                    if (corpseTarget && corpseTarget == corpseGuid)
+                    ObjectGuid corpseTarget = spell->m_targets.getCorpseTargetGuid();
+                    if (corpseTarget == corpseGuid)
                         return true;
                 }
 			}

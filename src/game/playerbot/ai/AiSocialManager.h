@@ -29,6 +29,7 @@ namespace ai
 	private:
 		string GetLogLevel(LogLevel level);
 		void SetLogLevel(string level);
+		void TellReputation();
 
 	private:
 		LogLevel logLevel;

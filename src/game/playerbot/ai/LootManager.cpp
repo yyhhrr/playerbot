@@ -66,7 +66,8 @@ bool LootManager::CanLoot()
 
 void LootManager::ReleaseLoot()
 {
-    if( uint64 lguid = bot->GetLootGUID() && bot->GetSession() )
+	ObjectGuid lguid = bot->GetLootGuid();
+    if( !lguid.IsEmpty()  && bot->GetSession() )
         bot->GetSession()->DoLootRelease( lguid );
 }
 

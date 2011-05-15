@@ -207,17 +207,17 @@ void AiQuestManager::AcceptQuest( Quest const *qInfo, Player *pGiver )
 	if( !bot->CanTakeQuest( qInfo, false ) )
 	{
 		// can't take quest
-		bot->SetDivider( 0 );
+		bot->SetDividerGuid( ObjectGuid() );
         aiRegistry->GetSocialManager()->TellMaster("I can't take this quest");
 
 		return;
 	}
 
-	if( bot->GetDivider() != 0 )
+	if( !bot->GetDividerGuid().IsEmpty() )
 	{
 		// send msg to quest giving player
 		pGiver->SendPushToPartyResponse( bot, QUEST_PARTY_MSG_ACCEPT_QUEST );
-		bot->SetDivider( 0 );
+		bot->SetDividerGuid( ObjectGuid() );
 	}
 
 	if( bot->CanAddQuest( qInfo, false ) )
