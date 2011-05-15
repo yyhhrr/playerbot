@@ -306,6 +306,9 @@ void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 	}
     else if(text == "fly" && !taxiMaster.IsEmpty())
     {
+		if (taxiMaster.IsEmpty())
+			taxiMaster = ai->GetMaster()->GetSelectionGuid();
+
         bot->SetSelectionGuid(taxiMaster);
 
         Creature *npc = bot->GetNPCIfCanInteractWith(taxiMaster, UNIT_NPC_FLAG_FLIGHTMASTER);
