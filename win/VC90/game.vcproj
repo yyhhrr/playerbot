@@ -816,6 +816,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\MailHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\Mail.h"
 				>
 			</File>

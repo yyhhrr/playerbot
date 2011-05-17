@@ -378,6 +378,9 @@ void WorldSession::LogoutPlayer(bool Save)
     {
         sLog.outChar("Account: %d (IP: %s) Logout Character:[%s] (guid: %u)", GetAccountId(), GetRemoteAddress().c_str(), _player->GetName() ,_player->GetGUIDLow());
 
+        if (ObjectGuid lootGuid = GetPlayer()->GetLootGuid())
+            DoLootRelease(lootGuid);
+        
 	// Playerbot mod: log out all player bots owned by this toon
         if (_player->GetPlayerbotMgr())
             _player->GetPlayerbotMgr()->LogoutAllBots();
