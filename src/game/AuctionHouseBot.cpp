@@ -410,7 +410,7 @@ void AuctionHouseBot::addNewAuctions(Player *AHBplayer, AHBConfig *config)
         auctionEntry->bid = 0;
         auctionEntry->deposit = 0;
         auctionEntry->expireTime = (time_t) (urand(config->GetMinTime(), config->GetMaxTime()) * 60 * 60 + time(NULL));
-		auctionEntry->moneyDeliveryTime = (time_t) (urand(auctionEntry->expireTime, config->GetMinTime() * 60 * 60 + time(NULL)));
+		auctionEntry->moneyDeliveryTime = 0;
         auctionEntry->auctionHouseEntry = ahEntry;
         item->SaveToDB();
         item->RemoveFromUpdateQueueOf(AHBplayer);
