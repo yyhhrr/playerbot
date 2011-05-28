@@ -27,14 +27,16 @@ void AiQuestManager::UpdateQuestNeedItems()
 	}
 }
 
-void AiQuestManager::ListQuests()
+void AiQuestManager::ListQuests(bool silent)
 {
 	AiSocialManager* socialManager = aiRegistry->GetSocialManager();
-	socialManager->TellMaster("--- incomplete quests ---");
-	int incompleteCount = ListQuests(false);
+	if (!silent)
+		socialManager->TellMaster("--- incomplete quests ---");
+	int incompleteCount = ListQuests(false, silent);
 
-	socialManager->TellMaster("--- complete quests ---");
-	int completeCount = ListQuests(true);
+	if (!silent)
+		socialManager->TellMaster("--- complete quests ---");
+	int completeCount = ListQuests(true, silent);
 
 	socialManager->TellMaster("--- summary ---");
 	std::ostringstream out;
@@ -42,7 +44,7 @@ void AiQuestManager::ListQuests()
 	socialManager->TellMaster(out.str().c_str());
 }
 
-int AiQuestManager::ListQuests(bool completed)
+int AiQuestManager::ListQuests(bool completed, bool silent)
 {
 	int count = 0;
 	for (uint16 slot = 0; slot < MAX_QUEST_LOG_SIZE; ++slot)
@@ -58,6 +60,9 @@ int AiQuestManager::ListQuests(bool completed)
 		
 		count++;
 		
+		if (silent)
+			continue;
+
 		std::ostringstream stream;
 		stream << " |cFFFFFF00|Hquest:" << questId << ':' << pQuest->GetQuestLevel() << "|h[" << pQuest->GetTitle() << "]|h|r";
 		aiRegistry->GetSocialManager()->TellMaster(stream.str().c_str());
@@ -68,12 +73,18 @@ int AiQuestManager::ListQuests(bool completed)
 
 void AiQuestManager::DropQuest(const char* link)
 {
-	PlayerbotChatHandler ch(ai->GetMaster());
+	Player* master = ai->GetMaster();
+	ObjectGuid oldSelection = master->GetSelectionGuid();
+	master->SetSelectionGuid(bot->GetObjectGuid());
+	
+	PlayerbotChatHandler ch(bot);
 	if (!ch.dropQuest(link))
 	{
 		aiRegistry->GetSocialManager()->TellMaster("Could not drop quest: ");
 		aiRegistry->GetSocialManager()->TellMaster(link);
 	}
+
+	master->SetSelectionGuid(oldSelection);
 }
 
 void AiQuestManager::QuestLocalization(std::string& questTitle, const uint32 questID)
@@ -242,7 +253,11 @@ void AiQuestManager::HandleCommand(const string& text, Player& fromPlayer)
 {
 	if (text == "quests")
 	{
-		ListQuests();
+		ListQuests(false);
+	}
+	else if (text == "qsummary")
+	{
+		ListQuests(true);
 	}
 
 	else if (text.size() > 5 && text.substr(0, 5) == "drop ")
