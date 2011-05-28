@@ -7,6 +7,13 @@ namespace ai
     class AiManagerRegistry;
     class AiManagerBase;
 
+	enum QuestListFilter {
+		QUEST_LIST_FILTER_SUMMARY = 0,
+		QUEST_LIST_FILTER_COMPLETED = 1,
+		QUEST_LIST_FILTER_INCOMPLETED = 2,
+		QUEST_LIST_FILTER_ALL = QUEST_LIST_FILTER_COMPLETED | QUEST_LIST_FILTER_INCOMPLETED
+	};
+
 	class AiQuestManager : public AiManagerBase
 	{
 	public:
@@ -16,7 +23,7 @@ namespace ai
 
 	public:
 		void UpdateQuestNeedItems();
-		void ListQuests(bool silent);
+		void ListQuests(QuestListFilter filter);
 		int ListQuests(bool completed, bool silent);
 		void DropQuest(const char* link);
 		void QuestLocalization(std::string& questTitle, const uint32 questID);

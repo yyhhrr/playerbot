@@ -27,16 +27,20 @@ void AiQuestManager::UpdateQuestNeedItems()
 	}
 }
 
-void AiQuestManager::ListQuests(bool silent)
+void AiQuestManager::ListQuests(QuestListFilter filter)
 {
 	AiSocialManager* socialManager = aiRegistry->GetSocialManager();
-	if (!silent)
-		socialManager->TellMaster("--- incomplete quests ---");
-	int incompleteCount = ListQuests(false, silent);
 
-	if (!silent)
+	bool showIncompleted = filter & QUEST_LIST_FILTER_INCOMPLETED;
+	bool showCompleted = filter & QUEST_LIST_FILTER_COMPLETED;
+
+	if (showIncompleted)
+		socialManager->TellMaster("--- incomplete quests ---");
+	int incompleteCount = ListQuests(false, !showIncompleted);
+
+	if (showCompleted)
 		socialManager->TellMaster("--- complete quests ---");
-	int completeCount = ListQuests(true, silent);
+	int completeCount = ListQuests(true, !showCompleted);
 
 	socialManager->TellMaster("--- summary ---");
 	std::ostringstream out;
@@ -251,14 +255,14 @@ void AiQuestManager::AcceptQuest( Quest const *qInfo, Player *pGiver )
 
 void AiQuestManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text == "quests")
-	{
-		ListQuests(false);
-	}
-	else if (text == "qsummary")
-	{
-		ListQuests(true);
-	}
+	if (text == "quests completed")
+		ListQuests(QUEST_LIST_FILTER_COMPLETED);
+	else if (text == "quests incompleted")
+		ListQuests(QUEST_LIST_FILTER_INCOMPLETED);
+	else if (text == "quests summary" || text == "qsummary")
+		ListQuests(QUEST_LIST_FILTER_SUMMARY);
+	else if (text == "quests")
+		ListQuests(QUEST_LIST_FILTER_ALL);
 
 	else if (text.size() > 5 && text.substr(0, 5) == "drop ")
 	{
