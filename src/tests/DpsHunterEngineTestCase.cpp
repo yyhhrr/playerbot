@@ -107,8 +107,9 @@ protected:
 		addTargetAura("black arrow");
 		addTargetAura("serpent sting");
         tickWithAttackerCount(3);
+		tickWithAttackerCount(4);
 
-		assertActions(">T:multi-shot");
+		assertActions(">T:multi-shot>T:volley");
     }
 
 	void buff()

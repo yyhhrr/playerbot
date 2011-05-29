@@ -15,6 +15,7 @@ class FrostMageTestCase : public EngineTestBase
   CPPUNIT_TEST( interruptSpells );
   CPPUNIT_TEST( cc );
   CPPUNIT_TEST( pull );
+  CPPUNIT_TEST( aoe );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -99,6 +100,15 @@ protected:
 
         assertActions(">reach spell>T:shoot>follow>co:-pull");
     }
+
+	void aoe() 
+	{
+		tick();
+		tickWithAttackerCount(4);
+		tick();
+
+		assertActions(">T:frostbolt>T:blizzard>T:shoot");
+	}
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( FrostMageTestCase );

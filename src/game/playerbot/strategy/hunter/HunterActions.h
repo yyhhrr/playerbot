@@ -32,6 +32,9 @@ namespace ai
     BEGIN_RANGED_SPELL_ACTION(CastMultiShotAction, "multi-shot")
     END_SPELL_ACTION()
 
+	BEGIN_RANGED_SPELL_ACTION(CastVolleyAction, "volley")
+	END_SPELL_ACTION()
+
     BEGIN_RANGED_SPELL_ACTION(CastSerpentStingAction, "serpent sting")
     virtual bool isUseful();
     END_SPELL_ACTION()

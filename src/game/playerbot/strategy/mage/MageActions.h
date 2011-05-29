@@ -42,7 +42,12 @@ namespace ai
 	public:
 		CastFrostboltAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "frostbolt") {}
 	};
-
+	
+	class CastBlizzardAction : public CastSpellAction
+	{
+	public:
+		CastBlizzardAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "blizzard") {}
+	};
 
 	class CastArcaneIntellectAction : public CastBuffSpellAction 
     {

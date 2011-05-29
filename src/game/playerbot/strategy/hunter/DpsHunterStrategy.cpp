@@ -58,6 +58,10 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         new AoeTrigger(ai, 3), 
         NextAction::array(0, new NextAction("multi-shot", 20.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new AoeTrigger(ai, 4), 
+		NextAction::array(0, new NextAction("volley", 20.0f), NULL)));
 }
 
 void DpsHunterStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
@@ -120,6 +124,13 @@ ActionNode* DpsHunterStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
+	else if (!strcmp("volley", name)) 
+	{
+		return new ActionNode (new CastVolleyAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else if (!strcmp("serpent sting", name)) 
     {
         return new ActionNode (new CastSerpentStingAction(ai),  

@@ -19,6 +19,10 @@ void FrostMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         new BoostTrigger(ai, "icy veins"),
         NextAction::array(0, new NextAction("icy veins", 50.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		new AoeTrigger(ai, 4),
+		NextAction::array(0, new NextAction("blizzard", 40.0f), NULL)));
 }
 
 void FrostMageStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
@@ -39,6 +43,13 @@ ActionNode* FrostMageStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
             /*C*/ NULL);
     }
+	else if (!strcmp("blizzard", name)) 
+	{
+		return new ActionNode (new CastBlizzardAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else if (!strcmp("frost nova", name)) 
     {
         return new ActionNode (new CastFrostNovaAction(ai),  
