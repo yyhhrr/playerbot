@@ -9,7 +9,7 @@ LootManager::LootManager(Player* bot)
 {
     availableLoot = new LootObjectStack(bot);
     this->bot = bot;
-	lootStrategy = LOOTSTRATEGY_NORMAL;
+	lootStrategy = LOOTSTRATEGY_QUEST;
 }
 
 LootManager::~LootManager()
