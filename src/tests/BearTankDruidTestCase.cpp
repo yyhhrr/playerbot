@@ -105,7 +105,7 @@ protected:
 
         tickWithRage(40);
         
-        assertActions(">S:dire bear form>T:faerie fire (feral)>T:feral charge - bear>melee>reach melee>melee>T:mangle (bear)>T:swipe>T:maul");
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>melee>reach melee>melee>T:mangle (bear)>T:swipe>T:maul");
     }
 
     void healHimself()

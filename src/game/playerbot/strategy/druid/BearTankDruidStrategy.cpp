@@ -81,7 +81,7 @@ ActionNode* BearTankDruidStrategy::createAction(const char* name)
     else if (!strcmp("faerie fire (feral)", name)) 
     {
         return new ActionNode (new CastFaerieFireFeralAction(ai),  
-            /*P*/ NextAction::array(0, new NextAction("dire bear form"), NULL),
+			/*P*/ NextAction::array(0, new NextAction("dire bear form"), new NextAction("feral charge - bear"), NULL),
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
