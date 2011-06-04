@@ -1131,8 +1131,11 @@ bool AiInventoryManager::TradeItem(FindItemVisitor *visitor, int8 slot)
 
 bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 {
-	if (!bot->GetTrader() || item.IsInTrade() || (!item.CanBeTraded() && slot != TRADE_SLOT_NONTRADED))
+	if (!bot->GetTrader() || item.IsInTrade())
 		return false;
+
+	if (!item.CanBeTraded() && slot != TRADE_SLOT_NONTRADED)
+		slot = TRADE_SLOT_NONTRADED;
 
 	int8 tradeSlot = -1;
 	Item* itemPtr = const_cast<Item*>(&item);
@@ -1141,31 +1144,33 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 	if ((slot >= 0 && slot < TRADE_SLOT_COUNT) && pTrade->GetItem(TradeSlots(slot)) == NULL)
 		tradeSlot = slot;
 	
-	for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
-	{
-		if (pTrade->GetItem(TradeSlots(i)) == itemPtr)
-		{
-			tradeSlot = i;
-
-			WorldPacket* const packet = new WorldPacket(CMSG_CLEAR_TRADE_ITEM, 1);
-			*packet << (uint8) tradeSlot;
-			bot->GetSession()->QueuePacket(packet);
-			pTrade->SetItem(TradeSlots(i), NULL);
-			return true;
-		}
-	}
-
-	for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
-	{
-		if (pTrade->GetItem(TradeSlots(i)) == NULL)
-		{
-			pTrade->SetItem(TradeSlots(i), itemPtr);
-			tradeSlot = i;
-		}
-	}
-
 	if (slot == TRADE_SLOT_NONTRADED)
 		pTrade->SetItem(TRADE_SLOT_NONTRADED, itemPtr);
+	else 
+	{
+		for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
+		{
+			if (pTrade->GetItem(TradeSlots(i)) == itemPtr)
+			{
+				tradeSlot = i;
+
+				WorldPacket* const packet = new WorldPacket(CMSG_CLEAR_TRADE_ITEM, 1);
+				*packet << (uint8) tradeSlot;
+				bot->GetSession()->QueuePacket(packet);
+				pTrade->SetItem(TradeSlots(i), NULL);
+				return true;
+			}
+		}
+
+		for (uint8 i = 0; i < TRADE_SLOT_TRADED_COUNT && tradeSlot == -1; i++)
+		{
+			if (pTrade->GetItem(TradeSlots(i)) == NULL)
+			{
+				pTrade->SetItem(TradeSlots(i), itemPtr);
+				tradeSlot = i;
+			}
+		}
+	}
 
 	if (tradeSlot == -1) return false;
 
