@@ -24,7 +24,7 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     }
 
     GameObject* gameObject = aiTargetManager->GetGameObject(guid);
-    if (gameObject && !gameObject->loot.empty())
+    if (gameObject)
     {
         loot = &gameObject->loot;
         worldObject = gameObject;
