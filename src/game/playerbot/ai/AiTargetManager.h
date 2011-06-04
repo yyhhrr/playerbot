@@ -34,6 +34,12 @@ namespace ai
 		virtual Unit* GetPet();
 		virtual Player* GetMaster();
         virtual void ResetTarget() { selection = ObjectGuid(); }
+		list<GameObject*> FindNearestGameObjects();
+		list<Unit*> FindNearestCorpses();
+		list<Unit*> FindPossibleTargets();
+		list<Unit*> FindNearestNpcs();
+		Creature* GetCreature(ObjectGuid guid);
+		GameObject* GetGameObject(ObjectGuid guid);
 
 	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
@@ -48,7 +54,6 @@ namespace ai
 		virtual bool HasAuraToDispel(uint32 dispelType) { return HasAuraToDispel(bot, dispelType); }
 		bool HasAuraToDispel(Unit* player, uint32 dispelType);
 		bool canDispel(const SpellEntry* entry, uint32 dispelType);
-		list<Unit*> FindPossibleTargets();
 		int GetTargetingPlayerCount( Unit* unit );
 
 	private:
@@ -58,6 +63,7 @@ namespace ai
 
 	private:
 		Unit* FindTarget(FindTargetStrategy* strategy);
+		void RemoveNotInLOS( list<Unit *> &targets );
 
 	private:
 		bool PlayerWithoutAuraPredicate(Unit* player, void *param /*const char* spell*/);

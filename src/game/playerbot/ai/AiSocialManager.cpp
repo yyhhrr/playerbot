@@ -211,3 +211,19 @@ void AiSocialManager::HandleBotOutgoingPacket(const WorldPacket& packet)
         }
     }
 }
+
+void AiSocialManager::ListUnits(const char* title, list<Unit*> units)
+{
+	TellMaster(title);
+	
+	for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
+		TellMaster((*i)->GetName());
+
+}
+void AiSocialManager::ListGameObjects(const char* title, list<GameObject*> gos)
+{
+	TellMaster(title);
+
+	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+		TellMaster((*i)->GetGOInfo()->name);
+}

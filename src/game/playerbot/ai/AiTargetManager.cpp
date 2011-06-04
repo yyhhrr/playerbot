@@ -3,6 +3,8 @@
 #include "FindTargetStrategy.h"
 
 #include "../../GridNotifiers.h"
+#include "../../GridNotifiersImpl.h"
+#include "../../CellImpl.h"
 
 using namespace ai;
 using namespace std;
@@ -255,6 +257,15 @@ void AiTargetManager::HandleCommand(const string& text, Player& fromPlayer)
     {
         ResetTarget();
     }
+	else if (text == "los")
+	{
+		AiSocialManager* aiSocialManager = aiRegistry->GetSocialManager();
+		
+		aiSocialManager->ListUnits("--- Targets ---", FindPossibleTargets());
+		aiSocialManager->ListUnits("--- NPCs ---", FindNearestNpcs());
+		aiSocialManager->ListUnits("--- Corpses ---", FindNearestCorpses());
+		aiSocialManager->ListGameObjects("--- Game objects ---", FindNearestGameObjects());
+	}
 }
 
 void AiTargetManager::HandleBotOutgoingPacket(const WorldPacket& packet)
@@ -307,6 +318,111 @@ Unit* AiTargetManager::GetCurrentCcTarget(const char* spell)
     return FindTarget(&strategy);
 }
 
+
+namespace MaNGOS
+{
+	class AnyGameObjectInObjectRangeCheck
+	{
+	public:
+		AnyGameObjectInObjectRangeCheck(WorldObject const* obj, float range) : i_obj(obj), i_range(range) {}
+		WorldObject const& GetFocusObject() const { return *i_obj; }
+		bool operator()(GameObject* u)
+		{
+			if (u && i_obj->IsWithinDistInMap(u, i_range) && u->isSpawned() && u->GetGOInfo())
+				return true;
+
+			return false;
+		}
+	private:
+		WorldObject const* i_obj;
+		float i_range;
+	};
+
+	class AnyDeadUnitInObjectRangeCheck
+	{
+	public:
+		AnyDeadUnitInObjectRangeCheck(WorldObject const* obj, float range) : i_obj(obj), i_range(range) {}
+		WorldObject const& GetFocusObject() const { return *i_obj; }
+		bool operator()(Unit* u)
+		{
+			return !u->isAlive() && i_obj->IsWithinDistInMap(u, i_range);
+		}
+	private:
+		WorldObject const* i_obj;
+		float i_range;
+	};
+
+	class UnitByGuidInRangeCheck
+	{
+	public:
+		UnitByGuidInRangeCheck(WorldObject const* obj, ObjectGuid guid, float range) : i_obj(obj), i_range(range), i_guid(guid) {}
+		WorldObject const& GetFocusObject() const { return *i_obj; }
+		bool operator()(Unit* u)
+		{
+			return u->GetObjectGuid() == i_guid && i_obj->IsWithinDistInMap(u, i_range);
+		}
+	private:
+		WorldObject const* i_obj;
+		float i_range;
+		ObjectGuid i_guid;
+	};
+
+	class GameObjectByGuidInRangeCheck
+	{
+	public:
+		GameObjectByGuidInRangeCheck(WorldObject const* obj, ObjectGuid guid, float range) : i_obj(obj), i_range(range), i_guid(guid) {}
+		WorldObject const& GetFocusObject() const { return *i_obj; }
+		bool operator()(GameObject* u)
+		{
+			if (u && i_obj->IsWithinDistInMap(u, i_range) && u->isSpawned() && u->GetGOInfo() && u->GetObjectGuid() == i_guid)
+				return true;
+
+			return false;
+		}
+	private:
+		WorldObject const* i_obj;
+		float i_range;
+		ObjectGuid i_guid;
+	};
+
+};
+
+list<GameObject*> AiTargetManager::FindNearestGameObjects()
+{
+	list<GameObject *> targets;
+
+	MaNGOS::AnyGameObjectInObjectRangeCheck u_check(bot, BOT_GRIND_DISTANCE);
+	MaNGOS::GameObjectListSearcher<MaNGOS::AnyGameObjectInObjectRangeCheck> searcher(targets, u_check);
+	Cell::VisitAllObjects((const WorldObject*)bot, searcher, BOT_GRIND_DISTANCE);
+
+	for(list<GameObject *>::iterator tIter = targets.begin(); tIter != targets.end();)
+	{
+		if(!bot->IsWithinLOSInMap(*tIter))
+		{
+			list<GameObject *>::iterator tIter2 = tIter;
+			++tIter;
+			targets.erase(tIter2);
+		}
+		else
+			++tIter;
+	}
+
+	return targets;
+}
+
+
+list<Unit*> AiTargetManager::FindNearestCorpses()
+{
+	list<Unit *> targets;
+
+	MaNGOS::AnyDeadUnitInObjectRangeCheck u_check(bot,  BOT_GRIND_DISTANCE);
+	MaNGOS::UnitListSearcher<MaNGOS::AnyDeadUnitInObjectRangeCheck> searcher(targets, u_check);
+	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+
+	RemoveNotInLOS(targets);
+	return targets;
+}
+
 list<Unit*> AiTargetManager::FindPossibleTargets()
 {
 	list<Unit *> targets;
@@ -315,18 +431,19 @@ list<Unit*> AiTargetManager::FindPossibleTargets()
 	MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
 	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
 
-	for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
-	{
-		if(!bot->IsWithinLOSInMap(*tIter))
-		{
-			list<Unit *>::iterator tIter2 = tIter;
-			++tIter;
-			targets.erase(tIter2);
-		}
-		else
-			++tIter;
-	}
+	RemoveNotInLOS(targets);
+	return targets;
+}
 
+list<Unit*> AiTargetManager::FindNearestNpcs()
+{
+	list<Unit *> targets;
+
+	MaNGOS::AnyFriendlyUnitInObjectRangeCheck u_check(bot, BOT_GRIND_DISTANCE);
+	MaNGOS::UnitListSearcher<MaNGOS::AnyFriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
+	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+
+	RemoveNotInLOS(targets);
 	return targets;
 }
 
@@ -412,4 +529,61 @@ Unit* AiTargetManager::FindTargetForGrinding(int assistCount)
 	}
 
 	return result;
+}
+
+void AiTargetManager::RemoveNotInLOS( list<Unit *> &targets ) 
+{
+	for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
+	{
+		if(!bot->IsWithinLOSInMap(*tIter))
+		{
+			list<Unit *>::iterator tIter2 = tIter;
+			++tIter;
+			targets.erase(tIter2);
+		}
+		else
+			++tIter;
+	}
+}
+
+Creature* AiTargetManager::GetCreature(ObjectGuid guid)
+{
+	if (!guid)
+		return NULL;
+
+	list<Unit *> targets;
+
+	MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_REACT_DISTANCE);
+	MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
+	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	
+	for(list<Unit *>::iterator i = targets.begin(); i != targets.end(); i++)
+	{
+		Creature* creature = dynamic_cast<Creature*>(*i);
+		if (creature)
+			return creature;
+	}
+	
+	return NULL;
+}
+
+GameObject* AiTargetManager::GetGameObject(ObjectGuid guid)
+{
+	if (!guid)
+		return NULL;
+	
+	list<GameObject*> targets;
+
+	MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_REACT_DISTANCE);
+	MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectByGuidInRangeCheck> searcher(targets, u_check);
+	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+
+	for(list<GameObject*>::iterator i = targets.begin(); i != targets.end(); i++)
+	{
+		GameObject* go = *i;
+		if (go && go->isSpawned())
+			return go;
+	}
+
+	return NULL;
 }

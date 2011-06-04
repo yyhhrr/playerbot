@@ -3,30 +3,6 @@
 
 using namespace std;
 
-namespace MaNGOS
-{
-	class MANGOS_DLL_DECL GameObjectRangeCheck
-	{
-		public:
-			GameObjectRangeCheck(WorldObject const& obj, float range) : i_obj(obj), i_range(range) {}
-			WorldObject const& GetFocusObject() const { return i_obj; }
-			bool operator()(GameObject* go)
-			{
-				if(i_obj.IsWithinDistInMap(go, i_range) && go->isSpawned())
-				{
-					i_range = i_obj.GetDistance(go);        // use found GO range as new range limit for next check
-					return true;
-				}
-				return false;
-			}
-			float GetLastRange() const { return i_range; }
-			template<class NOT_INTERESTED> bool operator()(NOT_INTERESTED*) { return false; }
-		private:
-			WorldObject const& i_obj;
-			float  i_range;
-	};
-};
-
 namespace ai 
 {
 	class AiManagerRegistry;
@@ -97,7 +73,7 @@ namespace ai
         virtual void ClearLoot() { lootManager->ClearLoot(); }
         virtual void AddLoot(ObjectGuid guid) { lootManager->AddLoot(guid); }
         virtual bool CanLoot() { return lootManager->CanLoot(); }
-        virtual void DoLoot() { lootManager->DoLoot(); }
+        virtual void DoLoot();
 		virtual void AddAllLoot();
 		
         virtual void UnequipItem(const char* link);
@@ -151,7 +127,7 @@ namespace ai
 
 		uint32 TextToItemQuality(const char* text);
 		void TellItem(ItemPrototype const * proto, int count);
-  
+		
 	private:
         LootManager *lootManager;
 	};

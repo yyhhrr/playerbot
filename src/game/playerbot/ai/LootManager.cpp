@@ -25,22 +25,18 @@ void LootManager::ClearLoot()
 
 void LootManager::AddLoot(ObjectGuid guid)
 {
-	if (!bot->GetMapId())
-	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: not in a map");
-		return;
-	}
+	AiManagerRegistry* aIRegistry = bot->GetPlayerbotAI()->GetAiRegistry();
 
-	GameObject* go = bot->GetMap()->GetGameObject(guid);
+	GameObject* go = aIRegistry->GetTargetManager()->GetGameObject(guid);
 	if (go && !go->isSpawned())
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: game object not spawned");
+		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: game object not spawned");
 		return;
 	}
 
 	if (go && !CheckSkill(go->GetGOInfo()->GetLockId()))
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: insufficient skill");
+		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: insufficient skill");
 		return;
 	}
 
@@ -73,7 +69,7 @@ void LootManager::ReleaseLoot()
 
 void LootManager::DeactivateLootGameObject(LootObject &loot)
 {
-    GameObject* go = bot->GetMap()->GetGameObject(loot.guid);
+    GameObject* go = bot->GetPlayerbotAI()->GetAiRegistry()->GetTargetManager()->GetGameObject(loot.guid);
     if(go)
     {
         go->SetLootState(GO_JUST_DEACTIVATED);
@@ -84,19 +80,14 @@ void LootManager::DeactivateLootGameObject(LootObject &loot)
 
 void LootManager::DoLoot()
 {
-    bot->GetMotionMaster()->Clear();
-
-    AddMasterSelection();
-
-    if (CanLoot())
-    {
-        LootObject lootObject = availableLoot->GetLoot(BOTLOOT_DISTANCE);
-        DoLoot(lootObject);
-    }
-	else
+	if (!CanLoot())
 	{
 		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: nothing more available");
+		return;
 	}
+
+	LootObject lootObject = availableLoot->GetLoot(BOTLOOT_DISTANCE);
+	DoLoot(lootObject);
 }
 
 void LootManager::DoLoot(LootObject &lootObject)
@@ -107,6 +98,8 @@ void LootManager::DoLoot(LootObject &lootObject)
         bot->GetPlayerbotAI()->GetAiRegistry()->GetMoveManager()->MoveTo(lootObject.worldObject);
         return;
     }
+
+	bot->GetMotionMaster()->Clear();
 
     bool isLooted = StoreLootItems(lootObject, LOOT_CORPSE);
 	
@@ -144,14 +137,14 @@ Item* LootManager::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, ui
     ItemPosCountVec dest;
     if( bot->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, item->itemid, item->count ) != EQUIP_ERR_OK )
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: cannot store item");
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("Insufficient bag space");
         return NULL;
 	}
 
     Item * newitem = bot->StoreNewItem( dest, item->itemid, true, item->randomPropertyId);
 	if (!newitem)
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: store unsuccessful");
+		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Insufficient bag space");
 		return NULL;
 	}
 
@@ -201,23 +194,25 @@ void LootManager::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTy
     QuestItem *qitem=0, *ffaitem=0, *conditem=0;
     LootItem *item = loot->LootItemInSlot( lootIndex, bot, &qitem, &ffaitem, &conditem );
 
+	AiManagerRegistry* aIRegistry = bot->GetPlayerbotAI()->GetAiRegistry();
+
 	if (!item || !item->AllowedForPlayer(bot))
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
+		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
 		return;
 	}
 
-	GameObject* go = bot->GetMap()->GetGameObject(lootObject.guid);
+	GameObject* go = aIRegistry->GetTargetManager()->GetGameObject(lootObject.guid);
 	if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
+		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
 		return;
 	}
 
-	Creature* creature = bot->GetMap()->GetCreature(lootObject.guid);
+	Creature* creature = aIRegistry->GetTargetManager()->GetCreature(lootObject.guid);
 	if (lootType == LOOT_SKINNING && creature && !CheckLevelBasedSkill(creature->GetCreatureInfo()->GetRequiredLootSkill(), creature->getLevel()))
 	{
-		bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
+		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
 		return;
 	}
 
@@ -225,13 +220,6 @@ void LootManager::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTy
 		return;
 
     StoreItem(item, qitem, loot, lootIndex, ffaitem, conditem);
-}
-
-void LootManager::AddMasterSelection()
-{
-    uint64 masterSelection = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
-    if (masterSelection) 
-        AddLoot(masterSelection);
 }
 
 void LootManager::SetLootStrategy(string strategy)

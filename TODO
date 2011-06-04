@@ -1,17 +1,12 @@
 [ ] nt chest, bracers, waist...
 [ ] start trade who has item by quality/name
-[?] notify when too far
-[?] notify when umounted
-[ ] tell items by quality
 [ ] pick quest on items
 [ ] check quest status on movement
-[ ] dual talent spec change
 [ ] loot items by quality
 [ ] suggest buffs using items (elixir, food, etc.)
 [ ] use health/mana potion/gem
 [ ] check anti-magic shield before casting
 [ ] flee out of damaging aoe
-[ ] fix looting - not in a map
 [ ] stop pet attack on flee
 
 [ ] create wow addon

@@ -569,7 +569,7 @@ void AiInventoryManager::Reward(const char* link)
 	const ObjectGuid &questRewarder = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
 	uint64 questRewarderGUID = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     bot->SetSelectionGuid(questRewarder);
-	Object* pNpc = bot->GetMap()->GetGameObject(questRewarder);
+	Object* pNpc = aiRegistry->GetTargetManager()->GetGameObject(questRewarder);
 	if (!pNpc)
 		pNpc = ObjectAccessor::GetUnit(*bot, questRewarder);
 
@@ -706,7 +706,7 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
     {
         ListCount(text.c_str());
     }
-	else if (text.size() > 2 && text.substr(0, 2) == "l " || text.size() > 4 && text.substr(0, 5) == "loot ")
+	else if (text.size() > 2 && text.substr(0, 3) == "ll " || text.size() > 4 && text.substr(0, 9) == "lootlist ")
 	{
 		string strategy = text.substr(text.find(" ") + 1);
 		if (strategy == "?")
@@ -747,6 +747,11 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
 					lootManager->AddLootItem(*i);
 			}
 		}
+	}
+	else if (text == "loot all")
+	{
+		AddAllLoot();
+		DoLoot();
 	}
     else if (bot->GetTrader() && bot->GetTrader()->GetGUID() == fromPlayer.GetGUID())
     {
@@ -1168,16 +1173,13 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 
 void AiInventoryManager::AddAllLoot()
 {
-    list<GameObject*> objects;
+	list<GameObject*> gos = aiRegistry->GetTargetManager()->FindNearestGameObjects();
+	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+		AddLoot((*i)->GetObjectGuid());
 
-	{
-		MaNGOS::GameObjectRangeCheck check(*bot, BOTLOOT_DISTANCE);
-		MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectRangeCheck> checker(objects, check);
-		Cell::VisitGridObjects(bot, checker, BOTLOOT_DISTANCE);
-	}
-
-	for (list<GameObject*>::iterator i = objects.begin(); i != objects.end(); i++)
-		AddLoot((*i)->GetObjectGuid().GetRawValue());
+	list<Unit*> corpses = aiRegistry->GetTargetManager()->FindNearestCorpses();
+	for (list<Unit*>::iterator i = corpses.begin(); i != corpses.end(); i++)
+		AddLoot((*i)->GetObjectGuid());
 }
 
 
@@ -1213,4 +1215,13 @@ void AiInventoryManager::TellItem(ItemPrototype const * proto, int count)
 		out << "x" << count;
 
 	aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+}
+
+void AiInventoryManager::DoLoot() 
+{ 
+	ObjectGuid masterSelection = ai->GetMaster()->GetSelectionGuid();
+	if (masterSelection) 
+		AddLoot(masterSelection);
+
+	lootManager->DoLoot(); 
 }

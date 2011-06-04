@@ -66,15 +66,15 @@ NextAction** GrindingStrategy::getDefaultActions()
 void GrindingStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        new GrindTrigger(ai), 
-        NextAction::array(0, new NextAction("grind", 1.0f), NULL)));
+        new NoTargetTrigger(ai), 
+        NextAction::array(0, new NextAction("attack anything", 1.0f), NULL)));
 }
 
 ActionNode* GrindingStrategy::createAction(const char* name)
 {
-	if (!strcmp("grind", name)) 
+	if (!strcmp("attack anything", name)) 
 	{
-		return new ActionNode (new GrindAction(ai),  
+		return new ActionNode (new AttackAnythingAction(ai),  
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("follow"), NULL), 
 			/*C*/ NULL);

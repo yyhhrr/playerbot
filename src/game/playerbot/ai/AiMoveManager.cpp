@@ -304,22 +304,30 @@ void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 	{
 		ReleaseSpirit();
 	}
-    else if(text == "fly" && !taxiMaster.IsEmpty())
+    else if(text == "fly")
     {
-		if (taxiMaster.IsEmpty())
-			taxiMaster = ai->GetMaster()->GetSelectionGuid();
+		list<Unit*> units = aiRegistry->GetTargetManager()->FindNearestNpcs();
+		for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
+		{
+			Creature *npc = bot->GetNPCIfCanInteractWith((*i)->GetObjectGuid(), UNIT_NPC_FLAG_FLIGHTMASTER);
+			if (!npc)
+				continue;
 
-        bot->SetSelectionGuid(taxiMaster);
+			if (taxiNodes.empty())
+			{
+				ostringstream out;
+				out << "I will order a fly from " << npc->GetName() << ". Please start flying, then instruct me again to fly";
+				aiRegistry->GetSocialManager()->TellMaster(out. str().c_str());
+				return;
+			}
 
-        Creature *npc = bot->GetNPCIfCanInteractWith(taxiMaster, UNIT_NPC_FLAG_FLIGHTMASTER);
-        if (!npc)
-        {
-            aiRegistry->GetSocialManager()->TellMaster("Cannot talk to flightmaster");
-            return;
-        }
+			if (!bot->ActivateTaxiPathTo(taxiNodes, npc))
+				aiRegistry->GetSocialManager()->TellMaster("I can not fly with you");
 
-        if (!bot->ActivateTaxiPathTo(taxiNodes, npc))
-            aiRegistry->GetSocialManager()->TellMaster("I can not fly with you");
+			return;
+		}
+
+        aiRegistry->GetSocialManager()->TellMaster("Cannot find any flightmaster to talk");
     }
     else if (text == "reset")
     {

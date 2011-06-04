@@ -60,7 +60,7 @@ bool NoAttackersTrigger::IsActive()
     return !targetManager->GetCurrentTarget() && statsManager->GetAttackerCount() > 0;
 }
 
-bool GrindTrigger::IsActive()
+bool NoTargetTrigger::IsActive()
 {
 	return !targetManager->GetCurrentTarget();
 }

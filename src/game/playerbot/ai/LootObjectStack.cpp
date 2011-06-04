@@ -1,5 +1,6 @@
 #include "../../pchdef.h"
 #include "LootObjectStack.h"
+#include "../playerbot.h"
 
 using namespace ai;
 using namespace std;
@@ -12,7 +13,9 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     worldObject = NULL;
     loot = NULL;
 
-    Creature *creature = bot->GetMap()->GetCreature(guid);
+	AiTargetManager* aiTargetManager = bot->GetPlayerbotAI()->GetAiRegistry()->GetTargetManager();
+
+    Creature *creature = aiTargetManager->GetCreature(guid);
     if (creature && creature->getDeathState() == CORPSE)
     {
         loot = &creature->loot;
@@ -20,8 +23,8 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
         return;
     }
 
-    GameObject* gameObject = bot->GetMap()->GetGameObject(guid);
-    if (gameObject)
+    GameObject* gameObject = aiTargetManager->GetGameObject(guid);
+    if (gameObject && !gameObject->loot.empty())
     {
         loot = &gameObject->loot;
         worldObject = gameObject;

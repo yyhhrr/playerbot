@@ -21,6 +21,8 @@ namespace ai
 		virtual void TellMaster(LogLevel level, const char* text);
 		virtual void LeaveGroup();
 		virtual void AcceptInvitation();
+		void ListUnits(const char* title, list<Unit*> units);
+		void ListGameObjects(const char* title, list<GameObject*> gos);
 	
 	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);

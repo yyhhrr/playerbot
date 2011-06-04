@@ -37,9 +37,9 @@ namespace ai
         }
     };   
   
-    class GrindAction : public AttackAction {
+    class AttackAnythingAction : public AttackAction {
     public:
-        GrindAction(AiManagerRegistry* const ai) : AttackAction(ai, "grind") {}
+        AttackAnythingAction(AiManagerRegistry* const ai) : AttackAction(ai, "attack anything") {}
         virtual Unit* GetTarget() 
         {
             return ai->GetTargetManager()->FindTargetForGrinding();
