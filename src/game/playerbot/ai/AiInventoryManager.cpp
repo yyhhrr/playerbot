@@ -545,8 +545,13 @@ void AiInventoryManager::Buy(const char* link)
         return;
 
     Creature *pCreature = bot->GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
-    VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
+	if (!pCreature)
+	{
+		ai->GetAiRegistry()->GetSocialManager()->TellMaster("Cannot talk to vendor");
+		return;
+	}
 
+    VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
     for (list<uint32>::iterator i = itemIds.begin(); i != itemIds.end(); i++) 
     {
     	for (uint32 slot = 0; slot < tItems->GetItemCount(); slot++)
