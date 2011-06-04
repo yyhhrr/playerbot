@@ -520,6 +520,16 @@ void AiSpellManager::HandleCommand(const string& text, Player& fromPlayer)
 	{
 		ListSpells();
 	}
+	else if (text == "talents 1" || text == "talents primary")
+	{
+		bot->ActivateSpec(0);
+		aiRegistry->GetSocialManager()->TellMaster("Primary talents activated");
+	}
+	else if (text == "talents 2" || text == "talents secondary")
+	{
+		bot->ActivateSpec(1);
+		aiRegistry->GetSocialManager()->TellMaster("Secondary talents activated");
+	}
 	else if (text.size() > 5 && text.substr(0, 5) == "cast ")
 	{
 		Unit* unit = sObjectAccessor.GetUnit(*bot, ai->GetMaster()->GetSelectionGuid());

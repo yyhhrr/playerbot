@@ -755,14 +755,17 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
 	else
 	{
 		uint32 quality = TextToItemQuality(text.c_str());
-		if (quality != MAX_ITEM_QUALITY)
+		if (quality == MAX_ITEM_QUALITY)
 		{
-			FindItemsToTradeByQualityVisitor visitor(quality, 100);
-			IterateItems(&visitor);
-			list<Item*> found = visitor.GetResult();
-			for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
-				TellItem((*i)->GetProto(), (*i)->GetCount());
+			ListCount(text.c_str());
+			return;
 		}
+
+		FindItemsToTradeByQualityVisitor visitor(quality, 100);
+		IterateItems(&visitor);
+		list<Item*> found = visitor.GetResult();
+		for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
+			TellItem((*i)->GetProto(), (*i)->GetCount());
 	}
 }
 
