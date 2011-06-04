@@ -148,6 +148,9 @@ namespace ai
 
         bool TradeItem(const Item& item, int8 slot = -1);
         bool TradeItem(FindItemVisitor *visitor, int8 slot = -1);
+
+		uint32 TextToItemQuality(const char* text);
+		void TellItem(ItemPrototype const * proto, int count);
   
 	private:
         LootManager *lootManager;

@@ -747,11 +747,23 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
 					lootManager->AddLootItem(*i);
 			}
 		}
-	}    
+	}
     else if (bot->GetTrader() && bot->GetTrader()->GetGUID() == fromPlayer.GetGUID())
     {
         Trade(text.c_str());
     }
+	else
+	{
+		uint32 quality = TextToItemQuality(text.c_str());
+		if (quality != MAX_ITEM_QUALITY)
+		{
+			FindItemsToTradeByQualityVisitor visitor(quality, 100);
+			IterateItems(&visitor);
+			list<Item*> found = visitor.GetResult();
+			for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
+				TellItem((*i)->GetProto(), (*i)->GetCount());
+		}
+	}
 }
 
 void AiInventoryManager::HandleBotOutgoingPacket(const WorldPacket& packet)
@@ -1057,18 +1069,7 @@ void AiInventoryManager::BeginTrade()
 			}
 		}
 
-		ostringstream out;
-
-		char color[32];
-		sprintf(color, "%x", ItemQualityColors[proto->Quality]);
-
-		out << " |c" << color << "|Hitem:" << proto->ItemId
-			<< ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
-			<< "]|h|r";
-		int count = visitor.items[proto->ItemId];
-		if (count > 1)
-			out << "x" << count;
-		aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+		TellItem(proto, visitor.items[proto->ItemId]);
 	}
 }
 
@@ -1086,17 +1087,7 @@ void AiInventoryManager::Trade(const char* text)
 
     int8 slot = !strncmp(text, "nt ", 3) ? TRADE_SLOT_NONTRADED : -1;
 
-	uint32 quality = MAX_ITEM_QUALITY;
-	if (strstr(text, "poor") || strstr(text, "gray"))
-		quality = ITEM_QUALITY_POOR;
-	else if (strstr(text, "normal") || strstr(text, "white"))
-		quality = ITEM_QUALITY_NORMAL;
-	else if (strstr(text, "uncommon") || strstr(text, "green"))
-		quality = ITEM_QUALITY_UNCOMMON;
-	else if (strstr(text, "rare") || strstr(text, "blue"))
-		quality = ITEM_QUALITY_RARE;
-	else if (strstr(text, "epic") || strstr(text, "violet"))
-		quality = ITEM_QUALITY_EPIC;
+	uint32 quality = TextToItemQuality(text);
 
 	if (quality != MAX_ITEM_QUALITY) 
 	{
@@ -1184,4 +1175,39 @@ void AiInventoryManager::AddAllLoot()
 
 	for (list<GameObject*>::iterator i = objects.begin(); i != objects.end(); i++)
 		AddLoot((*i)->GetObjectGuid().GetRawValue());
+}
+
+
+uint32 AiInventoryManager::TextToItemQuality( const char* text ) 
+{
+	uint32 quality = MAX_ITEM_QUALITY;
+
+	if (strstr(text, "poor") || strstr(text, "gray"))
+		quality = ITEM_QUALITY_POOR;
+	else if (strstr(text, "normal") || strstr(text, "white"))
+		quality = ITEM_QUALITY_NORMAL;
+	else if (strstr(text, "uncommon") || strstr(text, "green"))
+		quality = ITEM_QUALITY_UNCOMMON;
+	else if (strstr(text, "rare") || strstr(text, "blue"))
+		quality = ITEM_QUALITY_RARE;
+	else if (strstr(text, "epic") || strstr(text, "violet"))
+		quality = ITEM_QUALITY_EPIC;
+	
+	return quality;
+}
+
+void AiInventoryManager::TellItem(ItemPrototype const * proto, int count) 
+{
+	ostringstream out;
+
+	char color[32];
+	sprintf(color, "%x", ItemQualityColors[proto->Quality]);
+
+	out << " |c" << color << "|Hitem:" << proto->ItemId
+		<< ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
+		<< "]|h|r";
+	if (count > 1)
+		out << "x" << count;
+
+	aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
 }
