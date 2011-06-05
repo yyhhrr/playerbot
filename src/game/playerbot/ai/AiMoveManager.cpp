@@ -15,6 +15,7 @@ AiMoveManager::AiMoveManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : A
 	lastMoveToY = 0;
 	lastMoveToZ = 0;
 	lastMoveToOri = 0;
+	lastFollow = NULL;
 }
 
 float AiMoveManager::GetDistanceTo(Unit* target)
@@ -134,6 +135,7 @@ void AiMoveManager::Follow(Unit* target, float distance, float angle)
 	SetInFront(target);
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
+	lastFollow = target;
 }
 
 void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
@@ -152,6 +154,7 @@ void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
 	lastMoveToY = y;
 	lastMoveToZ = z;
 	lastMoveToOri = bot->GetOrientation();
+	lastFollow = NULL;
 }
 
 bool AiMoveManager::Flee(Unit* target, float distance)
@@ -174,6 +177,8 @@ void AiMoveManager::Stay()
 {
 	if (!IsMoving(bot))
 		return;
+
+	lastFollow = NULL;
 
     MotionMaster &mm = *bot->GetMotionMaster();
     if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
@@ -316,7 +321,15 @@ void AiMoveManager::StayLine(vector<Player*> line, float diff, float cx, float c
 
 bool AiMoveManager::IsMoving(Unit* target)
 {
-	return target && target->GetMotionMaster()->GetCurrentMovementGeneratorType() != IDLE_MOTION_TYPE;
+	if (!target)
+		return false;
+
+	switch (target->GetMotionMaster()->GetCurrentMovementGeneratorType())
+	{
+	case IDLE_MOTION_TYPE:
+		return false;
+	}
+	return true;
 }
 
 void AiMoveManager::SetInFront(const Unit* obj)

@@ -19,6 +19,7 @@ namespace ai
         virtual const char* getName() { return "follow master"; }
         virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
+		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line"; }
 
     };

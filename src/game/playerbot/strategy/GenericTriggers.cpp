@@ -178,3 +178,8 @@ bool HasCcTargetTrigger::IsActive()
 {
     return statsManager->GetAttackerCount() > 2 && targetManager->FindCcTarget(name) && !targetManager->GetCurrentCcTarget(name);
 }
+
+bool NoMovementTrigger::IsActive()
+{
+	return !moveManager->IsMoving(targetManager->GetSelf());
+}

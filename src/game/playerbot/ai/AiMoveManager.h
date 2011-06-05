@@ -54,6 +54,7 @@ namespace ai
     private:
         vector<uint32> taxiNodes;
         ObjectGuid taxiMaster;
+		Unit* lastFollow;
 		uint32 lastAreaTrigger;
 		float lastMoveToX, lastMoveToY, lastMoveToZ, lastMoveToOri;
 	};

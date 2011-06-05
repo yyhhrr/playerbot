@@ -325,6 +325,15 @@ namespace ai
     public: 
         virtual bool IsActive();
     };
+
+	class NoMovementTrigger : public Trigger
+	{
+	public:
+		NoMovementTrigger(AiManagerRegistry* const ai, const char* name) : Trigger(ai, name, 5) {}
+
+	public: 
+		virtual bool IsActive();
+	};
 }
 
 #include "RangeTriggers.h"
