@@ -35,6 +35,7 @@ namespace ai
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
 		virtual void UsePortal();
+		virtual void SetInFront(const Unit* obj);
 
     private:
         bool IsMovingAllowed(Unit* target);
@@ -47,6 +48,7 @@ namespace ai
     private:
         vector<uint32> taxiNodes;
         ObjectGuid taxiMaster;
+		uint32 lastAreaTrigger;
 	};
 
 };

@@ -10,6 +10,7 @@ using namespace std;
 
 AiMoveManager::AiMoveManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
+	lastAreaTrigger = 0;
 }
 
 float AiMoveManager::GetDistanceTo(Unit* target)
@@ -175,6 +176,23 @@ bool AiMoveManager::IsMoving(Unit* target)
 	return target && target->GetMotionMaster()->GetCurrentMovementGeneratorType() != IDLE_MOTION_TYPE;
 }
 
+void AiMoveManager::SetInFront(const Unit* obj)
+{
+	if (IsMoving(bot))
+		return;
+
+	bot->SetInFront(obj);
+
+	float ori = bot->GetAngle(obj);
+	float x, y, z;
+	x = bot->m_movementInfo.GetPos()->x;
+	y = bot->m_movementInfo.GetPos()->y;
+	z = bot->m_movementInfo.GetPos()->z;
+	bot->m_movementInfo.ChangePosition(x, y, z, ori);
+
+	bot->SendHeartBeat(false);
+}
+
 void AiMoveManager::Attack(Unit* target)
 {
 	if (!target) 
@@ -204,6 +222,7 @@ void AiMoveManager::Attack(Unit* target)
 	uint64 guid = target->GetGUID();
 	bot->SetSelectionGuid(target->GetObjectGuid());
 	bot->Attack(target, true);
+	SetInFront(target);
 
     Pet* pet = bot->GetPet();
     if (pet)
@@ -317,6 +336,17 @@ void AiMoveManager::UsePortal()
 		targets.setUnitTarget(bot);
 		spell->prepare(&targets, false);
 		spell->cast(true);
+		return;
+	}
+
+	if (lastAreaTrigger)
+	{
+		WorldPacket p(CMSG_AREATRIGGER);
+		p << lastAreaTrigger;
+		p.rpos(0);
+
+		bot->GetSession()->HandleAreaTriggerOpcode(p);
+		lastAreaTrigger = 0;
 		return;
 	}
 
@@ -480,7 +510,26 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
             p >> taxiMaster >> taxiNodes[0] >> taxiNodes[1];
             return;
         }
-    case CMSG_GAMEOBJ_REPORT_USE:
+	case CMSG_ACTIVATETAXIEXPRESS:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+
+			ObjectGuid guid;
+			uint32 node_count;
+			p >> guid >> node_count;
+
+			taxiNodes.clear();
+			for (uint32 i = 0; i < node_count; ++i)
+			{
+				uint32 node;
+				p >> node;
+				taxiNodes.push_back(node);
+			}
+
+			return;
+		}
+	case CMSG_GAMEOBJ_REPORT_USE:
         {
             WorldPacket p(packet);
             p.rpos(0);
@@ -495,8 +544,11 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 		{
 			WorldPacket p(packet);
 			p.rpos(0);
+			p >> lastAreaTrigger;
+			Player* master = bot->GetPlayerbotAI()->GetMaster();
+			MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
 			
-			bot->GetSession()->HandleAreaTriggerOpcode(p);
+			aiRegistry->GetSocialManager()->TellMaster("Ready to teleport");
 			return;
 		}
     }
