@@ -16,11 +16,22 @@ namespace ai
     {
     public:
         FollowMasterNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "follow"; }
+        virtual const char* getName() { return "follow master"; }
         virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
+		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line"; }
 
     };
+
+	class FollowLineNonCombatStrategy : public GenericNonCombatStrategy
+	{
+	public:
+		FollowLineNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		virtual const char* getName() { return "follow line"; }
+		virtual ActionNode* createAction(const char* name);
+		virtual NextAction** getDefaultActions();
+		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow master"; }
+	};
 
     class GoAwayNonCombatStrategy : public GenericNonCombatStrategy
     {
@@ -29,7 +40,7 @@ namespace ai
         virtual const char* getName() { return "goaway"; }
         virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
-
+		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-follow master"; }
     };
 
     class StayNonCombatStrategy : public GenericNonCombatStrategy
@@ -39,7 +50,7 @@ namespace ai
         virtual const char* getName() { return "stay"; }
         virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
-
+		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-follow master"; }
     };
 
     class DpsAssistStrategy : public GenericNonCombatStrategy

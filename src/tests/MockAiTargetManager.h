@@ -32,6 +32,7 @@ namespace ai
 		virtual Player* GetSelf();
 		virtual Unit* GetPet();
 		virtual Player* GetMaster();
+		virtual Player* GetLineTarget();
         virtual Unit* FindCcTarget(const char* spell);
         virtual Unit* GetCurrentCcTarget(const char* spell) { return NULL; }
 

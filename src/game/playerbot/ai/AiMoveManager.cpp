@@ -113,10 +113,14 @@ bool AiMoveManager::IsMovingAllowed()
 
 void AiMoveManager::Follow(Unit* target, float distance)
 {
+	Follow(target, distance, GetFollowAngle());
+}
+
+void AiMoveManager::Follow(Unit* target, float distance, float angle)
+{
     if (!IsMovingAllowed(target))
         return;
 
-	float angle = GetFollowAngle();
 	if (target->IsFriendlyTo(bot) && bot->IsMounted())
 		distance += angle;
 

@@ -29,10 +29,18 @@ float MockAiMoveManager::GetFollowAngle()
 	return 0.0f;
 }
 
+void MockAiMoveManager::Follow(Unit* target, float distance, float angle)
+{
+	Follow(target, distance);
+}
+
 void MockAiMoveManager::Follow(Unit* target, float distance)
 {
 	if (target == MockedTargets::GetMaster())
-		buffer->append(">follow");
+		buffer->append(">follow master");
+	
+	if (target == MockedTargets::GetLineTarget())
+		buffer->append(">follow line");
 }
 
 bool MockAiMoveManager::Flee(Unit* target, float distance)

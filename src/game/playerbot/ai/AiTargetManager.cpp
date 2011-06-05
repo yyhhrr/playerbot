@@ -240,6 +240,31 @@ Player* AiTargetManager::GetMaster()
 	return ai->GetMaster();
 }
 
+Player* AiTargetManager::GetLineTarget()
+{
+	Player* master = GetMaster();
+
+	Group* group = master->GetGroup();
+	if (!group)
+		return NULL;
+	
+	Player *prev = master;
+	Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
+	for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
+	{
+		Player *player = sObjectMgr.GetPlayer(itr->guid);
+		if( !player || !player->isAlive() || player == master)
+			continue;
+
+		if (player == bot)
+			return prev;
+
+		prev = player;
+	}
+
+	return master;
+}
+
 Unit* AiTargetManager::GetPet()
 {
 	return bot->GetPet();

@@ -115,6 +115,20 @@ ActionNode* ActionFactory::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
+	else if (!strcmp("follow line", name)) 
+	{
+		return new ActionNode (new FollowLineAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("follow master", name) || !strcmp("follow", name)) 
+	{
+		return new ActionNode (new FollowMasterAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else return NULL;
 }
 
@@ -123,8 +137,11 @@ Strategy* ActionFactory::createStrategy(const char* name)
 	if (!strcmp("racials", name))
 		return new RacialsStrategy(ai);
 
-    if (!strcmp("follow", name))
+    if (!strcmp("follow master", name))
         return new FollowMasterNonCombatStrategy(ai);
+
+	if (!strcmp("follow line", name))
+		return new FollowLineNonCombatStrategy(ai);
 
     if (!strcmp("stay", name))
         return new StayNonCombatStrategy(ai);

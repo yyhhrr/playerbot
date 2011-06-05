@@ -54,6 +54,11 @@ Player* MockAiTargetManager::GetMaster()
 	return MockedTargets::GetMaster();
 }
 
+Player* MockAiTargetManager::GetLineTarget()
+{
+	return MockedTargets::GetLineTarget();
+}
+
 Unit* MockAiTargetManager::GetPet()
 {
 	return hasPet ? MockedTargets::GetPet() : NULL;

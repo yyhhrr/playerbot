@@ -101,19 +101,36 @@ ActionNode* StayNonCombatStrategy::createAction(const char* name)
 
 NextAction** FollowMasterNonCombatStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("follow", 1.0f), NULL);
+    return NextAction::array(0, new NextAction("follow master", 1.0f), NULL);
+}
+
+NextAction** FollowLineNonCombatStrategy::getDefaultActions()
+{
+	return NextAction::array(0, new NextAction("follow line", 1.0f), NULL);
 }
 
 ActionNode* FollowMasterNonCombatStrategy::createAction(const char* name)
 {
-    if (!strcmp("follow", name)) 
+    if (!strcmp("follow master", name) || !strcmp("follow", name)) 
     {
-        return new ActionNode (new FollowAction(ai),  
+        return new ActionNode (new FollowMasterAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else return NULL;
+}
+
+ActionNode* FollowLineNonCombatStrategy::createAction(const char* name)
+{
+	if (!strcmp("follow line", name) || !strcmp("follow", name)) 
+	{
+		return new ActionNode (new FollowLineAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else return NULL;
 }
 
 

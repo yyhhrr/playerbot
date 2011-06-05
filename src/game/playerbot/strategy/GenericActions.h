@@ -4,45 +4,10 @@
 #include "GenericSpellActions.h"
 #include "ReachTargetActions.h"
 #include "ChooseTargetActions.h"
+#include "MovementActions.h"
 
 namespace ai
 {
-    class FleeAction : public Action {
-    public:
-        FleeAction(AiManagerRegistry* const ai, float distance = SPELL_DISTANCE) : Action(ai, "flee") {
-			this->distance = distance;
-		}
-
-        virtual bool ExecuteResult() 
-		{
-            return ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetCurrentTarget(), distance); 
-        }
-
-	private:
-		float distance;
-    };
-
-    class FollowAction : public Action {
-    public:
-        FollowAction(AiManagerRegistry* const ai) : Action(ai, "follow") {}
-        virtual void Execute();
-    };
-
-    class StayAction : public Action {
-    public:
-        StayAction(AiManagerRegistry* const ai) : Action(ai, "stay") {}
-        virtual void Execute();
-    };
-
-    class GoAwayAction : public Action {
-    public:
-        GoAwayAction(AiManagerRegistry* const ai) : Action(ai, "goaway") {}
-        virtual void Execute() 
-		{
-			ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetMaster()); 
-        }
-    };
-
     class MeleeAction : public Action {
     public:
         MeleeAction(AiManagerRegistry* const ai) : Action(ai, "melee") {}

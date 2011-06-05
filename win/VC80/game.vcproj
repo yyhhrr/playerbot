@@ -830,11 +830,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\MailHandler.cpp"
+				RelativePath="..\..\src\game\Mail.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\Mail.h"
+				RelativePath="..\..\src\game\MailHandler.cpp"
 				>
 			</File>
 			<File
@@ -1998,6 +1998,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LowManaMultiplier.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\MovementActions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\MovementActions.h"
 					>
 				</File>
 				<File

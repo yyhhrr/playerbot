@@ -10,6 +10,7 @@ class NonCombatEngineTestCase : public EngineTestBase
 {
   CPPUNIT_TEST_SUITE( NonCombatEngineTestCase );
   CPPUNIT_TEST( followMaster );
+  CPPUNIT_TEST( followLine );
   CPPUNIT_TEST( stay );
   CPPUNIT_TEST( eatDrink );
   CPPUNIT_TEST( dpsAssist );
@@ -40,8 +41,16 @@ protected:
         engine->addStrategy("follow");
 
 		tickWithAttackerCount(0);
-		assertActions(">follow");
+		assertActions(">follow master");
     }
+
+	void followLine()
+	{
+		engine->addStrategy("follow line");
+
+		tickWithAttackerCount(0);
+		assertActions(">follow line");
+	}
 
     void stay()
     {

@@ -15,6 +15,7 @@ namespace ai
         static Player* GetTargetForDps() { return (Player*)3; }
         static Player* GetTargetForTank() { return (Player*)4; }
         static Player* GetCc() { return (Player*)12; }
+		static Player* GetLineTarget() { return (Player*)14; }
    };
 
 }

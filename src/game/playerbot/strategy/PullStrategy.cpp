@@ -62,7 +62,7 @@ ActionNode* PullStrategy::createAction(const char* name)
     }
     else if (!strcmp("follow", name)) 
     {
-        return new ActionNode (new FollowAction(ai),  
+        return new ActionNode (new FollowMasterAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

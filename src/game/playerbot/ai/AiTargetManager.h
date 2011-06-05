@@ -33,6 +33,7 @@ namespace ai
 		virtual Player* GetSelf();
 		virtual Unit* GetPet();
 		virtual Player* GetMaster();
+		virtual Player* GetLineTarget();
         virtual void ResetTarget() { selection = ObjectGuid(); }
 		list<GameObject*> FindNearestGameObjects(float range = BOT_SIGHT_DISTANCE);
 		list<Unit*> FindNearestCorpses(float range = BOT_SIGHT_DISTANCE);
