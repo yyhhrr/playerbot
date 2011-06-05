@@ -294,6 +294,35 @@ void AiMoveManager::TeleportToMaster()
         aiRegistry->GetSocialManager()->TellMaster("You cannot summon me");
 }
 
+void AiMoveManager::UsePortal()
+{
+	list<GameObject*> gos = aiRegistry->GetTargetManager()->FindNearestGameObjects();
+	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+	{
+		GameObject* go = *i;
+		GameObjectInfo const *goInfo = go->GetGOInfo();
+		if (goInfo->type != GAMEOBJECT_TYPE_SPELLCASTER)
+			continue;
+
+		uint32 spellId = goInfo->spellcaster.spellId;
+		const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+		if (pSpellInfo->Effect[0] != SPELL_EFFECT_TELEPORT_UNITS && pSpellInfo->Effect[1] != SPELL_EFFECT_TELEPORT_UNITS && pSpellInfo->Effect[2] != SPELL_EFFECT_TELEPORT_UNITS)
+			continue;
+
+		ostringstream out; out << "Teleporting using " << goInfo->name;
+		aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+
+		Spell *spell = new Spell(bot, pSpellInfo, false);
+		SpellCastTargets targets;
+		targets.setUnitTarget(bot);
+		spell->prepare(&targets, false);
+		spell->cast(true);
+		return;
+	}
+
+	aiRegistry->GetSocialManager()->TellMaster("Cannot find any portal to teleport");
+}
+
 void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 {
 	if (text == "attack")
@@ -303,6 +332,10 @@ void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 	else if(text == "release" && !bot->isAlive())
 	{
 		ReleaseSpirit();
+	}
+	else if(text == "teleport")
+	{
+		UsePortal();
 	}
     else if(text == "fly")
     {

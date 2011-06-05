@@ -34,6 +34,7 @@ namespace ai
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
+		virtual void UsePortal();
 
     private:
         bool IsMovingAllowed(Unit* target);
