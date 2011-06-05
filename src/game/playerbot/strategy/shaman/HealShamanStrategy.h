@@ -15,6 +15,6 @@ namespace ai
         virtual const char* getName() { return "heal"; }
         virtual ActionNode* createAction(const char* name);
 		virtual string GetIncompatibleStrategies() { return "-dps"; }
-
+		virtual StrategyType GetType() { return STRATEGY_TYPE_HEAL; }
     };
 }

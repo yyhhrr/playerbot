@@ -24,6 +24,7 @@ namespace ai
 		virtual void Stay();
 		virtual void StayCircle(float range = 2.0f);
 		virtual void StayLine(float range = 2.0f);
+		virtual void StayCombat(float range = 2.0f);
 		virtual bool IsMoving(Unit* target);
 		virtual void Attack(Unit* target);
 		virtual void ReleaseSpirit();
@@ -47,11 +48,14 @@ namespace ai
         void UseMeetingStone(uint64 guid);
         void TeleportToMaster();
         void WaitForReach(float distance);
+		void StayLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range);
+		void UpdatePosition();
 
     private:
         vector<uint32> taxiNodes;
         ObjectGuid taxiMaster;
 		uint32 lastAreaTrigger;
+		float lastMoveToX, lastMoveToY, lastMoveToZ, lastMoveToOri;
 	};
 
 };

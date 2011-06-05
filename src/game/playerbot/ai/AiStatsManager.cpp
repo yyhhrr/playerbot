@@ -173,6 +173,8 @@ bool AiStatsManager::IsTank(Player* player)
 		case CLASS_PALADIN:
 		case CLASS_WARRIOR:
 			return true;
+		case CLASS_DRUID:
+			return aiRegistry->GetSpellManager()->HasAnyAuraOf(player, "bear form", "dire bear form");
 	}
 	return false;
 }

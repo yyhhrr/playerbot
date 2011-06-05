@@ -15,6 +15,7 @@ namespace ai
         virtual const char* getName() { return "bear"; }
         virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
+		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-cat,-caster"; }
     };
 }

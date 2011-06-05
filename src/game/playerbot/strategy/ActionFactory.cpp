@@ -150,6 +150,13 @@ ActionNode* ActionFactory::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
+	else if (!strcmp("stay combat", name)) 
+	{
+		return new ActionNode (new StayCombatAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else return NULL;
 }
 

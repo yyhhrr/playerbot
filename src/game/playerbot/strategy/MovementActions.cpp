@@ -21,12 +21,17 @@ void StayAction::Execute()
 
 void StayCircleAction::Execute()
 {
-	ai->GetMoveManager()->StayCircle(5.0f);
+	ai->GetMoveManager()->StayCircle(2.5f);
 }
 
 void StayLineAction::Execute()
 {
 	ai->GetMoveManager()->StayLine(2.5f);
+}
+
+void StayCombatAction::Execute()
+{
+	ai->GetMoveManager()->StayCombat(2.5f);
 }
 
 void GoAwayAction::Execute()

@@ -11,6 +11,10 @@ using namespace std;
 AiMoveManager::AiMoveManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
 	lastAreaTrigger = 0;
+	lastMoveToX = 0;
+	lastMoveToY = 0;
+	lastMoveToZ = 0;
+	lastMoveToOri = 0;
 }
 
 float AiMoveManager::GetDistanceTo(Unit* target)
@@ -143,6 +147,11 @@ void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
 	mm.Clear();
     mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
+	
+	lastMoveToX = x;
+	lastMoveToY = y;
+	lastMoveToZ = z;
+	lastMoveToOri = bot->GetOrientation();
 }
 
 bool AiMoveManager::Flee(Unit* target, float distance)
@@ -157,13 +166,15 @@ bool AiMoveManager::Flee(Unit* target, float distance)
 	if (!manager.CalculateDestination(&rx, &ry, &rz)) 
         return false;
 
-	bot->GetMotionMaster()->MovePoint(0, rx, ry, rz);
-    WaitForReach(bot->GetDistance(rx, ry, rz));
+	MoveTo(0, rx, ry, rz);
 	return true;
 }
 
 void AiMoveManager::Stay()
 {
+	if (!IsMoving(bot))
+		return;
+
     MotionMaster &mm = *bot->GetMotionMaster();
     if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
         return;
@@ -191,8 +202,6 @@ void AiMoveManager::StayCircle(float range)
 
 void AiMoveManager::StayLine(float range)
 {
-	Stay();
-
 	Group* group = bot->GetGroup();
 	if (!group)
 		return;
@@ -202,39 +211,105 @@ void AiMoveManager::StayLine(float range)
 	float y = master->GetPositionY();
 	float z = master->GetPositionZ();
 	float orientation = master->GetOrientation();
-	
+
+	vector<Player*> players;
 	GroupReference *gref = group->GetFirstMember();
-	int index = 0;
-	int count = group->GetMembersCount() - 1;
 	while( gref )
 	{
 		Player* member = gref->getSource();
-		if (member == master)
-			continue;
+		if (member != master)
+			players.push_back(member);
 
-		if (member == bot)
+		gref = gref->next();
+	}
+	
+	players.insert(players.begin() + group->GetMembersCount() / 2, master);
+
+	StayLine(players, 0.0f, x, y, z, orientation, range);
+}
+
+void AiMoveManager::StayCombat(float range)
+{
+	Group* group = bot->GetGroup();
+	if (!group)
+		return;
+
+	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+	float x = master->GetPositionX();
+	float y = master->GetPositionY();
+	float z = master->GetPositionZ();
+	float orientation = master->GetOrientation();
+
+	vector<Player*> tanks;
+	vector<Player*> dps;
+	GroupReference *gref = group->GetFirstMember();
+	while( gref )
+	{
+		Player* member = gref->getSource();
+		if (member != master)
 		{
-			float angle;
-			float multiplier;
-			if (index >= count / 2)
-			{
-				multiplier = 1.0f + index - count / 2.0f;
-				angle = orientation + M_PI / 2.0f;
-			}
-			else 
-			{
-				multiplier = count / 2.0f - index;
-				angle = orientation - M_PI / 2.0f;
-			}
-
-			if (multiplier == 0.0f) 
-				multiplier = 1.0f;
-			
-			MoveTo(bot->GetMapId(), x + cos(angle) * range * multiplier, y + sin(angle) * range * multiplier, z);
-			return;
+			if (aiRegistry->GetStatsManager()->IsTank(member))
+				tanks.push_back(member);
+			else
+				dps.push_back(member);
 		}
 
 		gref = gref->next();
+	}
+
+	if (aiRegistry->GetStatsManager()->IsTank(master))
+		tanks.insert(tanks.begin() + (tanks.size() + 1) / 2, master);
+	else
+		dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
+
+	if (aiRegistry->GetStatsManager()->IsTank(bot) && aiRegistry->GetStatsManager()->IsTank(master))
+	{
+		StayLine(tanks, 0.0f, x, y, z, orientation, range);
+		return;
+	}
+	if (!aiRegistry->GetStatsManager()->IsTank(bot) && !aiRegistry->GetStatsManager()->IsTank(master))
+	{
+		StayLine(dps, 0.0f, x, y, z, orientation, range);
+		return;
+	}
+	if (aiRegistry->GetStatsManager()->IsTank(bot) && !aiRegistry->GetStatsManager()->IsTank(master))
+	{
+		float diff = tanks.size() % 2 == 0 ? -range / 2.0f : 0.0f;
+		StayLine(tanks, diff, x + cos(orientation) * range, y + sin(orientation) * range, z, orientation, range);
+		return;
+	}
+	if (!aiRegistry->GetStatsManager()->IsTank(bot) && aiRegistry->GetStatsManager()->IsTank(master))
+	{
+		float diff = dps.size() % 2 == 0 ? -range / 2.0f : 0.0f;
+		StayLine(dps, diff, x - cos(orientation) * range, y - sin(orientation) * range, z, orientation, range);
+		return;
+	}
+}
+
+void AiMoveManager::StayLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range)
+{
+	Stay();
+
+	float count = line.size();
+	float angle = orientation - M_PI / 2.0f;
+	float x = cx + cos(angle) * (range * floor(count / 2.0f) + diff);
+	float y = cy + sin(angle) * (range * floor(count / 2.0f) + diff);
+	
+	int index = 0;
+	for (vector<Player*>::iterator i = line.begin(); i != line.end(); i++)
+	{
+		Player* member = *i;
+
+		if (member == bot)
+		{
+			float angle = orientation + M_PI / 2.0f;
+			float radius = range * index;
+			
+			MoveTo(bot->GetMapId(), x + cos(angle) * radius, y + sin(angle) * radius, cz);
+			bot->SetOrientation(orientation);
+			return;
+		}
+
 		index++;
 	}
 }
@@ -246,19 +321,8 @@ bool AiMoveManager::IsMoving(Unit* target)
 
 void AiMoveManager::SetInFront(const Unit* obj)
 {
-	if (IsMoving(bot))
-		return;
-
 	bot->SetInFront(obj);
-
-	float ori = bot->GetAngle(obj);
-	float x, y, z;
-	x = bot->m_movementInfo.GetPos()->x;
-	y = bot->m_movementInfo.GetPos()->y;
-	z = bot->m_movementInfo.GetPos()->z;
-	bot->m_movementInfo.ChangePosition(x, y, z, ori);
-
-	bot->SendHeartBeat(false);
+	UpdatePosition();
 }
 
 void AiMoveManager::Attack(Unit* target)
@@ -665,4 +729,21 @@ void AiMoveManager::Update()
 		bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
 		bot->SetSpeedRate(MOVE_RUN, ai->GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
 	}
+
+	UpdatePosition();
+}
+
+void AiMoveManager::UpdatePosition() 
+{
+	if (IsMoving(bot))
+		return;
+
+	if (lastMoveToX != 0.0f || lastMoveToY != 0.0f || lastMoveToZ != 0.0f)
+	{
+		bot->m_movementInfo.ChangePosition(lastMoveToX, lastMoveToY, lastMoveToZ, lastMoveToOri);
+		bot->SendHeartBeat(false);
+	
+		lastMoveToX = lastMoveToY = lastMoveToZ = lastMoveToOri = 0.0f;
+	}
+
 }
