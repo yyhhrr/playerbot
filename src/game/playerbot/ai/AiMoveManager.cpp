@@ -458,6 +458,14 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
             UseMeetingStone(guid);
             return;
         }
+	case CMSG_AREATRIGGER:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+			
+			bot->GetSession()->HandleAreaTriggerOpcode(p);
+			return;
+		}
     }
 }
 

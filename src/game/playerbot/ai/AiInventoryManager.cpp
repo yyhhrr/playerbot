@@ -816,15 +816,119 @@ void AiInventoryManager::HandleMasterIncomingPacket(const WorldPacket& packet)
     switch (packet.GetOpcode())
     {
     case CMSG_GAMEOBJ_REPORT_USE:
-		if (bot->GetPlayerbotAI()->GetMaster()->GetMapId() != bot->GetMapId())
-			return;
+		{
+			if (bot->GetPlayerbotAI()->GetMaster()->GetMapId() != bot->GetMapId())
+				return;
 
-        WorldPacket p(packet);
-        p.rpos(0); // reset reader
-        uint64 guid;
-        p >> guid;
-        AddLoot(ObjectGuid(guid));
-        break;
+			WorldPacket p(packet);
+			p.rpos(0); // reset reader
+			uint64 guid;
+			p >> guid;
+			AddLoot(ObjectGuid(guid));
+			break;
+		}
+	case CMSG_LOOT_ROLL:
+		{
+			WorldPacket p(packet); //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
+			ObjectGuid Guid;
+			uint32 NumberOfPlayers;
+			uint8 rollType;
+			p.rpos(0); //reset packet pointer
+			p >> Guid; //guid of the item rolled
+			p >> NumberOfPlayers; //number of players invited to roll
+			p >> rollType; //need,greed or pass on roll
+
+
+			uint32 choice = urand(0,2); //returns 0,1,or 2
+
+			Group* group = bot->GetGroup();
+			if(!group)
+				return;
+
+			switch (group->GetLootMethod())
+			{
+			case GROUP_LOOT:
+				// bot random roll
+				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_NEED);
+				break;
+			case NEED_BEFORE_GREED:
+				choice = 1;
+				// bot need roll
+				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_NEED);
+				break;
+			case MASTER_LOOT:
+				choice = 0;
+				// bot pass on roll
+				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_PASS);
+				break;
+			default:
+				break;
+			}
+
+			switch (rollType)
+			{
+			case ROLL_NEED:
+				bot->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_NEED, 1);
+				break;
+			case ROLL_GREED:
+				bot->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_GREED, 1);
+				break;
+			}
+
+			return;
+		}
+	case CMSG_REPAIR_ITEM:
+		{
+			WorldPacket p(packet); // WorldPacket packet for CMSG_REPAIR_ITEM, (8+8+1)
+
+			sLog.outDebug("PlayerbotMgr: CMSG_REPAIR_ITEM");
+
+			uint64 npcGUID, itemGUID;
+			uint8 guildBank;
+
+			p.rpos(0); //reset packet pointer
+			p >> npcGUID;
+			p >> itemGUID;  // Not used for bot but necessary opcode data retrieval
+			p >> guildBank; // Flagged if guild repair selected
+
+			Group* group = bot->GetGroup();  // check if bot is a member of group
+			if(!group)
+				return;
+
+			Creature *unit = bot->GetNPCIfCanInteractWith(npcGUID, UNIT_NPC_FLAG_REPAIR);
+			if (!unit) // Check if NPC can repair bot or not
+				return;
+
+			// remove fake death
+			if(bot->hasUnitState(UNIT_STAT_DIED))
+				bot->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
+
+			// reputation discount
+			float discountMod = bot->GetReputationPriceDiscount(unit);
+
+			uint32 TotalCost = 0;
+			if (itemGUID) // Handle redundant feature (repair individual item) for bot
+			{
+				sLog.outDebug("ITEM: Repair single item is not applicable for %s",bot->GetName());
+				return;
+			}
+			else  // Handle feature (repair all items) for bot
+			{
+				TotalCost = bot->DurabilityRepairAll(true,discountMod,guildBank>0?true:false);
+			}
+			if (guildBank) // Handle guild repair
+			{
+				uint32 GuildId = bot->GetGuildId();
+				if (!GuildId)
+					return;
+				Guild *pGuild = sGuildMgr.GetGuildById(GuildId);
+				if (!pGuild)
+					return;
+				pGuild->LogBankEvent(GUILD_BANK_LOG_REPAIR_MONEY, 0, bot->GetGUIDLow(), TotalCost);
+				pGuild->SendMoneyInfo(bot->GetSession(), bot->GetGUIDLow());
+			}
+			return;
+		}
     }
 }
 

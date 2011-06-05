@@ -345,3 +345,82 @@ void AiQuestManager::Query(const string& text)
     if (questId)
         QueryQuest(questId);
 }
+
+void AiQuestManager::HandleMasterIncomingPacket(const WorldPacket& packet)
+{
+	switch (packet.GetOpcode())
+	{
+	case CMSG_GAMEOBJ_USE:
+	case CMSG_GAMEOBJ_REPORT_USE:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+			uint64 objGUID;
+			p >> objGUID;
+
+			GameObject *obj = aiRegistry->GetTargetManager()->GetGameObject( objGUID );
+			if (obj && obj->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
+				TurnInQuests( obj );
+		}
+		break;
+	case CMSG_GOSSIP_HELLO:
+	case CMSG_QUESTGIVER_HELLO:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+			uint64 npcGUID;
+			p >> npcGUID;
+
+			WorldObject* pNpc = ai->GetMaster()->GetMap()->GetWorldObject( npcGUID );
+			if (pNpc)
+				TurnInQuests( pNpc );
+		}
+		break;
+	case CMSG_QUESTGIVER_ACCEPT_QUEST:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+			uint64 guid;
+			uint32 quest;
+			p >> guid >> quest;
+			Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
+			if (qInfo)
+			{
+				if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
+					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I already completed that quest.");
+				else if (! bot->CanTakeQuest(qInfo, false))
+				{                    	
+					if (! bot->SatisfyQuestStatus(qInfo, false))
+						bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I already have that quest.");
+					else
+						bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I can't take that quest.");
+				}
+				else if (! bot->SatisfyQuestLog(false))
+					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("My quest log is full.");
+				else if (! bot->CanAddQuest(qInfo, false))
+					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+
+				else
+				{
+					p.rpos(0);
+					bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
+					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("Got the quest.");
+				}
+			}
+		}
+		break;
+	case CMSG_QUESTGIVER_COMPLETE_QUEST:
+		{
+			WorldPacket p(packet);
+			p.rpos(0);
+			uint32 quest;
+			ObjectGuid npcGUID;
+			p >> npcGUID >> quest;
+
+			WorldObject* pNpc = ai->GetMaster()->GetMap()->GetWorldObject(npcGUID);
+			if (pNpc)
+				TurnInQuests(pNpc);
+		}
+		break;
+	}
+}
