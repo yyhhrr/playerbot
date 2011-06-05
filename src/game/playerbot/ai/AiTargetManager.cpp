@@ -387,13 +387,13 @@ namespace MaNGOS
 
 };
 
-list<GameObject*> AiTargetManager::FindNearestGameObjects()
+list<GameObject*> AiTargetManager::FindNearestGameObjects(float range)
 {
 	list<GameObject *> targets;
 
-	MaNGOS::AnyGameObjectInObjectRangeCheck u_check(bot, BOT_GRIND_DISTANCE);
+	MaNGOS::AnyGameObjectInObjectRangeCheck u_check(bot, range);
 	MaNGOS::GameObjectListSearcher<MaNGOS::AnyGameObjectInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects((const WorldObject*)bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects((const WorldObject*)bot, searcher, range);
 
 	for(list<GameObject *>::iterator tIter = targets.begin(); tIter != targets.end();)
 	{
@@ -411,37 +411,37 @@ list<GameObject*> AiTargetManager::FindNearestGameObjects()
 }
 
 
-list<Unit*> AiTargetManager::FindNearestCorpses()
+list<Unit*> AiTargetManager::FindNearestCorpses(float range)
 {
 	list<Unit *> targets;
 
-	MaNGOS::AnyDeadUnitInObjectRangeCheck u_check(bot,  BOT_GRIND_DISTANCE);
+	MaNGOS::AnyDeadUnitInObjectRangeCheck u_check(bot,  range);
 	MaNGOS::UnitListSearcher<MaNGOS::AnyDeadUnitInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, range);
 
 	RemoveNotInLOS(targets);
 	return targets;
 }
 
-list<Unit*> AiTargetManager::FindPossibleTargets()
+list<Unit*> AiTargetManager::FindPossibleTargets(float range)
 {
 	list<Unit *> targets;
 
-	MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, BOT_GRIND_DISTANCE);
+	MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, range);
 	MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, range);
 
 	RemoveNotInLOS(targets);
 	return targets;
 }
 
-list<Unit*> AiTargetManager::FindNearestNpcs()
+list<Unit*> AiTargetManager::FindNearestNpcs(float range)
 {
 	list<Unit *> targets;
 
-	MaNGOS::AnyFriendlyUnitInObjectRangeCheck u_check(bot, BOT_GRIND_DISTANCE);
+	MaNGOS::AnyFriendlyUnitInObjectRangeCheck u_check(bot, range);
 	MaNGOS::UnitListSearcher<MaNGOS::AnyFriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, range);
 
 	RemoveNotInLOS(targets);
 	return targets;
@@ -553,9 +553,9 @@ Creature* AiTargetManager::GetCreature(ObjectGuid guid)
 
 	list<Unit *> targets;
 
-	MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_REACT_DISTANCE);
+	MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
 	MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
 	
 	for(list<Unit *>::iterator i = targets.begin(); i != targets.end(); i++)
 	{
@@ -574,9 +574,9 @@ GameObject* AiTargetManager::GetGameObject(ObjectGuid guid)
 	
 	list<GameObject*> targets;
 
-	MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_REACT_DISTANCE);
+	MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
 	MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectByGuidInRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects(bot, searcher, BOT_GRIND_DISTANCE);
+	Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
 
 	for(list<GameObject*>::iterator i = targets.begin(); i != targets.end(); i++)
 	{

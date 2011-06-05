@@ -34,10 +34,10 @@ namespace ai
 		virtual Unit* GetPet();
 		virtual Player* GetMaster();
         virtual void ResetTarget() { selection = ObjectGuid(); }
-		list<GameObject*> FindNearestGameObjects();
-		list<Unit*> FindNearestCorpses();
-		list<Unit*> FindPossibleTargets();
-		list<Unit*> FindNearestNpcs();
+		list<GameObject*> FindNearestGameObjects(float range = BOT_SIGHT_DISTANCE);
+		list<Unit*> FindNearestCorpses(float range = BOT_SIGHT_DISTANCE);
+		list<Unit*> FindPossibleTargets(float range = BOT_SIGHT_DISTANCE);
+		list<Unit*> FindNearestNpcs(float range = BOT_SIGHT_DISTANCE);
 		Creature* GetCreature(ObjectGuid guid);
 		GameObject* GetGameObject(ObjectGuid guid);
 

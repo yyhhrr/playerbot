@@ -247,13 +247,19 @@ void AiSocialManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 			}
 
 			GossipMenuItemsMapBounds pMenuItemBounds = sObjectMgr.GetGossipMenuItemsMapBounds(pCreature->GetCreatureInfo()->GossipMenuId);
+			if (pMenuItemBounds.first == pMenuItemBounds.second)
+				return;
+
+			ostringstream out; out << "--- " << pCreature->GetName() << " ---";
+			TellMaster(out.str().c_str());
 			for (GossipMenuItemsMap::const_iterator itr = pMenuItemBounds.first; itr != pMenuItemBounds.second; ++itr)
 			{
 				uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
-
 				if (!(itr->second.npc_option_npcflag & npcflags))
 					continue;
 
+				TellMaster(itr->second.option_text.c_str());
+				
 				switch (itr->second.option_id)
 				{
 				case GOSSIP_OPTION_TAXIVENDOR:

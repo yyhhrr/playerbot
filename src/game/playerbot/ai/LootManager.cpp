@@ -57,7 +57,7 @@ void LootManager::RemoveLootItem(uint32 itemid)
 
 bool LootManager::CanLoot()
 {
-    return availableLoot->CanLoot(BOTLOOT_DISTANCE);
+    return availableLoot->CanLoot(BOT_SIGHT_DISTANCE);
 }
 
 void LootManager::ReleaseLoot()
@@ -86,7 +86,7 @@ void LootManager::DoLoot()
 		return;
 	}
 
-	LootObject lootObject = availableLoot->GetLoot(BOTLOOT_DISTANCE);
+	LootObject lootObject = availableLoot->GetLoot(BOT_SIGHT_DISTANCE);
 	DoLoot(lootObject);
 }
 
