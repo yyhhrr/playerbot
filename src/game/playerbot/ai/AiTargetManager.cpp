@@ -576,6 +576,9 @@ Creature* AiTargetManager::GetCreature(ObjectGuid guid)
 	if (!guid)
 		return NULL;
 
+	if (bot->GetMapId() != aiRegistry->GetTargetManager()->GetMaster()->GetMapId())
+		return NULL;
+
 	list<Unit *> targets;
 
 	MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
@@ -597,6 +600,9 @@ GameObject* AiTargetManager::GetGameObject(ObjectGuid guid)
 	if (!guid)
 		return NULL;
 	
+	if (bot->GetMapId() != aiRegistry->GetTargetManager()->GetMaster()->GetMapId())
+		return NULL;
+
 	list<GameObject*> targets;
 
 	MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
