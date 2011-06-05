@@ -143,6 +143,13 @@ ActionNode* ActionFactory::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
+	else if (!strcmp("stay line", name)) 
+	{
+		return new ActionNode (new StayLineAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else return NULL;
 }
 

@@ -24,6 +24,11 @@ void StayCircleAction::Execute()
 	ai->GetMoveManager()->StayCircle(5.0f);
 }
 
+void StayLineAction::Execute()
+{
+	ai->GetMoveManager()->StayLine(2.5f);
+}
+
 void GoAwayAction::Execute()
 {
 	ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetMaster()); 

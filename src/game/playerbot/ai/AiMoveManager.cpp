@@ -65,9 +65,8 @@ float AiMoveManager::GetFollowAngle()
 	while( gref )
 	{
 		if( gref->getSource() == bot)
-		{
-			return 2 * M_PI / group->GetMembersCount() * index;
-		}
+			return 2 * M_PI / (group->GetMembersCount() -1) * index;
+
 		gref = gref->next();
 		index++;
 	}
@@ -188,6 +187,56 @@ void AiMoveManager::StayCircle(float range)
 	float angle = GetFollowAngle();
 
 	MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);
+}
+
+void AiMoveManager::StayLine(float range)
+{
+	Stay();
+
+	Group* group = bot->GetGroup();
+	if (!group)
+		return;
+
+	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+	float x = master->GetPositionX();
+	float y = master->GetPositionY();
+	float z = master->GetPositionZ();
+	float orientation = master->GetOrientation();
+	
+	GroupReference *gref = group->GetFirstMember();
+	int index = 0;
+	int count = group->GetMembersCount() - 1;
+	while( gref )
+	{
+		Player* member = gref->getSource();
+		if (member == master)
+			continue;
+
+		if (member == bot)
+		{
+			float angle;
+			float multiplier;
+			if (index >= count / 2)
+			{
+				multiplier = 1.0f + index - count / 2.0f;
+				angle = orientation + M_PI / 2.0f;
+			}
+			else 
+			{
+				multiplier = count / 2.0f - index;
+				angle = orientation - M_PI / 2.0f;
+			}
+
+			if (multiplier == 0.0f) 
+				multiplier = 1.0f;
+			
+			MoveTo(bot->GetMapId(), x + cos(angle) * range * multiplier, y + sin(angle) * range * multiplier, z);
+			return;
+		}
+
+		gref = gref->next();
+		index++;
+	}
 }
 
 bool AiMoveManager::IsMoving(Unit* target)

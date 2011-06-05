@@ -23,6 +23,7 @@ namespace ai
 		virtual bool Flee(Unit* target, float distance = SPELL_DISTANCE);
 		virtual void Stay();
 		virtual void StayCircle(float range = 2.0f);
+		virtual void StayLine(float range = 2.0f);
 		virtual bool IsMoving(Unit* target);
 		virtual void Attack(Unit* target);
 		virtual void ReleaseSpirit();
