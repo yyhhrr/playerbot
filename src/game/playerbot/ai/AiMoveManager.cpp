@@ -128,9 +128,9 @@ void AiMoveManager::Follow(Unit* target, float distance, float angle)
 	mm.Clear();
     mm.MoveFollow(target, distance, angle);
 
+	SetInFront(target);
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
-
 }
 
 void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
