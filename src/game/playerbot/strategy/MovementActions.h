@@ -43,6 +43,12 @@ namespace ai
         virtual void Execute();
     };
 
+	class StayCircleAction : public Action {
+	public:
+		StayCircleAction(AiManagerRegistry* const ai) : Action(ai, "stay circle") {}
+		virtual void Execute();
+	};
+
     class GoAwayAction : public Action {
     public:
         GoAwayAction(AiManagerRegistry* const ai) : Action(ai, "goaway") {}

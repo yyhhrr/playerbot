@@ -93,9 +93,9 @@ bool AiMoveManager::IsMovingAllowed(Unit* target)
 
 bool AiMoveManager::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
-    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE)
+    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE || !bot->IsWithinLOS(x, y, z))
 	{
-		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
+		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
         return false;
 	}
 
@@ -138,6 +138,8 @@ void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return;
 
+	bot->UpdateGroundPositionZ(x, y, z);
+
 	MotionMaster &mm = *bot->GetMotionMaster();
 	mm.Clear();
     mm.MovePoint(mapId, x, y, z);
@@ -173,6 +175,19 @@ void AiMoveManager::Stay()
 
 	if (!bot->IsStandState())
 		bot->SetStandState(UNIT_STAND_STATE_STAND);
+}
+
+void AiMoveManager::StayCircle(float range)
+{
+	Stay();
+
+	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+	float x = master->GetPositionX();
+	float y = master->GetPositionY();
+	float z = master->GetPositionZ();
+	float angle = GetFollowAngle();
+
+	MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);
 }
 
 bool AiMoveManager::IsMoving(Unit* target)

@@ -129,6 +129,20 @@ ActionNode* ActionFactory::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
+	else if (!strcmp("stay", name)) 
+	{
+		return new ActionNode (new StayAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
+	else if (!strcmp("stay circle", name)) 
+	{
+		return new ActionNode (new StayCircleAction(ai),  
+			/*P*/ NULL,
+			/*A*/ NULL, 
+			/*C*/ NULL);
+	}
     else return NULL;
 }
 
