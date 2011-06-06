@@ -238,6 +238,9 @@ Item* AiSpellManager::FindItemForSpell(const SpellEntry* const pSpellInfo)
 
 bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
 {
+	if (!spellId)
+		return false;
+
 	if (!target)
 		target = bot;
 
@@ -530,8 +533,9 @@ void AiSpellManager::HandleCommand(const string& text, Player& fromPlayer)
 	else if (text.size() > 5 && text.substr(0, 5) == "cast ")
 	{
 		Unit* unit = sObjectAccessor.GetUnit(*bot, ai->GetMaster()->GetSelectionGuid());
-		if (unit)
-			CastSpell(text.substr(text.find(" ") + 1).c_str(), unit);
+		bool cast = CastSpell(text.substr(text.find(" ") + 1).c_str(), unit);
+		if (!cast) 
+			aiRegistry->GetSocialManager()->TellMaster("Cannot cast spell");
 	}
 }
 
