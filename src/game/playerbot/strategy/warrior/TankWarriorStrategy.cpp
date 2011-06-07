@@ -17,15 +17,15 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericWarriorStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new RageAvailable(ai, 40), 
+        new MediumRageAvailable(ai), 
         NextAction::array(0, new NextAction("heroic strike", 1.3f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new RageAvailable(ai, 30), 
+		new MediumRageAvailable(ai), 
 		NextAction::array(0, new NextAction("shield slam", 21.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new RageAvailable(ai, 20), 
+        new LightRageAvailable(ai), 
         NextAction::array(0, new NextAction("devastate", 1.4f), NULL)));
 
     triggers.push_back(new TriggerNode(

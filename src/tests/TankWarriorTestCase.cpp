@@ -127,15 +127,13 @@ protected:
         tick(); // revenge
         tick(); // sunder armor
 
-		statsManager->rage[MockedTargets::GetSelf()] = 31;
-		tick();
+		statsManager->rage[MockedTargets::GetSelf()] = 41;
+		tick(); //shield slam
 
         tick(); // disarm
+        tick(); // heroic strike
         spellAvailable("disarm");
         addTargetAura("disarm");
-
-        statsManager->rage[MockedTargets::GetSelf()] = 41;
-        tick(); // heroic strike
 
         tick(); 
         spellAvailable("disarm");
@@ -155,7 +153,7 @@ protected:
         addAura("sword and board");
         tickWithSpellAvailable("shield slam");
 
-		assertActions(">S:defensive stance>reach melee>melee>S:bloodrage>T:rend>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:disarm>T:heroic strike>melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
+		assertActions(">S:defensive stance>reach melee>melee>S:bloodrage>T:rend>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:heroic strike>T:disarm>melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
     }
 
     void revengeIfDodge()

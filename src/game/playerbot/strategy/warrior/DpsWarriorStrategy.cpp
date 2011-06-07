@@ -17,7 +17,7 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericWarriorStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new RageAvailable(ai, 40), 
+        new MediumRageAvailable(ai), 
         NextAction::array(0, new NextAction("bloodthirst", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
