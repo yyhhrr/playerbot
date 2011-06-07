@@ -59,6 +59,12 @@ namespace ai
     class TriggerNode
     {
     public:
+        TriggerNode(const char* name, NextAction** handlers = NULL)
+        {
+            this->name = name; 
+            this->handlers = handlers;
+            this->trigger = NULL;
+        }
         TriggerNode(Trigger* trigger, NextAction** handlers = NULL)
         {
             this->trigger = trigger; 
@@ -66,15 +72,14 @@ namespace ai
         }
         virtual ~TriggerNode() 
         { 
-            delete trigger; 
+            if (trigger) delete trigger; 
             NextAction::destroy(handlers); 
         }
 
     public:
-        bool IsActive() { return trigger->IsActive(); }
-		bool needCheck() { return trigger->needCheck(); }
         Trigger* getTrigger() { return trigger; }
-        const char* getName() { return trigger->getName(); }
+        void setTrigger(Trigger* trigger) { this->trigger = trigger; }
+        const char* getName() { return name.c_str(); }
 
     public:
         NextAction** getHandlers() { return NextAction::merge(NextAction::clone(handlers), trigger->getHandlers()); }
@@ -82,5 +87,6 @@ namespace ai
     private:
         Trigger* trigger;
         NextAction** handlers;
+        std::string name;
     };
 }

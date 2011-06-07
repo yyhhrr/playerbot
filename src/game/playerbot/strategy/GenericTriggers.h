@@ -43,22 +43,22 @@ namespace ai
         virtual bool IsActive();
     };
 
-    class LightRageAvailable : public RageAvailable
+    class LightRageAvailableTrigger : public RageAvailable
     {
     public:
-        LightRageAvailable(AiManagerRegistry* const ai) : RageAvailable(ai, 20) {}
+        LightRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 20) {}
     };
 
-    class MediumRageAvailable : public RageAvailable
+    class MediumRageAvailableTrigger : public RageAvailable
     {
     public:
-        MediumRageAvailable(AiManagerRegistry* const ai) : RageAvailable(ai, 40) {}
+        MediumRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 40) {}
     };
 
-    class HighRageAvailable : public RageAvailable
+    class HighRageAvailableTrigger : public RageAvailable
     {
     public:
-        HighRageAvailable(AiManagerRegistry* const ai) : RageAvailable(ai, 60) {}
+        HighRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 60) {}
     };
 
 	class EnergyAvailable : public StatAvailable

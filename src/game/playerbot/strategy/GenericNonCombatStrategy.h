@@ -17,7 +17,6 @@ namespace ai
     public:
         FollowMasterNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "follow master"; }
-        virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line"; }
@@ -29,7 +28,6 @@ namespace ai
 	public:
 		FollowLineNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "follow line"; }
-		virtual ActionNode* createAction(const char* name);
 		virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow master"; }
 	};
@@ -39,7 +37,6 @@ namespace ai
     public:
         GoAwayNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "goaway"; }
-        virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-follow master"; }
     };
@@ -49,7 +46,6 @@ namespace ai
     public:
         StayNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "stay"; }
-        virtual ActionNode* createAction(const char* name);
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-follow master"; }
     };
@@ -113,7 +109,6 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual ActionNode* createAction(const char* name);
     };
 
     class LootNonCombatStrategy : public Strategy
@@ -134,7 +129,6 @@ namespace ai
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual const char* getName() { return "emote"; }
-        virtual ActionNode* createAction(const char* name);
    };
 
     class PassiveStrategy : public Strategy

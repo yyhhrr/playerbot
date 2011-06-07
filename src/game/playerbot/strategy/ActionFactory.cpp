@@ -6,6 +6,8 @@
 #include "GenericNonCombatStrategy.h"
 #include "RacialsStrategy.h"
 #include "NamedObjectFactory.h"
+#include "HealthTriggers.h"
+#include "GenericTriggers.h"
 
 using namespace ai;
 
@@ -32,10 +34,13 @@ public:
         creators["follow line"] = &ActionFactoryInternal::follow_line;
         creators["follow"] = &ActionFactoryInternal::follow_master;
         creators["follow master"] = &ActionFactoryInternal::follow_master;
+        creators["goaway"] = &ActionFactoryInternal::goaway;
         creators["stay"] = &ActionFactoryInternal::stay;
         creators["stay circle"] = &ActionFactoryInternal::stay_circle;
         creators["stay line"] = &ActionFactoryInternal::stay_line;
         creators["stay combat"] = &ActionFactoryInternal::stay_combat;
+        creators["attack anything"] = &ActionFactoryInternal::attack_anything;
+        creators["emote"] = &ActionFactoryInternal::emote;
     }
 
 private:
@@ -158,6 +163,13 @@ private:
             /*A*/ NULL, 
             /*C*/ NULL);
     }
+    ActionNode* goaway(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new GoAwayAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
     ActionNode* stay(AiManagerRegistry* ai)
     {
         return new ActionNode (new StayAction(ai),  
@@ -182,6 +194,20 @@ private:
     ActionNode* stay_combat(AiManagerRegistry* ai)
     {
         return new ActionNode (new StayCombatAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* attack_anything(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new AttackAnythingAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("follow"), NULL), 
+            /*C*/ NULL);
+    }
+    ActionNode* emote(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new EmoteAction(ai, 0),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
@@ -300,4 +326,82 @@ static StrategyFactoryInternal strategyFactoryInternal;
 Strategy* ActionFactory::createStrategy(const char* name)
 {
     return strategyFactoryInternal.create(name, ai);
+}
+
+
+class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+{
+public:
+    TriggerFactoryInternal()
+    {
+        creators["timer"] = &TriggerFactoryInternal::Timer;
+        creators["random"] = &TriggerFactoryInternal::Random;
+
+        creators["low health"] = &TriggerFactoryInternal::LowHealth;
+        creators["low mana"] = &TriggerFactoryInternal::LowMana;
+        
+        creators["light rage available"] = &TriggerFactoryInternal::LightRageAvailable;
+        creators["medium rage available"] = &TriggerFactoryInternal::MediumRageAvailable;
+        creators["high rage available"] = &TriggerFactoryInternal::HighRageAvailable;
+        
+        creators["loot available"] = &TriggerFactoryInternal::LootAvailable;
+        creators["no attackers"] = &TriggerFactoryInternal::NoAttackers;
+        creators["no target"] = &TriggerFactoryInternal::NoTarget;
+        
+        creators["tank aoe"] = &TriggerFactoryInternal::TankAoe;
+    }
+
+private:
+    Trigger* LowHealth(AiManagerRegistry* ai)
+    {
+        return new LowHealthTrigger(ai);
+    }
+    Trigger* LowMana(AiManagerRegistry* ai)
+    {
+        return new LowManaTrigger(ai);
+    }
+    Trigger* LightRageAvailable(AiManagerRegistry* ai)
+    {
+        return new LightRageAvailableTrigger(ai);
+    }
+    Trigger* MediumRageAvailable(AiManagerRegistry* ai)
+    {
+        return new MediumRageAvailableTrigger(ai);
+    }
+    Trigger* HighRageAvailable(AiManagerRegistry* ai)
+    {
+        return new HighRageAvailableTrigger(ai);
+    }
+    Trigger* LootAvailable(AiManagerRegistry* ai)
+    {
+        return new LootAvailableTrigger(ai);
+    }
+    Trigger* NoAttackers(AiManagerRegistry* ai)
+    {
+        return new NoAttackersTrigger(ai);
+    }
+    Trigger* TankAoe(AiManagerRegistry* ai)
+    {
+        return new TankAoeTrigger(ai);
+    }
+    Trigger* Timer(AiManagerRegistry* ai)
+    {
+        return new TimerTrigger(ai);
+    }
+    Trigger* NoTarget(AiManagerRegistry* ai)
+    {
+        return new NoTargetTrigger(ai);
+    }
+    Trigger* Random(AiManagerRegistry* ai)
+    {
+        return new RandomTrigger(ai);
+    }
+
+};
+
+static TriggerFactoryInternal triggerFactoryInternal;
+
+Trigger* ActionFactory::createTrigger(const char* name)
+{
+    return triggerFactoryInternal.create(name, ai);
 }

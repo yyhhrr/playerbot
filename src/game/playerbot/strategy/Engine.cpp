@@ -286,10 +286,17 @@ void Engine::ProcessTriggers()
 {
     for (std::list<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
     {
-        TriggerNode* trigger = *i;
+        TriggerNode* node = *i;
+        Trigger* trigger = node->getTrigger();
+        if (!trigger)
+        {
+            trigger = actionFactory->createTrigger(node->getName());
+            node->setTrigger(trigger);
+        }
+
         if ((testMode || trigger->needCheck()) && trigger->IsActive())
         {
-            MultiplyAndPush(trigger->getHandlers());
+            MultiplyAndPush(node->getHandlers());
         }
     }
 }
