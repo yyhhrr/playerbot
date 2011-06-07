@@ -29,7 +29,7 @@ void DpsPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("divine storm", 27.0f), new NextAction("consecration", 27.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HasAuraTrigger(ai, "the art of war"), 
+		new ArtOfWarTrigger(ai), 
 		NextAction::array(0, new NextAction("exorcism", 27.0f), NULL)));
 }
 

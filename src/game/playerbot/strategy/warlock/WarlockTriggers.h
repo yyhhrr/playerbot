@@ -20,4 +20,11 @@ namespace ai
     DEBUFF_TRIGGER(CurseOfAgonyTrigger, "curse of agony", "curse of agony");
     DEBUFF_TRIGGER(CorruptionTrigger, "corruption", "corruption");
     DEBUFF_TRIGGER(ImmolateTrigger, "immolate", "immolate");
+
+    class ShadowTranceTrigger : public HasAuraTrigger
+    {
+    public:
+        ShadowTranceTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "shadow trance") {}
+    };
+    
 }

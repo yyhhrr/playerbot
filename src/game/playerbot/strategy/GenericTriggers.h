@@ -152,6 +152,12 @@ namespace ai
         float distance;
     };    
 
+    class HasAttackersTrigger : public AttackerCountTrigger
+    {
+    public:
+        HasAttackersTrigger(AiManagerRegistry* const ai) : AttackerCountTrigger(ai, 1) {}
+    };
+
     class MyAttackerCountTrigger : public AttackerCountTrigger
     {
     public:
@@ -255,7 +261,7 @@ namespace ai
     class RandomTrigger : public Trigger
     {
     public:
-        RandomTrigger(AiManagerRegistry* const ai, int probability) : Trigger(ai) 
+        RandomTrigger(AiManagerRegistry* const ai, int probability = 20) : Trigger(ai) 
         {
             this->probability = probability;
         }
@@ -352,7 +358,7 @@ namespace ai
     class TimerTrigger : public Trigger
     {
     public:
-        TimerTrigger(AiManagerRegistry* const ai, int checkInterval) : Trigger(ai, "timer", checkInterval) {}
+        TimerTrigger(AiManagerRegistry* const ai, int checkInterval = 5) : Trigger(ai, "timer", checkInterval) {}
 
     public: 
         virtual bool IsActive() { return true; }

@@ -21,7 +21,7 @@ void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigg
     GenericNonCombatStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new AttackerCountTrigger(ai, 1), 
+        new HasAttackersTrigger(ai), 
         NextAction::array(0, new NextAction("aspect of the hawk", 90.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

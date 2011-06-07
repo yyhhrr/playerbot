@@ -53,7 +53,7 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("concussion blow", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasAuraTrigger(ai, "sword and board"), 
+        new SwordAndBoardTrigger(ai), 
         NextAction::array(0, new NextAction("shield slam", 40.0f), NULL)));
 }
 

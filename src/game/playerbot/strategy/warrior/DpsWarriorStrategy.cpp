@@ -41,7 +41,7 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("hamstring", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HasAuraTrigger(ai, "victory rush"), 
+		new VictoryRushTrigger(ai), 
 		NextAction::array(0, new NextAction("victory rush", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

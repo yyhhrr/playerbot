@@ -54,7 +54,7 @@ void DpsAssistStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 void DpsAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new TimerTrigger(ai, 5), 
+		new TimerTrigger(ai), 
 		NextAction::array(0, new NextAction("dps assist", 50.0f), NULL)));
 }
 
@@ -163,7 +163,7 @@ ActionNode* GoAwayNonCombatStrategy::createAction(const char* name)
 void RandomEmoteStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        new RandomTrigger(ai, 20), 
+        new RandomTrigger(ai), 
         NextAction::array(0, new NextAction("emote", 1.0f), NULL)));
 }
 
