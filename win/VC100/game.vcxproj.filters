@@ -25,6 +25,9 @@
     <Filter Include="vmaps">
       <UniqueIdentifier>{948284d3-9d89-4609-8cdd-28a213edb53e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playerbot">
+      <UniqueIdentifier>{931bc20c-f137-461e-ac2f-92c9bcd45359}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -481,6 +484,346 @@
     <ClCompile Include="..\..\src\game\vmap\WorldModel.cpp">
       <Filter>vmaps</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\AuctionHouseBot.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiGroupStatsManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiInventoryManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiManagerBase.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiManagerRegistry.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiMoveManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiQuestManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiSocialManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiSpellManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiStatsManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiStrategyManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AiTargetManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\AttackerMapProvider.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\FindTargetStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\FleeManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\LootManager.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ai\LootObjectStack.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Action.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\ActionBasket.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\ActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\CureTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\CasterDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\CatDpsDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\DruidActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\DruidActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\DruidMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\DruidTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Engine.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericSpellActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\HealthTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterBuffStrategies.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\GenericMageNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\GenericMageStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\MageActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\MageActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\MageMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\MageTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\MovementActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Multiplier.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\NonCombatActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\DpsPaladinStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\GenericPaladinNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\GenericPaladinStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\PaladinActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\PaladinActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\PaladinBuffStrategies.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\PaladinMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\PaladinTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\TankPaladinStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\PassiveMultiplier.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\DpsPriestStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\HealPriestNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\HealPriestStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\PullStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Queue.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\RacialsStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\GenericRogueNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\GenericShamanStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\HealShamanStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Strategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\Trigger.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\DpsWarlockStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\GenericWarlockNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\GenericWarlockStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\TankWarlockStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\WarlockActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\WarlockActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\WarlockMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warlock\WarlockTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\DpsWarriorStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\GenericWarriorNonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\GenericWarriorStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\TankWarriorStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorActionFactory.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorMultipliers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorTriggers.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIBase.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotMgr.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -909,6 +1252,391 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\vmap\WorldModel.h">
       <Filter>vmaps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\AuctionHouseBot.h" />
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiGroupStatsManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiInventoryManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiManagerBase.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiManagerRegistry.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiManagerRegistryAware.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiManagers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiMoveManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiQuestManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiSocialManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiSpellManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiStatsManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiStrategyManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AiTargetManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\AttackerMapProvider.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\FindTargetStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\FleeManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\LazyCalculatedValue.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\LootManager.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ai\LootObjectStack.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Action.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\ActionBasket.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\ActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\ChooseTargetActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\CureTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\CasterDruidStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\CatDpsDruidStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidBearActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidCatActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidShapeshiftActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\DruidTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Engine.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericSpellActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\HealthTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterBuffStrategies.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\GenericMageNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\GenericMageStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\MageActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\MageActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\MageMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\MageTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\MovementActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Multiplier.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\NamedObjectFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\NonCombatActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\DpsPaladinStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\GenericPaladinNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\GenericPaladinStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\PaladinActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\PaladinActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\PaladinBuffStrategies.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\PaladinMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\PaladinTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\paladin\TankPaladinStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\PassiveMultiplier.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\DpsPriestStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\HealPriestNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\HealPriestStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\PullStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Queue.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\RacialsStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\RangeTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\ReachTargetActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\GenericRogueNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueComboActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueFinishingActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueOpeningActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\GenericShamanStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\HealShamanStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Strategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\Trigger.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\DpsWarlockStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\GenericWarlockNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\GenericWarlockStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\TankWarlockStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\WarlockActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\WarlockActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\WarlockMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warlock\WarlockTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\DpsWarriorStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\GenericWarriorNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\GenericWarriorStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\TankWarriorStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\WarriorActionFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\WarriorActions.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\WarriorMultipliers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\warrior\WarriorTriggers.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\playerbot.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIBase.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\playerbotDefs.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h">
+      <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
