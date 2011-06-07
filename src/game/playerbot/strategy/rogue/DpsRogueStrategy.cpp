@@ -22,7 +22,7 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("melee", 10.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new EnergyAvailable(ai, 60), 
+		new HighEnergyAvailable(ai), 
 		NextAction::array(0, new NextAction("mutilate", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

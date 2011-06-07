@@ -68,6 +68,24 @@ namespace ai
 		virtual bool IsActive();
 	};
 
+    class LightEnergyAvailable : public EnergyAvailable
+    {
+    public:
+        LightEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 20) {}
+    };
+
+    class MediumEnergyAvailable : public EnergyAvailable
+    {
+    public:
+        MediumEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 40) {}
+    };
+
+    class HighEnergyAvailable : public EnergyAvailable
+    {
+    public:
+        HighEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 60) {}
+    };
+
 	class ComboPointsAvailable : public StatAvailable
 	{
 	public:
