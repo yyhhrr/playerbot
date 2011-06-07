@@ -9,36 +9,36 @@
 using namespace ai;
 
 
-class ActionFactoryInternal : public NamedObjectFactory<ActionNode, ActionFactoryInternal>
+class ActionNodeFactoryInternal : public NamedObjectFactory<ActionNode, ActionNodeFactoryInternal>
 {
 public:
-    ActionFactoryInternal()
+    ActionNodeFactoryInternal()
     {
-        creators["flee"] = &ActionFactoryInternal::flee;
-        creators["melee"] = &ActionFactoryInternal::melee;
-        creators["reach melee"] = &ActionFactoryInternal::reach_melee;
-        creators["reach spell"] = &ActionFactoryInternal::reach_spell;
-        creators["healthstone"] = &ActionFactoryInternal::healthstone;
-        creators["panic potion"] = &ActionFactoryInternal::panic_potion;
-        creators["healing potion"] = &ActionFactoryInternal::healing_potion;
-        creators["mana potion"] = &ActionFactoryInternal::mana_potion;
-        creators["eat"] = &ActionFactoryInternal::eat;
-        creators["drink"] = &ActionFactoryInternal::drink;
-        creators["tank assist"] = &ActionFactoryInternal::tank_assist;
-        creators["dps assist"] = &ActionFactoryInternal::dps_assist;
-        creators["loot"] = &ActionFactoryInternal::loot;
-        creators["loot all"] = &ActionFactoryInternal::loot_all;
-        creators["shoot"] = &ActionFactoryInternal::shoot;
-        creators["follow line"] = &ActionFactoryInternal::follow_line;
-        creators["follow"] = &ActionFactoryInternal::follow_master;
-        creators["follow master"] = &ActionFactoryInternal::follow_master;
-        creators["goaway"] = &ActionFactoryInternal::goaway;
-        creators["stay"] = &ActionFactoryInternal::stay;
-        creators["stay circle"] = &ActionFactoryInternal::stay_circle;
-        creators["stay line"] = &ActionFactoryInternal::stay_line;
-        creators["stay combat"] = &ActionFactoryInternal::stay_combat;
-        creators["attack anything"] = &ActionFactoryInternal::attack_anything;
-        creators["emote"] = &ActionFactoryInternal::emote;
+        creators["flee"] = &ActionNodeFactoryInternal::flee;
+        creators["melee"] = &ActionNodeFactoryInternal::melee;
+        creators["reach melee"] = &ActionNodeFactoryInternal::reach_melee;
+        creators["reach spell"] = &ActionNodeFactoryInternal::reach_spell;
+        creators["healthstone"] = &ActionNodeFactoryInternal::healthstone;
+        creators["panic potion"] = &ActionNodeFactoryInternal::panic_potion;
+        creators["healing potion"] = &ActionNodeFactoryInternal::healing_potion;
+        creators["mana potion"] = &ActionNodeFactoryInternal::mana_potion;
+        creators["eat"] = &ActionNodeFactoryInternal::eat;
+        creators["drink"] = &ActionNodeFactoryInternal::drink;
+        creators["tank assist"] = &ActionNodeFactoryInternal::tank_assist;
+        creators["dps assist"] = &ActionNodeFactoryInternal::dps_assist;
+        creators["loot"] = &ActionNodeFactoryInternal::loot;
+        creators["loot all"] = &ActionNodeFactoryInternal::loot_all;
+        creators["shoot"] = &ActionNodeFactoryInternal::shoot;
+        creators["follow line"] = &ActionNodeFactoryInternal::follow_line;
+        creators["follow"] = &ActionNodeFactoryInternal::follow_master;
+        creators["follow master"] = &ActionNodeFactoryInternal::follow_master;
+        creators["goaway"] = &ActionNodeFactoryInternal::goaway;
+        creators["stay"] = &ActionNodeFactoryInternal::stay;
+        creators["stay circle"] = &ActionNodeFactoryInternal::stay_circle;
+        creators["stay line"] = &ActionNodeFactoryInternal::stay_line;
+        creators["stay combat"] = &ActionNodeFactoryInternal::stay_combat;
+        creators["attack anything"] = &ActionNodeFactoryInternal::attack_anything;
+        creators["emote"] = &ActionNodeFactoryInternal::emote;
     }
 
 private:
@@ -212,11 +212,11 @@ private:
     }
 };
 
-static ActionFactoryInternal actionFactoryInternal;
+static ActionNodeFactoryInternal ActionNodeFactoryInternal;
 
 ActionNode* Strategy::createAction(const char* name)
 {
-    return actionFactoryInternal.create(name, ai);
+    return ActionNodeFactoryInternal.create(name, ai);
 }
 
 void CombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers) 

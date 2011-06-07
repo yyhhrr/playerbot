@@ -20,5 +20,6 @@ namespace ai
     public:
         virtual Strategy* createStrategy(const char* name);
         virtual Trigger* createTrigger(const char* name);
+        virtual Action* createAction(const char* name);
     };
 }

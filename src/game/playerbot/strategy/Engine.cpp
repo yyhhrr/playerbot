@@ -100,19 +100,20 @@ bool Engine::DoNextAction(Unit* unit, int depth)
             float relevance = basket->getRelevance(); // just for reference
             bool skipPrerequisites = basket->isSkipPrerequisites();
             ActionNode* actionNode = queue.Pop();
+            Action* action = InitializeAction(actionNode);
 
-            if (actionNode->isUseful()) {
-                if (actionNode->isPossible()) {
+            if (action && action->isUseful()) {
+                if (action->isPossible()) {
                     if ((!skipPrerequisites || lastRelevance-relevance > 0.02) && 
                             MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01)) {
                         PushAgain(actionNode, relevance);
                         continue;
                     }
 
-                    sLog.outDetail("A:%s", actionNode->getName());
+                    sLog.outDetail("A:%s", action->getName());
 
                     if (actionExecutionListeners.ActionExecuted(actionNode->getAction()))
-                        actionExecuted = actionNode->Execute();
+                        actionExecuted = action->ExecuteResult();
 
                     if (actionExecuted) {
                         MultiplyAndPush(actionNode->getContinuers());
@@ -176,6 +177,8 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
             if (nextAction)
             {
                 ActionNode* action = createAction(nextAction->getName());
+                InitializeAction(action);
+
                 float k = nextAction->getRelevance();
                 for (std::list<Multiplier*>::iterator i = multipliers.begin(); i!= multipliers.end(); i++)
                 {
@@ -206,12 +209,13 @@ bool Engine::ExecuteAction(const char* name)
 {
 	bool result = false;
 
-    ActionNode *action = createAction(name);
+    ActionNode *actionNode = createAction(name);
+    Action* action = InitializeAction(actionNode);
     if (action && action->isPossible() && action->isUseful())
     {
-        if (actionExecutionListeners.ActionExecuted(action->getAction()))
+        if (actionExecutionListeners.ActionExecuted(action))
 		{
-            result = action->Execute();
+            result = action->ExecuteResult();
 		}
 
         MultiplyAndPush(action->getContinuers());
@@ -344,4 +348,15 @@ bool Engine::ContainsStrategy(StrategyType type)
 			return true;
 	}
 	return false;
+}
+
+Action* Engine::InitializeAction(ActionNode* actionNode) 
+{
+    Action* action = actionNode->getAction();
+    if (!action)
+    {
+        action = actionFactory->createAction(actionNode->getName());
+        actionNode->setAction(action);
+    }
+    return action;
 }

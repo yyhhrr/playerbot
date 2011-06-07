@@ -65,6 +65,15 @@ namespace ai
         ActionNode(Action* action, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
         {
             this->action = action; 
+            this->name = action->getName();
+            this->prerequisites = prerequisites;
+            this->alternatives = alternatives;
+            this->continuers = continuers;
+        }
+        ActionNode(const char* name, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
+        {
+            this->action = NULL; 
+            this->name = name;
             this->prerequisites = prerequisites;
             this->alternatives = alternatives;
             this->continuers = continuers;
@@ -79,10 +88,8 @@ namespace ai
 
     public:
         Action* getAction() { return action; }
-        const char* getName() { return action->getName(); }
-        virtual bool Execute() { return action->ExecuteResult(); }
-        virtual bool isPossible() { return action->isPossible(); }
-        virtual bool isUseful() { return action->isUseful(); }
+        void setAction(Action* action) { this->action = action; }
+        const char* getName() { return name.c_str(); }
 
     public:
         NextAction** getContinuers() { return NextAction::merge(NextAction::clone(continuers), action->getContinuers()); }
@@ -90,6 +97,7 @@ namespace ai
         NextAction** getPrerequisites() { return NextAction::merge(NextAction::clone(prerequisites), action->getPrerequisites()); }
 
     private:
+        string name;
         Action* action;
         NextAction** continuers;
         NextAction** alternatives;

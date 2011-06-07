@@ -86,6 +86,7 @@ namespace ai
         void PushDefaultActions();
         void PushAgain(ActionNode* actionNode, float relevance);
         ActionNode* createAction(const char* name);
+        Action* InitializeAction(ActionNode* actionNode);
 
     protected:
 	    Queue queue;

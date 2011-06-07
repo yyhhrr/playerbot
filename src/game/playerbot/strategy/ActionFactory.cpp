@@ -6,6 +6,7 @@
 #include "NamedObjectFactory.h"
 #include "HealthTriggers.h"
 #include "GenericTriggers.h"
+#include "GenericActions.h"
 
 using namespace ai;
 
@@ -192,4 +193,28 @@ static TriggerFactoryInternal triggerFactoryInternal;
 Trigger* ActionFactory::createTrigger(const char* name)
 {
     return triggerFactoryInternal.create(name, ai);
+}
+
+
+class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+{
+public:
+    ActionFactoryInternal()
+    {
+        creators["melee"] = &ActionFactoryInternal::melee;
+    }
+
+private:
+    Action* melee(AiManagerRegistry* ai)
+    {
+        return new MeleeAction(ai);
+    }
+    
+};
+
+static ActionFactoryInternal actionFactoryInternal;
+
+Action* ActionFactory::createAction(const char* name)
+{
+    return actionFactoryInternal.create(name, ai);
 }

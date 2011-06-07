@@ -61,7 +61,7 @@ ActionNode* DpsWarriorStrategy::createAction(const char* name)
     }
     else if (!strcmp("melee", name)) 
     {
-        return new ActionNode (new MeleeAction(ai),  
+        return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("charge"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);

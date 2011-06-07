@@ -59,7 +59,7 @@ ActionNode* BearTankDruidStrategy::createAction(const char* name)
 {
     if (!strcmp("melee", name))
     {
-        return new ActionNode (new MeleeAction(ai),
+        return new ActionNode ("melee",
             /*P*/ NextAction::array(0, new NextAction("dire bear form"), new NextAction("feral charge - bear"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
