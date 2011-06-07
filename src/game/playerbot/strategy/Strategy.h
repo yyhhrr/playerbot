@@ -27,7 +27,7 @@ namespace ai
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers) {}
         virtual const char* getName() = 0;
 		virtual StrategyType GetType() { return STRATEGY_TYPE_GENERIC; }
-        virtual ActionNode* createAction(const char* name)  { return NULL; }
+        virtual ActionNode* createAction(const char* name);
 		virtual string GetIncompatibleStrategies() { return string(); }
     };
 

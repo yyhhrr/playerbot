@@ -39,6 +39,6 @@ ActionNode* HealShamanStrategy::createAction(const char* name)
 			/*C*/ NULL);
 	}
 
-    return NULL;
+    return GenericShamanStrategy::createAction(name);
 }
 

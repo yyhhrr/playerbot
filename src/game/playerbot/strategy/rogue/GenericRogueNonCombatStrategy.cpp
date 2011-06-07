@@ -12,9 +12,3 @@ void GenericRogueNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
     GenericNonCombatStrategy::InitTriggers(triggers);
         
 }
-
-
-ActionNode* GenericRogueNonCombatStrategy::createAction(const char* name)
-{
-   return NULL;
-}

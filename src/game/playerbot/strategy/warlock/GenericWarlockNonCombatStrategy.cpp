@@ -82,5 +82,5 @@ ActionNode* GenericWarlockNonCombatStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    return NULL;
+    return GenericNonCombatStrategy::createAction(name);
 }

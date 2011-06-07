@@ -157,5 +157,5 @@ ActionNode* GenericDruidStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    else return NULL;
+    else return Strategy::createAction(name);
 }

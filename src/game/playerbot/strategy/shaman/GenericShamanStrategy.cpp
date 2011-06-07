@@ -238,7 +238,7 @@ ActionNode* GenericShamanStrategy::createAction(const char* name)
 			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL),
 			/*C*/ NULL);
 	}
-    return NULL;
+    return CombatStrategy::createAction(name);
 }
 
 

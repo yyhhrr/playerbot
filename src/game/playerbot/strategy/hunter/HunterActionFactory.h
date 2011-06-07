@@ -11,6 +11,5 @@ namespace ai
 
     public:
         virtual Strategy* createStrategy(const char* name);
-		virtual ActionNode* createAction(const char* name);
     };
 }

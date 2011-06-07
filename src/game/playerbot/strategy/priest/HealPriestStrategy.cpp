@@ -20,13 +20,3 @@ void HealPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
        new MediumThreatTrigger(ai),
        NextAction::array(0, new NextAction("fade", 90.0f), NULL)));
 }
-
-ActionNode* HealPriestStrategy::createAction(const char* name)
-{
-    ActionNode* node = GenericPriestStrategy::createAction(name);
-    if (node)
-        return node;
-
-    else return NULL;
-}
-

@@ -55,5 +55,5 @@ ActionNode* GenericDruidNonCombatStrategy::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else return NULL;
+    else return GenericNonCombatStrategy::createAction(name);
 }

@@ -194,6 +194,6 @@ ActionNode* DpsHunterStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else return NULL;
+    else return GenericHunterStrategy::createAction(name);
 }
 

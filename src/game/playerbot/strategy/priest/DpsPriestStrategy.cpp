@@ -82,5 +82,5 @@ ActionNode* DpsPriestStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
             /*C*/ NextAction::array(0, new NextAction("shoot"), NULL));
     }
-    else return NULL;
+    else return HealPriestStrategy::createAction(name);
 }

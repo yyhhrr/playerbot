@@ -53,6 +53,6 @@ ActionNode* MeleeShamanStrategy::createAction(const char* name)
 			/*C*/ NULL);
 	}
 
-    return NULL;
+    return GenericShamanStrategy::createAction(name);
 }
 

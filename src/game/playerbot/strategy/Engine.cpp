@@ -162,7 +162,7 @@ ActionNode* Engine::createAction(const char* name)
         if (node)
             return node;
     }
-    return actionFactory->createAction(name);
+    return NULL;
 }
 
 bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool skipPrerequisites)

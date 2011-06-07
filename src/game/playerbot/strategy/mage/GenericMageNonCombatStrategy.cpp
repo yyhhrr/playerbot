@@ -89,5 +89,5 @@ ActionNode* GenericMageNonCombatStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    return NULL;
+    return GenericMageStrategy::createAction(name);
 }

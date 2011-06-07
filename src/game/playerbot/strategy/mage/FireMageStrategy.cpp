@@ -41,5 +41,5 @@ ActionNode* FireMageStrategy::createAction(const char* name)
     if (node)
         return node;
 
-    return NULL;
+    return GenericMageStrategy::createAction(name);
 }

@@ -58,5 +58,5 @@ ActionNode* FrostMageStrategy::createAction(const char* name)
             /*C*/ NextAction::array(0, new NextAction("flee"), new NextAction("frostbolt"), NULL));
     }
 
-    else return NULL;
+    else return GenericMageStrategy::createAction(name);
 }

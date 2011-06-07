@@ -165,5 +165,5 @@ ActionNode* GenericWarriorStrategy::createAction(const char* name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else return NULL;
+    else return CombatStrategy::createAction(name);
 }
