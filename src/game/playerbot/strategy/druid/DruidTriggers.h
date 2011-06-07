@@ -59,6 +59,12 @@ namespace ai {
         TigersFuryTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "tiger's fury") {}
     };
 
+    class NaturesGraspTrigger : public BoostTrigger
+    {
+    public:
+        NaturesGraspTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "nature's grasp") {}
+    };
+
     class EntanglingRootsTrigger : public HasCcTargetTrigger
     {
     public:

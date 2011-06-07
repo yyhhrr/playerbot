@@ -49,7 +49,7 @@ protected:
 		spellAvailable("starfire");
 		tickInSpellRange();
 
-		tickWithAttackerCount(3);
+        tickWithBalancePercent(49);
         
 		assertActions(">S:moonkin form>T:faerie fire>T:insect swarm>T:moonfire>T:starfire>T:wrath>T:starfire>S:nature's grasp");
     }
@@ -115,10 +115,9 @@ protected:
 
     void aoe()
     {
-        tickWithAttackerCount(3);
         tickWithAttackerCount(4);
 
-		assertActions(">S:nature's grasp>T:starfall");
+		assertActions(">T:starfall");
     }
 };
 
