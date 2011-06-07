@@ -28,4 +28,10 @@ namespace ai
     BUFF_ON_PARTY_TRIGGER(BlessingOfKingsOnPartyTrigger, "blessing of kings", "blessing of kings on party")
     BUFF_TRIGGER(BlessingTrigger, "blessing of sanctuary", "blessing of sanctuary")
 
+    class HammerOfJusticeInterruptSpellTrigger : public InterruptSpellTrigger
+    {
+    public:
+        HammerOfJusticeInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "hammer of justice") {}
+    };
+
 }

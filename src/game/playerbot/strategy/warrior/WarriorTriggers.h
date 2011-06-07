@@ -19,9 +19,15 @@ namespace ai
     public:
         BloodrageDebuffTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "bloodrage") {}
         virtual bool IsActive() {
-            return DebuffTrigger::IsActive() && 
-				statsManager->GetHealthPercent(targetManager->GetSelf()) >= 75 && 
+            return DebuffTrigger::IsActive() &&
+				statsManager->GetHealthPercent(targetManager->GetSelf()) >= 75 &&
 				statsManager->GetRage(targetManager->GetSelf()) < 20;
         }
+    };
+
+    class ShieldBashInterruptSpellTrigger : public InterruptSpellTrigger
+    {
+    public:
+        ShieldBashInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "shield bash") {}
     };
 }

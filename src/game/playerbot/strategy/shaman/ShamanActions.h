@@ -151,7 +151,7 @@ namespace ai
 	public:
 		CastAncestralSpiritAction(AiManagerRegistry* const ai) : ResurrectPartyMemberAction(ai, "ancestral spirit") {}
 	};
-    
+
 
 	class CastPurgeAction : public CastSpellAction
 	{

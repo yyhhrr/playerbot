@@ -11,7 +11,7 @@ namespace ai
 		NoFoodTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no food trigger") {}
 		virtual bool IsActive() { return !ai->GetInventoryManager()->HasFood(); }
 	};
-	
+
 	class NoDrinkTrigger : public Trigger {
 	public:
 		NoDrinkTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no drink trigger") {}
@@ -23,7 +23,7 @@ namespace ai
         MageArmorTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "mage armor") {}
         virtual bool IsActive();
     };
-    
+
     class FireballTrigger : public DebuffTrigger {
     public:
         FireballTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "fireball") {}
@@ -32,5 +32,11 @@ namespace ai
     class PyroblastTrigger : public DebuffTrigger {
     public:
         PyroblastTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "pyroblast") {}
+    };
+
+    class CounterspellInterruptSpellTrigger : public InterruptSpellTrigger
+    {
+    public:
+        CounterspellInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "counterspell") {}
     };
 }

@@ -12,7 +12,7 @@ namespace ai
     class TotemTrigger : public BuffTrigger {
     public:
         TotemTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {}
-        virtual bool IsActive() 
+        virtual bool IsActive()
 		{
             return BuffTrigger::IsActive() && statsManager->GetAttackerCount() > 2;
         }
@@ -36,5 +36,11 @@ namespace ai
     class StrengthOfEarthTotemTrigger : public TotemTrigger {
     public:
         StrengthOfEarthTotemTrigger(AiManagerRegistry* const ai) : TotemTrigger(ai, "strength of earth totem") {}
+    };
+
+    class WindShearInterruptSpellTrigger : public InterruptSpellTrigger
+    {
+    public:
+        WindShearInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "wind shear") {}
     };
 }

@@ -77,7 +77,7 @@ namespace ai
 	public:
 		CastSealOfJusticeAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "seal of justice") {}
 	};
-    
+
 
 	class CastSealOfLightAction : public CastBuffSpellAction {
 	public:
@@ -94,7 +94,7 @@ namespace ai
 		CastSealOfCommandAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "seal of command") {}
 	};
 
-    
+
 	class CastBlessingOfMightAction : public CastBuffSpellAction {
 	public:
 		CastBlessingOfMightAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "blessing of might") {}
@@ -282,7 +282,7 @@ namespace ai
 	public:
 		CastHolyShieldAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "holy shield") {}
 	};
-	
+
 	class CastRedemptionAction : public ResurrectPartyMemberAction
 	{
 	public:

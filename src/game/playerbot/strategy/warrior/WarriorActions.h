@@ -191,5 +191,5 @@ namespace ai
 	};
 
 	BEGIN_MELEE_SPELL_ACTION(CastVictoryRushAction, "victory rush")
-	END_SPELL_ACTION()   
+	END_SPELL_ACTION()
 }

@@ -24,15 +24,15 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("frost nova", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new InterruptSpellTrigger(ai, "counterspell"), 
+        new CounterspellInterruptSpellTrigger(ai),
         NextAction::array(0, new NextAction("counterspell", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 25), 
+		new LowHealthTrigger(ai, 25),
 		NextAction::array(0, new NextAction("ice block", 80.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasCcTargetTrigger(ai, "polymorph"), 
+        new HasCcTargetTrigger(ai, "polymorph"),
         NextAction::array(0, new NextAction("polymorph", 30.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
@@ -43,123 +43,123 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 ActionNode* GenericMageStrategy::createAction(const char* name)
 {
-    if (!strcmp("frostbolt", name)) 
+    if (!strcmp("frostbolt", name))
     {
-        return new ActionNode (new CastFrostboltAction(ai),  
+        return new ActionNode (new CastFrostboltAction(ai),
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("fireball", name)) 
+    else if (!strcmp("fireball", name))
     {
-        return new ActionNode (new CastFireballAction(ai),  
+        return new ActionNode (new CastFireballAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("pyroblast", name)) 
+    else if (!strcmp("pyroblast", name))
     {
-        return new ActionNode (new CastPyroblastAction(ai),  
+        return new ActionNode (new CastPyroblastAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("flamestrike", name)) 
+    else if (!strcmp("flamestrike", name))
     {
-        return new ActionNode (new CastFlamestrikeAction(ai),  
+        return new ActionNode (new CastFlamestrikeAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("fire blast", name)) 
+    else if (!strcmp("fire blast", name))
     {
-        return new ActionNode (new CastFireBlastAction(ai),  
+        return new ActionNode (new CastFireBlastAction(ai),
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("scorch"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("scorch"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("scorch", name)) 
+    else if (!strcmp("scorch", name))
     {
-        return new ActionNode (new CastScorchAction(ai),  
+        return new ActionNode (new CastScorchAction(ai),
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-	else if (!strcmp("reach spell", name)) 
+	else if (!strcmp("reach spell", name))
 	{
-		return new ActionNode (new ReachSpellAction(ai),  
+		return new ActionNode (new ReachSpellAction(ai),
 			/*P*/ NULL,
-			/*A*/ NULL, 
+			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("flee", name)) 
+	else if (!strcmp("flee", name))
 	{
-		return new ActionNode (new FleeAction(ai),  
+		return new ActionNode (new FleeAction(ai),
 			/*P*/ NULL,
-			/*A*/ NULL, 
+			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("frost nova", name)) 
+    else if (!strcmp("frost nova", name))
     {
-        return new ActionNode (new CastFrostNovaAction(ai),  
+        return new ActionNode (new CastFrostNovaAction(ai),
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("flee"), NULL));
     }
-    else if (!strcmp("counterspell", name)) 
+    else if (!strcmp("counterspell", name))
     {
-        return new ActionNode (new CastCounterspellAction(ai),  
+        return new ActionNode (new CastCounterspellAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("remove curse", name)) 
+    else if (!strcmp("remove curse", name))
     {
-        return new ActionNode (new CastRemoveCurseAction(ai),  
+        return new ActionNode (new CastRemoveCurseAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("remove curse on party", name)) 
+    else if (!strcmp("remove curse on party", name))
     {
-        return new ActionNode (new CastRemoveCurseOnPartyAction(ai),  
+        return new ActionNode (new CastRemoveCurseOnPartyAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("icy veins", name) || !strcmp("boost", name)) 
+    else if (!strcmp("icy veins", name) || !strcmp("boost", name))
     {
-        return new ActionNode (new CastIcyVeinsAction(ai),  
+        return new ActionNode (new CastIcyVeinsAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("combustion", name) || !strcmp("boost", name)) 
+    else if (!strcmp("combustion", name) || !strcmp("boost", name))
     {
-        return new ActionNode (new CastCombustionAction(ai),  
+        return new ActionNode (new CastCombustionAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("ice block", name)) 
+	else if (!strcmp("ice block", name))
 	{
-		return new ActionNode (new CastIceBlockAction(ai),  
+		return new ActionNode (new CastIceBlockAction(ai),
 			/*P*/ NULL,
-			/*A*/ NULL, 
+			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("polymorph", name)) 
+    else if (!strcmp("polymorph", name))
     {
-        return new ActionNode (new CastPolymorphAction(ai),  
+        return new ActionNode (new CastPolymorphAction(ai),
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("spellsteal", name)) 
+	else if (!strcmp("spellsteal", name))
 	{
-		return new ActionNode (new CastSpellstealAction(ai),  
+		return new ActionNode (new CastSpellstealAction(ai),
 			/*P*/ NULL,
-			/*A*/ NULL, 
+			/*A*/ NULL,
 			/*C*/ NULL);
 	}
     else return NULL;
