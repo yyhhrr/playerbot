@@ -161,6 +161,12 @@ namespace ai
         virtual const char* getName() { return "my attacker count"; }
     };    
 
+    class MediumThreatTrigger : public MyAttackerCountTrigger
+    {
+    public:
+        MediumThreatTrigger(AiManagerRegistry* const ai) : MyAttackerCountTrigger(ai, 2) {}
+    };    
+
     class AoeTrigger : public AttackerCountTrigger
     {
     public:

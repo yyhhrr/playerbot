@@ -30,7 +30,7 @@ void CatDpsDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("ferocious bite", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new MyAttackerCountTrigger(ai, 2),
+        new MediumThreatTrigger(ai),
         NextAction::array(0, new NextAction("cower", 90.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

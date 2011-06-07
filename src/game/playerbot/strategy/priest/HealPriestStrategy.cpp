@@ -17,8 +17,8 @@ void HealPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericPriestStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-                       new MyAttackerCountTrigger(ai, 2),
-                       NextAction::array(0, new NextAction("fade", 90.0f), NULL)));
+       new MediumThreatTrigger(ai),
+       NextAction::array(0, new NextAction("fade", 90.0f), NULL)));
 }
 
 ActionNode* HealPriestStrategy::createAction(const char* name)
