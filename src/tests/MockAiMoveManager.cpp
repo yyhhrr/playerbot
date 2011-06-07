@@ -39,8 +39,11 @@ void MockAiMoveManager::Follow(Unit* target, float distance)
 	if (target == MockedTargets::GetMaster())
 		buffer->append(">follow master");
 	
-	if (target == MockedTargets::GetLineTarget())
+	else if (target == MockedTargets::GetLineTarget())
 		buffer->append(">follow line");
+
+	else
+		buffer->append(">follow");
 }
 
 bool MockAiMoveManager::Flee(Unit* target, float distance)
@@ -52,6 +55,22 @@ bool MockAiMoveManager::Flee(Unit* target, float distance)
 
 	return true;
 }
+
+void MockAiMoveManager::StayCircle(float range)
+{
+	buffer->append(">stay circle");
+}
+
+void MockAiMoveManager::StayLine(float range)
+{
+	buffer->append(">stay line");
+}
+
+void MockAiMoveManager::StayCombat(float range)
+{
+	buffer->append(">stay combat");
+}
+
 
 void MockAiMoveManager::Stay()
 {

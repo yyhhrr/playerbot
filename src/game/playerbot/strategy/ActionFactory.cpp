@@ -5,207 +5,299 @@
 #include "NonCombatActions.h"
 #include "GenericNonCombatStrategy.h"
 #include "RacialsStrategy.h"
+#include "NamedObjectFactory.h"
 
 using namespace ai;
 
-ActionNode* ActionFactory::createAction(const char* name)
+class ActionFactoryInternal : public NamedObjectFactory<ActionNode, ActionFactoryInternal>
 {
-    if (!strcmp("flee", name)) 
+public:
+    ActionFactoryInternal()
+    {
+        creators["flee"] = &ActionFactoryInternal::flee;
+        creators["melee"] = &ActionFactoryInternal::melee;
+        creators["reach melee"] = &ActionFactoryInternal::reach_melee;
+        creators["reach spell"] = &ActionFactoryInternal::reach_spell;
+        creators["healthstone"] = &ActionFactoryInternal::healthstone;
+        creators["panic potion"] = &ActionFactoryInternal::panic_potion;
+        creators["healing potion"] = &ActionFactoryInternal::healing_potion;
+        creators["mana potion"] = &ActionFactoryInternal::mana_potion;
+        creators["eat"] = &ActionFactoryInternal::eat;
+        creators["drink"] = &ActionFactoryInternal::drink;
+        creators["tank assist"] = &ActionFactoryInternal::tank_assist;
+        creators["dps assist"] = &ActionFactoryInternal::dps_assist;
+        creators["loot"] = &ActionFactoryInternal::loot;
+        creators["loot all"] = &ActionFactoryInternal::loot_all;
+        creators["shoot"] = &ActionFactoryInternal::shoot;
+        creators["follow line"] = &ActionFactoryInternal::follow_line;
+        creators["follow"] = &ActionFactoryInternal::follow_master;
+        creators["follow master"] = &ActionFactoryInternal::follow_master;
+        creators["stay"] = &ActionFactoryInternal::stay;
+        creators["stay circle"] = &ActionFactoryInternal::stay_circle;
+        creators["stay line"] = &ActionFactoryInternal::stay_line;
+        creators["stay combat"] = &ActionFactoryInternal::stay_combat;
+    }
+
+private:
+    ActionNode* flee(AiManagerRegistry* ai)
     {
         return new ActionNode (new FleeAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("melee", name)) 
+    ActionNode* melee(AiManagerRegistry* ai)
     {
         return new ActionNode (new MeleeAction(ai),  
             /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("reach melee", name)) 
+    ActionNode* reach_melee(AiManagerRegistry* ai)
     {
         return new ActionNode (new ReachMeleeAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("reach spell", name)) 
+    ActionNode* reach_spell(AiManagerRegistry* ai)
     {
         return new ActionNode (new ReachSpellAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("healthstone", name)) 
-	{
-		return new ActionNode (new UseItemAction(ai, "healthstone"),  
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("panic potion"), NULL), 
-			/*C*/ NULL);
-	}
-    else if (!strcmp("panic potion", name)) 
+    ActionNode* healthstone(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new UseItemAction(ai, "healthstone"),  
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("panic potion"), NULL), 
+            /*C*/ NULL);
+    }
+    ActionNode* panic_potion(AiManagerRegistry* ai)
     {
         return new ActionNode (new UsePanicPotion(ai),  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("healing potion"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("healing potion", name)) 
+    ActionNode* healing_potion(AiManagerRegistry* ai)
     {
         return new ActionNode (new UseHealingPotion(ai),  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("mana potion"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("mana potion", name)) 
+    ActionNode* mana_potion(AiManagerRegistry* ai)
     {
         return new ActionNode (new UseManaPotion(ai),  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("eat", name)) 
+    ActionNode* eat(AiManagerRegistry* ai)
     {
         return new ActionNode (new EatAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("drink", name)) 
+    ActionNode* drink(AiManagerRegistry* ai)
     {
         return new ActionNode (new DrinkAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("tank assist", name)) 
+    ActionNode* tank_assist(AiManagerRegistry* ai)
     {
         return new ActionNode (new TankAssistAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("dps assist", name)) 
+    ActionNode* dps_assist(AiManagerRegistry* ai)
     {
         return new ActionNode (new DpsAssistAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("loot", name)) 
+    ActionNode* loot(AiManagerRegistry* ai)
     {
         return new ActionNode (new LootAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("loot all", name)) 
+    ActionNode* loot_all(AiManagerRegistry* ai)
     {
         return new ActionNode (new LootAllAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("shoot", name)) 
+    ActionNode* shoot(AiManagerRegistry* ai)
     {
         return new ActionNode (new CastShootAction(ai),  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("follow line", name)) 
-	{
-		return new ActionNode (new FollowLineAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (!strcmp("follow master", name) || !strcmp("follow", name)) 
-	{
-		return new ActionNode (new FollowMasterAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (!strcmp("stay", name)) 
-	{
-		return new ActionNode (new StayAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (!strcmp("stay circle", name)) 
-	{
-		return new ActionNode (new StayCircleAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (!strcmp("stay line", name)) 
-	{
-		return new ActionNode (new StayLineAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (!strcmp("stay combat", name)) 
-	{
-		return new ActionNode (new StayCombatAction(ai),  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else return NULL;
+    ActionNode* follow_line(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new FollowLineAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* follow_master(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new FollowMasterAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* stay(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new StayAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* stay_circle(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new StayCircleAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* stay_line(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new StayLineAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    ActionNode* stay_combat(AiManagerRegistry* ai)
+    {
+        return new ActionNode (new StayCombatAction(ai),  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+};
+
+static ActionFactoryInternal actionFactoryInternal;
+
+ActionNode* ActionFactory::createAction(const char* name)
+{
+    return actionFactoryInternal.create(name, ai);
 }
+
+class StrategyFactoryInternal : public NamedObjectFactory<Strategy, StrategyFactoryInternal>
+{
+public:
+    StrategyFactoryInternal()
+    {
+        creators["racials"] = &StrategyFactoryInternal::racials;
+        creators["follow master"] = &StrategyFactoryInternal::follow_master;
+        creators["follow line"] = &StrategyFactoryInternal::follow_line;
+        creators["stay"] = &StrategyFactoryInternal::stay;
+        creators["dps assist"] = &StrategyFactoryInternal::dps_assist;
+        creators["dps aoe"] = &StrategyFactoryInternal::dps_aoe;
+        creators["tank assist"] = &StrategyFactoryInternal::tank_assist;
+        creators["tank aoe"] = &StrategyFactoryInternal::tank_aoe;
+        creators["grind"] = &StrategyFactoryInternal::grind;
+        creators["loot"] = &StrategyFactoryInternal::loot;
+        creators["goaway"] = &StrategyFactoryInternal::goaway;
+        creators["emote"] = &StrategyFactoryInternal::emote;
+        creators["passive"] = &StrategyFactoryInternal::passive;
+        creators["low mana"] = &StrategyFactoryInternal::low_mana;
+        creators["food"] = &StrategyFactoryInternal::food;
+    }
+
+private:
+    Strategy* racials(AiManagerRegistry* ai)
+    {
+        return new RacialsStrategy(ai);
+    }
+
+    Strategy* follow_master(AiManagerRegistry* ai)
+    {
+        return new FollowMasterNonCombatStrategy(ai);
+    }
+
+    Strategy* follow_line(AiManagerRegistry* ai)
+    {
+        return new FollowLineNonCombatStrategy(ai);
+    }
+
+    Strategy* stay(AiManagerRegistry* ai)
+    {
+        return new StayNonCombatStrategy(ai);
+    }
+
+    Strategy* dps_assist(AiManagerRegistry* ai)
+    {
+        return new DpsAssistStrategy(ai);
+    }
+
+    Strategy* dps_aoe(AiManagerRegistry* ai)
+    {
+        return new DpsAoeStrategy(ai);
+    }
+
+    Strategy* tank_assist(AiManagerRegistry* ai)
+    {
+        return new TankAssistStrategy(ai);
+    }
+
+    Strategy* tank_aoe(AiManagerRegistry* ai)
+    {
+        return new TankAoeStrategy(ai);
+    }
+
+    Strategy* grind(AiManagerRegistry* ai)
+    {
+        return new GrindingStrategy(ai);
+    }
+
+    Strategy* loot(AiManagerRegistry* ai)
+    {
+        return new LootNonCombatStrategy(ai);
+    }
+
+    Strategy* goaway(AiManagerRegistry* ai)
+    {
+        return new GoAwayNonCombatStrategy(ai);
+    }
+
+    Strategy* emote(AiManagerRegistry* ai)
+    {
+        return new RandomEmoteStrategy(ai);
+    }
+
+    Strategy* passive(AiManagerRegistry* ai)
+    {
+        return new PassiveStrategy(ai);
+    }
+
+    Strategy* low_mana(AiManagerRegistry* ai)
+    {
+        return new LowManaStrategy(ai);
+    }
+
+    Strategy* food(AiManagerRegistry* ai)
+    {
+        return new UseFoodStrategy(ai);
+    }
+};
+
+static StrategyFactoryInternal strategyFactoryInternal;
+
 
 Strategy* ActionFactory::createStrategy(const char* name)
 {
-	if (!strcmp("racials", name))
-		return new RacialsStrategy(ai);
-
-    if (!strcmp("follow master", name))
-        return new FollowMasterNonCombatStrategy(ai);
-
-	if (!strcmp("follow line", name))
-		return new FollowLineNonCombatStrategy(ai);
-
-    if (!strcmp("stay", name))
-        return new StayNonCombatStrategy(ai);
-    
-    if (!strcmp("dps assist", name))
-        return new DpsAssistStrategy(ai);
-
-	if (!strcmp("dps aoe", name))
-		return new DpsAoeStrategy(ai);
-
-    if (!strcmp("tank assist", name))
-        return new TankAssistStrategy(ai);
-
-	if (!strcmp("tank aoe", name))
-		return new TankAoeStrategy(ai);
-
-    if (!strcmp("grind", name))
-        return new GrindingStrategy(ai);
-
-    if (!strcmp("loot", name))
-        return new LootNonCombatStrategy(ai);
-    
-    if (!strcmp("goaway", name))
-        return new GoAwayNonCombatStrategy(ai);
-    
-    if (!strcmp("emote", name))
-        return new RandomEmoteStrategy(ai);
-
-    if (!strcmp("passive", name))
-        return new PassiveStrategy(ai);
-    
-    if (!strcmp("low mana", name))
-        return new LowManaStrategy(ai);
-
-    if (!strcmp("food", name))
-        return new UseFoodStrategy(ai);
-
-    return NULL;
+    return strategyFactoryInternal.create(name, ai);
 }

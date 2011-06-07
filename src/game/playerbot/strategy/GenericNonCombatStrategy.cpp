@@ -106,9 +106,9 @@ NextAction** FollowMasterNonCombatStrategy::getDefaultActions()
 
 void FollowMasterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-	triggers.push_back(new TriggerNode(
-		new NoMovementTrigger(ai, "stay combat"), 
-		NextAction::array(0, new NextAction("stay combat", 2.0f), NULL)));
+//	triggers.push_back(new TriggerNode(
+//		new NoMovementTrigger(ai, "stay combat"), 
+//		NextAction::array(0, new NextAction("stay combat", 2.0f), NULL)));
 }
 
 NextAction** FollowLineNonCombatStrategy::getDefaultActions()

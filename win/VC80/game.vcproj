@@ -2017,6 +2017,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NamedObjectFactory.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\NonCombatActions.cpp"
 					>
 				</File>

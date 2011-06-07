@@ -37,7 +37,7 @@ float MagePullMultiplier::GetValue(Action* action)
 
 NextAction** PullStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction(action, 105.0f), new NextAction("follow", 104.0f), new NextAction("end pull", 103.0f), NULL);
+    return NextAction::array(0, new NextAction(action, 105.0f), new NextAction("follow master", 104.0f), new NextAction("end pull", 103.0f), NULL);
 }
 
 void PullStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -58,13 +58,6 @@ ActionNode* PullStrategy::createAction(const char* name)
         return new ActionNode (new ChangeCombatStrategyAction(ai, "-pull"),  
             /*P*/ NULL,
             /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (!strcmp("follow", name)) 
-    {
-        return new ActionNode (new FollowMasterAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
             /*C*/ NULL);
     }
     else return RangedCombatStrategy::createAction(name);

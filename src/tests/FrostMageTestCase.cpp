@@ -98,7 +98,7 @@ protected:
         tick();
         tick();
 
-        assertActions(">reach spell>T:shoot>follow>co:-pull");
+        assertActions(">reach spell>T:shoot>follow master>co:-pull");
     }
 
 	void aoe() 

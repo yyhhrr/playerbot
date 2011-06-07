@@ -30,6 +30,9 @@ namespace ai
 		virtual bool IsMoving(Unit* target);
 		virtual void Attack(Unit* target);
         virtual bool IsBehind(Unit* target);
+		virtual void StayCircle(float range = 2.0f);
+		virtual void StayLine(float range = 2.0f);
+		virtual void StayCombat(float range = 2.0f);
 
 	private:
 		string *buffer;

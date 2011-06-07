@@ -38,7 +38,7 @@ protected:
     
     void followMaster()
     {
-        engine->addStrategy("follow");
+        engine->addStrategy("follow master");
 
 		tickWithAttackerCount(0);
 		assertActions(">follow master");
