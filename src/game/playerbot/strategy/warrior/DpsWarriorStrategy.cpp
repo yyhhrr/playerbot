@@ -29,7 +29,7 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("mocking blow", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new TargetLowHealthTrigger(ai, 25), 
+        new TargetCriticalHealthTrigger(ai), 
         NextAction::array(0, new NextAction("execute", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

@@ -42,7 +42,7 @@ protected:
         tick();
         tick();
 
-		tickWithLowHealth(24);
+		tickWithLowHealth(19);
 
 		assertActions(">T:pyroblast>T:fireball>T:fire blast>T:scorch>T:frost nova>flee>T:fire blast>T:scorch>T:shoot>S:ice block");
 	}

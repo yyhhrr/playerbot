@@ -118,7 +118,7 @@ protected:
         tick(); 
         tick(); 
 
-		tickWithTargetLowHealth(24);
+		tickWithTargetLowHealth(19);
 
         assertActions(">reach melee>melee>T:judgement of light>T:hammer of wrath");
     }

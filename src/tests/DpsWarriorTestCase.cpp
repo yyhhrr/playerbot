@@ -105,7 +105,7 @@ protected:
     {
         tickInMeleeRange(); // battle stance
 
-		tickWithTargetLowHealth(24);
+		tickWithTargetLowHealth(19);
 
         tick(); // melee
 

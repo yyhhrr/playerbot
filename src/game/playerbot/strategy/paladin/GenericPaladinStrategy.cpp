@@ -19,19 +19,19 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("hammer of justice", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 60, 40),
+        new MediumHealthTrigger(ai),
         NextAction::array(0, new NextAction("flash of light", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai, 60, 40),
+        new PartyMemberMediumHealthTrigger(ai),
         NextAction::array(0, new NextAction("flash of light on party", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 40),
+        new LowHealthTrigger(ai),
         NextAction::array(0, new NextAction("divine shield", 50.0f), new NextAction("holy light", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai, 40),
+        new PartyMemberLowHealthTrigger(ai),
         NextAction::array(0, new NextAction("divine protection on party", 40.0f), new NextAction("holy light on party", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
@@ -39,15 +39,15 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("hammer of justice", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 20),
+		new CriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("lay on hands", 90.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberLowHealthTrigger(ai, 25),
+		new PartyMemberCriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("lay on hands on party", 90.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new TargetLowHealthTrigger(ai, 25),
+		new TargetCriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("hammer of wrath", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

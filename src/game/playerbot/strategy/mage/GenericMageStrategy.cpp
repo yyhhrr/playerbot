@@ -28,7 +28,7 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("counterspell", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 25),
+		new CriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("ice block", 80.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

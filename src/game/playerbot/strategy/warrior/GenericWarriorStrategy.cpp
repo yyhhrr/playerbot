@@ -53,7 +53,7 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("shield bash", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 5),
+		new CriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("intimidating shout", 90.0f), NULL)));
 }
 

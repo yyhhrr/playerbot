@@ -25,11 +25,11 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("curse of agony", 11.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 50),
+        new MediumHealthTrigger(ai),
         NextAction::array(0, new NextAction("drain life", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new TargetLowHealthTrigger(ai, 20),
+		new TargetCriticalHealthTrigger(ai),
 		NextAction::array(0, new NextAction("drain soul", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

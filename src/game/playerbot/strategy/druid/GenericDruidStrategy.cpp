@@ -17,15 +17,15 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 60, 40),
+		new MediumHealthTrigger(ai),
 		NextAction::array(0, new NextAction("regrowth", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 40, 25),
+        new LowHealthTrigger(ai),
         NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("healing touch", 70.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberLowHealthTrigger(ai, 60, 40),
+		new PartyMemberMediumHealthTrigger(ai),
 		NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

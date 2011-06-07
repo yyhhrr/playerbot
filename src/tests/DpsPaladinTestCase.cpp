@@ -62,7 +62,7 @@ protected:
 		tickWithAttackerCount(3);
 		tickWithAttackerCount(3);
 
-		tickWithTargetLowHealth(24);
+		tickWithTargetLowHealth(19);
 
 		assertActions(">reach melee>melee>T:crusader strike>T:judgement of wisdom>S:divine storm>T:consecration>T:hammer of wrath");
     }

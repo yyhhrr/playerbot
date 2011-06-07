@@ -36,7 +36,7 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("purge", 10.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberLowHealthTrigger(ai, 60, 40),
+		new PartyMemberMediumHealthTrigger(ai),
 		NextAction::array(0, new NextAction("chain heal on party", 25.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
@@ -44,7 +44,7 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("riptide on party", 25.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai, 60, 40),
+		new MediumHealthTrigger(ai),
 		NextAction::array(0, new NextAction("chain heal", 26.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
