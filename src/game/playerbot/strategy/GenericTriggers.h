@@ -89,7 +89,7 @@ namespace ai
 	class ComboPointsAvailable : public StatAvailable
 	{
 	public:
-		ComboPointsAvailable(AiManagerRegistry* const ai, int amount) : StatAvailable(ai, amount) {}
+		ComboPointsAvailable(AiManagerRegistry* const ai, int amount = 5) : StatAvailable(ai, amount) {}
 		virtual bool IsActive();
 	};
 

@@ -43,4 +43,17 @@ namespace ai
     public:
         WindShearInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "wind shear") {}
     };
+    
+    class WaterShieldTrigger : public BuffTrigger 
+    {
+    public:
+        WaterShieldTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "water shield") {}
+    };
+
+    class LightningShieldTrigger : public BuffTrigger 
+    {
+    public:
+        LightningShieldTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "lightning shield") {}
+    };
+
 }

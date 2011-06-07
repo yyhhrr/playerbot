@@ -43,4 +43,23 @@ namespace ai
         SwordAndBoardTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "sword and board") {}
     };
 
+    class ConcussionBlowTrigger : public SnareTargetTrigger
+    {
+    public:
+        ConcussionBlowTrigger(AiManagerRegistry* const ai) : SnareTargetTrigger(ai, "concussion blow") {}
+    };
+
+    class HamstringTrigger : public SnareTargetTrigger
+    {
+    public:
+        HamstringTrigger(AiManagerRegistry* const ai) : SnareTargetTrigger(ai, "hamstring") {}
+    };
+
+    class DeathWishTrigger : public BoostTrigger
+    {
+    public:
+        DeathWishTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "death wish") {}
+    };
+
+    
 }

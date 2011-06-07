@@ -34,6 +34,12 @@ namespace ai
         HammerOfJusticeInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "hammer of justice") {}
     };
 
+    class HammerOfJusticeSnareTrigger : public SnareTargetTrigger
+    {
+    public:
+        HammerOfJusticeSnareTrigger(AiManagerRegistry* const ai) : SnareTargetTrigger(ai, "hammer of justice") {}
+    };
+
     class ArtOfWarTrigger : public HasAuraTrigger
     {
     public:

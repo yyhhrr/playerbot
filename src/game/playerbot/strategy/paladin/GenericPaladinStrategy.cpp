@@ -15,7 +15,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("melee", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new SnareTargetTrigger(ai, "hammer of justice"),
+        new HammerOfJusticeSnareTrigger(ai),
         NextAction::array(0, new NextAction("hammer of justice", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

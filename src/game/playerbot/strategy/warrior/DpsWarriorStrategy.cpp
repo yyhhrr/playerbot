@@ -32,12 +32,8 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         new TargetCriticalHealthTrigger(ai), 
         NextAction::array(0, new NextAction("execute", 60.0f), NULL)));
 
-    triggers.push_back(new TriggerNode(
-        new SnareTargetTrigger(ai, "hamstring"), 
-        NextAction::array(0, new NextAction("hamstring", 50.0f), NULL)));
-
 	triggers.push_back(new TriggerNode(
-		new SnareTargetTrigger(ai, "hamstring"), 
+		new HamstringTrigger(ai), 
 		NextAction::array(0, new NextAction("hamstring", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
@@ -45,7 +41,7 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("victory rush", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BoostTrigger(ai, "death wish"),
+        new DeathWishTrigger(ai),
         NextAction::array(0, new NextAction("death wish", 40.0f), NULL)));
 }
 

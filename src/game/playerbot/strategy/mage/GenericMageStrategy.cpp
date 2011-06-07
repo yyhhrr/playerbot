@@ -32,7 +32,7 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("ice block", 80.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasCcTargetTrigger(ai, "polymorph"),
+        new PolymorphTrigger(ai),
         NextAction::array(0, new NextAction("polymorph", 30.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

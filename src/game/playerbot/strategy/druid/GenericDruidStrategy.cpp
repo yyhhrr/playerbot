@@ -45,7 +45,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("rebirth", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasCcTargetTrigger(ai, "entangling roots"),
+        new EntanglingRootsTrigger(ai),
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
 }
 

@@ -26,5 +26,28 @@ namespace ai
     public:
         ShadowTranceTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "shadow trance") {}
     };
-    
+
+    class BanishTrigger : public HasCcTargetTrigger
+    {
+    public:
+        BanishTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "banish") {}
+    };
+
+    class HasSpellstoneTrigger : public ItemCountTrigger
+    {
+    public:
+        HasSpellstoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "spellstone", 1) {}
+    };
+
+    class HasFirestoneTrigger : public ItemCountTrigger
+    {
+    public:
+        HasFirestoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "firestone", 1) {}
+    };
+
+    class HasHealthstoneTrigger : public ItemCountTrigger
+    {
+    public:
+        HasHealthstoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "healthstone", 1) {}
+    };
 }

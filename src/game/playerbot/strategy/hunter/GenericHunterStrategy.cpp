@@ -31,7 +31,7 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("mend pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BoostTrigger(ai, "rapid fire"),
+        new RapidFireTrigger(ai),
         NextAction::array(0, new NextAction("rapid fire", 55.0f), NULL)));
 }
 

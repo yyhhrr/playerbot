@@ -33,7 +33,7 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("drain soul", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasCcTargetTrigger(ai, "banish"),
+        new BanishTrigger(ai),
         NextAction::array(0, new NextAction("banish", 21.0f), NULL)));
 }
 

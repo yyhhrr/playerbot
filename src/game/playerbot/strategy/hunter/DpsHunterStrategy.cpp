@@ -24,7 +24,7 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("aspect of the viper", 91.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new DebuffTrigger(ai, "black arrow"), 
+        new BlackArrowTrigger(ai), 
         NextAction::array(0, new NextAction("black arrow", 51.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
@@ -48,11 +48,11 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("mend pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new DebuffTrigger(ai, "hunter's mark"), 
+        new HuntersMarkTrigger(ai), 
         NextAction::array(0, new NextAction("hunter's mark", 52.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HasCcTargetTrigger(ai, "freezing trap"), 
+        new FreezingTrapTrigger(ai), 
         NextAction::array(0, new NextAction("freezing trap", 83.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

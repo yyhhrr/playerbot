@@ -39,4 +39,17 @@ namespace ai
     public:
         CounterspellInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "counterspell") {}
     };
+
+    class CombustionTrigger : public BoostTrigger
+    {
+    public:
+        CombustionTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "combustion") {}
+    };
+
+    class PolymorphTrigger : public HasCcTargetTrigger
+    {
+    public:
+        PolymorphTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "polymorph") {}
+    };
+    
 }

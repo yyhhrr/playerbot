@@ -26,7 +26,7 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("mutilate", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new ComboPointsAvailable(ai, 5),
+        new ComboPointsAvailable(ai),
         NextAction::array(0, new NextAction("kidney shot", 30.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

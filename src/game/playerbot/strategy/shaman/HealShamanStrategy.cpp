@@ -21,7 +21,7 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("earthliving weapon", 22.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "water shield"), 
+		new WaterShieldTrigger(ai), 
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
 

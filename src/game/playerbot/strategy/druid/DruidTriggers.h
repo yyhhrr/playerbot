@@ -53,4 +53,16 @@ namespace ai {
         BashInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "bash") {}
     };
 
+    class TigersFuryTrigger : public BoostTrigger
+    {
+    public:
+        TigersFuryTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "tiger's fury") {}
+    };
+
+    class EntanglingRootsTrigger : public HasCcTargetTrigger
+    {
+    public:
+        EntanglingRootsTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "entangling roots") {}
+    };
+    
 }

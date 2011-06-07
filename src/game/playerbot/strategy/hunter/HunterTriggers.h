@@ -57,4 +57,28 @@ namespace ai
     BEGIN_TRIGGER(HuntersPetLowHealthTrigger, Trigger)
     END_TRIGGER()
 
+    class BlackArrowTrigger : public DebuffTrigger
+    { 
+    public: 
+        BlackArrowTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "black arrow") {}
+    };
+
+    class HuntersMarkTrigger : public DebuffTrigger
+    { 
+    public: 
+        HuntersMarkTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "hunter's mark") {}
+    };
+    
+    class FreezingTrapTrigger : public HasCcTargetTrigger
+    { 
+    public: 
+        FreezingTrapTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "freezing trap") {}
+    };
+
+    class RapidFireTrigger : public BoostTrigger
+    { 
+    public: 
+        RapidFireTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "rapid fire") {}
+    };
+    
 }

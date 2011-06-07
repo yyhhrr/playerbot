@@ -21,7 +21,7 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("windfury weapon", 22.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "lightning shield"), 
+		new LightningShieldTrigger(ai), 
 		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
 }
 
