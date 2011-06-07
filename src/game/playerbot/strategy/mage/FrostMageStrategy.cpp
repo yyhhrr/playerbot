@@ -21,7 +21,7 @@ void FrostMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("icy veins", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new AoeTrigger(ai, 4),
+		new HighAoeTrigger(ai),
 		NextAction::array(0, new NextAction("blizzard", 40.0f), NULL)));
 }
 

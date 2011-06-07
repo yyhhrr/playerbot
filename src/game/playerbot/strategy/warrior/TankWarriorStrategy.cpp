@@ -45,7 +45,7 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("last stand", 91.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new AoeTrigger(ai, 2), 
+		new MediumAoeTrigger(ai), 
 		NextAction::array(0, new NextAction("shockwave", 24.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

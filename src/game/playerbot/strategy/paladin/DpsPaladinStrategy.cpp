@@ -25,7 +25,7 @@ void DpsPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("blessing of might", 21.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new AoeTrigger(ai, 3), 
+		new MediumAoeTrigger(ai), 
 		NextAction::array(0, new NextAction("divine storm", 27.0f), new NextAction("consecration", 27.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

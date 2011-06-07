@@ -140,6 +140,24 @@ namespace ai
         float range;
     };    
 
+    class LightAoeTrigger : public AoeTrigger
+    {
+    public:
+        LightAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 2, 15.0f) {}
+    };    
+
+    class MediumAoeTrigger : public AoeTrigger
+    {
+    public:
+        MediumAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 3, 17.0f) {}
+    };    
+
+    class HighAoeTrigger : public AoeTrigger
+    {
+    public:
+        HighAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 4, 20.0f) {}
+    };    
+
     class BuffTrigger : public SpellTrigger
     {
     public:

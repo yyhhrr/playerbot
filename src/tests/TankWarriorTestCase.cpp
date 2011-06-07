@@ -79,14 +79,14 @@ protected:
 
         statsManager->rage[MockedTargets::GetSelf()] = 41;
 
+		tickWithAttackerCount(3);
 		tickWithAttackerCount(2);
 		tickWithAttackerCount(2);
 		tickWithAttackerCount(2);
-		tickWithAttackerCount(2);
-		tickWithAttackerCount(2);
+		tickWithAttackerCount(3);
 
         statsManager->rage[MockedTargets::GetSelf()] = 21;
-		tickWithAttackerCount(3);
+		tickWithAttackerCount(4);
 		
 		tick();
 

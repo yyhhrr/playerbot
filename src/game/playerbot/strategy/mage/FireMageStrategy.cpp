@@ -26,7 +26,7 @@ void FireMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         new BoostTrigger(ai, "combustion"),
         NextAction::array(0, new NextAction("combustion", 50.0f), NULL)));
     triggers.push_back(new TriggerNode(
-        new AoeTrigger(ai, 3),
+        new MediumAoeTrigger(ai),
         NextAction::array(0, new NextAction("flamestrike", 20.0f), NULL)));
 }
 

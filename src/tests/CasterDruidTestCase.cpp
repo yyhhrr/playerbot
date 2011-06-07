@@ -116,7 +116,7 @@ protected:
     void aoe()
     {
         tickWithAttackerCount(3);
-        tickWithAttackerCount(3);
+        tickWithAttackerCount(4);
 
 		assertActions(">S:nature's grasp>T:starfall");
     }

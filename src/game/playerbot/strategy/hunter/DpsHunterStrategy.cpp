@@ -56,11 +56,11 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("freezing trap", 83.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new AoeTrigger(ai, 3), 
+        new MediumAoeTrigger(ai), 
         NextAction::array(0, new NextAction("multi-shot", 20.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new AoeTrigger(ai, 4), 
+		new HighAoeTrigger(ai), 
 		NextAction::array(0, new NextAction("volley", 20.0f), NULL)));
 }
 

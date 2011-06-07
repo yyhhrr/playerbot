@@ -42,7 +42,7 @@ void CatDpsDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("tiger's fury", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new AoeTrigger(ai, 3),
+        new MediumAoeTrigger(ai),
         NextAction::array(0, new NextAction("swipe (cat)", 30.0f), NULL)));
 }
 
