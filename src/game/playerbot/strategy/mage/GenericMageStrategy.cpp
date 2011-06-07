@@ -12,11 +12,11 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "remove curse", DISPEL_CURSE),
+        new RemoveCurseTrigger(ai),
         NextAction::array(0, new NextAction("remove curse", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "remove curse", DISPEL_CURSE),
+        new PartyMemberRemoveCurseTrigger(ai),
         NextAction::array(0, new NextAction("remove curse on party", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
@@ -36,7 +36,7 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("polymorph", 30.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new TargetAuraDispelTrigger(ai, "spellsteal", DISPEL_MAGIC),
+		new SpellstealTrigger(ai),
 		NextAction::array(0, new NextAction("spellsteal", 40.0f), NULL)));
 }
 

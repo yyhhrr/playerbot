@@ -12,36 +12,36 @@ void GenericPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 60, 40),
+        new MediumHealthTrigger(ai),
         NextAction::array(0, new NextAction("flash heal", 25.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai, 60, 40),
+        new PartyMemberMediumHealthTrigger(ai),
         NextAction::array(0, new NextAction("flash heal on party", 20.0f), NULL)));
 
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai, 40),
+        new LowHealthTrigger(ai),
         NextAction::array(0, new NextAction("power word: shield", 60.0f), new NextAction("greater heal", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai, 40),
+        new PartyMemberLowHealthTrigger(ai),
         NextAction::array(0, new NextAction("power word: shield on party", 50.0f), new NextAction("greater heal on party", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC),
+        new DispelMagicTrigger(ai),
         NextAction::array(0, new NextAction("dispel magic", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC),
+        new DispelMagicPartyMemberTrigger(ai),
         NextAction::array(0, new NextAction("dispel magic on party", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "cure disease", DISPEL_DISEASE),
+        new CureDiseaseTrigger(ai),
         NextAction::array(0, new NextAction("abolish disease", 31.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_DISEASE),
+        new PartyMemberCureDiseaseTrigger(ai),
         NextAction::array(0, new NextAction("abolish disease on party", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

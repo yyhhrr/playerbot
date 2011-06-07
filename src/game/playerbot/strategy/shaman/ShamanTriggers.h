@@ -56,4 +56,9 @@ namespace ai
         LightningShieldTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "lightning shield") {}
     };
 
+    class PurgeTrigger : public TargetAuraDispelTrigger 
+    {
+    public:
+        PurgeTrigger(AiManagerRegistry* const ai) : TargetAuraDispelTrigger(ai, "purge", DISPEL_MAGIC) {}
+    };
 }

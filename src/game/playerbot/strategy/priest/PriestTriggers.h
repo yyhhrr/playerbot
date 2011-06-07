@@ -13,4 +13,28 @@ namespace ai
 
     DEBUFF_TRIGGER(PowerWordPainTrigger, "shadow word: pain", "shadow word: pain")
     DEBUFF_TRIGGER(DevouringPlagueTrigger, "devouring plague", "devouring plague")
+
+    class DispelMagicTrigger : public NeedCureTrigger 
+    {
+    public:
+        DispelMagicTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
+    };
+
+    class DispelMagicPartyMemberTrigger : public PartyMemberNeedCureTrigger 
+    {
+    public:
+        DispelMagicPartyMemberTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
+    };
+
+    class CureDiseaseTrigger : public NeedCureTrigger 
+    {
+    public:
+        CureDiseaseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cure disease", DISPEL_MAGIC) {}
+    };
+
+    class PartyMemberCureDiseaseTrigger : public PartyMemberNeedCureTrigger 
+    {
+    public:
+        PartyMemberCureDiseaseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_MAGIC) {}
+    };
 }

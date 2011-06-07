@@ -6,7 +6,6 @@ namespace ai
 	BUFF_TRIGGER(HolyShieldTrigger, "holy shield", "holy shield")
     BUFF_TRIGGER(RighteousFuryTrigger, "righteous fury", "righteous fury")
 
-    BUFF_TRIGGER(DevotionAuraTrigger, "devotion aura", "devotion aura")
     BUFF_TRIGGER(RetributionAuraTrigger, "retribution aura", "retribution aura")
 
 	class CrusaderAuraTrigger : public BuffTrigger
@@ -44,5 +43,65 @@ namespace ai
     {
     public:
         ArtOfWarTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "the art of war") {}
+    };
+
+    class ShadowResistanceAuraTrigger : public BuffTrigger
+    {
+    public:
+        ShadowResistanceAuraTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "shadow resistance aura") {}
+    };
+
+    class FrostResistanceAuraTrigger : public BuffTrigger
+    {
+    public:
+        FrostResistanceAuraTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "frost resistance aura") {}
+    };
+
+    class FireResistanceAuraTrigger : public BuffTrigger
+    {
+    public:
+        FireResistanceAuraTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "fire resistance aura") {}
+    };
+
+    class DevotionAuraTrigger : public BuffTrigger
+    {
+    public:
+        DevotionAuraTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "devotion aura") {}
+    };
+
+    class CleanseCureDiseaseTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseCureDiseaseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cleanse", DISPEL_DISEASE) {}
+    };
+
+    class CleanseCurePartyMemberDiseaseTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        CleanseCurePartyMemberDiseaseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_DISEASE) {}
+    };
+
+    class CleanseCurePoisonTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseCurePoisonTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cleanse", DISPEL_POISON) {}
+    };
+
+    class CleanseCurePartyMemberPoisonTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        CleanseCurePartyMemberPoisonTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_POISON) {}
+    };
+
+    class CleanseCureMagicTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseCureMagicTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cleanse", DISPEL_MAGIC) {}
+    };
+
+    class CleanseCurePartyMemberMagicTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        CleanseCurePartyMemberMagicTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_MAGIC) {}
     };
 }

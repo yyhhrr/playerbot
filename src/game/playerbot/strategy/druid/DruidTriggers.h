@@ -71,4 +71,17 @@ namespace ai {
         EntanglingRootsTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "entangling roots") {}
     };
     
+    class CurePoisonTrigger : public NeedCureTrigger 
+    {
+    public:
+        CurePoisonTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cure poison", DISPEL_POISON) {}
+    };
+
+    class PartyMemberCurePoisonTrigger : public PartyMemberNeedCureTrigger 
+    {
+    public:
+        PartyMemberCurePoisonTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cure poison", DISPEL_POISON) {}
+    };
+
+    
 }

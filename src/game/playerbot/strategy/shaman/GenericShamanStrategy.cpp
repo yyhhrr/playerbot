@@ -32,7 +32,7 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("wind shear", 15.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new TargetAuraDispelTrigger(ai, "purge", DISPEL_MAGIC),
+		new PurgeTrigger(ai),
 		NextAction::array(0, new NextAction("purge", 10.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

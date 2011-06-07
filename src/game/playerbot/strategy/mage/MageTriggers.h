@@ -46,10 +46,34 @@ namespace ai
         CombustionTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "combustion") {}
     };
 
+    class IcyVeinsTrigger : public BoostTrigger
+    {
+    public:
+        IcyVeinsTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "icy veins") {}
+    };
+    
     class PolymorphTrigger : public HasCcTargetTrigger
     {
     public:
         PolymorphTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "polymorph") {}
+    };
+
+    class RemoveCurseTrigger : public NeedCureTrigger 
+    {
+    public:
+        RemoveCurseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "remove curse", DISPEL_MAGIC) {}
+    };
+
+    class PartyMemberRemoveCurseTrigger : public PartyMemberNeedCureTrigger 
+    {
+    public:
+        PartyMemberRemoveCurseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "remove curse", DISPEL_MAGIC) {}
+    };
+    
+    class SpellstealTrigger : public TargetAuraDispelTrigger 
+    {
+    public:
+        SpellstealTrigger(AiManagerRegistry* const ai) : TargetAuraDispelTrigger(ai, "spellsteal", DISPEL_MAGIC) {}
     };
     
 }

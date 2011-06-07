@@ -51,27 +51,27 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("hammer of wrath", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "cleanse", DISPEL_DISEASE),
+        new CleanseCureDiseaseTrigger(ai),
         NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_DISEASE),
+        new CleanseCurePartyMemberDiseaseTrigger(ai),
         NextAction::array(0, new NextAction("cleanse disease on party", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "cleanse", DISPEL_POISON),
+        new CleanseCurePoisonTrigger(ai),
         NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_POISON),
+        new CleanseCurePartyMemberPoisonTrigger(ai),
         NextAction::array(0, new NextAction("cleanse poison on party", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new NeedCureTrigger(ai, "cleanse", DISPEL_MAGIC),
+		new CleanseCureMagicTrigger(ai),
 		NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberNeedCureTrigger(ai, "cleanse", DISPEL_MAGIC),
+		new CleanseCurePartyMemberMagicTrigger(ai),
 		NextAction::array(0, new NextAction("cleanse magic on party", 40.0f), NULL)));
 }
 

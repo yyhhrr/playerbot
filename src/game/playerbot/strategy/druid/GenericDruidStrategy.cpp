@@ -33,11 +33,11 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("rejuvenation on party", 70.0f), new NextAction("healing touch on party", 70.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NeedCureTrigger(ai, "cure poison", DISPEL_POISON),
+        new CurePoisonTrigger(ai),
         NextAction::array(0, new NextAction("abolish poison", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberNeedCureTrigger(ai, "cure poison", DISPEL_POISON),
+        new PartyMemberCurePoisonTrigger(ai),
         NextAction::array(0, new NextAction("abolish poison on party", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

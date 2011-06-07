@@ -17,7 +17,7 @@ void FrostMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericMageStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new BoostTrigger(ai, "icy veins"),
+        new IcyVeinsTrigger(ai),
         NextAction::array(0, new NextAction("icy veins", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(

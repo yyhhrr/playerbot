@@ -28,28 +28,28 @@ void PaladinBuffDpsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("seal of command", 24.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "retribution aura"), 
+		new RetributionAuraTrigger(ai), 
 		NextAction::array(0, new NextAction("retribution aura", 25.0f), NULL)));
 }
 
 void PaladinShadowResistanceStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "shadow resistance aura"), 
+		new ShadowResistanceAuraTrigger(ai), 
 		NextAction::array(0, new NextAction("shadow resistance aura", 24.0f), NULL)));
 }
 
 void PaladinFrostResistanceStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "frost resistance aura"), 
+		new FrostResistanceAuraTrigger(ai), 
 		NextAction::array(0, new NextAction("frost resistance aura", 24.0f), NULL)));
 }
 
 void PaladinFireResistanceStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "fire resistance aura"), 
+		new FireResistanceAuraTrigger(ai), 
 		NextAction::array(0, new NextAction("fire resistance aura", 24.0f), NULL)));
 }
 
@@ -57,7 +57,7 @@ void PaladinFireResistanceStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 void PaladinBuffArmorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new BuffTrigger(ai, "devotion aura"), 
+		new DevotionAuraTrigger(ai), 
 		NextAction::array(0, new NextAction("devotion aura", 25.0f), NULL)));
 }
 
