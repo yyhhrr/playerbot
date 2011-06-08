@@ -91,6 +91,8 @@ public:
         creators["combo points available"] = &TriggerFactoryInternal::ComboPointsAvailable;
 
         creators["medium threat"] = &TriggerFactoryInternal::MediumThreat;
+        
+        creators["party member dead"] = &TriggerFactoryInternal::PartyMemberDead;
     }
 
 private:
@@ -113,6 +115,7 @@ private:
     Trigger* EnemyOutOfMelee(AiManagerRegistry* ai) { return new EnemyOutOfMeleeTrigger(ai); }
     Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
     Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
+    Trigger* PartyMemberDead(AiManagerRegistry* ai) { return new PartyMemberDeadTrigger(ai); }
 };
 
 static TriggerFactoryInternal triggerFactoryInternal;

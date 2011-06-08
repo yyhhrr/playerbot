@@ -69,6 +69,8 @@ namespace ai
                 creators["nature's grasp"] = &TriggerFactoryInternal::natures_grasp;
                 creators["tiger's fury"] = &TriggerFactoryInternal::tigers_fury;
                 creators["rake"] = &TriggerFactoryInternal::rake;
+                creators["mark of the wild"] = &TriggerFactoryInternal::mark_of_the_wild;
+                creators["mark of the wild on party"] = &TriggerFactoryInternal::mark_of_the_wild_on_party;
             }
 
         private:
@@ -81,6 +83,8 @@ namespace ai
             Trigger* natures_grasp(AiManagerRegistry* ai) { return new NaturesGraspTrigger(ai); }
             Trigger* tigers_fury(AiManagerRegistry* ai) { return new TigersFuryTrigger(ai); }
             Trigger* rake(AiManagerRegistry* ai) { return new RakeTrigger(ai); }
+            Trigger* mark_of_the_wild(AiManagerRegistry* ai) { return new MarkOfTheWildTrigger(ai); }
+            Trigger* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new MarkOfTheWildOnPartyTrigger(ai); }
         }
         triggerFactoryInternal;
     };
@@ -144,6 +148,9 @@ namespace ai
                 creators["abolish poison on party"] = &ActionFactoryInternal::abolish_poison_on_party;
                 creators["berserk"] = &ActionFactoryInternal::berserk;
                 creators["tiger's fury"] = &ActionFactoryInternal::tigers_fury;
+                creators["mark of the wild"] = &ActionFactoryInternal::mark_of_the_wild;
+                creators["mark of the wild on party"] = &ActionFactoryInternal::mark_of_the_wild_on_party;
+                creators["revive"] = &ActionFactoryInternal::revive;
             }
 
         private:
@@ -187,6 +194,9 @@ namespace ai
             Action* abolish_poison_on_party(AiManagerRegistry* ai) { return new CastAbolishPoisonOnPartyAction(ai); }
             Action* berserk(AiManagerRegistry* ai) { return new CastBerserkAction(ai); }
             Action* tigers_fury(AiManagerRegistry* ai) { return new CastTigersFuryAction(ai); }
+            Action* mark_of_the_wild(AiManagerRegistry* ai) { return new CastMarkOfTheWildAction(ai); }
+            Action* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new CastMarkOfTheWildOnPartyAction(ai); }
+            Action* revive(AiManagerRegistry* ai) { return new CastReviveAction(ai); }
         }
         actionFactoryInternal;
     };

@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "DruidTriggers.h"
 #include "DruidMultipliers.h"
 #include "GenericDruidNonCombatStrategy.h"
-#include "DruidActions.h"
 
 using namespace ai;
 
@@ -12,15 +10,15 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
     GenericNonCombatStrategy::InitTriggers(triggers);
         
     triggers.push_back(new TriggerNode(
-        new MarkOfTheWildTrigger(ai),
+        "mark of the wild",
         NextAction::array(0, new NextAction("mark of the wild", 1.0f), NULL)));
     
     triggers.push_back(new TriggerNode(
-        new MarkOfTheWildOnPartyTrigger(ai),
+        "mark of the wild on party",
         NextAction::array(0, new NextAction("mark of the wild on party", 1.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberDeadTrigger(ai),
+		"party member dead",
 		NextAction::array(0, new NextAction("revive", 2.0f), NULL)));
 }
 
@@ -29,28 +27,28 @@ ActionNode* GenericDruidNonCombatStrategy::createAction(const char* name)
 {
     if (!strcmp("mark of the wild", name)) 
     {
-        return new ActionNode (new CastMarkOfTheWildAction(ai),  
+        return new ActionNode ("mark of the wild",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("mark of the wild on party", name)) 
     {
-        return new ActionNode (new CastMarkOfTheWildOnPartyAction(ai),  
+        return new ActionNode ("mark of the wild on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("caster form", name)) 
     {
-        return new ActionNode (new CastCasterFormAction(ai),  
+        return new ActionNode ("caster form",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("revive", name)) 
 	{
-		return new ActionNode (new CastReviveAction(ai),  
+		return new ActionNode ("revive",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
