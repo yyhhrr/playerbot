@@ -105,18 +105,21 @@ namespace ai
             ActionFactoryInternal()
             {
                 creators["feral charge - bear"] = &ActionFactoryInternal::feral_charge_bear;
+                creators["feral charge - cat"] = &ActionFactoryInternal::feral_charge_cat;
                 creators["swipe (bear)"] = &ActionFactoryInternal::swipe_bear;
                 creators["faerie fire (feral)"] = &ActionFactoryInternal::faerie_fire_feral;
                 creators["faerie fire"] = &ActionFactoryInternal::faerie_fire;
                 creators["bear form"] = &ActionFactoryInternal::bear_form;
                 creators["dire bear form"] = &ActionFactoryInternal::dire_bear_form;
+                creators["moonkin form"] = &ActionFactoryInternal::moonkin_form;
+                creators["cat form"] = &ActionFactoryInternal::cat_form;
+                creators["caster form"] = &ActionFactoryInternal::caster_form;
                 creators["mangle (bear)"] = &ActionFactoryInternal::mangle_bear;
                 creators["maul"] = &ActionFactoryInternal::maul;
                 creators["bash"] = &ActionFactoryInternal::bash;
                 creators["swipe"] = &ActionFactoryInternal::swipe;
                 creators["growl"] = &ActionFactoryInternal::growl;
                 creators["demoralizing roar"] = &ActionFactoryInternal::demoralizing_roar;
-                creators["moonkin form"] = &ActionFactoryInternal::moonkin_form;
                 creators["hibernate"] = &ActionFactoryInternal::hibernate;
                 creators["entangling roots"] = &ActionFactoryInternal::entangling_roots;
                 creators["entangling roots on cc"] = &ActionFactoryInternal::entangling_roots_on_cc;
@@ -126,15 +129,25 @@ namespace ai
                 creators["moonfire"] = &ActionFactoryInternal::moonfire;
                 creators["starfire"] = &ActionFactoryInternal::starfire;
                 creators["nature's grasp"] = &ActionFactoryInternal::natures_grasp;
+                creators["claw"] = &ActionFactoryInternal::claw;
+                creators["mangle (cat)"] = &ActionFactoryInternal::mangle_cat;
+                creators["swipe (cat)"] = &ActionFactoryInternal::swipe_cat;
+                creators["rake"] = &ActionFactoryInternal::rake;
+                creators["ferocious bite"] = &ActionFactoryInternal::ferocious_bite;
+                creators["rip"] = &ActionFactoryInternal::rip;
+                creators["cower"] = &ActionFactoryInternal::cower;
             }
 
         private:
             Action* feral_charge_bear(AiManagerRegistry* ai) { return new CastFeralChargeBearAction(ai); }
+            Action* feral_charge_cat(AiManagerRegistry* ai) { return new CastFeralChargeCatAction(ai); }
             Action* swipe_bear(AiManagerRegistry* ai) { return new CastSwipeBearAction(ai); }
             Action* faerie_fire_feral(AiManagerRegistry* ai) { return new CastFaerieFireFeralAction(ai); }
             Action* faerie_fire(AiManagerRegistry* ai) { return new CastFaerieFireAction(ai); }
             Action* bear_form(AiManagerRegistry* ai) { return new CastBearFormAction(ai); }
             Action* dire_bear_form(AiManagerRegistry* ai) { return new CastDireBearFormAction(ai); }
+            Action* cat_form(AiManagerRegistry* ai) { return new CastCatFormAction(ai); }
+            Action* caster_form(AiManagerRegistry* ai) { return new CastCasterFormAction(ai); }
             Action* mangle_bear(AiManagerRegistry* ai) { return new CastMangleBearAction(ai); }
             Action* maul(AiManagerRegistry* ai) { return new CastMaulAction(ai); }
             Action* bash(AiManagerRegistry* ai) { return new CastBashAction(ai); }
@@ -151,6 +164,13 @@ namespace ai
             Action* moonfire(AiManagerRegistry* ai) { return new CastMoonfireAction(ai); }
             Action* starfire(AiManagerRegistry* ai) { return new CastStarfireAction(ai); }
             Action* natures_grasp(AiManagerRegistry* ai) { return new CastNaturesGraspAction(ai); }
+            Action* claw(AiManagerRegistry* ai) { return new CastClawAction(ai); }
+            Action* mangle_cat(AiManagerRegistry* ai) { return new CastMangleCatAction(ai); }
+            Action* swipe_cat(AiManagerRegistry* ai) { return new CastSwipeCatAction(ai); }
+            Action* rake(AiManagerRegistry* ai) { return new CastRakeAction(ai); }
+            Action* ferocious_bite(AiManagerRegistry* ai) { return new CastFerociousBiteAction(ai); }
+            Action* rip(AiManagerRegistry* ai) { return new CastRipAction(ai); }
+            Action* cower(AiManagerRegistry* ai) { return new CastCowerAction(ai); }
         }
         actionFactoryInternal;
     };
