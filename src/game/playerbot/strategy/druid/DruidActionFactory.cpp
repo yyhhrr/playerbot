@@ -11,12 +11,12 @@
 
 using namespace ai;
 
-namespace ai 
+namespace ai
 {
     namespace druid
     {
         using namespace ai;
-        
+
         static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, druid::StrategyFactoryInternal>
         {
         public:
@@ -29,7 +29,7 @@ namespace ai
 
                 creators["caster"] = &druid::StrategyFactoryInternal::caster;
                 creators["dps"] = &druid::StrategyFactoryInternal::caster;
-            
+
                 creators["nc"] = &druid::StrategyFactoryInternal::nc;
             }
 
@@ -38,7 +38,7 @@ namespace ai
             Strategy* cat(AiManagerRegistry* ai) { return new CatDpsDruidStrategy(ai); }
             Strategy* caster(AiManagerRegistry* ai) { return new CasterDruidStrategy(ai); }
             Strategy* nc(AiManagerRegistry* ai) { return new GenericDruidNonCombatStrategy(ai); }
-        } 
+        }
         strategyFactoryInternal;
     };
 };
@@ -49,7 +49,7 @@ Strategy* DruidActionFactory::createStrategy(const char* name)
     return strategy ? strategy : ActionFactory::createStrategy(name);
 }
 
-namespace ai 
+namespace ai
 {
     namespace druid
     {
@@ -63,12 +63,20 @@ namespace ai
                 creators["thorns"] = &TriggerFactoryInternal::Thorns;
                 creators["bash"] = &TriggerFactoryInternal::bash;
                 creators["faerie fire (feral)"] = &TriggerFactoryInternal::faerie_fire_feral;
+                creators["faerie fire"] = &TriggerFactoryInternal::faerie_fire;
+                creators["insect swarm"] = &TriggerFactoryInternal::insect_swarm;
+                creators["moonfire"] = &TriggerFactoryInternal::moonfire;
+                creators["nature's grasp"] = &TriggerFactoryInternal::natures_grasp;
             }
 
         private:
             Trigger* Thorns(AiManagerRegistry* ai) { return new ThornsTrigger(ai); }
             Trigger* bash(AiManagerRegistry* ai) { return new BashInterruptSpellTrigger(ai); }
             Trigger* faerie_fire_feral(AiManagerRegistry* ai) { return new FaerieFireFeralTrigger(ai); }
+            Trigger* insect_swarm(AiManagerRegistry* ai) { return new InsectSwarmTrigger(ai); }
+            Trigger* moonfire(AiManagerRegistry* ai) { return new MoonfireTrigger(ai); }
+            Trigger* faerie_fire(AiManagerRegistry* ai) { return new FaerieFireTrigger(ai); }
+            Trigger* natures_grasp(AiManagerRegistry* ai) { return new NaturesGraspTrigger(ai); }
         }
         triggerFactoryInternal;
     };
@@ -81,7 +89,7 @@ Trigger* DruidActionFactory::createTrigger(const char* name)
 }
 
 
-namespace ai 
+namespace ai
 {
     namespace druid
     {
