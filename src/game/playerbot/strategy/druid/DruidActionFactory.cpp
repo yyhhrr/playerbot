@@ -136,6 +136,14 @@ namespace ai
                 creators["ferocious bite"] = &ActionFactoryInternal::ferocious_bite;
                 creators["rip"] = &ActionFactoryInternal::rip;
                 creators["cower"] = &ActionFactoryInternal::cower;
+                creators["survival instincts"] = &ActionFactoryInternal::survival_instincts;
+                creators["thorns"] = &ActionFactoryInternal::thorns;
+                creators["cure poison"] = &ActionFactoryInternal::cure_poison;
+                creators["cure poison on party"] = &ActionFactoryInternal::cure_poison_on_party;
+                creators["abolish poison"] = &ActionFactoryInternal::abolish_poison;
+                creators["abolish poison on party"] = &ActionFactoryInternal::abolish_poison_on_party;
+                creators["berserk"] = &ActionFactoryInternal::berserk;
+                creators["tiger's fury"] = &ActionFactoryInternal::tigers_fury;
             }
 
         private:
@@ -171,6 +179,14 @@ namespace ai
             Action* ferocious_bite(AiManagerRegistry* ai) { return new CastFerociousBiteAction(ai); }
             Action* rip(AiManagerRegistry* ai) { return new CastRipAction(ai); }
             Action* cower(AiManagerRegistry* ai) { return new CastCowerAction(ai); }
+            Action* survival_instincts(AiManagerRegistry* ai) { return new CastSurvivalInstinctsAction(ai); }
+            Action* thorns(AiManagerRegistry* ai) { return new CastThornsAction(ai); }
+            Action* cure_poison(AiManagerRegistry* ai) { return new CastCurePoisonAction(ai); }
+            Action* cure_poison_on_party(AiManagerRegistry* ai) { return new CastCurePoisonOnPartyAction(ai); }
+            Action* abolish_poison(AiManagerRegistry* ai) { return new CastAbolishPoisonAction(ai); }
+            Action* abolish_poison_on_party(AiManagerRegistry* ai) { return new CastAbolishPoisonOnPartyAction(ai); }
+            Action* berserk(AiManagerRegistry* ai) { return new CastBerserkAction(ai); }
+            Action* tigers_fury(AiManagerRegistry* ai) { return new CastTigersFuryAction(ai); }
         }
         actionFactoryInternal;
     };

@@ -1,8 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "DruidTriggers.h"
 #include "FeralDruidStrategy.h"
-#include "DruidActions.h"
 
 using namespace ai;
 
@@ -11,7 +9,7 @@ void FeralDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericDruidStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new CriticalHealthTrigger(ai),
+        "critical health",
         NextAction::array(0, new NextAction("survival instincts", 80.0f), NULL)));
 }
 
@@ -19,56 +17,56 @@ ActionNode* FeralDruidStrategy::createAction(const char* name)
 {
     if (!strcmp("survival instincts", name)) 
     {
-        return new ActionNode (new CastSurvivalInstinctsAction(ai),  
+        return new ActionNode ("survival instincts",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("rejuvenation"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("thorns", name)) 
     {
-        return new ActionNode (new CastThornsAction(ai),  
+        return new ActionNode ("thorns",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("cure poison", name)) 
     {
-        return new ActionNode (new CastCurePoisonAction(ai),  
+        return new ActionNode ("cure poison",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("cure poison on party", name)) 
     {
-        return new ActionNode (new CastCurePoisonOnPartyAction(ai),  
+        return new ActionNode ("cure poison on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("abolish poison", name)) 
     {
-        return new ActionNode (new CastAbolishPoisonAction(ai),  
+        return new ActionNode ("abolish poison",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("abolish poison on party", name)) 
     {
-        return new ActionNode (new CastAbolishPoisonOnPartyAction(ai),  
+        return new ActionNode ("abolish poison on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("berserk", name)) 
     {
-        return new ActionNode (new CastBerserkAction(ai),  
+        return new ActionNode ("berserk",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("tiger's fury", name)) 
     {
-        return new ActionNode (new CastTigersFuryAction(ai),  
+        return new ActionNode ("tiger's fury",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

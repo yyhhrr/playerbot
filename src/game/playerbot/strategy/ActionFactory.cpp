@@ -33,80 +33,21 @@ public:
     }
 
 private:
-    Strategy* racials(AiManagerRegistry* ai)
-    {
-        return new RacialsStrategy(ai);
-    }
-
-    Strategy* follow_master(AiManagerRegistry* ai)
-    {
-        return new FollowMasterNonCombatStrategy(ai);
-    }
-
-    Strategy* follow_line(AiManagerRegistry* ai)
-    {
-        return new FollowLineNonCombatStrategy(ai);
-    }
-
-    Strategy* stay(AiManagerRegistry* ai)
-    {
-        return new StayNonCombatStrategy(ai);
-    }
-
-    Strategy* dps_assist(AiManagerRegistry* ai)
-    {
-        return new DpsAssistStrategy(ai);
-    }
-
-    Strategy* dps_aoe(AiManagerRegistry* ai)
-    {
-        return new DpsAoeStrategy(ai);
-    }
-
-    Strategy* tank_assist(AiManagerRegistry* ai)
-    {
-        return new TankAssistStrategy(ai);
-    }
-
-    Strategy* tank_aoe(AiManagerRegistry* ai)
-    {
-        return new TankAoeStrategy(ai);
-    }
-
-    Strategy* grind(AiManagerRegistry* ai)
-    {
-        return new GrindingStrategy(ai);
-    }
-
-    Strategy* loot(AiManagerRegistry* ai)
-    {
-        return new LootNonCombatStrategy(ai);
-    }
-
-    Strategy* goaway(AiManagerRegistry* ai)
-    {
-        return new GoAwayNonCombatStrategy(ai);
-    }
-
-    Strategy* emote(AiManagerRegistry* ai)
-    {
-        return new RandomEmoteStrategy(ai);
-    }
-
-    Strategy* passive(AiManagerRegistry* ai)
-    {
-        return new PassiveStrategy(ai);
-    }
-
-    Strategy* low_mana(AiManagerRegistry* ai)
-    {
-        return new LowManaStrategy(ai);
-    }
-
-    Strategy* food(AiManagerRegistry* ai)
-    {
-        return new UseFoodStrategy(ai);
-    }
+    Strategy* racials(AiManagerRegistry* ai) { return new RacialsStrategy(ai); }
+    Strategy* follow_master(AiManagerRegistry* ai) { return new FollowMasterNonCombatStrategy(ai); }
+    Strategy* follow_line(AiManagerRegistry* ai) { return new FollowLineNonCombatStrategy(ai); }
+    Strategy* stay(AiManagerRegistry* ai) { return new StayNonCombatStrategy(ai); }
+    Strategy* dps_assist(AiManagerRegistry* ai) { return new DpsAssistStrategy(ai); }
+    Strategy* dps_aoe(AiManagerRegistry* ai) { return new DpsAoeStrategy(ai); }
+    Strategy* tank_assist(AiManagerRegistry* ai) { return new TankAssistStrategy(ai); }
+    Strategy* tank_aoe(AiManagerRegistry* ai) { return new TankAoeStrategy(ai); }
+    Strategy* grind(AiManagerRegistry* ai) { return new GrindingStrategy(ai); }
+    Strategy* loot(AiManagerRegistry* ai) { return new LootNonCombatStrategy(ai); }
+    Strategy* goaway(AiManagerRegistry* ai) { return new GoAwayNonCombatStrategy(ai); }
+    Strategy* emote(AiManagerRegistry* ai) { return new RandomEmoteStrategy(ai); }
+    Strategy* passive(AiManagerRegistry* ai) { return new PassiveStrategy(ai); }
+    Strategy* low_mana(AiManagerRegistry* ai) { return new LowManaStrategy(ai); }
+    Strategy* food(AiManagerRegistry* ai) { return new UseFoodStrategy(ai); }
 };
 
 static StrategyFactoryInternal strategyFactoryInternal;
@@ -126,6 +67,7 @@ public:
         creators["timer"] = &TriggerFactoryInternal::Timer;
         creators["random"] = &TriggerFactoryInternal::Random;
 
+        creators["critical health"] = &TriggerFactoryInternal::CriticalHealth;
         creators["low health"] = &TriggerFactoryInternal::LowHealth;
         creators["low mana"] = &TriggerFactoryInternal::LowMana;
 
@@ -152,78 +94,25 @@ public:
     }
 
 private:
-    Trigger* LightAoe(AiManagerRegistry* ai)
-    {
-        return new LightAoeTrigger(ai);
-    }
-    Trigger* MediumAoe(AiManagerRegistry* ai)
-    {
-        return new MediumAoeTrigger(ai);
-    }
-    Trigger* HighAoe(AiManagerRegistry* ai)
-    {
-        return new HighAoeTrigger(ai);
-    }
-    Trigger* LoseAggro(AiManagerRegistry* ai)
-    {
-        return new LoseAggroTrigger(ai);
-    }
-    Trigger* LowHealth(AiManagerRegistry* ai)
-    {
-        return new LowHealthTrigger(ai);
-    }
-    Trigger* LowMana(AiManagerRegistry* ai)
-    {
-        return new LowManaTrigger(ai);
-    }
-    Trigger* LightRageAvailable(AiManagerRegistry* ai)
-    {
-        return new LightRageAvailableTrigger(ai);
-    }
-    Trigger* MediumRageAvailable(AiManagerRegistry* ai)
-    {
-        return new MediumRageAvailableTrigger(ai);
-    }
-    Trigger* HighRageAvailable(AiManagerRegistry* ai)
-    {
-        return new HighRageAvailableTrigger(ai);
-    }
-    Trigger* LootAvailable(AiManagerRegistry* ai)
-    {
-        return new LootAvailableTrigger(ai);
-    }
-    Trigger* NoAttackers(AiManagerRegistry* ai)
-    {
-        return new NoAttackersTrigger(ai);
-    }
-    Trigger* TankAoe(AiManagerRegistry* ai)
-    {
-        return new TankAoeTrigger(ai);
-    }
-    Trigger* Timer(AiManagerRegistry* ai)
-    {
-        return new TimerTrigger(ai);
-    }
-    Trigger* NoTarget(AiManagerRegistry* ai)
-    {
-        return new NoTargetTrigger(ai);
-    }
-    Trigger* Random(AiManagerRegistry* ai)
-    {
-        return new RandomTrigger(ai);
-    }
-    Trigger* EnemyOutOfMelee(AiManagerRegistry* ai)
-    {
-        return new EnemyOutOfMeleeTrigger(ai);
-    }
-    Trigger* ComboPointsAvailable(AiManagerRegistry* ai)
-    {
-        return new ComboPointsAvailableTrigger(ai);
-    }
-    Trigger* MediumThreat(AiManagerRegistry* ai)
-    {
-        return new MediumThreatTrigger(ai);
-    }
+    Trigger* LightAoe(AiManagerRegistry* ai) { return new LightAoeTrigger(ai); }
+    Trigger* MediumAoe(AiManagerRegistry* ai) { return new MediumAoeTrigger(ai); }
+    Trigger* HighAoe(AiManagerRegistry* ai) { return new HighAoeTrigger(ai); }
+    Trigger* LoseAggro(AiManagerRegistry* ai) { return new LoseAggroTrigger(ai); }
+    Trigger* LowHealth(AiManagerRegistry* ai) { return new LowHealthTrigger(ai); }
+    Trigger* CriticalHealth(AiManagerRegistry* ai) { return new CriticalHealthTrigger(ai); }
+    Trigger* LowMana(AiManagerRegistry* ai) { return new LowManaTrigger(ai); }
+    Trigger* LightRageAvailable(AiManagerRegistry* ai) { return new LightRageAvailableTrigger(ai); }
+    Trigger* MediumRageAvailable(AiManagerRegistry* ai) { return new MediumRageAvailableTrigger(ai); }
+    Trigger* HighRageAvailable(AiManagerRegistry* ai) { return new HighRageAvailableTrigger(ai); }
+    Trigger* LootAvailable(AiManagerRegistry* ai) { return new LootAvailableTrigger(ai); }
+    Trigger* NoAttackers(AiManagerRegistry* ai) { return new NoAttackersTrigger(ai); }
+    Trigger* TankAoe(AiManagerRegistry* ai) { return new TankAoeTrigger(ai); }
+    Trigger* Timer(AiManagerRegistry* ai) { return new TimerTrigger(ai); }
+    Trigger* NoTarget(AiManagerRegistry* ai) { return new NoTargetTrigger(ai); }
+    Trigger* Random(AiManagerRegistry* ai) { return new RandomTrigger(ai); }
+    Trigger* EnemyOutOfMelee(AiManagerRegistry* ai) { return new EnemyOutOfMeleeTrigger(ai); }
+    Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
+    Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
 };
 
 static TriggerFactoryInternal triggerFactoryInternal;
