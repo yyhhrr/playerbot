@@ -138,9 +138,30 @@ public:
         creators["no target"] = &TriggerFactoryInternal::NoTarget;
         
         creators["tank aoe"] = &TriggerFactoryInternal::TankAoe;
+        creators["lose aggro"] = &TriggerFactoryInternal::LoseAggro;
+    
+        creators["light aoe"] = &TriggerFactoryInternal::LightAoe;
+        creators["medium aoe"] = &TriggerFactoryInternal::MediumAoe;
+        creators["high aoe"] = &TriggerFactoryInternal::HighAoe;
     }
 
 private:
+    Trigger* LightAoe(AiManagerRegistry* ai)
+    {
+        return new LightAoeTrigger(ai);
+    }
+    Trigger* MediumAoe(AiManagerRegistry* ai)
+    {
+        return new MediumAoeTrigger(ai);
+    }
+    Trigger* HighAoe(AiManagerRegistry* ai)
+    {
+        return new HighAoeTrigger(ai);
+    }
+    Trigger* LoseAggro(AiManagerRegistry* ai)
+    {
+        return new LoseAggroTrigger(ai);
+    }
     Trigger* LowHealth(AiManagerRegistry* ai)
     {
         return new LowHealthTrigger(ai);
