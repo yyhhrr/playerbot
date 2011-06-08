@@ -27,7 +27,7 @@ namespace ai
 	class StatAvailable : public Trigger
 	{
 	public:
-		StatAvailable(AiManagerRegistry* const ai, int amount) : Trigger(ai) 
+		StatAvailable(AiManagerRegistry* const ai, int amount) : Trigger(ai)
 		{
 			this->amount = amount;
 		}
@@ -86,10 +86,10 @@ namespace ai
         HighEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 60) {}
     };
 
-	class ComboPointsAvailable : public StatAvailable
+	class ComboPointsAvailableTrigger : public StatAvailable
 	{
 	public:
-		ComboPointsAvailable(AiManagerRegistry* const ai, int amount = 5) : StatAvailable(ai, amount) {}
+	    ComboPointsAvailableTrigger(AiManagerRegistry* const ai, int amount = 5) : StatAvailable(ai, amount) {}
 		virtual bool IsActive();
 	};
 
@@ -102,7 +102,7 @@ namespace ai
 	class SpellTrigger : public Trigger
 	{
 	public:
-		SpellTrigger(AiManagerRegistry* const ai, const char* spell, int checkInterval = 1) : Trigger(ai, spell, checkInterval) 
+		SpellTrigger(AiManagerRegistry* const ai, const char* spell, int checkInterval = 1) : Trigger(ai, spell, checkInterval)
 		{
 			this->spell = spell;
 		}
@@ -115,7 +115,7 @@ namespace ai
 		const char* spell;
 	};
 
-	class SpellCanBeCastTrigger : public SpellTrigger 
+	class SpellCanBeCastTrigger : public SpellTrigger
 	{
 	public:
 		SpellCanBeCastTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell) {}
@@ -123,7 +123,7 @@ namespace ai
 	};
 
 	// TODO: check other targets
-    class InterruptSpellTrigger : public SpellTrigger 
+    class InterruptSpellTrigger : public SpellTrigger
 	{
     public:
         InterruptSpellTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell) {}
@@ -135,13 +135,13 @@ namespace ai
     class AttackerCountTrigger : public Trigger
     {
     public:
-        AttackerCountTrigger(AiManagerRegistry* const ai, int amount, float distance = BOT_REACT_DISTANCE) : Trigger(ai) 
+        AttackerCountTrigger(AiManagerRegistry* const ai, int amount, float distance = BOT_REACT_DISTANCE) : Trigger(ai)
         {
             this->amount = amount;
             this->distance = distance;
         }
-    public: 
-        virtual bool IsActive() 
+    public:
+        virtual bool IsActive()
 		{
             return statsManager->GetAttackerCount(distance) >= amount;
         }
@@ -150,7 +150,7 @@ namespace ai
     protected:
         int amount;
         float distance;
-    };    
+    };
 
     class HasAttackersTrigger : public AttackerCountTrigger
     {
@@ -162,55 +162,55 @@ namespace ai
     {
     public:
         MyAttackerCountTrigger(AiManagerRegistry* const ai, int amount) : AttackerCountTrigger(ai, amount) {}
-    public: 
+    public:
         virtual bool IsActive();
         virtual const char* getName() { return "my attacker count"; }
-    };    
+    };
 
     class MediumThreatTrigger : public MyAttackerCountTrigger
     {
     public:
         MediumThreatTrigger(AiManagerRegistry* const ai) : MyAttackerCountTrigger(ai, 2) {}
-    };    
+    };
 
     class AoeTrigger : public AttackerCountTrigger
     {
     public:
-        AoeTrigger(AiManagerRegistry* const ai, int amount = 3, float range = 15.0f) : AttackerCountTrigger(ai, amount) 
+        AoeTrigger(AiManagerRegistry* const ai, int amount = 3, float range = 15.0f) : AttackerCountTrigger(ai, amount)
         {
             this->range = range;
         }
-    public: 
+    public:
         virtual bool IsActive();
         virtual const char* getName() { return "aoe"; }
 
     private:
         float range;
-    };    
+    };
 
     class LightAoeTrigger : public AoeTrigger
     {
     public:
         LightAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 2, 15.0f) {}
-    };    
+    };
 
     class MediumAoeTrigger : public AoeTrigger
     {
     public:
         MediumAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 3, 17.0f) {}
-    };    
+    };
 
     class HighAoeTrigger : public AoeTrigger
     {
     public:
         HighAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 4, 20.0f) {}
-    };    
+    };
 
     class BuffTrigger : public SpellTrigger
     {
     public:
         BuffTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell, 5) {}
-    public: 
+    public:
 		virtual Unit* GetTarget();
         virtual bool IsActive();
     };
@@ -219,7 +219,7 @@ namespace ai
     {
     public:
         BuffOnPartyTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {}
-    public: 
+    public:
 		virtual Unit* GetTarget();
     };
 
@@ -235,7 +235,7 @@ namespace ai
         DebuffTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {
 			checkInterval = 1;
 		}
-    public: 
+    public:
 		virtual Unit* GetTarget();
         virtual bool IsActive();
     };
@@ -247,11 +247,11 @@ namespace ai
 	class BoostTrigger : public BuffTrigger
 	{
 	public:
-		BoostTrigger(AiManagerRegistry* const ai, const char* spell, float balance = 50) : BuffTrigger(ai, spell) 
+		BoostTrigger(AiManagerRegistry* const ai, const char* spell, float balance = 50) : BuffTrigger(ai, spell)
 		{
 			this->balance = balance;
 		}
-	public: 
+	public:
 		virtual bool IsActive();
 
 	protected:
@@ -261,11 +261,11 @@ namespace ai
     class RandomTrigger : public Trigger
     {
     public:
-        RandomTrigger(AiManagerRegistry* const ai, int probability = 20) : Trigger(ai) 
+        RandomTrigger(AiManagerRegistry* const ai, int probability = 20) : Trigger(ai)
         {
             this->probability = probability;
         }
-    public: 
+    public:
         virtual bool IsActive();
         virtual const char* getName() { return "random"; }
 
@@ -276,17 +276,17 @@ namespace ai
     class AndTrigger : public Trigger
     {
     public:
-        AndTrigger(AiManagerRegistry* const ai, Trigger* ls, Trigger* rs) : Trigger(ai) 
+        AndTrigger(AiManagerRegistry* const ai, Trigger* ls, Trigger* rs) : Trigger(ai)
         {
             this->ls = ls;
             this->rs = rs;
         }
-        virtual ~AndTrigger() 
+        virtual ~AndTrigger()
         {
             delete ls;
             delete rs;
         }
-    public: 
+    public:
         virtual bool IsActive();
         virtual const char* getName();
 
@@ -299,12 +299,12 @@ namespace ai
     {
     public:
         SnareTargetTrigger(AiManagerRegistry* const ai, const char* aura) : DebuffTrigger(ai, aura) {}
-    public: 
+    public:
         virtual bool IsActive();
         virtual const char* getName() { return "target is moving"; }
     };
 
-	class LowManaTrigger : public Trigger 
+	class LowManaTrigger : public Trigger
 	{
 	public:
 		LowManaTrigger(AiManagerRegistry* const ai) : Trigger(ai, "low mana", 5) {}
@@ -317,7 +317,7 @@ namespace ai
     END_TRIGGER()
 
 
-	class NoPetTrigger : public Trigger 
+	class NoPetTrigger : public Trigger
 	{
 	public:
 		NoPetTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no pet", 5) {}
@@ -333,7 +333,7 @@ namespace ai
 			this->item = item;
 			this->count = count;
 		}
-	public: 
+	public:
 		virtual bool IsActive();
 		virtual const char* getName() { return "item count"; }
 
@@ -360,7 +360,7 @@ namespace ai
     public:
         TimerTrigger(AiManagerRegistry* const ai, int checkInterval = 5) : Trigger(ai, "timer", checkInterval) {}
 
-    public: 
+    public:
         virtual bool IsActive() { return true; }
     };
 
@@ -369,7 +369,7 @@ namespace ai
 	public:
 		TankAoeTrigger(AiManagerRegistry* const ai) : NoAttackersTrigger(ai) {}
 
-	public: 
+	public:
 		virtual bool IsActive();
 
 	};
@@ -379,7 +379,7 @@ namespace ai
     public:
         IsBehindTargetTrigger(AiManagerRegistry* const ai) : Trigger(ai) {}
 
-    public: 
+    public:
         virtual bool IsActive();
     };
 
@@ -388,7 +388,7 @@ namespace ai
     public:
         HasCcTargetTrigger(AiManagerRegistry* const ai, const char* name) : Trigger(ai, name) {}
 
-    public: 
+    public:
         virtual bool IsActive();
     };
 
@@ -397,7 +397,7 @@ namespace ai
 	public:
 		NoMovementTrigger(AiManagerRegistry* const ai, const char* name) : Trigger(ai, name, 5) {}
 
-	public: 
+	public:
 		virtual bool IsActive();
 	};
 }

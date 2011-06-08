@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-bool LowManaTrigger::IsActive() 
+bool LowManaTrigger::IsActive()
 {
 	Unit* target = targetManager->GetSelf();
 	return statsManager->HasMana(target) && statsManager->GetManaPercent(target) < LOW_HEALTH_PERCENT;
@@ -21,7 +21,7 @@ bool EnergyAvailable::IsActive()
 	return statsManager->GetEnergy(targetManager->GetSelf()) >= amount;
 }
 
-bool ComboPointsAvailable::IsActive()
+bool ComboPointsAvailableTrigger::IsActive()
 {
     return statsManager->GetComboPoints(targetManager->GetSelf()) >= amount;
 }
@@ -33,7 +33,7 @@ bool LoseAggroTrigger::IsActive()
 
 bool PanicTrigger::IsActive()
 {
-    return ai->GetStatsManager()->GetHealthPercent(ai->GetTargetManager()->GetSelf()) < 25 && 
+    return ai->GetStatsManager()->GetHealthPercent(ai->GetTargetManager()->GetSelf()) < 25 &&
 		(!statsManager->HasMana(targetManager->GetSelf()) || statsManager->GetManaPercent(targetManager->GetSelf()) < 25);
 }
 
@@ -44,8 +44,8 @@ Unit* BuffTrigger::GetTarget()
 
 bool BuffTrigger::IsActive()
 {
-	return SpellTrigger::IsActive() && 
-		!spellManager->HasAura(spell, GetTarget()) && 
+	return SpellTrigger::IsActive() &&
+		!spellManager->HasAura(spell, GetTarget()) &&
 		(!statsManager->HasMana(targetManager->GetSelf()) ||
 		statsManager->GetManaPercent(targetManager->GetSelf()) > 40);
 }
@@ -102,7 +102,7 @@ bool SpellCanBeCastTrigger::IsActive()
 }
 
 bool LootAvailableTrigger::IsActive()
-{   
+{
     return ai->GetInventoryManager()->CanLoot();
 }
 
@@ -146,7 +146,7 @@ Unit* InterruptSpellTrigger::GetTarget()
 	return targetManager->GetCurrentTarget();
 }
 
-bool InterruptSpellTrigger::IsActive() 
+bool InterruptSpellTrigger::IsActive()
 {
 	return SpellTrigger::IsActive() && spellManager->IsSpellCasting(GetTarget());
 }
@@ -164,7 +164,7 @@ bool HasAuraTrigger::IsActive()
 bool TankAoeTrigger::IsActive()
 {
     Unit* target = targetManager->GetCurrentTarget();
-    return statsManager->GetAttackerCount() > 0 && 
+    return statsManager->GetAttackerCount() > 0 &&
         (!target || target->getVictim() == targetManager->GetSelf());
 }
 

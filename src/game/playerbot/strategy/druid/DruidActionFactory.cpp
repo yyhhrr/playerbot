@@ -67,6 +67,8 @@ namespace ai
                 creators["insect swarm"] = &TriggerFactoryInternal::insect_swarm;
                 creators["moonfire"] = &TriggerFactoryInternal::moonfire;
                 creators["nature's grasp"] = &TriggerFactoryInternal::natures_grasp;
+                creators["tiger's fury"] = &TriggerFactoryInternal::tigers_fury;
+                creators["rake"] = &TriggerFactoryInternal::rake;
             }
 
         private:
@@ -77,6 +79,8 @@ namespace ai
             Trigger* moonfire(AiManagerRegistry* ai) { return new MoonfireTrigger(ai); }
             Trigger* faerie_fire(AiManagerRegistry* ai) { return new FaerieFireTrigger(ai); }
             Trigger* natures_grasp(AiManagerRegistry* ai) { return new NaturesGraspTrigger(ai); }
+            Trigger* tigers_fury(AiManagerRegistry* ai) { return new TigersFuryTrigger(ai); }
+            Trigger* rake(AiManagerRegistry* ai) { return new RakeTrigger(ai); }
         }
         triggerFactoryInternal;
     };

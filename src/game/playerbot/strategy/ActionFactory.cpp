@@ -128,21 +128,27 @@ public:
 
         creators["low health"] = &TriggerFactoryInternal::LowHealth;
         creators["low mana"] = &TriggerFactoryInternal::LowMana;
-        
+
         creators["light rage available"] = &TriggerFactoryInternal::LightRageAvailable;
         creators["medium rage available"] = &TriggerFactoryInternal::MediumRageAvailable;
         creators["high rage available"] = &TriggerFactoryInternal::HighRageAvailable;
-        
+
         creators["loot available"] = &TriggerFactoryInternal::LootAvailable;
         creators["no attackers"] = &TriggerFactoryInternal::NoAttackers;
         creators["no target"] = &TriggerFactoryInternal::NoTarget;
-        
+
         creators["tank aoe"] = &TriggerFactoryInternal::TankAoe;
         creators["lose aggro"] = &TriggerFactoryInternal::LoseAggro;
-    
+
         creators["light aoe"] = &TriggerFactoryInternal::LightAoe;
         creators["medium aoe"] = &TriggerFactoryInternal::MediumAoe;
         creators["high aoe"] = &TriggerFactoryInternal::HighAoe;
+
+        creators["enemy out of melee"] = &TriggerFactoryInternal::EnemyOutOfMelee;
+
+        creators["combo points available"] = &TriggerFactoryInternal::ComboPointsAvailable;
+
+        creators["medium threat"] = &TriggerFactoryInternal::MediumThreat;
     }
 
 private:
@@ -206,7 +212,18 @@ private:
     {
         return new RandomTrigger(ai);
     }
-
+    Trigger* EnemyOutOfMelee(AiManagerRegistry* ai)
+    {
+        return new EnemyOutOfMeleeTrigger(ai);
+    }
+    Trigger* ComboPointsAvailable(AiManagerRegistry* ai)
+    {
+        return new ComboPointsAvailableTrigger(ai);
+    }
+    Trigger* MediumThreat(AiManagerRegistry* ai)
+    {
+        return new MediumThreatTrigger(ai);
+    }
 };
 
 static TriggerFactoryInternal triggerFactoryInternal;
@@ -230,7 +247,7 @@ private:
     {
         return new MeleeAction(ai);
     }
-    
+
 };
 
 static ActionFactoryInternal actionFactoryInternal;
