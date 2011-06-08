@@ -69,7 +69,12 @@ public:
 
         creators["critical health"] = &TriggerFactoryInternal::CriticalHealth;
         creators["low health"] = &TriggerFactoryInternal::LowHealth;
+        creators["medium health"] = &TriggerFactoryInternal::MediumHealth;
         creators["low mana"] = &TriggerFactoryInternal::LowMana;
+
+        creators["party member critical health"] = &TriggerFactoryInternal::PartyMemberCriticalHealth;
+        creators["party member low health"] = &TriggerFactoryInternal::PartyMemberLowHealth;
+        creators["party member medium health"] = &TriggerFactoryInternal::PartyMemberMediumHealth;
 
         creators["light rage available"] = &TriggerFactoryInternal::LightRageAvailable;
         creators["medium rage available"] = &TriggerFactoryInternal::MediumRageAvailable;
@@ -101,6 +106,7 @@ private:
     Trigger* HighAoe(AiManagerRegistry* ai) { return new HighAoeTrigger(ai); }
     Trigger* LoseAggro(AiManagerRegistry* ai) { return new LoseAggroTrigger(ai); }
     Trigger* LowHealth(AiManagerRegistry* ai) { return new LowHealthTrigger(ai); }
+    Trigger* MediumHealth(AiManagerRegistry* ai) { return new MediumHealthTrigger(ai); }
     Trigger* CriticalHealth(AiManagerRegistry* ai) { return new CriticalHealthTrigger(ai); }
     Trigger* LowMana(AiManagerRegistry* ai) { return new LowManaTrigger(ai); }
     Trigger* LightRageAvailable(AiManagerRegistry* ai) { return new LightRageAvailableTrigger(ai); }
@@ -116,6 +122,9 @@ private:
     Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
     Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
     Trigger* PartyMemberDead(AiManagerRegistry* ai) { return new PartyMemberDeadTrigger(ai); }
+    Trigger* PartyMemberLowHealth(AiManagerRegistry* ai) { return new PartyMemberLowHealthTrigger(ai); }
+    Trigger* PartyMemberMediumHealth(AiManagerRegistry* ai) { return new PartyMemberMediumHealthTrigger(ai); }
+    Trigger* PartyMemberCriticalHealth(AiManagerRegistry* ai) { return new PartyMemberCriticalHealthTrigger(ai); }
 };
 
 static TriggerFactoryInternal triggerFactoryInternal;
@@ -135,6 +144,7 @@ public:
         creators["reach spell"] = &ActionFactoryInternal::ReachSpell;
         creators["reach melee"] = &ActionFactoryInternal::ReachMelee;
         creators["flee"] = &ActionFactoryInternal::flee;
+        creators["gift of the naaru"] = &ActionFactoryInternal::gift_of_the_naaru;
     }
 
 private:
@@ -142,6 +152,8 @@ private:
     Action* ReachSpell(AiManagerRegistry* ai) { return new ReachSpellAction(ai); }
     Action* ReachMelee(AiManagerRegistry* ai) { return new ReachMeleeAction(ai); }
     Action* flee(AiManagerRegistry* ai) { return new FleeAction(ai); }
+    Action* gift_of_the_naaru(AiManagerRegistry* ai) { return new CastGiftOfTheNaaruAction(ai); }
+    
 
 };
 

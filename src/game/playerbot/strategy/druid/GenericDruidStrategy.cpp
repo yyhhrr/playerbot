@@ -1,8 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "DruidTriggers.h"
 #include "GenericDruidStrategy.h"
-#include "DruidActions.h"
 #include "DruidActionFactory.h"
 
 using namespace ai;
@@ -17,35 +15,35 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
 	triggers.push_back(new TriggerNode(
-		new MediumHealthTrigger(ai),
+		"medium health",
 		NextAction::array(0, new NextAction("regrowth", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowHealthTrigger(ai),
+        "low health",
         NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("healing touch", 70.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberMediumHealthTrigger(ai),
+		"party member medium health",
 		NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberLowHealthTrigger(ai),
+        "party member low health",
         NextAction::array(0, new NextAction("rejuvenation on party", 70.0f), new NextAction("healing touch on party", 70.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new CurePoisonTrigger(ai),
+        "cure poison",
         NextAction::array(0, new NextAction("abolish poison", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new PartyMemberCurePoisonTrigger(ai),
+        "party member cure poison",
         NextAction::array(0, new NextAction("abolish poison on party", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberDeadTrigger(ai),
+		"party member dead",
 		NextAction::array(0, new NextAction("rebirth", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new EntanglingRootsTrigger(ai),
+        "entangling roots",
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
 }
 
@@ -60,98 +58,98 @@ ActionNode* GenericDruidStrategy::createAction(const char* name)
     }
     else if (!strcmp("caster form", name)) 
     {
-        return new ActionNode (new CastCasterFormAction(ai),  
+        return new ActionNode ("caster form",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("gift of the naaru", name)) 
     {
-        return new ActionNode (new CastGiftOfTheNaaruAction(ai),  
+        return new ActionNode ("gift of the naaru",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("regrowth"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("regrowth", name)) 
     {
-        return new ActionNode (new CastRegrowthAction(ai),  
+        return new ActionNode ("regrowth",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
     else if (!strcmp("rejuvenation", name)) 
     {
-        return new ActionNode (new CastRejuvenationAction(ai),  
+        return new ActionNode ("rejuvenation",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("healing touch", name)) 
     {
-        return new ActionNode (new CastHealingTouchAction(ai),  
+        return new ActionNode ("healing touch",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("regrowth on party", name)) 
     {
-        return new ActionNode (new CastRegrowthOnPartyAction(ai),  
+        return new ActionNode ("regrowth on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
     else if (!strcmp("rejuvenation on party", name)) 
     {
-        return new ActionNode (new CastRejuvenationOnPartyAction(ai),  
+        return new ActionNode ("rejuvenation on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("healing touch on party", name)) 
     {
-        return new ActionNode (new CastHealingTouchOnPartyAction(ai),  
+        return new ActionNode ("healing touch on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("cure poison", name)) 
     {
-        return new ActionNode (new CastCurePoisonAction(ai),  
+        return new ActionNode ("cure poison",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("cure poison on party", name)) 
     {
-        return new ActionNode (new CastCurePoisonOnPartyAction(ai),  
+        return new ActionNode ("cure poison on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("abolish poison", name)) 
     {
-        return new ActionNode (new CastAbolishPoisonAction(ai),  
+        return new ActionNode ("abolish poison",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("abolish poison on party", name)) 
     {
-        return new ActionNode (new CastAbolishPoisonOnPartyAction(ai),  
+        return new ActionNode ("abolish poison on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("rebirth", name)) 
 	{
-		return new ActionNode (new CastRebirthAction(ai),  
+		return new ActionNode ("rebirth",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("entangling roots on cc", name)) 
     {
-        return new ActionNode (new CastEntanglingRootsCcAction(ai),  
+        return new ActionNode ("entangling roots on cc",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);

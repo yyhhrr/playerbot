@@ -71,6 +71,9 @@ namespace ai
                 creators["rake"] = &TriggerFactoryInternal::rake;
                 creators["mark of the wild"] = &TriggerFactoryInternal::mark_of_the_wild;
                 creators["mark of the wild on party"] = &TriggerFactoryInternal::mark_of_the_wild_on_party;
+                creators["cure poison"] = &TriggerFactoryInternal::cure_poison;
+                creators["party member cure poison"] = &TriggerFactoryInternal::party_member_cure_poison;
+                creators["entangling roots"] = &TriggerFactoryInternal::entangling_roots;
             }
 
         private:
@@ -85,6 +88,9 @@ namespace ai
             Trigger* rake(AiManagerRegistry* ai) { return new RakeTrigger(ai); }
             Trigger* mark_of_the_wild(AiManagerRegistry* ai) { return new MarkOfTheWildTrigger(ai); }
             Trigger* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new MarkOfTheWildOnPartyTrigger(ai); }
+            Trigger* cure_poison(AiManagerRegistry* ai) { return new CurePoisonTrigger(ai); }
+            Trigger* party_member_cure_poison(AiManagerRegistry* ai) { return new PartyMemberCurePoisonTrigger(ai); }
+            Trigger* entangling_roots(AiManagerRegistry* ai) { return new EntanglingRootsTrigger(ai); }
         }
         triggerFactoryInternal;
     };
@@ -150,6 +156,13 @@ namespace ai
                 creators["tiger's fury"] = &ActionFactoryInternal::tigers_fury;
                 creators["mark of the wild"] = &ActionFactoryInternal::mark_of_the_wild;
                 creators["mark of the wild on party"] = &ActionFactoryInternal::mark_of_the_wild_on_party;
+                creators["regrowth"] = &ActionFactoryInternal::regrowth;
+                creators["rejuvenation"] = &ActionFactoryInternal::rejuvenation;
+                creators["healing touch"] = &ActionFactoryInternal::healing_touch;
+                creators["regrowth on party"] = &ActionFactoryInternal::regrowth_on_party;
+                creators["rejuvenation on party"] = &ActionFactoryInternal::rejuvenation_on_party;
+                creators["healing touch on party"] = &ActionFactoryInternal::healing_touch_on_party;
+                creators["rebirth"] = &ActionFactoryInternal::rebirth;
                 creators["revive"] = &ActionFactoryInternal::revive;
             }
 
@@ -196,6 +209,13 @@ namespace ai
             Action* tigers_fury(AiManagerRegistry* ai) { return new CastTigersFuryAction(ai); }
             Action* mark_of_the_wild(AiManagerRegistry* ai) { return new CastMarkOfTheWildAction(ai); }
             Action* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new CastMarkOfTheWildOnPartyAction(ai); }
+            Action* regrowth(AiManagerRegistry* ai) { return new CastRegrowthAction(ai); }
+            Action* rejuvenation(AiManagerRegistry* ai) { return new CastRejuvenationAction(ai); }
+            Action* healing_touch(AiManagerRegistry* ai) { return new CastHealingTouchAction(ai); }
+            Action* regrowth_on_party(AiManagerRegistry* ai) { return new CastRegrowthOnPartyAction(ai); }
+            Action* rejuvenation_on_party(AiManagerRegistry* ai) { return new CastRejuvenationOnPartyAction(ai); }
+            Action* healing_touch_on_party(AiManagerRegistry* ai) { return new CastHealingTouchOnPartyAction(ai); }
+            Action* rebirth(AiManagerRegistry* ai) { return new CastRebirthAction(ai); }
             Action* revive(AiManagerRegistry* ai) { return new CastReviveAction(ai); }
         }
         actionFactoryInternal;
