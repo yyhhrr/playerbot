@@ -188,6 +188,18 @@ namespace ai
         float range;
     };
 
+    class NoFoodTrigger : public Trigger {
+    public:
+        NoFoodTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no food trigger") {}
+        virtual bool IsActive() { return !ai->GetInventoryManager()->HasFood(); }
+    };
+
+    class NoDrinkTrigger : public Trigger {
+    public:
+        NoDrinkTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no drink trigger") {}
+        virtual bool IsActive() { return !ai->GetInventoryManager()->HasDrink(); }
+    };
+
     class LightAoeTrigger : public AoeTrigger
     {
     public:

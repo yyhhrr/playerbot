@@ -101,9 +101,14 @@ public:
         creators["party member dead"] = &TriggerFactoryInternal::PartyMemberDead;
         creators["no pet"] = &TriggerFactoryInternal::no_pet;
         creators["has attackers"] = &TriggerFactoryInternal::has_attackers;
+    
+        creators["no drink"] = &TriggerFactoryInternal::no_drink;
+        creators["no food"] = &TriggerFactoryInternal::no_food;
     }
 
 private:
+    Trigger* no_drink(AiManagerRegistry* ai) { return new NoDrinkTrigger(ai); }
+    Trigger* no_food(AiManagerRegistry* ai) { return new NoFoodTrigger(ai); }
     Trigger* LightAoe(AiManagerRegistry* ai) { return new LightAoeTrigger(ai); }
     Trigger* MediumAoe(AiManagerRegistry* ai) { return new MediumAoeTrigger(ai); }
     Trigger* HighAoe(AiManagerRegistry* ai) { return new HighAoeTrigger(ai); }

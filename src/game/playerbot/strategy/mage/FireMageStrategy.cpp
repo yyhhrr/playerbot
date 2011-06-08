@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "MageTriggers.h"
 #include "MageMultipliers.h"
 #include "FireMageStrategy.h"
-#include "MageActions.h"
 
 using namespace ai;
 
@@ -17,16 +15,16 @@ void FireMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericMageStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new FireballTrigger(ai), 
+        "fireball", 
         NextAction::array(0, new NextAction("fireball", 5.0f), NULL)));
     triggers.push_back(new TriggerNode(
-        new PyroblastTrigger(ai), 
+        "pyroblast", 
         NextAction::array(0, new NextAction("pyroblast", 10.0f), NULL)));
     triggers.push_back(new TriggerNode(
-        new CombustionTrigger(ai),
+        "combustion",
         NextAction::array(0, new NextAction("combustion", 50.0f), NULL)));
     triggers.push_back(new TriggerNode(
-        new MediumAoeTrigger(ai),
+        "medium aoe",
         NextAction::array(0, new NextAction("flamestrike", 20.0f), NULL)));
 }
 
@@ -37,9 +35,5 @@ void FireMageStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 ActionNode* FireMageStrategy::createAction(const char* name)
 {
-    ActionNode* node = GenericMageStrategy::createAction(name);
-    if (node)
-        return node;
-
     return GenericMageStrategy::createAction(name);
 }
