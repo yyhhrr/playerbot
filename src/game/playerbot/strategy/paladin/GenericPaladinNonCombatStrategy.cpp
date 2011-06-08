@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "PaladinTriggers.h"
 #include "PaladinMultipliers.h"
 #include "GenericPaladinNonCombatStrategy.h"
-#include "PaladinActions.h"
 
 using namespace ai;
 
@@ -12,15 +10,15 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
     GenericNonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new BlessingOfKingsOnPartyTrigger(ai), 
+        "blessing of kings on party", 
         NextAction::array(0, new NextAction("blessing of kings on party", 20.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberDeadTrigger(ai),
+		"party member dead",
 		NextAction::array(0, new NextAction("redemption", 30.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new CrusaderAuraTrigger(ai),
+		"crusader aura",
 		NextAction::array(0, new NextAction("crusader aura", 40.0f), NULL)));
 }
 
@@ -28,21 +26,21 @@ ActionNode* GenericPaladinNonCombatStrategy::createAction(const char* name)
 {
     if (!strcmp("blessing of kings on party", name)) 
     {
-        return new ActionNode (new CastBlessingOfKingsOnPartyAction(ai),  
+        return new ActionNode ("blessing of kings on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("redemption", name)) 
 	{
-		return new ActionNode (new CastRedemptionAction(ai),  
+		return new ActionNode ("redemption",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("crusader aura", name)) 
 	{
-		return new ActionNode (new CastCrusaderAuraAction(ai),  
+		return new ActionNode ("crusader aura",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);

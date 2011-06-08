@@ -67,6 +67,7 @@ public:
         creators["timer"] = &TriggerFactoryInternal::Timer;
         creators["random"] = &TriggerFactoryInternal::Random;
 
+        creators["target critical health"] = &TriggerFactoryInternal::TargetCriticalHealth;
         creators["critical health"] = &TriggerFactoryInternal::CriticalHealth;
         creators["low health"] = &TriggerFactoryInternal::LowHealth;
         creators["medium health"] = &TriggerFactoryInternal::MediumHealth;
@@ -116,6 +117,7 @@ private:
     Trigger* LowHealth(AiManagerRegistry* ai) { return new LowHealthTrigger(ai); }
     Trigger* MediumHealth(AiManagerRegistry* ai) { return new MediumHealthTrigger(ai); }
     Trigger* CriticalHealth(AiManagerRegistry* ai) { return new CriticalHealthTrigger(ai); }
+    Trigger* TargetCriticalHealth(AiManagerRegistry* ai) { return new TargetCriticalHealthTrigger(ai); }
     Trigger* LowMana(AiManagerRegistry* ai) { return new LowManaTrigger(ai); }
     Trigger* LightRageAvailable(AiManagerRegistry* ai) { return new LightRageAvailableTrigger(ai); }
     Trigger* MediumRageAvailable(AiManagerRegistry* ai) { return new MediumRageAvailableTrigger(ai); }
