@@ -3,10 +3,8 @@
 #include "../GenericTriggers.h"
 #include "../GenericActions.h"
 
-#include "HunterTriggers.h"
 #include "HunterMultipliers.h"
 #include "DpsHunterStrategy.h"
-#include "HunterActions.h"
 
 using namespace ai;
 
@@ -20,47 +18,47 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericHunterStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new HunterAspectOfTheViperTrigger(ai), 
+        "aspect of the viper", 
         NextAction::array(0, new NextAction("aspect of the viper", 91.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BlackArrowTrigger(ai), 
+        "black arrow", 
         NextAction::array(0, new NextAction("black arrow", 51.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HunterNoStingsActiveTrigger(ai), 
+        "no stings", 
         NextAction::array(0, new NextAction("serpent sting", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowManaTrigger(ai), 
+        "low mana", 
         NextAction::array(0, new NextAction("viper sting", 51.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NoPetTrigger(ai), 
+        "no pet", 
         NextAction::array(0, new NextAction("call pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HuntersPetDeadTrigger(ai), 
+        "hunters pet dead", 
         NextAction::array(0, new NextAction("revive pet", 5.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HuntersPetLowHealthTrigger(ai), 
+        "hunters pet low health", 
         NextAction::array(0, new NextAction("mend pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HuntersMarkTrigger(ai), 
+        "hunter's mark", 
         NextAction::array(0, new NextAction("hunter's mark", 52.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new FreezingTrapTrigger(ai), 
+        "freezing trap", 
         NextAction::array(0, new NextAction("freezing trap", 83.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new MediumAoeTrigger(ai), 
+        "medium aoe", 
         NextAction::array(0, new NextAction("multi-shot", 20.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HighAoeTrigger(ai), 
+		"high aoe", 
 		NextAction::array(0, new NextAction("volley", 20.0f), NULL)));
 }
 
@@ -77,119 +75,119 @@ ActionNode* DpsHunterStrategy::createAction(const char* name)
 
     if (!strcmp("auto shot", name)) 
     {
-        return new ActionNode (new CastAutoShotAction(ai),  
+        return new ActionNode ("auto shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("aimed shot", name)) 
     {
-        return new ActionNode (new CastAimedShotAction(ai),  
+        return new ActionNode ("aimed shot",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("arcane shot", 10.0f), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("explosive shot", name)) 
     {
-        return new ActionNode (new CastExplosiveShotAction(ai),  
+        return new ActionNode ("explosive shot",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("aimed shot"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("arcane shot", name)) 
     {
-        return new ActionNode (new CastArcaneShotAction(ai),  
+        return new ActionNode ("arcane shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("concussive shot", name)) 
     {
-        return new ActionNode (new CastConcussiveShotAction(ai),  
+        return new ActionNode ("concussive shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("wyvern sting", 11.0f), NULL));
     }
     else if (!strcmp("distracting shot", name)) 
     {
-        return new ActionNode (new CastDistractingShotAction(ai),  
+        return new ActionNode ("distracting shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("multi-shot", name)) 
     {
-        return new ActionNode (new CastMultiShotAction(ai),  
+        return new ActionNode ("multi-shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("volley", name)) 
 	{
-		return new ActionNode (new CastVolleyAction(ai),  
+		return new ActionNode ("volley",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("serpent sting", name)) 
     {
-        return new ActionNode (new CastSerpentStingAction(ai),  
+        return new ActionNode ("serpent sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("wyvern sting", name)) 
     {
-        return new ActionNode (new CastWyvernStingAction(ai),  
+        return new ActionNode ("wyvern sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("viper sting", name)) 
     {
-        return new ActionNode (new CastViperStingAction(ai),  
+        return new ActionNode ("viper sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("scorpid sting", name)) 
     {
-        return new ActionNode (new CastScorpidStingAction(ai),  
+        return new ActionNode ("scorpid sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("hunter's mark", name)) 
     {
-        return new ActionNode (new CastHuntersMarkAction(ai),  
+        return new ActionNode ("hunter's mark",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("mend pet", name)) 
     {
-        return new ActionNode (new CastMendPetAction(ai),  
+        return new ActionNode ("mend pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("revive pet", name)) 
     {
-        return new ActionNode (new CastRevivePetAction(ai),  
+        return new ActionNode ("revive pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("black arrow", name)) 
     {
-        return new ActionNode (new CastBlackArrow(ai),  
+        return new ActionNode ("black arrow",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("freezing trap", name)) 
     {
-        return new ActionNode (new CastFreezingTrap(ai),  
+        return new ActionNode ("freezing trap",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "HunterTriggers.h"
 #include "HunterMultipliers.h"
 #include "GenericHunterNonCombatStrategy.h"
-#include "HunterActions.h"
 
 using namespace ai;
 
@@ -12,7 +10,7 @@ void HunterBuffSpeedNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &tri
     GenericNonCombatStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new HunterAspectOfThePackTrigger(ai), 
+        "aspect of the pack", 
         NextAction::array(0, new NextAction("aspect of the pack", 1.0f), NULL)));
 }
 
@@ -21,19 +19,19 @@ void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigg
     GenericNonCombatStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new HasAttackersTrigger(ai), 
+        "has attackers", 
         NextAction::array(0, new NextAction("aspect of the hawk", 90.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new NoPetTrigger(ai), 
+        "no pet", 
         NextAction::array(0, new NextAction("call pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HuntersPetDeadTrigger(ai), 
+        "hunters pet dead", 
         NextAction::array(0, new NextAction("revive pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HuntersPetLowHealthTrigger(ai), 
+        "hunters pet low health", 
         NextAction::array(0, new NextAction("mend pet", 60.0f), NULL)));
 }
 
@@ -42,115 +40,88 @@ ActionNode* GenericHunterNonCombatStrategy::createAction(const char* name)
 {
     if (!strcmp("call pet", name)) 
     {
-        return new ActionNode (new CastCallPetAction(ai),  
+        return new ActionNode ("call pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("reach spell", name)) 
     {
-        return new ActionNode (new ReachSpellAction(ai),  
+        return new ActionNode ("reach spell",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("flee", name)) 
     {
-        return new ActionNode (new FleeAction(ai),  
+        return new ActionNode ("flee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("mend pet", name)) 
     {
-        return new ActionNode (new CastMendPetAction(ai),  
+        return new ActionNode ("mend pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("revive pet", name)) 
     {
-        return new ActionNode (new CastRevivePetAction(ai),  
+        return new ActionNode ("revive pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("rapid fire", name) || !strcmp("boost", name)) 
     {
-        return new ActionNode (new CastRapidFireAction(ai),  
+        return new ActionNode ("rapid fire",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("readyness"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("readyness", name)) 
     {
-        return new ActionNode (new CastReadynessAction(ai),  
+        return new ActionNode ("readyness",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("aspect of the hawk", name)) 
     {
-        return new ActionNode (new CastAspectOfTheHawkAction(ai),  
+        return new ActionNode ("aspect of the hawk",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("aspect of the wild", name)) 
     {
-        return new ActionNode (new CastAspectOfTheWildAction(ai),  
+        return new ActionNode ("aspect of the wild",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("aspect of the viper", name)) 
     {
-        return new ActionNode (new CastAspectOfTheViperAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("call pet", name)) 
-    {
-        return new ActionNode (new CastCallPetAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("mend pet", name)) 
-    {
-        return new ActionNode (new CastMendPetAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (!strcmp("revive pet", name)) 
-    {
-        return new ActionNode (new CastRevivePetAction(ai),  
+        return new ActionNode ("aspect of the viper",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("aspect of the pack", name)) 
     {
-        return new ActionNode (new CastAspectOfThePackAction(ai),  
+        return new ActionNode ("aspect of the pack",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("aspect of the cheetah"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("aspect of the cheetah", name)) 
     {
-        return new ActionNode (new CastAspectOfTheCheetahAction(ai),  
+        return new ActionNode ("aspect of the cheetah",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the hawk", name)) 
-    {
-        return new ActionNode (new CastAspectOfTheHawkAction(ai),  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
+
     return GenericNonCombatStrategy::createAction(name);
 }

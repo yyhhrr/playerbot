@@ -92,12 +92,15 @@ public:
         creators["high aoe"] = &TriggerFactoryInternal::HighAoe;
 
         creators["enemy out of melee"] = &TriggerFactoryInternal::EnemyOutOfMelee;
+        creators["enemy too close"] = &TriggerFactoryInternal::EnemyTooClose;
 
         creators["combo points available"] = &TriggerFactoryInternal::ComboPointsAvailable;
 
         creators["medium threat"] = &TriggerFactoryInternal::MediumThreat;
         
         creators["party member dead"] = &TriggerFactoryInternal::PartyMemberDead;
+        creators["no pet"] = &TriggerFactoryInternal::no_pet;
+        creators["has attackers"] = &TriggerFactoryInternal::has_attackers;
     }
 
 private:
@@ -119,12 +122,16 @@ private:
     Trigger* NoTarget(AiManagerRegistry* ai) { return new NoTargetTrigger(ai); }
     Trigger* Random(AiManagerRegistry* ai) { return new RandomTrigger(ai); }
     Trigger* EnemyOutOfMelee(AiManagerRegistry* ai) { return new EnemyOutOfMeleeTrigger(ai); }
+    Trigger* EnemyTooClose(AiManagerRegistry* ai) { return new EnemyTooCloseTrigger(ai); }
     Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
     Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
     Trigger* PartyMemberDead(AiManagerRegistry* ai) { return new PartyMemberDeadTrigger(ai); }
     Trigger* PartyMemberLowHealth(AiManagerRegistry* ai) { return new PartyMemberLowHealthTrigger(ai); }
     Trigger* PartyMemberMediumHealth(AiManagerRegistry* ai) { return new PartyMemberMediumHealthTrigger(ai); }
     Trigger* PartyMemberCriticalHealth(AiManagerRegistry* ai) { return new PartyMemberCriticalHealthTrigger(ai); }
+    Trigger* no_pet(AiManagerRegistry* ai) { return new NoPetTrigger(ai); }
+    Trigger* has_attackers(AiManagerRegistry* ai) { return new HasAttackersTrigger(ai); }
+    
 };
 
 static TriggerFactoryInternal triggerFactoryInternal;
