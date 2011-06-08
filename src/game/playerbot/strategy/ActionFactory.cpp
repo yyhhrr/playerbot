@@ -240,13 +240,14 @@ public:
     ActionFactoryInternal()
     {
         creators["melee"] = &ActionFactoryInternal::melee;
+        creators["reach spell"] = &ActionFactoryInternal::ReachSpell;
+        creators["flee"] = &ActionFactoryInternal::flee;
     }
 
 private:
-    Action* melee(AiManagerRegistry* ai)
-    {
-        return new MeleeAction(ai);
-    }
+    Action* melee(AiManagerRegistry* ai) { return new MeleeAction(ai); }
+    Action* ReachSpell(AiManagerRegistry* ai) { return new ReachSpellAction(ai); }
+    Action* flee(AiManagerRegistry* ai) { return new FleeAction(ai); }
 
 };
 

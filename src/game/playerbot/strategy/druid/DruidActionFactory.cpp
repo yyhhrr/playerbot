@@ -107,6 +107,7 @@ namespace ai
                 creators["feral charge - bear"] = &ActionFactoryInternal::feral_charge_bear;
                 creators["swipe (bear)"] = &ActionFactoryInternal::swipe_bear;
                 creators["faerie fire (feral)"] = &ActionFactoryInternal::faerie_fire_feral;
+                creators["faerie fire"] = &ActionFactoryInternal::faerie_fire;
                 creators["bear form"] = &ActionFactoryInternal::bear_form;
                 creators["dire bear form"] = &ActionFactoryInternal::dire_bear_form;
                 creators["mangle (bear)"] = &ActionFactoryInternal::mangle_bear;
@@ -115,12 +116,23 @@ namespace ai
                 creators["swipe"] = &ActionFactoryInternal::swipe;
                 creators["growl"] = &ActionFactoryInternal::growl;
                 creators["demoralizing roar"] = &ActionFactoryInternal::demoralizing_roar;
+                creators["moonkin form"] = &ActionFactoryInternal::moonkin_form;
+                creators["hibernate"] = &ActionFactoryInternal::hibernate;
+                creators["entangling roots"] = &ActionFactoryInternal::entangling_roots;
+                creators["entangling roots on cc"] = &ActionFactoryInternal::entangling_roots_on_cc;
+                creators["wrath"] = &ActionFactoryInternal::wrath;
+                creators["starfall"] = &ActionFactoryInternal::starfall;
+                creators["insect swarm"] = &ActionFactoryInternal::insect_swarm;
+                creators["moonfire"] = &ActionFactoryInternal::moonfire;
+                creators["starfire"] = &ActionFactoryInternal::starfire;
+                creators["nature's grasp"] = &ActionFactoryInternal::natures_grasp;
             }
 
         private:
             Action* feral_charge_bear(AiManagerRegistry* ai) { return new CastFeralChargeBearAction(ai); }
             Action* swipe_bear(AiManagerRegistry* ai) { return new CastSwipeBearAction(ai); }
             Action* faerie_fire_feral(AiManagerRegistry* ai) { return new CastFaerieFireFeralAction(ai); }
+            Action* faerie_fire(AiManagerRegistry* ai) { return new CastFaerieFireAction(ai); }
             Action* bear_form(AiManagerRegistry* ai) { return new CastBearFormAction(ai); }
             Action* dire_bear_form(AiManagerRegistry* ai) { return new CastDireBearFormAction(ai); }
             Action* mangle_bear(AiManagerRegistry* ai) { return new CastMangleBearAction(ai); }
@@ -129,6 +141,16 @@ namespace ai
             Action* swipe(AiManagerRegistry* ai) { return new CastSwipeAction(ai); }
             Action* growl(AiManagerRegistry* ai) { return new CastGrowlAction(ai); }
             Action* demoralizing_roar(AiManagerRegistry* ai) { return new CastDemoralizingRoarAction(ai); }
+            Action* moonkin_form(AiManagerRegistry* ai) { return new CastMoonkinFormAction(ai); }
+            Action* hibernate(AiManagerRegistry* ai) { return new CastHibernateAction(ai); }
+            Action* entangling_roots(AiManagerRegistry* ai) { return new CastEntanglingRootsAction(ai); }
+            Action* entangling_roots_on_cc(AiManagerRegistry* ai) { return new CastEntanglingRootsCcAction(ai); }
+            Action* wrath(AiManagerRegistry* ai) { return new CastWrathAction(ai); }
+            Action* starfall(AiManagerRegistry* ai) { return new CastStarfallAction(ai); }
+            Action* insect_swarm(AiManagerRegistry* ai) { return new CastInsectSwarmAction(ai); }
+            Action* moonfire(AiManagerRegistry* ai) { return new CastMoonfireAction(ai); }
+            Action* starfire(AiManagerRegistry* ai) { return new CastStarfireAction(ai); }
+            Action* natures_grasp(AiManagerRegistry* ai) { return new CastNaturesGraspAction(ai); }
         }
         actionFactoryInternal;
     };
