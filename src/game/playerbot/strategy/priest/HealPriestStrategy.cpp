@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "PriestTriggers.h"
 #include "PriestMultipliers.h"
 #include "HealPriestStrategy.h"
-#include "PriestActions.h"
 
 using namespace ai;
 
@@ -17,6 +15,6 @@ void HealPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericPriestStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-       new MediumThreatTrigger(ai),
+       "medium threat",
        NextAction::array(0, new NextAction("fade", 90.0f), NULL)));
 }
