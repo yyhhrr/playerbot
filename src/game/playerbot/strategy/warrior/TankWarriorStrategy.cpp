@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarriorTriggers.h"
 #include "WarriorMultipliers.h"
 #include "TankWarriorStrategy.h"
-#include "WarriorActions.h"
 
 using namespace ai;
 
@@ -25,31 +23,31 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("devastate", 1.4f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new DisarmDebuffTrigger(ai), 
+        "disarm", 
         NextAction::array(0, new NextAction("disarm", 1.2f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LoseAggroTrigger(ai), 
+        "lose aggro", 
         NextAction::array(0, new NextAction("taunt", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new MediumHealthTrigger(ai), 
+        "medium health", 
         NextAction::array(0, new NextAction("shield wall", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new CriticalHealthTrigger(ai), 
+		"critical health", 
 		NextAction::array(0, new NextAction("last stand", 91.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new MediumAoeTrigger(ai), 
+		"medium aoe", 
 		NextAction::array(0, new NextAction("shockwave", 24.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new ConcussionBlowTrigger(ai), 
+		"concussion blow", 
 		NextAction::array(0, new NextAction("concussion blow", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new SwordAndBoardTrigger(ai), 
+        "sword and board", 
         NextAction::array(0, new NextAction("shield slam", 40.0f), NULL)));
 }
 
@@ -69,98 +67,98 @@ ActionNode* TankWarriorStrategy::createAction(const char* name)
     }
     else if (!strcmp("shield wall", name)) 
     {
-        return new ActionNode (new CastShieldWallAction(ai),  
+        return new ActionNode ("shield wall",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("shield block"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("rend", name)) 
     {
-        return new ActionNode (new CastRendAction(ai),  
+        return new ActionNode ("rend",  
             /*P*/ NextAction::array(0, new NextAction("defensive stance"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("taunt", name)) 
     {
-        return new ActionNode (new CastTauntAction(ai),  
+        return new ActionNode ("taunt",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("revenge", name)) 
     {
-        return new ActionNode (new CastRevengeAction(ai),  
+        return new ActionNode ("revenge",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("slam"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("slam", name)) 
     {
-        return new ActionNode (new CastSlamAction(ai),  
+        return new ActionNode ("slam",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("shield slam", name)) 
 	{
-		return new ActionNode (new CastShieldSlamAction(ai),  
+		return new ActionNode ("shield slam",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("disarm", name)) 
     {
-        return new ActionNode (new CastDisarmAction(ai),  
+        return new ActionNode ("disarm",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("sunder armor", name)) 
     {
-        return new ActionNode (new CastSunderArmorAction(ai),  
+        return new ActionNode ("sunder armor",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("devastate", name)) 
     {
-        return new ActionNode (new CastDevastateAction(ai),  
+        return new ActionNode ("devastate",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL), 
             /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
     }
     else if (!strcmp("shield bash", name)) 
     {
-        return new ActionNode (new CastShieldBashAction(ai),  
+        return new ActionNode ("shield bash",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("intimidating shout", name)) 
     {
-        return new ActionNode (new CastIntimidatingShoutAction(ai),  
+        return new ActionNode ("intimidating shout",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("last stand", name)) 
 	{
-		return new ActionNode (new CastLastStandAction(ai),  
+		return new ActionNode ("last stand",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("shockwave", name)) 
 	{
-		return new ActionNode (new CastShockwaveAction(ai),  
+		return new ActionNode ("shockwave",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("concussion blow", name)) 
 	{
-		return new ActionNode (new CastConcussionBlowAction(ai),  
+		return new ActionNode ("concussion blow",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);

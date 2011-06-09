@@ -1,8 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarriorTriggers.h"
 #include "GenericWarriorStrategy.h"
-#include "WarriorActions.h"
 #include "WarriorActionFactory.h"
 
 using namespace ai;
@@ -17,43 +15,39 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new LightAoeTrigger(ai),
-        NextAction::array(0, new NextAction("cleave", 21.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        new EnemyOutOfMeleeTrigger(ai),
+        "enemy out of melee",
         NextAction::array(0, new NextAction("melee", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BattleShoutTrigger(ai),
+        "battle shout",
         NextAction::array(0, new NextAction("battle shout", 80.0f), NULL)));
 
-    /*triggers.push_back(new TriggerNode(
-        new RevengeAvailableTrigger(ai),
-        NextAction::array(0, new NextAction("revenge", 50.0f), NULL)));*/
-
     triggers.push_back(new TriggerNode(
-        new RendDebuffTrigger(ai),
+        "rend",
         NextAction::array(0, new NextAction("rend", 1.3f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LightAoeTrigger(ai),
+        "light aoe",
         NextAction::array(0, new NextAction("demoralizing shout", 23.0f), new NextAction("thunder clap", 23.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new HighAoeTrigger(ai),
+        "medium rage available",
+        NextAction::array(0, new NextAction("cleave", 31.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "high aoe",
         NextAction::array(0, new NextAction("challenging shout", 23.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BloodrageDebuffTrigger(ai),
+        "bloodrage",
         NextAction::array(0, new NextAction("bloodrage", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new ShieldBashInterruptSpellTrigger(ai),
+        "shield bash",
         NextAction::array(0, new NextAction("shield bash", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new CriticalHealthTrigger(ai),
+		"critical health",
 		NextAction::array(0, new NextAction("intimidating shout", 90.0f), NULL)));
 }
 
@@ -62,105 +56,98 @@ ActionNode* GenericWarriorStrategy::createAction(const char* name)
 {
     if (!strcmp("hamstring", name))
     {
-        return new ActionNode (new CastHamstringAction(ai),
+        return new ActionNode ("hamstring",
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("shield bash", name))
     {
-        return new ActionNode (new CastShieldBashAction(ai),
+        return new ActionNode ("shield bash",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("shield block", name))
     {
-        return new ActionNode (new CastShieldBlockAction(ai),
+        return new ActionNode ("shield block",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("bloodrage", name))
     {
-        return new ActionNode (new CastBloodrageAction(ai),
+        return new ActionNode ("bloodrage",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("defensive stance", name))
     {
-        return new ActionNode (new CastDefensiveStanceAction(ai),
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (!strcmp("gift of the naaru", name))
-    {
-        return new ActionNode (new CastGiftOfTheNaaruAction(ai),
+        return new ActionNode ("defensive stance",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("battle stance", name))
     {
-        return new ActionNode (new CastBattleStanceAction(ai),
+        return new ActionNode ("battle stance",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("heroic strike", name))
     {
-        return new ActionNode (new CastHeroicStrikeAction(ai),
+        return new ActionNode ("heroic strike",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("cleave", name))
     {
-        return new ActionNode (new CastCleaveAction(ai),
+        return new ActionNode ("cleave",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
 	else if (!strcmp("intimidating shout", name))
 	{
-		return new ActionNode (new CastIntimidatingShoutAction(ai),
+		return new ActionNode ("intimidating shout",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
     else if (!strcmp("demoralizing shout", name))
     {
-        return new ActionNode (new CastDemoralizingShoutAction(ai),
+        return new ActionNode ("demoralizing shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("challenging shout", name))
     {
-        return new ActionNode (new CastChallengingShoutAction(ai),
+        return new ActionNode ("challenging shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("shield wall", name))
     {
-        return new ActionNode (new CastShieldWallAction(ai),
+        return new ActionNode ("shield wall",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("battle shout", name))
     {
-        return new ActionNode (new CastBattleShoutAction(ai),
+        return new ActionNode ("battle shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("thunder clap", name))
     {
-        return new ActionNode (new CastThunderClapAction(ai),
+        return new ActionNode ("thunder clap",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);

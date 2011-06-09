@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarriorTriggers.h"
 #include "WarriorMultipliers.h"
 #include "DpsWarriorStrategy.h"
-#include "WarriorActions.h"
 
 using namespace ai;
 
@@ -21,27 +19,27 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("bloodthirst", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new EnemyOutOfMeleeTrigger(ai), 
+        "enemy out of melee", 
         NextAction::array(0, new NextAction("melee", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LoseAggroTrigger(ai), 
+        "lose aggro", 
         NextAction::array(0, new NextAction("mocking blow", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new TargetCriticalHealthTrigger(ai), 
+        "target critical health", 
         NextAction::array(0, new NextAction("execute", 60.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HamstringTrigger(ai), 
+		"hamstring", 
 		NextAction::array(0, new NextAction("hamstring", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new VictoryRushTrigger(ai), 
+		"victory rush", 
 		NextAction::array(0, new NextAction("victory rush", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new DeathWishTrigger(ai),
+        "death wish",
         NextAction::array(0, new NextAction("death wish", 40.0f), NULL)));
 }
 
@@ -54,7 +52,7 @@ ActionNode* DpsWarriorStrategy::createAction(const char* name)
 {
     if (!strcmp("overpower", name)) 
     {
-        return new ActionNode (new CastOverpowerAction(ai),  
+        return new ActionNode ("overpower",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL), 
             /*C*/ NULL);
@@ -68,56 +66,56 @@ ActionNode* DpsWarriorStrategy::createAction(const char* name)
     }
     else if (!strcmp("charge", name)) 
     {
-        return new ActionNode (new CastChargeAction(ai),  
+        return new ActionNode ("charge",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, new NextAction("reach melee"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("bloodthirst", name)) 
     {
-        return new ActionNode (new CastBloodthirstAction(ai),  
+        return new ActionNode ("bloodthirst",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, new NextAction("heroic strike"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("rend", name)) 
     {
-        return new ActionNode (new CastRendAction(ai),  
+        return new ActionNode ("rend",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("mocking blow", name)) 
     {
-        return new ActionNode (new CastMockingBlowAction(ai),  
+        return new ActionNode ("mocking blow",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("death wish", name) || !strcmp("boost", name)) 
     {
-        return new ActionNode (new CastDeathWishAction(ai),  
+        return new ActionNode ("death wish",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("berserker rage"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("berserker rage", name)) 
     {
-        return new ActionNode (new CastBerserkerRageAction(ai),  
+        return new ActionNode ("berserker rage",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("victory rush", name)) 
 	{
-		return new ActionNode (new CastVictoryRushAction(ai),  
+		return new ActionNode ("victory rush",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("execute", name)) 
     {
-        return new ActionNode (new CastExecuteAction(ai),  
+        return new ActionNode ("execute",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, new NextAction("heroic strike"), NULL), 
             /*C*/ NULL);

@@ -169,9 +169,11 @@ public:
         creators["reach melee"] = &ActionFactoryInternal::ReachMelee;
         creators["flee"] = &ActionFactoryInternal::flee;
         creators["gift of the naaru"] = &ActionFactoryInternal::gift_of_the_naaru;
+        creators["shoot"] = &ActionFactoryInternal::shoot;
     }
 
 private:
+    Action* shoot(AiManagerRegistry* ai) { return new CastShootAction(ai); }
     Action* melee(AiManagerRegistry* ai) { return new MeleeAction(ai); }
     Action* ReachSpell(AiManagerRegistry* ai) { return new ReachSpellAction(ai); }
     Action* ReachMelee(AiManagerRegistry* ai) { return new ReachMeleeAction(ai); }

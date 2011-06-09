@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarriorTriggers.h"
 #include "WarriorMultipliers.h"
 #include "GenericWarriorNonCombatStrategy.h"
-#include "WarriorActions.h"
 
 using namespace ai;
 
@@ -16,7 +14,7 @@ ActionNode* GenericWarriorNonCombatStrategy::createAction(const char* name)
 {
     if (!strcmp("defensive stance", name)) 
     {
-        return new ActionNode (new CastDefensiveStanceAction(ai),  
+        return new ActionNode ("defensive stance",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
