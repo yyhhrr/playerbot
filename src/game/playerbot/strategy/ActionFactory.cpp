@@ -81,6 +81,10 @@ public:
         creators["medium rage available"] = &TriggerFactoryInternal::MediumRageAvailable;
         creators["high rage available"] = &TriggerFactoryInternal::HighRageAvailable;
 
+        creators["light energy available"] = &TriggerFactoryInternal::LightEnergyAvailable;
+        creators["medium energy available"] = &TriggerFactoryInternal::MediumEnergyAvailable;
+        creators["high energy available"] = &TriggerFactoryInternal::HighEnergyAvailable;
+
         creators["loot available"] = &TriggerFactoryInternal::LootAvailable;
         creators["no attackers"] = &TriggerFactoryInternal::NoAttackers;
         creators["no target"] = &TriggerFactoryInternal::NoTarget;
@@ -105,9 +109,12 @@ public:
     
         creators["no drink"] = &TriggerFactoryInternal::no_drink;
         creators["no food"] = &TriggerFactoryInternal::no_food;
+        
+        creators["behind target"] = &TriggerFactoryInternal::behind_target;
     }
 
 private:
+    Trigger* behind_target(AiManagerRegistry* ai) { return new IsBehindTargetTrigger(ai); }
     Trigger* no_drink(AiManagerRegistry* ai) { return new NoDrinkTrigger(ai); }
     Trigger* no_food(AiManagerRegistry* ai) { return new NoFoodTrigger(ai); }
     Trigger* LightAoe(AiManagerRegistry* ai) { return new LightAoeTrigger(ai); }
@@ -122,6 +129,9 @@ private:
     Trigger* LightRageAvailable(AiManagerRegistry* ai) { return new LightRageAvailableTrigger(ai); }
     Trigger* MediumRageAvailable(AiManagerRegistry* ai) { return new MediumRageAvailableTrigger(ai); }
     Trigger* HighRageAvailable(AiManagerRegistry* ai) { return new HighRageAvailableTrigger(ai); }
+    Trigger* LightEnergyAvailable(AiManagerRegistry* ai) { return new LightEnergyAvailableTrigger(ai); }
+    Trigger* MediumEnergyAvailable(AiManagerRegistry* ai) { return new MediumEnergyAvailableTrigger(ai); }
+    Trigger* HighEnergyAvailable(AiManagerRegistry* ai) { return new HighEnergyAvailableTrigger(ai); }
     Trigger* LootAvailable(AiManagerRegistry* ai) { return new LootAvailableTrigger(ai); }
     Trigger* NoAttackers(AiManagerRegistry* ai) { return new NoAttackersTrigger(ai); }
     Trigger* TankAoe(AiManagerRegistry* ai) { return new TankAoeTrigger(ai); }

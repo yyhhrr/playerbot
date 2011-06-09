@@ -68,22 +68,22 @@ namespace ai
 		virtual bool IsActive();
 	};
 
-    class LightEnergyAvailable : public EnergyAvailable
+    class LightEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        LightEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 20) {}
+        LightEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 20) {}
     };
 
-    class MediumEnergyAvailable : public EnergyAvailable
+    class MediumEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        MediumEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 40) {}
+        MediumEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 40) {}
     };
 
-    class HighEnergyAvailable : public EnergyAvailable
+    class HighEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        HighEnergyAvailable(AiManagerRegistry* const ai) : EnergyAvailable(ai, 60) {}
+        HighEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 60) {}
     };
 
 	class ComboPointsAvailableTrigger : public StatAvailable
