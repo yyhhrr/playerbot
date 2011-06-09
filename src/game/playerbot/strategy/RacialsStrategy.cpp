@@ -10,11 +10,11 @@ using namespace ai;
 void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai), 
+		"low health", 
 		NextAction::array(0, new NextAction("lifeblood", 71.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new LowManaTrigger(ai), 
+        "low mana", 
         NextAction::array(0, new NextAction("arcane torrent", 55.0f), NULL)));
 }
 
@@ -23,21 +23,21 @@ ActionNode* RacialsStrategy::createAction(const char* name)
 {
 	if (!strcmp("lifeblood", name)) 
 	{
-		return new ActionNode (new CastLifeBloodAction(ai),  
+		return new ActionNode ("lifeblood",  
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("gift of the naaru"), NULL), 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("gift of the naaru", name)) 
 	{
-		return new ActionNode (new CastGiftOfTheNaaruAction(ai),  
+		return new ActionNode ("gift of the naaru",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("arcane torrent", name)) 
     {
-        return new ActionNode (new CastArcaneTorrentAction(ai),  
+        return new ActionNode ("arcane torrent",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

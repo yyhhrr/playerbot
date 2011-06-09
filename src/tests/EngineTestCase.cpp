@@ -115,7 +115,7 @@ public:
     virtual void InitTriggers(std::list<TriggerNode*> &triggers)
     {
         triggers.push_back(new TriggerNode(
-            new TestTrigger(ai), 
+            "TestTrigger", 
             NextAction::array(0, new NextAction("TriggeredAction", 10.0f), NULL)));
     }
 
@@ -172,6 +172,13 @@ public:
 
         if (!strcmp("AnotherTestStrategy", name))
             return new AnotherTestStrategy(ai);
+
+        return NULL;
+    }
+    virtual Trigger* createTrigger(const char* name)
+    {
+        if (!strcmp("TestTrigger", name))
+            return new TestTrigger(ai);
 
         return NULL;
     }

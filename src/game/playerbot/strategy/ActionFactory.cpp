@@ -97,6 +97,7 @@ public:
         creators["high aoe"] = &TriggerFactoryInternal::HighAoe;
 
         creators["enemy out of melee"] = &TriggerFactoryInternal::EnemyOutOfMelee;
+        creators["enemy out of spell"] = &TriggerFactoryInternal::EnemyOutOfSpell;
         creators["enemy too close"] = &TriggerFactoryInternal::EnemyTooClose;
 
         creators["combo points available"] = &TriggerFactoryInternal::ComboPointsAvailable;
@@ -110,11 +111,13 @@ public:
         creators["no drink"] = &TriggerFactoryInternal::no_drink;
         creators["no food"] = &TriggerFactoryInternal::no_food;
         
+        creators["panic"] = &TriggerFactoryInternal::panic;
         creators["behind target"] = &TriggerFactoryInternal::behind_target;
     }
 
 private:
     Trigger* behind_target(AiManagerRegistry* ai) { return new IsBehindTargetTrigger(ai); }
+    Trigger* panic(AiManagerRegistry* ai) { return new PanicTrigger(ai); }
     Trigger* no_drink(AiManagerRegistry* ai) { return new NoDrinkTrigger(ai); }
     Trigger* no_food(AiManagerRegistry* ai) { return new NoFoodTrigger(ai); }
     Trigger* LightAoe(AiManagerRegistry* ai) { return new LightAoeTrigger(ai); }
@@ -139,6 +142,7 @@ private:
     Trigger* NoTarget(AiManagerRegistry* ai) { return new NoTargetTrigger(ai); }
     Trigger* Random(AiManagerRegistry* ai) { return new RandomTrigger(ai); }
     Trigger* EnemyOutOfMelee(AiManagerRegistry* ai) { return new EnemyOutOfMeleeTrigger(ai); }
+    Trigger* EnemyOutOfSpell(AiManagerRegistry* ai) { return new EnemyOutOfSpellRangeTrigger(ai); }
     Trigger* EnemyTooClose(AiManagerRegistry* ai) { return new EnemyTooCloseTrigger(ai); }
     Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
     Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
@@ -170,6 +174,8 @@ public:
         creators["flee"] = &ActionFactoryInternal::flee;
         creators["gift of the naaru"] = &ActionFactoryInternal::gift_of_the_naaru;
         creators["shoot"] = &ActionFactoryInternal::shoot;
+        creators["lifeblood"] = &ActionFactoryInternal::lifeblood;
+        creators["arcane torrent"] = &ActionFactoryInternal::arcane_torrent;
     }
 
 private:
@@ -179,6 +185,8 @@ private:
     Action* ReachMelee(AiManagerRegistry* ai) { return new ReachMeleeAction(ai); }
     Action* flee(AiManagerRegistry* ai) { return new FleeAction(ai); }
     Action* gift_of_the_naaru(AiManagerRegistry* ai) { return new CastGiftOfTheNaaruAction(ai); }
+    Action* lifeblood(AiManagerRegistry* ai) { return new CastLifeBloodAction(ai); }
+    Action* arcane_torrent(AiManagerRegistry* ai) { return new CastArcaneTorrentAction(ai); }
     
 
 };

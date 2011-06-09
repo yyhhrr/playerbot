@@ -60,6 +60,9 @@ namespace ai
                 creators["no healthstone"] = &TriggerFactoryInternal::HasHealthstone;
                 creators["no firestone"] = &TriggerFactoryInternal::HasFirestone;
                 creators["no spellstone"] = &TriggerFactoryInternal::HasSpellstone;
+                creators["corruption"] = &TriggerFactoryInternal::corruption;
+                creators["curse of agony"] = &TriggerFactoryInternal::curse_of_agony;
+                creators["banish"] = &TriggerFactoryInternal::banish;
                 creators["spellstone"] = &TriggerFactoryInternal::spellstone;
 
 
@@ -71,6 +74,9 @@ namespace ai
             Trigger* HasHealthstone(AiManagerRegistry* ai) { return new HasHealthstoneTrigger(ai); }
             Trigger* HasFirestone(AiManagerRegistry* ai) { return new HasFirestoneTrigger(ai); }
             Trigger* HasSpellstone(AiManagerRegistry* ai) { return new HasSpellstoneTrigger(ai); }
+            Trigger* corruption(AiManagerRegistry* ai) { return new CorruptionTrigger(ai); }
+            Trigger* curse_of_agony(AiManagerRegistry* ai) { return new CurseOfAgonyTrigger(ai); }
+            Trigger* banish(AiManagerRegistry* ai) { return new BanishTrigger(ai); }
             Trigger* spellstone(AiManagerRegistry* ai) { return new SpellstoneTrigger(ai); }
 
         }
@@ -103,9 +109,19 @@ namespace ai
                 creators["create firestone"] = &ActionFactoryInternal::create_firestone;
                 creators["create spellstone"] = &ActionFactoryInternal::create_spellstone;
                 creators["spellstone"] = &ActionFactoryInternal::spellstone;
+                creators["summon voidwalker"] = &ActionFactoryInternal::summon_voidwalker;
+                creators["immolate"] = &ActionFactoryInternal::immolate;
+                creators["corruption"] = &ActionFactoryInternal::corruption;
+                creators["curse of agony"] = &ActionFactoryInternal::curse_of_agony;
+                creators["shadow bolt"] = &ActionFactoryInternal::shadow_bolt;
+                creators["drain soul"] = &ActionFactoryInternal::drain_soul;
+                creators["drain mana"] = &ActionFactoryInternal::drain_mana;
+                creators["drain life"] = &ActionFactoryInternal::drain_life;
+                creators["banish"] = &ActionFactoryInternal::banish;
             }
 
         private:
+            Action* immolate(AiManagerRegistry* ai) { return new CastImmolateAction(ai); }
             Action* summon_imp(AiManagerRegistry* ai) { return new CastSummonImpAction(ai); }
             Action* demon_armor(AiManagerRegistry* ai) { return new CastDemonArmorAction(ai); }
             Action* demon_skin(AiManagerRegistry* ai) { return new CastDemonSkinAction(ai); }
@@ -113,6 +129,14 @@ namespace ai
             Action* create_firestone(AiManagerRegistry* ai) { return new CastCreateFirestoneAction(ai); }
             Action* create_spellstone(AiManagerRegistry* ai) { return new CastCreateSpellstoneAction(ai); }
             Action* spellstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "spellstone"); }
+            Action* summon_voidwalker(AiManagerRegistry* ai) { return new CastSummonVoidwalkerAction(ai); }
+            Action* corruption(AiManagerRegistry* ai) { return new CastCorruptionAction(ai); }
+            Action* curse_of_agony(AiManagerRegistry* ai) { return new CastCurseOfAgonyAction(ai); }
+            Action* shadow_bolt(AiManagerRegistry* ai) { return new CastShadowBoltAction(ai); }
+            Action* drain_soul(AiManagerRegistry* ai) { return new CastDrainSoulAction(ai); }
+            Action* drain_mana(AiManagerRegistry* ai) { return new CastDrainManaAction(ai); }
+            Action* drain_life(AiManagerRegistry* ai) { return new CastDrainLifeAction(ai); }
+            Action* banish(AiManagerRegistry* ai) { return new CastBanishAction(ai); }
 
         }
         actionFactoryInternal;

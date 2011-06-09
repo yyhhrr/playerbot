@@ -222,7 +222,7 @@ ActionNode* Strategy::createAction(const char* name)
 void CombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers) 
 {
     triggers.push_back(new TriggerNode(
-        new PanicTrigger(ai), 
+        "panic", 
         NextAction::array(0, new NextAction("healthstone", 100.0f), NULL)));
 
 }
@@ -230,13 +230,13 @@ void CombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 void MeleeCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers) 
 {
     triggers.push_back(new TriggerNode(
-        new EnemyOutOfMeleeTrigger(ai), 
+        "enemy out of melee", 
         NextAction::array(0, new NextAction("reach melee", 10.0f), NULL)));
 }
 
 void RangedCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers) 
 {
     triggers.push_back(new TriggerNode(
-        new EnemyOutOfSpellRangeTrigger(ai), 
+        "enemy out of spell", 
         NextAction::array(0, new NextAction("reach spell", 10.0f), NULL)));
 }

@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarlockTriggers.h"
 #include "WarlockMultipliers.h"
 #include "GenericWarlockStrategy.h"
-#include "WarlockActions.h"
 
 using namespace ai;
 
@@ -17,23 +15,23 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new CorruptionTrigger(ai),
+        "corruption",
         NextAction::array(0, new NextAction("corruption", 12.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new CurseOfAgonyTrigger(ai),
+        "curse of agony",
         NextAction::array(0, new NextAction("curse of agony", 11.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new MediumHealthTrigger(ai),
+        "medium health",
         NextAction::array(0, new NextAction("drain life", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new TargetCriticalHealthTrigger(ai),
+		"target critical health",
 		NextAction::array(0, new NextAction("drain soul", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new BanishTrigger(ai),
+        "banish",
         NextAction::array(0, new NextAction("banish", 21.0f), NULL)));
 }
 
@@ -42,77 +40,77 @@ ActionNode* GenericWarlockStrategy::createAction(const char* name)
 {
     if (!strcmp("immolate", name)) 
     {
-        return new ActionNode (new CastImmolateAction(ai),  
+        return new ActionNode ("immolate",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
 	else if (!strcmp("reach spell", name)) 
 	{
-		return new ActionNode (new ReachSpellAction(ai),  
+		return new ActionNode ("reach spell",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("flee", name)) 
 	{
-		return new ActionNode (new FleeAction(ai),  
+		return new ActionNode ("flee",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("corruption", name)) 
     {
-        return new ActionNode (new CastCorruptionAction(ai),  
+        return new ActionNode ("corruption",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("summon voidwalker", name)) 
     {
-        return new ActionNode (new CastSummonVoidwalkerAction(ai),  
+        return new ActionNode ("summon voidwalker",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL), 
             /*C*/ NULL);
     }
     else if (!strcmp("curse of agony", name)) 
     {
-        return new ActionNode (new CastCurseOfAgonyAction(ai),  
+        return new ActionNode ("curse of agony",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("shadow bolt", name)) 
     {
-        return new ActionNode (new CastShadowBoltAction(ai),  
+        return new ActionNode ("shadow bolt",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("drain soul", name)) 
     {
-        return new ActionNode (new CastDrainSoulAction(ai),  
+        return new ActionNode ("drain soul",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("drain mana", name)) 
     {
-        return new ActionNode (new CastDrainManaAction(ai),  
+        return new ActionNode ("drain mana",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("drain life", name)) 
     {
-        return new ActionNode (new CastDrainLifeAction(ai),  
+        return new ActionNode ("drain life",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
     else if (!strcmp("banish", name)) 
     {
-        return new ActionNode (new CastBanishAction(ai),  
+        return new ActionNode ("banish",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

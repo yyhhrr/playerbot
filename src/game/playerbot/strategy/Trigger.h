@@ -65,11 +65,6 @@ namespace ai
             this->handlers = handlers;
             this->trigger = NULL;
         }
-        TriggerNode(Trigger* trigger, NextAction** handlers = NULL)
-        {
-            this->trigger = trigger; 
-            this->handlers = handlers;
-        }
         virtual ~TriggerNode() 
         { 
             if (trigger) delete trigger; 
