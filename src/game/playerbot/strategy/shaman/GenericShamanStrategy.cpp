@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "ShamanTriggers.h"
 #include "ShamanMultipliers.h"
 #include "HealShamanStrategy.h"
-#include "ShamanActions.h"
 
 using namespace ai;
 
@@ -12,43 +10,43 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new WindfuryTotemTrigger(ai),
+        "windfury totem",
         NextAction::array(0, new NextAction("windfury totem", 18.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new ManaSpringTotemTrigger(ai),
+        "mana spring totem",
         NextAction::array(0, new NextAction("mana spring totem", 16.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new FlametongueTotemTrigger(ai),
+        "flametongue totem",
         NextAction::array(0, new NextAction("flametongue totem", 17.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new StrengthOfEarthTotemTrigger(ai),
+        "strength of earth totem",
         NextAction::array(0, new NextAction("strength of earth totem", 19.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new WindShearInterruptSpellTrigger(ai),
+        "wind shear",
         NextAction::array(0, new NextAction("wind shear", 15.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PurgeTrigger(ai),
+        "purge",
 		NextAction::array(0, new NextAction("purge", 10.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberMediumHealthTrigger(ai),
+        "party member medium health",
 		NextAction::array(0, new NextAction("chain heal on party", 25.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new PartyMemberLowHealthTrigger(ai),
+        "party member low health",
 		NextAction::array(0, new NextAction("riptide on party", 25.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new MediumHealthTrigger(ai),
+		"medium health",
 		NextAction::array(0, new NextAction("chain heal", 26.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LowHealthTrigger(ai),
+		"low health",
 		NextAction::array(0, new NextAction("riptide", 26.0f), NULL)));
 }
 
@@ -65,175 +63,175 @@ ActionNode* GenericShamanStrategy::createAction(const char* name)
 
     if (!strcmp("water shield", name))
     {
-        return new ActionNode (new CastWaterShieldAction(ai),
+        return new ActionNode ("water shield",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
 	else if (!strcmp("reach spell", name))
 	{
-		return new ActionNode (new ReachSpellAction(ai),
+		return new ActionNode ("reach spell",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("flee", name))
 	{
-		return new ActionNode (new FleeAction(ai),
+		return new ActionNode ("flee",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
     else if (!strcmp("strength of earth totem", name))
     {
-        return new ActionNode (new CastStrengthOfEarthTotemAction(ai),
+        return new ActionNode ("strength of earth totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("flametongue totem", name))
     {
-        return new ActionNode (new CastFlametongueTotemAction(ai),
+        return new ActionNode ("flametongue totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("windfury totem", name))
     {
-        return new ActionNode (new CastWindfuryTotemAction(ai),
+        return new ActionNode ("windfury totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("mana spring totem", name))
     {
-        return new ActionNode (new CastManaSpringTotemAction(ai),
+        return new ActionNode ("mana spring totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
 	else if (!strcmp("mana tide totem", name))
 	{
-		return new ActionNode (new CastManaTideTotemAction(ai),
+		return new ActionNode ("mana tide totem",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("healing stream totem", name))
 	{
-		return new ActionNode (new CastHealingStreamTotemAction(ai),
+		return new ActionNode ("healing stream totem",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
     else if (!strcmp("wind shear", name))
     {
-        return new ActionNode (new CastWindShearAction(ai),
+        return new ActionNode ("wind shear",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("rockbiter weapon", name))
     {
-        return new ActionNode (new CastRockbiterWeaponAction(ai),
+        return new ActionNode ("rockbiter weapon",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (!strcmp("flametongue weapon", name))
     {
-        return new ActionNode (new CastFlametongueWeaponAction(ai),
+        return new ActionNode ("flametongue weapon",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("frostbrand weapon"), NULL),
             /*C*/ NULL);
     }
     else if (!strcmp("frostbrand weapon", name))
     {
-        return new ActionNode (new CastFrostbrandWeaponAction(ai),
+        return new ActionNode ("frostbrand weapon",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("rockbiter weapon"), NULL),
             /*C*/ NULL);
     }
     else if (!strcmp("windfury weapon", name))
     {
-        return new ActionNode (new CastWindfuryWeaponAction(ai),
+        return new ActionNode ("windfury weapon",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("rockbiter weapon"), NULL),
             /*C*/ NULL);
     }
 	else if (!strcmp("purge", name))
 	{
-		return new ActionNode (new CastPurgeAction(ai),
+		return new ActionNode ("purge",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("healing wave", name))
 	{
-		return new ActionNode (new CastHealingWaveAction(ai),
+		return new ActionNode ("healing wave",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("lesser healing wave", name))
 	{
-		return new ActionNode (new CastLesserHealingWaveAction(ai),
+		return new ActionNode ("lesser healing wave",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("healing wave"), NULL),
 			/*C*/ NULL);
 	}
 	else if (!strcmp("healing wave on party", name))
 	{
-		return new ActionNode (new CastHealingWaveOnPartyAction(ai),
+		return new ActionNode ("healing wave on party",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("lesser healing wave on party", name))
 	{
-		return new ActionNode (new CastLesserHealingWaveOnPartyAction(ai),
+		return new ActionNode ("lesser healing wave on party",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL),
 			/*C*/ NULL);
 	}
 	else if (!strcmp("earth shield", name))
 	{
-		return new ActionNode (new CastEarthShieldAction(ai),
+		return new ActionNode ("earth shield",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("earth shield on party", name))
 	{
-		return new ActionNode (new CastEarthShieldOnPartyAction(ai),
+		return new ActionNode ("earth shield on party",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (!strcmp("chain heal", name))
 	{
-		return new ActionNode (new CastChainHealAction(ai),
+		return new ActionNode ("chain heal",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("lesser healing wave"), NULL),
 			/*C*/ NULL);
 	}
 	else if (!strcmp("riptide", name))
 	{
-		return new ActionNode (new CastRiptideAction(ai),
+		return new ActionNode ("riptide",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("healing wave"), NULL),
 			/*C*/ NULL);
 	}
 	else if (!strcmp("chain heal on party", name))
 	{
-		return new ActionNode (new CastChainHealOnPartyAction(ai),
+		return new ActionNode ("chain heal on party",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("lesser healing wave on party"), NULL),
 			/*C*/ NULL);
 	}
 	else if (!strcmp("riptide on party", name))
 	{
-		return new ActionNode (new CastRiptideOnPartyAction(ai),
+		return new ActionNode ("riptide on party",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL),
 			/*C*/ NULL);

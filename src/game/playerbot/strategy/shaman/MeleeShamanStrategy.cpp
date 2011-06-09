@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "ShamanTriggers.h"
 #include "ShamanMultipliers.h"
 #include "MeleeShamanStrategy.h"
-#include "ShamanActions.h"
 
 using namespace ai;
 
@@ -17,11 +15,11 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericShamanStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new ShamanWeaponTrigger(ai), 
+        "shaman weapon",
         NextAction::array(0, new NextAction("windfury weapon", 22.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new LightningShieldTrigger(ai), 
+		"lightning shield",
 		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
 }
 
@@ -31,25 +29,25 @@ ActionNode* MeleeShamanStrategy::createAction(const char* name)
     if (node)
         return node;
 
-	if (!strcmp("stormstrike", name)) 
+	if (!strcmp("stormstrike", name))
 	{
-		return new ActionNode (new CastStormstrikeAction(ai),  
+		return new ActionNode ("stormstrike",
 			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("lava lash"), NULL), 
+			/*A*/ NextAction::array(0, new NextAction("lava lash"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("lava lash", name)) 
+	else if (!strcmp("lava lash", name))
 	{
-		return new ActionNode (new CastLavaLashAction(ai),  
+		return new ActionNode ("lava lash",
 			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("melee"), NULL), 
+			/*A*/ NextAction::array(0, new NextAction("melee"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("lightning shield", name)) 
+	else if (!strcmp("lightning shield", name))
 	{
-		return new ActionNode (new CastLightningShieldAction(ai),  
+		return new ActionNode ("lightning shield",
 			/*P*/ NULL,
-			/*A*/ NULL, 
+			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 

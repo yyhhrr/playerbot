@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "ShamanTriggers.h"
 #include "ShamanMultipliers.h"
 #include "HealShamanStrategy.h"
-#include "ShamanActions.h"
 
 using namespace ai;
 
@@ -17,11 +15,11 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericShamanStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new ShamanWeaponTrigger(ai), 
+        "shaman weapon",
         NextAction::array(0, new NextAction("earthliving weapon", 22.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new WaterShieldTrigger(ai), 
+        "water shield",
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
 
@@ -30,12 +28,12 @@ ActionNode* HealShamanStrategy::createAction(const char* name)
     ActionNode* node = GenericShamanStrategy::createAction(name);
     if (node)
         return node;
-	
-	if (!strcmp("earthliving weapon", name)) 
+
+	if (!strcmp("earthliving weapon", name))
 	{
-		return new ActionNode (new CastEarthlivingWeaponAction(ai),  
+		return new ActionNode ("earthliving weapon",
 			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL), 
+			/*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL),
 			/*C*/ NULL);
 	}
 
