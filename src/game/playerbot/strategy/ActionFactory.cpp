@@ -7,6 +7,7 @@
 #include "HealthTriggers.h"
 #include "GenericTriggers.h"
 #include "GenericActions.h"
+#include "NonCombatActions.h"
 
 using namespace ai;
 
@@ -176,6 +177,28 @@ public:
         creators["shoot"] = &ActionFactoryInternal::shoot;
         creators["lifeblood"] = &ActionFactoryInternal::lifeblood;
         creators["arcane torrent"] = &ActionFactoryInternal::arcane_torrent;
+        creators["end pull"] = &ActionFactoryInternal::end_pull;
+        creators["healthstone"] = &ActionFactoryInternal::healthstone;
+        creators["panic potion"] = &ActionFactoryInternal::panic_potion;
+        creators["healing potion"] = &ActionFactoryInternal::healing_potion;
+        creators["mana potion"] = &ActionFactoryInternal::mana_potion;
+        creators["eat"] = &ActionFactoryInternal::eat;
+        creators["drink"] = &ActionFactoryInternal::drink;
+        creators["tank assist"] = &ActionFactoryInternal::tank_assist;
+        creators["dps assist"] = &ActionFactoryInternal::dps_assist;
+        creators["loot"] = &ActionFactoryInternal::loot;
+        creators["loot all"] = &ActionFactoryInternal::loot_all;
+        creators["shoot"] = &ActionFactoryInternal::shoot;
+        creators["follow line"] = &ActionFactoryInternal::follow_line;
+        creators["follow"] = &ActionFactoryInternal::follow_master;
+        creators["follow master"] = &ActionFactoryInternal::follow_master;
+        creators["goaway"] = &ActionFactoryInternal::goaway;
+        creators["stay"] = &ActionFactoryInternal::stay;
+        creators["stay circle"] = &ActionFactoryInternal::stay_circle;
+        creators["stay line"] = &ActionFactoryInternal::stay_line;
+        creators["stay combat"] = &ActionFactoryInternal::stay_combat;
+        creators["attack anything"] = &ActionFactoryInternal::attack_anything;
+        creators["emote"] = &ActionFactoryInternal::emote;
     }
 
 private:
@@ -187,8 +210,27 @@ private:
     Action* gift_of_the_naaru(AiManagerRegistry* ai) { return new CastGiftOfTheNaaruAction(ai); }
     Action* lifeblood(AiManagerRegistry* ai) { return new CastLifeBloodAction(ai); }
     Action* arcane_torrent(AiManagerRegistry* ai) { return new CastArcaneTorrentAction(ai); }
+    Action* end_pull(AiManagerRegistry* ai) { return new ChangeCombatStrategyAction(ai, "-pull"); }
     
-
+    Action* emote(AiManagerRegistry* ai) { return new EmoteAction(ai, 0); }
+    Action* attack_anything(AiManagerRegistry* ai) { return new AttackAnythingAction(ai); }
+    Action* stay_combat(AiManagerRegistry* ai) { return new StayCombatAction(ai); }
+    Action* stay_line(AiManagerRegistry* ai) { return new StayLineAction(ai); }
+    Action* stay_circle(AiManagerRegistry* ai) { return new StayCircleAction(ai); }
+    Action* stay(AiManagerRegistry* ai) { return new StayAction(ai); }
+    Action* goaway(AiManagerRegistry* ai) { return new GoAwayAction(ai); }
+    Action* follow_master(AiManagerRegistry* ai) { return new FollowMasterAction(ai); }
+    Action* follow_line(AiManagerRegistry* ai) { return new FollowLineAction(ai); }
+    Action* loot_all(AiManagerRegistry* ai) { return new LootAllAction(ai); }
+    Action* loot(AiManagerRegistry* ai) { return new LootAction(ai); }
+    Action* dps_assist(AiManagerRegistry* ai) { return new DpsAssistAction(ai); }
+    Action* tank_assist(AiManagerRegistry* ai) { return new TankAssistAction(ai); }
+    Action* drink(AiManagerRegistry* ai) { return new DrinkAction(ai); }
+    Action* eat(AiManagerRegistry* ai) { return new EatAction(ai); }
+    Action* mana_potion(AiManagerRegistry* ai) { return new UseManaPotion(ai); }
+    Action* healing_potion(AiManagerRegistry* ai) { return new UseHealingPotion(ai); }
+    Action* panic_potion(AiManagerRegistry* ai) { return new UsePanicPotion(ai); }
+    Action* healthstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "healthstone"); }
 };
 
 static ActionFactoryInternal actionFactoryInternal;

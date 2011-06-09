@@ -25,13 +25,13 @@ protected:
         CastSpellAction action3(&mock, "3");
 
 		Queue q;
-		q.Push(new ActionBasket(new ActionNode(&action1, NULL, NULL, NULL), 0.5f));
-		q.Push(new ActionBasket(new ActionNode(&action2, NULL, NULL, NULL), 0.7f));
-		q.Push(new ActionBasket(new ActionNode(&action3, NULL, NULL, NULL), 0.3f));
+		q.Push(new ActionBasket(new ActionNode("action1", NULL, NULL, NULL), 0.5f));
+		q.Push(new ActionBasket(new ActionNode("action2", NULL, NULL, NULL), 0.7f));
+		q.Push(new ActionBasket(new ActionNode("action3", NULL, NULL, NULL), 0.3f));
 
-		CPPUNIT_ASSERT(q.Pop()->getAction() == &action2);
-		CPPUNIT_ASSERT(q.Pop()->getAction() == &action1);
-		CPPUNIT_ASSERT(q.Pop()->getAction() == &action3);
+		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action2");
+		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action1");
+		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action3");
 		CPPUNIT_ASSERT(q.Pop() == NULL);
 	}
 };

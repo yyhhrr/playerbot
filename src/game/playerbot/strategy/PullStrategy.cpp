@@ -55,7 +55,7 @@ ActionNode* PullStrategy::createAction(const char* name)
 {
     if (!strcmp("end pull", name)) 
     {
-        return new ActionNode (new ChangeCombatStrategyAction(ai, "-pull"),  
+        return new ActionNode ("end pull",  
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);

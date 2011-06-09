@@ -123,28 +123,28 @@ public:
     {
         if (!strcmp("TriggeredAction", name)) 
         {
-            return new ActionNode (new TriggeredAction(ai),  
+            return new ActionNode ("TriggeredAction",  
                 /*P*/ NULL,
                 /*A*/ NULL, 
                 /*C*/ NULL);
         }
         else if (!strcmp("RepeatingAction", name)) 
         {
-            return new ActionNode (new RepeatingAction(ai),  
+            return new ActionNode ("RepeatingAction",  
                 /*P*/ NULL,
                 /*A*/ NextAction::array(0, new NextAction("AlternativeAction", 1.0f), NULL), 
                 /*C*/ NextAction::array(0, new NextAction("RepeatingAction", 1.0f), NULL));
         }
         else if (!strcmp("AlternativeAction", name)) 
         {
-            return new ActionNode (new AlternativeAction(ai),  
+            return new ActionNode ("AlternativeAction",  
                 /*P*/ NextAction::array(0, new NextAction("PrerequisiteAction", 1.0f), NULL),
                 /*A*/ NULL, 
                 /*C*/ NULL);
         }
         else if (!strcmp("PrerequisiteAction", name)) 
         {
-            return new ActionNode (new PrerequisiteAction(ai),  
+            return new ActionNode ("PrerequisiteAction",  
                 /*P*/ NULL,
                 /*A*/ NULL, 
                 /*C*/ NULL);
@@ -181,6 +181,20 @@ public:
             return new TestTrigger(ai);
 
         return NULL;
+    }
+    virtual Action* createAction(const char* name)
+    {
+        if (!strcmp("TriggeredAction", name))
+            return new TriggeredAction(ai);
+        if (!strcmp("RepeatingAction", name))
+            return new RepeatingAction(ai);
+        if (!strcmp("AlternativeAction", name))
+            return new AlternativeAction(ai);
+        if (!strcmp("PrerequisiteAction", name))
+            return new PrerequisiteAction(ai);
+
+        return NULL;
+
     }
 };
 

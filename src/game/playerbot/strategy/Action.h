@@ -62,14 +62,6 @@ namespace ai
     class ActionNode
     {
     public:
-        ActionNode(Action* action, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
-        {
-            this->action = action; 
-            this->name = action->getName();
-            this->prerequisites = prerequisites;
-            this->alternatives = alternatives;
-            this->continuers = continuers;
-        }
         ActionNode(const char* name, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
         {
             this->action = NULL; 
