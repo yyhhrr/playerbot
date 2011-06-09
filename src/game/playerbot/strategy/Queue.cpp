@@ -16,7 +16,6 @@ void Queue::Push(ActionBasket *action)
             if (!strcmp(action->getAction()->getName(), basket->getAction()->getName()))
             {
                 basket->setRelevance(action->getRelevance());
-                delete action->getAction();
                 delete action;
                 return;
             }

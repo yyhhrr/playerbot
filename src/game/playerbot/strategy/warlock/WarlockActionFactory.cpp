@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, warlock::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -29,20 +29,13 @@ namespace ai
             }
 
         private:
-            Strategy* tank(AiManagerRegistry* ai) { return new TankWarlockStrategy(ai); }
-            Strategy* dps(AiManagerRegistry* ai) { return new DpsWarlockStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new GenericWarlockNonCombatStrategy(ai); }
-            Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
-        }
-        strategyFactoryInternal;
+            static Strategy* tank(AiManagerRegistry* ai) { return new TankWarlockStrategy(ai); }
+            static Strategy* dps(AiManagerRegistry* ai) { return new DpsWarlockStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new GenericWarlockNonCombatStrategy(ai); }
+            static Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
+        };
     };
 };
-
-Strategy* WarlockActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::warlock::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -50,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -69,27 +62,19 @@ namespace ai
             }
 
         private:
-            Trigger* shadow_trance(AiManagerRegistry* ai) { return new ShadowTranceTrigger(ai); }
-            Trigger* demon_armor(AiManagerRegistry* ai) { return new DemonArmorTrigger(ai); }
-            Trigger* HasHealthstone(AiManagerRegistry* ai) { return new HasHealthstoneTrigger(ai); }
-            Trigger* HasFirestone(AiManagerRegistry* ai) { return new HasFirestoneTrigger(ai); }
-            Trigger* HasSpellstone(AiManagerRegistry* ai) { return new HasSpellstoneTrigger(ai); }
-            Trigger* corruption(AiManagerRegistry* ai) { return new CorruptionTrigger(ai); }
-            Trigger* curse_of_agony(AiManagerRegistry* ai) { return new CurseOfAgonyTrigger(ai); }
-            Trigger* banish(AiManagerRegistry* ai) { return new BanishTrigger(ai); }
-            Trigger* spellstone(AiManagerRegistry* ai) { return new SpellstoneTrigger(ai); }
+            static Trigger* shadow_trance(AiManagerRegistry* ai) { return new ShadowTranceTrigger(ai); }
+            static Trigger* demon_armor(AiManagerRegistry* ai) { return new DemonArmorTrigger(ai); }
+            static Trigger* HasHealthstone(AiManagerRegistry* ai) { return new HasHealthstoneTrigger(ai); }
+            static Trigger* HasFirestone(AiManagerRegistry* ai) { return new HasFirestoneTrigger(ai); }
+            static Trigger* HasSpellstone(AiManagerRegistry* ai) { return new HasSpellstoneTrigger(ai); }
+            static Trigger* corruption(AiManagerRegistry* ai) { return new CorruptionTrigger(ai); }
+            static Trigger* curse_of_agony(AiManagerRegistry* ai) { return new CurseOfAgonyTrigger(ai); }
+            static Trigger* banish(AiManagerRegistry* ai) { return new BanishTrigger(ai); }
+            static Trigger* spellstone(AiManagerRegistry* ai) { return new SpellstoneTrigger(ai); }
 
-        }
-        triggerFactoryInternal;
+        };
     };
 };
-
-Trigger* WarlockActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::warlock::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
-
 
 namespace ai
 {
@@ -97,7 +82,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -121,30 +106,32 @@ namespace ai
             }
 
         private:
-            Action* immolate(AiManagerRegistry* ai) { return new CastImmolateAction(ai); }
-            Action* summon_imp(AiManagerRegistry* ai) { return new CastSummonImpAction(ai); }
-            Action* demon_armor(AiManagerRegistry* ai) { return new CastDemonArmorAction(ai); }
-            Action* demon_skin(AiManagerRegistry* ai) { return new CastDemonSkinAction(ai); }
-            Action* create_healthstone(AiManagerRegistry* ai) { return new CastCreateHealthstoneAction(ai); }
-            Action* create_firestone(AiManagerRegistry* ai) { return new CastCreateFirestoneAction(ai); }
-            Action* create_spellstone(AiManagerRegistry* ai) { return new CastCreateSpellstoneAction(ai); }
-            Action* spellstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "spellstone"); }
-            Action* summon_voidwalker(AiManagerRegistry* ai) { return new CastSummonVoidwalkerAction(ai); }
-            Action* corruption(AiManagerRegistry* ai) { return new CastCorruptionAction(ai); }
-            Action* curse_of_agony(AiManagerRegistry* ai) { return new CastCurseOfAgonyAction(ai); }
-            Action* shadow_bolt(AiManagerRegistry* ai) { return new CastShadowBoltAction(ai); }
-            Action* drain_soul(AiManagerRegistry* ai) { return new CastDrainSoulAction(ai); }
-            Action* drain_mana(AiManagerRegistry* ai) { return new CastDrainManaAction(ai); }
-            Action* drain_life(AiManagerRegistry* ai) { return new CastDrainLifeAction(ai); }
-            Action* banish(AiManagerRegistry* ai) { return new CastBanishAction(ai); }
+            static Action* immolate(AiManagerRegistry* ai) { return new CastImmolateAction(ai); }
+            static Action* summon_imp(AiManagerRegistry* ai) { return new CastSummonImpAction(ai); }
+            static Action* demon_armor(AiManagerRegistry* ai) { return new CastDemonArmorAction(ai); }
+            static Action* demon_skin(AiManagerRegistry* ai) { return new CastDemonSkinAction(ai); }
+            static Action* create_healthstone(AiManagerRegistry* ai) { return new CastCreateHealthstoneAction(ai); }
+            static Action* create_firestone(AiManagerRegistry* ai) { return new CastCreateFirestoneAction(ai); }
+            static Action* create_spellstone(AiManagerRegistry* ai) { return new CastCreateSpellstoneAction(ai); }
+            static Action* spellstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "spellstone"); }
+            static Action* summon_voidwalker(AiManagerRegistry* ai) { return new CastSummonVoidwalkerAction(ai); }
+            static Action* corruption(AiManagerRegistry* ai) { return new CastCorruptionAction(ai); }
+            static Action* curse_of_agony(AiManagerRegistry* ai) { return new CastCurseOfAgonyAction(ai); }
+            static Action* shadow_bolt(AiManagerRegistry* ai) { return new CastShadowBoltAction(ai); }
+            static Action* drain_soul(AiManagerRegistry* ai) { return new CastDrainSoulAction(ai); }
+            static Action* drain_mana(AiManagerRegistry* ai) { return new CastDrainManaAction(ai); }
+            static Action* drain_life(AiManagerRegistry* ai) { return new CastDrainLifeAction(ai); }
+            static Action* banish(AiManagerRegistry* ai) { return new CastBanishAction(ai); }
 
-        }
-        actionFactoryInternal;
+        };
     };
 };
 
-Action* WarlockActionFactory::createAction(const char* name)
+
+
+WarlockActionFactory::WarlockActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::warlock::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::warlock::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::warlock::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::warlock::TriggerFactoryInternal());    
 }

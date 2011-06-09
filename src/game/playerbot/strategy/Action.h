@@ -72,7 +72,6 @@ namespace ai
         }
         virtual ~ActionNode() 
         { 
-            delete action; 
             NextAction::destroy(prerequisites); 
             NextAction::destroy(alternatives); 
             NextAction::destroy(continuers); 

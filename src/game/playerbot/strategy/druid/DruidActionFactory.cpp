@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, druid::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -34,20 +34,13 @@ namespace ai
             }
 
         private:
-            Strategy* bear(AiManagerRegistry* ai) { return new BearTankDruidStrategy(ai); }
-            Strategy* cat(AiManagerRegistry* ai) { return new CatDpsDruidStrategy(ai); }
-            Strategy* caster(AiManagerRegistry* ai) { return new CasterDruidStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new GenericDruidNonCombatStrategy(ai); }
-        }
-        strategyFactoryInternal;
+            static Strategy* bear(AiManagerRegistry* ai) { return new BearTankDruidStrategy(ai); }
+            static Strategy* cat(AiManagerRegistry* ai) { return new CatDpsDruidStrategy(ai); }
+            static Strategy* caster(AiManagerRegistry* ai) { return new CasterDruidStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new GenericDruidNonCombatStrategy(ai); }
+        };
     };
 };
-
-Strategy* DruidActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::druid::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -55,7 +48,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -77,31 +70,23 @@ namespace ai
             }
 
         private:
-            Trigger* Thorns(AiManagerRegistry* ai) { return new ThornsTrigger(ai); }
-            Trigger* bash(AiManagerRegistry* ai) { return new BashInterruptSpellTrigger(ai); }
-            Trigger* faerie_fire_feral(AiManagerRegistry* ai) { return new FaerieFireFeralTrigger(ai); }
-            Trigger* insect_swarm(AiManagerRegistry* ai) { return new InsectSwarmTrigger(ai); }
-            Trigger* moonfire(AiManagerRegistry* ai) { return new MoonfireTrigger(ai); }
-            Trigger* faerie_fire(AiManagerRegistry* ai) { return new FaerieFireTrigger(ai); }
-            Trigger* natures_grasp(AiManagerRegistry* ai) { return new NaturesGraspTrigger(ai); }
-            Trigger* tigers_fury(AiManagerRegistry* ai) { return new TigersFuryTrigger(ai); }
-            Trigger* rake(AiManagerRegistry* ai) { return new RakeTrigger(ai); }
-            Trigger* mark_of_the_wild(AiManagerRegistry* ai) { return new MarkOfTheWildTrigger(ai); }
-            Trigger* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new MarkOfTheWildOnPartyTrigger(ai); }
-            Trigger* cure_poison(AiManagerRegistry* ai) { return new CurePoisonTrigger(ai); }
-            Trigger* party_member_cure_poison(AiManagerRegistry* ai) { return new PartyMemberCurePoisonTrigger(ai); }
-            Trigger* entangling_roots(AiManagerRegistry* ai) { return new EntanglingRootsTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* Thorns(AiManagerRegistry* ai) { return new ThornsTrigger(ai); }
+            static Trigger* bash(AiManagerRegistry* ai) { return new BashInterruptSpellTrigger(ai); }
+            static Trigger* faerie_fire_feral(AiManagerRegistry* ai) { return new FaerieFireFeralTrigger(ai); }
+            static Trigger* insect_swarm(AiManagerRegistry* ai) { return new InsectSwarmTrigger(ai); }
+            static Trigger* moonfire(AiManagerRegistry* ai) { return new MoonfireTrigger(ai); }
+            static Trigger* faerie_fire(AiManagerRegistry* ai) { return new FaerieFireTrigger(ai); }
+            static Trigger* natures_grasp(AiManagerRegistry* ai) { return new NaturesGraspTrigger(ai); }
+            static Trigger* tigers_fury(AiManagerRegistry* ai) { return new TigersFuryTrigger(ai); }
+            static Trigger* rake(AiManagerRegistry* ai) { return new RakeTrigger(ai); }
+            static Trigger* mark_of_the_wild(AiManagerRegistry* ai) { return new MarkOfTheWildTrigger(ai); }
+            static Trigger* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new MarkOfTheWildOnPartyTrigger(ai); }
+            static Trigger* cure_poison(AiManagerRegistry* ai) { return new CurePoisonTrigger(ai); }
+            static Trigger* party_member_cure_poison(AiManagerRegistry* ai) { return new PartyMemberCurePoisonTrigger(ai); }
+            static Trigger* entangling_roots(AiManagerRegistry* ai) { return new EntanglingRootsTrigger(ai); }
+        };
     };
 };
-
-Trigger* DruidActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::druid::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
-
 
 namespace ai
 {
@@ -109,7 +94,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -167,63 +152,63 @@ namespace ai
             }
 
         private:
-            Action* feral_charge_bear(AiManagerRegistry* ai) { return new CastFeralChargeBearAction(ai); }
-            Action* feral_charge_cat(AiManagerRegistry* ai) { return new CastFeralChargeCatAction(ai); }
-            Action* swipe_bear(AiManagerRegistry* ai) { return new CastSwipeBearAction(ai); }
-            Action* faerie_fire_feral(AiManagerRegistry* ai) { return new CastFaerieFireFeralAction(ai); }
-            Action* faerie_fire(AiManagerRegistry* ai) { return new CastFaerieFireAction(ai); }
-            Action* bear_form(AiManagerRegistry* ai) { return new CastBearFormAction(ai); }
-            Action* dire_bear_form(AiManagerRegistry* ai) { return new CastDireBearFormAction(ai); }
-            Action* cat_form(AiManagerRegistry* ai) { return new CastCatFormAction(ai); }
-            Action* caster_form(AiManagerRegistry* ai) { return new CastCasterFormAction(ai); }
-            Action* mangle_bear(AiManagerRegistry* ai) { return new CastMangleBearAction(ai); }
-            Action* maul(AiManagerRegistry* ai) { return new CastMaulAction(ai); }
-            Action* bash(AiManagerRegistry* ai) { return new CastBashAction(ai); }
-            Action* swipe(AiManagerRegistry* ai) { return new CastSwipeAction(ai); }
-            Action* growl(AiManagerRegistry* ai) { return new CastGrowlAction(ai); }
-            Action* demoralizing_roar(AiManagerRegistry* ai) { return new CastDemoralizingRoarAction(ai); }
-            Action* moonkin_form(AiManagerRegistry* ai) { return new CastMoonkinFormAction(ai); }
-            Action* hibernate(AiManagerRegistry* ai) { return new CastHibernateAction(ai); }
-            Action* entangling_roots(AiManagerRegistry* ai) { return new CastEntanglingRootsAction(ai); }
-            Action* entangling_roots_on_cc(AiManagerRegistry* ai) { return new CastEntanglingRootsCcAction(ai); }
-            Action* wrath(AiManagerRegistry* ai) { return new CastWrathAction(ai); }
-            Action* starfall(AiManagerRegistry* ai) { return new CastStarfallAction(ai); }
-            Action* insect_swarm(AiManagerRegistry* ai) { return new CastInsectSwarmAction(ai); }
-            Action* moonfire(AiManagerRegistry* ai) { return new CastMoonfireAction(ai); }
-            Action* starfire(AiManagerRegistry* ai) { return new CastStarfireAction(ai); }
-            Action* natures_grasp(AiManagerRegistry* ai) { return new CastNaturesGraspAction(ai); }
-            Action* claw(AiManagerRegistry* ai) { return new CastClawAction(ai); }
-            Action* mangle_cat(AiManagerRegistry* ai) { return new CastMangleCatAction(ai); }
-            Action* swipe_cat(AiManagerRegistry* ai) { return new CastSwipeCatAction(ai); }
-            Action* rake(AiManagerRegistry* ai) { return new CastRakeAction(ai); }
-            Action* ferocious_bite(AiManagerRegistry* ai) { return new CastFerociousBiteAction(ai); }
-            Action* rip(AiManagerRegistry* ai) { return new CastRipAction(ai); }
-            Action* cower(AiManagerRegistry* ai) { return new CastCowerAction(ai); }
-            Action* survival_instincts(AiManagerRegistry* ai) { return new CastSurvivalInstinctsAction(ai); }
-            Action* thorns(AiManagerRegistry* ai) { return new CastThornsAction(ai); }
-            Action* cure_poison(AiManagerRegistry* ai) { return new CastCurePoisonAction(ai); }
-            Action* cure_poison_on_party(AiManagerRegistry* ai) { return new CastCurePoisonOnPartyAction(ai); }
-            Action* abolish_poison(AiManagerRegistry* ai) { return new CastAbolishPoisonAction(ai); }
-            Action* abolish_poison_on_party(AiManagerRegistry* ai) { return new CastAbolishPoisonOnPartyAction(ai); }
-            Action* berserk(AiManagerRegistry* ai) { return new CastBerserkAction(ai); }
-            Action* tigers_fury(AiManagerRegistry* ai) { return new CastTigersFuryAction(ai); }
-            Action* mark_of_the_wild(AiManagerRegistry* ai) { return new CastMarkOfTheWildAction(ai); }
-            Action* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new CastMarkOfTheWildOnPartyAction(ai); }
-            Action* regrowth(AiManagerRegistry* ai) { return new CastRegrowthAction(ai); }
-            Action* rejuvenation(AiManagerRegistry* ai) { return new CastRejuvenationAction(ai); }
-            Action* healing_touch(AiManagerRegistry* ai) { return new CastHealingTouchAction(ai); }
-            Action* regrowth_on_party(AiManagerRegistry* ai) { return new CastRegrowthOnPartyAction(ai); }
-            Action* rejuvenation_on_party(AiManagerRegistry* ai) { return new CastRejuvenationOnPartyAction(ai); }
-            Action* healing_touch_on_party(AiManagerRegistry* ai) { return new CastHealingTouchOnPartyAction(ai); }
-            Action* rebirth(AiManagerRegistry* ai) { return new CastRebirthAction(ai); }
-            Action* revive(AiManagerRegistry* ai) { return new CastReviveAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* feral_charge_bear(AiManagerRegistry* ai) { return new CastFeralChargeBearAction(ai); }
+            static Action* feral_charge_cat(AiManagerRegistry* ai) { return new CastFeralChargeCatAction(ai); }
+            static Action* swipe_bear(AiManagerRegistry* ai) { return new CastSwipeBearAction(ai); }
+            static Action* faerie_fire_feral(AiManagerRegistry* ai) { return new CastFaerieFireFeralAction(ai); }
+            static Action* faerie_fire(AiManagerRegistry* ai) { return new CastFaerieFireAction(ai); }
+            static Action* bear_form(AiManagerRegistry* ai) { return new CastBearFormAction(ai); }
+            static Action* dire_bear_form(AiManagerRegistry* ai) { return new CastDireBearFormAction(ai); }
+            static Action* cat_form(AiManagerRegistry* ai) { return new CastCatFormAction(ai); }
+            static Action* caster_form(AiManagerRegistry* ai) { return new CastCasterFormAction(ai); }
+            static Action* mangle_bear(AiManagerRegistry* ai) { return new CastMangleBearAction(ai); }
+            static Action* maul(AiManagerRegistry* ai) { return new CastMaulAction(ai); }
+            static Action* bash(AiManagerRegistry* ai) { return new CastBashAction(ai); }
+            static Action* swipe(AiManagerRegistry* ai) { return new CastSwipeAction(ai); }
+            static Action* growl(AiManagerRegistry* ai) { return new CastGrowlAction(ai); }
+            static Action* demoralizing_roar(AiManagerRegistry* ai) { return new CastDemoralizingRoarAction(ai); }
+            static Action* moonkin_form(AiManagerRegistry* ai) { return new CastMoonkinFormAction(ai); }
+            static Action* hibernate(AiManagerRegistry* ai) { return new CastHibernateAction(ai); }
+            static Action* entangling_roots(AiManagerRegistry* ai) { return new CastEntanglingRootsAction(ai); }
+            static Action* entangling_roots_on_cc(AiManagerRegistry* ai) { return new CastEntanglingRootsCcAction(ai); }
+            static Action* wrath(AiManagerRegistry* ai) { return new CastWrathAction(ai); }
+            static Action* starfall(AiManagerRegistry* ai) { return new CastStarfallAction(ai); }
+            static Action* insect_swarm(AiManagerRegistry* ai) { return new CastInsectSwarmAction(ai); }
+            static Action* moonfire(AiManagerRegistry* ai) { return new CastMoonfireAction(ai); }
+            static Action* starfire(AiManagerRegistry* ai) { return new CastStarfireAction(ai); }
+            static Action* natures_grasp(AiManagerRegistry* ai) { return new CastNaturesGraspAction(ai); }
+            static Action* claw(AiManagerRegistry* ai) { return new CastClawAction(ai); }
+            static Action* mangle_cat(AiManagerRegistry* ai) { return new CastMangleCatAction(ai); }
+            static Action* swipe_cat(AiManagerRegistry* ai) { return new CastSwipeCatAction(ai); }
+            static Action* rake(AiManagerRegistry* ai) { return new CastRakeAction(ai); }
+            static Action* ferocious_bite(AiManagerRegistry* ai) { return new CastFerociousBiteAction(ai); }
+            static Action* rip(AiManagerRegistry* ai) { return new CastRipAction(ai); }
+            static Action* cower(AiManagerRegistry* ai) { return new CastCowerAction(ai); }
+            static Action* survival_instincts(AiManagerRegistry* ai) { return new CastSurvivalInstinctsAction(ai); }
+            static Action* thorns(AiManagerRegistry* ai) { return new CastThornsAction(ai); }
+            static Action* cure_poison(AiManagerRegistry* ai) { return new CastCurePoisonAction(ai); }
+            static Action* cure_poison_on_party(AiManagerRegistry* ai) { return new CastCurePoisonOnPartyAction(ai); }
+            static Action* abolish_poison(AiManagerRegistry* ai) { return new CastAbolishPoisonAction(ai); }
+            static Action* abolish_poison_on_party(AiManagerRegistry* ai) { return new CastAbolishPoisonOnPartyAction(ai); }
+            static Action* berserk(AiManagerRegistry* ai) { return new CastBerserkAction(ai); }
+            static Action* tigers_fury(AiManagerRegistry* ai) { return new CastTigersFuryAction(ai); }
+            static Action* mark_of_the_wild(AiManagerRegistry* ai) { return new CastMarkOfTheWildAction(ai); }
+            static Action* mark_of_the_wild_on_party(AiManagerRegistry* ai) { return new CastMarkOfTheWildOnPartyAction(ai); }
+            static Action* regrowth(AiManagerRegistry* ai) { return new CastRegrowthAction(ai); }
+            static Action* rejuvenation(AiManagerRegistry* ai) { return new CastRejuvenationAction(ai); }
+            static Action* healing_touch(AiManagerRegistry* ai) { return new CastHealingTouchAction(ai); }
+            static Action* regrowth_on_party(AiManagerRegistry* ai) { return new CastRegrowthOnPartyAction(ai); }
+            static Action* rejuvenation_on_party(AiManagerRegistry* ai) { return new CastRejuvenationOnPartyAction(ai); }
+            static Action* healing_touch_on_party(AiManagerRegistry* ai) { return new CastHealingTouchOnPartyAction(ai); }
+            static Action* rebirth(AiManagerRegistry* ai) { return new CastRebirthAction(ai); }
+            static Action* revive(AiManagerRegistry* ai) { return new CastReviveAction(ai); }
+        };
     };
 };
 
-Action* DruidActionFactory::createAction(const char* name)
+DruidActionFactory::DruidActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::druid::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::druid::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::druid::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::druid::TriggerFactoryInternal());    
 }

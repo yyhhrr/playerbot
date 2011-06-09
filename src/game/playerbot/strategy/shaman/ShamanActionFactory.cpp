@@ -18,7 +18,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, shaman::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -30,19 +30,12 @@ namespace ai
             }
 
         private:
-            Strategy* heal(AiManagerRegistry* ai) { return new HealShamanStrategy(ai); }
-            Strategy* dps(AiManagerRegistry* ai) { return new MeleeShamanStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new ShamanNonCombatStrategy(ai); }
-        }
-        strategyFactoryInternal;
+            static Strategy* heal(AiManagerRegistry* ai) { return new HealShamanStrategy(ai); }
+            static Strategy* dps(AiManagerRegistry* ai) { return new MeleeShamanStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new ShamanNonCombatStrategy(ai); }
+        };
     };
 };
-
-Strategy* ShamanActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::shaman::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -50,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -68,25 +61,18 @@ namespace ai
             }
 
         private:
-            Trigger* windfury_totem(AiManagerRegistry* ai) { return new WindfuryTotemTrigger(ai); }
-            Trigger* mana_spring_totem(AiManagerRegistry* ai) { return new ManaSpringTotemTrigger(ai); }
-            Trigger* flametongue_totem(AiManagerRegistry* ai) { return new FlametongueTotemTrigger(ai); }
-            Trigger* strength_of_earth_totem(AiManagerRegistry* ai) { return new StrengthOfEarthTotemTrigger(ai); }
-            Trigger* wind_shear(AiManagerRegistry* ai) { return new WindShearInterruptSpellTrigger(ai); }
-            Trigger* purge(AiManagerRegistry* ai) { return new PurgeTrigger(ai); }
-            Trigger* shaman_weapon(AiManagerRegistry* ai) { return new ShamanWeaponTrigger(ai); }
-            Trigger* water_shield(AiManagerRegistry* ai) { return new WaterShieldTrigger(ai); }
-            Trigger* lightning_shield(AiManagerRegistry* ai) { return new LightningShieldTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* windfury_totem(AiManagerRegistry* ai) { return new WindfuryTotemTrigger(ai); }
+            static Trigger* mana_spring_totem(AiManagerRegistry* ai) { return new ManaSpringTotemTrigger(ai); }
+            static Trigger* flametongue_totem(AiManagerRegistry* ai) { return new FlametongueTotemTrigger(ai); }
+            static Trigger* strength_of_earth_totem(AiManagerRegistry* ai) { return new StrengthOfEarthTotemTrigger(ai); }
+            static Trigger* wind_shear(AiManagerRegistry* ai) { return new WindShearInterruptSpellTrigger(ai); }
+            static Trigger* purge(AiManagerRegistry* ai) { return new PurgeTrigger(ai); }
+            static Trigger* shaman_weapon(AiManagerRegistry* ai) { return new ShamanWeaponTrigger(ai); }
+            static Trigger* water_shield(AiManagerRegistry* ai) { return new WaterShieldTrigger(ai); }
+            static Trigger* lightning_shield(AiManagerRegistry* ai) { return new LightningShieldTrigger(ai); }
+        };
     };
 };
-
-Trigger* ShamanActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::shaman::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
 
 
 namespace ai
@@ -95,7 +81,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -131,41 +117,43 @@ namespace ai
             }
 
         private:
-            Action* water_shield(AiManagerRegistry* ai) { return new CastWaterShieldAction(ai); }
-            Action* lightning_shield(AiManagerRegistry* ai) { return new CastLightningShieldAction(ai); }
-            Action* strength_of_earth_totem(AiManagerRegistry* ai) { return new CastStrengthOfEarthTotemAction(ai); }
-            Action* flametongue_totem(AiManagerRegistry* ai) { return new CastFlametongueTotemAction(ai); }
-            Action* windfury_totem(AiManagerRegistry* ai) { return new CastWindfuryTotemAction(ai); }
-            Action* mana_spring_totem(AiManagerRegistry* ai) { return new CastManaSpringTotemAction(ai); }
-            Action* mana_tide_totem(AiManagerRegistry* ai) { return new CastManaTideTotemAction(ai); }
-            Action* healing_stream_totem(AiManagerRegistry* ai) { return new CastHealingStreamTotemAction(ai); }
-            Action* wind_shear(AiManagerRegistry* ai) { return new CastWindShearAction(ai); }
-            Action* rockbiter_weapon(AiManagerRegistry* ai) { return new CastRockbiterWeaponAction(ai); }
-            Action* flametongue_weapon(AiManagerRegistry* ai) { return new CastFlametongueWeaponAction(ai); }
-            Action* frostbrand_weapon(AiManagerRegistry* ai) { return new CastFrostbrandWeaponAction(ai); }
-            Action* windfury_weapon(AiManagerRegistry* ai) { return new CastWindfuryWeaponAction(ai); }
-            Action* earthliving_weapon(AiManagerRegistry* ai) { return new CastEarthlivingWeaponAction(ai); }
-            Action* purge(AiManagerRegistry* ai) { return new CastPurgeAction(ai); }
-            Action* healing_wave(AiManagerRegistry* ai) { return new CastHealingWaveAction(ai); }
-            Action* lesser_healing_wave(AiManagerRegistry* ai) { return new CastLesserHealingWaveAction(ai); }
-            Action* healing_wave_on_party(AiManagerRegistry* ai) { return new CastHealingWaveOnPartyAction(ai); }
-            Action* lesser_healing_wave_on_party(AiManagerRegistry* ai) { return new CastLesserHealingWaveOnPartyAction(ai); }
-            Action* earth_shield(AiManagerRegistry* ai) { return new CastEarthShieldAction(ai); }
-            Action* earth_shield_on_party(AiManagerRegistry* ai) { return new CastEarthShieldOnPartyAction(ai); }
-            Action* chain_heal(AiManagerRegistry* ai) { return new CastChainHealAction(ai); }
-            Action* riptide(AiManagerRegistry* ai) { return new CastRiptideAction(ai); }
-            Action* chain_heal_on_party(AiManagerRegistry* ai) { return new CastChainHealOnPartyAction(ai); }
-            Action* riptide_on_party(AiManagerRegistry* ai) { return new CastRiptideOnPartyAction(ai); }
-            Action* stormstrike(AiManagerRegistry* ai) { return new CastStormstrikeAction(ai); }
-            Action* lava_lash(AiManagerRegistry* ai) { return new CastLavaLashAction(ai); }
-            Action* ancestral_spirit(AiManagerRegistry* ai) { return new CastAncestralSpiritAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* water_shield(AiManagerRegistry* ai) { return new CastWaterShieldAction(ai); }
+            static Action* lightning_shield(AiManagerRegistry* ai) { return new CastLightningShieldAction(ai); }
+            static Action* strength_of_earth_totem(AiManagerRegistry* ai) { return new CastStrengthOfEarthTotemAction(ai); }
+            static Action* flametongue_totem(AiManagerRegistry* ai) { return new CastFlametongueTotemAction(ai); }
+            static Action* windfury_totem(AiManagerRegistry* ai) { return new CastWindfuryTotemAction(ai); }
+            static Action* mana_spring_totem(AiManagerRegistry* ai) { return new CastManaSpringTotemAction(ai); }
+            static Action* mana_tide_totem(AiManagerRegistry* ai) { return new CastManaTideTotemAction(ai); }
+            static Action* healing_stream_totem(AiManagerRegistry* ai) { return new CastHealingStreamTotemAction(ai); }
+            static Action* wind_shear(AiManagerRegistry* ai) { return new CastWindShearAction(ai); }
+            static Action* rockbiter_weapon(AiManagerRegistry* ai) { return new CastRockbiterWeaponAction(ai); }
+            static Action* flametongue_weapon(AiManagerRegistry* ai) { return new CastFlametongueWeaponAction(ai); }
+            static Action* frostbrand_weapon(AiManagerRegistry* ai) { return new CastFrostbrandWeaponAction(ai); }
+            static Action* windfury_weapon(AiManagerRegistry* ai) { return new CastWindfuryWeaponAction(ai); }
+            static Action* earthliving_weapon(AiManagerRegistry* ai) { return new CastEarthlivingWeaponAction(ai); }
+            static Action* purge(AiManagerRegistry* ai) { return new CastPurgeAction(ai); }
+            static Action* healing_wave(AiManagerRegistry* ai) { return new CastHealingWaveAction(ai); }
+            static Action* lesser_healing_wave(AiManagerRegistry* ai) { return new CastLesserHealingWaveAction(ai); }
+            static Action* healing_wave_on_party(AiManagerRegistry* ai) { return new CastHealingWaveOnPartyAction(ai); }
+            static Action* lesser_healing_wave_on_party(AiManagerRegistry* ai) { return new CastLesserHealingWaveOnPartyAction(ai); }
+            static Action* earth_shield(AiManagerRegistry* ai) { return new CastEarthShieldAction(ai); }
+            static Action* earth_shield_on_party(AiManagerRegistry* ai) { return new CastEarthShieldOnPartyAction(ai); }
+            static Action* chain_heal(AiManagerRegistry* ai) { return new CastChainHealAction(ai); }
+            static Action* riptide(AiManagerRegistry* ai) { return new CastRiptideAction(ai); }
+            static Action* chain_heal_on_party(AiManagerRegistry* ai) { return new CastChainHealOnPartyAction(ai); }
+            static Action* riptide_on_party(AiManagerRegistry* ai) { return new CastRiptideOnPartyAction(ai); }
+            static Action* stormstrike(AiManagerRegistry* ai) { return new CastStormstrikeAction(ai); }
+            static Action* lava_lash(AiManagerRegistry* ai) { return new CastLavaLashAction(ai); }
+            static Action* ancestral_spirit(AiManagerRegistry* ai) { return new CastAncestralSpiritAction(ai); }
+        };
     };
 };
 
-Action* ShamanActionFactory::createAction(const char* name)
+
+
+ShamanActionFactory::ShamanActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::shaman::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::shaman::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::shaman::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::shaman::TriggerFactoryInternal());    
 }

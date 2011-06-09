@@ -67,7 +67,6 @@ namespace ai
         }
         virtual ~TriggerNode() 
         { 
-            if (trigger) delete trigger; 
             NextAction::destroy(handlers); 
         }
 

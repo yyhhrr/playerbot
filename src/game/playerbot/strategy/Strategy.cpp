@@ -9,7 +9,7 @@
 using namespace ai;
 
 
-class ActionNodeFactoryInternal : public NamedObjectFactory<ActionNode, ActionNodeFactoryInternal>
+class ActionNodeFactoryInternal : public NamedObjectFactoryBase<ActionNode>
 {
 public:
     ActionNodeFactoryInternal()
@@ -42,168 +42,168 @@ public:
     }
 
 private:
-    ActionNode* flee(AiManagerRegistry* ai)
+    static ActionNode* flee(AiManagerRegistry* ai)
     {
         return new ActionNode ("flee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* melee(AiManagerRegistry* ai)
+    static ActionNode* melee(AiManagerRegistry* ai)
     {
         return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* reach_melee(AiManagerRegistry* ai)
+    static ActionNode* reach_melee(AiManagerRegistry* ai)
     {
         return new ActionNode ("reach melee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* reach_spell(AiManagerRegistry* ai)
+    static ActionNode* reach_spell(AiManagerRegistry* ai)
     {
         return new ActionNode ("reach spell",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* healthstone(AiManagerRegistry* ai)
+    static ActionNode* healthstone(AiManagerRegistry* ai)
     {
         return new ActionNode ("healthstone",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("panic potion"), NULL), 
             /*C*/ NULL);
     }
-    ActionNode* panic_potion(AiManagerRegistry* ai)
+    static ActionNode* panic_potion(AiManagerRegistry* ai)
     {
         return new ActionNode ("panic potion",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("healing potion"), NULL), 
             /*C*/ NULL);
     }
-    ActionNode* healing_potion(AiManagerRegistry* ai)
+    static ActionNode* healing_potion(AiManagerRegistry* ai)
     {
         return new ActionNode ("healing potion",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("mana potion"), NULL), 
             /*C*/ NULL);
     }
-    ActionNode* mana_potion(AiManagerRegistry* ai)
+    static ActionNode* mana_potion(AiManagerRegistry* ai)
     {
         return new ActionNode ("mana potion",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
             /*C*/ NULL);
     }
-    ActionNode* eat(AiManagerRegistry* ai)
+    static ActionNode* eat(AiManagerRegistry* ai)
     {
         return new ActionNode ("eat",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* drink(AiManagerRegistry* ai)
+    static ActionNode* drink(AiManagerRegistry* ai)
     {
         return new ActionNode ("drink",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* tank_assist(AiManagerRegistry* ai)
+    static ActionNode* tank_assist(AiManagerRegistry* ai)
     {
         return new ActionNode ("tank assist",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* dps_assist(AiManagerRegistry* ai)
+    static ActionNode* dps_assist(AiManagerRegistry* ai)
     {
         return new ActionNode ("dps assist",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* loot(AiManagerRegistry* ai)
+    static ActionNode* loot(AiManagerRegistry* ai)
     {
         return new ActionNode ("loot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* loot_all(AiManagerRegistry* ai)
+    static ActionNode* loot_all(AiManagerRegistry* ai)
     {
         return new ActionNode ("loot all",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* shoot(AiManagerRegistry* ai)
+    static ActionNode* shoot(AiManagerRegistry* ai)
     {
         return new ActionNode ("shoot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* follow_line(AiManagerRegistry* ai)
+    static ActionNode* follow_line(AiManagerRegistry* ai)
     {
         return new ActionNode ("follow line",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* follow_master(AiManagerRegistry* ai)
+    static ActionNode* follow_master(AiManagerRegistry* ai)
     {
         return new ActionNode ("follow master",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* goaway(AiManagerRegistry* ai)
+    static ActionNode* goaway(AiManagerRegistry* ai)
     {
         return new ActionNode ("goaway",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* stay(AiManagerRegistry* ai)
+    static ActionNode* stay(AiManagerRegistry* ai)
     {
         return new ActionNode ("stay",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* stay_circle(AiManagerRegistry* ai)
+    static ActionNode* stay_circle(AiManagerRegistry* ai)
     {
         return new ActionNode ("stay circle",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* stay_line(AiManagerRegistry* ai)
+    static ActionNode* stay_line(AiManagerRegistry* ai)
     {
         return new ActionNode ("stay line",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* stay_combat(AiManagerRegistry* ai)
+    static ActionNode* stay_combat(AiManagerRegistry* ai)
     {
         return new ActionNode ("stay combat",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    ActionNode* attack_anything(AiManagerRegistry* ai)
+    static ActionNode* attack_anything(AiManagerRegistry* ai)
     {
         return new ActionNode ("attack anything",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("follow"), NULL), 
             /*C*/ NULL);
     }
-    ActionNode* emote(AiManagerRegistry* ai)
+    static ActionNode* emote(AiManagerRegistry* ai)
     {
         return new ActionNode ("emote",  
             /*P*/ NULL,

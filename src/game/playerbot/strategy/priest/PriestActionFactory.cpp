@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, priest::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -29,20 +29,13 @@ namespace ai
             }
 
         private:
-            Strategy* heal(AiManagerRegistry* ai) { return new HealPriestStrategy(ai); }
-            Strategy* dps(AiManagerRegistry* ai) { return new DpsPriestStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new HealPriestNonCombatStrategy(ai); }
-            Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
-        }
-        strategyFactoryInternal;
+            static Strategy* heal(AiManagerRegistry* ai) { return new HealPriestStrategy(ai); }
+            static Strategy* dps(AiManagerRegistry* ai) { return new DpsPriestStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new HealPriestNonCombatStrategy(ai); }
+            static Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
+        };
     };
 };
-
-Strategy* PriestActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::priest::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -50,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -70,27 +63,21 @@ namespace ai
             }
 
         private:
-            Trigger* devouring_plague(AiManagerRegistry* ai) { return new DevouringPlagueTrigger(ai); }
-            Trigger* shadow_word_pain(AiManagerRegistry* ai) { return new PowerWordPainTrigger(ai); }
-            Trigger* dispel_magic(AiManagerRegistry* ai) { return new DispelMagicTrigger(ai); }
-            Trigger* dispel_magic_party_member(AiManagerRegistry* ai) { return new DispelMagicPartyMemberTrigger(ai); }
-            Trigger* cure_disease(AiManagerRegistry* ai) { return new CureDiseaseTrigger(ai); }
-            Trigger* party_member_cure_disease(AiManagerRegistry* ai) { return new PartyMemberCureDiseaseTrigger(ai); }
-            Trigger* power_word_fortitude(AiManagerRegistry* ai) { return new PowerWordFortitudeTrigger(ai); }
-            Trigger* power_word_fortitude_on_party(AiManagerRegistry* ai) { return new PowerWordFortitudeOnPartyTrigger(ai); }
-            Trigger* divine_spirit(AiManagerRegistry* ai) { return new DivineSpiritTrigger(ai); }
-            Trigger* divine_spirit_on_party(AiManagerRegistry* ai) { return new DivineSpiritOnPartyTrigger(ai); }
-            Trigger* inner_fire(AiManagerRegistry* ai) { return new InnerFireTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* devouring_plague(AiManagerRegistry* ai) { return new DevouringPlagueTrigger(ai); }
+            static Trigger* shadow_word_pain(AiManagerRegistry* ai) { return new PowerWordPainTrigger(ai); }
+            static Trigger* dispel_magic(AiManagerRegistry* ai) { return new DispelMagicTrigger(ai); }
+            static Trigger* dispel_magic_party_member(AiManagerRegistry* ai) { return new DispelMagicPartyMemberTrigger(ai); }
+            static Trigger* cure_disease(AiManagerRegistry* ai) { return new CureDiseaseTrigger(ai); }
+            static Trigger* party_member_cure_disease(AiManagerRegistry* ai) { return new PartyMemberCureDiseaseTrigger(ai); }
+            static Trigger* power_word_fortitude(AiManagerRegistry* ai) { return new PowerWordFortitudeTrigger(ai); }
+            static Trigger* power_word_fortitude_on_party(AiManagerRegistry* ai) { return new PowerWordFortitudeOnPartyTrigger(ai); }
+            static Trigger* divine_spirit(AiManagerRegistry* ai) { return new DivineSpiritTrigger(ai); }
+            static Trigger* divine_spirit_on_party(AiManagerRegistry* ai) { return new DivineSpiritOnPartyTrigger(ai); }
+            static Trigger* inner_fire(AiManagerRegistry* ai) { return new InnerFireTrigger(ai); }
+        };
     };
 };
 
-Trigger* PriestActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::priest::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
 
 
 namespace ai
@@ -99,7 +86,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -142,48 +129,48 @@ namespace ai
             }
 
         private:
-            Action* resurrection(AiManagerRegistry* ai) { return new CastResurrectionAction(ai); }
-            Action* shadow_word_pain(AiManagerRegistry* ai) { return new CastPowerWordPainAction(ai); }
-            Action* devouring_plague(AiManagerRegistry* ai) { return new CastDevouringPlagueAction(ai); }
-            Action* mind_flay(AiManagerRegistry* ai) { return new CastMindFlayAction(ai); }
-            Action* holy_fire(AiManagerRegistry* ai) { return new CastHolyFireAction(ai); }
-            Action* smite(AiManagerRegistry* ai) { return new CastSmiteAction(ai); }
-            Action* mind_blast(AiManagerRegistry* ai) { return new CastMindBlastAction(ai); }
-            Action* shadowform(AiManagerRegistry* ai) { return new CastShadowformAction(ai); }
-            Action* remove_shadowform(AiManagerRegistry* ai) { return new CastRemoveShadowformAction(ai); }
-            Action* holy_nova(AiManagerRegistry* ai) { return new CastHolyNovaAction(ai); }
-            Action* power_word_fortitude(AiManagerRegistry* ai) { return new CastPowerWordFortitudeAction(ai); }
-            Action* power_word_fortitude_on_party(AiManagerRegistry* ai) { return new CastPowerWordFortitudeOnPartyAction(ai); }
-            Action* divine_spirit(AiManagerRegistry* ai) { return new CastDivineSpiritAction(ai); }
-            Action* divine_spirit_on_party(AiManagerRegistry* ai) { return new CastDivineSpiritOnPartyAction(ai); }
-            Action* power_word_shield(AiManagerRegistry* ai) { return new CastPowerWordShieldAction(ai); }
-            Action* power_word_shield_on_party(AiManagerRegistry* ai) { return new CastPowerWordShieldOnPartyAction(ai); }
-            Action* renew(AiManagerRegistry* ai) { return new CastRenewAction(ai); }
-            Action* renew_on_party(AiManagerRegistry* ai) { return new CastRenewOnPartyAction(ai); }
-            Action* greater_heal(AiManagerRegistry* ai) { return new CastGreaterHealAction(ai); }
-            Action* greater_heal_on_party(AiManagerRegistry* ai) { return new CastGreaterHealOnPartyAction(ai); }
-            Action* heal(AiManagerRegistry* ai) { return new CastHealAction(ai); }
-            Action* heal_on_party(AiManagerRegistry* ai) { return new CastHealOnPartyAction(ai); }
-            Action* lesser_heal(AiManagerRegistry* ai) { return new CastLesserHealAction(ai); }
-            Action* lesser_heal_on_party(AiManagerRegistry* ai) { return new CastLesserHealOnPartyAction(ai); }
-            Action* flash_heal(AiManagerRegistry* ai) { return new CastFlashHealAction(ai); }
-            Action* flash_heal_on_party(AiManagerRegistry* ai) { return new CastFlashHealOnPartyAction(ai); }
-            Action* dispel_magic(AiManagerRegistry* ai) { return new CastDispelMagicAction(ai); }
-            Action* dispel_magic_on_party(AiManagerRegistry* ai) { return new CastDispelMagicOnPartyAction(ai); }
-            Action* dispel_magic_on_target(AiManagerRegistry* ai) { return new CastDispelMagicOnTargetAction(ai); }
-            Action* cure_disease(AiManagerRegistry* ai) { return new CastCureDiseaseAction(ai); }
-            Action* cure_disease_on_party(AiManagerRegistry* ai) { return new CastCureDiseaseOnPartyAction(ai); }
-            Action* abolish_disease(AiManagerRegistry* ai) { return new CastAbolishDiseaseAction(ai); }
-            Action* abolish_disease_on_party(AiManagerRegistry* ai) { return new CastAbolishDiseaseOnPartyAction(ai); }
-            Action* fade(AiManagerRegistry* ai) { return new CastFadeAction(ai); }
-            Action* inner_fire(AiManagerRegistry* ai) { return new CastInnerFireAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* resurrection(AiManagerRegistry* ai) { return new CastResurrectionAction(ai); }
+            static Action* shadow_word_pain(AiManagerRegistry* ai) { return new CastPowerWordPainAction(ai); }
+            static Action* devouring_plague(AiManagerRegistry* ai) { return new CastDevouringPlagueAction(ai); }
+            static Action* mind_flay(AiManagerRegistry* ai) { return new CastMindFlayAction(ai); }
+            static Action* holy_fire(AiManagerRegistry* ai) { return new CastHolyFireAction(ai); }
+            static Action* smite(AiManagerRegistry* ai) { return new CastSmiteAction(ai); }
+            static Action* mind_blast(AiManagerRegistry* ai) { return new CastMindBlastAction(ai); }
+            static Action* shadowform(AiManagerRegistry* ai) { return new CastShadowformAction(ai); }
+            static Action* remove_shadowform(AiManagerRegistry* ai) { return new CastRemoveShadowformAction(ai); }
+            static Action* holy_nova(AiManagerRegistry* ai) { return new CastHolyNovaAction(ai); }
+            static Action* power_word_fortitude(AiManagerRegistry* ai) { return new CastPowerWordFortitudeAction(ai); }
+            static Action* power_word_fortitude_on_party(AiManagerRegistry* ai) { return new CastPowerWordFortitudeOnPartyAction(ai); }
+            static Action* divine_spirit(AiManagerRegistry* ai) { return new CastDivineSpiritAction(ai); }
+            static Action* divine_spirit_on_party(AiManagerRegistry* ai) { return new CastDivineSpiritOnPartyAction(ai); }
+            static Action* power_word_shield(AiManagerRegistry* ai) { return new CastPowerWordShieldAction(ai); }
+            static Action* power_word_shield_on_party(AiManagerRegistry* ai) { return new CastPowerWordShieldOnPartyAction(ai); }
+            static Action* renew(AiManagerRegistry* ai) { return new CastRenewAction(ai); }
+            static Action* renew_on_party(AiManagerRegistry* ai) { return new CastRenewOnPartyAction(ai); }
+            static Action* greater_heal(AiManagerRegistry* ai) { return new CastGreaterHealAction(ai); }
+            static Action* greater_heal_on_party(AiManagerRegistry* ai) { return new CastGreaterHealOnPartyAction(ai); }
+            static Action* heal(AiManagerRegistry* ai) { return new CastHealAction(ai); }
+            static Action* heal_on_party(AiManagerRegistry* ai) { return new CastHealOnPartyAction(ai); }
+            static Action* lesser_heal(AiManagerRegistry* ai) { return new CastLesserHealAction(ai); }
+            static Action* lesser_heal_on_party(AiManagerRegistry* ai) { return new CastLesserHealOnPartyAction(ai); }
+            static Action* flash_heal(AiManagerRegistry* ai) { return new CastFlashHealAction(ai); }
+            static Action* flash_heal_on_party(AiManagerRegistry* ai) { return new CastFlashHealOnPartyAction(ai); }
+            static Action* dispel_magic(AiManagerRegistry* ai) { return new CastDispelMagicAction(ai); }
+            static Action* dispel_magic_on_party(AiManagerRegistry* ai) { return new CastDispelMagicOnPartyAction(ai); }
+            static Action* dispel_magic_on_target(AiManagerRegistry* ai) { return new CastDispelMagicOnTargetAction(ai); }
+            static Action* cure_disease(AiManagerRegistry* ai) { return new CastCureDiseaseAction(ai); }
+            static Action* cure_disease_on_party(AiManagerRegistry* ai) { return new CastCureDiseaseOnPartyAction(ai); }
+            static Action* abolish_disease(AiManagerRegistry* ai) { return new CastAbolishDiseaseAction(ai); }
+            static Action* abolish_disease_on_party(AiManagerRegistry* ai) { return new CastAbolishDiseaseOnPartyAction(ai); }
+            static Action* fade(AiManagerRegistry* ai) { return new CastFadeAction(ai); }
+            static Action* inner_fire(AiManagerRegistry* ai) { return new CastInnerFireAction(ai); }
+        };
     };
 };
 
-Action* PriestActionFactory::createAction(const char* name)
+PriestActionFactory::PriestActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::priest::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::priest::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::priest::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::priest::TriggerFactoryInternal());    
 }

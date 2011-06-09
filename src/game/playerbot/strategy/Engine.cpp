@@ -30,7 +30,9 @@ ActionExecutionListeners::~ActionExecutionListeners()
 Engine::~Engine(void)
 {
     Reset();
-    clearStrategies();
+    
+    strategies.clear();
+    
     if (actionFactory)
         delete actionFactory;
 }
@@ -43,11 +45,6 @@ void Engine::Reset()
         action = queue.Pop();
     } while (action);
 
-    for (std::list<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
-    {
-        TriggerNode* trigger = *i;
-        delete trigger;
-    }
     triggers.clear();
 
     for (std::list<Multiplier*>::iterator i = multipliers.begin(); i != multipliers.end(); i++)
@@ -56,16 +53,6 @@ void Engine::Reset()
         delete multiplier;
     }
     multipliers.clear();
-}
-
-void Engine::clearStrategies()
-{
-    for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
-    {
-        Strategy* strategy = *i;
-        delete strategy;
-    }
-    strategies.clear();
 }
 
 void Engine::Init()
@@ -219,7 +206,6 @@ bool Engine::ExecuteAction(const char* name)
 		}
 
         MultiplyAndPush(action->getContinuers());
-        delete action;
     }
 	return result;
 }
@@ -271,7 +257,6 @@ bool Engine::removeStrategy(const char* name)
         if (!strcmp(strategy->getName(), name))
         {
             strategies.remove(strategy);
-            delete strategy;
             Init();
             return true;
         }

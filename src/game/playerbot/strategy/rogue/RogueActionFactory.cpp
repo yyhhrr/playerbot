@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, rogue::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -28,19 +28,12 @@ namespace ai
             }
 
         private:
-            Strategy* dps(AiManagerRegistry* ai) { return new DpsRogueStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new GenericRogueNonCombatStrategy(ai); }
-            Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
-        }
-        strategyFactoryInternal;
+            static Strategy* dps(AiManagerRegistry* ai) { return new DpsRogueStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new GenericRogueNonCombatStrategy(ai); }
+            static Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
+        };
     };
 };
-
-Strategy* RogueActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::rogue::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -48,7 +41,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -58,17 +51,10 @@ namespace ai
             }
 
         private:
-            Trigger* kick(AiManagerRegistry* ai) { return new KickInterruptSpellTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* kick(AiManagerRegistry* ai) { return new KickInterruptSpellTrigger(ai); }
+        };
     };
 };
-
-Trigger* RogueActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::rogue::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
 
 
 namespace ai
@@ -77,7 +63,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -96,24 +82,24 @@ namespace ai
             }
 
         private:
-            Action* mutilate(AiManagerRegistry* ai) { return new CastMutilateAction(ai); }
-            Action* sinister_strike(AiManagerRegistry* ai) { return new CastSinisterStrikeAction(ai); }
-            Action* kidney_shot(AiManagerRegistry* ai) { return new CastKidneyShotAction(ai); }
-            Action* rupture(AiManagerRegistry* ai) { return new CastRuptureAction(ai); }
-            Action* slice_and_dice(AiManagerRegistry* ai) { return new CastSliceAndDiceAction(ai); }
-            Action* eviscerate(AiManagerRegistry* ai) { return new CastEviscerateAction(ai); }
-            Action* vanish(AiManagerRegistry* ai) { return new CastVanishAction(ai); }
-            Action* evasion(AiManagerRegistry* ai) { return new CastEvasionAction(ai); }
-            Action* kick(AiManagerRegistry* ai) { return new CastKickAction(ai); }
-            Action* feint(AiManagerRegistry* ai) { return new CastFeintAction(ai); }
-            Action* backstab(AiManagerRegistry* ai) { return new CastBackstabAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* mutilate(AiManagerRegistry* ai) { return new CastMutilateAction(ai); }
+            static Action* sinister_strike(AiManagerRegistry* ai) { return new CastSinisterStrikeAction(ai); }
+            static Action* kidney_shot(AiManagerRegistry* ai) { return new CastKidneyShotAction(ai); }
+            static Action* rupture(AiManagerRegistry* ai) { return new CastRuptureAction(ai); }
+            static Action* slice_and_dice(AiManagerRegistry* ai) { return new CastSliceAndDiceAction(ai); }
+            static Action* eviscerate(AiManagerRegistry* ai) { return new CastEviscerateAction(ai); }
+            static Action* vanish(AiManagerRegistry* ai) { return new CastVanishAction(ai); }
+            static Action* evasion(AiManagerRegistry* ai) { return new CastEvasionAction(ai); }
+            static Action* kick(AiManagerRegistry* ai) { return new CastKickAction(ai); }
+            static Action* feint(AiManagerRegistry* ai) { return new CastFeintAction(ai); }
+            static Action* backstab(AiManagerRegistry* ai) { return new CastBackstabAction(ai); }
+        };
     };
 };
 
-Action* RogueActionFactory::createAction(const char* name)
+RogueActionFactory::RogueActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::rogue::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::rogue::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::rogue::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::rogue::TriggerFactoryInternal());    
 }

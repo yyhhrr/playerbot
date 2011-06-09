@@ -18,7 +18,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, mage::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -30,20 +30,14 @@ namespace ai
             }
 
         private:
-            Strategy* frost(AiManagerRegistry* ai) { return new FrostMageStrategy(ai); }
-            Strategy* fire(AiManagerRegistry* ai) { return new FireMageStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new GenericMageNonCombatStrategy(ai); }
-            Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
-        }
-        strategyFactoryInternal;
+            static Strategy* frost(AiManagerRegistry* ai) { return new FrostMageStrategy(ai); }
+            static Strategy* fire(AiManagerRegistry* ai) { return new FireMageStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new GenericMageNonCombatStrategy(ai); }
+            static Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
+        };
     };
 };
 
-Strategy* MageActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::mage::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -51,7 +45,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -72,28 +66,21 @@ namespace ai
             }
 
         private:
-            Trigger* fireball(AiManagerRegistry* ai) { return new FireballTrigger(ai); }
-            Trigger* pyroblast(AiManagerRegistry* ai) { return new PyroblastTrigger(ai); }
-            Trigger* combustion(AiManagerRegistry* ai) { return new CombustionTrigger(ai); }
-            Trigger* icy_veins(AiManagerRegistry* ai) { return new IcyVeinsTrigger(ai); }
-            Trigger* arcane_intellect(AiManagerRegistry* ai) { return new ArcaneIntellectTrigger(ai); }
-            Trigger* arcane_intellect_on_party(AiManagerRegistry* ai) { return new ArcaneIntellectOnPartyTrigger(ai); }
-            Trigger* mage_armor(AiManagerRegistry* ai) { return new MageArmorTrigger(ai); }
-            Trigger* remove_curse(AiManagerRegistry* ai) { return new RemoveCurseTrigger(ai); }
-            Trigger* remove_curse_on_party(AiManagerRegistry* ai) { return new PartyMemberRemoveCurseTrigger(ai); }
-            Trigger* counterspell(AiManagerRegistry* ai) { return new CounterspellInterruptSpellTrigger(ai); }
-            Trigger* polymorph(AiManagerRegistry* ai) { return new PolymorphTrigger(ai); }
-            Trigger* spellsteal(AiManagerRegistry* ai) { return new SpellstealTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* fireball(AiManagerRegistry* ai) { return new FireballTrigger(ai); }
+            static Trigger* pyroblast(AiManagerRegistry* ai) { return new PyroblastTrigger(ai); }
+            static Trigger* combustion(AiManagerRegistry* ai) { return new CombustionTrigger(ai); }
+            static Trigger* icy_veins(AiManagerRegistry* ai) { return new IcyVeinsTrigger(ai); }
+            static Trigger* arcane_intellect(AiManagerRegistry* ai) { return new ArcaneIntellectTrigger(ai); }
+            static Trigger* arcane_intellect_on_party(AiManagerRegistry* ai) { return new ArcaneIntellectOnPartyTrigger(ai); }
+            static Trigger* mage_armor(AiManagerRegistry* ai) { return new MageArmorTrigger(ai); }
+            static Trigger* remove_curse(AiManagerRegistry* ai) { return new RemoveCurseTrigger(ai); }
+            static Trigger* remove_curse_on_party(AiManagerRegistry* ai) { return new PartyMemberRemoveCurseTrigger(ai); }
+            static Trigger* counterspell(AiManagerRegistry* ai) { return new CounterspellInterruptSpellTrigger(ai); }
+            static Trigger* polymorph(AiManagerRegistry* ai) { return new PolymorphTrigger(ai); }
+            static Trigger* spellsteal(AiManagerRegistry* ai) { return new SpellstealTrigger(ai); }
+        };
     };
 };
-
-Trigger* MageActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::mage::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
 
 
 namespace ai
@@ -102,7 +89,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -133,36 +120,38 @@ namespace ai
             }
 
         private:
-            Action* frostbolt(AiManagerRegistry* ai) { return new CastFrostboltAction(ai); }
-            Action* blizzard(AiManagerRegistry* ai) { return new CastBlizzardAction(ai); }
-            Action* frost_nova(AiManagerRegistry* ai) { return new CastFrostNovaAction(ai); }
-            Action* arcane_intellect(AiManagerRegistry* ai) { return new CastArcaneIntellectAction(ai); }
-            Action* arcane_intellect_on_party(AiManagerRegistry* ai) { return new CastArcaneIntellectOnPartyAction(ai); }
-            Action* conjure_water(AiManagerRegistry* ai) { return new CastConjureWaterAction(ai); }
-            Action* conjure_food(AiManagerRegistry* ai) { return new CastConjureFoodAction(ai); }
-            Action* mage_armor(AiManagerRegistry* ai) { return new CastMageArmorAction(ai); }
-            Action* ice_armor(AiManagerRegistry* ai) { return new CastIceArmorAction(ai); }
-            Action* frost_armor(AiManagerRegistry* ai) { return new CastFrostArmorAction(ai); }
-            Action* fireball(AiManagerRegistry* ai) { return new CastFireballAction(ai); }
-            Action* pyroblast(AiManagerRegistry* ai) { return new CastPyroblastAction(ai); }
-            Action* flamestrike(AiManagerRegistry* ai) { return new CastFlamestrikeAction(ai); }
-            Action* fire_blast(AiManagerRegistry* ai) { return new CastFireBlastAction(ai); }
-            Action* scorch(AiManagerRegistry* ai) { return new CastScorchAction(ai); }
-            Action* counterspell(AiManagerRegistry* ai) { return new CastCounterspellAction(ai); }
-            Action* remove_curse(AiManagerRegistry* ai) { return new CastRemoveCurseAction(ai); }
-            Action* remove_curse_on_party(AiManagerRegistry* ai) { return new CastRemoveCurseOnPartyAction(ai); }
-            Action* icy_veins(AiManagerRegistry* ai) { return new CastIcyVeinsAction(ai); }
-            Action* combustion(AiManagerRegistry* ai) { return new CastCombustionAction(ai); }
-            Action* ice_block(AiManagerRegistry* ai) { return new CastIceBlockAction(ai); }
-            Action* polymorph(AiManagerRegistry* ai) { return new CastPolymorphAction(ai); }
-            Action* spellsteal(AiManagerRegistry* ai) { return new CastSpellstealAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* frostbolt(AiManagerRegistry* ai) { return new CastFrostboltAction(ai); }
+            static Action* blizzard(AiManagerRegistry* ai) { return new CastBlizzardAction(ai); }
+            static Action* frost_nova(AiManagerRegistry* ai) { return new CastFrostNovaAction(ai); }
+            static Action* arcane_intellect(AiManagerRegistry* ai) { return new CastArcaneIntellectAction(ai); }
+            static Action* arcane_intellect_on_party(AiManagerRegistry* ai) { return new CastArcaneIntellectOnPartyAction(ai); }
+            static Action* conjure_water(AiManagerRegistry* ai) { return new CastConjureWaterAction(ai); }
+            static Action* conjure_food(AiManagerRegistry* ai) { return new CastConjureFoodAction(ai); }
+            static Action* mage_armor(AiManagerRegistry* ai) { return new CastMageArmorAction(ai); }
+            static Action* ice_armor(AiManagerRegistry* ai) { return new CastIceArmorAction(ai); }
+            static Action* frost_armor(AiManagerRegistry* ai) { return new CastFrostArmorAction(ai); }
+            static Action* fireball(AiManagerRegistry* ai) { return new CastFireballAction(ai); }
+            static Action* pyroblast(AiManagerRegistry* ai) { return new CastPyroblastAction(ai); }
+            static Action* flamestrike(AiManagerRegistry* ai) { return new CastFlamestrikeAction(ai); }
+            static Action* fire_blast(AiManagerRegistry* ai) { return new CastFireBlastAction(ai); }
+            static Action* scorch(AiManagerRegistry* ai) { return new CastScorchAction(ai); }
+            static Action* counterspell(AiManagerRegistry* ai) { return new CastCounterspellAction(ai); }
+            static Action* remove_curse(AiManagerRegistry* ai) { return new CastRemoveCurseAction(ai); }
+            static Action* remove_curse_on_party(AiManagerRegistry* ai) { return new CastRemoveCurseOnPartyAction(ai); }
+            static Action* icy_veins(AiManagerRegistry* ai) { return new CastIcyVeinsAction(ai); }
+            static Action* combustion(AiManagerRegistry* ai) { return new CastCombustionAction(ai); }
+            static Action* ice_block(AiManagerRegistry* ai) { return new CastIceBlockAction(ai); }
+            static Action* polymorph(AiManagerRegistry* ai) { return new CastPolymorphAction(ai); }
+            static Action* spellsteal(AiManagerRegistry* ai) { return new CastSpellstealAction(ai); }
+        };
     };
 };
 
-Action* MageActionFactory::createAction(const char* name)
+
+
+MageActionFactory::MageActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::mage::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::mage::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::mage::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::mage::TriggerFactoryInternal());    
 }

@@ -227,15 +227,12 @@ protected:
 		CPPUNIT_ASSERT(TriggeredAction::fired);
         CPPUNIT_ASSERT(TestMultiplier::asked);
         CPPUNIT_ASSERT_EQUAL(5, RepeatingAction::executed);
-        CPPUNIT_ASSERT_EQUAL(5, RepeatingAction::destroyed);
 
         RepeatingAction::available = FALSE;
         engine.DoNextAction(NULL);
         engine.DoNextAction(NULL);
         CPPUNIT_ASSERT(AlternativeAction::executed);
-        CPPUNIT_ASSERT(AlternativeAction::destroyed);
         CPPUNIT_ASSERT(PrerequisiteAction::executed);
-        CPPUNIT_ASSERT(PrerequisiteAction::destroyed);
 	}
 
     void addRemoveStrategies()

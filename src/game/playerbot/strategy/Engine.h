@@ -58,7 +58,6 @@ namespace ai
 		void addStrategies(const char* first, ...);
         bool removeStrategy(const char* name);
         void toggleStrategy(const char* name);
-        void clearStrategies();
         std::string ListStrategies();
 		bool ContainsStrategy(StrategyType type);
 

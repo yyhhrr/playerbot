@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class StrategyFactoryInternal : public NamedObjectFactory<Strategy, hunter::StrategyFactoryInternal>
+        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -30,21 +30,15 @@ namespace ai
             }
 
         private:
-            Strategy* dps(AiManagerRegistry* ai) { return new DpsHunterStrategy(ai); }
-            Strategy* nc(AiManagerRegistry* ai) { return new GenericHunterNonCombatStrategy(ai); }
-            Strategy* bspeed(AiManagerRegistry* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
-            Strategy* bdps(AiManagerRegistry* ai) { return new HunterBuffDpsStrategy(ai); }
-            Strategy* rnature(AiManagerRegistry* ai) { return new HunterNatureResistanceStrategy(ai); }
-        }
-        strategyFactoryInternal;
+            static Strategy* dps(AiManagerRegistry* ai) { return new DpsHunterStrategy(ai); }
+            static Strategy* nc(AiManagerRegistry* ai) { return new GenericHunterNonCombatStrategy(ai); }
+            static Strategy* bspeed(AiManagerRegistry* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
+            static Strategy* bdps(AiManagerRegistry* ai) { return new HunterBuffDpsStrategy(ai); }
+            static Strategy* rnature(AiManagerRegistry* ai) { return new HunterNatureResistanceStrategy(ai); }
+        };
     };
 };
 
-Strategy* HunterActionFactory::createStrategy(const char* name)
-{
-    Strategy* strategy = ai::hunter::strategyFactoryInternal.create(name, ai);
-    return strategy ? strategy : ActionFactory::createStrategy(name);
-}
 
 namespace ai
 {
@@ -52,7 +46,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class TriggerFactoryInternal : public NamedObjectFactory<Trigger, TriggerFactoryInternal>
+        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -71,27 +65,21 @@ namespace ai
             }
 
         private:
-            Trigger* aspect_of_the_viper(AiManagerRegistry* ai) { return new HunterAspectOfTheViperTrigger(ai); }
-            Trigger* black_arrow(AiManagerRegistry* ai) { return new BlackArrowTrigger(ai); }
-            Trigger* NoStings(AiManagerRegistry* ai) { return new HunterNoStingsActiveTrigger(ai); }
-            Trigger* hunters_pet_dead(AiManagerRegistry* ai) { return new HuntersPetDeadTrigger(ai); }
-            Trigger* hunters_pet_low_health(AiManagerRegistry* ai) { return new HuntersPetLowHealthTrigger(ai); }
-            Trigger* hunters_mark(AiManagerRegistry* ai) { return new HuntersMarkTrigger(ai); }
-            Trigger* freezing_trap(AiManagerRegistry* ai) { return new FreezingTrapTrigger(ai); }
-            Trigger* aspect_of_the_pack(AiManagerRegistry* ai) { return new HunterAspectOfThePackTrigger(ai); }
-            Trigger* rapid_fire(AiManagerRegistry* ai) { return new RapidFireTrigger(ai); }
-            Trigger* aspect_of_the_hawk(AiManagerRegistry* ai) { return new HunterAspectOfTheHawkTrigger(ai); }
-            Trigger* aspect_of_the_wild(AiManagerRegistry* ai) { return new HunterAspectOfTheWildTrigger(ai); }
-        }
-        triggerFactoryInternal;
+            static Trigger* aspect_of_the_viper(AiManagerRegistry* ai) { return new HunterAspectOfTheViperTrigger(ai); }
+            static Trigger* black_arrow(AiManagerRegistry* ai) { return new BlackArrowTrigger(ai); }
+            static Trigger* NoStings(AiManagerRegistry* ai) { return new HunterNoStingsActiveTrigger(ai); }
+            static Trigger* hunters_pet_dead(AiManagerRegistry* ai) { return new HuntersPetDeadTrigger(ai); }
+            static Trigger* hunters_pet_low_health(AiManagerRegistry* ai) { return new HuntersPetLowHealthTrigger(ai); }
+            static Trigger* hunters_mark(AiManagerRegistry* ai) { return new HuntersMarkTrigger(ai); }
+            static Trigger* freezing_trap(AiManagerRegistry* ai) { return new FreezingTrapTrigger(ai); }
+            static Trigger* aspect_of_the_pack(AiManagerRegistry* ai) { return new HunterAspectOfThePackTrigger(ai); }
+            static Trigger* rapid_fire(AiManagerRegistry* ai) { return new RapidFireTrigger(ai); }
+            static Trigger* aspect_of_the_hawk(AiManagerRegistry* ai) { return new HunterAspectOfTheHawkTrigger(ai); }
+            static Trigger* aspect_of_the_wild(AiManagerRegistry* ai) { return new HunterAspectOfTheWildTrigger(ai); }
+        };
     };
 };
 
-Trigger* HunterActionFactory::createTrigger(const char* name)
-{
-    Trigger* trigger = ai::hunter::triggerFactoryInternal.create(name, ai);
-    return trigger ? trigger : ActionFactory::createTrigger(name);
-}
 
 
 namespace ai
@@ -100,7 +88,7 @@ namespace ai
     {
         using namespace ai;
 
-        static class ActionFactoryInternal : public NamedObjectFactory<Action, ActionFactoryInternal>
+        class ActionFactoryInternal : public NamedObjectFactory<Action>
         {
         public:
             ActionFactoryInternal()
@@ -134,38 +122,38 @@ namespace ai
             }
 
         private:
-            Action* auto_shot(AiManagerRegistry* ai) { return new CastAutoShotAction(ai); }
-            Action* aimed_shot(AiManagerRegistry* ai) { return new CastAimedShotAction(ai); }
-            Action* explosive_shot(AiManagerRegistry* ai) { return new CastExplosiveShotAction(ai); }
-            Action* arcane_shot(AiManagerRegistry* ai) { return new CastArcaneShotAction(ai); }
-            Action* concussive_shot(AiManagerRegistry* ai) { return new CastConcussiveShotAction(ai); }
-            Action* distracting_shot(AiManagerRegistry* ai) { return new CastDistractingShotAction(ai); }
-            Action* multi_shot(AiManagerRegistry* ai) { return new CastMultiShotAction(ai); }
-            Action* volley(AiManagerRegistry* ai) { return new CastVolleyAction(ai); }
-            Action* serpent_sting(AiManagerRegistry* ai) { return new CastSerpentStingAction(ai); }
-            Action* wyvern_sting(AiManagerRegistry* ai) { return new CastWyvernStingAction(ai); }
-            Action* viper_sting(AiManagerRegistry* ai) { return new CastViperStingAction(ai); }
-            Action* scorpid_sting(AiManagerRegistry* ai) { return new CastScorpidStingAction(ai); }
-            Action* hunters_mark(AiManagerRegistry* ai) { return new CastHuntersMarkAction(ai); }
-            Action* mend_pet(AiManagerRegistry* ai) { return new CastMendPetAction(ai); }
-            Action* revive_pet(AiManagerRegistry* ai) { return new CastRevivePetAction(ai); }
-            Action* call_pet(AiManagerRegistry* ai) { return new CastCallPetAction(ai); }
-            Action* black_arrow(AiManagerRegistry* ai) { return new CastBlackArrow(ai); }
-            Action* freezing_trap(AiManagerRegistry* ai) { return new CastFreezingTrap(ai); }
-            Action* rapid_fire(AiManagerRegistry* ai) { return new CastRapidFireAction(ai); }
-            Action* readyness(AiManagerRegistry* ai) { return new CastReadynessAction(ai); }
-            Action* aspect_of_the_hawk(AiManagerRegistry* ai) { return new CastAspectOfTheHawkAction(ai); }
-            Action* aspect_of_the_wild(AiManagerRegistry* ai) { return new CastAspectOfTheWildAction(ai); }
-            Action* aspect_of_the_viper(AiManagerRegistry* ai) { return new CastAspectOfTheViperAction(ai); }
-            Action* aspect_of_the_pack(AiManagerRegistry* ai) { return new CastAspectOfThePackAction(ai); }
-            Action* aspect_of_the_cheetah(AiManagerRegistry* ai) { return new CastAspectOfTheCheetahAction(ai); }
-        }
-        actionFactoryInternal;
+            static Action* auto_shot(AiManagerRegistry* ai) { return new CastAutoShotAction(ai); }
+            static Action* aimed_shot(AiManagerRegistry* ai) { return new CastAimedShotAction(ai); }
+            static Action* explosive_shot(AiManagerRegistry* ai) { return new CastExplosiveShotAction(ai); }
+            static Action* arcane_shot(AiManagerRegistry* ai) { return new CastArcaneShotAction(ai); }
+            static Action* concussive_shot(AiManagerRegistry* ai) { return new CastConcussiveShotAction(ai); }
+            static Action* distracting_shot(AiManagerRegistry* ai) { return new CastDistractingShotAction(ai); }
+            static Action* multi_shot(AiManagerRegistry* ai) { return new CastMultiShotAction(ai); }
+            static Action* volley(AiManagerRegistry* ai) { return new CastVolleyAction(ai); }
+            static Action* serpent_sting(AiManagerRegistry* ai) { return new CastSerpentStingAction(ai); }
+            static Action* wyvern_sting(AiManagerRegistry* ai) { return new CastWyvernStingAction(ai); }
+            static Action* viper_sting(AiManagerRegistry* ai) { return new CastViperStingAction(ai); }
+            static Action* scorpid_sting(AiManagerRegistry* ai) { return new CastScorpidStingAction(ai); }
+            static Action* hunters_mark(AiManagerRegistry* ai) { return new CastHuntersMarkAction(ai); }
+            static Action* mend_pet(AiManagerRegistry* ai) { return new CastMendPetAction(ai); }
+            static Action* revive_pet(AiManagerRegistry* ai) { return new CastRevivePetAction(ai); }
+            static Action* call_pet(AiManagerRegistry* ai) { return new CastCallPetAction(ai); }
+            static Action* black_arrow(AiManagerRegistry* ai) { return new CastBlackArrow(ai); }
+            static Action* freezing_trap(AiManagerRegistry* ai) { return new CastFreezingTrap(ai); }
+            static Action* rapid_fire(AiManagerRegistry* ai) { return new CastRapidFireAction(ai); }
+            static Action* readyness(AiManagerRegistry* ai) { return new CastReadynessAction(ai); }
+            static Action* aspect_of_the_hawk(AiManagerRegistry* ai) { return new CastAspectOfTheHawkAction(ai); }
+            static Action* aspect_of_the_wild(AiManagerRegistry* ai) { return new CastAspectOfTheWildAction(ai); }
+            static Action* aspect_of_the_viper(AiManagerRegistry* ai) { return new CastAspectOfTheViperAction(ai); }
+            static Action* aspect_of_the_pack(AiManagerRegistry* ai) { return new CastAspectOfThePackAction(ai); }
+            static Action* aspect_of_the_cheetah(AiManagerRegistry* ai) { return new CastAspectOfTheCheetahAction(ai); }
+        };
     };
 };
 
-Action* HunterActionFactory::createAction(const char* name)
+HunterActionFactory::HunterActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
 {
-    Action* action = ai::hunter::actionFactoryInternal.create(name, ai);
-    return action ? action : ActionFactory::createAction(name);
+    strategyFactories.push_back(new ai::hunter::StrategyFactoryInternal());
+    actionFactories.push_back(new ai::hunter::ActionFactoryInternal());
+    triggerFactories.push_back(new ai::hunter::TriggerFactoryInternal());    
 }
