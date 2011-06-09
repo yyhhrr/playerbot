@@ -1,9 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "WarlockTriggers.h"
 #include "WarlockMultipliers.h"
 #include "GenericWarlockNonCombatStrategy.h"
-#include "WarlockActions.h"
 
 using namespace ai;
 
@@ -12,23 +10,23 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
     GenericNonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        new DemonArmorTrigger(ai), 
+        "demon armor", 
         NextAction::array(0, new NextAction("demon armor", 21.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HasHealthstoneTrigger(ai), 
+		"no healthstone", 
 		NextAction::array(0, new NextAction("create healthstone", 15.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HasFirestoneTrigger(ai), 
+		"no firestone", 
 		NextAction::array(0, new NextAction("create firestone", 14.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new HasSpellstoneTrigger(ai), 
+		"no spellstone", 
 		NextAction::array(0, new NextAction("create spellstone", 13.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        new SpellstoneTrigger(ai), 
+        "spellstone", 
         NextAction::array(0, new NextAction("spellstone", 13.0f), NULL)));
 }
 
@@ -41,42 +39,42 @@ ActionNode* GenericWarlockNonCombatStrategy::createAction(const char* name)
 
     if (!strcmp("demon armor", name)) 
     {
-        return new ActionNode (new CastDemonArmorAction(ai),  
+        return new ActionNode ("demon armor",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("demon skin"), NULL), 
             /*C*/ NULL);
     }
 	else if (!strcmp("demon skin", name)) 
 	{
-		return new ActionNode (new CastDemonSkinAction(ai),  
+		return new ActionNode ("demon skin",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("create healthstone", name)) 
 	{
-		return new ActionNode (new CastCreateHealthstoneAction(ai),  
+		return new ActionNode ("create healthstone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("create firestone", name)) 
 	{
-		return new ActionNode (new CastCreateFirestoneAction(ai),  
+		return new ActionNode ("create firestone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
 	else if (!strcmp("create spellstone", name)) 
 	{
-		return new ActionNode (new CastCreateSpellstoneAction(ai),  
+		return new ActionNode ("create spellstone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
     else if (!strcmp("spellstone", name)) 
     {
-        return new ActionNode (new UseItemAction(ai, "spellstone"),  
+        return new ActionNode ("spellstone",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

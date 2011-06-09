@@ -17,27 +17,20 @@ void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericWarlockStrategy::InitTriggers(triggers);
     
     triggers.push_back(new TriggerNode(
-        new NoPetTrigger(ai),
+        "no pet",
         NextAction::array(0, new NextAction("summon imp", 50.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		new ShadowTranceTrigger(ai),
+		"shadow trance",
 		NextAction::array(0, new NextAction("shadow bolt", 20.0f), NULL)));
 }
 
 
 ActionNode* DpsWarlockStrategy::createAction(const char* name)
 {
-    //else if (!strcmp("summon voidwalker", name)) 
-    //{
-    //    return new ActionNode (new CastSummonVoidwalkerAction(ai),  
-    //        /*P*/ NULL,
-    //        /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL), 
-    //        /*C*/ NULL);
-    //}
     if (!strcmp("summon imp", name)) 
     {
-        return new ActionNode (new CastSummonImpAction(ai),  
+        return new ActionNode ("summon imp",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
