@@ -79,11 +79,11 @@ namespace ai
 	    virtual ~Engine(void);
 
     private:
-        bool MultiplyAndPush(NextAction** actions, float forceRelevance = 0.0f, bool skipPrerequisites = false);
+        bool MultiplyAndPush(NextAction** actions, float forceRelevance, bool skipPrerequisites, Event event);
         void Reset();
         void ProcessTriggers();
         void PushDefaultActions();
-        void PushAgain(ActionNode* actionNode, float relevance);
+        void PushAgain(ActionNode* actionNode, float relevance, Event event);
         ActionNode* createAction(const char* name);
         Action* InitializeAction(ActionNode* actionNode);
 

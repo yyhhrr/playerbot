@@ -64,7 +64,7 @@ void Engine::Init()
         Strategy* strategy = *i;
         strategy->InitMultipliers(multipliers);
         strategy->InitTriggers(triggers);
-        MultiplyAndPush(strategy->getDefaultActions());
+        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
     }
 }
 
@@ -86,35 +86,37 @@ bool Engine::DoNextAction(Unit* unit, int depth)
 
             float relevance = basket->getRelevance(); // just for reference
             bool skipPrerequisites = basket->isSkipPrerequisites();
+            Event event = basket->getEvent();
+            // NOTE: queue.Pop() deletes basket
             ActionNode* actionNode = queue.Pop();
             Action* action = InitializeAction(actionNode);
 
             if (action && action->isUseful()) {
                 if (action->isPossible()) {
                     if ((!skipPrerequisites || lastRelevance-relevance > 0.02) && 
-                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01)) {
-                        PushAgain(actionNode, relevance);
+                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01, false, event)) {
+                        PushAgain(actionNode, relevance, basket->getEvent());
                         continue;
                     }
 
                     sLog.outDetail("A:%s", action->getName());
 
                     if (actionExecutionListeners.ActionExecuted(actionNode->getAction()))
-                        actionExecuted = action->ExecuteResult();
+                        actionExecuted = action->Execute(event);
 
                     if (actionExecuted) {
-                        MultiplyAndPush(actionNode->getContinuers());
+                        MultiplyAndPush(actionNode->getContinuers(), 0, false, event);
                         lastRelevance = relevance;
                         delete actionNode;
                         break;
                     }
                     else {
-                        MultiplyAndPush(actionNode->getAlternatives(), relevance);
+                        MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
                         sLog.outDetail("NOT EXECUTED:%s", actionNode->getName());
                     }
                 }
                 else {
-                    MultiplyAndPush(actionNode->getAlternatives(), relevance);
+                    MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
                     sLog.outDetail("IMPOSSIBLE:%s", actionNode->getName());
                 }
             }
@@ -153,7 +155,7 @@ ActionNode* Engine::createAction(const char* name)
     return NULL;
 }
 
-bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool skipPrerequisites)
+bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool skipPrerequisites, Event event)
 {
     bool pushed = false;
     if (actions)
@@ -178,7 +180,7 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
 
                 if (k > 0)
                 {
-                    queue.Push(new ActionBasket(action, k, skipPrerequisites));
+                    queue.Push(new ActionBasket(action, k, skipPrerequisites, event));
                     pushed = true;
                 }
 
@@ -205,7 +207,7 @@ bool Engine::ExecuteAction(const char* name)
             result = action->ExecuteResult();
 		}
 
-        MultiplyAndPush(action->getContinuers());
+        MultiplyAndPush(action->getContinuers(), 0.0f, false, Event());
     }
 	return result;
 }
@@ -283,9 +285,13 @@ void Engine::ProcessTriggers()
             node->setTrigger(trigger);
         }
 
-        if ((testMode || trigger->needCheck()) && trigger->IsActive())
+        if (testMode || trigger->needCheck())
         {
-            MultiplyAndPush(node->getHandlers());
+            Event event = trigger->Check();
+            if (!event)
+                continue;
+
+            MultiplyAndPush(node->getHandlers(), 0.0f, false, event);
         }
     }
 }
@@ -295,7 +301,7 @@ void Engine::PushDefaultActions()
     for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
         Strategy* strategy = *i;
-        MultiplyAndPush(strategy->getDefaultActions());
+        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
     }
 }
 
@@ -315,12 +321,12 @@ string Engine::ListStrategies()
     return s.substr(0, s.length() - 2);
 }
 
-void Engine::PushAgain( ActionNode* actionNode, float relevance ) 
+void Engine::PushAgain(ActionNode* actionNode, float relevance, Event event) 
 {
     NextAction** nextAction = new NextAction*[2];
     nextAction[0] = new NextAction(actionNode->getName(), relevance);
     nextAction[1] = NULL;
-    MultiplyAndPush(nextAction, relevance, true);
+    MultiplyAndPush(nextAction, relevance, true, event);
     delete actionNode;
 }
 

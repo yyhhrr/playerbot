@@ -5,3 +5,7 @@
 
 using namespace ai;
 
+Event Trigger::Check()
+{
+    return IsActive() ? Event(getName()) : Event();
+}

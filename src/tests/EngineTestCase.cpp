@@ -66,18 +66,25 @@ public:
 	TriggeredAction(AiManagerRegistry* const ai) : Action(ai) { fired = false; }
 	virtual ~TriggeredAction() {}
 
+    bool Execute(Event event) { param = event.getParam(); return ExecuteResult(); }
 	bool ExecuteResult() { fired = TRUE; return TRUE; }
     const char* getName() {return "TriggeredAction"; }
 
 	static int fired;
+    static string param;
 };
 
 int TriggeredAction::fired = 0;
+string TriggeredAction::param;
 
 class TestTrigger : public Trigger
 {
 public:
 	TestTrigger(AiManagerRegistry* const ai) : Trigger(ai) {count = 0;}
+    virtual Event Check()
+    {
+        return IsActive() ? Event(getName(), "test") : Event();
+    }
 	virtual bool IsActive() 
 	{
 		return ++count==3;
@@ -204,6 +211,7 @@ class EngineTestCase : public CPPUNIT_NS::TestFixture
       CPPUNIT_TEST( engineMustRepeatActions );
       CPPUNIT_TEST( addRemoveStrategies );
       CPPUNIT_TEST( listStrategies );
+      CPPUNIT_TEST( eventMustPassToAction );
   CPPUNIT_TEST_SUITE_END();
 
 protected:
@@ -260,6 +268,19 @@ protected:
 
         std::string s = engine.ListStrategies();
         CPPUNIT_ASSERT(s == "Strategies: AnotherTestStrategy, TestStrategy");
+    }
+
+    void eventMustPassToAction()
+    {
+        MockAiManagerRegistry mock;
+        Engine engine(&mock, new TestActionFactory(&mock));
+        engine.addStrategy("TestStrategy");
+        engine.Init();
+
+        for (int i=0; i<6; i++)
+            engine.DoNextAction(NULL);
+
+        CPPUNIT_ASSERT(TriggeredAction::param == "test");
     }
 };
 

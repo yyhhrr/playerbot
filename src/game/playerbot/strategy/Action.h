@@ -1,4 +1,5 @@
 #pragma once
+#include "Event.h"
 
 namespace ai
 {
@@ -46,6 +47,7 @@ namespace ai
 
     public:
         virtual bool ExecuteResult() { Execute(); return true; }
+        virtual bool Execute(Event event) { return ExecuteResult(); }
         virtual void Execute() { }
         virtual bool isPossible() { return true; }
         virtual bool isUseful() { return true; }
@@ -100,16 +102,13 @@ namespace ai
 	class ActionBasket
 	{
 	public:
-		ActionBasket(ActionNode* action, float relevance, bool skipPrerequisites = false)
-        {
-            this->action = action;
-            this->relevance = relevance;
-            this->skipPrerequisites = skipPrerequisites;
-        }
+        ActionBasket(ActionNode* action, float relevance, bool skipPrerequisites, Event event) : 
+          action(action), relevance(relevance), skipPrerequisites(skipPrerequisites), event(event) {}
         virtual ~ActionBasket(void) {}
 	public:
 		float getRelevance() {return relevance;}
 		ActionNode* getAction() {return action;}
+        Event getEvent() { return event; }
         bool isSkipPrerequisites() { return skipPrerequisites; }
         void AmendRelevance(float k) {relevance *= k; }
         void setRelevance(float relevance) { this->relevance = relevance; }
@@ -117,6 +116,7 @@ namespace ai
 		ActionNode* action;
 		float relevance;
         bool skipPrerequisites;
+        Event event;
 	};
 
     //---------------------------------------------------------------------------------------------------------------------

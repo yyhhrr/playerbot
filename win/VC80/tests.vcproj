@@ -695,6 +695,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\EventTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\GenericTestCase.cpp"
 				>
 			</File>

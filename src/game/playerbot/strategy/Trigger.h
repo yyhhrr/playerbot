@@ -1,5 +1,6 @@
 #pragma once
 #include "Action.h"
+#include "Event.h"
 #include "../ai/AiManagerRegistryAware.h"
 
 #define NEXT_TRIGGERS(name, relevance) \
@@ -33,6 +34,7 @@ namespace ai
         virtual ~Trigger() {}
 
 	public:
+        virtual Event Check();
 		virtual bool IsActive() = 0;
         virtual NextAction** getHandlers() { return NULL; }
         virtual const char* getName() { return name ? name : "trigger"; }

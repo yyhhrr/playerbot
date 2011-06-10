@@ -25,9 +25,9 @@ protected:
         CastSpellAction action3(&mock, "3");
 
 		Queue q;
-		q.Push(new ActionBasket(new ActionNode("action1", NULL, NULL, NULL), 0.5f));
-		q.Push(new ActionBasket(new ActionNode("action2", NULL, NULL, NULL), 0.7f));
-		q.Push(new ActionBasket(new ActionNode("action3", NULL, NULL, NULL), 0.3f));
+		q.Push(new ActionBasket(new ActionNode("action1", NULL, NULL, NULL), 0.5f, false, Event()));
+		q.Push(new ActionBasket(new ActionNode("action2", NULL, NULL, NULL), 0.7f, false, Event()));
+		q.Push(new ActionBasket(new ActionNode("action3", NULL, NULL, NULL), 0.3f, false, Event()));
 
 		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action2");
 		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action1");

@@ -1953,6 +1953,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\Event.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\Event.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\GenericActions.cpp"
 					>
 				</File>
