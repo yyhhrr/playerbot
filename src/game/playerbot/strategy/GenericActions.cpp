@@ -11,7 +11,7 @@ ChangeCombatStrategyAction::ChangeCombatStrategyAction(AiManagerRegistry* const 
 
 void ChangeCombatStrategyAction::Execute()
 {
-    ai->GetStrategyManager()->ChangeCombatStrategy(name.c_str());
+    ai->GetAi()->ChangeCombatStrategy(name.c_str());
 }
 
 bool UseItemAction::isUseful()

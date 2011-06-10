@@ -1110,8 +1110,6 @@ void AiInventoryManager::BeginTrade()
     WorldPacket p;
     bot->GetSession()->HandleBeginTradeOpcode(p);
 
-    aiRegistry->GetStatsManager()->ListStats();
-
     ListItemsVisitor visitor;
     IterateItems(&visitor);
 

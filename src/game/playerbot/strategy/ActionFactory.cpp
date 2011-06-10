@@ -8,6 +8,10 @@
 #include "GenericTriggers.h"
 #include "GenericActions.h"
 #include "NonCombatActions.h"
+#include "ChatCommandTrigger.h"
+#include "ChatCommandHandlerStrategy.h"
+#include "ListQuestsActions.h"
+#include "StatsAction.h"
 
 using namespace ai;
 
@@ -32,6 +36,7 @@ public:
         creators["passive"] = &StrategyFactoryInternal::passive;
         creators["low mana"] = &StrategyFactoryInternal::low_mana;
         creators["food"] = &StrategyFactoryInternal::food;
+        creators["chat"] = &StrategyFactoryInternal::chat;
     }
 
 private:
@@ -50,6 +55,7 @@ private:
     static Strategy* passive(AiManagerRegistry* ai) { return new PassiveStrategy(ai); }
     static Strategy* low_mana(AiManagerRegistry* ai) { return new LowManaStrategy(ai); }
     static Strategy* food(AiManagerRegistry* ai) { return new UseFoodStrategy(ai); }
+    static Strategy* chat(AiManagerRegistry* ai) { return new ChatCommandHandlerStrategy(ai); }
 };
 
 class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
@@ -217,6 +223,37 @@ private:
     static Action* healthstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "healthstone"); }
 };
 
+class ChatCommandTriggerFactory : public NamedObjectFactory<Trigger>
+{
+public:
+    ChatCommandTriggerFactory()
+    {
+        creators["quests"] = &ChatCommandTriggerFactory::quests;
+        creators["stats"] = &ChatCommandTriggerFactory::stats;
+    }
+
+private:
+    static Trigger* quests(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "quests"); }
+    static Trigger* stats(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "stats"); }
+
+};
+
+class ChatCommandActionFactory : public NamedObjectFactory<Action>
+{
+public:
+    ChatCommandActionFactory()
+    {
+        creators["stats"] = &ChatCommandActionFactory::stats;
+        creators["quests"] = &ChatCommandActionFactory::quests;
+    }
+
+private:
+    static Action* stats(AiManagerRegistry* ai) { return new StatsAction(ai); }
+    static Action* quests(AiManagerRegistry* ai) { return new ListQuestsAction(ai); }
+
+};
+
+
 Action* ActionFactory::createAction(const char* name)
 {
     for (list<NamedObjectFactory<Action>*>::iterator i = actionFactories.begin(); i != actionFactories.end(); i++)
@@ -251,7 +288,10 @@ ActionFactory::ActionFactory(AiManagerRegistry* const ai) : AiManagerRegistryAwa
 {
     strategyFactories.push_back(new StrategyFactoryInternal());
     actionFactories.push_back(new ActionFactoryInternal());
+    actionFactories.push_back(new ChatCommandActionFactory());
+    
     triggerFactories.push_back(new TriggerFactoryInternal());
+    triggerFactories.push_back(new ChatCommandTriggerFactory());
 }
 
 ActionFactory::~ActionFactory() 

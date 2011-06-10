@@ -13,45 +13,73 @@
 #include "../strategy/hunter/HunterActionFactory.h"
 #include "../strategy/rogue/RogueActionFactory.h"
 
-Engine* AiFactory::createCombatEngine(Player* player, AiManagerRegistry* const facade) {
+
+ActionFactory* AiFactory::createActionFactory(Player* player, AiManagerRegistry* const aiRegistry)
+{
+    switch (player->getClass())
+    {
+    case CLASS_PRIEST:
+        return new PriestActionFactory(aiRegistry);
+        break;
+    case CLASS_MAGE:
+        return new MageActionFactory(aiRegistry);
+        break;
+    case CLASS_WARLOCK:
+        return new WarlockActionFactory(aiRegistry);
+        break;
+    case CLASS_WARRIOR:
+        return new WarriorActionFactory(aiRegistry);
+        break;
+    case CLASS_SHAMAN:
+        return new ShamanActionFactory(aiRegistry);
+        break;
+    case CLASS_PALADIN:
+        return new PaladinActionFactory(aiRegistry);
+        break;
+    case CLASS_DRUID:
+        return new DruidActionFactory(aiRegistry);
+        break;
+    case CLASS_HUNTER:
+        return new HunterActionFactory(aiRegistry);
+        break;
+    case CLASS_ROGUE:
+        return new RogueActionFactory(aiRegistry);
+        break;
+    }
+    return NULL;
+}
+
+Engine* AiFactory::createCombatEngine(Player* player, AiManagerRegistry* const facade, ActionFactory* actionFactory) {
 	Engine* engine = NULL;
 
+    engine = new Engine(facade, actionFactory);
 	switch (player->getClass())
     {
         case CLASS_PRIEST:
-			engine = new Engine(facade, new PriestActionFactory(facade));
 			engine->addStrategies("heal", "dps assist", NULL);
             break;
         case CLASS_MAGE:
-			engine = new Engine(facade, new MageActionFactory(facade));
 			engine->addStrategies("frost", "dps assist", NULL);
             break;
         case CLASS_WARLOCK:
-			engine = new Engine(facade, new WarlockActionFactory(facade));
 			engine->addStrategies("dps", "dps assist", NULL);
             break;
         case CLASS_WARRIOR:
-			engine = new Engine(facade, new WarriorActionFactory(facade));
 			engine->addStrategies("tank", "tank assist", NULL);
             break;
         case CLASS_SHAMAN:
-			engine = new Engine(facade, new ShamanActionFactory(facade));
 			engine->addStrategies("heal", "dps assist", NULL);
             break;
         case CLASS_PALADIN:
-			engine = new Engine(facade, new PaladinActionFactory(facade));
 			engine->addStrategies("tank", "tank assist", "bhealth", "barmor", NULL);
             break;
         case CLASS_DRUID:
-			engine = new Engine(facade, new DruidActionFactory(facade));
 			engine->addStrategies("bear", "tank assist", NULL);
             break;
         case CLASS_HUNTER:
-			engine = new Engine(facade, new HunterActionFactory(facade));
 			engine->addStrategies("dps", "dps assist", "bdps", NULL);
             break;
 		case CLASS_ROGUE:
-			engine = new Engine(facade, new RogueActionFactory(facade));
 			engine->addStrategies("dps", "dps assist", NULL);
 			break;
     }
@@ -59,47 +87,39 @@ Engine* AiFactory::createCombatEngine(Player* player, AiManagerRegistry* const f
 	return engine;
 }
 
-Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* const facade) {
+Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* const facade, ActionFactory* actionFactory) {
 	Engine* nonCombatEngine = NULL;
+    nonCombatEngine = new Engine(facade, actionFactory);
 	switch (player->getClass())
     {
         case CLASS_PRIEST:
-			nonCombatEngine = new Engine(facade, new PriestActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_MAGE:
-			nonCombatEngine = new Engine(facade, new MageActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_WARLOCK:
-			nonCombatEngine = new Engine(facade, new WarlockActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_WARRIOR:
-			nonCombatEngine = new Engine(facade, new WarriorActionFactory(facade));
 			nonCombatEngine->addStrategy("tank assist");
             break;
         case CLASS_SHAMAN:
-			nonCombatEngine = new Engine(facade, new ShamanActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_PALADIN:
-			nonCombatEngine = new Engine(facade, new PaladinActionFactory(facade));
 			nonCombatEngine->addStrategy("tank assist");
             break;
         case CLASS_DRUID:
-			nonCombatEngine = new Engine(facade, new DruidActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_HUNTER:
-			nonCombatEngine = new Engine(facade, new HunterActionFactory(facade));
 			nonCombatEngine->addStrategies("dps assist", "bspeed", NULL);
             break;
 		case CLASS_ROGUE:
-			nonCombatEngine = new Engine(facade, new RogueActionFactory(facade));
 			nonCombatEngine->addStrategy("dps assist");
 			break;
     }
-    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", NULL);
+    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", NULL);
 	return nonCombatEngine;
 }

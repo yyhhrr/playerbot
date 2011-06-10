@@ -80,3 +80,8 @@ void NextAction::destroy(NextAction** actions)
     for (int i=0; i<10 && actions[i]; i++)
         delete actions[i];
 }
+
+Player* Action::GetBot()
+{
+    return ai->GetAi()->GetBot();
+}

@@ -14,7 +14,6 @@ class FrostMageTestCase : public EngineTestBase
   CPPUNIT_TEST( boost );
   CPPUNIT_TEST( interruptSpells );
   CPPUNIT_TEST( cc );
-  CPPUNIT_TEST( pull );
   CPPUNIT_TEST( aoe );
   CPPUNIT_TEST_SUITE_END();
 
@@ -89,19 +88,7 @@ protected:
         assertActions(">Cc:polymorph");
     }
 
-    void pull() 
-    {
-        engine->addStrategy("pull");
-        
-        tickOutOfSpellRange();
-        tickInSpellRange();
-        tick();
-        tick();
-
-        assertActions(">reach spell>T:shoot>follow master>co:-pull");
-    }
-
-	void aoe() 
+   	void aoe() 
 	{
 		tick();
 		tickWithAttackerCount(4);

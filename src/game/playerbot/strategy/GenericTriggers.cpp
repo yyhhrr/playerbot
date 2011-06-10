@@ -176,7 +176,7 @@ bool IsBehindTargetTrigger::IsActive()
 
 bool HasCcTargetTrigger::IsActive()
 {
-    return statsManager->GetAttackerCount() > 2 && targetManager->FindCcTarget(name) && !targetManager->GetCurrentCcTarget(name);
+    return statsManager->GetAttackerCount() > 2 && targetManager->FindCcTarget(getName()) && !targetManager->GetCurrentCcTarget(getName());
 }
 
 bool NoMovementTrigger::IsActive()

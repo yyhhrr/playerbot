@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define MAX_AI_MANAGER_TYPE 8
+#define MAX_AI_MANAGER_TYPE 7
 
 class Player;
 class PlayerbotAI;
@@ -29,8 +29,7 @@ namespace ai
 		AiMoveManagerType = 3,
 		AiInventoryManagerType = 4,
 		AiSocialManagerType = 5,
-		AiQuestManagerType = 6,
-		AiStrategyManagerType = 7
+		AiQuestManagerType = 6
 	};
 
 	class AiManagerRegistry
@@ -49,13 +48,14 @@ namespace ai
 		AiInventoryManager* GetInventoryManager() { return (AiInventoryManager*)managers[AiInventoryManagerType]; }
 		AiSocialManager* GetSocialManager() { return (AiSocialManager*)managers[AiSocialManagerType]; }
 		AiQuestManager* GetQuestManager() { return (AiQuestManager*)managers[AiQuestManagerType]; }
-		AiStrategyManager* GetStrategyManager() { return (AiStrategyManager*)managers[AiStrategyManagerType]; }
 
 		int GetManagerCount() { return MAX_AI_MANAGER_TYPE; }
 		AiManagerBase** GetManagers() { return managers; }
+        PlayerbotAI* GetAi() { return ai; }
 
 	protected:
 		AiManagerBase* managers[MAX_AI_MANAGER_TYPE];
+        PlayerbotAI* ai;
 	};
 
 };

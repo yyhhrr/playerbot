@@ -32,9 +32,6 @@ Engine::~Engine(void)
     Reset();
     
     strategies.clear();
-    
-    if (actionFactory)
-        delete actionFactory;
 }
 
 void Engine::Reset()
@@ -221,11 +218,11 @@ void Engine::addStrategy(const char* name)
 	{
         strategies.push_back(strategy);
 
-		AiStrategyManager* manager = ai->GetStrategyManager();
+		PlayerbotAI* manager = ai->GetAi();
 		if (manager)
 		{
 			string list = strategy->GetIncompatibleStrategies();
-			ai->GetStrategyManager()->ChangeStrategy(list.c_str(), this);
+			manager->ChangeStrategy(list.c_str(), this);
 		}
 	}
 

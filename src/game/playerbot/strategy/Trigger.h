@@ -22,7 +22,7 @@ namespace ai
     class Trigger : public AiManagerRegistryAware
 	{
 	public:
-        Trigger(AiManagerRegistry* const ai, const char* name = NULL, int checkInterval = 1) : AiManagerRegistryAware(ai) {
+        Trigger(AiManagerRegistry* const ai, const char* name = "trigger", int checkInterval = 1) : AiManagerRegistryAware(ai) {
             this->name = name;
 			this->checkInterval = checkInterval;
 			ticksElapsed = 0;
@@ -35,9 +35,11 @@ namespace ai
 
 	public:
         virtual Event Check();
-		virtual bool IsActive() = 0;
+        virtual void ExternalEvent(string param) {}
+        virtual void ExternalEvent(WorldPacket &packet) {}
+        virtual bool IsActive() { return false; }
         virtual NextAction** getHandlers() { return NULL; }
-        virtual const char* getName() { return name ? name : "trigger"; }
+        virtual const char* getName() { return name.c_str(); }
 		
 		bool needCheck() {
 			if (++ticksElapsed >= checkInterval) {
@@ -48,7 +50,7 @@ namespace ai
 		}
 
     protected:
-        const char* name;
+        string name;
 		int checkInterval;
 		int ticksElapsed;
 		AiSpellManager* spellManager;

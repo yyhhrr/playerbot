@@ -1845,14 +1845,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiStrategyManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiStrategyManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\AiTargetManager.cpp"
 					>
 				</File>
@@ -1933,6 +1925,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChatCommandTrigger.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChooseTargetActions.h"
 					>
 				</File>
@@ -1958,6 +1962,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Event.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ExternalEventHelper.h"
 					>
 				</File>
 				<File
@@ -1998,6 +2006,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ListQuestsActions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ListQuestsActions.h"
 					>
 				</File>
 				<File
@@ -2074,6 +2090,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ReachTargetActions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\StatsAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\StatsAction.h"
 					>
 				</File>
 				<File

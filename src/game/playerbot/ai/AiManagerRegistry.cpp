@@ -6,13 +6,13 @@
 using namespace ai;
 using namespace std;
 
-AiManagerRegistry::AiManagerRegistry()
+AiManagerRegistry::AiManagerRegistry() : ai(NULL)
 {
 	for (int i=0; i<MAX_AI_MANAGER_TYPE; i++)
 		managers[i] = NULL;
 }
 
-AiManagerRegistry::AiManagerRegistry(PlayerbotAI* ai) 
+AiManagerRegistry::AiManagerRegistry(PlayerbotAI* ai) : ai(ai)
 {
 	for (int i=0; i<MAX_AI_MANAGER_TYPE; i++)
 		managers[i] = NULL;
@@ -24,7 +24,6 @@ AiManagerRegistry::AiManagerRegistry(PlayerbotAI* ai)
 	managers[AiInventoryManagerType] = new AiInventoryManager(ai, this);
 	managers[AiSocialManagerType] = new AiSocialManager(ai, this);
 	managers[AiQuestManagerType] = new AiQuestManager(ai, this);
-	managers[AiStrategyManagerType] = new AiStrategyManager(ai, this);
 }
 
 AiManagerRegistry::~AiManagerRegistry()

@@ -8,6 +8,7 @@ using namespace ai;
 class AiFactory
 {
 public:
-	static Engine* createCombatEngine(Player* player, AiManagerRegistry* const facade);
-	static Engine* createNonCombatEngine(Player* player, AiManagerRegistry* const facade);
+    static ActionFactory* createActionFactory(Player* player, AiManagerRegistry* const aiRegistry);
+	static Engine* createCombatEngine(Player* player, AiManagerRegistry* const facade, ActionFactory* actionFactory);
+	static Engine* createNonCombatEngine(Player* player, AiManagerRegistry* const facade, ActionFactory* actionFactory);
 };

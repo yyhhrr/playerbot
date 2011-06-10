@@ -699,6 +699,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\ExternalEventHelperTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\GenericTestCase.cpp"
 				>
 			</File>
@@ -856,14 +860,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\tests\MockAiStatsManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\MockAiStrategyManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\MockAiStrategyManager.h"
 				>
 			</File>
 			<File
