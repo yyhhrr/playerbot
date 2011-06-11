@@ -36,7 +36,7 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericWarlockStrategy::createAction(const char* name)
+ActionNode* GenericWarlockStrategy::GetAction(const char* name)
 {
     if (!strcmp("immolate", name)) 
     {
@@ -115,7 +115,7 @@ ActionNode* GenericWarlockStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }
 
 

@@ -25,7 +25,7 @@ public:
 	void setUp()
 	{
 		EngineTestBase::setUp();
-		setupEngine(new ActionFactory(ai), "nc", NULL);
+		setupEngine(new AiObjectContext(ai), "nc", NULL);
 	}
 
 protected:

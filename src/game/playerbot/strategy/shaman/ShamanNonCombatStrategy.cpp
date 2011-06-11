@@ -19,9 +19,9 @@ void ShamanNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multiplier
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* ShamanNonCombatStrategy::createAction(const char* name)
+ActionNode* ShamanNonCombatStrategy::GetAction(const char* name)
 {
-    ActionNode* node = CombatStrategy::createAction(name);
+    ActionNode* node = CombatStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -60,7 +60,7 @@ ActionNode* ShamanNonCombatStrategy::createAction(const char* name)
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }
 
 

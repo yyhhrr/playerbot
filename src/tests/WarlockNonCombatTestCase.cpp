@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/warlock/WarlockActionFactory.h"
+#include "../game/playerbot/strategy/warlock/WarlockAiObjectContext.h"
 
 using namespace ai;
 
@@ -16,7 +16,7 @@ public:
     void setUp()
     {
         EngineTestBase::setUp();
-        setupEngine(new WarlockActionFactory(ai), "nc", NULL);
+        setupEngine(new WarlockAiObjectContext(ai), "nc", NULL);
     }
 
 protected:

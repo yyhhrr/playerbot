@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/rogue/RogueActionFactory.h"
+#include "../game/playerbot/strategy/rogue/RogueAiObjectContext.h"
 
 using namespace ai;
 
@@ -18,7 +18,7 @@ public:
     virtual void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new RogueActionFactory(ai), "dps", NULL);
+		setupEngine(new RogueAiObjectContext(ai), "dps", NULL);
     }
 
 protected:

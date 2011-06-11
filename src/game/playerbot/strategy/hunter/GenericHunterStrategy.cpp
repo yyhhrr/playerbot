@@ -3,13 +3,13 @@
 #include "../GenericTriggers.h"
 #include "../GenericActions.h"
 #include "GenericHunterStrategy.h"
-#include "HunterActionFactory.h"
+#include "HunterAiObjectContext.h"
 
 using namespace ai;
 
-ActionFactory* GenericHunterStrategy::createActionFactory() 
+AiObjectContext* GenericHunterStrategy::createAiObjectContext() 
 {
-    return new HunterActionFactory(ai); 
+    return new HunterAiObjectContext(ai); 
 }
 
 void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -33,7 +33,7 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("rapid fire", 55.0f), NULL)));
 }
 
-ActionNode* GenericHunterStrategy::createAction(const char* name)
+ActionNode* GenericHunterStrategy::GetAction(const char* name)
 {
     if (!strcmp("call pet", name)) 
     {
@@ -119,5 +119,5 @@ ActionNode* GenericHunterStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }

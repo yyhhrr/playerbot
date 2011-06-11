@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/shaman/ShamanActionFactory.h"
+#include "../game/playerbot/strategy/shaman/ShamanAiObjectContext.h"
 
 using namespace ai;
 
@@ -16,7 +16,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new ShamanActionFactory(ai), "nc", NULL);
+		setupEngine(new ShamanAiObjectContext(ai), "nc", NULL);
     }
 
 protected:

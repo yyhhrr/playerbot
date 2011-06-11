@@ -13,7 +13,7 @@ namespace ai
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual NextAction** getDefaultActions();
         virtual const char* getName() { return "heal"; }
-        virtual ActionNode* createAction(const char* name);
+        virtual ActionNode* GetAction(const char* name);
 		virtual string GetIncompatibleStrategies() { return "-dps"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_HEAL; }
     };

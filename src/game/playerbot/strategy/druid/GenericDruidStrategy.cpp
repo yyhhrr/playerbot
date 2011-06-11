@@ -1,13 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "GenericDruidStrategy.h"
-#include "DruidActionFactory.h"
+#include "DruidAiObjectContext.h"
 
 using namespace ai;
 
-ActionFactory* GenericDruidStrategy::createActionFactory() 
+AiObjectContext* GenericDruidStrategy::createAiObjectContext() 
 {
-    return new DruidActionFactory(ai); 
+    return new DruidAiObjectContext(ai); 
 }
 
 void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -47,7 +47,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
 }
 
-ActionNode* GenericDruidStrategy::createAction(const char* name)
+ActionNode* GenericDruidStrategy::GetAction(const char* name)
 {
     if (!strcmp("melee", name)) 
     {
@@ -155,5 +155,5 @@ ActionNode* GenericDruidStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    else return Strategy::createAction(name);
+    else return Strategy::GetAction(name);
 }

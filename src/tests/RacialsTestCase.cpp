@@ -2,7 +2,7 @@
 
 #include "aitest.h"
 #include "EngineTestBase.h"
-#include "../game/playerbot/strategy/warrior/WarriorActionFactory.h"
+#include "../game/playerbot/strategy/warrior/WarriorAiObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ public:
 	virtual void setUp()
 	{
 		EngineTestBase::setUp();
-		setupEngine(new WarriorActionFactory(ai), "tank", NULL);
+		setupEngine(new WarriorAiObjectContext(ai), "tank", NULL);
 
 		engine->addStrategy("racials");
 		moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0;

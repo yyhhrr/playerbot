@@ -23,9 +23,9 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
 }
 
-ActionNode* MeleeShamanStrategy::createAction(const char* name)
+ActionNode* MeleeShamanStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericShamanStrategy::createAction(name);
+    ActionNode* node = GenericShamanStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -51,6 +51,6 @@ ActionNode* MeleeShamanStrategy::createAction(const char* name)
 			/*C*/ NULL);
 	}
 
-    return GenericShamanStrategy::createAction(name);
+    return GenericShamanStrategy::GetAction(name);
 }
 

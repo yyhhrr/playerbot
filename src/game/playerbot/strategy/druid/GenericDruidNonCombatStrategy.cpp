@@ -23,7 +23,7 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 }
 
 
-ActionNode* GenericDruidNonCombatStrategy::createAction(const char* name)
+ActionNode* GenericDruidNonCombatStrategy::GetAction(const char* name)
 {
     if (!strcmp("mark of the wild", name)) 
     {
@@ -53,5 +53,5 @@ ActionNode* GenericDruidNonCombatStrategy::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else return GenericNonCombatStrategy::createAction(name);
+    else return GenericNonCombatStrategy::GetAction(name);
 }

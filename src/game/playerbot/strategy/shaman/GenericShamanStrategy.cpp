@@ -55,9 +55,9 @@ void GenericShamanStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* GenericShamanStrategy::createAction(const char* name)
+ActionNode* GenericShamanStrategy::GetAction(const char* name)
 {
-    ActionNode* node = CombatStrategy::createAction(name);
+    ActionNode* node = CombatStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -236,7 +236,7 @@ ActionNode* GenericShamanStrategy::createAction(const char* name)
 			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL),
 			/*C*/ NULL);
 	}
-    return CombatStrategy::createAction(name);
+    return CombatStrategy::GetAction(name);
 }
 
 

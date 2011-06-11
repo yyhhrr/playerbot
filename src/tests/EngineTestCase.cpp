@@ -126,7 +126,7 @@ public:
             NextAction::array(0, new NextAction("TriggeredAction", 10.0f), NULL)));
     }
 
-    virtual ActionNode* createAction(const char* name)
+    virtual ActionNode* GetAction(const char* name)
     {
         if (!strcmp("TriggeredAction", name)) 
         {
@@ -168,40 +168,59 @@ public:
     virtual const char* getName() { return "AnotherTestStrategy"; }
 };
 
-class TestActionFactory : public ActionFactory
+class TestStrategyContext : public NamedObjectContext<Strategy>
 {
 public:
-    TestActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai) {}
-    virtual Strategy* createStrategy(const char* name)
+    TestStrategyContext()
     {
-        if (!strcmp("TestStrategy", name))
-            return new TestStrategy(ai);
-
-        if (!strcmp("AnotherTestStrategy", name))
-            return new AnotherTestStrategy(ai);
-
-        return NULL;
+        creators["TestStrategy"] = &TestStrategyContext::Test;
+        creators["AnotherTestStrategy"] = &TestStrategyContext::AnotherTest;
     }
-    virtual Trigger* createTrigger(const char* name)
-    {
-        if (!strcmp("TestTrigger", name))
-            return new TestTrigger(ai);
 
-        return NULL;
+private:
+    static Strategy* Test(AiManagerRegistry* ai) { return new TestStrategy(ai); }
+    static Strategy* AnotherTest(AiManagerRegistry* ai) { return new AnotherTestStrategy(ai); }
+};
+
+class TestTriggerContext : public NamedObjectContext<Trigger>
+{
+public:
+    TestTriggerContext()
+    {
+        creators["TestTrigger"] = &TestTriggerContext::Test;
     }
-    virtual Action* createAction(const char* name)
+
+private:
+    static Trigger* Test(AiManagerRegistry* ai) { return new TestTrigger(ai); }
+};
+
+
+class TestActionContext : public NamedObjectContext<Action>
+{
+public:
+    TestActionContext()
     {
-        if (!strcmp("TriggeredAction", name))
-            return new TriggeredAction(ai);
-        if (!strcmp("RepeatingAction", name))
-            return new RepeatingAction(ai);
-        if (!strcmp("AlternativeAction", name))
-            return new AlternativeAction(ai);
-        if (!strcmp("PrerequisiteAction", name))
-            return new PrerequisiteAction(ai);
+        creators["TriggeredAction"] = &TestActionContext::Triggered;
+        creators["RepeatingAction"] = &TestActionContext::Repeating;
+        creators["AlternativeAction"] = &TestActionContext::Alternative;
+        creators["PrerequisiteAction"] = &TestActionContext::Prerequisite;
+    }
 
-        return NULL;
+private:
+    static Action* Triggered(AiManagerRegistry* ai) { return new TriggeredAction(ai); }
+    static Action* Repeating(AiManagerRegistry* ai) { return new RepeatingAction(ai); }
+    static Action* Alternative(AiManagerRegistry* ai) { return new AlternativeAction(ai); }
+    static Action* Prerequisite(AiManagerRegistry* ai) { return new PrerequisiteAction(ai); }
+};
 
+class TestAiObjectContext : public AiObjectContext
+{
+public:
+    TestAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai) 
+    {
+        strategyContexts.Add(new TestStrategyContext());
+        triggerContexts.Add(new TestTriggerContext());
+        actionContexts.Add(new TestActionContext());
     }
 };
 
@@ -225,7 +244,7 @@ protected:
 	void engineMustRepeatActions()
 	{
 		MockAiManagerRegistry mock;
-		Engine engine(&mock, new TestActionFactory(&mock));
+		Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("TestStrategy");
         engine.Init();
 
@@ -246,7 +265,7 @@ protected:
     void addRemoveStrategies()
     {
 		MockAiManagerRegistry mock;
-        Engine engine(&mock, new TestActionFactory(&mock));
+        Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("AnotherTestStrategy");
         engine.removeStrategy("AnotherTestStrategy");
         engine.Init();
@@ -261,7 +280,7 @@ protected:
     void listStrategies()
     {
 		MockAiManagerRegistry mock;
-        Engine engine(&mock, new TestActionFactory(&mock));
+        Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("AnotherTestStrategy");
         engine.addStrategy("TestStrategy");
         engine.Init();
@@ -273,7 +292,7 @@ protected:
     void eventMustPassToAction()
     {
         MockAiManagerRegistry mock;
-        Engine engine(&mock, new TestActionFactory(&mock));
+        Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("TestStrategy");
         engine.Init();
 

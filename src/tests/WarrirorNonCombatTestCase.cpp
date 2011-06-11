@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/warrior/WarriorActionFactory.h"
+#include "../game/playerbot/strategy/warrior/WarriorAiObjectContext.h"
 
 using namespace ai;
 
@@ -25,7 +25,7 @@ protected:
     {
         ai = new MockAiManagerRegistry();
 
-        Engine engine(ai, new WarriorActionFactory(ai));
+        Engine engine(ai, new WarriorAiObjectContext(ai));
         engine.addStrategy("nc");
         engine.Init();
 

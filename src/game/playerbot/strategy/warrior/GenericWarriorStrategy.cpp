@@ -1,13 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "GenericWarriorStrategy.h"
-#include "WarriorActionFactory.h"
+#include "WarriorAiObjectContext.h"
 
 using namespace ai;
 
-ActionFactory* GenericWarriorStrategy::createActionFactory()
+AiObjectContext* GenericWarriorStrategy::createAiObjectContext()
 {
-    return new WarriorActionFactory(ai);
+    return new WarriorAiObjectContext(ai);
 }
 
 void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -52,7 +52,7 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericWarriorStrategy::createAction(const char* name)
+ActionNode* GenericWarriorStrategy::GetAction(const char* name)
 {
     if (!strcmp("hamstring", name))
     {
@@ -152,5 +152,5 @@ ActionNode* GenericWarriorStrategy::createAction(const char* name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }

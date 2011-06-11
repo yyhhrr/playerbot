@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "aitest.h"
-#include "../game/playerbot/strategy/druid/DruidActionFactory.h"
+#include "../game/playerbot/strategy/druid/DruidAiObjectContext.h"
 
 using namespace ai;
 
@@ -27,7 +27,7 @@ public:
     virtual void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new DruidActionFactory(ai), "bear", NULL);
+		setupEngine(new DruidAiObjectContext(ai), "bear", NULL);
 
 		addAura("thorns");
         addTargetAura("faerie fire (feral)");

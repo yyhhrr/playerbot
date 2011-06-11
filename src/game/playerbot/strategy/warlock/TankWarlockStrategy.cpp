@@ -21,7 +21,7 @@ void TankWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* TankWarlockStrategy::createAction(const char* name)
+ActionNode* TankWarlockStrategy::GetAction(const char* name)
 {
     if (!strcmp("summon voidwalker", name)) 
     {
@@ -31,7 +31,7 @@ ActionNode* TankWarlockStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
     else 
-        return GenericWarlockStrategy::createAction(name);
+        return GenericWarlockStrategy::GetAction(name);
 }
 
 

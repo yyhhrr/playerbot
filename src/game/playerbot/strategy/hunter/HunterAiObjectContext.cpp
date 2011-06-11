@@ -2,11 +2,11 @@
 #include "../../playerbot.h"
 #include "HunterActions.h"
 #include "HunterTriggers.h"
-#include "HunterActionFactory.h"
+#include "HunterAiObjectContext.h"
 #include "DpsHunterStrategy.h"
 #include "GenericHunterNonCombatStrategy.h"
 #include "HunterBuffStrategies.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -46,7 +46,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -88,37 +88,37 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["auto shot"] = &ActionFactoryInternal::auto_shot;
-                creators["aimed shot"] = &ActionFactoryInternal::aimed_shot;
-                creators["explosive shot"] = &ActionFactoryInternal::explosive_shot;
-                creators["arcane shot"] = &ActionFactoryInternal::arcane_shot;
-                creators["concussive shot"] = &ActionFactoryInternal::concussive_shot;
-                creators["distracting shot"] = &ActionFactoryInternal::distracting_shot;
-                creators["multi-shot"] = &ActionFactoryInternal::multi_shot;
-                creators["volley"] = &ActionFactoryInternal::volley;
-                creators["serpent sting"] = &ActionFactoryInternal::serpent_sting;
-                creators["wyvern sting"] = &ActionFactoryInternal::wyvern_sting;
-                creators["viper sting"] = &ActionFactoryInternal::viper_sting;
-                creators["scorpid sting"] = &ActionFactoryInternal::scorpid_sting;
-                creators["hunter's mark"] = &ActionFactoryInternal::hunters_mark;
-                creators["mend pet"] = &ActionFactoryInternal::mend_pet;
-                creators["revive pet"] = &ActionFactoryInternal::revive_pet;
-                creators["call pet"] = &ActionFactoryInternal::call_pet;
-                creators["black arrow"] = &ActionFactoryInternal::black_arrow;
-                creators["freezing trap"] = &ActionFactoryInternal::freezing_trap;
-                creators["rapid fire"] = &ActionFactoryInternal::rapid_fire;
-                creators["boost"] = &ActionFactoryInternal::rapid_fire;
-                creators["readyness"] = &ActionFactoryInternal::readyness;
-                creators["aspect of the hawk"] = &ActionFactoryInternal::aspect_of_the_hawk;
-                creators["aspect of the wild"] = &ActionFactoryInternal::aspect_of_the_wild;
-                creators["aspect of the viper"] = &ActionFactoryInternal::aspect_of_the_viper;
-                creators["aspect of the pack"] = &ActionFactoryInternal::aspect_of_the_pack;
-                creators["aspect of the cheetah"] = &ActionFactoryInternal::aspect_of_the_cheetah;
+                creators["auto shot"] = &AiObjectContextInternal::auto_shot;
+                creators["aimed shot"] = &AiObjectContextInternal::aimed_shot;
+                creators["explosive shot"] = &AiObjectContextInternal::explosive_shot;
+                creators["arcane shot"] = &AiObjectContextInternal::arcane_shot;
+                creators["concussive shot"] = &AiObjectContextInternal::concussive_shot;
+                creators["distracting shot"] = &AiObjectContextInternal::distracting_shot;
+                creators["multi-shot"] = &AiObjectContextInternal::multi_shot;
+                creators["volley"] = &AiObjectContextInternal::volley;
+                creators["serpent sting"] = &AiObjectContextInternal::serpent_sting;
+                creators["wyvern sting"] = &AiObjectContextInternal::wyvern_sting;
+                creators["viper sting"] = &AiObjectContextInternal::viper_sting;
+                creators["scorpid sting"] = &AiObjectContextInternal::scorpid_sting;
+                creators["hunter's mark"] = &AiObjectContextInternal::hunters_mark;
+                creators["mend pet"] = &AiObjectContextInternal::mend_pet;
+                creators["revive pet"] = &AiObjectContextInternal::revive_pet;
+                creators["call pet"] = &AiObjectContextInternal::call_pet;
+                creators["black arrow"] = &AiObjectContextInternal::black_arrow;
+                creators["freezing trap"] = &AiObjectContextInternal::freezing_trap;
+                creators["rapid fire"] = &AiObjectContextInternal::rapid_fire;
+                creators["boost"] = &AiObjectContextInternal::rapid_fire;
+                creators["readyness"] = &AiObjectContextInternal::readyness;
+                creators["aspect of the hawk"] = &AiObjectContextInternal::aspect_of_the_hawk;
+                creators["aspect of the wild"] = &AiObjectContextInternal::aspect_of_the_wild;
+                creators["aspect of the viper"] = &AiObjectContextInternal::aspect_of_the_viper;
+                creators["aspect of the pack"] = &AiObjectContextInternal::aspect_of_the_pack;
+                creators["aspect of the cheetah"] = &AiObjectContextInternal::aspect_of_the_cheetah;
             }
 
         private:
@@ -151,9 +151,9 @@ namespace ai
     };
 };
 
-HunterActionFactory::HunterActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+HunterAiObjectContext::HunterAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::hunter::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::hunter::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::hunter::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::hunter::StrategyFactoryInternal());
+    actionContexts.Add(new ai::hunter::AiObjectContextInternal());
+    triggerContexts.Add(new ai::hunter::TriggerFactoryInternal());    
 }

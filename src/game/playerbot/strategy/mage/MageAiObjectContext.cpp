@@ -1,13 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "MageActions.h"
-#include "MageActionFactory.h"
+#include "MageAiObjectContext.h"
 #include "FrostMageStrategy.h"
 #include "GenericMageNonCombatStrategy.h"
 #include "FireMageStrategy.h"
 #include "../PullStrategy.h"
 #include "MageTriggers.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -18,7 +18,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -45,7 +45,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -89,34 +89,34 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["frostbolt"] = &ActionFactoryInternal::frostbolt;
-                creators["blizzard"] = &ActionFactoryInternal::blizzard;
-                creators["frost nova"] = &ActionFactoryInternal::frost_nova;
-                creators["arcane intellect"] = &ActionFactoryInternal::arcane_intellect;
-                creators["arcane intellect on party"] = &ActionFactoryInternal::arcane_intellect_on_party;
-                creators["conjure water"] = &ActionFactoryInternal::conjure_water;
-                creators["conjure food"] = &ActionFactoryInternal::conjure_food;
-                creators["mage armor"] = &ActionFactoryInternal::mage_armor;
-                creators["ice armor"] = &ActionFactoryInternal::ice_armor;
-                creators["frost armor"] = &ActionFactoryInternal::frost_armor;
-                creators["fireball"] = &ActionFactoryInternal::fireball;
-                creators["pyroblast"] = &ActionFactoryInternal::pyroblast;
-                creators["flamestrike"] = &ActionFactoryInternal::flamestrike;
-                creators["fire blast"] = &ActionFactoryInternal::fire_blast;
-                creators["scorch"] = &ActionFactoryInternal::scorch;
-                creators["counterspell"] = &ActionFactoryInternal::counterspell;
-                creators["remove curse"] = &ActionFactoryInternal::remove_curse;
-                creators["remove curse on party"] = &ActionFactoryInternal::remove_curse_on_party;
-                creators["icy veins"] = &ActionFactoryInternal::icy_veins;
-                creators["combustion"] = &ActionFactoryInternal::combustion;
-                creators["ice block"] = &ActionFactoryInternal::ice_block;
-                creators["polymorph"] = &ActionFactoryInternal::polymorph;
-                creators["spellsteal"] = &ActionFactoryInternal::spellsteal;
+                creators["frostbolt"] = &AiObjectContextInternal::frostbolt;
+                creators["blizzard"] = &AiObjectContextInternal::blizzard;
+                creators["frost nova"] = &AiObjectContextInternal::frost_nova;
+                creators["arcane intellect"] = &AiObjectContextInternal::arcane_intellect;
+                creators["arcane intellect on party"] = &AiObjectContextInternal::arcane_intellect_on_party;
+                creators["conjure water"] = &AiObjectContextInternal::conjure_water;
+                creators["conjure food"] = &AiObjectContextInternal::conjure_food;
+                creators["mage armor"] = &AiObjectContextInternal::mage_armor;
+                creators["ice armor"] = &AiObjectContextInternal::ice_armor;
+                creators["frost armor"] = &AiObjectContextInternal::frost_armor;
+                creators["fireball"] = &AiObjectContextInternal::fireball;
+                creators["pyroblast"] = &AiObjectContextInternal::pyroblast;
+                creators["flamestrike"] = &AiObjectContextInternal::flamestrike;
+                creators["fire blast"] = &AiObjectContextInternal::fire_blast;
+                creators["scorch"] = &AiObjectContextInternal::scorch;
+                creators["counterspell"] = &AiObjectContextInternal::counterspell;
+                creators["remove curse"] = &AiObjectContextInternal::remove_curse;
+                creators["remove curse on party"] = &AiObjectContextInternal::remove_curse_on_party;
+                creators["icy veins"] = &AiObjectContextInternal::icy_veins;
+                creators["combustion"] = &AiObjectContextInternal::combustion;
+                creators["ice block"] = &AiObjectContextInternal::ice_block;
+                creators["polymorph"] = &AiObjectContextInternal::polymorph;
+                creators["spellsteal"] = &AiObjectContextInternal::spellsteal;
             }
 
         private:
@@ -149,9 +149,9 @@ namespace ai
 
 
 
-MageActionFactory::MageActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+MageAiObjectContext::MageAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::mage::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::mage::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::mage::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::mage::StrategyFactoryInternal());
+    actionContexts.Add(new ai::mage::AiObjectContextInternal());
+    triggerContexts.Add(new ai::mage::TriggerFactoryInternal());    
 }

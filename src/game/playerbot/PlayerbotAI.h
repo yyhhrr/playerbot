@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PlayerbotAIBase.h"
-#include "strategy/ActionFactory.h"
+#include "strategy/AiObjectContext.h"
 #include "strategy/Engine.h"
 
 class Player;
@@ -66,12 +66,12 @@ public:
 	Player* GetMaster() { return mgr->GetMaster(); }
 	AiManagerRegistry* GetAiRegistry() { return aiRegistry; }
     AiGroupStatsManager* GetGroupStatsManager() { return mgr->GetGroupStatsManager(); }
-    ActionFactory* GetActionFactory() { return actionFactory; }
+    AiObjectContext* GetAiObjectContext() { return AiObjectContext; }
 
 protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
-    ActionFactory* actionFactory;
+    AiObjectContext* AiObjectContext;
 	AiManagerRegistry* aiRegistry;
     Engine* currentEngine;
     Engine* combatEngine;

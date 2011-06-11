@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/warrior/WarriorActionFactory.h"
+#include "../game/playerbot/strategy/warrior/WarriorAiObjectContext.h"
 
 using namespace ai;
 
@@ -22,7 +22,7 @@ public:
     void setUp()
     {
         EngineTestBase::setUp();
-        setupEngine(new WarriorActionFactory(ai), "tank", NULL);
+        setupEngine(new WarriorAiObjectContext(ai), "tank", NULL);
 
         // this buff is combat-only, so skip for most test cases
         addAura("battle shout");

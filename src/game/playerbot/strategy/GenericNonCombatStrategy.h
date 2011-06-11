@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Strategy.h"
-#include "ActionFactory.h"
+#include "AiObjectContext.h"
 
 namespace ai
 {

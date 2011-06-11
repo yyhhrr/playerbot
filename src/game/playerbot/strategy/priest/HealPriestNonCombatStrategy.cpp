@@ -47,9 +47,9 @@ void HealPriestNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multip
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* HealPriestNonCombatStrategy::createAction(const char* name)
+ActionNode* HealPriestNonCombatStrategy::GetAction(const char* name)
 {
-    ActionNode* node = CombatStrategy::createAction(name);
+    ActionNode* node = CombatStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -256,7 +256,7 @@ ActionNode* HealPriestNonCombatStrategy::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }
 
 

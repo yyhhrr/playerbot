@@ -25,7 +25,7 @@ vector<string> split(const string &s, char delim) {
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
 {
 	aiRegistry = NULL;
-    actionFactory = NULL;
+    AiObjectContext = NULL;
     combatEngine = NULL;
     nonCombatEngine = NULL;
     currentEngine = NULL;
@@ -37,10 +37,10 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
 	this->bot = bot;
     aiRegistry = new AiManagerRegistry(this);
 
-    actionFactory = AiFactory::createActionFactory(bot, aiRegistry);
+    AiObjectContext = AiFactory::createAiObjectContext(bot, aiRegistry);
 
-    combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, actionFactory);
-    nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, actionFactory);
+    combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, AiObjectContext);
+    nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, AiObjectContext);
 
     currentEngine = nonCombatEngine;
 }
@@ -53,8 +53,8 @@ PlayerbotAI::~PlayerbotAI()
     if (nonCombatEngine) 
         delete nonCombatEngine;
 
-    if (actionFactory)
-        delete actionFactory;
+    if (AiObjectContext)
+        delete AiObjectContext;
 
 	if (aiRegistry)
 		delete aiRegistry;
@@ -142,7 +142,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 	for (int i=0; i<aiRegistry->GetManagerCount(); i++)
 		managers[i]->HandleCommand(text, fromPlayer);
 
-    ExternalEventHelper helper(actionFactory);
+    ExternalEventHelper helper(AiObjectContext);
     helper.ParseChatCommand(text);
 }
 

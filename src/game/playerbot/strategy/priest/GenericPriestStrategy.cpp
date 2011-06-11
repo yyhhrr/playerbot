@@ -52,9 +52,9 @@ void GenericPriestStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* GenericPriestStrategy::createAction(const char* name)
+ActionNode* GenericPriestStrategy::GetAction(const char* name)
 {
-    ActionNode* node = CombatStrategy::createAction(name);
+    ActionNode* node = CombatStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -268,7 +268,7 @@ ActionNode* GenericPriestStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }
 
 

@@ -50,7 +50,7 @@ void CatDpsDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* CatDpsDruidStrategy::createAction(const char* name)
+ActionNode* CatDpsDruidStrategy::GetAction(const char* name)
 {
     if (!strcmp("reach melee", name))
     {
@@ -136,5 +136,5 @@ ActionNode* CatDpsDruidStrategy::createAction(const char* name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else return FeralDruidStrategy::createAction(name);
+    else return FeralDruidStrategy::GetAction(name);
 }

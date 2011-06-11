@@ -13,7 +13,7 @@ void FeralDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("survival instincts", 80.0f), NULL)));
 }
 
-ActionNode* FeralDruidStrategy::createAction(const char* name)
+ActionNode* FeralDruidStrategy::GetAction(const char* name)
 {
     if (!strcmp("survival instincts", name)) 
     {
@@ -72,6 +72,6 @@ ActionNode* FeralDruidStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
     
-	else return GenericDruidStrategy::createAction(name);
+	else return GenericDruidStrategy::GetAction(name);
 }
 

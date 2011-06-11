@@ -36,7 +36,7 @@ void DpsPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* DpsPaladinStrategy::createAction(const char* name)
+ActionNode* DpsPaladinStrategy::GetAction(const char* name)
 {
     if (!strcmp("seal of command", name)) 
     {
@@ -66,5 +66,5 @@ ActionNode* DpsPaladinStrategy::createAction(const char* name)
 			/*A*/ NextAction::array(0, new NextAction("melee"), NULL),
 			/*C*/ NULL);
 	}
-    else return GenericPaladinStrategy::createAction(name);
+    else return GenericPaladinStrategy::GetAction(name);
 }

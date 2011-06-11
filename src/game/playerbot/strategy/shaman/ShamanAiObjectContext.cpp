@@ -1,12 +1,12 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "ShamanActions.h"
-#include "ShamanActionFactory.h"
+#include "ShamanAiObjectContext.h"
 #include "ShamanNonCombatStrategy.h"
 #include "HealShamanStrategy.h"
 #include "MeleeShamanStrategy.h"
 #include "ShamanTriggers.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -18,7 +18,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -43,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -81,39 +81,39 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["water shield"] = &ActionFactoryInternal::water_shield;
-                creators["lightning shield"] = &ActionFactoryInternal::lightning_shield;
-                creators["strength of earth totem"] = &ActionFactoryInternal::strength_of_earth_totem;
-                creators["flametongue totem"] = &ActionFactoryInternal::flametongue_totem;
-                creators["windfury totem"] = &ActionFactoryInternal::windfury_totem;
-                creators["mana spring totem"] = &ActionFactoryInternal::mana_spring_totem;
-                creators["mana tide totem"] = &ActionFactoryInternal::mana_tide_totem;
-                creators["healing stream totem"] = &ActionFactoryInternal::healing_stream_totem;
-                creators["wind shear"] = &ActionFactoryInternal::wind_shear;
-                creators["rockbiter weapon"] = &ActionFactoryInternal::rockbiter_weapon;
-                creators["flametongue weapon"] = &ActionFactoryInternal::flametongue_weapon;
-                creators["frostbrand weapon"] = &ActionFactoryInternal::frostbrand_weapon;
-                creators["windfury weapon"] = &ActionFactoryInternal::windfury_weapon;
-                creators["earthliving weapon"] = &ActionFactoryInternal::earthliving_weapon;
-                creators["purge"] = &ActionFactoryInternal::purge;
-                creators["healing wave"] = &ActionFactoryInternal::healing_wave;
-                creators["lesser healing wave"] = &ActionFactoryInternal::lesser_healing_wave;
-                creators["healing wave on party"] = &ActionFactoryInternal::healing_wave_on_party;
-                creators["lesser healing wave on party"] = &ActionFactoryInternal::lesser_healing_wave_on_party;
-                creators["earth shield"] = &ActionFactoryInternal::earth_shield;
-                creators["earth shield on party"] = &ActionFactoryInternal::earth_shield_on_party;
-                creators["chain heal"] = &ActionFactoryInternal::chain_heal;
-                creators["riptide"] = &ActionFactoryInternal::riptide;
-                creators["chain heal on party"] = &ActionFactoryInternal::chain_heal_on_party;
-                creators["riptide on party"] = &ActionFactoryInternal::riptide_on_party;
-                creators["stormstrike"] = &ActionFactoryInternal::stormstrike;
-                creators["lava lash"] = &ActionFactoryInternal::lava_lash;
-                creators["ancestral spirit"] = &ActionFactoryInternal::ancestral_spirit;
+                creators["water shield"] = &AiObjectContextInternal::water_shield;
+                creators["lightning shield"] = &AiObjectContextInternal::lightning_shield;
+                creators["strength of earth totem"] = &AiObjectContextInternal::strength_of_earth_totem;
+                creators["flametongue totem"] = &AiObjectContextInternal::flametongue_totem;
+                creators["windfury totem"] = &AiObjectContextInternal::windfury_totem;
+                creators["mana spring totem"] = &AiObjectContextInternal::mana_spring_totem;
+                creators["mana tide totem"] = &AiObjectContextInternal::mana_tide_totem;
+                creators["healing stream totem"] = &AiObjectContextInternal::healing_stream_totem;
+                creators["wind shear"] = &AiObjectContextInternal::wind_shear;
+                creators["rockbiter weapon"] = &AiObjectContextInternal::rockbiter_weapon;
+                creators["flametongue weapon"] = &AiObjectContextInternal::flametongue_weapon;
+                creators["frostbrand weapon"] = &AiObjectContextInternal::frostbrand_weapon;
+                creators["windfury weapon"] = &AiObjectContextInternal::windfury_weapon;
+                creators["earthliving weapon"] = &AiObjectContextInternal::earthliving_weapon;
+                creators["purge"] = &AiObjectContextInternal::purge;
+                creators["healing wave"] = &AiObjectContextInternal::healing_wave;
+                creators["lesser healing wave"] = &AiObjectContextInternal::lesser_healing_wave;
+                creators["healing wave on party"] = &AiObjectContextInternal::healing_wave_on_party;
+                creators["lesser healing wave on party"] = &AiObjectContextInternal::lesser_healing_wave_on_party;
+                creators["earth shield"] = &AiObjectContextInternal::earth_shield;
+                creators["earth shield on party"] = &AiObjectContextInternal::earth_shield_on_party;
+                creators["chain heal"] = &AiObjectContextInternal::chain_heal;
+                creators["riptide"] = &AiObjectContextInternal::riptide;
+                creators["chain heal on party"] = &AiObjectContextInternal::chain_heal_on_party;
+                creators["riptide on party"] = &AiObjectContextInternal::riptide_on_party;
+                creators["stormstrike"] = &AiObjectContextInternal::stormstrike;
+                creators["lava lash"] = &AiObjectContextInternal::lava_lash;
+                creators["ancestral spirit"] = &AiObjectContextInternal::ancestral_spirit;
             }
 
         private:
@@ -151,9 +151,9 @@ namespace ai
 
 
 
-ShamanActionFactory::ShamanActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+ShamanAiObjectContext::ShamanAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::shaman::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::shaman::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::shaman::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::shaman::StrategyFactoryInternal());
+    actionContexts.Add(new ai::shaman::AiObjectContextInternal());
+    triggerContexts.Add(new ai::shaman::TriggerFactoryInternal());    
 }

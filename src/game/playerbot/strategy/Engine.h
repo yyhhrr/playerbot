@@ -4,7 +4,7 @@
 #include "Queue.h"
 #include "Trigger.h"
 #include "Multiplier.h"
-#include "ActionFactory.h"
+#include "AiObjectContext.h"
 #include "Strategy.h"
 
 namespace ai
@@ -45,9 +45,8 @@ namespace ai
     class Engine : public AiManagerRegistryAware
     {
     public:
-        Engine(AiManagerRegistry* const ai, ActionFactory *factory) : AiManagerRegistryAware(ai) 
+        Engine(AiManagerRegistry* const ai, AiObjectContext *factory) : AiManagerRegistryAware(ai), aiObjectContext(factory)
         {
-            actionFactory = factory;
             lastRelevance = 0.0f;
             maxIterations = 10;
 			testMode = false;
@@ -84,7 +83,7 @@ namespace ai
         void ProcessTriggers();
         void PushDefaultActions();
         void PushAgain(ActionNode* actionNode, float relevance, Event event);
-        ActionNode* createAction(const char* name);
+        ActionNode* GetAction(const char* name);
         Action* InitializeAction(ActionNode* actionNode);
 
     protected:
@@ -93,7 +92,7 @@ namespace ai
         std::list<Multiplier*> multipliers;
 	    Player* master;
 	    Player* bot;
-        ActionFactory* actionFactory;
+        AiObjectContext* aiObjectContext;
         std::list<Strategy*> strategies;
         float lastRelevance;
 

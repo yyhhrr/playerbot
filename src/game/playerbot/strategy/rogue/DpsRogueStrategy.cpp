@@ -50,7 +50,7 @@ void DpsRogueStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* DpsRogueStrategy::createAction(const char* name)
+ActionNode* DpsRogueStrategy::GetAction(const char* name)
 {
     if (!strcmp("mutilate", name))
     {
@@ -129,5 +129,5 @@ ActionNode* DpsRogueStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("mutilate"), NULL),
             /*C*/ NULL);
     }
-	else return CombatStrategy::createAction(name);
+	else return CombatStrategy::GetAction(name);
 }

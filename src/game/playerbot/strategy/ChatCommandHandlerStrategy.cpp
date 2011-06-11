@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-ActionNode* ChatCommandHandlerStrategy::createAction(const char* name)
+ActionNode* ChatCommandHandlerStrategy::GetAction(const char* name)
 {
     return new ActionNode(name,  
         /*P*/ NULL,

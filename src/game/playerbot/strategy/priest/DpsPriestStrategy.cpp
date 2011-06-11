@@ -32,9 +32,9 @@ void DpsPriestStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     HealPriestStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* DpsPriestStrategy::createAction(const char* name)
+ActionNode* DpsPriestStrategy::GetAction(const char* name)
 {
-    ActionNode* node = HealPriestStrategy::createAction(name);
+    ActionNode* node = HealPriestStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -80,5 +80,5 @@ ActionNode* DpsPriestStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
             /*C*/ NextAction::array(0, new NextAction("shoot"), NULL));
     }
-    else return HealPriestStrategy::createAction(name);
+    else return HealPriestStrategy::GetAction(name);
 }

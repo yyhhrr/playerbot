@@ -31,9 +31,9 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 }
 
 
-ActionNode* GenericWarlockNonCombatStrategy::createAction(const char* name)
+ActionNode* GenericWarlockNonCombatStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericNonCombatStrategy::createAction(name);
+    ActionNode* node = GenericNonCombatStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -80,5 +80,5 @@ ActionNode* GenericWarlockNonCombatStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    return GenericNonCombatStrategy::createAction(name);
+    return GenericNonCombatStrategy::GetAction(name);
 }

@@ -67,9 +67,9 @@ void DpsHunterStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     GenericHunterStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* DpsHunterStrategy::createAction(const char* name)
+ActionNode* DpsHunterStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericHunterStrategy::createAction(name);
+    ActionNode* node = GenericHunterStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -192,6 +192,6 @@ ActionNode* DpsHunterStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else return GenericHunterStrategy::createAction(name);
+    else return GenericHunterStrategy::GetAction(name);
 }
 

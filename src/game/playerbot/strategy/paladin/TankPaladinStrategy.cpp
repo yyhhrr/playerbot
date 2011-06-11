@@ -48,7 +48,7 @@ void TankPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* TankPaladinStrategy::createAction(const char* name)
+ActionNode* TankPaladinStrategy::GetAction(const char* name)
 {
     if (!strcmp("righteous fury", name)) 
     {
@@ -64,5 +64,5 @@ ActionNode* TankPaladinStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL), 
             /*C*/ NULL);
     }
-    else return GenericPaladinStrategy::createAction(name);
+    else return GenericPaladinStrategy::GetAction(name);
 }

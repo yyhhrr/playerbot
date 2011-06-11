@@ -19,7 +19,7 @@ void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* RacialsStrategy::createAction(const char* name)
+ActionNode* RacialsStrategy::GetAction(const char* name)
 {
 	if (!strcmp("lifeblood", name)) 
 	{
@@ -42,6 +42,6 @@ ActionNode* RacialsStrategy::createAction(const char* name)
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else return Strategy::createAction(name);
+	else return Strategy::GetAction(name);
 }
 

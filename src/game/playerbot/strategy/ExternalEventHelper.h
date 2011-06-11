@@ -6,7 +6,7 @@ namespace ai
 {
     class ExternalEventHelper {
     public:
-        ExternalEventHelper(ActionFactory* actionFactory) : actionFactory(actionFactory) {}
+        ExternalEventHelper(AiObjectContext* aiObjectContext) : aiObjectContext(aiObjectContext) {}
 
         void ParseChatCommand(string command) 
         {
@@ -33,7 +33,7 @@ namespace ai
     private:
         bool Check(string name, string param)
         {
-            Trigger* trigger = actionFactory->createTrigger(name.c_str());
+            Trigger* trigger = aiObjectContext->GetTrigger(name.c_str());
             if (!trigger)
                 return false;
 
@@ -42,6 +42,6 @@ namespace ai
         }
 
     private:
-        ActionFactory* actionFactory;
+        AiObjectContext* aiObjectContext;
     };
 }

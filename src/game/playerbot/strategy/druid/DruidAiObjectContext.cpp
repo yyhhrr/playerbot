@@ -1,12 +1,12 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "DruidActions.h"
-#include "DruidActionFactory.h"
+#include "DruidAiObjectContext.h"
 #include "BearTankDruidStrategy.h"
 #include "CatDpsDruidStrategy.h"
 #include "CasterDruidStrategy.h"
 #include "GenericDruidNonCombatStrategy.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 #include "DruidTriggers.h"
 
 using namespace ai;
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -48,7 +48,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -94,61 +94,61 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["feral charge - bear"] = &ActionFactoryInternal::feral_charge_bear;
-                creators["feral charge - cat"] = &ActionFactoryInternal::feral_charge_cat;
-                creators["swipe (bear)"] = &ActionFactoryInternal::swipe_bear;
-                creators["faerie fire (feral)"] = &ActionFactoryInternal::faerie_fire_feral;
-                creators["faerie fire"] = &ActionFactoryInternal::faerie_fire;
-                creators["bear form"] = &ActionFactoryInternal::bear_form;
-                creators["dire bear form"] = &ActionFactoryInternal::dire_bear_form;
-                creators["moonkin form"] = &ActionFactoryInternal::moonkin_form;
-                creators["cat form"] = &ActionFactoryInternal::cat_form;
-                creators["caster form"] = &ActionFactoryInternal::caster_form;
-                creators["mangle (bear)"] = &ActionFactoryInternal::mangle_bear;
-                creators["maul"] = &ActionFactoryInternal::maul;
-                creators["bash"] = &ActionFactoryInternal::bash;
-                creators["swipe"] = &ActionFactoryInternal::swipe;
-                creators["growl"] = &ActionFactoryInternal::growl;
-                creators["demoralizing roar"] = &ActionFactoryInternal::demoralizing_roar;
-                creators["hibernate"] = &ActionFactoryInternal::hibernate;
-                creators["entangling roots"] = &ActionFactoryInternal::entangling_roots;
-                creators["entangling roots on cc"] = &ActionFactoryInternal::entangling_roots_on_cc;
-                creators["wrath"] = &ActionFactoryInternal::wrath;
-                creators["starfall"] = &ActionFactoryInternal::starfall;
-                creators["insect swarm"] = &ActionFactoryInternal::insect_swarm;
-                creators["moonfire"] = &ActionFactoryInternal::moonfire;
-                creators["starfire"] = &ActionFactoryInternal::starfire;
-                creators["nature's grasp"] = &ActionFactoryInternal::natures_grasp;
-                creators["claw"] = &ActionFactoryInternal::claw;
-                creators["mangle (cat)"] = &ActionFactoryInternal::mangle_cat;
-                creators["swipe (cat)"] = &ActionFactoryInternal::swipe_cat;
-                creators["rake"] = &ActionFactoryInternal::rake;
-                creators["ferocious bite"] = &ActionFactoryInternal::ferocious_bite;
-                creators["rip"] = &ActionFactoryInternal::rip;
-                creators["cower"] = &ActionFactoryInternal::cower;
-                creators["survival instincts"] = &ActionFactoryInternal::survival_instincts;
-                creators["thorns"] = &ActionFactoryInternal::thorns;
-                creators["cure poison"] = &ActionFactoryInternal::cure_poison;
-                creators["cure poison on party"] = &ActionFactoryInternal::cure_poison_on_party;
-                creators["abolish poison"] = &ActionFactoryInternal::abolish_poison;
-                creators["abolish poison on party"] = &ActionFactoryInternal::abolish_poison_on_party;
-                creators["berserk"] = &ActionFactoryInternal::berserk;
-                creators["tiger's fury"] = &ActionFactoryInternal::tigers_fury;
-                creators["mark of the wild"] = &ActionFactoryInternal::mark_of_the_wild;
-                creators["mark of the wild on party"] = &ActionFactoryInternal::mark_of_the_wild_on_party;
-                creators["regrowth"] = &ActionFactoryInternal::regrowth;
-                creators["rejuvenation"] = &ActionFactoryInternal::rejuvenation;
-                creators["healing touch"] = &ActionFactoryInternal::healing_touch;
-                creators["regrowth on party"] = &ActionFactoryInternal::regrowth_on_party;
-                creators["rejuvenation on party"] = &ActionFactoryInternal::rejuvenation_on_party;
-                creators["healing touch on party"] = &ActionFactoryInternal::healing_touch_on_party;
-                creators["rebirth"] = &ActionFactoryInternal::rebirth;
-                creators["revive"] = &ActionFactoryInternal::revive;
+                creators["feral charge - bear"] = &AiObjectContextInternal::feral_charge_bear;
+                creators["feral charge - cat"] = &AiObjectContextInternal::feral_charge_cat;
+                creators["swipe (bear)"] = &AiObjectContextInternal::swipe_bear;
+                creators["faerie fire (feral)"] = &AiObjectContextInternal::faerie_fire_feral;
+                creators["faerie fire"] = &AiObjectContextInternal::faerie_fire;
+                creators["bear form"] = &AiObjectContextInternal::bear_form;
+                creators["dire bear form"] = &AiObjectContextInternal::dire_bear_form;
+                creators["moonkin form"] = &AiObjectContextInternal::moonkin_form;
+                creators["cat form"] = &AiObjectContextInternal::cat_form;
+                creators["caster form"] = &AiObjectContextInternal::caster_form;
+                creators["mangle (bear)"] = &AiObjectContextInternal::mangle_bear;
+                creators["maul"] = &AiObjectContextInternal::maul;
+                creators["bash"] = &AiObjectContextInternal::bash;
+                creators["swipe"] = &AiObjectContextInternal::swipe;
+                creators["growl"] = &AiObjectContextInternal::growl;
+                creators["demoralizing roar"] = &AiObjectContextInternal::demoralizing_roar;
+                creators["hibernate"] = &AiObjectContextInternal::hibernate;
+                creators["entangling roots"] = &AiObjectContextInternal::entangling_roots;
+                creators["entangling roots on cc"] = &AiObjectContextInternal::entangling_roots_on_cc;
+                creators["wrath"] = &AiObjectContextInternal::wrath;
+                creators["starfall"] = &AiObjectContextInternal::starfall;
+                creators["insect swarm"] = &AiObjectContextInternal::insect_swarm;
+                creators["moonfire"] = &AiObjectContextInternal::moonfire;
+                creators["starfire"] = &AiObjectContextInternal::starfire;
+                creators["nature's grasp"] = &AiObjectContextInternal::natures_grasp;
+                creators["claw"] = &AiObjectContextInternal::claw;
+                creators["mangle (cat)"] = &AiObjectContextInternal::mangle_cat;
+                creators["swipe (cat)"] = &AiObjectContextInternal::swipe_cat;
+                creators["rake"] = &AiObjectContextInternal::rake;
+                creators["ferocious bite"] = &AiObjectContextInternal::ferocious_bite;
+                creators["rip"] = &AiObjectContextInternal::rip;
+                creators["cower"] = &AiObjectContextInternal::cower;
+                creators["survival instincts"] = &AiObjectContextInternal::survival_instincts;
+                creators["thorns"] = &AiObjectContextInternal::thorns;
+                creators["cure poison"] = &AiObjectContextInternal::cure_poison;
+                creators["cure poison on party"] = &AiObjectContextInternal::cure_poison_on_party;
+                creators["abolish poison"] = &AiObjectContextInternal::abolish_poison;
+                creators["abolish poison on party"] = &AiObjectContextInternal::abolish_poison_on_party;
+                creators["berserk"] = &AiObjectContextInternal::berserk;
+                creators["tiger's fury"] = &AiObjectContextInternal::tigers_fury;
+                creators["mark of the wild"] = &AiObjectContextInternal::mark_of_the_wild;
+                creators["mark of the wild on party"] = &AiObjectContextInternal::mark_of_the_wild_on_party;
+                creators["regrowth"] = &AiObjectContextInternal::regrowth;
+                creators["rejuvenation"] = &AiObjectContextInternal::rejuvenation;
+                creators["healing touch"] = &AiObjectContextInternal::healing_touch;
+                creators["regrowth on party"] = &AiObjectContextInternal::regrowth_on_party;
+                creators["rejuvenation on party"] = &AiObjectContextInternal::rejuvenation_on_party;
+                creators["healing touch on party"] = &AiObjectContextInternal::healing_touch_on_party;
+                creators["rebirth"] = &AiObjectContextInternal::rebirth;
+                creators["revive"] = &AiObjectContextInternal::revive;
             }
 
         private:
@@ -206,9 +206,9 @@ namespace ai
     };
 };
 
-DruidActionFactory::DruidActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+DruidAiObjectContext::DruidAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::druid::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::druid::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::druid::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::druid::StrategyFactoryInternal());
+    actionContexts.Add(new ai::druid::AiObjectContextInternal());
+    triggerContexts.Add(new ai::druid::TriggerFactoryInternal());    
 }

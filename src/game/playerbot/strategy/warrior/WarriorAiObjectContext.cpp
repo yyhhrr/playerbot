@@ -1,13 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "WarriorActions.h"
-#include "WarriorActionFactory.h"
+#include "WarriorAiObjectContext.h"
 #include "GenericWarriorNonCombatStrategy.h"
 #include "TankWarriorStrategy.h"
 #include "DpsWarriorStrategy.h"
 #include "../PullStrategy.h"
 #include "WarriorTriggers.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -18,7 +18,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -44,7 +44,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -84,43 +84,43 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["devastate"] = &ActionFactoryInternal::devastate;
-                creators["overpower"] = &ActionFactoryInternal::overpower;
-                creators["charge"] = &ActionFactoryInternal::charge;
-                creators["bloodthirst"] = &ActionFactoryInternal::bloodthirst;
-                creators["rend"] = &ActionFactoryInternal::rend;
-                creators["mocking blow"] = &ActionFactoryInternal::mocking_blow;
-                creators["death wish"] = &ActionFactoryInternal::death_wish;
-                creators["berserker rage"] = &ActionFactoryInternal::berserker_rage;
-                creators["victory rush"] = &ActionFactoryInternal::victory_rush;
-                creators["execute"] = &ActionFactoryInternal::execute;
-                creators["defensive stance"] = &ActionFactoryInternal::defensive_stance;
-                creators["hamstring"] = &ActionFactoryInternal::hamstring;
-                creators["shield bash"] = &ActionFactoryInternal::shield_bash;
-                creators["shield block"] = &ActionFactoryInternal::shield_block;
-                creators["bloodrage"] = &ActionFactoryInternal::bloodrage;
-                creators["battle stance"] = &ActionFactoryInternal::battle_stance;
-                creators["heroic strike"] = &ActionFactoryInternal::heroic_strike;
-                creators["intimidating shout"] = &ActionFactoryInternal::intimidating_shout;
-                creators["demoralizing shout"] = &ActionFactoryInternal::demoralizing_shout;
-                creators["challenging shout"] = &ActionFactoryInternal::challenging_shout;
-                creators["shield wall"] = &ActionFactoryInternal::shield_wall;
-                creators["battle shout"] = &ActionFactoryInternal::battle_shout;
-                creators["thunder clap"] = &ActionFactoryInternal::thunder_clap;
-                creators["taunt"] = &ActionFactoryInternal::taunt;
-                creators["revenge"] = &ActionFactoryInternal::revenge;
-                creators["slam"] = &ActionFactoryInternal::slam;
-                creators["shield slam"] = &ActionFactoryInternal::shield_slam;
-                creators["disarm"] = &ActionFactoryInternal::disarm;
-                creators["sunder armor"] = &ActionFactoryInternal::sunder_armor;
-                creators["last stand"] = &ActionFactoryInternal::last_stand;
-                creators["shockwave"] = &ActionFactoryInternal::shockwave;
-                creators["concussion blow"] = &ActionFactoryInternal::concussion_blow;
+                creators["devastate"] = &AiObjectContextInternal::devastate;
+                creators["overpower"] = &AiObjectContextInternal::overpower;
+                creators["charge"] = &AiObjectContextInternal::charge;
+                creators["bloodthirst"] = &AiObjectContextInternal::bloodthirst;
+                creators["rend"] = &AiObjectContextInternal::rend;
+                creators["mocking blow"] = &AiObjectContextInternal::mocking_blow;
+                creators["death wish"] = &AiObjectContextInternal::death_wish;
+                creators["berserker rage"] = &AiObjectContextInternal::berserker_rage;
+                creators["victory rush"] = &AiObjectContextInternal::victory_rush;
+                creators["execute"] = &AiObjectContextInternal::execute;
+                creators["defensive stance"] = &AiObjectContextInternal::defensive_stance;
+                creators["hamstring"] = &AiObjectContextInternal::hamstring;
+                creators["shield bash"] = &AiObjectContextInternal::shield_bash;
+                creators["shield block"] = &AiObjectContextInternal::shield_block;
+                creators["bloodrage"] = &AiObjectContextInternal::bloodrage;
+                creators["battle stance"] = &AiObjectContextInternal::battle_stance;
+                creators["heroic strike"] = &AiObjectContextInternal::heroic_strike;
+                creators["intimidating shout"] = &AiObjectContextInternal::intimidating_shout;
+                creators["demoralizing shout"] = &AiObjectContextInternal::demoralizing_shout;
+                creators["challenging shout"] = &AiObjectContextInternal::challenging_shout;
+                creators["shield wall"] = &AiObjectContextInternal::shield_wall;
+                creators["battle shout"] = &AiObjectContextInternal::battle_shout;
+                creators["thunder clap"] = &AiObjectContextInternal::thunder_clap;
+                creators["taunt"] = &AiObjectContextInternal::taunt;
+                creators["revenge"] = &AiObjectContextInternal::revenge;
+                creators["slam"] = &AiObjectContextInternal::slam;
+                creators["shield slam"] = &AiObjectContextInternal::shield_slam;
+                creators["disarm"] = &AiObjectContextInternal::disarm;
+                creators["sunder armor"] = &AiObjectContextInternal::sunder_armor;
+                creators["last stand"] = &AiObjectContextInternal::last_stand;
+                creators["shockwave"] = &AiObjectContextInternal::shockwave;
+                creators["concussion blow"] = &AiObjectContextInternal::concussion_blow;
             }
 
         private:
@@ -161,9 +161,9 @@ namespace ai
     };
 };
 
-WarriorActionFactory::WarriorActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+WarriorAiObjectContext::WarriorAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::warrior::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::warrior::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::warrior::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::warrior::StrategyFactoryInternal());
+    actionContexts.Add(new ai::warrior::AiObjectContextInternal());
+    triggerContexts.Add(new ai::warrior::TriggerFactoryInternal());    
 }

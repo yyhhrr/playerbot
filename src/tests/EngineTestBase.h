@@ -27,7 +27,7 @@ private:
 	void va_generic(void (EngineTestBase::*callback)(const char*), va_list vl);
 
 protected:
-	virtual void setupEngine(ActionFactory* actionFactory, ...);
+	virtual void setupEngine(AiObjectContext* AiObjectContext, ...);
 	void setupEngineCallback(const char* name);
 	void tick();
 	void assertActions(const char* expected);

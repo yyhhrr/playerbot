@@ -26,7 +26,7 @@ void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* DpsWarlockStrategy::createAction(const char* name)
+ActionNode* DpsWarlockStrategy::GetAction(const char* name)
 {
     if (!strcmp("summon imp", name)) 
     {
@@ -36,7 +36,7 @@ ActionNode* DpsWarlockStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
     else 
-        return GenericWarlockStrategy::createAction(name);
+        return GenericWarlockStrategy::GetAction(name);
 }
 
 

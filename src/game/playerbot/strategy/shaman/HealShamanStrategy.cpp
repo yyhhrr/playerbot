@@ -23,9 +23,9 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
 
-ActionNode* HealShamanStrategy::createAction(const char* name)
+ActionNode* HealShamanStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericShamanStrategy::createAction(name);
+    ActionNode* node = GenericShamanStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -37,6 +37,6 @@ ActionNode* HealShamanStrategy::createAction(const char* name)
 			/*C*/ NULL);
 	}
 
-    return GenericShamanStrategy::createAction(name);
+    return GenericShamanStrategy::GetAction(name);
 }
 

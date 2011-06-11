@@ -74,7 +74,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericPaladinStrategy::createAction(const char* name)
+ActionNode* GenericPaladinStrategy::GetAction(const char* name)
 {
     if (!strcmp("seal of light", name))
     {
@@ -342,5 +342,5 @@ ActionNode* GenericPaladinStrategy::createAction(const char* name)
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else return CombatStrategy::createAction(name);
+	else return CombatStrategy::GetAction(name);
 }

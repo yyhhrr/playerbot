@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/shaman/ShamanActionFactory.h"
+#include "../game/playerbot/strategy/shaman/ShamanAiObjectContext.h"
 
 using namespace ai;
 
@@ -20,7 +20,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new ShamanActionFactory(ai), "heal", NULL);
+		setupEngine(new ShamanAiObjectContext(ai), "heal", NULL);
 
         addAura("water shield");
         addAura("earthliving weapon");

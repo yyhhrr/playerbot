@@ -37,12 +37,12 @@ void EngineTestBase::va_generic(void (EngineTestBase::*callback)(const char*), v
 }
 
 
-void EngineTestBase::setupEngine(ActionFactory* actionFactory, ...)
+void EngineTestBase::setupEngine(AiObjectContext* AiObjectContext, ...)
 {
-    engine = new Engine(ai, actionFactory);
+    engine = new Engine(ai, AiObjectContext);
     
 	va_list vl;
-	va_start(vl, actionFactory);
+	va_start(vl, AiObjectContext);
 
 	va_generic(&EngineTestBase::setupEngineCallback, vl);
     

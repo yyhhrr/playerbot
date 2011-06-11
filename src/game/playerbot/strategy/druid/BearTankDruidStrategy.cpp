@@ -53,7 +53,7 @@ void BearTankDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* BearTankDruidStrategy::createAction(const char* name)
+ActionNode* BearTankDruidStrategy::GetAction(const char* name)
 {
     if (!strcmp("melee", name))
     {
@@ -139,5 +139,5 @@ ActionNode* BearTankDruidStrategy::createAction(const char* name)
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else return FeralDruidStrategy::createAction(name);
+    else return FeralDruidStrategy::GetAction(name);
 }

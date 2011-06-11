@@ -31,9 +31,9 @@ void GenericMageNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigger
 }
 
 
-ActionNode* GenericMageNonCombatStrategy::createAction(const char* name)
+ActionNode* GenericMageNonCombatStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericMageStrategy::createAction(name);
+    ActionNode* node = GenericMageStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -87,5 +87,5 @@ ActionNode* GenericMageNonCombatStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    return GenericMageStrategy::createAction(name);
+    return GenericMageStrategy::GetAction(name);
 }

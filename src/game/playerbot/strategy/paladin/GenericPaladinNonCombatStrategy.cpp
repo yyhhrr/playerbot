@@ -22,7 +22,7 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 		NextAction::array(0, new NextAction("crusader aura", 40.0f), NULL)));
 }
 
-ActionNode* GenericPaladinNonCombatStrategy::createAction(const char* name)
+ActionNode* GenericPaladinNonCombatStrategy::GetAction(const char* name)
 {
     if (!strcmp("blessing of kings on party", name)) 
     {
@@ -46,5 +46,5 @@ ActionNode* GenericPaladinNonCombatStrategy::createAction(const char* name)
 			/*C*/ NULL);
 	}
 	
-    else return GenericNonCombatStrategy::createAction(name);
+    else return GenericNonCombatStrategy::GetAction(name);
 }

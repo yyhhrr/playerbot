@@ -2,12 +2,12 @@
 #include "../../playerbot.h"
 #include "PaladinActions.h"
 #include "PaladinTriggers.h"
-#include "PaladinActionFactory.h"
+#include "PaladinAiObjectContext.h"
 #include "GenericPaladinNonCombatStrategy.h"
 #include "TankPaladinStrategy.h"
 #include "DpsPaladinStrategy.h"
 #include "PaladinBuffStrategies.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -55,7 +55,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -117,58 +117,58 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["seal of command"] = &ActionFactoryInternal::seal_of_command;
-                creators["blessing of might"] = &ActionFactoryInternal::blessing_of_might;
-                creators["divine storm"] = &ActionFactoryInternal::divine_storm;
-                creators["blessing of kings on party"] = &ActionFactoryInternal::blessing_of_kings_on_party;
-                creators["redemption"] = &ActionFactoryInternal::redemption;
-                creators["crusader strike"] = &ActionFactoryInternal::crusader_strike;
-                creators["crusader aura"] = &ActionFactoryInternal::crusader_aura;
-                creators["seal of light"] = &ActionFactoryInternal::seal_of_light;
-                creators["devotion aura"] = &ActionFactoryInternal::devotion_aura;
-                creators["holy wrath"] = &ActionFactoryInternal::holy_wrath;
-                creators["consecration"] = &ActionFactoryInternal::consecration;
-                creators["cleanse"] = &ActionFactoryInternal::cleanse;
-                creators["purify"] = &ActionFactoryInternal::purify;
-                creators["cleanse poison on party"] = &ActionFactoryInternal::cleanse_poison_on_party;
-                creators["cleanse disease on party"] = &ActionFactoryInternal::cleanse_disease_on_party;
-                creators["cleanse magic on party"] = &ActionFactoryInternal::cleanse_magic_on_party;
-                creators["purify poison on party"] = &ActionFactoryInternal::purify_poison_on_party;
-                creators["purify disease on party"] = &ActionFactoryInternal::purify_disease_on_party;
-                creators["seal of wisdom"] = &ActionFactoryInternal::seal_of_wisdom;
-                creators["seal of justice"] = &ActionFactoryInternal::seal_of_justice;
-                creators["seal of righteousness"] = &ActionFactoryInternal::seal_of_righteousness;
-                creators["flash of light"] = &ActionFactoryInternal::flash_of_light;
-                creators["hand of reckoning"] = &ActionFactoryInternal::hand_of_reckoning;
-                creators["avenger's shield"] = &ActionFactoryInternal::avengers_shield;
-                creators["exorcism"] = &ActionFactoryInternal::exorcism;
-                creators["judgement of light"] = &ActionFactoryInternal::judgement_of_light;
-                creators["judgement of wisdom"] = &ActionFactoryInternal::judgement_of_wisdom;
-                creators["divine shield"] = &ActionFactoryInternal::divine_shield;
-                creators["divine protection"] = &ActionFactoryInternal::divine_protection;
-                creators["divine protection on party"] =&ActionFactoryInternal::divine_protection_on_party;
-                creators["hammer of justice"] = &ActionFactoryInternal::hammer_of_justice;
-                creators["flash of light on party"] = &ActionFactoryInternal::flash_of_light_on_party;
-                creators["holy light"] = &ActionFactoryInternal::holy_light;
-                creators["holy light on party"] = &ActionFactoryInternal::holy_light_on_party;
-                creators["lay on hands"] = &ActionFactoryInternal::lay_on_hands;
-                creators["lay on hands on party"] = &ActionFactoryInternal::lay_on_hands_on_party;
-                creators["judgement of justice"] = &ActionFactoryInternal::judgement_of_justice;
-                creators["hammer of wrath"] = &ActionFactoryInternal::hammer_of_wrath;
-                creators["holy shield"] = &ActionFactoryInternal::holy_shield;
-                creators["hammer of the righteous"] = &ActionFactoryInternal::hammer_of_the_righteous;
-                creators["blessing of kings"] = &ActionFactoryInternal::blessing_of_kings;
-                creators["retribution aura"] = &ActionFactoryInternal::retribution_aura;
-                creators["shadow resistance aura"] = &ActionFactoryInternal::shadow_resistance_aura;
-                creators["frost resistance aura"] = &ActionFactoryInternal::frost_resistance_aura;
-                creators["fire resistance aura"] = &ActionFactoryInternal::fire_resistance_aura;
-                creators["righteous fury"] = &ActionFactoryInternal::righteous_fury;
-                creators["blessing of sanctuary"] = &ActionFactoryInternal::blessing_of_sanctuary;
+                creators["seal of command"] = &AiObjectContextInternal::seal_of_command;
+                creators["blessing of might"] = &AiObjectContextInternal::blessing_of_might;
+                creators["divine storm"] = &AiObjectContextInternal::divine_storm;
+                creators["blessing of kings on party"] = &AiObjectContextInternal::blessing_of_kings_on_party;
+                creators["redemption"] = &AiObjectContextInternal::redemption;
+                creators["crusader strike"] = &AiObjectContextInternal::crusader_strike;
+                creators["crusader aura"] = &AiObjectContextInternal::crusader_aura;
+                creators["seal of light"] = &AiObjectContextInternal::seal_of_light;
+                creators["devotion aura"] = &AiObjectContextInternal::devotion_aura;
+                creators["holy wrath"] = &AiObjectContextInternal::holy_wrath;
+                creators["consecration"] = &AiObjectContextInternal::consecration;
+                creators["cleanse"] = &AiObjectContextInternal::cleanse;
+                creators["purify"] = &AiObjectContextInternal::purify;
+                creators["cleanse poison on party"] = &AiObjectContextInternal::cleanse_poison_on_party;
+                creators["cleanse disease on party"] = &AiObjectContextInternal::cleanse_disease_on_party;
+                creators["cleanse magic on party"] = &AiObjectContextInternal::cleanse_magic_on_party;
+                creators["purify poison on party"] = &AiObjectContextInternal::purify_poison_on_party;
+                creators["purify disease on party"] = &AiObjectContextInternal::purify_disease_on_party;
+                creators["seal of wisdom"] = &AiObjectContextInternal::seal_of_wisdom;
+                creators["seal of justice"] = &AiObjectContextInternal::seal_of_justice;
+                creators["seal of righteousness"] = &AiObjectContextInternal::seal_of_righteousness;
+                creators["flash of light"] = &AiObjectContextInternal::flash_of_light;
+                creators["hand of reckoning"] = &AiObjectContextInternal::hand_of_reckoning;
+                creators["avenger's shield"] = &AiObjectContextInternal::avengers_shield;
+                creators["exorcism"] = &AiObjectContextInternal::exorcism;
+                creators["judgement of light"] = &AiObjectContextInternal::judgement_of_light;
+                creators["judgement of wisdom"] = &AiObjectContextInternal::judgement_of_wisdom;
+                creators["divine shield"] = &AiObjectContextInternal::divine_shield;
+                creators["divine protection"] = &AiObjectContextInternal::divine_protection;
+                creators["divine protection on party"] =&AiObjectContextInternal::divine_protection_on_party;
+                creators["hammer of justice"] = &AiObjectContextInternal::hammer_of_justice;
+                creators["flash of light on party"] = &AiObjectContextInternal::flash_of_light_on_party;
+                creators["holy light"] = &AiObjectContextInternal::holy_light;
+                creators["holy light on party"] = &AiObjectContextInternal::holy_light_on_party;
+                creators["lay on hands"] = &AiObjectContextInternal::lay_on_hands;
+                creators["lay on hands on party"] = &AiObjectContextInternal::lay_on_hands_on_party;
+                creators["judgement of justice"] = &AiObjectContextInternal::judgement_of_justice;
+                creators["hammer of wrath"] = &AiObjectContextInternal::hammer_of_wrath;
+                creators["holy shield"] = &AiObjectContextInternal::holy_shield;
+                creators["hammer of the righteous"] = &AiObjectContextInternal::hammer_of_the_righteous;
+                creators["blessing of kings"] = &AiObjectContextInternal::blessing_of_kings;
+                creators["retribution aura"] = &AiObjectContextInternal::retribution_aura;
+                creators["shadow resistance aura"] = &AiObjectContextInternal::shadow_resistance_aura;
+                creators["frost resistance aura"] = &AiObjectContextInternal::frost_resistance_aura;
+                creators["fire resistance aura"] = &AiObjectContextInternal::fire_resistance_aura;
+                creators["righteous fury"] = &AiObjectContextInternal::righteous_fury;
+                creators["blessing of sanctuary"] = &AiObjectContextInternal::blessing_of_sanctuary;
             }
 
         private:
@@ -224,9 +224,9 @@ namespace ai
 };
 
 
-PaladinActionFactory::PaladinActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+PaladinAiObjectContext::PaladinAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::paladin::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::paladin::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::paladin::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::paladin::StrategyFactoryInternal());
+    actionContexts.Add(new ai::paladin::AiObjectContextInternal());
+    triggerContexts.Add(new ai::paladin::TriggerFactoryInternal());    
 }

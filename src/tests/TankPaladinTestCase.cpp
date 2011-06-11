@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/paladin/PaladinActionFactory.h"
+#include "../game/playerbot/strategy/paladin/PaladinAiObjectContext.h"
 
 using namespace ai;
 
@@ -26,7 +26,7 @@ public:
 	virtual void setUp()
 	{
 		EngineTestBase::setUp();
-		setupEngine(new PaladinActionFactory(ai), "tank", NULL);
+		setupEngine(new PaladinAiObjectContext(ai), "tank", NULL);
 		engine->addStrategy("bhealth");
 		engine->addStrategy("barmor");
 

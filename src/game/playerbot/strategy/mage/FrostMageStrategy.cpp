@@ -28,9 +28,9 @@ void FrostMageStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     GenericMageStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* FrostMageStrategy::createAction(const char* name)
+ActionNode* FrostMageStrategy::GetAction(const char* name)
 {
-    ActionNode* node = GenericMageStrategy::createAction(name);
+    ActionNode* node = GenericMageStrategy::GetAction(name);
     if (node)
         return node;
 
@@ -56,5 +56,5 @@ ActionNode* FrostMageStrategy::createAction(const char* name)
             /*C*/ NextAction::array(0, new NextAction("flee"), new NextAction("frostbolt"), NULL));
     }
 
-    else return GenericMageStrategy::createAction(name);
+    else return GenericMageStrategy::GetAction(name);
 }

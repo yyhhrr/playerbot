@@ -2,11 +2,11 @@
 #include "../../playerbot.h"
 #include "RogueActions.h"
 #include "RogueTriggers.h"
-#include "RogueActionFactory.h"
+#include "RogueAiObjectContext.h"
 #include "DpsRogueStrategy.h"
 #include "GenericRogueNonCombatStrategy.h"
 #include "../PullStrategy.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -41,7 +41,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -63,22 +63,22 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["mutilate"] = &ActionFactoryInternal::mutilate;
-                creators["sinister strike"] = &ActionFactoryInternal::sinister_strike;
-                creators["kidney shot"] = &ActionFactoryInternal::kidney_shot;
-                creators["rupture"] = &ActionFactoryInternal::rupture;
-                creators["slice and dice"] = &ActionFactoryInternal::slice_and_dice;
-                creators["eviscerate"] = &ActionFactoryInternal::eviscerate;
-                creators["vanish"] = &ActionFactoryInternal::vanish;
-                creators["evasion"] = &ActionFactoryInternal::evasion;
-                creators["kick"] = &ActionFactoryInternal::kick;
-                creators["feint"] = &ActionFactoryInternal::feint;
-                creators["backstab"] = &ActionFactoryInternal::backstab;
+                creators["mutilate"] = &AiObjectContextInternal::mutilate;
+                creators["sinister strike"] = &AiObjectContextInternal::sinister_strike;
+                creators["kidney shot"] = &AiObjectContextInternal::kidney_shot;
+                creators["rupture"] = &AiObjectContextInternal::rupture;
+                creators["slice and dice"] = &AiObjectContextInternal::slice_and_dice;
+                creators["eviscerate"] = &AiObjectContextInternal::eviscerate;
+                creators["vanish"] = &AiObjectContextInternal::vanish;
+                creators["evasion"] = &AiObjectContextInternal::evasion;
+                creators["kick"] = &AiObjectContextInternal::kick;
+                creators["feint"] = &AiObjectContextInternal::feint;
+                creators["backstab"] = &AiObjectContextInternal::backstab;
             }
 
         private:
@@ -97,9 +97,9 @@ namespace ai
     };
 };
 
-RogueActionFactory::RogueActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+RogueAiObjectContext::RogueAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::rogue::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::rogue::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::rogue::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::rogue::StrategyFactoryInternal());
+    actionContexts.Add(new ai::rogue::AiObjectContextInternal());
+    triggerContexts.Add(new ai::rogue::TriggerFactoryInternal());    
 }

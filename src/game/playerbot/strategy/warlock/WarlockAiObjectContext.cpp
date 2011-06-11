@@ -1,13 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "WarlockActions.h"
-#include "WarlockActionFactory.h"
+#include "WarlockAiObjectContext.h"
 #include "DpsWarlockStrategy.h"
 #include "GenericWarlockNonCombatStrategy.h"
 #include "TankWarlockStrategy.h"
 #include "../PullStrategy.h"
 #include "WarlockTriggers.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -43,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -82,27 +82,27 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["summon imp"] = &ActionFactoryInternal::summon_imp;
-                creators["demon armor"] = &ActionFactoryInternal::demon_armor;
-                creators["demon skin"] = &ActionFactoryInternal::demon_skin;
-                creators["create healthstone"] = &ActionFactoryInternal::create_healthstone;
-                creators["create firestone"] = &ActionFactoryInternal::create_firestone;
-                creators["create spellstone"] = &ActionFactoryInternal::create_spellstone;
-                creators["spellstone"] = &ActionFactoryInternal::spellstone;
-                creators["summon voidwalker"] = &ActionFactoryInternal::summon_voidwalker;
-                creators["immolate"] = &ActionFactoryInternal::immolate;
-                creators["corruption"] = &ActionFactoryInternal::corruption;
-                creators["curse of agony"] = &ActionFactoryInternal::curse_of_agony;
-                creators["shadow bolt"] = &ActionFactoryInternal::shadow_bolt;
-                creators["drain soul"] = &ActionFactoryInternal::drain_soul;
-                creators["drain mana"] = &ActionFactoryInternal::drain_mana;
-                creators["drain life"] = &ActionFactoryInternal::drain_life;
-                creators["banish"] = &ActionFactoryInternal::banish;
+                creators["summon imp"] = &AiObjectContextInternal::summon_imp;
+                creators["demon armor"] = &AiObjectContextInternal::demon_armor;
+                creators["demon skin"] = &AiObjectContextInternal::demon_skin;
+                creators["create healthstone"] = &AiObjectContextInternal::create_healthstone;
+                creators["create firestone"] = &AiObjectContextInternal::create_firestone;
+                creators["create spellstone"] = &AiObjectContextInternal::create_spellstone;
+                creators["spellstone"] = &AiObjectContextInternal::spellstone;
+                creators["summon voidwalker"] = &AiObjectContextInternal::summon_voidwalker;
+                creators["immolate"] = &AiObjectContextInternal::immolate;
+                creators["corruption"] = &AiObjectContextInternal::corruption;
+                creators["curse of agony"] = &AiObjectContextInternal::curse_of_agony;
+                creators["shadow bolt"] = &AiObjectContextInternal::shadow_bolt;
+                creators["drain soul"] = &AiObjectContextInternal::drain_soul;
+                creators["drain mana"] = &AiObjectContextInternal::drain_mana;
+                creators["drain life"] = &AiObjectContextInternal::drain_life;
+                creators["banish"] = &AiObjectContextInternal::banish;
             }
 
         private:
@@ -129,9 +129,9 @@ namespace ai
 
 
 
-WarlockActionFactory::WarlockActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+WarlockAiObjectContext::WarlockAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::warlock::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::warlock::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::warlock::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::warlock::StrategyFactoryInternal());
+    actionContexts.Add(new ai::warlock::AiObjectContextInternal());
+    triggerContexts.Add(new ai::warlock::TriggerFactoryInternal());    
 }

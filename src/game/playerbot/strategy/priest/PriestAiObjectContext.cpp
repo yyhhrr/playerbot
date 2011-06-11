@@ -1,12 +1,12 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "PriestActions.h"
-#include "PriestActionFactory.h"
+#include "PriestAiObjectContext.h"
 #include "HealPriestNonCombatStrategy.h"
 #include "DpsPriestStrategy.h"
 #include "../PullStrategy.h"
 #include "PriestTriggers.h"
-#include "../NamedObjectFactory.h"
+#include "../NamedObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ namespace ai
     {
         using namespace ai;
 
-        class StrategyFactoryInternal : public NamedObjectFactory<Strategy>
+        class StrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
             StrategyFactoryInternal()
@@ -43,7 +43,7 @@ namespace ai
     {
         using namespace ai;
 
-        class TriggerFactoryInternal : public NamedObjectFactory<Trigger>
+        class TriggerFactoryInternal : public NamedObjectContext<Trigger>
         {
         public:
             TriggerFactoryInternal()
@@ -86,46 +86,46 @@ namespace ai
     {
         using namespace ai;
 
-        class ActionFactoryInternal : public NamedObjectFactory<Action>
+        class AiObjectContextInternal : public NamedObjectContext<Action>
         {
         public:
-            ActionFactoryInternal()
+            AiObjectContextInternal()
             {
-                creators["shadow word: pain"] = &ActionFactoryInternal::shadow_word_pain;
-                creators["devouring plague"] = &ActionFactoryInternal::devouring_plague;
-                creators["mind flay"] = &ActionFactoryInternal::mind_flay;
-                creators["holy fire"] = &ActionFactoryInternal::holy_fire;
-                creators["smite"] = &ActionFactoryInternal::smite;
-                creators["mind blast"] = &ActionFactoryInternal::mind_blast;
-                creators["shadowform"] = &ActionFactoryInternal::shadowform;
-                creators["remove shadowform"] = &ActionFactoryInternal::remove_shadowform;
-                creators["holy nova"] = &ActionFactoryInternal::holy_nova;
-                creators["power word: fortitude"] = &ActionFactoryInternal::power_word_fortitude;
-                creators["power word: fortitude on party"] = &ActionFactoryInternal::power_word_fortitude_on_party;
-                creators["divine spirit"] = &ActionFactoryInternal::divine_spirit;
-                creators["divine spirit on party"] = &ActionFactoryInternal::divine_spirit_on_party;
-                creators["power word: shield"] = &ActionFactoryInternal::power_word_shield;
-                creators["power word: shield on party"] = &ActionFactoryInternal::power_word_shield_on_party;
-                creators["renew"] = &ActionFactoryInternal::renew;
-                creators["renew on party"] = &ActionFactoryInternal::renew_on_party;
-                creators["greater heal"] = &ActionFactoryInternal::greater_heal;
-                creators["greater heal on party"] = &ActionFactoryInternal::greater_heal_on_party;
-                creators["heal"] = &ActionFactoryInternal::heal;
-                creators["heal on party"] = &ActionFactoryInternal::heal_on_party;
-                creators["lesser heal"] = &ActionFactoryInternal::lesser_heal;
-                creators["lesser heal on party"] = &ActionFactoryInternal::lesser_heal_on_party;
-                creators["flash heal"] = &ActionFactoryInternal::flash_heal;
-                creators["flash heal on party"] = &ActionFactoryInternal::flash_heal_on_party;
-                creators["dispel magic"] = &ActionFactoryInternal::dispel_magic;
-                creators["dispel magic on party"] = &ActionFactoryInternal::dispel_magic_on_party;
-                creators["dispel magic on target"] = &ActionFactoryInternal::dispel_magic_on_target;
-                creators["cure disease"] = &ActionFactoryInternal::cure_disease;
-                creators["cure disease on party"] = &ActionFactoryInternal::cure_disease_on_party;
-                creators["abolish disease"] = &ActionFactoryInternal::abolish_disease;
-                creators["abolish disease on party"] = &ActionFactoryInternal::abolish_disease_on_party;
-                creators["fade"] = &ActionFactoryInternal::fade;
-                creators["inner fire"] = &ActionFactoryInternal::inner_fire;
-                creators["resurrection"] = &ActionFactoryInternal::resurrection;
+                creators["shadow word: pain"] = &AiObjectContextInternal::shadow_word_pain;
+                creators["devouring plague"] = &AiObjectContextInternal::devouring_plague;
+                creators["mind flay"] = &AiObjectContextInternal::mind_flay;
+                creators["holy fire"] = &AiObjectContextInternal::holy_fire;
+                creators["smite"] = &AiObjectContextInternal::smite;
+                creators["mind blast"] = &AiObjectContextInternal::mind_blast;
+                creators["shadowform"] = &AiObjectContextInternal::shadowform;
+                creators["remove shadowform"] = &AiObjectContextInternal::remove_shadowform;
+                creators["holy nova"] = &AiObjectContextInternal::holy_nova;
+                creators["power word: fortitude"] = &AiObjectContextInternal::power_word_fortitude;
+                creators["power word: fortitude on party"] = &AiObjectContextInternal::power_word_fortitude_on_party;
+                creators["divine spirit"] = &AiObjectContextInternal::divine_spirit;
+                creators["divine spirit on party"] = &AiObjectContextInternal::divine_spirit_on_party;
+                creators["power word: shield"] = &AiObjectContextInternal::power_word_shield;
+                creators["power word: shield on party"] = &AiObjectContextInternal::power_word_shield_on_party;
+                creators["renew"] = &AiObjectContextInternal::renew;
+                creators["renew on party"] = &AiObjectContextInternal::renew_on_party;
+                creators["greater heal"] = &AiObjectContextInternal::greater_heal;
+                creators["greater heal on party"] = &AiObjectContextInternal::greater_heal_on_party;
+                creators["heal"] = &AiObjectContextInternal::heal;
+                creators["heal on party"] = &AiObjectContextInternal::heal_on_party;
+                creators["lesser heal"] = &AiObjectContextInternal::lesser_heal;
+                creators["lesser heal on party"] = &AiObjectContextInternal::lesser_heal_on_party;
+                creators["flash heal"] = &AiObjectContextInternal::flash_heal;
+                creators["flash heal on party"] = &AiObjectContextInternal::flash_heal_on_party;
+                creators["dispel magic"] = &AiObjectContextInternal::dispel_magic;
+                creators["dispel magic on party"] = &AiObjectContextInternal::dispel_magic_on_party;
+                creators["dispel magic on target"] = &AiObjectContextInternal::dispel_magic_on_target;
+                creators["cure disease"] = &AiObjectContextInternal::cure_disease;
+                creators["cure disease on party"] = &AiObjectContextInternal::cure_disease_on_party;
+                creators["abolish disease"] = &AiObjectContextInternal::abolish_disease;
+                creators["abolish disease on party"] = &AiObjectContextInternal::abolish_disease_on_party;
+                creators["fade"] = &AiObjectContextInternal::fade;
+                creators["inner fire"] = &AiObjectContextInternal::inner_fire;
+                creators["resurrection"] = &AiObjectContextInternal::resurrection;
             }
 
         private:
@@ -168,9 +168,9 @@ namespace ai
     };
 };
 
-PriestActionFactory::PriestActionFactory(AiManagerRegistry* const ai) : ActionFactory(ai)
+PriestAiObjectContext::PriestAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
 {
-    strategyFactories.push_back(new ai::priest::StrategyFactoryInternal());
-    actionFactories.push_back(new ai::priest::ActionFactoryInternal());
-    triggerFactories.push_back(new ai::priest::TriggerFactoryInternal());    
+    strategyContexts.Add(new ai::priest::StrategyFactoryInternal());
+    actionContexts.Add(new ai::priest::AiObjectContextInternal());
+    triggerContexts.Add(new ai::priest::TriggerFactoryInternal());    
 }

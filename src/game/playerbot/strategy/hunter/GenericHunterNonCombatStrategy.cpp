@@ -36,7 +36,7 @@ void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigg
 }
 
 
-ActionNode* GenericHunterNonCombatStrategy::createAction(const char* name)
+ActionNode* GenericHunterNonCombatStrategy::GetAction(const char* name)
 {
     if (!strcmp("call pet", name)) 
     {
@@ -123,5 +123,5 @@ ActionNode* GenericHunterNonCombatStrategy::createAction(const char* name)
             /*C*/ NULL);
     }
 
-    return GenericNonCombatStrategy::createAction(name);
+    return GenericNonCombatStrategy::GetAction(name);
 }

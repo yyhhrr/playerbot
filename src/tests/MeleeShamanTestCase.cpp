@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/shaman/ShamanActionFactory.h"
+#include "../game/playerbot/strategy/shaman/ShamanAiObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new ShamanActionFactory(ai), "melee", NULL);
+		setupEngine(new ShamanAiObjectContext(ai), "melee", NULL);
 
         addAura("lightning shield");
         addAura("windfury weapon");

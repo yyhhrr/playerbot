@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/mage/MageActionFactory.h"
+#include "../game/playerbot/strategy/mage/MageAiObjectContext.h"
 
 using namespace ai;
 
@@ -16,7 +16,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new MageActionFactory(ai), "nc", NULL);
+		setupEngine(new MageAiObjectContext(ai), "nc", NULL);
     }
 
 protected:

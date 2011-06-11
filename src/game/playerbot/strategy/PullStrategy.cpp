@@ -51,7 +51,7 @@ void PullStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     RangedCombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* PullStrategy::createAction(const char* name)
+ActionNode* PullStrategy::GetAction(const char* name)
 {
     if (!strcmp("end pull", name)) 
     {
@@ -60,5 +60,5 @@ ActionNode* PullStrategy::createAction(const char* name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else return RangedCombatStrategy::createAction(name);
+    else return RangedCombatStrategy::GetAction(name);
 }

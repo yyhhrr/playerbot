@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/hunter/HunterActionFactory.h"
+#include "../game/playerbot/strategy/hunter/HunterAiObjectContext.h"
 
 using namespace ai;
 
@@ -21,7 +21,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new HunterActionFactory(ai), "dps", NULL);
+		setupEngine(new HunterAiObjectContext(ai), "dps", NULL);
 		engine->addStrategy("bdps");
 
         addAura("aspect of the hawk");

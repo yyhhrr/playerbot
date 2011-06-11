@@ -56,7 +56,7 @@ void TankWarriorStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* TankWarriorStrategy::createAction(const char* name)
+ActionNode* TankWarriorStrategy::GetAction(const char* name)
 {
     if (!strcmp("melee", name)) 
     {
@@ -163,5 +163,5 @@ ActionNode* TankWarriorStrategy::createAction(const char* name)
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else return GenericWarriorStrategy::createAction(name);
+    else return GenericWarriorStrategy::GetAction(name);
 }

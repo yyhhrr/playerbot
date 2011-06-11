@@ -42,7 +42,7 @@ void CasterDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* CasterDruidStrategy::createAction(const char* name)
+ActionNode* CasterDruidStrategy::GetAction(const char* name)
 {
     if (!strcmp("faerie fire", name))
     {
@@ -135,5 +135,5 @@ ActionNode* CasterDruidStrategy::createAction(const char* name)
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else return GenericDruidStrategy::createAction(name);
+    else return GenericDruidStrategy::GetAction(name);
 }

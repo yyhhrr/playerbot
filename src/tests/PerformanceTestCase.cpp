@@ -4,14 +4,14 @@
 #include "EngineTestBase.h"
 #include "EverythingUnavailableAiManagerRegistry.h"
 #include <time.inl>
-#include "../game/playerbot/strategy/druid/DruidActionFactory.h"
-#include "../game/playerbot/strategy/paladin/PaladinActionFactory.h"
-#include "../game/playerbot/strategy/warrior/WarriorActionFactory.h"
-#include "../game/playerbot/strategy/warlock/WarlockActionFactory.h"
-#include "../game/playerbot/strategy/mage/MageActionFactory.h"
-#include "../game/playerbot/strategy/hunter/HunterActionFactory.h"
-#include "../game/playerbot/strategy/priest/PriestActionFactory.h"
-#include "../game/playerbot/strategy/shaman/ShamanActionFactory.h"
+#include "../game/playerbot/strategy/druid/DruidAiObjectContext.h"
+#include "../game/playerbot/strategy/paladin/PaladinAiObjectContext.h"
+#include "../game/playerbot/strategy/warrior/WarriorAiObjectContext.h"
+#include "../game/playerbot/strategy/warlock/WarlockAiObjectContext.h"
+#include "../game/playerbot/strategy/mage/MageAiObjectContext.h"
+#include "../game/playerbot/strategy/hunter/HunterAiObjectContext.h"
+#include "../game/playerbot/strategy/priest/PriestAiObjectContext.h"
+#include "../game/playerbot/strategy/shaman/ShamanAiObjectContext.h"
 
 using namespace ai;
 
@@ -50,63 +50,63 @@ protected:
 
     void druidBear()
     {
-        setupEngine(new DruidActionFactory(ai), "tank", NULL);
+        setupEngine(new DruidAiObjectContext(ai), "tank", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void paladin()
     {
-        setupEngine(new PaladinActionFactory(ai), "tank", NULL);
+        setupEngine(new PaladinAiObjectContext(ai), "tank", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void priest()
     {
-        setupEngine(new PriestActionFactory(ai), "heal", NULL);
+        setupEngine(new PriestAiObjectContext(ai), "heal", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void mage()
     {
-        setupEngine(new MageActionFactory(ai), "frost", NULL);
+        setupEngine(new MageAiObjectContext(ai), "frost", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void hunter()
     {
-        setupEngine(new HunterActionFactory(ai), "dps", NULL);
+        setupEngine(new HunterAiObjectContext(ai), "dps", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void warrior()
     {
-        setupEngine(new WarriorActionFactory(ai), "tank", NULL);
+        setupEngine(new WarriorAiObjectContext(ai), "tank", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void druidCat()
     {
-        setupEngine(new DruidActionFactory(ai), "dps", NULL);
+        setupEngine(new DruidAiObjectContext(ai), "dps", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void warlock()
     {
-        setupEngine(new WarlockActionFactory(ai), "tank", NULL);
+        setupEngine(new WarlockAiObjectContext(ai), "tank", NULL);
         engine->maxIterations = 100;
         run();
     }
 
     void shaman()
     {
-        setupEngine(new ShamanActionFactory(ai), "heal", NULL);
+        setupEngine(new ShamanAiObjectContext(ai), "heal", NULL);
         engine->maxIterations = 100;
         run();
     }

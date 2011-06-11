@@ -33,7 +33,7 @@ void FireMageStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     GenericMageStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* FireMageStrategy::createAction(const char* name)
+ActionNode* FireMageStrategy::GetAction(const char* name)
 {
-    return GenericMageStrategy::createAction(name);
+    return GenericMageStrategy::GetAction(name);
 }

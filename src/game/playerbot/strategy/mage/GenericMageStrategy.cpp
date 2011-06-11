@@ -39,7 +39,7 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericMageStrategy::createAction(const char* name)
+ActionNode* GenericMageStrategy::GetAction(const char* name)
 {
     if (!strcmp("frostbolt", name))
     {
@@ -160,5 +160,5 @@ ActionNode* GenericMageStrategy::createAction(const char* name)
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else return CombatStrategy::createAction(name);
+    else return CombatStrategy::GetAction(name);
 }

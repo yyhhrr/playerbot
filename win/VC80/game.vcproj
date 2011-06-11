@@ -1917,11 +1917,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\strategy\ActionFactory.cpp"
+					RelativePath="..\..\src\game\playerbot\strategy\ActionContext.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\strategy\ActionFactory.h"
+					RelativePath="..\..\src\game\playerbot\strategy\AiObjectContext.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AiObjectContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChatActionContext.h"
 					>
 				</File>
 				<File
@@ -1934,6 +1942,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChatCommandTrigger.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChatTriggerContext.h"
 					>
 				</File>
 				<File
@@ -2041,7 +2053,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\strategy\NamedObjectFactory.h"
+					RelativePath="..\..\src\game\playerbot\strategy\NamedObjectContext.h"
 					>
 				</File>
 				<File
@@ -2109,11 +2121,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\StrategyContext.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Trigger.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Trigger.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TriggerContext.h"
 					>
 				</File>
 				<Filter
@@ -2144,19 +2164,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\druid\DruidAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2240,19 +2260,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\hunter\HunterAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2316,19 +2336,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\mage\MageActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\mage\MageActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\mage\MageActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\mage\MageActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\mage\MageAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\mage\MageAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2376,19 +2396,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\paladin\PaladinAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2460,19 +2480,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\priest\PriestAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2512,19 +2532,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\rogue\RogueAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2584,19 +2604,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\shaman\ShamanAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2660,19 +2680,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\warlock\WarlockAiObjectContext.h"
 						>
 					</File>
 					<File
@@ -2728,19 +2748,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorActionFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorActionFactory.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorActions.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorAiObjectContext.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\warrior\WarriorAiObjectContext.h"
 						>
 					</File>
 					<File

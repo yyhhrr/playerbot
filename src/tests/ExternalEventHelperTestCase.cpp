@@ -7,27 +7,29 @@
 
 using namespace ai;
 
-
-
-class ExternalEventTestActionFactory : public ActionFactory
+class ExternalEventTestTriggerContext : public NamedObjectContext<Trigger>
 {
 public:
-    ExternalEventTestActionFactory(AiManagerRegistry* const ai) : 
-      ActionFactory(ai), message(ai, "message"), message_from(ai, "message from") {}
-    
-    virtual Trigger* createTrigger(const char* name)
+    ExternalEventTestTriggerContext()
     {
-        if (!strcmp("message", name))
-            return &message;
-
-        if (!strcmp("message from", name))
-            return &message_from;
-
-        return NULL;
+        creators["message"] = &ExternalEventTestTriggerContext::message;
+        creators["message from"] = &ExternalEventTestTriggerContext::message_from;
     }
+
 private:
-    ChatCommandTrigger message;
-    ChatCommandTrigger message_from;
+    static Trigger* message(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "message"); }
+    static Trigger* message_from(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "message from"); }
+};
+
+
+
+class ExternalEventTestAiObjectContext : public AiObjectContext
+{
+public:
+    ExternalEventTestAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+    {
+        triggerContexts.Add(new ExternalEventTestTriggerContext());
+    }
 };
 
 
@@ -49,28 +51,28 @@ protected:
 	void externalEvent()
 	{
         MockAiManagerRegistry ai;
-        ExternalEventTestActionFactory actionFactory(&ai);
-        ExternalEventHelper helper(&actionFactory);
+        ExternalEventTestAiObjectContext aiObjectContext(&ai);
+        ExternalEventHelper helper(&aiObjectContext);
         
         helper.ParseChatCommand("message from chat");
         
-        Event event = actionFactory.createTrigger("message from")->Check();
+        Event event = aiObjectContext.GetTrigger("message from")->Check();
         CPPUNIT_ASSERT(event);
         CPPUNIT_ASSERT(event.getParam() == "chat");
 	
-        event = actionFactory.createTrigger("message")->Check();
+        event = aiObjectContext.GetTrigger("message")->Check();
         CPPUNIT_ASSERT(!event);
     }
 
     void emptyExternalEvent()
     {
         MockAiManagerRegistry ai;
-        ExternalEventTestActionFactory actionFactory(&ai);
-        ExternalEventHelper helper(&actionFactory);
+        ExternalEventTestAiObjectContext aiObjectContext(&ai);
+        ExternalEventHelper helper(&aiObjectContext);
 
         helper.ParseChatCommand("message from");
 
-        Event event = actionFactory.createTrigger("message from")->Check();
+        Event event = aiObjectContext.GetTrigger("message from")->Check();
         CPPUNIT_ASSERT(event);
         CPPUNIT_ASSERT(event.getParam() == "");
     }

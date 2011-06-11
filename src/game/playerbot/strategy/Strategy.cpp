@@ -1,7 +1,7 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "Strategy.h"
-#include "NamedObjectFactory.h"
+#include "NamedObjectContext.h"
 #include "GenericActions.h"
 #include "NonCombatActions.h"
 #include "GenericTriggers.h"
@@ -9,7 +9,7 @@
 using namespace ai;
 
 
-class ActionNodeFactoryInternal : public NamedObjectFactoryBase<ActionNode>
+class ActionNodeFactoryInternal : public NamedObjectContextBase<ActionNode>
 {
 public:
     ActionNodeFactoryInternal()
@@ -214,7 +214,7 @@ private:
 
 static ActionNodeFactoryInternal ActionNodeFactoryInternal;
 
-ActionNode* Strategy::createAction(const char* name)
+ActionNode* Strategy::GetAction(const char* name)
 {
     return ActionNodeFactoryInternal.create(name, ai);
 }

@@ -140,12 +140,12 @@ bool Engine::DoNextAction(Unit* unit, int depth)
     return actionExecuted;
 }
 
-ActionNode* Engine::createAction(const char* name)
+ActionNode* Engine::GetAction(const char* name)
 {
     for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
         Strategy* strategy = *i;
-        ActionNode* node = strategy->createAction(name);
+        ActionNode* node = strategy->GetAction(name);
         if (node)
             return node;
     }
@@ -162,7 +162,7 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
             NextAction* nextAction = actions[j];
             if (nextAction)
             {
-                ActionNode* action = createAction(nextAction->getName());
+                ActionNode* action = GetAction(nextAction->getName());
                 InitializeAction(action);
 
                 float k = nextAction->getRelevance();
@@ -195,7 +195,7 @@ bool Engine::ExecuteAction(const char* name)
 {
 	bool result = false;
 
-    ActionNode *actionNode = createAction(name);
+    ActionNode *actionNode = GetAction(name);
     Action* action = InitializeAction(actionNode);
     if (action && action->isPossible() && action->isUseful())
     {
@@ -213,7 +213,7 @@ void Engine::addStrategy(const char* name)
 {
     removeStrategy(name);
 
-    Strategy* strategy = actionFactory->createStrategy(name);
+    Strategy* strategy = aiObjectContext->GetStrategy(name);
     if (strategy)
 	{
         strategies.push_back(strategy);
@@ -278,7 +278,7 @@ void Engine::ProcessTriggers()
         Trigger* trigger = node->getTrigger();
         if (!trigger)
         {
-            trigger = actionFactory->createTrigger(node->getName());
+            trigger = aiObjectContext->GetTrigger(node->getName());
             node->setTrigger(trigger);
         }
 
@@ -343,7 +343,7 @@ Action* Engine::InitializeAction(ActionNode* actionNode)
     Action* action = actionNode->getAction();
     if (!action)
     {
-        action = actionFactory->createAction(actionNode->getName());
+        action = aiObjectContext->GetAction(actionNode->getName());
         actionNode->setAction(action);
     }
     return action;

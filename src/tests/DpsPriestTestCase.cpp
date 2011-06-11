@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "../game/playerbot/strategy/priest/PriestActionFactory.h"
+#include "../game/playerbot/strategy/priest/PriestAiObjectContext.h"
 
 using namespace ai;
 
@@ -17,7 +17,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new PriestActionFactory(ai), "dps", NULL);
+		setupEngine(new PriestAiObjectContext(ai), "dps", NULL);
 
         addAura("power word: fortitude");
         addAura("divine spirit");

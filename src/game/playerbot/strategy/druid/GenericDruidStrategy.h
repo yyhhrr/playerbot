@@ -4,7 +4,7 @@
 
 namespace ai
 {
-    class ActionFactory;
+    class AiObjectContext;
 
     class GenericDruidStrategy : public CombatStrategy
     {
@@ -13,7 +13,7 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionFactory* createActionFactory();
-        virtual ActionNode* createAction(const char* name);
+        virtual AiObjectContext* createAiObjectContext();
+        virtual ActionNode* GetAction(const char* name);
     };
 }

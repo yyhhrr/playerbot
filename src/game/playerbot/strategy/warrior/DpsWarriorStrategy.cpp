@@ -48,7 +48,7 @@ void DpsWarriorStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* DpsWarriorStrategy::createAction(const char* name)
+ActionNode* DpsWarriorStrategy::GetAction(const char* name)
 {
     if (!strcmp("overpower", name)) 
     {
@@ -120,5 +120,5 @@ ActionNode* DpsWarriorStrategy::createAction(const char* name)
             /*A*/ NextAction::array(0, new NextAction("heroic strike"), NULL), 
             /*C*/ NULL);
     }
-    else return GenericWarriorStrategy::createAction(name);
+    else return GenericWarriorStrategy::GetAction(name);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Strategy.h"
-#include "PaladinActionFactory.h"
+#include "PaladinAiObjectContext.h"
 
 namespace ai
 {
@@ -12,8 +12,8 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionFactory* createActionFactory() { return new PaladinActionFactory(ai); }
+        virtual AiObjectContext* createAiObjectContext() { return new PaladinAiObjectContext(ai); }
         virtual const char* getName() { return "paladin"; }
-        ActionNode* createAction(const char* name);
+        ActionNode* GetAction(const char* name);
     };
 }
