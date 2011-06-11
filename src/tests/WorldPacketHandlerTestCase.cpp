@@ -13,6 +13,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
   CPPUNIT_TEST_SUITE( WorldPacketHandlerTestCase );
   CPPUNIT_TEST( stats );
   CPPUNIT_TEST( groupInvite );
+  CPPUNIT_TEST( groupSetLeader );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -30,6 +31,10 @@ protected:
     void groupInvite()
     {
         assertCommand("group invite", "accept invitation");
+    }
+    void groupSetLeader()
+    {
+        assertCommand("group set leader", "pass leadership to master");
     }
 };
 

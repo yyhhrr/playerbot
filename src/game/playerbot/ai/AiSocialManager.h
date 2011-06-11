@@ -16,7 +16,6 @@ namespace ai
 		}
 
 	public:
-		virtual void Emote(uint32 emote);
 		virtual void TellMaster(const char* text);
 		virtual void TellMaster(LogLevel level, const char* text);
 		void ListUnits(const char* title, list<Unit*> units);

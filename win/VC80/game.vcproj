@@ -2101,6 +2101,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PassLeadershipToMasterAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\PassTroughStrategy.h"
 					>
 				</File>

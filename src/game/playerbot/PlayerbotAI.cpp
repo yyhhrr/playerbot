@@ -46,6 +46,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
 
     packetHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
     packetHandlers[SMSG_GROUP_INVITE] = "group invite";
+    packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
 }
 
 PlayerbotAI::~PlayerbotAI()
