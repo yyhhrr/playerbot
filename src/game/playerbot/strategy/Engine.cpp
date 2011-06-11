@@ -196,6 +196,9 @@ bool Engine::ExecuteAction(const char* name)
 	bool result = false;
 
     ActionNode *actionNode = GetAction(name);
+    if (!actionNode)
+        return false;
+
     Action* action = InitializeAction(actionNode);
     if (action && action->isPossible() && action->isUseful())
     {
