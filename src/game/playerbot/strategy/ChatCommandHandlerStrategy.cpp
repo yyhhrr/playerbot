@@ -4,21 +4,19 @@
 
 using namespace ai;
 
-ActionNode* ChatCommandHandlerStrategy::GetAction(const char* name)
+void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    return new ActionNode(name,  
-        /*P*/ NULL,
-        /*A*/ NULL, 
-        /*C*/ NULL);
+    PassTroughStrategy::InitTriggers(triggers);
+
+    triggers.push_back(new TriggerNode(
+        "rep", 
+        NextAction::array(0, new NextAction("reputation", relevance), NULL)));
 }
 
-void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers) 
+ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
 {
-    triggers.push_back(new TriggerNode(
-        "quests", 
-        NextAction::array(0, new NextAction("quests", 100.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "stats", 
-        NextAction::array(0, new NextAction("stats", 100.0f), NULL)));
+    supported.push_back("quests");
+    supported.push_back("stats");
+    supported.push_back("leave");
+    supported.push_back("reputation");
 }

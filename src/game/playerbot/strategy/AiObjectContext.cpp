@@ -12,6 +12,8 @@
 #include "ChatCommandHandlerStrategy.h"
 #include "ListQuestsActions.h"
 #include "StatsAction.h"
+#include "LeaveGroupAction.h"
+#include "TellReputationAction.h"
 #include "StrategyContext.h"
 #include "TriggerContext.h"
 #include "ActionContext.h"

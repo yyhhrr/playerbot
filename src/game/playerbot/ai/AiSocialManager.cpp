@@ -27,13 +27,6 @@ void AiSocialManager::TellMaster(const char* text)
 	bot->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
 }
 
-void AiSocialManager::LeaveGroup()
-{
-	Group* group = bot->GetGroup();
-	if (group) 
-		group->RemoveMember(bot->GetGUID(), 0);
-}
-
 void AiSocialManager::AcceptInvitation()
 {
 	Group* grp = bot->GetGroupInvite();
@@ -77,75 +70,9 @@ void AiSocialManager::SetLogLevel(string level)
 		logLevel = LOG_LVL_BASIC;
 }
 
-void AiSocialManager::TellReputation() 
-{
-	Player *master = ai->GetMaster();
-	ObjectGuid selection = master->GetSelectionGuid();
-	if (selection.IsEmpty())
-		return;
-
-	Unit* unit = master->GetMap()->GetUnit(selection);
-	if (!unit)
-		return;
-
-	const FactionTemplateEntry *factionTemplate = unit->getFactionTemplateEntry();
-	uint32 faction = factionTemplate->faction;
-	const FactionEntry* entry = sFactionStore.LookupEntry(faction);
-	int32 reputation = bot->GetReputationMgr().GetReputation(faction);
-	
-	ostringstream out;
-	out << "Reputation with " << entry->name[0] << ": ";
-	ReputationRank rank = bot->GetReputationMgr().GetRank(entry);
-	switch (rank) {
-		case REP_HATED:
-			out << "hated";
-			break;
-		case REP_HOSTILE:
-			out << "hostile";
-			break;
-		case REP_UNFRIENDLY:
-			out << "unfriendly";
-			break;
-		case REP_NEUTRAL:
-			out << "neutral";
-			break;
-		case REP_FRIENDLY:
-			out << "friendly";
-			break;
-		case REP_HONORED:
-			out << "honored";
-			break;
-		case REP_REVERED:
-			out << "revered";
-			break;
-		case REP_EXALTED:
-			out << "exalted";
-			break;
-		default:
-			out << "unknown";
-			break;
-	}
-
-	int32 base = ReputationMgr::Reputation_Cap + 1;
-	for (int i = MAX_REPUTATION_RANK - 1; i >= rank; --i)
-		base -= ReputationMgr::PointsInRank[i];
-
-	out << " (" << (reputation - base) << "/" << ReputationMgr::PointsInRank[rank] << ")";
-	TellMaster(out.str().c_str());
-}
-
-
 void AiSocialManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text == "leave")
-	{
-		LeaveGroup();
-	}
-	if (text == "rep" || text == "reputation")
-	{
-		TellReputation();
-	}
-	else if (text.size() > 4 && text.substr(0, 4) == "log ")
+	if (text.size() > 4 && text.substr(0, 4) == "log ")
 	{
 		string level = text.substr(text.find(" ") + 1);
 		if (level == "?")

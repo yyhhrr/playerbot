@@ -17,7 +17,7 @@ bool StatsAction::ExecuteResult()
     out << ", ";
     ListRepairCost(out);
 
-    ai->GetSocialManager()->TellMaster(out.str().c_str());
+    TellMaster(out);
     return true;
 }
 

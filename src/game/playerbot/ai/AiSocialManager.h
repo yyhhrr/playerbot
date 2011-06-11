@@ -19,7 +19,6 @@ namespace ai
 		virtual void Emote(uint32 emote);
 		virtual void TellMaster(const char* text);
 		virtual void TellMaster(LogLevel level, const char* text);
-		virtual void LeaveGroup();
 		virtual void AcceptInvitation();
 		void ListUnits(const char* title, list<Unit*> units);
 		void ListGameObjects(const char* title, list<GameObject*> gos);
@@ -32,7 +31,6 @@ namespace ai
 	private:
 		string GetLogLevel(LogLevel level);
 		void SetLogLevel(string level);
-		void TellReputation();
 
 	private:
 		LogLevel logLevel;

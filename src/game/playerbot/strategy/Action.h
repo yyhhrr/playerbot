@@ -56,7 +56,12 @@ namespace ai
         virtual NextAction** getContinuers() { return NULL; }
         virtual const char* getName() { return !name ? "action" : name; }
         virtual int getKind() { return 0; }
+
+    protected:
         Player* GetBot();
+        void TellMaster(ostringstream &stream) { TellMaster(stream.str().c_str()); }
+        void TellMaster(string &text) { TellMaster(text.c_str()); }
+        void TellMaster(const char* text) { ai->GetSocialManager()->TellMaster(text); }
 
     protected:
         const char* name;

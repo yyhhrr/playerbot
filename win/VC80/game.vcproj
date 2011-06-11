@@ -2021,6 +2021,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LeaveGroupAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ListQuestsActions.cpp"
 					>
 				</File>
@@ -2073,6 +2077,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PassTroughStrategy.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\PullStrategy.cpp"
 					>
 				</File>
@@ -2122,6 +2130,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\StrategyContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellReputationAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellReputationAction.h"
 					>
 				</File>
 				<File
