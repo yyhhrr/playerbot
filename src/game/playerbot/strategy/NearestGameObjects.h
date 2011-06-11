@@ -8,7 +8,7 @@ namespace ai
 	{
 	public:
         NearestGameObjects(AiManagerRegistry* const ai, float range = BOT_SIGHT_DISTANCE) : 
-            CalculatedValue<list<GameObject*>>(ai, list<GameObject*>()), range(range) {}
+            CalculatedValue<list<GameObject*>>(ai), range(range) {}
     
     protected:
         virtual list<GameObject*> Calculate();

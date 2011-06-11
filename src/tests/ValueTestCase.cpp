@@ -8,7 +8,7 @@ using namespace ai;
 class TestValue : public CalculatedValue<int>
 {
 public:
-    TestValue() : CalculatedValue<int>(NULL, 0, "name", 2), increment(0) {}
+    TestValue() : CalculatedValue<int>(NULL, "name", 2), increment(0) {}
     virtual int Calculate() { return ++increment; }
 
 private:
@@ -65,7 +65,7 @@ protected:
     void empty()
 	{
         TestValue value;
-        CPPUNIT_ASSERT(value == 0);
+        CPPUNIT_ASSERT(value == 1);
 	}
     
     void calculate()
@@ -73,13 +73,13 @@ protected:
         TestValue value;
 
         value.Update();
-        CPPUNIT_ASSERT(value == 0);
+        CPPUNIT_ASSERT(value == 1);
         
         value.Update();
         CPPUNIT_ASSERT(value == 1);
     
         value.Update();
-        CPPUNIT_ASSERT(value == 1);
+        CPPUNIT_ASSERT(value == 2);
     
         value.Update();
         CPPUNIT_ASSERT(value == 2);

@@ -26,8 +26,8 @@ namespace ai
     class CalculatedValue : public UntypedValue, public Value<T>
 	{
 	public:
-        CalculatedValue(AiManagerRegistry* const ai, T defaultValue, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
-            name(name), checkInterval(checkInterval), ticksElapsed(0), value(defaultValue) 
+        CalculatedValue(AiManagerRegistry* const ai, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
+            name(name), checkInterval(checkInterval), ticksElapsed(checkInterval) 
         { }
         virtual ~CalculatedValue() {}
 
