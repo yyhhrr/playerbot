@@ -1,5 +1,8 @@
 #pragma once;
 
+#include "GenericActions.h"
+#include "NonCombatActions.h"
+
 namespace ai
 {
     class ActionContext : public NamedObjectContext<Action>

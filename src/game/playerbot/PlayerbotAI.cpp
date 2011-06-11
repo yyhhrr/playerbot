@@ -25,7 +25,7 @@ vector<string> split(const string &s, char delim) {
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
 {
 	aiRegistry = NULL;
-    AiObjectContext = NULL;
+    aiObjectContext = NULL;
     combatEngine = NULL;
     nonCombatEngine = NULL;
     currentEngine = NULL;
@@ -37,12 +37,14 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
 	this->bot = bot;
     aiRegistry = new AiManagerRegistry(this);
 
-    AiObjectContext = AiFactory::createAiObjectContext(bot, aiRegistry);
+    aiObjectContext = AiFactory::createAiObjectContext(bot, aiRegistry);
 
-    combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, AiObjectContext);
-    nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, AiObjectContext);
+    combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, aiObjectContext);
+    nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, aiObjectContext);
 
     currentEngine = nonCombatEngine;
+
+    packetHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
 }
 
 PlayerbotAI::~PlayerbotAI()
@@ -53,8 +55,8 @@ PlayerbotAI::~PlayerbotAI()
     if (nonCombatEngine) 
         delete nonCombatEngine;
 
-    if (AiObjectContext)
-        delete AiObjectContext;
+    if (aiObjectContext)
+        delete aiObjectContext;
 
 	if (aiRegistry)
 		delete aiRegistry;
@@ -142,7 +144,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 	for (int i=0; i<aiRegistry->GetManagerCount(); i++)
 		managers[i]->HandleCommand(text, fromPlayer);
 
-    ExternalEventHelper helper(AiObjectContext);
+    ExternalEventHelper helper(aiObjectContext);
     helper.ParseChatCommand(text);
 }
 
@@ -151,6 +153,9 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 	AiManagerBase** managers = aiRegistry->GetManagers();
 	for (int i=0; i<aiRegistry->GetManagerCount(); i++)
 		managers[i]->HandleBotOutgoingPacket(packet);
+
+    ExternalEventHelper helper(aiObjectContext);
+    helper.HandlePacket(packetHandlers, packet);
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -158,6 +163,9 @@ void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
     AiManagerBase** managers = aiRegistry->GetManagers();
     for (int i=0; i<aiRegistry->GetManagerCount(); i++)
         managers[i]->HandleMasterIncomingPacket(packet);
+
+    ExternalEventHelper helper(aiObjectContext);
+    helper.HandlePacket(packetHandlers, packet);
 }
 
 void PlayerbotAI::UpdateNextCheckDelay()

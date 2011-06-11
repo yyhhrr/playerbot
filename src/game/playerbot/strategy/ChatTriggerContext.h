@@ -1,5 +1,7 @@
 #pragma once;
 
+#include "ChatCommandTrigger.h"
+
 namespace ai
 {
     class ChatTriggerContext : public NamedObjectContext<Trigger>

@@ -30,6 +30,20 @@ namespace ai
             }
         }
 
+        void HandlePacket(map<uint16, string> &handlers, const WorldPacket &packet)
+        {
+            uint8 opcode = packet.GetOpcode();
+            string name = handlers[packet.GetOpcode()];
+            if (name.empty())
+                return;
+
+            Trigger* trigger = aiObjectContext->GetTrigger(name.c_str());
+            if (!trigger)
+                return;
+
+            trigger->ExternalEvent(WorldPacket(packet));
+        }
+
     private:
         bool Check(string name, string param)
         {

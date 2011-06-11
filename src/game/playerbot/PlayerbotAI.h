@@ -66,15 +66,16 @@ public:
 	Player* GetMaster() { return mgr->GetMaster(); }
 	AiManagerRegistry* GetAiRegistry() { return aiRegistry; }
     AiGroupStatsManager* GetGroupStatsManager() { return mgr->GetGroupStatsManager(); }
-    AiObjectContext* GetAiObjectContext() { return AiObjectContext; }
+    AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
 
 protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
-    AiObjectContext* AiObjectContext;
+    AiObjectContext* aiObjectContext;
 	AiManagerRegistry* aiRegistry;
     Engine* currentEngine;
     Engine* combatEngine;
     Engine* nonCombatEngine;
+    map<uint16, string> packetHandlers;
 };
 

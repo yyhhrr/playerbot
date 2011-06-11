@@ -1,5 +1,10 @@
 #pragma once;
 
+#include "GenericNonCombatStrategy.h"
+#include "RacialsStrategy.h"
+#include "ChatCommandHandlerStrategy.h"
+#include "WorldPacketHandlerStrategy.h"
+
 namespace ai
 {
     class StrategyContext : public NamedObjectContext<Strategy>
@@ -23,6 +28,7 @@ namespace ai
             creators["low mana"] = &StrategyContext::low_mana;
             creators["food"] = &StrategyContext::food;
             creators["chat"] = &StrategyContext::chat;
+            creators["world packet"] = &StrategyContext::world_packet;
         }
 
     private:
@@ -42,6 +48,7 @@ namespace ai
         static Strategy* low_mana(AiManagerRegistry* ai) { return new LowManaStrategy(ai); }
         static Strategy* food(AiManagerRegistry* ai) { return new UseFoodStrategy(ai); }
         static Strategy* chat(AiManagerRegistry* ai) { return new ChatCommandHandlerStrategy(ai); }
+        static Strategy* world_packet(AiManagerRegistry* ai) { return new WorldPacketHandlerStrategy(ai); }
     };
 
 };

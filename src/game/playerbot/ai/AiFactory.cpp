@@ -120,6 +120,6 @@ Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* cons
 			nonCombatEngine->addStrategy("dps assist");
 			break;
     }
-    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", NULL);
+    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", NULL);
 	return nonCombatEngine;
 }

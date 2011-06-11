@@ -1,24 +1,14 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "AiObjectContext.h"
-#include "GenericNonCombatStrategy.h"
-#include "RacialsStrategy.h"
 #include "NamedObjectContext.h"
-#include "HealthTriggers.h"
-#include "GenericTriggers.h"
-#include "GenericActions.h"
-#include "NonCombatActions.h"
-#include "ChatCommandTrigger.h"
-#include "ChatCommandHandlerStrategy.h"
-#include "ListQuestsActions.h"
-#include "StatsAction.h"
-#include "LeaveGroupAction.h"
-#include "TellReputationAction.h"
 #include "StrategyContext.h"
 #include "TriggerContext.h"
 #include "ActionContext.h"
 #include "ChatTriggerContext.h"
 #include "ChatActionContext.h"
+#include "WorldPacketTriggerContext.h"
+#include "WorldPacketActionContext.h"
 
 using namespace ai;
 
@@ -28,7 +18,9 @@ AiObjectContext::AiObjectContext(AiManagerRegistry* const ai) : AiManagerRegistr
     
     actionContexts.Add(new ActionContext());
     actionContexts.Add(new ChatActionContext());
+    actionContexts.Add(new WorldPacketActionContext());
     
     triggerContexts.Add(new TriggerContext());
     triggerContexts.Add(new ChatTriggerContext());
+    triggerContexts.Add(new WorldPacketTriggerContext());
 }

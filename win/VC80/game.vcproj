@@ -2013,6 +2013,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\GossipHelloAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\GossipHelloAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.cpp"
 					>
 				</File>
@@ -2150,6 +2158,26 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TriggerContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\WorldPacketActionContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\WorldPacketHandlerStrategy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\WorldPacketHandlerStrategy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\WorldPacketTrigger.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\WorldPacketTriggerContext.h"
 					>
 				</File>
 				<Filter

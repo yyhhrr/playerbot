@@ -1,0 +1,31 @@
+#include "pch.h"
+
+#include "aitest.h"
+#include "MockAiObjectContext.h"
+#include "MockedAiObjectContextTestCase.h"
+#include "../game/playerbot/strategy/ChatCommandHandlerStrategy.h"
+
+using namespace ai;
+
+
+class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
+{
+  CPPUNIT_TEST_SUITE( WorldPacketHandlerTestCase );
+  CPPUNIT_TEST( stats );
+  CPPUNIT_TEST_SUITE_END();
+
+public:
+    void setUp()
+    {
+		EngineTestBase::setUp();
+		setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "world packet", NULL);
+    }
+
+protected:
+ 	void stats()
+	{
+        assertCommand("gossip hello");
+	}
+};
+
+CPPUNIT_TEST_SUITE_REGISTRATION( WorldPacketHandlerTestCase );

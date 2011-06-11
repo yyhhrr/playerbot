@@ -1,5 +1,10 @@
 #pragma once;
 
+#include "ListQuestsActions.h"
+#include "StatsAction.h"
+#include "LeaveGroupAction.h"
+#include "TellReputationAction.h"
+
 namespace ai
 {
     class ChatActionContext : public NamedObjectContext<Action>

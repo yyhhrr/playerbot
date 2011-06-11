@@ -2,12 +2,13 @@
 
 #include "aitest.h"
 #include "MockAiObjectContext.h"
+#include "MockedAiObjectContextTestCase.h"
 #include "../game/playerbot/strategy/ChatCommandHandlerStrategy.h"
 
 using namespace ai;
 
 
-class ChatCommandTestCase : public EngineTestBase
+class ChatCommandTestCase : public MockedAiObjectContextTestCase
 {
   CPPUNIT_TEST_SUITE( ChatCommandTestCase );
   CPPUNIT_TEST( stats );
@@ -15,9 +16,6 @@ class ChatCommandTestCase : public EngineTestBase
   CPPUNIT_TEST( quests );
   CPPUNIT_TEST( reputation );
   CPPUNIT_TEST_SUITE_END();
-
-protected:
-    MockAiObjectContext* context;
 
 public:
     void setUp()
@@ -27,31 +25,6 @@ public:
     }
 
 protected:
-    void assertCommand(const char* trigger)
-    {
-        assertCommand(trigger, trigger);
-    }
-
-    void assertCommand(const char* trigger, const char* expectedAction)
-    {
-        ai->buffer.clear();
-
-        context->GetTrigger(trigger)->ExternalEvent("");
-        tick();
-
-        assertActions((string(">") + expectedAction).c_str());
-    }
-
-    void assertParametrizedCommand(const char* trigger, const char* param)
-    {
-        ai->buffer.clear();
-
-        context->GetTrigger(trigger)->ExternalEvent(param);
-        tick();
-
-        assertActions((string(">") + trigger + "(" + param + ")").c_str());
-    }
-
  	void stats()
 	{
         assertCommand("stats");
