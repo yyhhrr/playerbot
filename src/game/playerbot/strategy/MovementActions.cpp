@@ -4,37 +4,44 @@
 
 using namespace ai;
 
-void FollowLineAction::Execute()
+bool FollowLineAction::Execute(Event event)
 {
 	ai->GetMoveManager()->Follow(ai->GetTargetManager()->GetLineTarget(), 2.0f, 0.0f);
+    return true;
 }
 
-void FollowMasterAction::Execute()
+bool FollowMasterAction::Execute(Event event)
 {
 	ai->GetMoveManager()->Follow(ai->GetTargetManager()->GetMaster());
+    return true;
 }
 
-void StayAction::Execute()
+bool StayAction::Execute(Event event)
 {
     ai->GetMoveManager()->Stay();
+    return true;
 }
 
-void StayCircleAction::Execute()
+bool StayCircleAction::Execute(Event event)
 {
 	ai->GetMoveManager()->StayCircle(2.0f);
+    return true;
 }
 
-void StayLineAction::Execute()
+bool StayLineAction::Execute(Event event)
 {
 	ai->GetMoveManager()->StayLine(2.0f);
+    return true;
 }
 
-void StayCombatAction::Execute()
+bool StayCombatAction::Execute(Event event)
 {
 	ai->GetMoveManager()->StayCombat(2.0f);
+    return true;
 }
 
-void GoAwayAction::Execute()
+bool GoAwayAction::Execute(Event event)
 {
 	ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetMaster()); 
+    return true;
 }

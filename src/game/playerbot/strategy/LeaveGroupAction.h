@@ -8,7 +8,7 @@ namespace ai
     public:
         LeaveGroupAction(AiManagerRegistry* const ai) : Action(ai, "leave") {}
         
-        virtual bool ExecuteResult()
+        virtual bool Execute(Event event)
         {
             Group* group = GetBot()->GetGroup();
             if (!group) 

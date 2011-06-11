@@ -8,7 +8,7 @@ namespace ai
     public:
         AcceptInvitationAction(AiManagerRegistry* const ai) : Action(ai, "accept invitation") {}
 
-        virtual bool ExecuteResult()
+        virtual bool Execute(Event event)
         {
             Player*  bot = ai->GetAi()->GetBot();
 

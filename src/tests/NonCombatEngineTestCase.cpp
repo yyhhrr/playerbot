@@ -17,7 +17,6 @@ class NonCombatEngineTestCase : public EngineTestBase
   CPPUNIT_TEST( tankAssist );
   CPPUNIT_TEST( loot );
   CPPUNIT_TEST( goaway );
-  CPPUNIT_TEST( emote );
   CPPUNIT_TEST( passive );
   CPPUNIT_TEST_SUITE_END();
 
@@ -102,16 +101,6 @@ protected:
 		tickWithLowMana(1);
 
         assertActions(">eat>drink");
-    }
-
-    void emote()
-    {
-        engine->addStrategy("emote");
-
-        for (int i=0; i<100; i++)
-            tick();
-
-        CPPUNIT_ASSERT(strstr(ai->buffer.c_str(), ">emote"));
     }
 
     void passive()

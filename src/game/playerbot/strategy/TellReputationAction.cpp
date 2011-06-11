@@ -5,7 +5,7 @@
 
 using namespace ai;
 
-bool TellReputationAction::ExecuteResult()
+bool TellReputationAction::Execute(Event event)
 {
     Player* bot = ai->GetAi()->GetBot();
     Player *master = ai->GetAi()->GetMaster();

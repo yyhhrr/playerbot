@@ -10,7 +10,7 @@ namespace ai
 			this->distance = distance;
 		}
 
-        virtual bool ExecuteResult() 
+        virtual bool Execute(Event event) 
 		{
             return ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetCurrentTarget(), distance); 
         }
@@ -22,48 +22,48 @@ namespace ai
 	class FollowAction : public Action {
 	public:
 		FollowAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) {}
-		virtual void Execute() = NULL;
+		virtual bool Execute(Event event) = NULL;
 	};
 
 	class FollowLineAction : public FollowAction {
 	public:
 		FollowLineAction(AiManagerRegistry* const ai) : FollowAction(ai, "follow line") {}
-		virtual void Execute();
+		virtual bool Execute(Event event);
 	};
 
 	class FollowMasterAction : public Action {
 	public:
 		FollowMasterAction(AiManagerRegistry* const ai) : Action(ai, "follow master") {}
-		virtual void Execute();
+		virtual bool Execute(Event event);
 	};
 
     class StayAction : public Action {
     public:
         StayAction(AiManagerRegistry* const ai) : Action(ai, "stay") {}
-        virtual void Execute();
+        virtual bool Execute(Event event);
     };
 
 	class StayCircleAction : public Action {
 	public:
 		StayCircleAction(AiManagerRegistry* const ai) : Action(ai, "stay circle") {}
-		virtual void Execute();
+		virtual bool Execute(Event event);
 	};
 
 	class StayCombatAction : public Action {
 	public:
 		StayCombatAction(AiManagerRegistry* const ai) : Action(ai, "stay combat") {}
-		virtual void Execute();
+		virtual bool Execute(Event event);
 	};
 
 	class StayLineAction : public Action {
 	public:
 		StayLineAction(AiManagerRegistry* const ai) : Action(ai, "stay line") {}
-		virtual void Execute();
+		virtual bool Execute(Event event);
 	};
 
     class GoAwayAction : public Action {
     public:
         GoAwayAction(AiManagerRegistry* const ai) : Action(ai, "goaway") {}
-        virtual void Execute();
+        virtual bool Execute(Event event);
     };
 }

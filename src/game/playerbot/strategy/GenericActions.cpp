@@ -9,9 +9,10 @@ ChangeCombatStrategyAction::ChangeCombatStrategyAction(AiManagerRegistry* const 
     this->name = name;
 }
 
-void ChangeCombatStrategyAction::Execute()
+bool ChangeCombatStrategyAction::Execute(Event event)
 {
     ai->GetAi()->ChangeCombatStrategy(name.c_str());
+    return true;
 }
 
 bool UseItemAction::isUseful()

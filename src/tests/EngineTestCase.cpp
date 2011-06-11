@@ -11,7 +11,7 @@ public:
     PrerequisiteAction(AiManagerRegistry* const ai) : Action(ai) {}
     virtual ~PrerequisiteAction() { destroyed = TRUE; }
 
-    bool ExecuteResult() { executed++; return TRUE; }
+    bool Execute(Event event) { executed++; return TRUE; }
     const char* getName() {return "PrerequisiteAction"; }
 
     static int executed;
@@ -27,7 +27,7 @@ public:
     AlternativeAction(AiManagerRegistry* const ai) : Action(ai) {}
     virtual ~AlternativeAction() {destroyed = TRUE;}
 
-    bool ExecuteResult() { executed++; return TRUE; }
+    bool Execute(Event event) { executed++; return TRUE; }
     const char* getName() {return "AlternativeAction"; }
 
     static int executed;
@@ -47,7 +47,7 @@ public:
 		destroyed++;
 	}
 
-    bool ExecuteResult() { executed++; return TRUE; }
+    bool Execute(Event event) { executed++; return TRUE; }
     const char* getName() {return "RepeatingAction"; }
     bool isPossible() { return available; }
 
@@ -66,8 +66,7 @@ public:
 	TriggeredAction(AiManagerRegistry* const ai) : Action(ai) { fired = false; }
 	virtual ~TriggeredAction() {}
 
-    bool Execute(Event event) { param = event.getParam(); return ExecuteResult(); }
-	bool ExecuteResult() { fired = TRUE; return TRUE; }
+    bool Execute(Event event) { param = event.getParam(); fired = TRUE; return true; }
     const char* getName() {return "TriggeredAction"; }
 
 	static int fired;

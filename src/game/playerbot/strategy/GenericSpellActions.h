@@ -56,7 +56,7 @@ namespace ai
         }
 
 		virtual Unit* GetTarget();
-        virtual bool ExecuteResult();
+        virtual bool Execute(Event event);
         virtual bool isPossible();
 		virtual bool isUseful();
 

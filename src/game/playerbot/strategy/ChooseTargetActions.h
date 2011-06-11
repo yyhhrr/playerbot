@@ -12,10 +12,13 @@ namespace ai
 
 		virtual bool isPossible() { return GetTarget(); }
 
-        virtual void Execute() {
+        virtual bool Execute(Event event) 
+        {
             Unit* target = GetTarget();
             if (target)
                 ai->GetMoveManager()->Attack(target);
+            
+            return true;
         }
     };   
 

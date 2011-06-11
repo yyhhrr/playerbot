@@ -2,6 +2,7 @@
 
 #include "GenericActions.h"
 #include "NonCombatActions.h"
+#include "EmoteAction.h"
 
 namespace ai
 {

@@ -9,7 +9,7 @@ Unit* CastSpellAction::GetTarget()
 	return targetManager->GetCurrentTarget();
 }
 
-bool CastSpellAction::ExecuteResult() 
+bool CastSpellAction::Execute(Event event) 
 {
 	return spellManager->CastSpell(spell, GetTarget()); 
 }

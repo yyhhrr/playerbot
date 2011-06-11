@@ -1,3 +1,4 @@
+#include "MockAiObjectContext.h"
 
 using namespace ai;
 
@@ -33,5 +34,15 @@ protected:
         tick();
 
         assertActions((string(">") + trigger + "(" + param + ")").c_str());
+    }
+
+    void trigger(const char* name)
+    {
+        context->GetTrigger(name)->ExternalEvent("");
+    }
+
+    void trigger(const char* name, const char* param)
+    {
+        context->GetTrigger(name)->ExternalEvent(param);
     }
 };

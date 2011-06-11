@@ -7,7 +7,7 @@ namespace ai
     class StatsAction : public Action {
     public:
         StatsAction(AiManagerRegistry* const ai) : Action(ai, "stats") {}
-        virtual bool ExecuteResult();
+        virtual bool Execute(Event event);
 
     private:
         void ListBagSlots(ostringstream &out);

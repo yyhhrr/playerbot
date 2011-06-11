@@ -46,9 +46,7 @@ namespace ai
         virtual ~Action(void) {}
 
     public:
-        virtual bool ExecuteResult() { Execute(); return true; }
-        virtual bool Execute(Event event) { return ExecuteResult(); }
-        virtual void Execute() { }
+        virtual bool Execute(Event event) { return true; }
         virtual bool isPossible() { return true; }
         virtual bool isUseful() { return true; }
         virtual NextAction** getPrerequisites() { return NULL; }

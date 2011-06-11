@@ -201,7 +201,7 @@ bool Engine::ExecuteAction(const char* name)
     {
         if (actionExecutionListeners.ActionExecuted(action))
 		{
-            result = action->ExecuteResult();
+            result = action->Execute(Event());
 		}
 
         MultiplyAndPush(action->getContinuers(), 0.0f, false, Event());

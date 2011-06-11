@@ -160,7 +160,7 @@ namespace ai
     public: 
         CastEntanglingRootsCcAction(AiManagerRegistry* const ai) : CastDebuffSpellAction(ai, "entangling roots on cc") {} 
         virtual Unit* GetTarget();
-        virtual bool ExecuteResult();
+        virtual bool Execute(Event event);
     };
 
 	class CastNaturesGraspAction : public CastBuffSpellAction 

@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-bool CastCasterFormAction::ExecuteResult()
+bool CastCasterFormAction::Execute(Event event)
 {
     spellManager->RemoveAura("dire bear form");
     spellManager->RemoveAura("bear form");
@@ -31,7 +31,7 @@ Unit* CastEntanglingRootsCcAction::GetTarget()
     return ai->GetTargetManager()->FindCcTarget(name);
 }
 
-bool CastEntanglingRootsCcAction::ExecuteResult()
+bool CastEntanglingRootsCcAction::Execute(Event event)
 {
     return spellManager->CastSpell("entangling roots", GetTarget()); 
 }

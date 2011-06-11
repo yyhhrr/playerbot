@@ -10,9 +10,10 @@ namespace ai
 		{
             this->distance = distance;
         }
-        virtual void Execute() 
+        virtual bool Execute(Event event) 
 		{
 			ai->GetMoveManager()->MoveTo(ai->GetTargetManager()->GetCurrentTarget(), distance);
+            return true;
         }
         virtual bool isUseful() 
 		{

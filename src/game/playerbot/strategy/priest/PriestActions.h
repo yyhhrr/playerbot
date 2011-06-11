@@ -84,7 +84,7 @@ namespace ai
         CastRemoveShadowformAction(AiManagerRegistry* const ai) : Action(ai) {}
         virtual bool isUseful() { return ai->GetSpellManager()->HasAura("shadowform", ai->GetTargetManager()->GetSelf()); }
         virtual bool isPossible() { return true; }
-        virtual bool ExecuteResult() {
+        virtual bool Execute(Event event) {
             ai->GetSpellManager()->RemoveAura("shadowform");
             return true;
         }

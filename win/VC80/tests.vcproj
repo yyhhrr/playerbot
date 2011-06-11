@@ -719,6 +719,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\NonCombatEngineTestCase2.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\RacialsTestCase.cpp"
 				>
 			</File>
