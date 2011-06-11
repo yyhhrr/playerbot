@@ -514,7 +514,8 @@ void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 	}
     else if(text == "fly")
     {
-		list<Unit*> units = aiRegistry->GetTargetManager()->FindNearestNpcs();
+        AiObjectContext *context = aiRegistry->GetAi()->GetAiObjectContext();
+        list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
 		for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
 		{
 			Creature *npc = bot->GetNPCIfCanInteractWith((*i)->GetObjectGuid(), UNIT_NPC_FLAG_FLIGHTMASTER);

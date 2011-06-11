@@ -5,6 +5,7 @@
 #include "LeaveGroupAction.h"
 #include "TellReputationAction.h"
 #include "LogLevelAction.h"
+#include "TellLosAction.h"
 
 namespace ai
 {
@@ -18,6 +19,7 @@ namespace ai
             creators["leave"] = &ChatActionContext::leave;
             creators["reputation"] = &ChatActionContext::reputation;
             creators["log"] = &ChatActionContext::log;
+            creators["los"] = &ChatActionContext::los;
         }
 
     private:
@@ -26,6 +28,7 @@ namespace ai
         static Action* leave(AiManagerRegistry* ai) { return new LeaveGroupAction(ai); }
         static Action* reputation(AiManagerRegistry* ai) { return new TellReputationAction(ai); }
         static Action* log(AiManagerRegistry* ai) { return new LogLevelAction(ai); }
+        static Action* los(AiManagerRegistry* ai) { return new TellLosAction(ai); }
 
     };
 

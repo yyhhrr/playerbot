@@ -15,6 +15,7 @@ namespace ai
             creators["rep"] = &ChatTriggerContext::reputation;
             creators["reputation"] = &ChatTriggerContext::reputation;
             creators["log"] = &ChatTriggerContext::log;
+            creators["los"] = &ChatTriggerContext::los;
         }
 
     private:
@@ -23,5 +24,6 @@ namespace ai
         static Trigger* leave(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "leave"); }
         static Trigger* reputation(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "reputation"); }
         static Trigger* log(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "log"); }
+        static Trigger* los(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "los"); }
     };
 };

@@ -2089,11 +2089,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestCorpsesValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestCorpsesValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\NearestGameObjects.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\NearestGameObjects.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestNpcsValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestNpcsValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestUnitsValue.h"
 					>
 				</File>
 				<File
@@ -2118,6 +2138,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\PassTroughStrategy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PossibleTargetsValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PossibleTargetsValue.h"
 					>
 				</File>
 				<File
@@ -2170,6 +2198,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\StrategyContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellLosAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellLosAction.h"
 					>
 				</File>
 				<File

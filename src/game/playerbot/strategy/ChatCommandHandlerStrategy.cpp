@@ -20,4 +20,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const 
     supported.push_back("leave");
     supported.push_back("reputation");
     supported.push_back("log");
+    supported.push_back("los");
 }

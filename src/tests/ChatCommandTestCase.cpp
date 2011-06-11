@@ -16,6 +16,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
   CPPUNIT_TEST( quests );
   CPPUNIT_TEST( reputation );
   CPPUNIT_TEST( log );
+  CPPUNIT_TEST( los );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -54,6 +55,16 @@ protected:
     {
         assertCommand("log");
         assertParametrizedCommand("log", "debug");
+    }
+
+    void los()
+    {
+        assertCommand("los");
+        assertParametrizedCommand("los", "targets");
+        assertParametrizedCommand("los", "npcs");
+        assertParametrizedCommand("los", "gos");
+        assertParametrizedCommand("los", "game objects");
+        assertParametrizedCommand("los", "corpses");
     }
 };
 
