@@ -45,6 +45,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
     currentEngine = nonCombatEngine;
 
     packetHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
+    packetHandlers[SMSG_GROUP_INVITE] = "group invite";
 }
 
 PlayerbotAI::~PlayerbotAI()

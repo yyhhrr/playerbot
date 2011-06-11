@@ -1,6 +1,7 @@
 #pragma once;
 
 #include "GossipHelloAction.h"
+#include "AcceptInvitationAction.h"
 
 namespace ai
 {
@@ -10,10 +11,12 @@ namespace ai
         WorldPacketActionContext()
         {
             creators["gossip hello"] = &WorldPacketActionContext::gossip_hello;
+            creators["accept invitation"] = &WorldPacketActionContext::accept_invitation;
         }
 
     private:
         static Action* gossip_hello(AiManagerRegistry* ai) { return new GossipHelloAction(ai); }
+        static Action* accept_invitation(AiManagerRegistry* ai) { return new AcceptInvitationAction(ai); }
 
     };
 

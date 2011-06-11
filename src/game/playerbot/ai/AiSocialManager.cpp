@@ -27,22 +27,6 @@ void AiSocialManager::TellMaster(const char* text)
 	bot->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
 }
 
-void AiSocialManager::AcceptInvitation()
-{
-	Group* grp = bot->GetGroupInvite();
-	if (!grp)
-		return;
-
-	Player* inviter = sObjectMgr.GetPlayer(grp->GetLeaderGuid());
-	if (!inviter)
-		return;
-
-	WorldPacket p;
-	uint32 roles_mask = 0;
-	p << roles_mask;
-	bot->GetSession()->HandleGroupAcceptOpcode(p);
-}
-
 string AiSocialManager::GetLogLevel(LogLevel level) 
 {
 	switch (level) 
@@ -106,11 +90,6 @@ void AiSocialManager::HandleBotOutgoingPacket(const WorldPacket& packet)
 					bot->GetSession()->HandleGroupSetLeaderOpcode(p);
 				}
 			}
-			return;
-		}
-	case SMSG_GROUP_INVITE:
-		{
-			AcceptInvitation();
 			return;
 		}
 

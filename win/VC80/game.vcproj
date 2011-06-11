@@ -1901,6 +1901,10 @@
 				Name="strategy"
 				>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AcceptInvitationAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Action.cpp"
 					>
 				</File>
