@@ -47,6 +47,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
     packetHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
     packetHandlers[SMSG_GROUP_INVITE] = "group invite";
     packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
+    packetHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
+    packetHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
 }
 
 PlayerbotAI::~PlayerbotAI()

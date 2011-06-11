@@ -14,6 +14,8 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
   CPPUNIT_TEST( stats );
   CPPUNIT_TEST( groupInvite );
   CPPUNIT_TEST( groupSetLeader );
+  CPPUNIT_TEST( notEnoughMoney );
+  CPPUNIT_TEST( notEnoughReputation );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -35,6 +37,14 @@ protected:
     void groupSetLeader()
     {
         assertCommand("group set leader", "pass leadership to master");
+    }
+    void notEnoughMoney()
+    {
+        assertCommand("not enough money", "tell not enough money");
+    }
+    void notEnoughReputation()
+    {
+        assertCommand("not enough reputation", "tell not enough reputation");
     }
 };
 

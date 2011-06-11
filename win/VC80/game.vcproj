@@ -2161,6 +2161,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellMasterAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TellReputationAction.cpp"
 					>
 				</File>
