@@ -14,9 +14,9 @@ namespace ai
         virtual ~AiObjectContext() {}
 
     public:
-        Strategy* GetStrategy(const char* name) { return strategyContexts.GetObject(name, ai); }
-        Trigger* GetTrigger(const char* name) { return triggerContexts.GetObject(name, ai); }
-        Action* GetAction(const char* name) { return actionContexts.GetObject(name, ai); }
+        virtual Strategy* GetStrategy(const char* name) { return strategyContexts.GetObject(name, ai); }
+        virtual Trigger* GetTrigger(const char* name) { return triggerContexts.GetObject(name, ai); }
+        virtual Action* GetAction(const char* name) { return actionContexts.GetObject(name, ai); }
 
     protected:
         NamedObjectContextList<Strategy> strategyContexts;

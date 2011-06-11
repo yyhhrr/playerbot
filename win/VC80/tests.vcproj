@@ -683,6 +683,10 @@
 			Name="Generic"
 			>
 			<File
+				RelativePath="..\..\src\tests\ChatCommandTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\EngineTestBase.cpp"
 				>
 			</File>
@@ -836,6 +840,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\tests\MockAiMoveManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\MockAiObjectContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\MockAiObjectContext.h"
 				>
 			</File>
 			<File
