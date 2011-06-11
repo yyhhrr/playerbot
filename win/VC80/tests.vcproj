@@ -723,6 +723,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\ValueTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\WorldPacketHandlerTestCase.cpp"
 				>
 			</File>

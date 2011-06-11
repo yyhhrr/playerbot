@@ -56,6 +56,7 @@ namespace ai
         virtual NextAction** getContinuers() { return NULL; }
         virtual const char* getName() { return !name ? "action" : name; }
         virtual int getKind() { return 0; }
+        void Update() {}
 
     protected:
         Player* GetBot();

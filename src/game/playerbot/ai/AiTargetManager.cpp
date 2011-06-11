@@ -289,7 +289,8 @@ void AiTargetManager::HandleCommand(const string& text, Player& fromPlayer)
 		aiSocialManager->ListUnits("--- Targets ---", FindPossibleTargets());
 		aiSocialManager->ListUnits("--- NPCs ---", FindNearestNpcs());
 		aiSocialManager->ListUnits("--- Corpses ---", FindNearestCorpses());
-		aiSocialManager->ListGameObjects("--- Game objects ---", FindNearestGameObjects());
+        list<GameObject*> gos = *aiRegistry->GetAi()->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
+		aiSocialManager->ListGameObjects("--- Game objects ---", gos);
 	}
 }
 
@@ -346,23 +347,6 @@ Unit* AiTargetManager::GetCurrentCcTarget(const char* spell)
 
 namespace MaNGOS
 {
-	class AnyGameObjectInObjectRangeCheck
-	{
-	public:
-		AnyGameObjectInObjectRangeCheck(WorldObject const* obj, float range) : i_obj(obj), i_range(range) {}
-		WorldObject const& GetFocusObject() const { return *i_obj; }
-		bool operator()(GameObject* u)
-		{
-			if (u && i_obj->IsWithinDistInMap(u, i_range) && u->isSpawned() && u->GetGOInfo())
-				return true;
-
-			return false;
-		}
-	private:
-		WorldObject const* i_obj;
-		float i_range;
-	};
-
 	class AnyDeadUnitInObjectRangeCheck
 	{
 	public:
@@ -411,30 +395,6 @@ namespace MaNGOS
 	};
 
 };
-
-list<GameObject*> AiTargetManager::FindNearestGameObjects(float range)
-{
-	list<GameObject *> targets;
-
-	MaNGOS::AnyGameObjectInObjectRangeCheck u_check(bot, range);
-	MaNGOS::GameObjectListSearcher<MaNGOS::AnyGameObjectInObjectRangeCheck> searcher(targets, u_check);
-	Cell::VisitAllObjects((const WorldObject*)bot, searcher, range);
-
-	for(list<GameObject *>::iterator tIter = targets.begin(); tIter != targets.end();)
-	{
-		if(!bot->IsWithinLOSInMap(*tIter))
-		{
-			list<GameObject *>::iterator tIter2 = tIter;
-			++tIter;
-			targets.erase(tIter2);
-		}
-		else
-			++tIter;
-	}
-
-	return targets;
-}
-
 
 list<Unit*> AiTargetManager::FindNearestCorpses(float range)
 {

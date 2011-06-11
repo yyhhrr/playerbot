@@ -40,6 +40,12 @@ namespace ai
             created.clear();
         }
 
+        void Update()
+        {
+            for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
+                i->second->Update();
+        }
+
     protected:
         map<string, T*> created;
     };
@@ -66,6 +72,12 @@ namespace ai
                 if (object) return object;
             }
             return NULL;
+        }
+
+        void Update()
+        {
+            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+                (*i)->Update();
         }
 
     private:

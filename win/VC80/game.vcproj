@@ -2069,6 +2069,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestGameObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\NearestGameObjects.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\NonCombatActions.cpp"
 					>
 				</File>
@@ -2158,6 +2166,18 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TriggerContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\Value.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\Value.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ValueContext.h"
 					>
 				</File>
 				<File

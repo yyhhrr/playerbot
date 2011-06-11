@@ -29,6 +29,7 @@ namespace ai
 		virtual StrategyType GetType() { return STRATEGY_TYPE_GENERIC; }
         virtual ActionNode* GetAction(const char* name);
 		virtual string GetIncompatibleStrategies() { return string(); }
+        void Update() {}
     };
 
     class CombatStrategy : public Strategy

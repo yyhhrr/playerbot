@@ -40,7 +40,8 @@ namespace ai
         virtual bool IsActive() { return false; }
         virtual NextAction** getHandlers() { return NULL; }
         virtual const char* getName() { return name.c_str(); }
-		
+        void Update() {}
+
 		bool needCheck() {
 			if (++ticksElapsed >= checkInterval) {
 				ticksElapsed = 0;

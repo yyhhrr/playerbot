@@ -9,6 +9,7 @@
 #include "ChatActionContext.h"
 #include "WorldPacketTriggerContext.h"
 #include "WorldPacketActionContext.h"
+#include "ValueContext.h"
 
 using namespace ai;
 
@@ -23,4 +24,14 @@ AiObjectContext::AiObjectContext(AiManagerRegistry* const ai) : AiManagerRegistr
     triggerContexts.Add(new TriggerContext());
     triggerContexts.Add(new ChatTriggerContext());
     triggerContexts.Add(new WorldPacketTriggerContext());
+
+    valueContexts.Add(new ValueContext());
+}
+
+void AiObjectContext::Update()
+{
+    strategyContexts.Update();
+    triggerContexts.Update();
+    actionContexts.Update();
+    valueContexts.Update();
 }

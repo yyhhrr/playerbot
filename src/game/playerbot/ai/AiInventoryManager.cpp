@@ -1285,7 +1285,7 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 
 void AiInventoryManager::AddAllLoot()
 {
-	list<GameObject*> gos = aiRegistry->GetTargetManager()->FindNearestGameObjects();
+    list<GameObject*> gos = *aiRegistry->GetAi()->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
 	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
 		AddLoot((*i)->GetObjectGuid());
 
