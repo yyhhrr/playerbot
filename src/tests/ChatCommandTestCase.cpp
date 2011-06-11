@@ -15,6 +15,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
   CPPUNIT_TEST( leave );
   CPPUNIT_TEST( quests );
   CPPUNIT_TEST( reputation );
+  CPPUNIT_TEST( log );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -47,6 +48,12 @@ protected:
         assertParametrizedCommand("quests", "summary");
         assertParametrizedCommand("quests", "completed");
         assertParametrizedCommand("quests", "incompleted");
+    }
+
+    void log()
+    {
+        assertCommand("log");
+        assertParametrizedCommand("log", "debug");
     }
 };
 

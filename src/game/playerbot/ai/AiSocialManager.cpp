@@ -1,16 +1,19 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
+#include "../strategy/LogLevelAction.h"
 
 using namespace ai;
 using namespace std;
 
 void AiSocialManager::TellMaster(LogLevel level, const char* text)
 {
+    LogLevel logLevel = *ai->GetAiObjectContext()->GetValue<LogLevel>("log level");
+
 	if (logLevel < level)
 		return;
 
 	ostringstream out;
-	out << GetLogLevel(level) << ": " << text;
+    out << LogLevelAction::logLevel2string(level) << ": " << text;
 	TellMaster(out.str().c_str());
 }
 
@@ -22,47 +25,8 @@ void AiSocialManager::TellMaster(const char* text)
 	bot->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
 }
 
-string AiSocialManager::GetLogLevel(LogLevel level) 
-{
-	switch (level) 
-	{
-	case LOG_LVL_BASIC:
-		return "basic";
-	case LOG_LVL_MINIMAL:
-		return "minimal";
-	case LOG_LVL_DETAIL:
-		return "detail";
-	default:
-		return "debug";
-	}
-}
-
-void AiSocialManager::SetLogLevel(string level) 
-{
-	if (level == "debug")
-		logLevel = LOG_LVL_DEBUG;
-	else if (level == "minimal")
-		logLevel = LOG_LVL_MINIMAL;
-	else if (level == "detail")
-		logLevel = LOG_LVL_DETAIL;
-	else 
-		logLevel = LOG_LVL_BASIC;
-}
-
 void AiSocialManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text.size() > 4 && text.substr(0, 4) == "log ")
-	{
-		string level = text.substr(text.find(" ") + 1);
-		if (level == "?")
-		{
-			ostringstream out;
-			out << "Log level: " << GetLogLevel(logLevel);
-			TellMaster(out.str().c_str());
-		}
-		
-		SetLogLevel(level);
-	}
 }
 
 void AiSocialManager::HandleBotOutgoingPacket(const WorldPacket& packet)

@@ -282,6 +282,9 @@ void Engine::ProcessTriggers()
             node->setTrigger(trigger);
         }
 
+        if (!trigger)
+            continue;
+
         if (testMode || trigger->needCheck())
         {
             Event event = trigger->Check();

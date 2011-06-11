@@ -11,7 +11,7 @@ using namespace ai;
 class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
 {
   CPPUNIT_TEST_SUITE( WorldPacketHandlerTestCase );
-  CPPUNIT_TEST( stats );
+  CPPUNIT_TEST( gossip_hello );
   CPPUNIT_TEST( groupInvite );
   CPPUNIT_TEST( groupSetLeader );
   CPPUNIT_TEST( notEnoughMoney );
@@ -26,7 +26,7 @@ public:
     }
 
 protected:
- 	void stats()
+ 	void gossip_hello()
 	{
         assertCommand("gossip hello");
 	}

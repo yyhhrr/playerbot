@@ -2049,6 +2049,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LogLevelAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LogLevelAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LogLevelValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp"
 					>
 				</File>

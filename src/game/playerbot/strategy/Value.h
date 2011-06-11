@@ -11,46 +11,70 @@ namespace ai
         UntypedValue(AiManagerRegistry* const ai) : AiManagerRegistryAware(ai) {}
         virtual void Update() {}
     };
-
+    
     template<class T>
-    class Value : public UntypedValue
+    class Value
+    {
+    public:
+        virtual const char* getName() = NULL;
+        virtual T Get() = NULL;
+        virtual void Set(T value) = NULL;
+        operator T() { return Get(); }
+    };
+    
+    template<class T>
+    class CalculatedValue : public UntypedValue, public Value<T>
 	{
 	public:
-        Value(AiManagerRegistry* const ai, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
-            name(name), checkInterval(checkInterval), ticksElapsed(0), calculated(false) 
+        CalculatedValue(AiManagerRegistry* const ai, T defaultValue, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
+            name(name), checkInterval(checkInterval), ticksElapsed(0), value(defaultValue) 
         { }
-        virtual ~Value() {}
+        virtual ~CalculatedValue() {}
 
 	public:
         virtual const char* getName() { return name.c_str(); }
-        T Get()
+        virtual T Get()
         {
             if (ticksElapsed >= checkInterval) {
                 ticksElapsed = 0;
                 value = Calculate();
-                calculated = true;
             }
             return value; 
         }
-        void Set(T value) { this->value = value; calculated = true; }
+        virtual void Set(T value) { this->value = value; }
         virtual void Update()
         {
             if (ticksElapsed < checkInterval) {
                 ticksElapsed++;
             }
         }
-        void Reset() { calculated = false; }
-        bool operator! () const { return !calculated; }
-        operator T() { return Get(); }
 
     protected:
         virtual T Calculate() = NULL;
 
     protected:
-        bool calculated;
         string name;
 		int checkInterval;
 		int ticksElapsed;
         T value;
 	};
+
+    template<class T>
+    class ManualSetValue : public UntypedValue, public Value<T>
+    {
+    public:
+        ManualSetValue(AiManagerRegistry* const ai, T defaultValue, const char* name = "value") : 
+            UntypedValue(ai), name(name), value(defaultValue) {}
+        virtual ~ManualSetValue() {}
+
+    public:
+        virtual const char* getName() { return name.c_str(); }
+        virtual T Get() { return value; }
+        virtual void Set(T value) { this->value = value; }
+        virtual void Update() { }
+
+    protected:
+        string name;
+        T value;
+    };
 }

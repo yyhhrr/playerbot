@@ -70,6 +70,9 @@ Strategy* MockAiObjectContext::GetStrategy(const char* name)
 
 Trigger* MockAiObjectContext::GetTrigger(const char* name)
 {
+    if (!realContext->GetTrigger(name))
+        CPPUNIT_ASSERT(false);
+
     Trigger* trigger = triggers[name];
     if (trigger)
         return trigger;
@@ -79,6 +82,8 @@ Trigger* MockAiObjectContext::GetTrigger(const char* name)
 
 Action* MockAiObjectContext::GetAction(const char* name)
 {
+    CPPUNIT_ASSERT(realContext->GetAction(name) != NULL);
+
     Action* action = actions[name];
     if (action)
         return action;

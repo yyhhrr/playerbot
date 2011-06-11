@@ -35,7 +35,10 @@ namespace ai
         virtual ~NamedObjectContext()
         {
             for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
-                delete i->second;
+            {
+                if (i->second)
+                    delete i->second;
+            }
             
             created.clear();
         }
@@ -43,7 +46,10 @@ namespace ai
         void Update()
         {
             for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
-                i->second->Update();
+            {
+                if (i->second)
+                    i->second->Update();
+            }
         }
 
     protected:

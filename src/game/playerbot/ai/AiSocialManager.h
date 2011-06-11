@@ -12,7 +12,6 @@ namespace ai
 	public:
 		AiSocialManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 		{
-			logLevel = LOG_LVL_BASIC;
 		}
 
 	public:
@@ -25,13 +24,6 @@ namespace ai
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
 		virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
-
-	private:
-		string GetLogLevel(LogLevel level);
-		void SetLogLevel(string level);
-
-	private:
-		LogLevel logLevel;
 	};
 
 };
