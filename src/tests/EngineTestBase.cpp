@@ -2,6 +2,7 @@
 #include "aitest.h"
 #include "EngineTestBase.h"
 #include "MockedTargets.h"
+#include "AiObjectContextWrapper.h"
 
 void EngineTestBase::setUp()
 {
@@ -37,12 +38,14 @@ void EngineTestBase::va_generic(void (EngineTestBase::*callback)(const char*), v
 }
 
 
-void EngineTestBase::setupEngine(AiObjectContext* AiObjectContext, ...)
+void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
 {
-    engine = new Engine(ai, AiObjectContext);
+    context = new AiObjectContextWrapper(ai, aiObjectContext);
+    ai->SetContext(context);
+    engine = new Engine(ai, context);
     
 	va_list vl;
-	va_start(vl, AiObjectContext);
+	va_start(vl, aiObjectContext);
 
 	va_generic(&EngineTestBase::setupEngineCallback, vl);
     
@@ -75,13 +78,13 @@ void EngineTestBase::assertActions(const char* expected)
 
 void EngineTestBase::tickWithNoTarget()
 {
-    targetManager->haveTarget = FALSE;
+    context->GetValue<Unit*>("current target")->Set(NULL);
     statsManager->myAttackerCount = 0;
     
 	tick();
     
 	statsManager->myAttackerCount = 1;
-    targetManager->haveTarget = TRUE;
+    context->GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
 }
 
 void EngineTestBase::spellUnavailable(const char* spell)
@@ -244,9 +247,9 @@ void EngineTestBase::tickWithBalancePercent(int percent)
 
 void EngineTestBase::tickWithNoPet()
 {
-	targetManager->hasPet = false;
+    context->GetValue<Unit*>("pet target")->Set(NULL);
 	tick();
-	targetManager->hasPet = true;
+    context->GetValue<Unit*>("pet target")->Set(MockedTargets::GetPet());
 }
 
 void EngineTestBase::tickWithPetLowHealth(int amount)
@@ -330,9 +333,9 @@ void EngineTestBase::itemAvailable(const char* item, int amount)
 
 void EngineTestBase::tickWithDeadPartyMember() 
 {
-	targetManager->deadPartyMember = true;
+    context->GetValue<Unit*>("party member to resurrect")->Set(MockedTargets::GetPartyMember());
 	tick();
-	targetManager->deadPartyMember = false;
+    context->GetValue<Unit*>("party member to resurrect")->Set(NULL);
 }
 
 void EngineTestBase::tickBehindTarget()
@@ -342,11 +345,11 @@ void EngineTestBase::tickBehindTarget()
     moveManager->isBehind[MockedTargets::GetCurrentTarget()] = false;
 }
 
-void EngineTestBase::tickWithCcTarget()
+void EngineTestBase::tickWithCcTarget(const char* spell)
 {   
     statsManager->attackerCount = 3;
-    targetManager->hasCc = true;
+    context->GetValue<Unit*>("cc target", spell)->Set(MockedTargets::GetCc());
     tick();
     statsManager->attackerCount = 1;
-    targetManager->hasCc = false;
+    context->GetValue<Unit*>("cc target", spell)->Set(NULL);
 }

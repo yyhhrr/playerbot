@@ -74,8 +74,6 @@ void PlayerbotAI::UpdateAI(uint32 elapsed)
 	if (!CanUpdateAI() || bot->IsBeingTeleported())
 		return;
 
-    aiObjectContext->Update();
-
 	if (bot->isAlive())
 		DoNextAction();
 	else

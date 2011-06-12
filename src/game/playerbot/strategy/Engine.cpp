@@ -72,6 +72,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
     ActionBasket* basket = NULL;
 
     time_t currentTime = time(0);
+    aiObjectContext->Update();
     ProcessTriggers();
 
     int iterations = 0;

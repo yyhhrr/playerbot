@@ -32,7 +32,7 @@ protected:
 
     void cc()
     {
-        tickWithCcTarget();
+        tickWithCcTarget("banish");
 
         assertActions(">Cc:banish");
     }

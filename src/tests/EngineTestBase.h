@@ -74,7 +74,7 @@ protected:
 	void tickWithNoDrink();
 	void itemAvailable(const char* item, int amount);
 	void tickWithDeadPartyMember();
-    void tickWithCcTarget();
+    void tickWithCcTarget(const char*  spell);
 
 protected:
     MockAiManagerRegistry *ai;
@@ -85,4 +85,5 @@ protected:
 	MockAiInventoryManager* inventoryManager;
 	MockAiSocialManager* socialManager;
     Engine *engine;
+    AiObjectContext *context;
 };

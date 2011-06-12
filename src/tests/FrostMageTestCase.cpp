@@ -83,7 +83,7 @@ protected:
 
     void cc() 
     {
-        tickWithCcTarget();
+        tickWithCcTarget("polymorph");
 
         assertActions(">Cc:polymorph");
     }

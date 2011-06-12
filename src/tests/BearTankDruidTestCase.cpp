@@ -193,8 +193,8 @@ protected:
     void cc()
     {
         addAura("dire bear form");
-        tickWithCcTarget();
-        tickWithCcTarget();
+        tickWithCcTarget("entangling roots");
+        tickWithCcTarget("entangling roots");
 
         assertActions(">-dire bear form>Cc:entangling roots");
     }

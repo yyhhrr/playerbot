@@ -96,7 +96,7 @@ protected:
 
     void cc() 
     {
-        tickWithCcTarget();
+        tickWithCcTarget("freezing trap");
 
         assertActions(">Cc:freezing trap");
     }

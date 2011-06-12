@@ -108,7 +108,7 @@ protected:
 
     void cc()
     {
-        tickWithCcTarget();
+        tickWithCcTarget("entangling roots");
 
         assertActions(">Cc:entangling roots");
     }

@@ -12,6 +12,7 @@ namespace ai
 	{
 	public:
 		MockPlayerbotAIBase() : PlayerbotAI() {}
+        void SetContext(AiObjectContext* context) { this->aiObjectContext = context; }
 	};
 
     class MockAiManagerRegistry : public AiManagerRegistry
@@ -19,6 +20,9 @@ namespace ai
     public:
 		MockAiManagerRegistry();
 		virtual ~MockAiManagerRegistry();
+
+    public:
+        void SetContext(AiObjectContext* context) { ai.SetContext(context); }
 
 	public:
 		std::string buffer;

@@ -839,6 +839,10 @@
 			Name="Mocks"
 			>
 			<File
+				RelativePath="..\..\src\tests\AiObjectContextWrapper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\MockAiInventoryManager.cpp"
 				>
 			</File>

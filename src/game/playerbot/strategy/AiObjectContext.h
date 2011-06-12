@@ -18,11 +18,12 @@ namespace ai
         virtual Strategy* GetStrategy(const char* name) { return strategyContexts.GetObject(name, ai); }
         virtual Trigger* GetTrigger(const char* name) { return triggerContexts.GetObject(name, ai); }
         virtual Action* GetAction(const char* name) { return actionContexts.GetObject(name, ai); }
+        virtual UntypedValue* GetUntypedValue(const char* name) { return valueContexts.GetObject(name, ai); }
         
         template<class T>
         Value<T>* GetValue(const char* name)
         {
-            return dynamic_cast<Value<T>*>(valueContexts.GetObject(name, ai)); 
+            return dynamic_cast<Value<T>*>(GetUntypedValue(name)); 
         }
 
         template<class T>
@@ -39,7 +40,7 @@ namespace ai
         }
 
     public:
-        void Update();
+        virtual void Update();
 
     protected:
         NamedObjectContextList<Strategy> strategyContexts;
