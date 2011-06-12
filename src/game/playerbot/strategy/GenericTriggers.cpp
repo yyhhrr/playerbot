@@ -44,10 +44,11 @@ Unit* BuffTrigger::GetTarget()
 
 bool BuffTrigger::IsActive()
 {
+    Unit* target = GetTarget();
+    Unit* self = targetManager->GetSelf();
 	return SpellTrigger::IsActive() &&
-		!spellManager->HasAura(spell, GetTarget()) &&
-		(!statsManager->HasMana(targetManager->GetSelf()) ||
-		statsManager->GetManaPercent(targetManager->GetSelf()) > 40);
+		!spellManager->HasAura(spell, target) &&
+		(!statsManager->HasMana(self) || statsManager->GetManaPercent(self) > 40);
 }
 
 Unit* BuffOnPartyTrigger::GetTarget()

@@ -18,8 +18,8 @@ Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
             return player;
 
         Pet* pet = player->GetPet();
-        if (pet && Check(player) && predicate.Check(player))
-            return player;
+        if (pet && Check(pet) && predicate.Check(pet))
+            return pet;
     }
     return NULL;
 }
