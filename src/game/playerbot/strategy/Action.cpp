@@ -85,3 +85,13 @@ Player* Action::GetBot()
 {
     return ai->GetAi()->GetBot();
 }
+
+Value<Unit*>* Action::GetTargetValue()
+{
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
+}
+
+Unit* Action::GetTarget()
+{
+    return GetTargetValue()->Get();
+}

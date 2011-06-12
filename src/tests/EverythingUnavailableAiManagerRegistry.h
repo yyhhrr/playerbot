@@ -16,7 +16,7 @@ namespace ai
     public:
         EverythingUnavailableAiManagerRegistry() : MockAiManagerRegistry()
 		{
-			managers[AiSpellManagerType] = new EverythingUnavailableAiSpellManager(&ai, this, &buffer);
+			managers[AiSpellManagerType] = new EverythingUnavailableAiSpellManager(ai, this, &buffer);
 		}
     };
 

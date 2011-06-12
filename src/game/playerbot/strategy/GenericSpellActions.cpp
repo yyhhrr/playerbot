@@ -4,11 +4,6 @@
 
 using namespace ai;
 
-Unit* CastSpellAction::GetTarget()
-{
-	return targetManager->GetCurrentTarget();
-}
-
 bool CastSpellAction::Execute(Event event) 
 {
 	return spellManager->CastSpell(spell, GetTarget()); 
@@ -36,29 +31,6 @@ bool CastAuraSpellAction::isUseful()
 	return CastSpellAction::isUseful() && !spellManager->HasAura(spell, GetTarget());
 }
 
-
-Unit* ResurrectPartyMemberAction::GetTarget()
-{
-	return targetManager->GetDeadPartyMember();
-}
-
-
-Unit* HealPartyMemberAction::GetTarget()
-{
-	return targetManager->GetPartyMinHealthPlayer();
-}
-
-
-Unit* CastHealingSpellAction::GetTarget()
-{
-	return targetManager->GetSelf();
-}
-
-Unit* CastCureSpellAction::GetTarget()
-{
-	return targetManager->GetSelf();
-}
-
 bool CastHealingSpellAction::isUseful() 
 {
 	Unit* target = GetTarget();
@@ -66,18 +38,12 @@ bool CastHealingSpellAction::isUseful()
 }
 
 
-Unit* CurePartyMemberAction::GetTarget()
+Value<Unit*>* CurePartyMemberAction::GetTargetValue()
 {
-	return targetManager->GetPartyMemberToDispell(dispelType);
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
 }
 
-
-Unit* BuffOnPartyAction::GetTarget()
+Value<Unit*>* BuffOnPartyAction::GetTargetValue()
 {
-	return targetManager->GetPartyMemberWithoutAura(spell);
-}
-
-Unit* CastBuffSpellAction::GetTarget()
-{
-	return targetManager->GetSelf();
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
 }

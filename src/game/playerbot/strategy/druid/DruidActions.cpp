@@ -26,9 +26,9 @@ NextAction** CastAbolishPoisonOnPartyAction::getAlternatives()
     return NextAction::merge( NextAction::array(0, new NextAction("cure poison on party"), NULL), CastSpellAction::getPrerequisites());
 }
 
-Unit* CastEntanglingRootsCcAction::GetTarget()
+Value<Unit*>* CastEntanglingRootsCcAction::GetTargetValue()
 {
-    return ai->GetTargetManager()->FindCcTarget("entangling roots");
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", "entangling roots");
 }
 
 bool CastEntanglingRootsCcAction::Execute(Event event)

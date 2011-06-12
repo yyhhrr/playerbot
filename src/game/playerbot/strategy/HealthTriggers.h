@@ -25,7 +25,6 @@ namespace ai
 		HealthInRangeTrigger(AiManagerRegistry* const ai, const char* name, float maxValue, float minValue = 0) :
 		  ValueInRangeTrigger(ai, name, maxValue, minValue) {}
 
-		  virtual Unit* GetTarget() = 0;
 		  virtual float GetValue();
 	};
         
@@ -34,7 +33,7 @@ namespace ai
         LowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "low health", value, minValue) {}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "self target"; }
     };
 
     class CriticalHealthTrigger : public LowHealthTrigger 
@@ -49,11 +48,13 @@ namespace ai
         MediumHealthTrigger(AiManagerRegistry* const ai) : LowHealthTrigger(ai, 60, 40) {}
     };
 
-    class PartyMemberLowHealthTrigger : public HealthInRangeTrigger {
+    class PartyMemberLowHealthTrigger : public HealthInRangeTrigger 
+    {
     public:
         PartyMemberLowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "party member low health", value, minValue) {}
-        virtual Unit* GetTarget();
+        
+        virtual const char* GetTargetName() { return "party member to heal"; }
     };
 
     class PartyMemberCriticalHealthTrigger : public PartyMemberLowHealthTrigger 
@@ -72,7 +73,7 @@ namespace ai
     public:
         TargetLowHealthTrigger(AiManagerRegistry* const ai, float value, float minValue = 0) : 
             HealthInRangeTrigger(ai, "target low health", value, minValue) {}
-        virtual Unit* GetTarget();
+        virtual const char* GetTargetName() { return "current target"; }
     };
 
     class TargetCriticalHealthTrigger : public TargetLowHealthTrigger 

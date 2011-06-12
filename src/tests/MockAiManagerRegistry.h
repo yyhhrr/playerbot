@@ -22,11 +22,10 @@ namespace ai
 		virtual ~MockAiManagerRegistry();
 
     public:
-        void SetContext(AiObjectContext* context) { ai.SetContext(context); }
+        void SetContext(AiObjectContext* context) { ((MockPlayerbotAIBase*)ai)->SetContext(context); }
 
 	public:
 		std::string buffer;
-		MockPlayerbotAIBase ai;
 	};
 
 }

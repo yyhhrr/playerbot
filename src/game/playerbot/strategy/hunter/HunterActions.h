@@ -84,7 +84,7 @@ namespace ai
 	class CastMendPetAction : public CastAuraSpellAction {
 	public:
 		CastMendPetAction(AiManagerRegistry* const ai) : CastAuraSpellAction(ai, "mend pet") {}
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "pet target"; }
 	};
 
 	class CastRevivePetAction : public CastBuffSpellAction {
@@ -110,6 +110,6 @@ namespace ai
     class CastFreezingTrap : public CastDebuffSpellAction {
     public:
         CastFreezingTrap(AiManagerRegistry* const ai) : CastDebuffSpellAction(ai, "freezing trap") {}
-        virtual Unit* GetTarget();
+        virtual Value<Unit*>* GetTargetValue();
     };
 }

@@ -5,23 +5,13 @@
 
 using namespace ai;
 
-Unit* NeedCureTrigger::GetTarget()
-{
-	return targetManager->GetSelf();
-}
-
 bool NeedCureTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
 	return target && spellManager->HasAuraToDispel(target, dispelType);
 }
 
-Unit* TargetAuraDispelTrigger::GetTarget()
+Value<Unit*>* PartyMemberNeedCureTrigger::GetTargetValue()
 {
-	return targetManager->GetCurrentTarget();
-}
-
-Unit* PartyMemberNeedCureTrigger::GetTarget()
-{
-	return targetManager->GetPartyMemberToDispell(dispelType);
+	return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
 }

@@ -11,7 +11,7 @@ namespace ai
   	    {
 			this->dispelType = dispelType;
         }
-		virtual Unit* GetTarget();
+        virtual const char* GetTargetName() { return "self target"; }
         virtual bool IsActive();
 
     protected:
@@ -22,7 +22,7 @@ namespace ai
     public:
         TargetAuraDispelTrigger(AiManagerRegistry* const ai, const char* spell, uint32 dispelType) : 
 			NeedCureTrigger(ai, spell, dispelType) {}
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "current target"; }
     };
 
     class PartyMemberNeedCureTrigger : public NeedCureTrigger {
@@ -30,6 +30,6 @@ namespace ai
         PartyMemberNeedCureTrigger(AiManagerRegistry* const ai, const char* spell, uint32 dispelType) : 
             NeedCureTrigger(ai, spell, dispelType) {}
 
-		virtual Unit* GetTarget();
+		virtual Value<Unit*>* GetTargetValue();
     };
 }

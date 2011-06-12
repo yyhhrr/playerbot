@@ -41,6 +41,9 @@ namespace ai
         virtual NextAction** getHandlers() { return NULL; }
         virtual const char* getName() { return name.c_str(); }
         void Update() {}
+        virtual Unit* GetTarget();
+        virtual Value<Unit*>* GetTargetValue();
+        virtual const char* GetTargetName() { return "self target"; }
 
 		bool needCheck() {
 			if (++ticksElapsed >= checkInterval) {

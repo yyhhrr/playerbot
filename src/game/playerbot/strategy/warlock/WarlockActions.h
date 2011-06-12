@@ -99,7 +99,7 @@ namespace ai
     {
     public:
         CastBanishAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "banish") {}
-        virtual Unit* GetTarget();
+        virtual Value<Unit*>* GetTargetValue();
     };
     
 }

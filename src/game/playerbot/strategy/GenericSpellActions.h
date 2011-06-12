@@ -55,7 +55,7 @@ namespace ai
 			this->statsManager = ai->GetStatsManager();
         }
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "current target"; };
         virtual bool Execute(Event event);
         virtual bool isPossible();
 		virtual bool isUseful();
@@ -111,7 +111,8 @@ namespace ai
 		{
 			range = BOT_REACT_DISTANCE;
 		}
-		virtual Unit* GetTarget();
+		
+        virtual const char* GetTargetName() { return "self target"; }
 	};
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -124,7 +125,7 @@ namespace ai
             this->estAmount = estAmount;
 			range = BOT_REACT_DISTANCE;
         }
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "self target"; }
         virtual bool isUseful();
 
     protected:
@@ -139,7 +140,7 @@ namespace ai
 			range = BOT_REACT_DISTANCE;
 		}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "self target"; }
 	};
 
 	class PartyMemberActionNameSupport {
@@ -161,7 +162,7 @@ namespace ai
         HealPartyMemberAction(AiManagerRegistry* const ai, const char* spell, uint8 estAmount = 15.0f) : 
 			CastHealingSpellAction(ai, spell, estAmount), PartyMemberActionNameSupport(spell) {}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "party member to heal"; }
 		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
     };
 
@@ -170,7 +171,7 @@ namespace ai
 	public:
 		ResurrectPartyMemberAction(AiManagerRegistry* const ai, const char* spell) : CastSpellAction(ai, spell) {}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "party member to resurrect"; }
 	};
     //---------------------------------------------------------------------------------------------------------------------
 
@@ -183,7 +184,7 @@ namespace ai
             this->dispelType = dispelType;
         }
 
-		virtual Unit* GetTarget();
+		virtual Value<Unit*>* GetTargetValue();
 		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
 
     protected:
@@ -198,7 +199,7 @@ namespace ai
         BuffOnPartyAction(AiManagerRegistry* const ai, const char* spell) : 
 			CastBuffSpellAction(ai, spell), PartyMemberActionNameSupport(spell) {}
     public: 
-		virtual Unit* GetTarget();
+		virtual Value<Unit*>* GetTargetValue();
 		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
     };
 

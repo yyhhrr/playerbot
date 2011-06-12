@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include "Value.h"
 
 namespace ai
 {
@@ -55,6 +56,9 @@ namespace ai
         virtual const char* getName() { return name.empty() ? "action" : name.c_str(); }
         virtual int getKind() { return 0; }
         void Update() {}
+        virtual Unit* GetTarget();
+        virtual Value<Unit*>* GetTargetValue();
+        virtual const char* GetTargetName() { return "self target"; }
 
     protected:
         Player* GetBot();

@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-Unit* CastBanishAction::GetTarget()
+Value<Unit*>* CastBanishAction::GetTargetValue()
 {
-    return ai->GetTargetManager()->FindCcTarget(getName());
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", getName());
 }

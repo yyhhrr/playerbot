@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-Unit* CastPolymorphAction::GetTarget()
+Value<Unit*>* CastPolymorphAction::GetTargetValue()
 {
-    return ai->GetTargetManager()->FindCcTarget(getName());
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", getName());
 }

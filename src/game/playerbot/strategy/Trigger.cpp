@@ -9,3 +9,13 @@ Event Trigger::Check()
 {
     return IsActive() ? Event(getName()) : Event();
 }
+
+Value<Unit*>* Trigger::GetTargetValue()
+{
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
+}
+
+Unit* Trigger::GetTarget()
+{
+    return GetTargetValue()->Get();
+}

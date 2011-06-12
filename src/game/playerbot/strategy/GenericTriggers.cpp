@@ -37,11 +37,6 @@ bool PanicTrigger::IsActive()
 		(!statsManager->HasMana(targetManager->GetSelf()) || statsManager->GetManaPercent(targetManager->GetSelf()) < 25);
 }
 
-Unit* BuffTrigger::GetTarget()
-{
-	return targetManager->GetSelf();
-}
-
 bool BuffTrigger::IsActive()
 {
     Unit* target = GetTarget();
@@ -51,9 +46,9 @@ bool BuffTrigger::IsActive()
 		(!statsManager->HasMana(self) || statsManager->GetManaPercent(self) > 40);
 }
 
-Unit* BuffOnPartyTrigger::GetTarget()
+Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()
 {
-	return targetManager->GetPartyMemberWithoutAura(spell);
+	return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
 }
 
 bool NoAttackersTrigger::IsActive()
@@ -76,19 +71,9 @@ bool AoeTrigger::IsActive()
     return statsManager->GetAttackerCount(targetManager->GetCurrentTarget(), range) >= amount;
 }
 
-Unit* DebuffTrigger::GetTarget()
-{
-	return targetManager->GetCurrentTarget();
-}
-
 bool DebuffTrigger::IsActive()
 {
 	return BuffTrigger::IsActive() && statsManager->GetHealthPercent(GetTarget()) > 25;
-}
-
-Unit* SpellTrigger::GetTarget()
-{
-	return targetManager->GetCurrentTarget();
 }
 
 bool SpellTrigger::IsActive()
@@ -142,19 +127,9 @@ bool ItemCountTrigger::IsActive()
 	return ai->GetInventoryManager()->GetItemCount(item) < count;
 }
 
-Unit* InterruptSpellTrigger::GetTarget()
-{
-	return targetManager->GetCurrentTarget();
-}
-
 bool InterruptSpellTrigger::IsActive()
 {
 	return SpellTrigger::IsActive() && spellManager->IsSpellCasting(GetTarget());
-}
-
-Unit* HasAuraTrigger::GetTarget()
-{
-	return targetManager->GetSelf();
 }
 
 bool HasAuraTrigger::IsActive()

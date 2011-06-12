@@ -31,11 +31,6 @@ bool CastAimedShotAction::isUseful()
     return statsManager->GetHealthPercent(GetTarget()) >= 5 && statsManager->GetManaPercent(targetManager->GetSelf()) >= 30;
 }
 
-Unit* CastMendPetAction::GetTarget()
-{
-	return targetManager->GetPet();
-}
-
 bool CastAspectOfTheCheetahAction::isUseful() {
     return !spellManager->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
 }
@@ -44,7 +39,7 @@ bool CastAspectOfTheViperAction::isUseful() {
 	return CastBuffSpellAction::isUseful() && statsManager->GetManaPercent(targetManager->GetSelf()) < 50;
 }
 
-Unit* CastFreezingTrap::GetTarget()
+Value<Unit*>* CastFreezingTrap::GetTargetValue()
 {
-    return ai->GetTargetManager()->FindCcTarget(getName());
+    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", "freezing trap");
 }

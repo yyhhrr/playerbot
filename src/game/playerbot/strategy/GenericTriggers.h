@@ -107,7 +107,7 @@ namespace ai
 			this->spell = spell;
 		}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "current target"; }
 		virtual const char* getName() { return spell; }
 		virtual bool IsActive();
 
@@ -127,7 +127,6 @@ namespace ai
 	{
     public:
         InterruptSpellTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell) {}
-		virtual Unit* GetTarget();
         virtual bool IsActive();
     };
 
@@ -223,7 +222,7 @@ namespace ai
     public:
         BuffTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell, 5) {}
     public:
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "self target"; }
         virtual bool IsActive();
     };
 
@@ -232,7 +231,7 @@ namespace ai
     public:
         BuffOnPartyTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {}
     public:
-		virtual Unit* GetTarget();
+		virtual Value<Unit*>* GetTargetValue();
     };
 
     BEGIN_TRIGGER(NoAttackersTrigger, Trigger)
@@ -248,7 +247,7 @@ namespace ai
 			checkInterval = 1;
 		}
     public:
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "current target"; }
         virtual bool IsActive();
     };
 
@@ -360,7 +359,7 @@ namespace ai
 			this->spell = spell;
 		}
 
-		virtual Unit* GetTarget();
+		virtual const char* GetTargetName() { return "self target"; }
 		virtual bool IsActive();
 
 	protected:
