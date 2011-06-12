@@ -6,13 +6,13 @@ using namespace ai;
 
 bool FollowLineAction::Execute(Event event)
 {
-	ai->GetMoveManager()->Follow(ai->GetTargetManager()->GetLineTarget(), 2.0f, 0.0f);
+	ai->GetMoveManager()->Follow(AI_VALUE(Unit*, "line target"), 2.0f, 0.0f);
     return true;
 }
 
 bool FollowMasterAction::Execute(Event event)
 {
-	ai->GetMoveManager()->Follow(ai->GetTargetManager()->GetMaster());
+	ai->GetMoveManager()->Follow(AI_VALUE(Unit*, "master"));
     return true;
 }
 
@@ -42,6 +42,6 @@ bool StayCombatAction::Execute(Event event)
 
 bool GoAwayAction::Execute(Event event)
 {
-	ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetMaster()); 
+	ai->GetMoveManager()->Flee(AI_VALUE(Unit*, "master")); 
     return true;
 }

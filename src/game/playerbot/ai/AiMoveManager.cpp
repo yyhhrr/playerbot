@@ -377,7 +377,7 @@ void AiMoveManager::Attack(Unit* target)
             creatureAI->AttackStart(target);
     }
 
-    aiRegistry->GetTargetManager()->SetCurrentTarget(target);
+    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
 	aiRegistry->GetInventoryManager()->AddLoot(guid);
 }
 
@@ -424,7 +424,7 @@ void AiMoveManager::Revive()
 		aiRegistry->GetSocialManager()->TellMaster(".. could not be revived ..");
 		return;
 	}
-    aiRegistry->GetTargetManager()->SetCurrentTarget(NULL);
+    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(NULL);
 	bot->SetSelectionGuid(ObjectGuid());
 }
 

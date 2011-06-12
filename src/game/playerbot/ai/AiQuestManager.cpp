@@ -301,7 +301,7 @@ void AiQuestManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 			uint64 objGUID;
 			p >> objGUID;
 
-			GameObject *obj = aiRegistry->GetTargetManager()->GetGameObject( objGUID );
+			GameObject *obj = aiRegistry->GetAi()->GetGameObject( objGUID );
 			if (obj && obj->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
 				TurnInQuests( obj );
 		}

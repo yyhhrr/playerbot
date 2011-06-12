@@ -137,14 +137,14 @@ bool HasAuraTrigger::IsActive()
 
 bool TankAoeTrigger::IsActive()
 {
-    Unit* target = targetManager->GetCurrentTarget();
+    Unit* target = AI_VALUE(Unit*, "current target");
     return AI_VALUE(uint8, "attacker count") > 0 &&
-        (!target || target->getVictim() == targetManager->GetSelf());
+        (!target || target->getVictim() == AI_VALUE(Unit*, "self target"));
 }
 
 bool IsBehindTargetTrigger::IsActive()
 {
-    Unit* target = targetManager->GetCurrentTarget();
+    Unit* target = AI_VALUE(Unit*, "current target");
     return target && moveManager->IsBehind(target);
 }
 
@@ -156,5 +156,5 @@ bool HasCcTargetTrigger::IsActive()
 
 bool NoMovementTrigger::IsActive()
 {
-	return !moveManager->IsMoving(targetManager->GetSelf());
+	return !moveManager->IsMoving(AI_VALUE(Unit*, "self target"));
 }

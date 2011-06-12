@@ -334,7 +334,7 @@ namespace ai
 		NoPetTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no pet", 5) {}
 
 		virtual bool IsActive() {
-			return !targetManager->GetPet() && !AI_VALUE(bool, "mounted");
+			return !AI_VALUE(Unit*, "pet target") && !AI_VALUE(bool, "mounted");
 		}
 	};
 

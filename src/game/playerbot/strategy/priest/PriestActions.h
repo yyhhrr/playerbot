@@ -82,7 +82,7 @@ namespace ai
     class CastRemoveShadowformAction : public Action {
     public:
         CastRemoveShadowformAction(AiManagerRegistry* const ai) : Action(ai) {}
-        virtual bool isUseful() { return ai->GetSpellManager()->HasAura("shadowform", ai->GetTargetManager()->GetSelf()); }
+        virtual bool isUseful() { return ai->GetSpellManager()->HasAura("shadowform", AI_VALUE(Unit*, "self target")); }
         virtual bool isPossible() { return true; }
         virtual bool Execute(Event event) {
             ai->GetSpellManager()->RemoveAura("shadowform");
@@ -120,19 +120,19 @@ namespace ai
 
     BEGIN_SPELL_ACTION(CastHolyNovaAction, "holy nova")
     virtual bool isUseful() {
-        return !spellManager->HasAura("shadowform", targetManager->GetSelf());
+        return !spellManager->HasAura("shadowform", AI_VALUE(Unit*, "self target"));
     }
     END_SPELL_ACTION()
 
     BEGIN_RANGED_SPELL_ACTION(CastHolyFireAction, "holy fire")
         virtual bool isUseful() {
-            return !spellManager->HasAura("shadowform", targetManager->GetSelf());
+            return !spellManager->HasAura("shadowform", AI_VALUE(Unit*, "self target"));
         }
     END_SPELL_ACTION()
 
     BEGIN_RANGED_SPELL_ACTION(CastSmiteAction, "smite")
         virtual bool isUseful() {
-			return !spellManager->HasAura("shadowform", targetManager->GetSelf());
+			return !spellManager->HasAura("shadowform", AI_VALUE(Unit*, "self target"));
         }
     END_SPELL_ACTION()
 

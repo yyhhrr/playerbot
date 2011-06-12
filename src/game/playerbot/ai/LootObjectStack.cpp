@@ -13,9 +13,9 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     worldObject = NULL;
     loot = NULL;
 
-	AiTargetManager* aiTargetManager = bot->GetPlayerbotAI()->GetAiRegistry()->GetTargetManager();
+	PlayerbotAI* ai = bot->GetPlayerbotAI();
 
-    Creature *creature = aiTargetManager->GetCreature(guid);
+    Creature *creature = ai->GetCreature(guid);
     if (creature && creature->getDeathState() == CORPSE)
     {
         loot = &creature->loot;
@@ -23,7 +23,7 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
         return;
     }
 
-    GameObject* gameObject = aiTargetManager->GetGameObject(guid);
+    GameObject* gameObject = ai->GetGameObject(guid);
     if (gameObject)
     {
         loot = &gameObject->loot;
@@ -51,7 +51,7 @@ void LootObjectStack::Add(ObjectGuid guid)
         return;
 
     vector<LootObject> ordered = OrderByDistance();
-    for (int i = MAX_LOOT_OBJECT_COUNT; i < ordered.size(); i++)
+    for (size_t i = MAX_LOOT_OBJECT_COUNT; i < ordered.size(); i++)
         Remove(ordered[i].guid);
 }
 

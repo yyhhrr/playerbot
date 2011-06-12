@@ -27,7 +27,7 @@ void LootManager::AddLoot(ObjectGuid guid)
 {
 	AiManagerRegistry* aIRegistry = bot->GetPlayerbotAI()->GetAiRegistry();
 
-	GameObject* go = aIRegistry->GetTargetManager()->GetGameObject(guid);
+	GameObject* go = aIRegistry->GetAi()->GetGameObject(guid);
 	if (go && !go->isSpawned())
 	{
 		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot add loot: game object not spawned");
@@ -69,7 +69,7 @@ void LootManager::ReleaseLoot()
 
 void LootManager::DeactivateLootGameObject(LootObject &loot)
 {
-    GameObject* go = bot->GetPlayerbotAI()->GetAiRegistry()->GetTargetManager()->GetGameObject(loot.guid);
+    GameObject* go = bot->GetPlayerbotAI()->GetGameObject(loot.guid);
     if(go)
     {
         go->SetLootState(GO_JUST_DEACTIVATED);
@@ -202,14 +202,14 @@ void LootManager::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTy
 		return;
 	}
 
-	GameObject* go = aIRegistry->GetTargetManager()->GetGameObject(lootObject.guid);
+	GameObject* go = aIRegistry->GetAi()->GetGameObject(lootObject.guid);
 	if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
 	{
 		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
 		return;
 	}
 
-	Creature* creature = aIRegistry->GetTargetManager()->GetCreature(lootObject.guid);
+	Creature* creature = aIRegistry->GetAi()->GetCreature(lootObject.guid);
 	if (lootType == LOOT_SKINNING && creature && !CheckLevelBasedSkill(creature->GetCreatureInfo()->GetRequiredLootSkill(), creature->getLevel()))
 	{
 		aIRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");

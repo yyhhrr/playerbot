@@ -4,6 +4,10 @@
 #include "strategy/ExternalEventHelper.h"
 #include "ai/AiFactory.h"
 
+#include "../GridNotifiers.h"
+#include "../GridNotifiersImpl.h"
+#include "../CellImpl.h"
+
 using namespace ai;
 using namespace std;
 
@@ -142,6 +146,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
         nonCombatEngine->Init();
         currentEngine = nonCombatEngine;
         nextAICheckTime = 0;
+        aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
     }
 
 
@@ -186,7 +191,7 @@ void PlayerbotAI::UpdateNextCheckDelay()
 
 void PlayerbotAI::ChangeStrategyIfNecessary()
 {
-    Unit* target = aiRegistry->GetTargetManager()->GetCurrentTarget();
+    Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
     if (target && !bot->isInFrontInMap(target, BOT_REACT_DISTANCE))
     {
         bot->SetFacingTo(bot->GetAngle(target));
@@ -202,7 +207,7 @@ void PlayerbotAI::ChangeStrategyIfNecessary()
     }
     else 
     {
-        aiRegistry->GetTargetManager()->SetCurrentTarget(NULL);
+        aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
         if (currentEngine != nonCombatEngine)
         {
@@ -291,4 +296,92 @@ bool PlayerbotAI::IsTank(Player* player)
         return aiRegistry->GetSpellManager()->HasAnyAuraOf(player, "bear form", "dire bear form");
     }
     return false;
+}
+
+
+
+namespace MaNGOS
+{
+
+    class UnitByGuidInRangeCheck
+    {
+    public:
+        UnitByGuidInRangeCheck(WorldObject const* obj, ObjectGuid guid, float range) : i_obj(obj), i_range(range), i_guid(guid) {}
+        WorldObject const& GetFocusObject() const { return *i_obj; }
+        bool operator()(Unit* u)
+        {
+            return u->GetObjectGuid() == i_guid && i_obj->IsWithinDistInMap(u, i_range);
+        }
+    private:
+        WorldObject const* i_obj;
+        float i_range;
+        ObjectGuid i_guid;
+    };
+
+    class GameObjectByGuidInRangeCheck
+    {
+    public:
+        GameObjectByGuidInRangeCheck(WorldObject const* obj, ObjectGuid guid, float range) : i_obj(obj), i_range(range), i_guid(guid) {}
+        WorldObject const& GetFocusObject() const { return *i_obj; }
+        bool operator()(GameObject* u)
+        {
+            if (u && i_obj->IsWithinDistInMap(u, i_range) && u->isSpawned() && u->GetGOInfo() && u->GetObjectGuid() == i_guid)
+                return true;
+
+            return false;
+        }
+    private:
+        WorldObject const* i_obj;
+        float i_range;
+        ObjectGuid i_guid;
+    };
+
+};
+
+Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
+{
+    if (!guid)
+        return NULL;
+
+    if (bot->GetMapId() != GetMaster()->GetMapId())
+        return NULL;
+
+    list<Unit *> targets;
+
+    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
+    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+
+    for(list<Unit *>::iterator i = targets.begin(); i != targets.end(); i++)
+    {
+        Creature* creature = dynamic_cast<Creature*>(*i);
+        if (creature)
+            return creature;
+    }
+
+    return NULL;
+}
+
+GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
+{
+    if (!guid)
+        return NULL;
+
+    if (bot->GetMapId() != GetMaster()->GetMapId())
+        return NULL;
+
+    list<GameObject*> targets;
+
+    MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectByGuidInRangeCheck> searcher(targets, u_check);
+    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+
+    for(list<GameObject*>::iterator i = targets.begin(); i != targets.end(); i++)
+    {
+        GameObject* go = *i;
+        if (go && go->isSpawned())
+            return go;
+    }
+
+    return NULL;
 }

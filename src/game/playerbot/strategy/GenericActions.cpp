@@ -17,5 +17,5 @@ bool ChangeCombatStrategyAction::Execute(Event event)
 
 bool UseItemAction::isUseful()
 {
-    return ai->GetSpellManager()->IsSpellCastUseful(getName(), ai->GetTargetManager()->GetSelf());
+    return ai->GetSpellManager()->IsSpellCastUseful(getName(), AI_VALUE(Unit*, "self target"));
 }

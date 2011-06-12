@@ -12,7 +12,7 @@ namespace ai
 
         virtual bool Execute(Event event) 
 		{
-            return ai->GetMoveManager()->Flee(ai->GetTargetManager()->GetCurrentTarget(), distance); 
+            return ai->GetMoveManager()->Flee(AI_VALUE(Unit*, "current target"), distance); 
         }
 
 	private:

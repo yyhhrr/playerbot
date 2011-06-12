@@ -61,6 +61,8 @@ public:
     bool ContainsStrategy(StrategyType type);
     void ReInitCurrentEngine();
     bool IsTank(Player* player);
+    Creature* GetCreature(ObjectGuid guid);
+    GameObject* GetGameObject(ObjectGuid guid);
 
 public:
 	Player* GetBot() { return bot; }

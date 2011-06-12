@@ -12,12 +12,12 @@ namespace ai
         }
         virtual bool Execute(Event event) 
 		{
-			ai->GetMoveManager()->MoveTo(ai->GetTargetManager()->GetCurrentTarget(), distance);
+			ai->GetMoveManager()->MoveTo(AI_VALUE(Unit*, "current target"), distance);
             return true;
         }
         virtual bool isUseful() 
 		{
-            return ai->GetMoveManager()->GetDistanceTo(ai->GetTargetManager()->GetCurrentTarget()) > distance;
+            return ai->GetMoveManager()->GetDistanceTo(AI_VALUE(Unit*, "current target")) > distance;
         }
 
     protected:
@@ -32,7 +32,7 @@ namespace ai
         }
 		virtual bool isUseful() 
 		{
-			return ai->GetMoveManager()->GetDistanceTo(ai->GetTargetManager()->GetCurrentTarget()) > distance;
+			return ai->GetMoveManager()->GetDistanceTo(AI_VALUE(Unit*, "current target")) > distance;
 		}
 
     protected:

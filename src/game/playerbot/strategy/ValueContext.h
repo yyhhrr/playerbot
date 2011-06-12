@@ -39,7 +39,7 @@ namespace ai
             creators["party member to resurrect"] = &ValueContext::party_member_to_resurrect;
             creators["current target"] = &ValueContext::current_target;
             creators["self target"] = &ValueContext::self_target;
-            creators["master target"] = &ValueContext::master_target;
+            creators["master"] = &ValueContext::master;
             creators["line target"] = &ValueContext::line_target;
             creators["tank target"] = &ValueContext::tank_target;
             creators["dps target"] = &ValueContext::dps_target;
@@ -86,7 +86,7 @@ namespace ai
         static UntypedValue* party_member_to_dispel(AiManagerRegistry* ai) { return new PartyMemberToDispel(ai); }
         static UntypedValue* current_target(AiManagerRegistry* ai) { return new CurrentTargetValue(ai); }
         static UntypedValue* self_target(AiManagerRegistry* ai) { return new SelfTargetValue(ai); }
-        static UntypedValue* master_target(AiManagerRegistry* ai) { return new MasterTargetValue(ai); }
+        static UntypedValue* master(AiManagerRegistry* ai) { return new MasterTargetValue(ai); }
         static UntypedValue* line_target(AiManagerRegistry* ai) { return new LineTargetValue(ai); }
         static UntypedValue* tank_target(AiManagerRegistry* ai) { return new TankTargetValue(ai); }
         static UntypedValue* dps_target(AiManagerRegistry* ai) { return new DpsTargetValue(ai); }

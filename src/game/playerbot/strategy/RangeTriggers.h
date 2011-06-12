@@ -8,7 +8,7 @@ namespace ai
         EnemyTooCloseTrigger(AiManagerRegistry* const ai) : Trigger(ai, "enemy too close") {}
         virtual bool IsActive() 
 		{
-			Unit* target = targetManager->GetCurrentTarget();
+			Unit* target = AI_VALUE(Unit*, "current target");
             float distance = moveManager->GetDistanceTo(target);
             return target && distance <= ATTACK_DISTANCE;
         }
@@ -22,7 +22,7 @@ namespace ai
         }
         virtual bool IsActive() 
 		{
-			Unit* target = targetManager->GetCurrentTarget();
+			Unit* target = AI_VALUE(Unit*, "current target");
 			return target && moveManager->GetDistanceTo(target) > distance;
         }
 
