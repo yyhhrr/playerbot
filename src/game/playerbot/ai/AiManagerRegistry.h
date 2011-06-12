@@ -12,7 +12,6 @@ namespace ai
     class AiManagerBase;
     
 	class AiSpellManager;
-	class AiTargetManager;
 	class AiMoveManager;
 	class AiInventoryManager;
 	class AiSocialManager;
@@ -23,11 +22,10 @@ namespace ai
 	enum AiManagerType
 	{
 		AiSpellManagerType = 0,
-		AiTargetManagerType = 1,
-		AiMoveManagerType = 2,
-		AiInventoryManagerType = 3,
-		AiSocialManagerType = 4,
-		AiQuestManagerType = 5
+		AiMoveManagerType = 1,
+		AiInventoryManagerType = 2,
+		AiSocialManagerType = 3,
+		AiQuestManagerType = 4
 	};
 
 	class AiManagerRegistry
@@ -40,7 +38,6 @@ namespace ai
 
 	public:
 		AiSpellManager* GetSpellManager() { return (AiSpellManager*)managers[AiSpellManagerType]; }
-		AiTargetManager* GetTargetManager() { return (AiTargetManager*)managers[AiTargetManagerType]; }
 		AiMoveManager* GetMoveManager() { return (AiMoveManager*)managers[AiMoveManagerType]; }
 		AiInventoryManager* GetInventoryManager() { return (AiInventoryManager*)managers[AiInventoryManagerType]; }
 		AiSocialManager* GetSocialManager() { return (AiSocialManager*)managers[AiSocialManagerType]; }

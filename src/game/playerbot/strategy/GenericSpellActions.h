@@ -51,7 +51,6 @@ namespace ai
         {
             this->spell = spell;
 			this->spellManager = ai->GetSpellManager();
-			this->targetManager = ai->GetTargetManager();
         }
 
 		virtual const char* GetTargetName() { return "current target"; };
@@ -73,7 +72,6 @@ namespace ai
         const char* spell;
 		float range;
 		AiSpellManager* spellManager;
-		AiTargetManager* targetManager;
     };
 
 	//---------------------------------------------------------------------------------------------------------------------

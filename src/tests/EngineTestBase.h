@@ -7,7 +7,6 @@
 #include "../game/playerbot/strategy/Engine.h"
 
 #include "MockAiSpellManager.h"
-#include "MockAiTargetManager.h"
 #include "MockAiMoveManager.h"
 #include "MockAiInventoryManager.h"
 #include "MockAiSocialManager.h" 
@@ -85,7 +84,6 @@ protected:
 protected:
     MockAiManagerRegistry *ai;
 	MockAiSpellManager* spellManager;
-	MockAiTargetManager* targetManager;
 	MockAiMoveManager* moveManager;
 	MockAiInventoryManager* inventoryManager;
 	MockAiSocialManager* socialManager;

@@ -10,7 +10,6 @@ MockAiManagerRegistry::MockAiManagerRegistry() : AiManagerRegistry()
 {
     ai = new MockPlayerbotAIBase();
 	managers[AiSpellManagerType] = new MockAiSpellManager(ai, this, &buffer);
-	managers[AiTargetManagerType] = new MockAiTargetManager(ai, this);
 	managers[AiMoveManagerType] = new MockAiMoveManager(ai, this, &buffer);
 	managers[AiInventoryManagerType] = new MockAiInventoryManager(ai, this, &buffer);
 	managers[AiSocialManagerType] = new MockAiSocialManager(ai, this, &buffer);

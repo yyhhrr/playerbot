@@ -27,7 +27,6 @@ namespace ai
 			this->checkInterval = checkInterval;
 			ticksElapsed = 0;
 			this->spellManager = ai->GetSpellManager();
-			this->targetManager = ai->GetTargetManager();
 			this->moveManager = ai->GetMoveManager();
         }
         virtual ~Trigger() {}
@@ -57,7 +56,6 @@ namespace ai
 		int checkInterval;
 		int ticksElapsed;
 		AiSpellManager* spellManager;
-		AiTargetManager* targetManager;
 		AiMoveManager* moveManager;
 	};
 
