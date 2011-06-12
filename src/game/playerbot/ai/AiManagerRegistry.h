@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define MAX_AI_MANAGER_TYPE 6
+#define MAX_AI_MANAGER_TYPE 5
 
 class Player;
 class PlayerbotAI;
