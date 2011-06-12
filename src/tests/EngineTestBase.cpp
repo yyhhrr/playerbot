@@ -4,6 +4,29 @@
 #include "MockedTargets.h"
 #include "AiObjectContextWrapper.h"
 
+class TestActionExecutionListener : public ActionExecutionListener
+{
+public:
+    TestActionExecutionListener(MockAiManagerRegistry *ai) : ai(ai) {}
+
+    virtual void Before(Action* action) {}
+    virtual bool AllowExecution(Action* action) { return false; }
+    virtual bool OverrideResult(bool executed) { return true; }
+    virtual void After(Action* action) 
+    {
+        ai->buffer.append(">");        
+        MockedTargets::Append(ai->buffer, action->GetTarget());
+        ai->buffer.append(":");
+        ai->buffer.append(action->getName());
+
+        ((MockAiSpellManager*)ai->GetSpellManager())->spellCooldowns.push_back(action->getName()); 
+    }
+
+private:
+    MockAiManagerRegistry *ai;
+};
+
+
 void EngineTestBase::setUp()
 {
 	ai = new MockAiManagerRegistry();
@@ -41,6 +64,7 @@ void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
     context = new AiObjectContextWrapper(ai, aiObjectContext);
     ai->SetContext(context);
     engine = new Engine(ai, context);
+    //engine->AddActionExecutionListener(new TestActionExecutionListener(ai));
     
 	va_list vl;
 	va_start(vl, aiObjectContext);

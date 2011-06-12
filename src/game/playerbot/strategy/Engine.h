@@ -12,7 +12,10 @@ namespace ai
     class ActionExecutionListener 
     {
     public:
-        virtual bool ActionExecuted(Action* action) = 0;
+        virtual void Before(Action* action) = 0;
+        virtual bool AllowExecution(Action* action) = 0;
+        virtual void After(Action* action) = 0;
+        virtual bool OverrideResult(bool executed) = 0;
     };
 
     // -----------------------------------------------------------------------------------------------------------------------
@@ -24,7 +27,10 @@ namespace ai
 
     // ActionExecutionListener
     public:
-        virtual bool ActionExecuted(Action* action);
+        virtual void Before(Action* action);
+        virtual bool AllowExecution(Action* action);
+        virtual void After(Action* action);
+        virtual bool OverrideResult(bool executed);
 
     public:
         void Add(ActionExecutionListener* listener)
@@ -85,6 +91,7 @@ namespace ai
         void PushAgain(ActionNode* actionNode, float relevance, Event event);
         ActionNode* GetAction(const char* name);
         Action* InitializeAction(ActionNode* actionNode);
+        bool ListenAndExecute(Action* action, Event event);
 
     protected:
 	    Queue queue;

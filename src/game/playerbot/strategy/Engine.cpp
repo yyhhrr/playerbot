@@ -7,12 +7,38 @@
 using namespace ai;
 using namespace std;
 
-bool ActionExecutionListeners::ActionExecuted(Action* action)
+void ActionExecutionListeners::Before(Action* action)
+{
+    for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
+    {
+        (*i)->Before(action);
+    }
+}
+
+void ActionExecutionListeners::After(Action* action)
+{
+    for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
+    {
+        (*i)->After(action);
+    }
+}
+
+bool ActionExecutionListeners::OverrideResult(bool executed)
 {
     bool result = true;
     for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
     {
-        result &= (*i)->ActionExecuted(action);
+        result &= (*i)->OverrideResult(executed);
+    }
+    return result;
+}
+
+bool ActionExecutionListeners::AllowExecution(Action* action)
+{
+    bool result = true;
+    for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
+    {
+        result &= (*i)->AllowExecution(action);
     }
     return result;
 }
@@ -99,8 +125,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
 
                     sLog.outDetail("A:%s", action->getName());
 
-                    if (actionExecutionListeners.ActionExecuted(actionNode->getAction()))
-                        actionExecuted = action->Execute(event);
+                    actionExecuted = ListenAndExecute(action, event);
 
                     if (actionExecuted) {
                         MultiplyAndPush(actionNode->getContinuers(), 0, false, event);
@@ -203,11 +228,7 @@ bool Engine::ExecuteAction(const char* name)
     Action* action = InitializeAction(actionNode);
     if (action && action->isPossible() && action->isUseful())
     {
-        if (actionExecutionListeners.ActionExecuted(action))
-		{
-            result = action->Execute(Event());
-		}
-
+        result = ListenAndExecute(action, Event());
         MultiplyAndPush(action->getContinuers(), 0.0f, false, Event());
     }
 	return result;
@@ -354,4 +375,20 @@ Action* Engine::InitializeAction(ActionNode* actionNode)
         actionNode->setAction(action);
     }
     return action;
+}
+
+bool Engine::ListenAndExecute(Action* action, Event event) 
+{
+    bool actionExecuted = true;
+
+    actionExecutionListeners.Before(action);
+    
+    if (actionExecutionListeners.AllowExecution(action))
+        actionExecuted = action->Execute(event);
+    else
+        actionExecuted = true;
+
+    actionExecutionListeners.After(action);
+
+    return actionExecuted;
 }

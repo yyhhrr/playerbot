@@ -16,6 +16,28 @@ namespace ai
         static Player* GetTargetForTank() { return (Player*)4; }
         static Player* GetCc() { return (Player*)12; }
 		static Player* GetLineTarget() { return (Player*)14; }
+
+        static void Append(string &buffer, Unit* unit)
+        {
+            if (unit == GetPartyMember())
+                buffer.append("P");
+            if (unit == GetCurrentTarget())
+                buffer.append("T");
+            if (unit == GetSelf())
+                buffer.append("S");
+            if (unit == GetPet())
+                buffer.append("Pet");
+            if (unit == GetMaster())
+                buffer.append("M");
+            if (unit == GetTargetForDps())
+                buffer.append("Dps");
+            if (unit == GetTargetForTank())
+                buffer.append("Tank");
+            if (unit == GetCc())
+                buffer.append("Cc");
+            if (unit == GetLineTarget())
+                buffer.append("Line");
+        }
    };
 
 }

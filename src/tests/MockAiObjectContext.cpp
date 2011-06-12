@@ -30,7 +30,7 @@ private:
 class MockAction : public Action
 {
 public:
-    MockAction(string *buffer, const char* name) : Action(NULL, name), buffer(buffer)
+    MockAction(AiManagerRegistry* const ai, string *buffer, const char* name) : Action(ai, name), buffer(buffer)
     {
 
     }
@@ -88,5 +88,5 @@ Action* MockAiObjectContext::GetAction(const char* name)
     if (action)
         return action;
 
-    return actions[name] = new MockAction(buffer, name);
+    return actions[name] = new MockAction(ai, buffer, name);
 }
