@@ -85,6 +85,7 @@ namespace ai
 	class PartyMemberDeadTrigger : public Trigger {
 	public:
 		PartyMemberDeadTrigger(AiManagerRegistry* const ai) : Trigger(ai, "resurrect", 10) {}
+        virtual const char* GetTargetName() { return "party member to resurrect"; }
 		virtual bool IsActive();
 	};
 
