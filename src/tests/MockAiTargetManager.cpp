@@ -44,17 +44,17 @@ Unit* MockAiTargetManager::GetCurrentTarget()
 	return haveTarget ? MockedTargets::GetCurrentTarget() : NULL;
 }
 
-Player* MockAiTargetManager::GetSelf()
+Unit* MockAiTargetManager::GetSelf()
 {
 	return MockedTargets::GetSelf();
 }
 
-Player* MockAiTargetManager::GetMaster()
+Unit* MockAiTargetManager::GetMaster()
 {
 	return MockedTargets::GetMaster();
 }
 
-Player* MockAiTargetManager::GetLineTarget()
+Unit* MockAiTargetManager::GetLineTarget()
 {
 	return MockedTargets::GetLineTarget();
 }

@@ -723,6 +723,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\QualifiedValueTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\RacialsTestCase.cpp"
 				>
 			</File>

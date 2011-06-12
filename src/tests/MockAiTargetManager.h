@@ -29,10 +29,10 @@ namespace ai
 		virtual Unit* GetCurrentTarget();
 		virtual Unit* FindTargetForTank();
 		virtual Unit* FindTargetForDps();
-		virtual Player* GetSelf();
+		virtual Unit* GetSelf();
 		virtual Unit* GetPet();
-		virtual Player* GetMaster();
-		virtual Player* GetLineTarget();
+		virtual Unit* GetMaster();
+		virtual Unit* GetLineTarget();
         virtual Unit* FindCcTarget(const char* spell);
         virtual Unit* GetCurrentCcTarget(const char* spell) { return NULL; }
 

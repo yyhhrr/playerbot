@@ -2,16 +2,41 @@
 
 namespace ai
 {
+    class Qualified
+    {
+    public:
+        Qualified() {};
+
+    public:
+        void Qualify(string qualifier) { this->qualifier = qualifier; }
+
+    protected:
+        string qualifier;
+    };
+
     template <class T> class NamedObjectContextBase
     {
     public:
         T* create(string name, AiManagerRegistry* ai)
         {
+            size_t found = name.find("::");
+            string qualifier;
+            if (found != string::npos)
+            {
+                qualifier = name.substr(found + 2);
+                name = name.substr(0, found);
+            }
+
             ActionCreator creator = creators[name];
             if (!creator)
                 return NULL;
 
-            return (*creator)(ai);
+            T *object = (*creator)(ai);
+            Qualified *q = dynamic_cast<Qualified *>(object);
+            if (q)
+                q->Qualify(qualifier);
+
+            return object;
         }
 
     protected:

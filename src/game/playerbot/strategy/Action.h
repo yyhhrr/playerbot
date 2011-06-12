@@ -40,7 +40,7 @@ namespace ai
     class Action : public AiManagerRegistryAware
 	{
 	public:
-        Action(AiManagerRegistry* const ai, const char* name = NULL) : AiManagerRegistryAware(ai) {
+        Action(AiManagerRegistry* const ai, const char* name = "action") : AiManagerRegistryAware(ai) {
             this->name = name;
         }
         virtual ~Action(void) {}
@@ -52,7 +52,7 @@ namespace ai
         virtual NextAction** getPrerequisites() { return NULL; }
         virtual NextAction** getAlternatives() { return NULL; }
         virtual NextAction** getContinuers() { return NULL; }
-        virtual const char* getName() { return !name ? "action" : name; }
+        virtual const char* getName() { return name.empty() ? "action" : name.c_str(); }
         virtual int getKind() { return 0; }
         void Update() {}
 
@@ -63,7 +63,7 @@ namespace ai
         void TellMaster(const char* text) { ai->GetSocialManager()->TellMaster(text); }
 
     protected:
-        const char* name;
+        string name;
 	};
 
     class ActionNode

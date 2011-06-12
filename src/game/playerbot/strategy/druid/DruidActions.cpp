@@ -28,7 +28,7 @@ NextAction** CastAbolishPoisonOnPartyAction::getAlternatives()
 
 Unit* CastEntanglingRootsCcAction::GetTarget()
 {
-    return ai->GetTargetManager()->FindCcTarget(name);
+    return ai->GetTargetManager()->FindCcTarget(getName());
 }
 
 bool CastEntanglingRootsCcAction::Execute(Event event)

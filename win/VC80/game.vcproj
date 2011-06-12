@@ -1861,14 +1861,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\FindTargetStrategy.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\FindTargetStrategy.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\FleeManager.cpp"
 					>
 				</File>
@@ -1933,6 +1925,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CcTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CcTargetValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChatActionContext.h"
 					>
 				</File>
@@ -1962,6 +1962,30 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\CureTriggers.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CurrentCcTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CurrentCcTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CurrentTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CurrentTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DpsTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DpsTargetValue.h"
 					>
 				</File>
 				<File
@@ -2029,6 +2053,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\GrindTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\GrindTargetValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.cpp"
 					>
 				</File>
@@ -2038,6 +2070,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LeaveGroupAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LineTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LineTargetValue.h"
 					>
 				</File>
 				<File
@@ -2066,6 +2106,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LowManaMultiplier.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\MasterTargetValue.h"
 					>
 				</File>
 				<File
@@ -2125,6 +2169,46 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToDispel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToDispel.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToHeal.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToHeal.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToResurrect.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberToResurrect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberWithoutAuraValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PartyMemberWithoutAuraValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\PassiveMultiplier.cpp"
 					>
 				</File>
@@ -2138,6 +2222,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\PassTroughStrategy.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\PetTargetValue.h"
 					>
 				</File>
 				<File
@@ -2181,6 +2269,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SelfTargetValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\StatsAction.cpp"
 					>
 				</File>
@@ -2198,6 +2290,22 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\StrategyContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TankTargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TankTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TargetValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TargetValue.h"
 					>
 				</File>
 				<File

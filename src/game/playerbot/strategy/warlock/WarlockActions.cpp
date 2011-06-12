@@ -6,5 +6,5 @@ using namespace ai;
 
 Unit* CastBanishAction::GetTarget()
 {
-    return ai->GetTargetManager()->FindCcTarget(name);
+    return ai->GetTargetManager()->FindCcTarget(getName());
 }

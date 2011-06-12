@@ -196,7 +196,7 @@ void AiMoveManager::StayCircle(float range)
 {
 	Stay();
 
-	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+	Player* master = aiRegistry->GetAi()->GetMaster();
 	float x = master->GetPositionX();
 	float y = master->GetPositionY();
 	float z = master->GetPositionZ();
@@ -211,7 +211,7 @@ void AiMoveManager::StayLine(float range)
 	if (!group)
 		return;
 
-	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+    Player* master = aiRegistry->GetAi()->GetMaster();
 	float x = master->GetPositionX();
 	float y = master->GetPositionY();
 	float z = master->GetPositionZ();
@@ -239,7 +239,7 @@ void AiMoveManager::StayCombat(float range)
 	if (!group)
 		return;
 
-	Player* master = aiRegistry->GetTargetManager()->GetMaster();
+    Player* master = aiRegistry->GetAi()->GetMaster();
 	float x = master->GetPositionX();
 	float y = master->GetPositionY();
 	float z = master->GetPositionZ();

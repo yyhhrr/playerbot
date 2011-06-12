@@ -1,6 +1,5 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
-#include "FindTargetStrategy.h"
 
 #include "../../GridNotifiers.h"
 #include "../../GridNotifiersImpl.h"
@@ -9,278 +8,87 @@
 using namespace ai;
 using namespace std;
 
+Unit* AiTargetManager::GetSelf()
+{
+    return ai->GetAiObjectContext()->GetValue<Unit*>("self target")->Get();
+}
+
+Unit* AiTargetManager::GetMaster()
+{
+    return ai->GetAiObjectContext()->GetValue<Unit*>("master target")->Get();
+}
+
 Unit* AiTargetManager::GetCurrentTarget()
 {
-	if (selection.IsEmpty())
-		return NULL;
-
-	Unit* unit = sObjectAccessor.GetUnit(*bot, selection);
-	if (unit && !bot->IsWithinLOSInMap(unit))
-		return NULL;
-
-	return unit;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
 }
 
 void AiTargetManager::SetCurrentTarget(Unit* target) 
 {
-	if (!target)
-	{
-		selection = ObjectGuid();
-		return;
-	}
-
-	selection = target->GetObjectGuid(); 
+    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
 }
 
 Unit* AiTargetManager::GetPartyMemberWithoutAura(const char* spell) 
 {
-	return FindPartyMember(&AiTargetManager::PlayerWithoutAuraPredicate, (void*)spell); 
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell)->Get();
 }
 
 Unit* AiTargetManager::GetPartyMinHealthPlayer()
 {
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-
-	MinValueCalculator calc(100);
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* player = gref->getSource();
-		if (!CheckPredicate(player, NULL, NULL) || !player->isAlive())
-			continue;
-
-		uint8 health = aiRegistry->GetStatsManager()->GetHealthPercent(player);
-		if (health < 25 || !IsTargetOfHealingSpell(player))
-			calc.probe(health, player);
-
-		Pet* pet = player->GetPet();
-		if (pet && CanHealPet(pet)) 
-		{
-			health = aiRegistry->GetStatsManager()->GetHealthPercent(pet);
-			if (health < 25 || !IsTargetOfHealingSpell(player))
-				calc.probe(health, player);
-		}
-	}
-	return (Unit*)calc.param;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member to heal")->Get();
 }
 
 Unit* AiTargetManager::GetDeadPartyMember() 
 {
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* player = gref->getSource();
-		if (CheckPredicate(player, NULL, NULL) && !player->isAlive() && !IsTargetOfResurrectSpell(player))
-			return player;
-	}
-	return NULL;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member to resurrect")->Get();
 }
 
-Unit* AiTargetManager::FindPartyMember(FindPlayerPredicate predicate, void* param)
+Unit* AiTargetManager::GetLineTarget()
 {
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* player = gref->getSource();
-		if (CheckPredicate(player, predicate, param))
-			return player;
-
-		Pet* pet = player->GetPet();
-		if (pet && CanHealPet(pet) && CheckPredicate(player, predicate, param))
-			return player;
-	}
-	return NULL;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("line target")->Get();
 }
 
-bool AiTargetManager::CheckPredicate(Unit* player, FindPlayerPredicate predicate, void *param) 
+Unit* AiTargetManager::FindTargetForTank()
 {
-	return (player != bot && 
-		bot->GetDistance(player) < 50.0f &&
-		bot->IsWithinLOS(player->GetPositionX(), player->GetPositionY(), player->GetPositionZ()) &&
-		(predicate==NULL || (this->*predicate)(player, param)));
+    return ai->GetAiObjectContext()->GetValue<Unit*>("tank target")->Get();
 }
 
-bool AiTargetManager::PlayerWithoutAuraPredicate(Unit* player, void *param )
+Unit* AiTargetManager::FindTargetForDps()
 {
-	return player->isAlive() && !aiRegistry->GetSpellManager()->HasAura((const char*)param, player);
+    return ai->GetAiObjectContext()->GetValue<Unit*>("dps target")->Get();
 }
 
-
-bool AiTargetManager::IsHealingSpell(SpellEntry const* spell) {
-	for (int i=0; i<3; i++) {
-		if (spell->Effect[i] == SPELL_EFFECT_HEAL ||
-			spell->Effect[i] == SPELL_EFFECT_HEAL_MAX_HEALTH ||
-			spell->Effect[i] == SPELL_EFFECT_HEAL_MECHANICAL || 
-			spell->Effect[i] == SPELL_EFFECT_HEAL_PCT)
-			return true;
-	}
-	return false;
-}
-
-bool AiTargetManager::IsResurrectSpell(SpellEntry const* spell) {
-	for (int i=0; i<3; i++) {
-		if (spell->Effect[i] == SPELL_EFFECT_RESURRECT || 
-			spell->Effect[i] == SPELL_EFFECT_RESURRECT_NEW || 
-			spell->Effect[i] == SPELL_EFFECT_SELF_RESURRECT)
-			return true;
-	}
-	return false;
-}
-
-
-bool AiTargetManager::IsTargetOfHealingSpell(Player* target) {
-	return IsTargetOfSpellCast(target, &AiTargetManager::IsHealingSpell);
-}
-
-bool AiTargetManager::IsTargetOfResurrectSpell(Player* target) {
-	return IsTargetOfSpellCast(target, &AiTargetManager::IsResurrectSpell);
-}
-
-bool AiTargetManager::IsTargetOfSpellCast(Player* target, SpellEntryPredicate predicate) 
+Unit* AiTargetManager::FindCcTarget(const char* spell)
 {
-	Group* group = bot->GetGroup();
-	ObjectGuid targetGuid = target ? target->GetObjectGuid() : bot->GetObjectGuid();
-    ObjectGuid corpseGuid = target && target->GetCorpse() ? target->GetCorpse()->GetObjectGuid() : ObjectGuid();
-
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* player = gref->getSource();
-		if (player == bot)
-			continue;
-
-		if (player->IsNonMeleeSpellCasted(true)) 
-		{
-			for (int type = CURRENT_GENERIC_SPELL; type < CURRENT_MAX_SPELL; type++) {
-				Spell* spell = player->GetCurrentSpell((CurrentSpellTypes)type);
-                if (spell && (this->*predicate)(spell->m_spellInfo)) { 
-                    ObjectGuid unitTarget = spell->m_targets.getUnitTargetGuid();
-                    if (unitTarget == targetGuid)
-                        return true;
-                    
-                    ObjectGuid corpseTarget = spell->m_targets.getCorpseTargetGuid();
-                    if (corpseTarget == corpseGuid)
-                        return true;
-                }
-			}
-		}
-	}
-
-	return false;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", spell)->Get();
 }
 
-Unit* AiTargetManager::GetPartyMemberToDispell(uint32 dispelType)
+Unit* AiTargetManager::GetCurrentCcTarget(const char* spell)
 {
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-	
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* player = gref->getSource();
-		if( !player || !player->isAlive() || player == bot)
-			continue;
-
-		if (HasAuraToDispel(player, dispelType))
-			return player;
-
-		Pet* pet = player->GetPet();
-		if (pet && CanHealPet(pet) && HasAuraToDispel(pet, dispelType))
-			return pet;
-	}
-
-	return NULL;
-}
-
-
-bool AiTargetManager::HasAuraToDispel(Unit* player, uint32 dispelType) 
-{
-	for (uint32 type = SPELL_AURA_NONE; type < TOTAL_AURAS; ++type)
-	{
-		Unit::AuraList auras = player->GetAurasByType((AuraType)type);
-		for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
-		{
-			Aura* aura = *itr;
-			const SpellEntry* entry = aura->GetSpellProto();
-			uint32 spellId = entry->Id;
-			if (IsPositiveSpell(spellId))
-				continue;
-
-			if (canDispel(entry, dispelType))
-				return true;
-		}
-	}
-	return false;
-}
-
-bool AiTargetManager::canDispel(const SpellEntry* entry, uint32 dispelType) {
-	if (entry->Dispel == dispelType) {
-		return !entry->SpellName[0] ||
-			(strcmpi((const char*)entry->SpellName[0], "demon skin") &&
-			strcmpi((const char*)entry->SpellName[0], "mage armor") &&
-			strcmpi((const char*)entry->SpellName[0], "frost armor") &&
-			strcmpi((const char*)entry->SpellName[0], "ice armor"));
-	}
-	return false;
-}
-
-Player* AiTargetManager::GetSelf()
-{
-	return bot;
-}
-
-Player* AiTargetManager::GetMaster()
-{
-	return ai->GetMaster();
-}
-
-Player* AiTargetManager::GetLineTarget()
-{
-	Player* master = GetMaster();
-
-	Group* group = master->GetGroup();
-	if (!group)
-		return NULL;
-	
-	Player *prev = master;
-	Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
-	for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
-	{
-		Player *player = sObjectMgr.GetPlayer(itr->guid);
-		if( !player || !player->isAlive() || player == master)
-			continue;
-
-		if (player == bot)
-			return prev;
-
-		prev = player;
-	}
-
-	return master;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("current cc target", spell)->Get();
 }
 
 Unit* AiTargetManager::GetPet()
 {
-	return bot->GetPet();
+    return ai->GetAiObjectContext()->GetValue<Unit*>("pet target")->Get();
 }
 
-bool AiTargetManager::CanHealPet(Pet* pet) 
+Unit* AiTargetManager::FindTargetForGrinding() 
 {
-	PetType type = pet->getPetType();
-	return type != SUMMON_PET && type != MINI_PET;
+    return ai->GetAiObjectContext()->GetValue<Unit*>("grind target")->Get();
 }
+
+Unit* AiTargetManager::GetPartyMemberToDispell(uint32 dispelType)
+{
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType)->Get();
+}
+
 
 void AiTargetManager::HandleCommand(const string& text, Player& fromPlayer)
 {
     if (text == "reset")
     {
-        ResetTarget();
+        SetCurrentTarget(NULL);
     }
 }
 
@@ -289,50 +97,7 @@ void AiTargetManager::HandleBotOutgoingPacket(const WorldPacket& packet)
 
 }
 
-Unit* AiTargetManager::FindTarget(FindTargetStrategy* strategy)
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-	{
-		strategy->CheckAttackers(bot, bot);
-		return strategy->GetResult();
-	}
 
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-	{
-		Player* member = gref->getSource();
-		if (!member || !member->isAlive() || !member->IsWithinLOSInMap(member))
-			continue;
-
-		strategy->CheckAttackers(bot, member);
-	}
-
-	return strategy->GetResult();
-}
-
-Unit* AiTargetManager::FindTargetForTank()
-{
-	FindTargetForTankStrategy strategy(aiRegistry);
-	return FindTarget(&strategy);
-}
-
-Unit* AiTargetManager::FindTargetForDps()
-{
-	FindTargetForDpsStrategy strategy(aiRegistry);
-	return FindTarget(&strategy);
-}
-
-Unit* AiTargetManager::FindCcTarget(const char* spell)
-{
-    FindTargetForCcStrategy strategy(aiRegistry, spell);
-    return FindTarget(&strategy);
-}
-
-Unit* AiTargetManager::GetCurrentCcTarget(const char* spell)
-{
-    FindCurrentCcTargetStrategy strategy(aiRegistry, spell);
-    return FindTarget(&strategy);
-}
 
 
 namespace MaNGOS
@@ -372,92 +137,6 @@ namespace MaNGOS
 	};
 
 };
-
-int AiTargetManager::GetTargetingPlayerCount( Unit* unit ) 
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return 0;
-	
-	int count = 0;
-	Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
-	for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
-	{
-		Player *member = sObjectMgr.GetPlayer(itr->guid);
-		if( !member || !member->isAlive() || member == bot)
-			continue;
-
-		PlayerbotAI* ai = member->GetPlayerbotAI();
-		if ((ai && ai->GetAiRegistry()->GetTargetManager()->GetCurrentTarget() == unit) ||
-		    (!ai && member->GetSelectionGuid() == unit->GetObjectGuid()))
-			count++;
-	}
-	
-	return count;
-}
-
-Unit* AiTargetManager::FindTargetForGrinding() 
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-
-	Unit* target = NULL;
-	int assistCount = 0;
-	while (!target && assistCount < group->GetMembersCount())
-	{
-		target = FindTargetForGrinding(assistCount++);
-	}
-	
-	return target;
-}
-
-Unit* AiTargetManager::FindTargetForGrinding(int assistCount) 
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return NULL;
-
-    AiObjectContext *context = aiRegistry->GetAi()->GetAiObjectContext();
-    list<Unit*> targets = *context->GetValue<list<Unit*>>("possible targets");
-
-    if(targets.empty())
-        return NULL;
-
-	float distance = 0;
-	Unit* result = NULL;
-    for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
-    {
-		Unit* unit = *tIter;
-
-		if (abs(bot->GetPositionZ() - unit->GetPositionZ()) > SPELL_DISTANCE)
-			continue;
-		
-		if (GetTargetingPlayerCount(unit) > assistCount)
-			continue;
-
-		Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
-		for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
-		{
-			Player *member = sObjectMgr.GetPlayer(itr->guid);
-			if( !member || !member->isAlive())
-				continue;
-
-			if (GetMaster()->GetDistance(unit) >= BOT_GRIND_DISTANCE)
-				continue;
-
-			float d = member->GetDistance(unit);
-			if (!result || d < distance)
-			{
-				distance = d;
-				result = unit;
-			}
-		}
-	}
-
-	return result;
-}
-
 
 Creature* AiTargetManager::GetCreature(ObjectGuid guid)
 {

@@ -23,7 +23,7 @@ bool EnergyAvailable::IsActive()
 
 bool ComboPointsAvailableTrigger::IsActive()
 {
-    return statsManager->GetComboPoints(targetManager->GetSelf()) >= amount;
+    return statsManager->GetComboPoints((Player*)targetManager->GetSelf()) >= amount;
 }
 
 bool LoseAggroTrigger::IsActive()

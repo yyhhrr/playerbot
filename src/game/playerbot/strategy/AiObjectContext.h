@@ -20,7 +20,23 @@ namespace ai
         virtual Action* GetAction(const char* name) { return actionContexts.GetObject(name, ai); }
         
         template<class T>
-        Value<T>* GetValue(const char* name) { return dynamic_cast<Value<T>*>(valueContexts.GetObject(name, ai)); }
+        Value<T>* GetValue(const char* name)
+        {
+            return dynamic_cast<Value<T>*>(valueContexts.GetObject(name, ai)); 
+        }
+
+        template<class T>
+        Value<T>* GetValue(const char* name, const char* param)
+        {
+            return GetValue<T>((string(name) + "::" + param).c_str()); 
+        }
+
+        template<class T>
+        Value<T>* GetValue(const char* name, uint32 param)
+        {
+            char buffer[64]; itoa(param, buffer, 10);
+            return GetValue<T>(name, buffer); 
+        }
 
     public:
         void Update();

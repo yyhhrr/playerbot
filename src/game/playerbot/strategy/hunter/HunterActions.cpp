@@ -46,5 +46,5 @@ bool CastAspectOfTheViperAction::isUseful() {
 
 Unit* CastFreezingTrap::GetTarget()
 {
-    return ai->GetTargetManager()->FindCcTarget(name);
+    return ai->GetTargetManager()->FindCcTarget(getName());
 }
