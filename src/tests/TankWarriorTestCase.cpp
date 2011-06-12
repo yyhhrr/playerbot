@@ -67,7 +67,7 @@ protected:
         tick(); // melee
         tick(); // battle shout
 
-		assertActions(">S:battle shout>S:defensive stance>reach melee>melee>S:bloodrage>T:rend");
+		assertActions(">S:battle shout>S:defensive stance>T:reach melee>T:melee>S:bloodrage>T:rend");
 
     }
 
@@ -81,7 +81,7 @@ protected:
 		tickWithAttackerCount(2); // demoralizing shout
 		tickWithAttackerCount(2); // thunder clap
 
-        assertActions(">melee>T:shockwave>T:demoralizing shout>T:thunder clap");
+        assertActions(">T:melee>T:shockwave>T:demoralizing shout>T:thunder clap");
     }
 
     void warriorMustHoldAggro()
@@ -95,7 +95,7 @@ protected:
         
         tick();
 
-		assertActions(">S:defensive stance>melee>T:taunt>T:devastate>T:revenge");
+		assertActions(">S:defensive stance>T:melee>T:taunt>T:devastate>T:revenge");
     }
 
     void combatVsMelee()
@@ -144,7 +144,7 @@ protected:
         addAura("sword and board");
         tickWithSpellAvailable("shield slam");
 
-		assertActions(">S:defensive stance>reach melee>melee>S:bloodrage>T:rend>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:heroic strike>T:disarm>melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
+		assertActions(">S:defensive stance>T:reach melee>T:melee>S:bloodrage>T:rend>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:heroic strike>T:disarm>T:melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
     }
 
     void revengeIfDodge()
@@ -154,7 +154,7 @@ protected:
         tick(); // defensive stance
         tick(); // revenge
 
-		assertActions(">melee>S:defensive stance>T:revenge");
+		assertActions(">T:melee>S:defensive stance>T:revenge");
     }
 
 	void snare()
@@ -163,7 +163,7 @@ protected:
 		tick();
 		tickWithTargetIsMoving();
 		
-		assertActions(">S:defensive stance>melee>T:concussion blow");
+		assertActions(">S:defensive stance>T:melee>T:concussion blow");
 	}
     
 };

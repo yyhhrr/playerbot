@@ -64,7 +64,7 @@ protected:
 
 		tickWithTargetLowHealth(19);
 
-		assertActions(">reach melee>melee>T:crusader strike>T:judgement of wisdom>S:divine storm>T:consecration>T:hammer of wrath");
+		assertActions(">T:reach melee>T:melee>T:crusader strike>T:judgement of wisdom>S:divine storm>T:consecration>T:hammer of wrath");
     }
 };
 

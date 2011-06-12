@@ -28,7 +28,7 @@ protected:
         trigger("random");
         tick();
 
-        CPPUNIT_ASSERT(strstr(ai->buffer.c_str(), ">emote"));
+        CPPUNIT_ASSERT(strstr(ai->buffer.c_str(), ">S:emote"));
     }
 };
 

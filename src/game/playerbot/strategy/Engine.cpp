@@ -7,38 +7,38 @@
 using namespace ai;
 using namespace std;
 
-void ActionExecutionListeners::Before(Action* action)
+void ActionExecutionListeners::Before(Action* action, Event event)
 {
     for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
     {
-        (*i)->Before(action);
+        (*i)->Before(action, event);
     }
 }
 
-void ActionExecutionListeners::After(Action* action)
+void ActionExecutionListeners::After(Action* action, Event event)
 {
     for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
     {
-        (*i)->After(action);
+        (*i)->After(action, event);
     }
 }
 
-bool ActionExecutionListeners::OverrideResult(bool executed)
+bool ActionExecutionListeners::OverrideResult(bool executed, Event event)
 {
     bool result = true;
     for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
     {
-        result &= (*i)->OverrideResult(executed);
+        result &= (*i)->OverrideResult(executed, event);
     }
     return result;
 }
 
-bool ActionExecutionListeners::AllowExecution(Action* action)
+bool ActionExecutionListeners::AllowExecution(Action* action, Event event)
 {
     bool result = true;
     for (std::list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
     {
-        result &= (*i)->AllowExecution(action);
+        result &= (*i)->AllowExecution(action, event);
     }
     return result;
 }
@@ -381,14 +381,14 @@ bool Engine::ListenAndExecute(Action* action, Event event)
 {
     bool actionExecuted = true;
 
-    actionExecutionListeners.Before(action);
+    actionExecutionListeners.Before(action, event);
     
-    if (actionExecutionListeners.AllowExecution(action))
+    if (actionExecutionListeners.AllowExecution(action, event))
         actionExecuted = action->Execute(event);
     else
         actionExecuted = true;
 
-    actionExecutionListeners.After(action);
+    actionExecutionListeners.After(action, event);
 
     return actionExecuted;
 }

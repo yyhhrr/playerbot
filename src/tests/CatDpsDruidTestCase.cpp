@@ -59,7 +59,7 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
 
-        assertActions(">T:rake>-cat form>S:regrowth>S:cat form>T:mangle (cat)>-cat form>S:rejuvenation>S:healing touch");
+        assertActions(">T:rake>S:caster form>S:regrowth>S:cat form>T:mangle (cat)>S:caster form>S:rejuvenation>S:healing touch");
 	}
 	
     void intensiveHealing()
@@ -76,7 +76,7 @@ protected:
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
 
-		assertActions(">-cat form>P:regrowth>P:rejuvenation>P:healing touch");
+		assertActions(">S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
     }
 
     void boost()
@@ -84,7 +84,7 @@ protected:
 		tickWithBalancePercent(49);
 		tick();
 
-		assertActions(">S:tiger's fury>reach melee");
+		assertActions(">S:tiger's fury>T:reach melee");
     }
 
     void cower()
@@ -92,7 +92,7 @@ protected:
 		tickWithMyAttackerCount(2);
 
 		tickOutOfMeleeRange();
-		assertActions(">S:cower>reach melee");
+		assertActions(">S:cower>T:reach melee");
     }
 
     void buff() 

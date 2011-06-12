@@ -14,9 +14,10 @@ namespace ai
         MeleeAction(AiManagerRegistry* const ai) : Action(ai, "melee") {}
         virtual bool Execute(Event event) 
         {
-            ai->GetMoveManager()->Attack(AI_VALUE(Unit*, "current target"));
+            ai->GetMoveManager()->Attack(GetTarget());
             return true;
         }
+        virtual const char* GetTargetName() { return "current target"; }
     };
 
     class UseHealingPotion : public Action {

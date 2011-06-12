@@ -55,7 +55,7 @@ protected:
         
 		tick(); 
 
-		assertActions(">S:dire bear form>S:dire bear form>reach melee>T:swipe (bear)>T:demoralizing roar");
+		assertActions(">S:dire bear form>S:dire bear form>T:reach melee>T:swipe (bear)>T:demoralizing roar");
     }
 
     void druidMustHoldAggro()
@@ -68,7 +68,7 @@ protected:
         tick();
         tick();
 
-		assertActions(">S:dire bear form>T:growl>T:feral charge - bear>melee");
+		assertActions(">S:dire bear form>T:growl>T:feral charge - bear>T:melee");
     }
 
     void druidMustDoMauls()
@@ -83,7 +83,7 @@ protected:
         
 		tickWithSpellAvailable("maul");
     
-		assertActions(">S:dire bear form>melee>T:mangle (bear)>T:maul>melee");
+		assertActions(">S:dire bear form>T:melee>T:mangle (bear)>T:maul>T:melee");
     }
 
     void combatVsMelee()
@@ -105,7 +105,7 @@ protected:
 
         tickWithRage(61);
         
-        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>melee>reach melee>melee>T:mangle (bear)>T:maul>T:swipe (bear)");
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:melee>T:reach melee>T:melee>T:mangle (bear)>T:maul>T:swipe (bear)");
     }
 
     void healHimself()
@@ -126,7 +126,7 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
         
-        assertActions(">S:dire bear form>melee>-dire bear form>S:regrowth>S:bear form>melee>-bear form>S:rejuvenation>S:healing touch");
+        assertActions(">S:dire bear form>T:melee>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
     }
 
     void intensiveHealing()
@@ -147,7 +147,7 @@ protected:
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
 
-		assertActions(">S:dire bear form>-dire bear form>P:regrowth>P:rejuvenation>P:healing touch");
+		assertActions(">S:dire bear form>S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
     }
     void curePoison() 
     {
@@ -165,7 +165,7 @@ protected:
 		spellAvailable("cure poison");
 		tickWithPartyAuraToDispel(DISPEL_POISON);
 
-		assertActions(">S:dire bear form>-dire bear form>S:abolish poison>P:abolish poison>S:cure poison>P:cure poison");
+		assertActions(">S:dire bear form>S:caster form>S:abolish poison>P:abolish poison on party>S:cure poison>P:cure poison on party");
     }
     void interruptSpells() 
     {
@@ -176,7 +176,7 @@ protected:
 
 		tickWithTargetIsCastingNonMeleeSpell();
 
-        assertActions(">S:dire bear form>melee>T:bash");
+        assertActions(">S:dire bear form>T:melee>T:bash");
     }
 	void buff() 
 	{
@@ -196,7 +196,7 @@ protected:
         tickWithCcTarget("entangling roots");
         tickWithCcTarget("entangling roots");
 
-        assertActions(">-dire bear form>Cc:entangling roots");
+        assertActions(">S:caster form>Cc:entangling roots on cc");
     }
 
     void aoe()
@@ -205,7 +205,7 @@ protected:
 		tickInMeleeRange();
 		tickWithAttackerCount(3);
 
-		assertActions(">melee>T:swipe (bear)");
+		assertActions(">T:melee>T:swipe (bear)");
     }
 
 };

@@ -19,6 +19,7 @@ namespace ai
 		{
             return ai->GetMoveManager()->GetDistanceTo(AI_VALUE(Unit*, "current target")) > distance;
         }
+        virtual const char* GetTargetName() { return "current target"; }
 
     protected:
         float distance;

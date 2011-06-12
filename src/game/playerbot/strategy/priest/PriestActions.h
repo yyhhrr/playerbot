@@ -81,7 +81,7 @@ namespace ai
 
     class CastRemoveShadowformAction : public Action {
     public:
-        CastRemoveShadowformAction(AiManagerRegistry* const ai) : Action(ai) {}
+        CastRemoveShadowformAction(AiManagerRegistry* const ai) : Action(ai, "remove shadowform") {}
         virtual bool isUseful() { return ai->GetSpellManager()->HasAura("shadowform", AI_VALUE(Unit*, "self target")); }
         virtual bool isPossible() { return true; }
         virtual bool Execute(Event event) {

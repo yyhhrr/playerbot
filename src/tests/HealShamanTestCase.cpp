@@ -37,7 +37,7 @@ protected:
         tick();
         tickInMeleeRange();
 
-        assertActions(">S:chain heal>S:lesser healing wave>S:riptide>S:healing wave>reach melee>melee");
+        assertActions(">S:chain heal>S:lesser healing wave>S:riptide>S:healing wave>T:reach melee>T:melee");
     }
 
     void healOthers()
@@ -47,7 +47,7 @@ protected:
         tickWithPartyLowHealth(35);
 		tickWithPartyLowHealth(35);
 
-        assertActions(">P:chain heal>P:lesser healing wave>P:riptide>P:healing wave");
+        assertActions(">P:chain heal on party>P:lesser healing wave on party>P:riptide on party>P:healing wave on party");
     }
 
     void buff()
@@ -84,7 +84,7 @@ protected:
 		tickInMeleeRange();
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
-		assertActions(">melee>T:purge");
+		assertActions(">T:melee>T:purge");
 	}
 };
 

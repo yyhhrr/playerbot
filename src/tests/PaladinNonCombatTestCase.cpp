@@ -31,7 +31,7 @@ protected:
 		tick();
         set<bool>("mounted", false);
 
-		assertActions(">P:blessing of kings>S:crusader aura");
+		assertActions(">P:blessing of kings on party>S:crusader aura");
     }
 
 	void resurrect()

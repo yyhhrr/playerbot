@@ -32,7 +32,7 @@ protected:
 		tick();
 		tick();
         
-		assertActions(">reach melee>melee>T:stormstrike>T:lava lash>melee");
+		assertActions(">T:reach melee>T:melee>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()

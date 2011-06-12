@@ -26,6 +26,7 @@ protected:
         addAura("arcane intellect");
 
 		tickWithSpellAvailable("arcane intellect");
+        addPartyAura("arcane intellect");
 
         tick();
         tick();
@@ -35,7 +36,7 @@ protected:
 		tickWithNoDrink();
 		tickWithNoFood();
 
-        assertActions(">S:arcane intellect>P:arcane intellect>S:mage armor>S:ice armor>S:frost armor>S:conjure water>S:conjure food");
+        assertActions(">S:arcane intellect>P:arcane intellect on party>S:mage armor>S:ice armor>S:frost armor>S:conjure water>S:conjure food");
     }
     
 };

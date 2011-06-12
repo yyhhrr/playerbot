@@ -70,7 +70,7 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
         
-        assertActions(">T:faerie fire>-moonkin form>S:regrowth>S:moonkin form>T:insect swarm>-moonkin form>S:rejuvenation>S:healing touch");
+        assertActions(">T:faerie fire>S:caster form>S:regrowth>S:moonkin form>T:insect swarm>S:caster form>S:rejuvenation>S:healing touch");
     }
 
 	void healOthers()
@@ -80,7 +80,7 @@ protected:
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
 
-        assertActions(">-moonkin form>P:regrowth>P:rejuvenation>P:healing touch");
+        assertActions(">S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
     }
 
 	void curePoison() 
@@ -95,7 +95,7 @@ protected:
 		spellAvailable("cure poison");
 		tickWithPartyAuraToDispel(DISPEL_POISON);
 
-		assertActions(">S:abolish poison>P:abolish poison>S:cure poison>P:cure poison");
+		assertActions(">S:abolish poison>P:abolish poison on party>S:cure poison>P:cure poison on party");
 	}
 
 	void resurrect()
@@ -103,14 +103,14 @@ protected:
 		tickWithDeadPartyMember();
 		tickWithDeadPartyMember();
 
-		assertActions(">-moonkin form>P:rebirth");
+		assertActions(">S:caster form>P:rebirth");
 	}
 
     void cc()
     {
         tickWithCcTarget("entangling roots");
 
-        assertActions(">Cc:entangling roots");
+        assertActions(">Cc:entangling roots on cc");
     }
 
     void aoe()

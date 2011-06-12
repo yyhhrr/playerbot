@@ -105,7 +105,7 @@ protected:
         tickWithSpellAvailable("shoot"); // shoot
 
 
-		assertActions(">T:shoot>P:power word: shield>P:greater heal>P:renew>P:heal>P:lesser heal>T:shoot>P:flash heal>T:shoot");
+		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>T:shoot>P:flash heal on party>T:shoot");
     }
 
     void buff()
@@ -131,7 +131,7 @@ protected:
 
 		tickWithSpellAvailable("divine spirit");
 
-		assertActions(">S:power word: fortitude>S:divine spirit>S:inner fire>P:power word: fortitude>P:divine spirit");
+		assertActions(">S:power word: fortitude>S:divine spirit>S:inner fire>P:power word: fortitude on party>P:divine spirit on party");
     }
 
     void fade()
@@ -155,7 +155,7 @@ protected:
 		spellAvailable("shoot");
 		tickInSpellRange();
 
-		assertActions(">T:shoot>S:fade>flee>T:shoot");
+		assertActions(">T:shoot>S:fade>S:flee>T:shoot");
     }
 
     void dispel() 
@@ -179,7 +179,7 @@ protected:
 
         tickWithSpellAvailable("shoot");
 
-		assertActions(">T:shoot>S:dispel magic>P:dispel magic>S:abolish disease>P:abolish disease>S:cure disease>P:cure disease>T:shoot");
+		assertActions(">T:shoot>S:dispel magic>P:dispel magic on party>S:abolish disease>P:abolish disease on party>S:cure disease>P:cure disease on party>T:shoot");
     }
 
 };

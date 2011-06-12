@@ -9,17 +9,55 @@ class TestActionExecutionListener : public ActionExecutionListener
 public:
     TestActionExecutionListener(MockAiManagerRegistry *ai) : ai(ai) {}
 
-    virtual void Before(Action* action) {}
-    virtual bool AllowExecution(Action* action) { return false; }
-    virtual bool OverrideResult(bool executed) { return true; }
-    virtual void After(Action* action) 
+    virtual void Before(Action* action, Event event) {}
+    virtual bool AllowExecution(Action* action, Event event) { return false; }
+    virtual bool OverrideResult(bool executed, Event event) { return true; }
+    virtual void After(Action* action, Event event) 
     {
+        string name = action->getName();
+
         ai->buffer.append(">");        
         MockedTargets::Append(ai->buffer, action->GetTarget());
         ai->buffer.append(":");
-        ai->buffer.append(action->getName());
+        ai->buffer.append(name);
 
-        ((MockAiSpellManager*)ai->GetSpellManager())->spellCooldowns.push_back(action->getName()); 
+        if (!event.getParam().empty())
+        {
+            ai->buffer.append("(");
+            ai->buffer.append(event.getParam());
+            ai->buffer.append(")");
+        }
+
+        MockAiSpellManager* spellManager = (MockAiSpellManager*)ai->GetSpellManager();
+
+        if (name == "caster form")
+        {
+            spellManager->auras[MockedTargets::GetSelf()].remove("dire bear form");
+            spellManager->auras[MockedTargets::GetSelf()].remove("bear form");
+            spellManager->auras[MockedTargets::GetSelf()].remove("cat form");
+            spellManager->auras[MockedTargets::GetSelf()].remove("moonkin form");
+            spellManager->auras[MockedTargets::GetSelf()].remove("travel form");
+            spellManager->auras[MockedTargets::GetSelf()].remove("aquatic form");
+        }
+        if (name == "remove shadowform")
+        {
+            spellManager->auras[MockedTargets::GetSelf()].remove("shadowform");
+        }
+
+        remove(name, " on party");
+        remove(name, " on cc");
+        if (name.find("cleanse") != string::npos)
+            name = "cleanse";
+        if (name.find("purify") != string::npos)
+            name = "purify";
+        spellManager->spellCooldowns.push_back(name); 
+    }
+
+    void remove(string& name, string pattern)
+    {
+        size_t pos = name.find(pattern);
+        if (pos != string::npos)
+            name = name.substr(0, pos);
     }
 
 private:
@@ -64,7 +102,7 @@ void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
     context = new AiObjectContextWrapper(ai, aiObjectContext);
     ai->SetContext(context);
     engine = new Engine(ai, context);
-    //engine->AddActionExecutionListener(new TestActionExecutionListener(ai));
+    engine->AddActionExecutionListener(new TestActionExecutionListener(ai));
     
 	va_list vl;
 	va_start(vl, aiObjectContext);
@@ -128,7 +166,15 @@ void EngineTestBase::tickWithSpellAvailable(const char* spell)
 
 void EngineTestBase::spellAvailable(const char* spell)
 {
-	spellManager->spellCooldowns.remove(spell);
+    list<string> remove;
+    for (list<string>::iterator i = spellManager->spellCooldowns.begin(); i != spellManager->spellCooldowns.end(); i++)
+    {
+        if (i->find(spell) != string::npos) remove.push_back(*i);
+    }
+    for (list<string>::iterator i = remove.begin(); i != remove.end(); i++)
+    {
+        spellManager->spellCooldowns.remove(*i);
+    }
 }
 
 void EngineTestBase::addAura(const char* spell)

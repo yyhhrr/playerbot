@@ -23,7 +23,7 @@ protected:
         context->GetTrigger(trigger)->ExternalEvent("");
         tick();
 
-        assertActions((string(">") + expectedAction).c_str());
+        assertActions((string(">S:") + expectedAction).c_str());
     }
 
     void assertParametrizedCommand(const char* trigger, const char* param)
@@ -33,7 +33,7 @@ protected:
         context->GetTrigger(trigger)->ExternalEvent(param);
         tick();
 
-        assertActions((string(">") + trigger + "(" + param + ")").c_str());
+        assertActions((string(">S:") + trigger + "(" + param + ")").c_str());
     }
 
     void trigger(const char* name)

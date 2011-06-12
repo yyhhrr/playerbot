@@ -37,7 +37,7 @@ protected:
 
         tickBehindTarget();
         
-        assertActions(">reach melee>melee>T:mutilate>T:sinister strike>T:kidney shot>T:rupture>T:slice and dice>T:eviscerate>T:backstab");
+        assertActions(">T:reach melee>T:melee>T:mutilate>T:sinister strike>T:kidney shot>T:rupture>T:slice and dice>T:eviscerate>T:backstab");
     }
 
 	void healHimself()
@@ -47,7 +47,7 @@ protected:
 		tickWithLowHealth(39);
 		tickWithMyAttackerCount(3);
 
-		assertActions(">melee>S:evasion>S:feint>S:vanish");
+		assertActions(">T:melee>S:evasion>S:feint>S:vanish");
 	}
 
 	void interruptSpells()
@@ -56,7 +56,7 @@ protected:
 
 		tickWithTargetIsCastingNonMeleeSpell();
 
-		assertActions(">melee>T:kick");
+		assertActions(">T:melee>T:kick");
 	}
 };
 

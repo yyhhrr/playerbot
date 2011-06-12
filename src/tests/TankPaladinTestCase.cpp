@@ -94,7 +94,7 @@ protected:
 		spellAvailable("lay on hands");
 		tickWithPartyLowHealth(20);
 
-		assertActions(">S:flash of light>S:divine shield>S:holy light>S:divine protection>S:lay on hands>P:lay on hands");
+		assertActions(">S:flash of light>S:divine shield>S:holy light>S:divine protection>S:lay on hands>P:lay on hands on party");
     }
   
     void paladinMustHoldAggro()
@@ -120,7 +120,7 @@ protected:
 
 		tickWithTargetLowHealth(19);
 
-        assertActions(">reach melee>melee>T:judgement of light>T:hammer of wrath");
+        assertActions(">T:reach melee>T:melee>T:judgement of light>T:hammer of wrath");
     }
 
     void stopEnemyMove()
@@ -130,7 +130,7 @@ protected:
 		tick(); 
 		tick(); 
 
-        assertActions(">T:hammer of justice>melee>T:judgement of light");
+        assertActions(">T:hammer of justice>T:melee>T:judgement of light");
     }
 
 	void interruptSpells() 
@@ -139,19 +139,19 @@ protected:
 
 		tick();
 
-		assertActions(">T:hammer of justice>melee");
+		assertActions(">T:hammer of justice>T:melee");
 	}
 
     void cureDisease()
     {
         cureKind(DISPEL_DISEASE);
-		assertActions(">S:cleanse>P:cleanse>S:purify>P:purify");
+		assertActions(">S:cleanse>P:cleanse disease on party>S:purify>P:purify disease on party");
     }
 
 	void curePoison()
 	{
 		cureKind(DISPEL_POISON);
-		assertActions(">S:cleanse>P:cleanse>S:purify>P:purify");
+		assertActions(">S:cleanse>P:cleanse poison on party>S:purify>P:purify poison on party");
 	}
 
 	void cureMagic()
@@ -162,7 +162,7 @@ protected:
 		spellAvailable("cleanse");
 		tickWithPartyAuraToDispel(DISPEL_MAGIC);
 		
-		assertActions(">S:cleanse>P:cleanse");
+		assertActions(">S:cleanse>P:cleanse magic on party");
 	}
 
     void cureKind(DispelType type) 

@@ -39,7 +39,7 @@ protected:
 
 		tickWithLowHealth(19);
 
-		assertActions(">T:frostbolt>T:frost nova>flee>T:frostbolt>T:shoot>S:ice block");
+		assertActions(">T:frostbolt>T:frost nova>S:flee>T:frostbolt>T:shoot>S:ice block");
 	}
 
     void dispel() 
@@ -55,7 +55,7 @@ protected:
 		
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
-		assertActions(">T:frostbolt>S:remove curse>P:remove curse>T:shoot>T:spellsteal");
+		assertActions(">T:frostbolt>S:remove curse>P:remove curse on party>T:shoot>T:spellsteal");
     }
 
     void boost() 

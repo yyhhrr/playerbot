@@ -28,9 +28,7 @@ protected:
                 
 		tickWithSpellAvailable("mark of the wild");
         
-		tick();
-
-		assertActions(">S:mark of the wild>P:mark of the wild");
+		assertActions(">S:mark of the wild>P:mark of the wild on party");
     }
 
 	void resurrect()

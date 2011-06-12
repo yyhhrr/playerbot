@@ -40,7 +40,7 @@ protected:
         tick();
         addAura("spellstone");
 
-        assertActions(">S:demon skin>S:demon armor>S:create healthstone>S:create firestone>S:create spellstone>spellstone");
+        assertActions(">S:demon skin>S:demon armor>S:create healthstone>S:create firestone>S:create spellstone>S:spellstone");
     }
     
 };

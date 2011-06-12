@@ -29,12 +29,12 @@ namespace ai
     class CureDiseaseTrigger : public NeedCureTrigger 
     {
     public:
-        CureDiseaseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cure disease", DISPEL_MAGIC) {}
+        CureDiseaseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
     };
 
     class PartyMemberCureDiseaseTrigger : public PartyMemberNeedCureTrigger 
     {
     public:
-        PartyMemberCureDiseaseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_MAGIC) {}
+        PartyMemberCureDiseaseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
     };
 }

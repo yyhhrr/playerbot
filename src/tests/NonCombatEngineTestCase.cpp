@@ -32,7 +32,7 @@ protected:
     {
         engine->addStrategy("goaway");
 		tickWithAttackerCount(0);
-		assertActions(">goaway");
+        assertActions(">S:goaway");
     }
     
     void followMaster()
@@ -40,7 +40,7 @@ protected:
         engine->addStrategy("follow master");
 
 		tickWithAttackerCount(0);
-		assertActions(">follow master");
+		assertActions(">S:follow master");
     }
 
 	void followLine()
@@ -48,7 +48,7 @@ protected:
 		engine->addStrategy("follow line");
 
 		tickWithAttackerCount(0);
-		assertActions(">follow line");
+		assertActions(">S:follow line");
 	}
 
     void stay()
@@ -56,7 +56,7 @@ protected:
 		engine->addStrategy("stay");
 
 		tickWithAttackerCount(0);
-		assertActions(">stay");
+		assertActions(">S:stay");
     }
 
     void dpsAssist()
@@ -67,7 +67,7 @@ protected:
 		tick();
 		tickWithNoTarget();
 
-		assertActions(">stay>dps assist");
+		assertActions(">S:stay>Dps:dps assist");
     }
 
 
@@ -79,7 +79,7 @@ protected:
 		tick();
 		tickWithNoTarget();
 
-		assertActions(">stay>tank assist");
+		assertActions(">S:stay>Tank:tank assist");
 	}
 	
     void loot()
@@ -90,7 +90,7 @@ protected:
 		tickWithLootAvailable();
 		tick();
 
-        assertActions(">loot>stay");
+        assertActions(">S:loot>S:stay");
     }
 
     void eatDrink()
@@ -100,7 +100,7 @@ protected:
 		tickWithLowHealth(1);
 		tickWithLowMana(1);
 
-        assertActions(">eat>drink");
+        assertActions(">S:eat>S:drink");
     }
 
     void passive()
@@ -111,7 +111,7 @@ protected:
         tick();
 		tickWithNoTarget();
 
-        assertActions(">stay>stay");
+        assertActions(">S:stay>S:stay");
     }
 
 };

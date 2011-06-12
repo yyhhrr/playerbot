@@ -74,5 +74,5 @@ bool MockAiSpellManager::IsSpellCasting(Unit* player)
 
 bool MockAiSpellManager::HasAuraToDispel(Unit* player, uint32 dispelType)
 {
-	return dispels[player];
+	return dispels[player] == dispelType;
 }

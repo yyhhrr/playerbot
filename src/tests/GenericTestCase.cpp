@@ -29,7 +29,7 @@ protected:
 		lowMana(1);
         tick(); 
 
-        assertActions(">healthstone");
+        assertActions(">S:healthstone");
     }
 	void flee()
 	{
@@ -37,7 +37,7 @@ protected:
 		lowMana(1);
 		tick(); 
 
-		assertActions(">flee");
+		assertActions(">S:flee");
 	}
 };
 

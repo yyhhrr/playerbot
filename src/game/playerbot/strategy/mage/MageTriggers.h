@@ -49,13 +49,13 @@ namespace ai
     class RemoveCurseTrigger : public NeedCureTrigger 
     {
     public:
-        RemoveCurseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "remove curse", DISPEL_MAGIC) {}
+        RemoveCurseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "remove curse", DISPEL_CURSE) {}
     };
 
     class PartyMemberRemoveCurseTrigger : public PartyMemberNeedCureTrigger 
     {
     public:
-        PartyMemberRemoveCurseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "remove curse", DISPEL_MAGIC) {}
+        PartyMemberRemoveCurseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "remove curse", DISPEL_CURSE) {}
     };
     
     class SpellstealTrigger : public TargetAuraDispelTrigger 

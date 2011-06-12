@@ -61,7 +61,7 @@ protected:
         
         tick(); 
 
-		assertActions(">S:battle stance>T:mocking blow>T:charge>melee");
+		assertActions(">S:battle stance>T:mocking blow>T:charge>T:melee");
     }
 
     void combatVsMelee()
@@ -85,7 +85,7 @@ protected:
 
         tick(); // bloodrage
 
-		assertActions(">S:battle stance>T:charge>melee>reach melee>melee>T:rend>T:bloodthirst>T:heroic strike>S:bloodrage");
+		assertActions(">S:battle stance>T:charge>T:melee>T:reach melee>T:melee>T:rend>T:bloodthirst>T:heroic strike>S:bloodrage");
     }
 
     void boost()
@@ -98,7 +98,7 @@ protected:
 
         tick(); // melee
 
-		assertActions(">S:battle stance>S:death wish>S:berserker rage>T:charge>melee");
+		assertActions(">S:battle stance>S:death wish>S:berserker rage>T:charge>T:melee");
     }
 
     void execute()
@@ -122,7 +122,7 @@ protected:
         
         tickWithSpellAvailable("defensive stance"); // melee
 
-		assertActions(">S:battle stance>T:hamstring>T:charge>melee");
+		assertActions(">S:battle stance>T:hamstring>T:charge>T:melee");
     }
 
 

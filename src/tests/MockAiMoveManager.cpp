@@ -19,9 +19,9 @@ void MockAiMoveManager::MoveTo(Unit* target, float distance)
 	if (target == MockedTargets::GetCurrentTarget())
 	{
 		if (distance >= SPELL_DISTANCE) 
-			buffer->append(">reach spell"); 
+			buffer->append(">T:reach spell"); 
 		else 
-			buffer->append(">reach melee");
+			buffer->append(">T:reach melee");
 	}
 }
 float MockAiMoveManager::GetFollowAngle()
@@ -37,13 +37,13 @@ void MockAiMoveManager::Follow(Unit* target, float distance, float angle)
 void MockAiMoveManager::Follow(Unit* target, float distance)
 {
 	if (target == MockedTargets::GetMaster())
-		buffer->append(">follow master");
+		buffer->append(">S:follow master");
 	
 	else if (target == MockedTargets::GetLineTarget())
-		buffer->append(">follow line");
+		buffer->append(">S:follow line");
 
 	else
-		buffer->append(">follow");
+		buffer->append(">S:follow");
 }
 
 bool MockAiMoveManager::Flee(Unit* target, float distance)
@@ -51,7 +51,7 @@ bool MockAiMoveManager::Flee(Unit* target, float distance)
 	if (target == MockedTargets::GetMaster())
 		buffer->append(">goaway");
 	else
-		buffer->append(">flee"); 
+		buffer->append(">S:flee"); 
 
 	return true;
 }
@@ -85,7 +85,7 @@ bool MockAiMoveManager::IsMoving(Unit* target)
 void MockAiMoveManager::Attack(Unit* target)
 {
 	if (target == MockedTargets::GetCurrentTarget())
-	buffer->append(">melee");
+	buffer->append(">T:melee");
 
 	if (target == MockedTargets::GetTargetForDps())
 	buffer->append(">dps assist");
