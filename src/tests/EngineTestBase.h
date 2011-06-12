@@ -10,7 +10,6 @@
 #include "MockAiMoveManager.h"
 #include "MockAiInventoryManager.h"
 #include "MockAiSocialManager.h" 
-#include "MockAiStrategyManager.h" 
 #include "MockAiManagerRegistry.h"
 
 using namespace ai;

@@ -10,4 +10,3 @@
 #include "AiQuestManager.h"
 #include "AiSocialManager.h"
 #include "AiSpellManager.h"
-#include "AiStrategyManager.h"
