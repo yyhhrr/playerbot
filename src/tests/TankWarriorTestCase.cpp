@@ -26,7 +26,7 @@ public:
 
         // this buff is combat-only, so skip for most test cases
         addAura("battle shout");
-        statsManager->rage[MockedTargets::GetSelf()] = 20;
+        set<uint8>("rage", "self target", 20);
 		moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0;
     }
 
@@ -54,7 +54,7 @@ protected:
 
     void buff()
     {
-        statsManager->rage[MockedTargets::GetSelf()] = 0;
+        set<uint8>("rage", "self target", 0);
         removeAura("battle shout");
 
         tickInSpellRange(); // battle shout
@@ -101,7 +101,7 @@ protected:
     void combatVsMelee()
     {
 		moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 15.0f; // enemy too far
-        statsManager->rage[MockedTargets::GetSelf()] = 11;
+        set<uint8>("rage", "self target", 11);
         
         tick(); // defensive stance
         tick(); // reach melee
@@ -113,12 +113,12 @@ protected:
         spellAvailable("rend");
         addTargetAura("rend");
 
-        statsManager->rage[MockedTargets::GetSelf()] = 21;
+        set<uint8>("rage", "self target", 21);
         tick(); // devastate
         tick(); // revenge
         tick(); // sunder armor
 
-		statsManager->rage[MockedTargets::GetSelf()] = 41;
+        set<uint8>("rage", "self target", 41);
 		tick(); //shield slam
 
         tick(); // disarm
@@ -139,7 +139,7 @@ protected:
 
         spellAvailable("heroic strike");
         tick(); 
-        statsManager->rage[MockedTargets::GetSelf()] = 20;
+        set<uint8>("rage", "self target", 20);
 
         addAura("sword and board");
         tickWithSpellAvailable("shield slam");

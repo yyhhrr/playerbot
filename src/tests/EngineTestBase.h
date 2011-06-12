@@ -6,7 +6,6 @@
 #include "../game/playerbot/strategy/Trigger.h"
 #include "../game/playerbot/strategy/Engine.h"
 
-#include "MockAiStatsManager.h"
 #include "MockAiSpellManager.h"
 #include "MockAiTargetManager.h"
 #include "MockAiMoveManager.h"
@@ -25,6 +24,12 @@ public:
 
 private:
 	void va_generic(void (EngineTestBase::*callback)(const char*), va_list vl);
+
+protected:
+    template <class T>
+    void set(const char* name, T value) { context->GetValue<T>(name)->Set(value); }
+    template <class T>
+    void set(const char* name, const char* param, T value) { context->GetValue<T>(name, param)->Set(value); }
 
 protected:
 	virtual void setupEngine(AiObjectContext* AiObjectContext, ...);
@@ -66,6 +71,7 @@ protected:
 	void tickWithBalancePercent(int percent);
 	void tickWithNoPet();
 	void tickWithPetLowHealth(int amount);
+    void tickWithPetDead();
 	void tickWithLowMana(int amount);
 	void tickWithTargetLowHealth(int amount);
 	void tickWithTargetIsMoving();
@@ -80,7 +86,6 @@ protected:
     MockAiManagerRegistry *ai;
 	MockAiSpellManager* spellManager;
 	MockAiTargetManager* targetManager;
-	MockAiStatsManager* statsManager;
 	MockAiMoveManager* moveManager;
 	MockAiInventoryManager* inventoryManager;
 	MockAiSocialManager* socialManager;

@@ -9,8 +9,8 @@ using namespace ai;
 
 bool HunterNoStingsActiveTrigger::IsActive()
 {
-	Unit* target = targetManager->GetCurrentTarget();
-    return target && statsManager->GetHealthPercent(target) > 40 &&
+	Unit* target = AI_VALUE(Unit*, "current target");
+    return target && AI_VALUE2(uint8, "health", "current target") > 40 &&
         !spellManager->HasAura("serpent sting", target) && 
         !spellManager->HasAura("scorpid sting", target) &&
         !spellManager->HasAura("viper sting", target);
@@ -18,12 +18,14 @@ bool HunterNoStingsActiveTrigger::IsActive()
 
 bool HuntersPetDeadTrigger::IsActive()
 {
-    return targetManager->GetPet() && statsManager->IsDead(targetManager->GetPet()) && !ai->GetStatsManager()->IsMounted();
+    Unit* pet = AI_VALUE(Unit*, "pet target");
+    return pet && AI_VALUE2(bool, "dead", "pet target") && !AI_VALUE(bool, "mounted");
 }
 
 
 bool HuntersPetLowHealthTrigger::IsActive()
 {
-	Unit* pet = targetManager->GetPet();
-    return pet && statsManager->GetHealthPercent(pet) < LOW_HEALTH_PERCENT && !statsManager->IsDead(pet) && !ai->GetStatsManager()->IsMounted();
+    Unit* pet = AI_VALUE(Unit*, "pet target");
+    return pet && AI_VALUE2(uint8, "health", "pet target") < LOW_HEALTH_PERCENT && 
+        !AI_VALUE2(bool, "dead", "pet target") && !AI_VALUE(bool, "mounted");
 }

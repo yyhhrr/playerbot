@@ -253,7 +253,7 @@ void AiMoveManager::StayCombat(float range)
 		Player* member = gref->getSource();
 		if (member != master)
 		{
-			if (aiRegistry->GetStatsManager()->IsTank(member))
+			if (aiRegistry->GetAi()->IsTank(member))
 				tanks.push_back(member);
 			else
 				dps.push_back(member);
@@ -262,28 +262,28 @@ void AiMoveManager::StayCombat(float range)
 		gref = gref->next();
 	}
 
-	if (aiRegistry->GetStatsManager()->IsTank(master))
+	if (aiRegistry->GetAi()->IsTank(master))
 		tanks.insert(tanks.begin() + (tanks.size() + 1) / 2, master);
 	else
 		dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
 
-	if (aiRegistry->GetStatsManager()->IsTank(bot) && aiRegistry->GetStatsManager()->IsTank(master))
+	if (aiRegistry->GetAi()->IsTank(bot) && aiRegistry->GetAi()->IsTank(master))
 	{
 		StayLine(tanks, 0.0f, x, y, z, orientation, range);
 		return;
 	}
-	if (!aiRegistry->GetStatsManager()->IsTank(bot) && !aiRegistry->GetStatsManager()->IsTank(master))
+	if (!aiRegistry->GetAi()->IsTank(bot) && !aiRegistry->GetAi()->IsTank(master))
 	{
 		StayLine(dps, 0.0f, x, y, z, orientation, range);
 		return;
 	}
-	if (aiRegistry->GetStatsManager()->IsTank(bot) && !aiRegistry->GetStatsManager()->IsTank(master))
+	if (aiRegistry->GetAi()->IsTank(bot) && !aiRegistry->GetAi()->IsTank(master))
 	{
 		float diff = tanks.size() % 2 == 0 ? -range / 2.0f : 0.0f;
 		StayLine(tanks, diff, x + cos(orientation) * range, y + sin(orientation) * range, z, orientation, range);
 		return;
 	}
-	if (!aiRegistry->GetStatsManager()->IsTank(bot) && aiRegistry->GetStatsManager()->IsTank(master))
+	if (!aiRegistry->GetAi()->IsTank(bot) && aiRegistry->GetAi()->IsTank(master))
 	{
 		float diff = dps.size() % 2 == 0 ? -range / 2.0f : 0.0f;
 		StayLine(dps, diff, x - cos(orientation) * range, y - sin(orientation) * range, z, orientation, range);
@@ -350,7 +350,7 @@ void AiMoveManager::Attack(Unit* target)
 	if (bot->getStandState() != UNIT_STAND_STATE_STAND)
 		bot->SetStandState(UNIT_STAND_STATE_STAND);
 
-    if (aiRegistry->GetStatsManager()->IsMounted())
+    if (bot->IsMounted())
         aiRegistry->GetSpellManager()->Unmount();
 
 	if (bot->IsFriendlyTo(target))

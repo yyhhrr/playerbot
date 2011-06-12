@@ -33,8 +33,7 @@ bool CastAuraSpellAction::isUseful()
 
 bool CastHealingSpellAction::isUseful() 
 {
-	Unit* target = GetTarget();
-	return CastSpellAction::isUseful() && statsManager->GetHealthPercent(target) < (100 - estAmount);
+	return CastSpellAction::isUseful() && AI_VALUE2(uint8, "health", GetTargetName()) < (100 - estAmount);
 }
 
 

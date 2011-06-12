@@ -19,7 +19,7 @@ protected:
         float threat = threatManager->getThreat(bot);
         Unit* creature = threatManager->getOwner();
 
-        uint8 health = aiRegistry->GetStatsManager()->GetHealthPercent(creature);
+        uint8 health = creature->GetHealthPercent();
         if (health < 75)
             return;
 
@@ -40,7 +40,7 @@ protected:
                 if( !member || !member->isAlive() || member == bot)
                     continue;
 
-                if (!aiRegistry->GetStatsManager()->IsTank(member))
+                if (!aiRegistry->GetAi()->IsTank(member))
                     continue;
 
                 float distance = member->GetDistance(creature);

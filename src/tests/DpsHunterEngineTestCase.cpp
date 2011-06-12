@@ -75,7 +75,7 @@ protected:
     {
         tickWithNoPet();
         
-		tickWithPetLowHealth(0); // dead
+		tickWithPetDead();
 		tickWithPetLowHealth(30);
 
 		assertActions(">S:call pet>T:hunter's mark>Pet:mend pet");

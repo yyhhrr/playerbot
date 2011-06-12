@@ -38,7 +38,7 @@ namespace ai
 			Unit* target = GetTarget();
             return !spellManager->HasAura(spell, target) && 
 				spellManager->CanCastSpell(spell, target) && 
-				statsManager->GetManaPercent(targetManager->GetSelf()) < 50; 
+				AI_VALUE2(uint8, "mana", "self target") < 50; 
         };
     };
 

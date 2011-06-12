@@ -9,7 +9,6 @@ void EngineTestBase::setUp()
 	ai = new MockAiManagerRegistry();
 	spellManager = (MockAiSpellManager*)ai->GetSpellManager();
 	targetManager = (MockAiTargetManager*)ai->GetTargetManager();
-	statsManager = (MockAiStatsManager*)ai->GetStatsManager();
 	moveManager = (MockAiMoveManager*)ai->GetMoveManager();
 	inventoryManager = (MockAiInventoryManager*)ai->GetInventoryManager();
 	socialManager = (MockAiSocialManager*)ai->GetSocialManager();
@@ -79,11 +78,11 @@ void EngineTestBase::assertActions(const char* expected)
 void EngineTestBase::tickWithNoTarget()
 {
     context->GetValue<Unit*>("current target")->Set(NULL);
-    statsManager->myAttackerCount = 0;
+    set<uint8>("my attacker count", 0);
     
 	tick();
     
-	statsManager->myAttackerCount = 1;
+    set<uint8>("my attacker count", 1);
     context->GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
 }
 
@@ -141,37 +140,37 @@ void EngineTestBase::tickInMeleeRange()
 
 void EngineTestBase::tickWithNoAggro()
 {
-    statsManager->aggro = FALSE;
+    set<bool>("has aggro", "current target", false);
     tick();
-    statsManager->aggro = TRUE;
+    set<bool>("has aggro", "current target", true);
 }
 
 void EngineTestBase::tickWithRage(int amount)
 {
-	statsManager->rage[MockedTargets::GetSelf()] = amount;
+    set<uint8>("rage", "self target", amount);
     tick();
-    statsManager->rage[MockedTargets::GetSelf()] = 0;
+    set<uint8>("rage", "self target", 0);
 }
 
 void EngineTestBase::tickWithEnergy(int amount)
 {
-	statsManager->energy[MockedTargets::GetSelf()] = amount;
+    set<uint8>("energy", "self target", amount);
 	tick();
-	statsManager->energy[MockedTargets::GetSelf()] = 0;
+    set<uint8>("energy", "self target", 0);
 }
 
 void EngineTestBase::tickWithAttackerCount(int count)
 {
-	statsManager->attackerCount = count;
+    set<uint8>("attacker count", count);
 	tick();
-	statsManager->attackerCount = 1;
+    set<uint8>("attacker count", 1);
 }
 
 void EngineTestBase::tickWithMyAttackerCount(int count)
 {
-	statsManager->myAttackerCount = count;
+    set<uint8>("my attacker count", count);
 	tickWithAttackerCount(count + 1);
-	statsManager->myAttackerCount = 1;
+    set<uint8>("my attacker count", 1);
 }
 
 void EngineTestBase::tickWithLowHealth(int amount)
@@ -183,9 +182,9 @@ void EngineTestBase::tickWithLowHealth(int amount)
 
 void EngineTestBase::tickWithPartyLowHealth(int amount)
 {
-	statsManager->health[MockedTargets::GetPartyMember()] = amount;
+    set<uint8>("health", "party member to heal", amount);
 	tick();
-	statsManager->health[MockedTargets::GetPartyMember()] = 100;
+    set<uint8>("health", "party member to heal", 100);
 }
 
 void EngineTestBase::tickWithAuraToDispel(uint32 type)
@@ -211,24 +210,24 @@ void EngineTestBase::tickWithTargetAuraToDispel(uint32 type)
 
 void EngineTestBase::lowHealth(int amount)
 {
-	statsManager->health[MockedTargets::GetSelf()] = amount;
+    set<uint8>("health", "self target", amount);
 }
 
 void EngineTestBase::lowMana(int amount)
 {
-	statsManager->mana[MockedTargets::GetSelf()] = amount;
+    set<uint8>("mana", "self target", amount);
 }
 
 void EngineTestBase::healthRestored()
 {
-	statsManager->health[MockedTargets::GetSelf()] = 100;
+    set<uint8>("health", "self target", 100);
 }
 
 void EngineTestBase::tickWithComboPoints(int amount)
 {
-	statsManager->comboPoints[MockedTargets::GetSelf()] = amount;
+    set<uint8>("combo", "self target", amount);
 	tick();
-	statsManager->comboPoints[MockedTargets::GetSelf()] = 0;
+    set<uint8>("combo", "self target", 0);
 }
 
 void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell() 
@@ -240,9 +239,9 @@ void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell()
 
 void EngineTestBase::tickWithBalancePercent(int percent)
 {
-	statsManager->balancePercent = percent;
+    set<uint8>("balance", percent);
 	tick();
-	statsManager->balancePercent = 100;
+    set<uint8>("balance", 100);
 }
 
 void EngineTestBase::tickWithNoPet()
@@ -254,23 +253,30 @@ void EngineTestBase::tickWithNoPet()
 
 void EngineTestBase::tickWithPetLowHealth(int amount)
 {
-	statsManager->health[MockedTargets::GetPet()] = amount;
+    set<uint8>("health", "pet target", amount);
 	tick();
-	statsManager->health[MockedTargets::GetPet()] = 100;
+    set<uint8>("health", "pet target", 100);
+}
+
+void EngineTestBase::tickWithPetDead()
+{
+    set<bool>("dead", "pet target", true);
+    tick();
+    set<bool>("dead", "pet target", false);
 }
 
 void EngineTestBase::tickWithLowMana(int amount)
 {
-    statsManager->mana[MockedTargets::GetSelf()] = amount;
+    set<uint8>("mana", "self target", amount);
     tick();
-    statsManager->mana[MockedTargets::GetSelf()] = 100;
+    set<uint8>("mana", "self target", 100);
 }
 
 void EngineTestBase::tickWithTargetLowHealth(int amount)
 {
-	statsManager->health[MockedTargets::GetCurrentTarget()] = amount;
+    set<uint8>("health", "current target", amount);
     tick();
-    statsManager->health[MockedTargets::GetCurrentTarget()] = 100;
+    set<uint8>("health", "current target", 100);
 }
 void EngineTestBase::tickWithTargetIsMoving()
 {
@@ -347,9 +353,9 @@ void EngineTestBase::tickBehindTarget()
 
 void EngineTestBase::tickWithCcTarget(const char* spell)
 {   
-    statsManager->attackerCount = 3;
+    set<uint8>("attacker count", 3);
     context->GetValue<Unit*>("cc target", spell)->Set(MockedTargets::GetCc());
     tick();
-    statsManager->attackerCount = 1;
+    set<uint8>("attacker count", 1);
     context->GetValue<Unit*>("cc target", spell)->Set(NULL);
 }

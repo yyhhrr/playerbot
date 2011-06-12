@@ -9,6 +9,17 @@ namespace ai
         MockTargetValue(AiManagerRegistry* const ai) : ManualSetValue<Unit*>(ai, NULL) {}
     };
 
+    class MockStatsValue : public ManualSetValue<uint8>, public Qualified
+    {
+    public:
+        MockStatsValue(AiManagerRegistry* const ai) : ManualSetValue<uint8>(ai, 0) {}
+    };
+
+    class MockLogicalValue : public ManualSetValue<bool>, public Qualified
+    {
+    public:
+        MockLogicalValue(AiManagerRegistry* const ai) : ManualSetValue<bool>(ai, false) {}
+    };
 
     class MockPartyMemberWithoutAuraValue : public CalculatedValue<Unit*>, public Qualified
     {
@@ -31,7 +42,7 @@ namespace ai
         virtual Unit* Calculate()
         {
             Unit* target = MockedTargets::GetPartyMember();
-            return ai->GetStatsManager()->GetHealthPercent(target) < 100.0f ? target : NULL;
+            return AI_VALUE2(uint8, "health", "party member to heal") < 100.0f ? target : NULL;
         }
     };
 
@@ -67,9 +78,25 @@ namespace ai
             creators["current cc target"] = &MockValueContext::mock;
             creators["pet target"] = &MockValueContext::mock;
             creators["grind target"] = &MockValueContext::mock;
+        
+            creators["health"] = &MockValueContext::stats;
+            creators["rage"] = &MockValueContext::stats;
+            creators["energy"] = &MockValueContext::stats;
+            creators["mana"] = &MockValueContext::stats;
+            creators["combo"] = &MockValueContext::stats;
+            creators["dead"] = &MockValueContext::logical;
+            creators["has mana"] = &MockValueContext::logical;
+        
+            creators["attacker count"] = &MockValueContext::stats;
+            creators["my attacker count"] = &MockValueContext::stats;
+            creators["has aggro"] = &MockValueContext::logical;
+            creators["balance"] = &MockValueContext::stats;
+            creators["mounted"] = &MockValueContext::logical;
         }
 
     private:
+        static UntypedValue* stats(AiManagerRegistry* ai) { return new MockStatsValue(ai); }
+        static UntypedValue* logical(AiManagerRegistry* ai) { return new MockLogicalValue(ai); }
         static UntypedValue* mock(AiManagerRegistry* ai) { return new MockTargetValue(ai); }
         static UntypedValue* party_member_without_aura(AiManagerRegistry* ai) { return new MockPartyMemberWithoutAuraValue(ai); }
         static UntypedValue* party_member_to_heal(AiManagerRegistry* ai) { return new MockPartyMemberToHeal(ai); }
@@ -91,12 +118,29 @@ namespace ai
               GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
               GetValue<Unit*>("pet target")->Set(MockedTargets::GetPet());
 
-              //GetValue<Unit*>("party member without aura")->Set(MockedTargets.GetPartyMember());
-              //GetValue<Unit*>("party member to heal")->Set(MockedTargets.GetPartyMember());
-              //GetValue<Unit*>("party member to resurrect")->Set(MockedTargets.GetPartyMember());
-              //GetValue<Unit*>("cc target")->Set(MockedTargets.GetCc());
-              //GetValue<Unit*>("grind target")->Set(MockedTargets.GetCurrentTarget());
-              //GetValue<Unit*>("party member to dispel")->Set(MockedTargets.GetPartyMember());
+              GetValue<uint8>("health", "self target")->Set(100);
+              GetValue<uint8>("health", "current target")->Set(100);
+              GetValue<uint8>("health", "pet target")->Set(100);
+              GetValue<uint8>("health", "party member to heal")->Set(100);
+              GetValue<uint8>("health", "party member to resurrect")->Set(100);
+          
+              GetValue<uint8>("mana", "self target")->Set(100);
+              GetValue<uint8>("mana", "current target")->Set(100);
+              GetValue<uint8>("mana", "pet target")->Set(100);
+              GetValue<uint8>("mana", "party member to heal")->Set(100);
+              GetValue<uint8>("mana", "party member to resurrect")->Set(100);
+          
+              GetValue<bool>("has mana", "self target")->Set(true);
+              GetValue<bool>("has mana", "current target")->Set(true);
+              GetValue<bool>("has mana", "pet target")->Set(true);
+              GetValue<bool>("has mana", "party member to heal")->Set(true);
+              GetValue<bool>("has mana", "party member to resurrect")->Set(true);
+          
+              GetValue<uint8>("attacker count")->Set(1);
+              GetValue<uint8>("my attacker count")->Set(1);
+              GetValue<uint8>("balance")->Set(100);
+              
+              GetValue<bool>("has aggro", "current target")->Set(true);
           }
 
     public:

@@ -70,10 +70,9 @@ void FindTargetStrategy::GetPlayerCount(Player* bot, Unit* creature, int* tankCo
         if (!player)
             continue;
 
-        if (aiRegistry->GetStatsManager()->IsTank(player))
+        if (aiRegistry->GetAi()->IsTank(player))
             (*tankCount)++;
-
-        if (aiRegistry->GetStatsManager()->IsDps(player))
+        else
             (*dpsCount)++;
     }
 

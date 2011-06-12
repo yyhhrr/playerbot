@@ -7,36 +7,37 @@ using namespace ai;
 
 bool CastSerpentStingAction::isUseful()
 {
-    return statsManager->GetHealthPercent(GetTarget()) > 50;
+    return AI_VALUE2(uint8, "health", "current target") > 50;
 }
 
 bool CastViperStingAction::isUseful()
 {
-    return statsManager->GetManaPercent(targetManager->GetSelf()) < 50 &&
-		statsManager->GetManaPercent(targetManager->GetCurrentTarget()) >= 30;
+    return AI_VALUE2(uint8, "mana", "self target") < 50 && AI_VALUE2(uint8, "mana", "current target") >= 30;
 }
 
 bool CastArcaneShotAction::isUseful()
 {
-    return statsManager->GetHealthPercent(GetTarget()) >= 5 && statsManager->GetManaPercent(targetManager->GetSelf()) >= 30;
+    return AI_VALUE2(uint8, "health", "current target") >= 5 && AI_VALUE2(uint8, "mana", "self target") >= 30;
 }
 
 bool CastExplosiveShotAction::isUseful()
 {
-    return statsManager->GetHealthPercent(GetTarget()) >= 25 && statsManager->GetManaPercent(targetManager->GetSelf()) >= 30;
+    return AI_VALUE2(uint8, "health", "current target") >= 25 && AI_VALUE2(uint8, "mana", "self target") >= 30;
 }
 
 bool CastAimedShotAction::isUseful()
 {
-    return statsManager->GetHealthPercent(GetTarget()) >= 5 && statsManager->GetManaPercent(targetManager->GetSelf()) >= 30;
+    return AI_VALUE2(uint8, "health", "current target") >= 5 && AI_VALUE2(uint8, "mana", "self target") >= 30;
 }
 
-bool CastAspectOfTheCheetahAction::isUseful() {
+bool CastAspectOfTheCheetahAction::isUseful() 
+{
     return !spellManager->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
 }
 
-bool CastAspectOfTheViperAction::isUseful() {
-	return CastBuffSpellAction::isUseful() && statsManager->GetManaPercent(targetManager->GetSelf()) < 50;
+bool CastAspectOfTheViperAction::isUseful() 
+{
+	return CastBuffSpellAction::isUseful() && AI_VALUE2(uint8, "mana", "self target") < 50;
 }
 
 Value<Unit*>* CastFreezingTrap::GetTargetValue()

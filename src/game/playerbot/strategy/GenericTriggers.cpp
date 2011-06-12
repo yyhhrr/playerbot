@@ -6,44 +6,42 @@ using namespace ai;
 
 bool LowManaTrigger::IsActive()
 {
-	Unit* target = targetManager->GetSelf();
-	return statsManager->HasMana(target) && statsManager->GetManaPercent(target) < LOW_HEALTH_PERCENT;
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < LOW_HEALTH_PERCENT;
 }
 
 
 bool RageAvailable::IsActive()
 {
-    return statsManager->GetRage(targetManager->GetSelf()) >= amount;
+    return AI_VALUE2(uint8, "rage", "self target") >= amount;
 }
 
 bool EnergyAvailable::IsActive()
 {
-	return statsManager->GetEnergy(targetManager->GetSelf()) >= amount;
+	return AI_VALUE2(uint8, "energy", "self target") >= amount;
 }
 
 bool ComboPointsAvailableTrigger::IsActive()
 {
-    return statsManager->GetComboPoints((Player*)targetManager->GetSelf()) >= amount;
+    return AI_VALUE2(uint8, "combo", "self target") >= amount;
 }
 
 bool LoseAggroTrigger::IsActive()
 {
-    return !statsManager->HasAggro(targetManager->GetCurrentTarget());
+    return !AI_VALUE2(bool, "has aggro", "current target");
 }
 
 bool PanicTrigger::IsActive()
 {
-    return ai->GetStatsManager()->GetHealthPercent(ai->GetTargetManager()->GetSelf()) < 25 &&
-		(!statsManager->HasMana(targetManager->GetSelf()) || statsManager->GetManaPercent(targetManager->GetSelf()) < 25);
+    return AI_VALUE2(uint8, "health", "self target") < 25 &&
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") < 25);
 }
 
 bool BuffTrigger::IsActive()
 {
     Unit* target = GetTarget();
-    Unit* self = targetManager->GetSelf();
 	return SpellTrigger::IsActive() &&
 		!spellManager->HasAura(spell, target) &&
-		(!statsManager->HasMana(self) || statsManager->GetManaPercent(self) > 40);
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > 40);
 }
 
 Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()
@@ -53,27 +51,27 @@ Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()
 
 bool NoAttackersTrigger::IsActive()
 {
-    return !targetManager->GetCurrentTarget() && statsManager->GetAttackerCount() > 0;
+    return !AI_VALUE(Unit*, "current target") && AI_VALUE(uint8, "attacker count") > 0;
 }
 
 bool NoTargetTrigger::IsActive()
 {
-	return !targetManager->GetCurrentTarget();
+	return !AI_VALUE(Unit*, "current target");
 }
 
 bool MyAttackerCountTrigger::IsActive()
 {
-    return statsManager->GetMyAttackerCount() >= amount;
+    return AI_VALUE(uint8, "my attacker count") >= amount;
 }
 
 bool AoeTrigger::IsActive()
 {
-    return statsManager->GetAttackerCount(targetManager->GetCurrentTarget(), range) >= amount;
+    return AI_VALUE(uint8, "attacker count") >= amount;
 }
 
 bool DebuffTrigger::IsActive()
 {
-	return BuffTrigger::IsActive() && statsManager->GetHealthPercent(GetTarget()) > 25;
+	return BuffTrigger::IsActive() && AI_VALUE2(uint8, "health", "current target") > 25;
 }
 
 bool SpellTrigger::IsActive()
@@ -113,7 +111,7 @@ const char* AndTrigger::getName()
 
 bool BoostTrigger::IsActive()
 {
-	return BuffTrigger::IsActive() && statsManager->GetBalancePercent() <= balance;
+	return BuffTrigger::IsActive() && AI_VALUE(uint8, "balance") <= balance;
 }
 
 bool SnareTargetTrigger::IsActive()
@@ -140,7 +138,7 @@ bool HasAuraTrigger::IsActive()
 bool TankAoeTrigger::IsActive()
 {
     Unit* target = targetManager->GetCurrentTarget();
-    return statsManager->GetAttackerCount() > 0 &&
+    return AI_VALUE(uint8, "attacker count") > 0 &&
         (!target || target->getVictim() == targetManager->GetSelf());
 }
 
@@ -152,7 +150,8 @@ bool IsBehindTargetTrigger::IsActive()
 
 bool HasCcTargetTrigger::IsActive()
 {
-    return statsManager->GetAttackerCount() > 2 && targetManager->FindCcTarget(getName()) && !targetManager->GetCurrentCcTarget(getName());
+    return AI_VALUE(uint8, "attacker count") > 2 && AI_VALUE2(Unit*, "cc target", getName()) && 
+        !AI_VALUE2(Unit*, "current cc target", getName());
 }
 
 bool NoMovementTrigger::IsActive()

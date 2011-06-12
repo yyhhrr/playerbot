@@ -134,7 +134,7 @@ namespace ai
     class AttackerCountTrigger : public Trigger
     {
     public:
-        AttackerCountTrigger(AiManagerRegistry* const ai, int amount, float distance = BOT_REACT_DISTANCE) : Trigger(ai)
+        AttackerCountTrigger(AiManagerRegistry* const ai, int amount, float distance = BOT_SIGHT_DISTANCE) : Trigger(ai)
         {
             this->amount = amount;
             this->distance = distance;
@@ -142,7 +142,7 @@ namespace ai
     public:
         virtual bool IsActive()
 		{
-            return statsManager->GetAttackerCount(distance) >= amount;
+            return AI_VALUE(uint8, "attacker count") >= amount;
         }
         virtual const char* getName() { return "attacker count"; }
 
@@ -334,7 +334,7 @@ namespace ai
 		NoPetTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no pet", 5) {}
 
 		virtual bool IsActive() {
-			return !targetManager->GetPet() && !ai->GetStatsManager()->IsMounted();
+			return !targetManager->GetPet() && !AI_VALUE(bool, "mounted");
 		}
 	};
 

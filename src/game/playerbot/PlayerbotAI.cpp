@@ -275,3 +275,20 @@ bool PlayerbotAI::ContainsStrategy(StrategyType type)
     return combatEngine->ContainsStrategy(type) || nonCombatEngine->ContainsStrategy(type);
 }
 
+bool PlayerbotAI::IsTank(Player* player)
+{
+    PlayerbotAI* botAi = player->GetPlayerbotAI();
+    if (botAi)
+        return botAi->ContainsStrategy(STRATEGY_TYPE_TANK);
+
+    switch (player->getClass()) 
+    {
+    case CLASS_DEATH_KNIGHT:
+    case CLASS_PALADIN:
+    case CLASS_WARRIOR:
+        return true;
+    case CLASS_DRUID:
+        return aiRegistry->GetSpellManager()->HasAnyAuraOf(player, "bear form", "dire bear form");
+    }
+    return false;
+}

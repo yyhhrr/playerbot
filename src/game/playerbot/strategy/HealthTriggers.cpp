@@ -6,8 +6,7 @@ using namespace ai;
 
 float HealthInRangeTrigger::GetValue()
 {
-	Unit* target = GetTarget();
-	return target ? statsManager->GetHealthPercent(target) : 100.0f;
+    return AI_VALUE2(uint8, "health", GetTargetName());
 }
 
 bool PartyMemberDeadTrigger::IsActive()

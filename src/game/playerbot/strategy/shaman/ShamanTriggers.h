@@ -14,7 +14,7 @@ namespace ai
         TotemTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {}
         virtual bool IsActive()
 		{
-            return BuffTrigger::IsActive() && statsManager->GetAttackerCount() > 2;
+            return BuffTrigger::IsActive() && AI_VALUE(uint8, "attacker count") > 2;
         }
     };
 

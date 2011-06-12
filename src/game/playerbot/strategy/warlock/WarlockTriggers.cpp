@@ -8,7 +8,7 @@ using namespace ai;
 bool DemonArmorTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
-	return statsManager->GetManaPercent(targetManager->GetSelf()) > 30 && 
+	return AI_VALUE2(uint8, "mana", "self target") > 30 && 
 		!spellManager->HasAura("demon skin", target) &&
 		!spellManager->HasAura("demon armor", target);
 }

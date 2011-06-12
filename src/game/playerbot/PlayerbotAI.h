@@ -60,6 +60,7 @@ public:
     void ChangeNonCombatStrategy(const char* name) { ChangeStrategy(name, nonCombatEngine); }
     bool ContainsStrategy(StrategyType type);
     void ReInitCurrentEngine();
+    bool IsTank(Player* player);
 
 public:
 	Player* GetBot() { return bot; }

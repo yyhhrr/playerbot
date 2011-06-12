@@ -19,6 +19,8 @@
 #include "PetTargetValue.h"
 #include "GrindTargetValue.h"
 #include "PartyMemberToDispel.h"
+#include "StatsValues.h"
+#include "AttackerCountValues.h"
 
 namespace ai
 {
@@ -46,9 +48,33 @@ namespace ai
             creators["pet target"] = &ValueContext::pet_target;
             creators["grind target"] = &ValueContext::grind_target;
             creators["party member to dispel"] = &ValueContext::party_member_to_dispel;
+            creators["health"] = &ValueContext::health;
+            creators["rage"] = &ValueContext::rage;
+            creators["energy"] = &ValueContext::energy;
+            creators["mana"] = &ValueContext::mana;
+            creators["combo"] = &ValueContext::combo;
+            creators["dead"] = &ValueContext::dead;
+            creators["has mana"] = &ValueContext::has_mana;
+            creators["attacker count"] = &ValueContext::attacker_count;
+            creators["my attacker count"] = &ValueContext::my_attacker_count;
+            creators["has aggro"] = &ValueContext::has_aggro;
+            creators["balance"] = &ValueContext::balance;
+            creators["mounted"] = &ValueContext::mounted;
         }
 
     private:
+        static UntypedValue* attacker_count(AiManagerRegistry* ai) { return new AttackerCountValue(ai); }
+        static UntypedValue* my_attacker_count(AiManagerRegistry* ai) { return new MyAttackerCountValue(ai); }
+        static UntypedValue* has_aggro(AiManagerRegistry* ai) { return new HasAggroValue(ai); }
+        static UntypedValue* balance(AiManagerRegistry* ai) { return new BalancePercentValue(ai); }
+        static UntypedValue* mounted(AiManagerRegistry* ai) { return new IsMountedValue(ai); }
+        static UntypedValue* health(AiManagerRegistry* ai) { return new HealthValue(ai); }
+        static UntypedValue* rage(AiManagerRegistry* ai) { return new RageValue(ai); }
+        static UntypedValue* energy(AiManagerRegistry* ai) { return new EnergyValue(ai); }
+        static UntypedValue* mana(AiManagerRegistry* ai) { return new ManaValue(ai); }
+        static UntypedValue* combo(AiManagerRegistry* ai) { return new ComboPointsValue(ai); }
+        static UntypedValue* dead(AiManagerRegistry* ai) { return new IsDeadValue(ai); }
+        static UntypedValue* has_mana(AiManagerRegistry* ai) { return new HasManaValue(ai); }
         static UntypedValue* nearest_game_objects(AiManagerRegistry* ai) { return new NearestGameObjects(ai); }
         static UntypedValue* log_level(AiManagerRegistry* ai) { return new LogLevelValue(ai); }
         static UntypedValue* nearest_npcs(AiManagerRegistry* ai) { return new NearestNpcsValue(ai); }

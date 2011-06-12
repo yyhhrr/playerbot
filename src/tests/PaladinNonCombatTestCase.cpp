@@ -20,15 +20,16 @@ public:
 		EngineTestBase::setUp();
 		setupEngine(new PaladinAiObjectContext(ai), "nc", NULL);
 
-        statsManager->attackerCount = 0;
+        set<uint8>("attacker count", 0);
     }
 
 protected:
     void buff()
     {
         tick(); 
-		statsManager->mounted = true;
+        set<bool>("mounted", true);
 		tick();
+        set<bool>("mounted", false);
 
 		assertActions(">P:blessing of kings>S:crusader aura");
     }

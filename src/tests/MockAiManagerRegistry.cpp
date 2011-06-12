@@ -9,7 +9,6 @@ using namespace ai;
 MockAiManagerRegistry::MockAiManagerRegistry() : AiManagerRegistry()
 {
     ai = new MockPlayerbotAIBase();
-	managers[AiStatsManagerType] = new MockAiStatsManager(ai, this);
 	managers[AiSpellManagerType] = new MockAiSpellManager(ai, this, &buffer);
 	managers[AiTargetManagerType] = new MockAiTargetManager(ai, this);
 	managers[AiMoveManagerType] = new MockAiMoveManager(ai, this, &buffer);

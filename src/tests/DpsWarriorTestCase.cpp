@@ -27,7 +27,7 @@ public:
 
 		spellUnavailable("revenge");
         addAura("battle shout");
-        statsManager->rage[MockedTargets::GetSelf()] = 20;
+        set<uint8>("rage", "self target", 20);
     }
 
 protected:

@@ -8,7 +8,7 @@ using namespace ai;
 bool SealTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
-	return statsManager->GetManaPercent(targetManager->GetSelf()) > 30 && 
+	return AI_VALUE2(uint8, "mana", "self target") > 30 && 
 		!spellManager->HasAura("seal of justice", target) &&
         !spellManager->HasAura("seal of command", target) &&
 		!spellManager->HasAura("seal of righteousness", target) &&
@@ -19,5 +19,5 @@ bool SealTrigger::IsActive()
 bool CrusaderAuraTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
-	return statsManager->IsMounted() && !spellManager->HasAura("crusader aura", target);
+	return AI_VALUE(bool, "mounted") && !spellManager->HasAura("crusader aura", target);
 }

@@ -129,6 +129,9 @@ namespace ai
 	};
 
     //---------------------------------------------------------------------------------------------------------------------
-    
+
    
 }
+
+#define AI_VALUE(type, name) ai->GetAi()->GetAiObjectContext()->GetValue<type>(name)->Get()
+#define AI_VALUE2(type, name, param) ai->GetAi()->GetAiObjectContext()->GetValue<type>(name, param)->Get()

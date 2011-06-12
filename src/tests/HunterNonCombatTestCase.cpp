@@ -20,7 +20,7 @@ public:
 		EngineTestBase::setUp();
 		setupEngine(new HunterAiObjectContext(ai), "nc", NULL);
 
-        statsManager->attackerCount = 0;
+        set<uint8>("attacker count", 0);
     }
 
 protected:
@@ -39,7 +39,7 @@ protected:
     {
         tickWithNoPet();
         
-		tickWithPetLowHealth(0); // dead
+		tickWithPetDead();
 		tickWithPetLowHealth(30);
 
 		assertActions(">S:call pet>S:revive pet>Pet:mend pet");

@@ -36,14 +36,14 @@ Unit* PartyMemberToHeal::Calculate()
         if (!Check(player) || !player->isAlive())
             continue;
 
-        uint8 health = ai->GetStatsManager()->GetHealthPercent(player);
+        uint8 health = player->GetHealthPercent();
         if (health < 25 || !IsTargetOfSpellCast(player, predicate))
             calc.probe(health, player);
 
         Pet* pet = player->GetPet();
         if (pet && CanHealPet(pet)) 
         {
-            health = ai->GetStatsManager()->GetHealthPercent(pet);
+            health = pet->GetHealthPercent();
             if (health < 25 || !IsTargetOfSpellCast(player, predicate))
                 calc.probe(health, player);
         }
