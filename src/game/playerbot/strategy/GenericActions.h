@@ -8,15 +8,11 @@
 
 namespace ai
 {
-    class MeleeAction : public Action 
+    class MeleeAction : public AttackAction 
     {
     public:
-        MeleeAction(AiManagerRegistry* const ai) : Action(ai, "melee") {}
-        virtual bool Execute(Event event) 
-        {
-            ai->GetMoveManager()->Attack(GetTarget());
-            return true;
-        }
+        MeleeAction(AiManagerRegistry* const ai) : AttackAction(ai, "melee") {}
+
         virtual const char* GetTargetName() { return "current target"; }
     };
 

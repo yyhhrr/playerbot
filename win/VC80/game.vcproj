@@ -1905,6 +1905,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AttackAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AttackAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AttackerCountValues.cpp"
 					>
 				</File>
@@ -1981,6 +1989,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DistanceValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\DpsTargetValue.cpp"
 					>
 				</File>
@@ -2018,6 +2030,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ExternalEventHelper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\FollowActions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\FollowActions.h"
 					>
 				</File>
 				<File
@@ -2078,6 +2098,18 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\IsBehindValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\IsMovingValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LastMovementValue.h"
 					>
 				</File>
 				<File
@@ -2333,6 +2365,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ReleaseSpiritAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SelfTargetValue.h"
 					>
 				</File>
@@ -2354,6 +2390,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\StatsValues.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\StayActions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\StayActions.h"
 					>
 				</File>
 				<File
@@ -2382,6 +2426,22 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TaxiAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TaxiAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TeleportAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TeleportAction.h"
 					>
 				</File>
 				<File

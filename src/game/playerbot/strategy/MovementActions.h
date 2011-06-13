@@ -4,66 +4,47 @@
 
 namespace ai
 {
-    class FleeAction : public Action {
+    class MovementAction : public Action {
     public:
-        FleeAction(AiManagerRegistry* const ai, float distance = SPELL_DISTANCE) : Action(ai, "flee") {
+        MovementAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) 
+        {
+            bot = ai->GetAi()->GetBot();
+        }
+
+    protected:
+        void MoveTo(uint32 mapId, float x, float y, float z);
+        void MoveTo(Unit* target, float distance = 0.0f);
+        void MoveTo(WorldObject* target);
+        float GetFollowAngle();
+        void Follow(Unit* target, float distance = 2.0f);
+        void Follow(Unit* target, float distance, float angle);
+        void WaitForReach(float distance);
+        bool IsMovingAllowed(Unit* target);
+        bool IsMovingAllowed(uint32 mapId, float x, float y, float z);
+        bool IsMovingAllowed();
+        void SetInFront(const Unit* obj);
+        bool Flee(Unit *target);
+
+    protected:
+        Player* bot;
+    };
+
+    class FleeAction : public MovementAction {
+    public:
+        FleeAction(AiManagerRegistry* const ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") {
 			this->distance = distance;
 		}
 
-        virtual bool Execute(Event event) 
-		{
-            return ai->GetMoveManager()->Flee(AI_VALUE(Unit*, "current target"), distance); 
-        }
+        virtual bool Execute(Event event);
 
 	private:
 		float distance;
     };
 
-	class FollowAction : public Action {
-	public:
-		FollowAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) {}
-		virtual bool Execute(Event event) = NULL;
-	};
 
-	class FollowLineAction : public FollowAction {
-	public:
-		FollowLineAction(AiManagerRegistry* const ai) : FollowAction(ai, "follow line") {}
-		virtual bool Execute(Event event);
-	};
-
-	class FollowMasterAction : public Action {
-	public:
-		FollowMasterAction(AiManagerRegistry* const ai) : Action(ai, "follow master") {}
-		virtual bool Execute(Event event);
-	};
-
-    class StayAction : public Action {
+    class GoAwayAction : public MovementAction {
     public:
-        StayAction(AiManagerRegistry* const ai) : Action(ai, "stay") {}
-        virtual bool Execute(Event event);
-    };
-
-	class StayCircleAction : public Action {
-	public:
-		StayCircleAction(AiManagerRegistry* const ai) : Action(ai, "stay circle") {}
-		virtual bool Execute(Event event);
-	};
-
-	class StayCombatAction : public Action {
-	public:
-		StayCombatAction(AiManagerRegistry* const ai) : Action(ai, "stay combat") {}
-		virtual bool Execute(Event event);
-	};
-
-	class StayLineAction : public Action {
-	public:
-		StayLineAction(AiManagerRegistry* const ai) : Action(ai, "stay line") {}
-		virtual bool Execute(Event event);
-	};
-
-    class GoAwayAction : public Action {
-    public:
-        GoAwayAction(AiManagerRegistry* const ai) : Action(ai, "goaway") {}
+        GoAwayAction(AiManagerRegistry* const ai) : MovementAction(ai, "goaway") {}
         virtual bool Execute(Event event);
     };
 }

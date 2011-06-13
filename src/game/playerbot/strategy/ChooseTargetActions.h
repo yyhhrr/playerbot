@@ -1,25 +1,10 @@
 #pragma once
 
 #include "Action.h"
+#include "AttackAction.h"
 
 namespace ai
 {
-    class AttackAction : public Action {
-    public:
-        AttackAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) {}
-        
-		virtual bool isPossible() { return GetTarget(); }
-
-        virtual bool Execute(Event event) 
-        {
-            Unit* target = GetTarget();
-            if (target)
-                ai->GetMoveManager()->Attack(target);
-            
-            return true;
-        }
-    };   
-
     class DpsAssistAction : public AttackAction {
     public:
         DpsAssistAction(AiManagerRegistry* const ai) : AttackAction(ai, "dps assist") {}

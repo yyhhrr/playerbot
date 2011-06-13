@@ -2,12 +2,13 @@
 
 #include "Action.h"
 #include "..\ai\LootObjectStack.h"
+#include "MovementActions.h"
 
 namespace ai
 {
-    class LootAction : public Action {
+    class LootAction : public MovementAction {
     public:
-        LootAction(AiManagerRegistry* const ai) : Action(ai, "loot") { bot = ai->GetAi()->GetBot(); }
+        LootAction(AiManagerRegistry* const ai) : MovementAction(ai, "loot") { bot = ai->GetAi()->GetBot(); }
         virtual bool Execute(Event event);
 
     private:

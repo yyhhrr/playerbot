@@ -1,5 +1,7 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
+#include "../strategy/LastMovementValue.h"
+#include "../../MovementGenerator.h"
 
 using namespace ai;
 using namespace std;
@@ -245,13 +247,24 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
 		target = bot;
 
     if (!bot->isInFrontInMap(target, 10))
-		aiRegistry->GetMoveManager()->SetInFront(target);
+    {
+        bot->SetInFront(target);
+		aiRegistry->GetMoveManager()->UpdatePosition();
+    }
 
     lastSpellId = spellId;
     lastSpellTarget = target->GetObjectGuid();
     lastCastTime = time(0);
 
-	aiRegistry->GetMoveManager()->Stay();
+    ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get().Set(NULL);
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+    bot->clearUnitState( UNIT_STAT_CHASE );
+    bot->clearUnitState( UNIT_STAT_FOLLOW );
+
+    if (!bot->IsStandState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(lastSpellId);
     ObjectGuid oldSel = bot->GetSelectionGuid().GetRawValue();

@@ -191,21 +191,21 @@ void EngineTestBase::removeAura(const char* spell)
 
 void EngineTestBase::tickOutOfSpellRange()
 {
-	moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 49.0f;
+    set<float>("distance", "current target", 49.0f);
     tick(); 
-    moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 15.0f;	
+    set<float>("distance", "current target", 15.0f);
 }
 
 void EngineTestBase::tickOutOfMeleeRange()
 {
-    moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 15.0f;
+    set<float>("distance", "current target", 15.0f);
     tick(); 
-    moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0.0f;	
+    set<float>("distance", "current target", 0.0f);
 }
 
 void EngineTestBase::tickInMeleeRange()
 {
-    moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0.0f;
+    set<float>("distance", "current target", 0.0f);
 	tick();
 }
 
@@ -351,14 +351,14 @@ void EngineTestBase::tickWithTargetLowHealth(int amount)
 }
 void EngineTestBase::tickWithTargetIsMoving()
 {
-    moveManager->moving[MockedTargets::GetCurrentTarget()] = true;
+    set<bool>("moving", "current target", true);
     tick();
-    moveManager->moving[MockedTargets::GetCurrentTarget()] = false;
+    set<bool>("moving", "current target", false);
 }
 
 void EngineTestBase::tickInSpellRange()
 {
-    moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 15.0f;
+    set<float>("distance", "current target", 15.0f);
     tick();
 }
 
@@ -417,9 +417,9 @@ void EngineTestBase::tickWithDeadPartyMember()
 
 void EngineTestBase::tickBehindTarget()
 {
-    moveManager->isBehind[MockedTargets::GetCurrentTarget()] = true;
+    set<bool>("behind", "current target", true);
     tick();
-    moveManager->isBehind[MockedTargets::GetCurrentTarget()] = false;
+    set<bool>("behind", "current target", false);
 }
 
 void EngineTestBase::tickWithCcTarget(const char* spell)

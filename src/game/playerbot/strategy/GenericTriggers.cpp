@@ -118,7 +118,7 @@ bool BoostTrigger::IsActive()
 bool SnareTargetTrigger::IsActive()
 {
 	Unit* target = GetTarget();
-	return DebuffTrigger::IsActive() && moveManager->IsMoving(target) && !spellManager->HasAura(spell, target);
+	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !spellManager->HasAura(spell, target);
 }
 
 bool ItemCountTrigger::IsActive()
@@ -146,7 +146,7 @@ bool TankAoeTrigger::IsActive()
 bool IsBehindTargetTrigger::IsActive()
 {
     Unit* target = AI_VALUE(Unit*, "current target");
-    return target && moveManager->IsBehind(target);
+    return target && AI_VALUE2(bool, "behind", "current target");
 }
 
 bool HasCcTargetTrigger::IsActive()
@@ -157,5 +157,5 @@ bool HasCcTargetTrigger::IsActive()
 
 bool NoMovementTrigger::IsActive()
 {
-	return !moveManager->IsMoving(AI_VALUE(Unit*, "self target"));
+	return !AI_VALUE2(bool, "moving", "self target");
 }

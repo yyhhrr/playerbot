@@ -21,6 +21,9 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( query );
       CPPUNIT_TEST( ll );
       CPPUNIT_TEST( loot_all );
+      CPPUNIT_TEST( release );
+      CPPUNIT_TEST( teleport );
+      CPPUNIT_TEST( taxi );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -102,6 +105,21 @@ protected:
         tick();
 
         assertActions(">S:add all loot>S:loot");
+    }
+
+    void release()
+    {
+        assertCommand("release");
+    }
+    
+    void teleport()
+    {
+        assertCommand("teleport");
+    }
+
+    void taxi()
+    {
+        assertCommand("taxi");
     }
 };
 

@@ -26,6 +26,10 @@
 #include "AlwaysLootListValue.h"
 #include "LootStrategyValue.h"
 #include "HasAvailableLootValue.h"
+#include "LastMovementValue.h"
+#include "DistanceValue.h"
+#include "IsMovingValue.h"
+#include "IsBehindValue.h"
 
 namespace ai
 {
@@ -69,9 +73,18 @@ namespace ai
             creators["has available loot"] = &ValueContext::has_available_loot;
             creators["always loot list"] = &ValueContext::always_loot_list;
             creators["loot strategy"] = &ValueContext::loot_strategy;
+            creators["last movement"] = &ValueContext::last_movement;
+            creators["distance"] = &ValueContext::distance;
+            creators["moving"] = &ValueContext::moving;
+            creators["behind"] = &ValueContext::behind;
         }
 
     private:
+        static UntypedValue* behind(AiManagerRegistry* ai) { return new IsBehindValue(ai); }
+        static UntypedValue* moving(AiManagerRegistry* ai) { return new IsMovingValue(ai); }
+        static UntypedValue* distance(AiManagerRegistry* ai) { return new DistanceValue(ai); }
+        static UntypedValue* last_movement(AiManagerRegistry* ai) { return new LastMovementValue(ai); }
+
         static UntypedValue* available_loot(AiManagerRegistry* ai) { return new AvailableLootValue(ai); }
         static UntypedValue* has_available_loot(AiManagerRegistry* ai) { return new HasAvailableLootValue(ai); }
         static UntypedValue* always_loot_list(AiManagerRegistry* ai) { return new AlwaysLootListValue(ai); }

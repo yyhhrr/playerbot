@@ -9,8 +9,7 @@ namespace ai
         virtual bool IsActive() 
 		{
 			Unit* target = AI_VALUE(Unit*, "current target");
-            float distance = moveManager->GetDistanceTo(target);
-            return target && distance <= ATTACK_DISTANCE;
+            return target && AI_VALUE2(float, "distance", "current target") <= ATTACK_DISTANCE;
         }
     };
 
@@ -23,7 +22,7 @@ namespace ai
         virtual bool IsActive() 
 		{
 			Unit* target = AI_VALUE(Unit*, "current target");
-			return target && moveManager->GetDistanceTo(target) > distance;
+			return target && AI_VALUE2(float, "distance", "current target") > distance;
         }
 
     protected:

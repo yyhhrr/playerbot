@@ -20,7 +20,7 @@ public:
 		setupEngine(new WarriorAiObjectContext(ai), "tank", NULL);
 
 		engine->addStrategy("racials");
-		moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0;
+        set<float>("distance", "current target", 0.0f);
 		
 		addAura("battle shout");
 		addAura("defensive stance");

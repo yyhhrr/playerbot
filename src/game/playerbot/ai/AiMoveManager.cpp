@@ -5,400 +5,21 @@
 #include "FleeManager.h"
 #include "../../CreatureAI.h"
 #include "LootObjectStack.h"
+#include "../strategy/LastMovementValue.h"
 
 using namespace ai;
 using namespace std;
 
 AiMoveManager::AiMoveManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
-	lastAreaTrigger = 0;
-	lastMoveToX = 0;
-	lastMoveToY = 0;
-	lastMoveToZ = 0;
-	lastMoveToOri = 0;
-	lastFollow = NULL;
-}
-
-float AiMoveManager::GetDistanceTo(Unit* target)
-{
-	return target ? bot->GetDistance(target) : 0.0f; 
-}
-
-void AiMoveManager::MoveTo(Unit* target, float distance)
-{
-    if (!IsMovingAllowed(target))
-        return;
-
-	if (distance < SPELL_DISTANCE) 
-	{
-		Follow(target, distance);
-		return;
-	}
-
-    float bx = bot->GetPositionX();
-    float by = bot->GetPositionY();
-    float bz = bot->GetPositionZ();
-
-    float tx = target->GetPositionX();
-    float ty = target->GetPositionY();
-    float tz = target->GetPositionZ();
-
-    float distanceToTarget = bot->GetDistance(target);
-
-	float angle = bot->GetAngle(target);
-
-    float destinationDistance = distanceToTarget - distance;
-    float dx = cos(angle) * destinationDistance + bx;
-    float dy = sin(angle) * destinationDistance + by;
-
-	bot->UpdateGroundPositionZ(dx, dy, tz);
-	MoveTo(target->GetMapId(), dx, dy, tz);
-}
-
-void AiMoveManager::MoveTo(WorldObject* target)
-{
-    MoveTo(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
-}
-
-float AiMoveManager::GetFollowAngle()
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return 0.0f;
-
-	GroupReference *gref = group->GetFirstMember();
-	int index = 1;
-	while( gref )
-	{
-		if( gref->getSource() == bot)
-			return 2 * M_PI / (group->GetMembersCount() -1) * index;
-
-		gref = gref->next();
-		index++;
-	}
-	return 0;
-}
-
-bool AiMoveManager::IsMovingAllowed(Unit* target) 
-{
-    if (!target)
-        return false;
-
-    if (bot->GetMapId() != target->GetMapId())
-        return false;
-
-    if (bot->GetDistance(target) > BOT_REACT_DISTANCE)
-	{
-		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
-        return false;
-	}
-
-    return IsMovingAllowed();
-}
-
-bool AiMoveManager::IsMovingAllowed(uint32 mapId, float x, float y, float z)
-{
-    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE || !bot->IsWithinLOS(x, y, z))
-	{
-		aiRegistry->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
-        return false;
-	}
-
-    return IsMovingAllowed();
-}
-
-bool AiMoveManager::IsMovingAllowed() 
-{
-    if (bot->isFrozen() || bot->IsPolymorphed() || !bot->CanFreeMove() || bot->isDead())
-        return false;
-
-    MotionMaster &mm = *bot->GetMotionMaster();
-    return mm->GetMovementGeneratorType() != FLIGHT_MOTION_TYPE;
-}
-
-void AiMoveManager::Follow(Unit* target, float distance)
-{
-	Follow(target, distance, GetFollowAngle());
-}
-
-void AiMoveManager::Follow(Unit* target, float distance, float angle)
-{
-    if (!IsMovingAllowed(target))
-        return;
-
-	if (target->IsFriendlyTo(bot) && bot->IsMounted())
-		distance += angle;
-
-	MotionMaster &mm = *bot->GetMotionMaster();
-	mm.Clear();
-    mm.MoveFollow(target, distance, angle);
-
-	SetInFront(target);
-    float distanceToRun = abs(bot->GetDistance(target) - distance);
-    WaitForReach(distanceToRun);
-	lastFollow = target;
-}
-
-void AiMoveManager::MoveTo(uint32 mapId, float x, float y, float z)
-{
-    if (!IsMovingAllowed(mapId, x, y, z))
-        return;
-
-	bot->UpdateGroundPositionZ(x, y, z);
-
-	MotionMaster &mm = *bot->GetMotionMaster();
-	mm.Clear();
-    mm.MovePoint(mapId, x, y, z);
-    WaitForReach(bot->GetDistance(x, y, z));
-	
-	lastMoveToX = x;
-	lastMoveToY = y;
-	lastMoveToZ = z;
-	lastMoveToOri = bot->GetOrientation();
-	lastFollow = NULL;
-}
-
-bool AiMoveManager::Flee(Unit* target, float distance)
-{
-    if (!IsMovingAllowed(target))
-        return true;
-    
-    AttackerMap attackers = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
-	FleeManager manager(bot, &attackers, distance, GetFollowAngle());
-        
-    float rx, ry, rz;
-	if (!manager.CalculateDestination(&rx, &ry, &rz)) 
-        return false;
-
-	MoveTo(0, rx, ry, rz);
-	return true;
-}
-
-void AiMoveManager::Stay()
-{
-	if (!IsMoving(bot))
-		return;
-
-	lastFollow = NULL;
-
-    MotionMaster &mm = *bot->GetMotionMaster();
-    if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
-        return;
-
-	mm.Clear();
-	bot->clearUnitState( UNIT_STAT_CHASE );
-	bot->clearUnitState( UNIT_STAT_FOLLOW );
-
-	if (!bot->IsStandState())
-		bot->SetStandState(UNIT_STAND_STATE_STAND);
-}
-
-void AiMoveManager::StayCircle(float range)
-{
-	Stay();
-
-	Player* master = aiRegistry->GetAi()->GetMaster();
-	float x = master->GetPositionX();
-	float y = master->GetPositionY();
-	float z = master->GetPositionZ();
-	float angle = GetFollowAngle();
-
-	MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);
-}
-
-void AiMoveManager::StayLine(float range)
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return;
-
-    Player* master = aiRegistry->GetAi()->GetMaster();
-	float x = master->GetPositionX();
-	float y = master->GetPositionY();
-	float z = master->GetPositionZ();
-	float orientation = master->GetOrientation();
-
-	vector<Player*> players;
-	GroupReference *gref = group->GetFirstMember();
-	while( gref )
-	{
-		Player* member = gref->getSource();
-		if (member != master)
-			players.push_back(member);
-
-		gref = gref->next();
-	}
-	
-	players.insert(players.begin() + group->GetMembersCount() / 2, master);
-
-	StayLine(players, 0.0f, x, y, z, orientation, range);
-}
-
-void AiMoveManager::StayCombat(float range)
-{
-	Group* group = bot->GetGroup();
-	if (!group)
-		return;
-
-    Player* master = aiRegistry->GetAi()->GetMaster();
-	float x = master->GetPositionX();
-	float y = master->GetPositionY();
-	float z = master->GetPositionZ();
-	float orientation = master->GetOrientation();
-
-	vector<Player*> tanks;
-	vector<Player*> dps;
-	GroupReference *gref = group->GetFirstMember();
-	while( gref )
-	{
-		Player* member = gref->getSource();
-		if (member != master)
-		{
-			if (aiRegistry->GetAi()->IsTank(member))
-				tanks.push_back(member);
-			else
-				dps.push_back(member);
-		}
-
-		gref = gref->next();
-	}
-
-	if (aiRegistry->GetAi()->IsTank(master))
-		tanks.insert(tanks.begin() + (tanks.size() + 1) / 2, master);
-	else
-		dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
-
-	if (aiRegistry->GetAi()->IsTank(bot) && aiRegistry->GetAi()->IsTank(master))
-	{
-		StayLine(tanks, 0.0f, x, y, z, orientation, range);
-		return;
-	}
-	if (!aiRegistry->GetAi()->IsTank(bot) && !aiRegistry->GetAi()->IsTank(master))
-	{
-		StayLine(dps, 0.0f, x, y, z, orientation, range);
-		return;
-	}
-	if (aiRegistry->GetAi()->IsTank(bot) && !aiRegistry->GetAi()->IsTank(master))
-	{
-		float diff = tanks.size() % 2 == 0 ? -range / 2.0f : 0.0f;
-		StayLine(tanks, diff, x + cos(orientation) * range, y + sin(orientation) * range, z, orientation, range);
-		return;
-	}
-	if (!aiRegistry->GetAi()->IsTank(bot) && aiRegistry->GetAi()->IsTank(master))
-	{
-		float diff = dps.size() % 2 == 0 ? -range / 2.0f : 0.0f;
-		StayLine(dps, diff, x - cos(orientation) * range, y - sin(orientation) * range, z, orientation, range);
-		return;
-	}
-}
-
-void AiMoveManager::StayLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range)
-{
-	Stay();
-
-	float count = line.size();
-	float angle = orientation - M_PI / 2.0f;
-	float x = cx + cos(angle) * (range * floor(count / 2.0f) + diff);
-	float y = cy + sin(angle) * (range * floor(count / 2.0f) + diff);
-	
-	int index = 0;
-	for (vector<Player*>::iterator i = line.begin(); i != line.end(); i++)
-	{
-		Player* member = *i;
-
-		if (member == bot)
-		{
-			float angle = orientation + M_PI / 2.0f;
-			float radius = range * index;
-			
-			MoveTo(bot->GetMapId(), x + cos(angle) * radius, y + sin(angle) * radius, cz);
-			bot->SetOrientation(orientation);
-			return;
-		}
-
-		index++;
-	}
-}
-
-bool AiMoveManager::IsMoving(Unit* target)
-{
-	if (!target)
-		return false;
-
-	switch (target->GetMotionMaster()->GetCurrentMovementGeneratorType())
-	{
-	case IDLE_MOTION_TYPE:
-		return false;
-	}
-	return true;
-}
-
-void AiMoveManager::SetInFront(const Unit* obj)
-{
-	bot->SetInFront(obj);
-	UpdatePosition();
-}
-
-void AiMoveManager::Attack(Unit* target)
-{
-	if (!target) 
-		return;
-
-    MotionMaster &mm = *bot->GetMotionMaster();
-    if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
-        return;
-
-	if (bot->getStandState() != UNIT_STAND_STATE_STAND)
-		bot->SetStandState(UNIT_STAND_STATE_STAND);
-
-    if (bot->IsMounted())
-        aiRegistry->GetSpellManager()->Unmount();
-
-	if (bot->IsFriendlyTo(target))
-	{
-		aiRegistry->GetSocialManager()->TellMaster("Target is friendly");
-		return;
-	}
-	if (!bot->IsWithinLOSInMap(target))
-	{
-		aiRegistry->GetSocialManager()->TellMaster("Target is not in my sight");
-		return;
-	}
-
-	uint64 guid = target->GetGUID();
-	bot->SetSelectionGuid(target->GetObjectGuid());
-	bot->Attack(target, true);
-	SetInFront(target);
-
-    Pet* pet = bot->GetPet();
-    if (pet)
-    {
-        CreatureAI* creatureAI = ((Creature*)pet)->AI();
-        if (creatureAI)
-            creatureAI->AttackStart(target);
-    }
-
-    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
-    ai->GetAiObjectContext()->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 }
 
 void AiMoveManager::ReleaseSpirit()
 {
-	if (bot->isAlive() || bot->GetCorpse())
-		return;
-
-	bot->SetBotDeathTimer();
-	bot->BuildPlayerRepop();
-
-	WorldLocation loc;
-	Corpse *corpse = bot->GetCorpse();
-	corpse->GetPosition( loc );
-	bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
 }
 
 void AiMoveManager::Resurrect()
 {
-	aiRegistry->GetMoveManager()->Stay();
 	Corpse* corpse = bot->GetCorpse();
 	if (corpse)
 	{
@@ -461,85 +82,12 @@ void AiMoveManager::TeleportToMaster()
 
 void AiMoveManager::UsePortal()
 {
-	list<GameObject*> gos = *aiRegistry->GetAi()->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
-	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-	{
-		GameObject* go = *i;
-		GameObjectInfo const *goInfo = go->GetGOInfo();
-		if (goInfo->type != GAMEOBJECT_TYPE_SPELLCASTER)
-			continue;
-
-		uint32 spellId = goInfo->spellcaster.spellId;
-		const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-		if (pSpellInfo->Effect[0] != SPELL_EFFECT_TELEPORT_UNITS && pSpellInfo->Effect[1] != SPELL_EFFECT_TELEPORT_UNITS && pSpellInfo->Effect[2] != SPELL_EFFECT_TELEPORT_UNITS)
-			continue;
-
-		ostringstream out; out << "Teleporting using " << goInfo->name;
-		aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
-
-		Spell *spell = new Spell(bot, pSpellInfo, false);
-		SpellCastTargets targets;
-		targets.setUnitTarget(bot);
-		spell->prepare(&targets, false);
-		spell->cast(true);
-		return;
-	}
-
-	if (lastAreaTrigger)
-	{
-		WorldPacket p(CMSG_AREATRIGGER);
-		p << lastAreaTrigger;
-		p.rpos(0);
-
-		bot->GetSession()->HandleAreaTriggerOpcode(p);
-		lastAreaTrigger = 0;
-		return;
-	}
-
-	aiRegistry->GetSocialManager()->TellMaster("Cannot find any portal to teleport");
+	
 }
 
 void AiMoveManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text == "attack")
-	{
-		Attack(ObjectAccessor::GetUnit(*bot, fromPlayer.GetSelectionGuid()));
-	}
-	else if(text == "release" && !bot->isAlive())
-	{
-		ReleaseSpirit();
-	}
-	else if(text == "teleport")
-	{
-		UsePortal();
-	}
-    else if(text == "fly")
-    {
-        AiObjectContext *context = aiRegistry->GetAi()->GetAiObjectContext();
-        list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
-		for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
-		{
-			Creature *npc = bot->GetNPCIfCanInteractWith((*i)->GetObjectGuid(), UNIT_NPC_FLAG_FLIGHTMASTER);
-			if (!npc)
-				continue;
-
-			if (taxiNodes.empty())
-			{
-				ostringstream out;
-				out << "I will order a fly from " << npc->GetName() << ". Please start flying, then instruct me again to fly";
-				aiRegistry->GetSocialManager()->TellMaster(out. str().c_str());
-				return;
-			}
-
-			if (!bot->ActivateTaxiPathTo(taxiNodes, npc))
-				aiRegistry->GetSocialManager()->TellMaster("I can not fly with you");
-
-			return;
-		}
-
-        aiRegistry->GetSocialManager()->TellMaster("Cannot find any flightmaster to talk");
-    }
-    else if (text == "reset")
+    if (text == "reset")
     {
         bot->GetMotionMaster()->Clear();
         bot->m_taxi.ClearTaxiDestinations();
@@ -651,10 +199,11 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
             WorldPacket p(packet);
             p.rpos(0);
             
-            taxiNodes.clear();
-            taxiNodes.resize(2);
+            LastMovement& movement = aiRegistry->GetAi()->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+            movement.taxiNodes.clear();
+            movement.taxiNodes.resize(2);
 
-            p >> taxiMaster >> taxiNodes[0] >> taxiNodes[1];
+            p >> movement.taxiMaster >> movement.taxiNodes[0] >> movement.taxiNodes[1];
             return;
         }
 	case CMSG_ACTIVATETAXIEXPRESS:
@@ -666,12 +215,13 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 			uint32 node_count;
 			p >> guid >> node_count;
 
-			taxiNodes.clear();
+            LastMovement& movement = aiRegistry->GetAi()->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+			movement.taxiNodes.clear();
 			for (uint32 i = 0; i < node_count; ++i)
 			{
 				uint32 node;
 				p >> node;
-				taxiNodes.push_back(node);
+				movement.taxiNodes.push_back(node);
 			}
 
 			return;
@@ -689,37 +239,18 @@ void AiMoveManager::HandleMasterIncomingPacket(const WorldPacket& packet)
         }
 	case CMSG_AREATRIGGER:
 		{
+            LastMovement& movement = aiRegistry->GetAi()->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+
 			WorldPacket p(packet);
 			p.rpos(0);
-			p >> lastAreaTrigger;
+			p >> movement.lastAreaTrigger;
 			Player* master = bot->GetPlayerbotAI()->GetMaster();
-			MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
+			//MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
 			
-			aiRegistry->GetSocialManager()->TellMaster("Ready to teleport");
+			//aiRegistry->GetSocialManager()->TellMaster("Ready to teleport");
 			return;
 		}
     }
-}
-
-bool AiMoveManager::IsBehind(Unit* target)
-{
-    if (!target)
-        return false;
-
-    float targetOrientation = target->GetOrientation();
-    float orientation = bot->GetOrientation();
-    float distance = bot->GetDistance(target);
-    
-    return distance <= ATTACK_DISTANCE && abs(targetOrientation - orientation) < M_PI / 2;
-}
-
-void AiMoveManager::WaitForReach(float distance)
-{
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN));
-    if (delay > GLOBAL_COOLDOWN)
-        delay = GLOBAL_COOLDOWN;
-
-    bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }
 
 void AiMoveManager::Update()
@@ -750,15 +281,9 @@ void AiMoveManager::Update()
 
 void AiMoveManager::UpdatePosition() 
 {
-	if (IsMoving(bot))
+	if (ai->GetAiObjectContext()->GetValue<bool>("moving", "self target")->Get())
 		return;
 
-	if (lastMoveToX != 0.0f || lastMoveToY != 0.0f || lastMoveToZ != 0.0f)
-	{
-		bot->m_movementInfo.ChangePosition(lastMoveToX, lastMoveToY, lastMoveToZ, lastMoveToOri);
-		bot->SendHeartBeat(false);
-	
-		lastMoveToX = lastMoveToY = lastMoveToZ = lastMoveToOri = 0.0f;
-	}
-
+    LastMovement& movement = aiRegistry->GetAi()->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+    movement.Update(bot);
 }

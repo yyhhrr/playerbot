@@ -15,6 +15,12 @@ namespace ai
         MockStatsValue(AiManagerRegistry* const ai) : ManualSetValue<uint8>(ai, 0) {}
     };
 
+    class MockFloatValue : public ManualSetValue<float>, public Qualified
+    {
+    public:
+        MockFloatValue(AiManagerRegistry* const ai) : ManualSetValue<float>(ai, 0) {}
+    };
+
     class MockLogicalValue : public ManualSetValue<bool>, public Qualified
     {
     public:
@@ -93,10 +99,14 @@ namespace ai
             creators["balance"] = &MockValueContext::stats;
             creators["mounted"] = &MockValueContext::logical;
             creators["has available loot"] = &MockValueContext::logical;
+            creators["distance"] = &MockValueContext::floating;
+            creators["moving"] = &MockValueContext::logical;
+            creators["behind"] = &MockValueContext::logical;
         }
 
     private:
         static UntypedValue* stats(AiManagerRegistry* ai) { return new MockStatsValue(ai); }
+        static UntypedValue* floating(AiManagerRegistry* ai) { return new MockFloatValue(ai); }
         static UntypedValue* logical(AiManagerRegistry* ai) { return new MockLogicalValue(ai); }
         static UntypedValue* mock(AiManagerRegistry* ai) { return new MockTargetValue(ai); }
         static UntypedValue* party_member_without_aura(AiManagerRegistry* ai) { return new MockPartyMemberWithoutAuraValue(ai); }
@@ -140,6 +150,7 @@ namespace ai
               GetValue<uint8>("attacker count")->Set(1);
               GetValue<uint8>("my attacker count")->Set(1);
               GetValue<uint8>("balance")->Set(100);
+              GetValue<float>("distance", "current target")->Set(15.0f);
               
               GetValue<bool>("has aggro", "current target")->Set(true);
           }

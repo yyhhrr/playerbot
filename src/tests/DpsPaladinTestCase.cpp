@@ -24,7 +24,7 @@ public:
         addAura("seal of command");
         addAura("blessing of might");
 
-		moveManager->distanceTo[MockedTargets::GetCurrentTarget()] = 0;
+        set<float>("distance", "current target", 0.0f);
     }
  
 protected:

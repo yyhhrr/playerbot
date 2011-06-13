@@ -6,6 +6,8 @@
 #include "AddLootAction.h"
 #include "LootAction.h"
 #include "AddLootAction.h"
+#include "StayActions.h"
+#include "FollowActions.h"
 
 namespace ai
 {
@@ -14,6 +16,7 @@ namespace ai
     public:
         ActionContext()
         {
+            creators["attack"] = &ActionContext::melee;
             creators["melee"] = &ActionContext::melee;
             creators["reach spell"] = &ActionContext::ReachSpell;
             creators["reach melee"] = &ActionContext::ReachMelee;

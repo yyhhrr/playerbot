@@ -21,9 +21,14 @@ namespace ai
             creators["ll"] = &ChatTriggerContext::ll;
             creators["loot all"] = &ChatTriggerContext::loot_all;
             creators["add all loot"] = &ChatTriggerContext::loot_all;
+            creators["release"] = &ChatTriggerContext::release;
+            creators["teleport"] = &ChatTriggerContext::teleport;
+            creators["taxi"] = &ChatTriggerContext::taxi;
         }
 
     private:
+        static Trigger* taxi(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "taxi"); }
+        static Trigger* teleport(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "teleport"); }
         static Trigger* q(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "q"); }
         static Trigger* ll(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "ll"); }
         static Trigger* drop(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "drop"); }
@@ -34,5 +39,6 @@ namespace ai
         static Trigger* log(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "log"); }
         static Trigger* los(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "los"); }
         static Trigger* loot_all(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "add all loot"); }
+        static Trigger* release(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "release"); }
     };
 };

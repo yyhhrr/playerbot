@@ -56,7 +56,7 @@ void LootAction::DoLoot(LootObject &lootObject)
     float distance = bot->GetDistance(lootObject.worldObject);
     if (distance > INTERACTION_DISTANCE)
     {
-        bot->GetPlayerbotAI()->GetAiRegistry()->GetMoveManager()->MoveTo(lootObject.worldObject);
+        MoveTo(lootObject.worldObject);
         return;
     }
 

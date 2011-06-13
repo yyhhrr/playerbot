@@ -12,6 +12,9 @@
 #include "QueryItemUsageAction.h"
 #include "LootStrategyAction.h"
 #include "AddLootAction.h"
+#include "ReleaseSpiritAction.h"
+#include "TeleportAction.h"
+#include "TaxiAction.h"
 
 namespace ai
 {
@@ -32,9 +35,15 @@ namespace ai
             creators["query item usage"] = &ChatActionContext::query_item_usage;
             creators["ll"] = &ChatActionContext::ll;
             creators["add all loot"] = &ChatActionContext::add_all_loot;
+            creators["release"] = &ChatActionContext::release;
+            creators["teleport"] = &ChatActionContext::teleport;
+            creators["taxi"] = &ChatActionContext::taxi;
         }
 
     private:
+        static Action* taxi(AiManagerRegistry* ai) { return new TaxiAction(ai); }
+        static Action* teleport(AiManagerRegistry* ai) { return new TeleportAction(ai); }
+        static Action* release(AiManagerRegistry* ai) { return new ReleaseSpiritAction(ai); }
         static Action* query_item_usage(AiManagerRegistry* ai) { return new QueryItemUsageAction(ai); }
         static Action* query_quest(AiManagerRegistry* ai) { return new QueryQuestAction(ai); }
         static Action* query_quest_item(AiManagerRegistry* ai) { return new QueryQuestItemAction(ai); }

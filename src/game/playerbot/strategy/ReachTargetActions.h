@@ -1,23 +1,24 @@
 #pragma once
 
 #include "Action.h"
+#include "MovementActions.h"
 
 namespace ai
 {
-    class ReachTargetAction : public Action {
+    class ReachTargetAction : public MovementAction {
     public:
-        ReachTargetAction(AiManagerRegistry* const ai, const char* name, float distance) : Action(ai, name) 
+        ReachTargetAction(AiManagerRegistry* const ai, const char* name, float distance) : MovementAction(ai, name) 
 		{
             this->distance = distance;
         }
         virtual bool Execute(Event event) 
 		{
-			ai->GetMoveManager()->MoveTo(AI_VALUE(Unit*, "current target"), distance);
+			MoveTo(AI_VALUE(Unit*, "current target"), distance);
             return true;
         }
         virtual bool isUseful() 
 		{
-            return ai->GetMoveManager()->GetDistanceTo(AI_VALUE(Unit*, "current target")) > distance;
+            return AI_VALUE2(float, "distance", "current target") > distance;
         }
         virtual const char* GetTargetName() { return "current target"; }
 
@@ -33,7 +34,7 @@ namespace ai
         }
 		virtual bool isUseful() 
 		{
-			return ai->GetMoveManager()->GetDistanceTo(AI_VALUE(Unit*, "current target")) > distance;
+			return AI_VALUE2(float, "distance", "current target") > distance;
 		}
 
     protected:
