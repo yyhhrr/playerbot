@@ -22,6 +22,10 @@
 #include "StatsValues.h"
 #include "AttackerCountValues.h"
 #include "AttackersValue.h"
+#include "AvailableLootValue.h"
+#include "AlwaysLootListValue.h"
+#include "LootStrategyValue.h"
+#include "HasAvailableLootValue.h"
 
 namespace ai
 {
@@ -60,9 +64,19 @@ namespace ai
             creators["my attacker count"] = &ValueContext::my_attacker_count;
             creators["has aggro"] = &ValueContext::has_aggro;
             creators["mounted"] = &ValueContext::mounted;
+
+            creators["available loot"] = &ValueContext::available_loot;
+            creators["has available loot"] = &ValueContext::has_available_loot;
+            creators["always loot list"] = &ValueContext::always_loot_list;
+            creators["loot strategy"] = &ValueContext::loot_strategy;
         }
 
     private:
+        static UntypedValue* available_loot(AiManagerRegistry* ai) { return new AvailableLootValue(ai); }
+        static UntypedValue* has_available_loot(AiManagerRegistry* ai) { return new HasAvailableLootValue(ai); }
+        static UntypedValue* always_loot_list(AiManagerRegistry* ai) { return new AlwaysLootListValue(ai); }
+        static UntypedValue* loot_strategy(AiManagerRegistry* ai) { return new LootStrategyValue(ai); }
+
         static UntypedValue* attacker_count(AiManagerRegistry* ai) { return new AttackerCountValue(ai); }
         static UntypedValue* my_attacker_count(AiManagerRegistry* ai) { return new MyAttackerCountValue(ai); }
         static UntypedValue* has_aggro(AiManagerRegistry* ai) { return new HasAggroValue(ai); }

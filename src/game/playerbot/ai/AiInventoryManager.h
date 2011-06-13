@@ -1,5 +1,4 @@
 #pragma once
-#include "LootManager.h"
 
 using namespace std;
 
@@ -69,13 +68,7 @@ namespace ai
 
 		virtual int GetItemCount(const char* name);
 		virtual void FindAndUse(const char* item, uint8 delay = 0);
-		
-        virtual void ClearLoot() { lootManager->ClearLoot(); }
-        virtual void AddLoot(ObjectGuid guid) { lootManager->AddLoot(guid); }
-        virtual bool CanLoot() { return lootManager->CanLoot(); }
-        virtual void DoLoot();
-		virtual void AddAllLoot();
-		
+				
         virtual void UnequipItem(const char* link);
         virtual void EquipItem(const char* link);
 		virtual void UseItem(const char* link);
@@ -125,9 +118,6 @@ namespace ai
 
 		uint32 TextToItemQuality(const char* text);
 		void TellItem(ItemPrototype const * proto, int count);
-		
-	private:
-        LootManager *lootManager;
 	};
 
 };

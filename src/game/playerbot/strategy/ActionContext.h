@@ -3,6 +3,9 @@
 #include "GenericActions.h"
 #include "NonCombatActions.h"
 #include "EmoteAction.h"
+#include "AddLootAction.h"
+#include "LootAction.h"
+#include "AddLootAction.h"
 
 namespace ai
 {
@@ -29,7 +32,8 @@ namespace ai
             creators["tank assist"] = &ActionContext::tank_assist;
             creators["dps assist"] = &ActionContext::dps_assist;
             creators["loot"] = &ActionContext::loot;
-            creators["loot all"] = &ActionContext::loot_all;
+            creators["add loot"] = &ActionContext::add_loot;
+            creators["add all loot"] = &ActionContext::add_all_loot;
             creators["shoot"] = &ActionContext::shoot;
             creators["follow line"] = &ActionContext::follow_line;
             creators["follow"] = &ActionContext::follow_master;
@@ -63,7 +67,8 @@ namespace ai
         static Action* goaway(AiManagerRegistry* ai) { return new GoAwayAction(ai); }
         static Action* follow_master(AiManagerRegistry* ai) { return new FollowMasterAction(ai); }
         static Action* follow_line(AiManagerRegistry* ai) { return new FollowLineAction(ai); }
-        static Action* loot_all(AiManagerRegistry* ai) { return new LootAllAction(ai); }
+        static Action* add_loot(AiManagerRegistry* ai) { return new AddLootAction(ai); }
+        static Action* add_all_loot(AiManagerRegistry* ai) { return new AddAllLootAction(ai); }
         static Action* loot(AiManagerRegistry* ai) { return new LootAction(ai); }
         static Action* dps_assist(AiManagerRegistry* ai) { return new DpsAssistAction(ai); }
         static Action* tank_assist(AiManagerRegistry* ai) { return new TankAssistAction(ai); }

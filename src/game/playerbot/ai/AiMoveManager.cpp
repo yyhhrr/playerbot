@@ -4,6 +4,7 @@
 #include "../../MovementGenerator.h"
 #include "FleeManager.h"
 #include "../../CreatureAI.h"
+#include "LootObjectStack.h"
 
 using namespace ai;
 using namespace std;
@@ -378,7 +379,7 @@ void AiMoveManager::Attack(Unit* target)
     }
 
     ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
-	aiRegistry->GetInventoryManager()->AddLoot(guid);
+    ai->GetAiObjectContext()->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 }
 
 void AiMoveManager::ReleaseSpirit()

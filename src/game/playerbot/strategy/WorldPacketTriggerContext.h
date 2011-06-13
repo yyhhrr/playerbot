@@ -18,6 +18,7 @@ namespace ai
             creators["complete quest"] = &WorldPacketTriggerContext::complete_quest;
             creators["accept quest"] = &WorldPacketTriggerContext::accept_quest;
             creators["quest share"] = &WorldPacketTriggerContext::quest_share;
+            creators["loot roll"] = &WorldPacketTriggerContext::loot_roll;
         }
 
     private:
@@ -30,5 +31,6 @@ namespace ai
         static Trigger* complete_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "complete quest"); }
         static Trigger* accept_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "accept quest"); }
         static Trigger* quest_share(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "quest share"); }
+        static Trigger* loot_roll(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "loot roll"); }
     };
 };

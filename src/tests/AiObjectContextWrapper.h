@@ -92,6 +92,7 @@ namespace ai
             creators["has aggro"] = &MockValueContext::logical;
             creators["balance"] = &MockValueContext::stats;
             creators["mounted"] = &MockValueContext::logical;
+            creators["has available loot"] = &MockValueContext::logical;
         }
 
     private:

@@ -10,6 +10,8 @@
 #include "QueryQuestAction.h"
 #include "QueryQuestItemAction.h"
 #include "QueryItemUsageAction.h"
+#include "LootStrategyAction.h"
+#include "AddLootAction.h"
 
 namespace ai
 {
@@ -28,6 +30,8 @@ namespace ai
             creators["query quest"] = &ChatActionContext::query_quest;
             creators["query quest item"] = &ChatActionContext::query_quest_item;
             creators["query item usage"] = &ChatActionContext::query_item_usage;
+            creators["ll"] = &ChatActionContext::ll;
+            creators["add all loot"] = &ChatActionContext::add_all_loot;
         }
 
     private:
@@ -41,7 +45,8 @@ namespace ai
         static Action* reputation(AiManagerRegistry* ai) { return new TellReputationAction(ai); }
         static Action* log(AiManagerRegistry* ai) { return new LogLevelAction(ai); }
         static Action* los(AiManagerRegistry* ai) { return new TellLosAction(ai); }
-
+        static Action* ll(AiManagerRegistry* ai) { return new LootStrategyAction(ai); }
+        static Action* add_all_loot(AiManagerRegistry* ai) { return new AddAllLootAction(ai); }
     };
 
 

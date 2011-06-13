@@ -26,7 +26,7 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "use game object", 
-        NextAction::array(0, new NextAction("turn in quest", relevance), NULL)));
+        NextAction::array(0, new NextAction("turn in quest", relevance), new NextAction("add loot", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "gossip hello", 
@@ -44,4 +44,5 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
 {
     supported.push_back("accept quest");
+    supported.push_back("loot roll");
 }

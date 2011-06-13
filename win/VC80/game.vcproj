@@ -1841,14 +1841,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\LootManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\LootManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\LootObjectStack.cpp"
 					>
 				</File>
@@ -1893,11 +1885,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AddLootAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AddLootAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AiObjectContext.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AiObjectContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AlwaysLootListValue.h"
 					>
 				</File>
 				<File
@@ -1914,6 +1918,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AttackersValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AvailableLootValue.h"
 					>
 				</File>
 				<File
@@ -2061,6 +2069,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\HasAvailableLootValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.cpp"
 					>
 				</File>
@@ -2098,6 +2110,34 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LogLevelValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootRollAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootRollAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootStrategyAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootStrategyAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootStrategyValue.h"
 					>
 				</File>
 				<File

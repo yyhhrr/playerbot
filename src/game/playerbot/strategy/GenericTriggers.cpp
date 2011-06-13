@@ -1,6 +1,7 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "GenericTriggers.h"
+#include "../ai/LootObjectStack.h"
 
 using namespace ai;
 
@@ -87,7 +88,7 @@ bool SpellCanBeCastTrigger::IsActive()
 
 bool LootAvailableTrigger::IsActive()
 {
-    return ai->GetInventoryManager()->CanLoot();
+    return AI_VALUE(bool, "has available loot");
 }
 
 bool RandomTrigger::IsActive()

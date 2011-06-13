@@ -6,6 +6,7 @@
 #include "TellMasterAction.h"
 #include "TurnInQuestAction.h"
 #include "AcceptQuestAction.h"
+#include "LootRollAction.h"
 
 namespace ai
 {
@@ -22,6 +23,7 @@ namespace ai
             creators["turn in quest"] = &WorldPacketActionContext::turn_in_quest;
             creators["accept quest"] = &WorldPacketActionContext::accept_quest;
             creators["accept quest share"] = &WorldPacketActionContext::accept_quest_share;
+            creators["loot roll"] = &WorldPacketActionContext::loot_roll;
         }
 
     private:
@@ -33,6 +35,7 @@ namespace ai
         static Action* turn_in_quest(AiManagerRegistry* ai) { return new TurnInQuestAction(ai); }
         static Action* accept_quest(AiManagerRegistry* ai) { return new AcceptQuestAction(ai); }
         static Action* accept_quest_share(AiManagerRegistry* ai) { return new AcceptQuestShareAction(ai); }
+        static Action* loot_roll(AiManagerRegistry* ai) { return new LootRollAction(ai); }
     };
 
 

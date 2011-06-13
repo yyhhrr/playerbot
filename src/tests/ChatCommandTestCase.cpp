@@ -11,14 +11,16 @@ using namespace ai;
 class ChatCommandTestCase : public MockedAiObjectContextTestCase
 {
   CPPUNIT_TEST_SUITE( ChatCommandTestCase );
-  CPPUNIT_TEST( stats );
-  CPPUNIT_TEST( leave );
-  CPPUNIT_TEST( quests );
-  CPPUNIT_TEST( reputation );
-  CPPUNIT_TEST( log );
-  CPPUNIT_TEST( los );
-  CPPUNIT_TEST( drop );
-  CPPUNIT_TEST( query );
+      CPPUNIT_TEST( stats );
+      CPPUNIT_TEST( leave );
+      CPPUNIT_TEST( quests );
+      CPPUNIT_TEST( reputation );
+      CPPUNIT_TEST( log );
+      CPPUNIT_TEST( los );
+      CPPUNIT_TEST( drop );
+      CPPUNIT_TEST( query );
+      CPPUNIT_TEST( ll );
+      CPPUNIT_TEST( loot_all );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -82,6 +84,24 @@ protected:
         tick();
 
         assertActions(">S:query quest>S:query quest item>S:query item usage");
+    }
+
+    void ll()
+    {
+        assertCommand("ll");
+        assertParametrizedCommand("ll", "?");
+        assertParametrizedCommand("ll", "[item]");
+        assertParametrizedCommand("ll", "-[item]");
+        assertParametrizedCommand("ll", "all");
+    }
+
+    void loot_all()
+    {
+        trigger("add all loot");
+        tick();
+        tick();
+
+        assertActions(">S:add all loot>S:loot");
     }
 };
 

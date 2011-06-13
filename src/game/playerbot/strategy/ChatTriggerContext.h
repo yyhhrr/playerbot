@@ -18,10 +18,14 @@ namespace ai
             creators["los"] = &ChatTriggerContext::los;
             creators["drop"] = &ChatTriggerContext::drop;
             creators["q"] = &ChatTriggerContext::q;
+            creators["ll"] = &ChatTriggerContext::ll;
+            creators["loot all"] = &ChatTriggerContext::loot_all;
+            creators["add all loot"] = &ChatTriggerContext::loot_all;
         }
 
     private:
         static Trigger* q(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "q"); }
+        static Trigger* ll(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "ll"); }
         static Trigger* drop(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "drop"); }
         static Trigger* quests(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "quests"); }
         static Trigger* stats(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "stats"); }
@@ -29,5 +33,6 @@ namespace ai
         static Trigger* reputation(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "reputation"); }
         static Trigger* log(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "log"); }
         static Trigger* los(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "los"); }
+        static Trigger* loot_all(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "add all loot"); }
     };
 };

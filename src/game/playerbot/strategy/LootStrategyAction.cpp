@@ -1,0 +1,98 @@
+#include "../../pchdef.h"
+#include "../playerbot.h"
+#include "LootStrategyAction.h"
+#include "../PlayerbotAI.h"
+
+using namespace ai;
+
+bool LootStrategyAction::Execute(Event event)
+{
+    Player *master = ai->GetAi()->GetMaster();
+    string strategy = event.getParam();
+    
+    LootObjectStack* lootItems = AI_VALUE(LootObjectStack*, "available loot");
+    set<uint32>& alwaysLootItems = AI_VALUE(set<uint32>&, "always loot list");
+    Value<LootStrategy>* lootStrategy = ai->GetAi()->GetAiObjectContext()->GetValue<LootStrategy>("loot strategy");
+
+    if (strategy == "?")
+    {
+        ostringstream out;
+        out << "Loot strategy: ";
+        out << LootStrategy2string(lootStrategy->Get());
+        out << ", always loot items: ";
+
+        for (set<uint32>::iterator i = alwaysLootItems.begin(); i != alwaysLootItems.end(); i++)
+        {
+            ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(*i);
+            if (!proto)
+                continue;
+
+            out << " |cffffffff|Hitem:" << proto->ItemId
+                << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
+                << "]|h|r";
+        }
+        TellMaster(out);
+    }
+    else
+    {
+        list<uint32> items; /* = */ ai->GetInventoryManager()->extractItemIds(strategy, items);
+
+        if (items.size() == 0)
+        {
+            lootStrategy->Set(String2LootStrategy(strategy));
+            ostringstream out;
+            out << "Loot strategy set to " << LootStrategy2string(lootStrategy->Get());
+            TellMaster(out);
+            return true;
+        }
+
+        bool remove = strategy.size() > 1 && strategy.substr(0, 1) == "-";
+        for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
+        {
+            uint32 itemid = *i;
+            if (remove)
+            {
+                set<uint32>::iterator j = alwaysLootItems.find(itemid);
+                if (j != alwaysLootItems.end())
+                    alwaysLootItems.erase(j);
+                
+                TellMaster("Item(s) removed from always loot list");
+            }
+            else
+            {
+                alwaysLootItems.insert(itemid);
+                TellMaster("Item(s) added to always loot list");
+            }
+        }
+    }    
+
+    return true;
+}
+
+
+LootStrategy LootStrategyAction::String2LootStrategy(string strategy)
+{
+    if (strategy == "*" || strategy == "all")
+        return LOOTSTRATEGY_ALL;
+    else if (strategy == "q" || strategy == "quest")
+        return LOOTSTRATEGY_QUEST;
+    else if (strategy == "g" || strategy == "gray")
+        return LOOTSTRATEGY_GRAY;
+    else 
+        return LOOTSTRATEGY_NORMAL;
+}
+
+string LootStrategyAction::LootStrategy2string(LootStrategy lootStrategy)
+{
+    switch (lootStrategy)
+    {
+    case LOOTSTRATEGY_ALL:
+        return "all";
+    case LOOTSTRATEGY_QUEST:
+        return "quest";
+    case LOOTSTRATEGY_GRAY:
+        return "gray";
+    default:
+        return "normal";
+    }
+}

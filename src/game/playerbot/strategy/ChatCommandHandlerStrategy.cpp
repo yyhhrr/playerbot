@@ -18,6 +18,10 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
             new NextAction("query quest", relevance), 
             new NextAction("query quest item", relevance), 
             new NextAction("query item usage", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "add all loot", 
+        NextAction::array(0, new NextAction("add all loot", relevance), new NextAction("loot", relevance), NULL)));
 }
 
 ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
@@ -29,4 +33,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const 
     supported.push_back("log");
     supported.push_back("los");
     supported.push_back("drop");
+    supported.push_back("ll");
 }

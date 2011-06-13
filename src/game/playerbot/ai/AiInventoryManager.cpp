@@ -310,12 +310,10 @@ public:
 
 AiInventoryManager::AiInventoryManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) : AiManagerBase(ai, aiRegistry)
 {
-    lootManager = new LootManager(bot);
 }
 
 AiInventoryManager::~AiInventoryManager()
 {
-    delete lootManager;
 }
 
 
@@ -689,53 +687,6 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
     {
         ListCount(text.c_str());
     }
-	else if (text.size() > 2 && text.substr(0, 3) == "ll " || text.size() > 4 && text.substr(0, 9) == "lootlist ")
-	{
-		string strategy = text.substr(text.find(" ") + 1);
-		if (strategy == "?")
-		{
-			ostringstream out;
-			out << "Loot strategy: ";
-			out << lootManager->GetLootStrategy();
-			out << ", always loot items: ";
-
-			for (set<uint32>::iterator i = lootManager->lootItems.begin(); i != lootManager->lootItems.end(); i++)
-			{
-				ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(*i);
-				if (!proto)
-					continue;
-
-				out << " |cffffffff|Hitem:" << proto->ItemId
-					<< ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
-					<< "]|h|r";
-			}
-			ai->GetAiRegistry()->GetSocialManager()->TellMaster(out.str().c_str());
-		}
-		else
-		{
-			list<uint32> items; /* = */ extractItemIds(text, items);
-
-			if (items.size() == 0)
-			{
-				lootManager->SetLootStrategy(strategy);
-				return;
-			}
-
-			bool remove = strategy.size() > 1 && strategy.substr(0, 1) == "-";
-			for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
-			{
-				if (remove)
-					lootManager->RemoveLootItem(*i);
-				else
-					lootManager->AddLootItem(*i);
-			}
-		}
-	}
-	else if (text == "loot all")
-	{
-		AddAllLoot();
-		DoLoot();
-	}
     else if (bot->GetTrader() && bot->GetTrader()->GetGUID() == fromPlayer.GetGUID())
     {
         Trade(text.c_str());
@@ -793,68 +744,6 @@ void AiInventoryManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 {
     switch (packet.GetOpcode())
     {
-    case CMSG_GAMEOBJ_REPORT_USE:
-		{
-			if (bot->GetPlayerbotAI()->GetMaster()->GetMapId() != bot->GetMapId())
-				return;
-
-			WorldPacket p(packet);
-			p.rpos(0); // reset reader
-			uint64 guid;
-			p >> guid;
-			AddLoot(ObjectGuid(guid));
-			break;
-		}
-	case CMSG_LOOT_ROLL:
-		{
-			WorldPacket p(packet); //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
-			ObjectGuid Guid;
-			uint32 NumberOfPlayers;
-			uint8 rollType;
-			p.rpos(0); //reset packet pointer
-			p >> Guid; //guid of the item rolled
-			p >> NumberOfPlayers; //number of players invited to roll
-			p >> rollType; //need,greed or pass on roll
-
-
-			uint32 choice = urand(0,2); //returns 0,1,or 2
-
-			Group* group = bot->GetGroup();
-			if(!group)
-				return;
-
-			switch (group->GetLootMethod())
-			{
-			case GROUP_LOOT:
-				// bot random roll
-				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_NEED);
-				break;
-			case NEED_BEFORE_GREED:
-				choice = 1;
-				// bot need roll
-				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_NEED);
-				break;
-			case MASTER_LOOT:
-				choice = 0;
-				// bot pass on roll
-				group->CountRollVote(bot, Guid, NumberOfPlayers, ROLL_PASS);
-				break;
-			default:
-				break;
-			}
-
-			switch (rollType)
-			{
-			case ROLL_NEED:
-				bot->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_NEED, 1);
-				break;
-			case ROLL_GREED:
-				bot->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_GREED, 1);
-				break;
-			}
-
-			return;
-		}
 	case CMSG_REPAIR_ITEM:
 		{
 			WorldPacket p(packet); // WorldPacket packet for CMSG_REPAIR_ITEM, (8+8+1)
@@ -1207,19 +1096,6 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 	return true;
 }
 
-void AiInventoryManager::AddAllLoot()
-{
-    AiObjectContext *context = aiRegistry->GetAi()->GetAiObjectContext();
-    list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
-	for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-		AddLoot((*i)->GetObjectGuid());
-
-    list<Unit*> corpses = *context->GetValue<list<Unit*>>("nearest corpses");
-	for (list<Unit*>::iterator i = corpses.begin(); i != corpses.end(); i++)
-		AddLoot((*i)->GetObjectGuid());
-}
-
-
 uint32 AiInventoryManager::TextToItemQuality( const char* text ) 
 {
 	uint32 quality = MAX_ITEM_QUALITY;
@@ -1252,13 +1128,4 @@ void AiInventoryManager::TellItem(ItemPrototype const * proto, int count)
 		out << "x" << count;
 
 	aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
-}
-
-void AiInventoryManager::DoLoot() 
-{ 
-	ObjectGuid masterSelection = ai->GetMaster()->GetSelectionGuid();
-	if (masterSelection) 
-		AddLoot(masterSelection);
-
-	lootManager->DoLoot(); 
 }

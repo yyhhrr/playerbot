@@ -384,9 +384,9 @@ void EngineTestBase::removePartyAura(const char* spell)
 
 void EngineTestBase::tickWithLootAvailable()
 {
-	inventoryManager->lootAvailable = true;
+    set<bool>("has available loot", true);
 	tick();
-	inventoryManager->lootAvailable = false;
+    set<bool>("has available loot", false);
 }
 
 void EngineTestBase::tickWithNoDrink()

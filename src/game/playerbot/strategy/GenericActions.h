@@ -80,30 +80,6 @@ namespace ai
 		}
 	};
 
-    class LootAction : public Action 
-    {
-    public:
-        LootAction(AiManagerRegistry* const ai) : Action(ai, "loot") {}
-        virtual bool Execute(Event event) 
-        {
-            ai->GetInventoryManager()->DoLoot();
-            return true;
-        }
-    };
-
-    class LootAllAction : public Action 
-    {
-    public:
-        LootAllAction(AiManagerRegistry* const ai) : Action(ai, "loot all") {}
-        virtual bool Execute(Event event) 
-        {
-			AiInventoryManager* manager = ai->GetInventoryManager();
-			manager->AddAllLoot();
-            manager->DoLoot();
-            return true;
-        }
-    };
-    
     class ChangeCombatStrategyAction : public Action 
     {
     public:

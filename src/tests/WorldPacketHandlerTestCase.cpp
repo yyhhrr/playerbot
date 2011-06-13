@@ -18,6 +18,8 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( turn_in_quest );
       CPPUNIT_TEST( accept_quest );
       CPPUNIT_TEST( quest_share );
+      CPPUNIT_TEST( useGameObject );
+      CPPUNIT_TEST( roll );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -54,12 +56,18 @@ protected:
         tick();
         assertActions(">S:tell not enough reputation");
     }
-
-    void turn_in_quest()
+    
+    void useGameObject()
     {
         trigger("use game object");
         tick();
+        tick();
 
+        assertActions(">S:turn in quest>S:add loot");
+    }
+    
+    void turn_in_quest()
+    {
         trigger("complete quest");
         tick();
 
@@ -67,7 +75,7 @@ protected:
         tick();
         tick();
 
-        assertActions(">S:turn in quest>S:turn in quest>S:turn in quest>S:gossip hello");
+        assertActions(">S:turn in quest>S:turn in quest>S:gossip hello");
     }
 
     void accept_quest()
@@ -84,6 +92,14 @@ protected:
         tick();
 
         assertActions(">S:accept quest share");
+    }
+
+    void roll()
+    {
+        trigger("loot roll");
+        tick();
+
+        assertActions(">S:loot roll");
     }
 };
 
