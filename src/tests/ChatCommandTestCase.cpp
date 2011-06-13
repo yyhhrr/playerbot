@@ -18,6 +18,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
   CPPUNIT_TEST( log );
   CPPUNIT_TEST( los );
   CPPUNIT_TEST( drop );
+  CPPUNIT_TEST( query );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -71,6 +72,15 @@ protected:
     void drop()
     {
         assertCommand("drop");
+    }
+
+    void query()
+    {
+        trigger("q");
+        tick();
+        tick();
+
+        assertActions(">S:query quest>S:query quest item");
     }
 };
 

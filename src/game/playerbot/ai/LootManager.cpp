@@ -151,9 +151,10 @@ Item* LootManager::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, ui
 	bot->SendNewItem( newitem, uint32(item->count), false, false, true );
 	bot->GetAchievementMgr().UpdateAchievementCriteria( ACHIEVEMENT_CRITERIA_TYPE_LOOT_ITEM, item->itemid, item->count );
 
-	ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
-	bot->GetPlayerbotAI()->GetAiRegistry()->GetInventoryManager()->QueryItemUsage(proto);
-	bot->GetPlayerbotAI()->GetAiRegistry()->GetQuestManager()->QueryQuestItem(item->itemid);
+    // TODO: query item after looting
+	//ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
+	//bot->GetPlayerbotAI()->GetAiRegistry()->GetInventoryManager()->QueryItemUsage(proto);
+	//bot->GetPlayerbotAI()->GetAiRegistry()->GetQuestManager()->QueryQuestItem(item->itemid);
 
 	NotifyLootItemRemoved(item, qitem, loot, lootIndex, ffaitem, conditem);
 

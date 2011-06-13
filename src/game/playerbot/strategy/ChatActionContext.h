@@ -7,6 +7,8 @@
 #include "LogLevelAction.h"
 #include "TellLosAction.h"
 #include "DropQuestAction.h"
+#include "QueryQuestAction.h"
+#include "QueryQuestItemAction.h"
 
 namespace ai
 {
@@ -22,9 +24,13 @@ namespace ai
             creators["log"] = &ChatActionContext::log;
             creators["los"] = &ChatActionContext::los;
             creators["drop"] = &ChatActionContext::drop;
+            creators["query quest"] = &ChatActionContext::query_quest;
+            creators["query quest item"] = &ChatActionContext::query_quest_item;
         }
 
     private:
+        static Action* query_quest(AiManagerRegistry* ai) { return new QueryQuestAction(ai); }
+        static Action* query_quest_item(AiManagerRegistry* ai) { return new QueryQuestItemAction(ai); }
         static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }
         static Action* stats(AiManagerRegistry* ai) { return new StatsAction(ai); }
         static Action* quests(AiManagerRegistry* ai) { return new ListQuestsAction(ai); }
