@@ -6,6 +6,7 @@
 #include "TellReputationAction.h"
 #include "LogLevelAction.h"
 #include "TellLosAction.h"
+#include "DropQuestAction.h"
 
 namespace ai
 {
@@ -20,9 +21,11 @@ namespace ai
             creators["reputation"] = &ChatActionContext::reputation;
             creators["log"] = &ChatActionContext::log;
             creators["los"] = &ChatActionContext::los;
+            creators["drop"] = &ChatActionContext::drop;
         }
 
     private:
+        static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }
         static Action* stats(AiManagerRegistry* ai) { return new StatsAction(ai); }
         static Action* quests(AiManagerRegistry* ai) { return new ListQuestsAction(ai); }
         static Action* leave(AiManagerRegistry* ai) { return new LeaveGroupAction(ai); }

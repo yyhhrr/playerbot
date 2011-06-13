@@ -16,9 +16,11 @@ namespace ai
             creators["reputation"] = &ChatTriggerContext::reputation;
             creators["log"] = &ChatTriggerContext::log;
             creators["los"] = &ChatTriggerContext::los;
+            creators["drop"] = &ChatTriggerContext::drop;
         }
 
     private:
+        static Trigger* drop(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "drop"); }
         static Trigger* quests(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "quests"); }
         static Trigger* stats(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "stats"); }
         static Trigger* leave(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "leave"); }

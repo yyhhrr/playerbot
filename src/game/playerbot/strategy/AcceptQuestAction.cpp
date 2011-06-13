@@ -1,0 +1,98 @@
+#include "../../pchdef.h"
+#include "../playerbot.h"
+#include "AcceptQuestAction.h"
+#include "../PlayerbotAI.h"
+
+using namespace ai;
+
+bool AcceptQuestAction::Execute(Event event)
+{
+    Player *master = ai->GetAi()->GetMaster();
+    Player *bot = ai->GetAi()->GetBot();
+
+    WorldPacket& p = event.getPacket();
+    p.rpos(0);
+    uint64 guid;
+    uint32 quest;
+    p >> guid >> quest;
+    Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
+    if (qInfo)
+    {
+        if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
+            TellMaster("I already completed that quest.");
+        else if (! bot->CanTakeQuest(qInfo, false))
+        {                    	
+            if (! bot->SatisfyQuestStatus(qInfo, false))
+                TellMaster("I already have that quest.");
+            else
+                TellMaster("I can't take that quest.");
+        }
+        else if (! bot->SatisfyQuestLog(false))
+            TellMaster("My quest log is full.");
+        else if (! bot->CanAddQuest(qInfo, false))
+            TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+
+        else
+        {
+            p.rpos(0);
+            bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
+            TellMaster("Got the quest.");
+        }
+    }
+
+    return false;
+}
+
+bool AcceptQuestShareAction::Execute(Event event)
+{
+    Player *master = ai->GetAi()->GetMaster();
+    Player *bot = ai->GetAi()->GetBot();
+
+    WorldPacket& p = event.getPacket();
+    p.rpos(0);
+    uint64 skip;
+    uint64 guid;
+    uint32 quest;
+    p >> guid >> skip >> quest;
+    Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
+
+    if (!qInfo || !bot->GetDividerGuid())
+        return false;
+
+    quest = qInfo->GetQuestId();
+    if( !bot->CanTakeQuest( qInfo, false ) )
+    {
+        // can't take quest
+        bot->SetDividerGuid( ObjectGuid() );
+        TellMaster("I can't take this quest");
+
+        return false;
+    }
+
+    if( !bot->GetDividerGuid().IsEmpty() )
+    {
+        // send msg to quest giving player
+        master->SendPushToPartyResponse( bot, QUEST_PARTY_MSG_ACCEPT_QUEST );
+        bot->SetDividerGuid( ObjectGuid() );
+    }
+
+    if( bot->CanAddQuest( qInfo, false ) )
+    {
+        bot->AddQuest( qInfo, master );
+
+        if( bot->CanCompleteQuest( quest ) )
+            bot->CompleteQuest( quest );
+
+        // Runsttren: did not add typeid switch from WorldSession::HandleQuestgiverAcceptQuestOpcode!
+        // I think it's not needed, cause typeid should be TYPEID_PLAYER - and this one is not handled
+        // there and there is no default case also.
+
+        if( qInfo->GetSrcSpell() > 0 )
+            bot->CastSpell( bot, qInfo->GetSrcSpell(), true );
+
+        TellMaster("Quest accepted");
+        return true;
+    }
+
+    return false;
+}

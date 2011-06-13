@@ -15,8 +15,9 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( groupSetLeader );
       CPPUNIT_TEST( notEnoughMoney );
       CPPUNIT_TEST( notEnoughReputation );
-      CPPUNIT_TEST( drop );
       CPPUNIT_TEST( turn_in_quest );
+      CPPUNIT_TEST( accept_quest );
+      CPPUNIT_TEST( quest_share );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -53,12 +54,7 @@ protected:
         tick();
         assertActions(">S:tell not enough reputation");
     }
-    void drop()
-    {
-        trigger("drop");
-        tick();
-        assertActions(">S:drop");
-    }
+
     void turn_in_quest()
     {
         trigger("use game object");
@@ -72,6 +68,22 @@ protected:
         tick();
 
         assertActions(">S:turn in quest>S:turn in quest>S:turn in quest>S:gossip hello");
+    }
+
+    void accept_quest()
+    {
+        trigger("accept quest");
+        tick();
+
+        assertActions(">S:accept quest");
+    }
+
+    void quest_share()
+    {
+        trigger("quest share");
+        tick();
+
+        assertActions(">S:accept quest share");
     }
 };
 

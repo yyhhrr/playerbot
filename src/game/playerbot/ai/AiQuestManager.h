@@ -16,8 +16,6 @@ namespace ai
 
 	public:
 		void QuestLocalization(std::string& questTitle, const uint32 questID);
-		map<uint32, uint32> GetQuestItems() { return questNeedItems; }
-		void AcceptQuest( Quest const *qInfo, Player *pGiver );
         void QueryQuestItem(uint32 itemId);
 
 	public:
@@ -29,9 +27,6 @@ namespace ai
     private:
         void QueryQuestItem(uint32 itemId, const Quest *questTemplate, QuestStatusData *questStatus);
         void QueryQuest(uint32 id);
-
-	private:
-		map<uint32, uint32> questNeedItems;
 	};
 
 };

@@ -4,8 +4,8 @@
 #include "AcceptInvitationAction.h"
 #include "PassLeadershipToMasterAction.h"
 #include "TellMasterAction.h"
-#include "DropQuestAction.h"
 #include "TurnInQuestAction.h"
+#include "AcceptQuestAction.h"
 
 namespace ai
 {
@@ -19,8 +19,9 @@ namespace ai
             creators["pass leadership to master"] = &WorldPacketActionContext::pass_leadership_to_master;
             creators["tell not enough money"] = &WorldPacketActionContext::tell_not_enough_money;
             creators["tell not enough reputation"] = &WorldPacketActionContext::tell_not_enough_reputation;
-            creators["drop"] = &WorldPacketActionContext::drop;
             creators["turn in quest"] = &WorldPacketActionContext::turn_in_quest;
+            creators["accept quest"] = &WorldPacketActionContext::accept_quest;
+            creators["accept quest share"] = &WorldPacketActionContext::accept_quest_share;
         }
 
     private:
@@ -29,8 +30,9 @@ namespace ai
         static Action* pass_leadership_to_master(AiManagerRegistry* ai) { return new PassLeadershipToMasterAction(ai); }
         static Action* tell_not_enough_money(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough money"); }
         static Action* tell_not_enough_reputation(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough reputation"); }
-        static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }
         static Action* turn_in_quest(AiManagerRegistry* ai) { return new TurnInQuestAction(ai); }
+        static Action* accept_quest(AiManagerRegistry* ai) { return new AcceptQuestAction(ai); }
+        static Action* accept_quest_share(AiManagerRegistry* ai) { return new AcceptQuestShareAction(ai); }
     };
 
 

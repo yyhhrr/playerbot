@@ -1873,6 +1873,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AcceptQuestAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AcceptQuestAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Action.cpp"
 					>
 				</File>

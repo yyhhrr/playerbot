@@ -59,6 +59,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     packetHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
     packetHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
     packetHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
+    packetHandlers[CMSG_QUESTGIVER_ACCEPT_QUEST] = "accept quest";
+    packetHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
 }
 
 PlayerbotAI::~PlayerbotAI()

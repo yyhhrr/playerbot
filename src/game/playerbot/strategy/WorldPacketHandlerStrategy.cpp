@@ -35,9 +35,13 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "complete quest", 
         NextAction::array(0, new NextAction("turn in quest", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "quest share", 
+        NextAction::array(0, new NextAction("accept quest share", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
 {
-    supported.push_back("drop");
+    supported.push_back("accept quest");
 }

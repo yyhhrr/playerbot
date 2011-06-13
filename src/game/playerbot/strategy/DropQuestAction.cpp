@@ -23,5 +23,6 @@ bool DropQuestAction::Execute(Event event)
     }
 
     master->SetSelectionGuid(oldSelection);
+    TellMaster("Quest removed");
     return true;
 }

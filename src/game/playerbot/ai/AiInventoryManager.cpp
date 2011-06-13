@@ -620,23 +620,6 @@ void AiInventoryManager::Reward(const char* link)
 
 void AiInventoryManager::ListQuestItems()
 {
-	map<uint32, uint32> questItems = aiRegistry->GetQuestManager()->GetQuestItems();
-	ostringstream out;
-
-	for( map<uint32, uint32>::iterator itr=questItems.begin(); itr!=questItems.end(); ++itr )
-	{
-		const ItemPrototype * pItemProto = sObjectMgr.GetItemPrototype( itr->first );
-
-		string itemName = pItemProto->Name1;
-		ItemLocalization(itemName, pItemProto->ItemId);
-
-		out << " " << itr->second << "x|cffffffff|Hitem:" << pItemProto->ItemId
-			<< ":0:0:0:0:0:0:0" << "|h[" << itemName
-			<< "]|h|r";
-	}
-
-	aiRegistry->GetSocialManager()->TellMaster( "Here's a list of all items I need for quests:" );
-	aiRegistry->GetSocialManager()->TellMaster( out.str().c_str() );
 }
 
 void AiInventoryManager::Sell(string link) 
@@ -678,11 +661,7 @@ void AiInventoryManager::Sell(Item* item)
 
 void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text == "report")
-	{
-		ListQuestItems();
-	}
-	else if (text.size() > 2 && text.substr(0, 2) == "u " || text.size() > 4 && text.substr(0, 4) == "use ")
+	if (text.size() > 2 && text.substr(0, 2) == "u " || text.size() > 4 && text.substr(0, 4) == "use ")
 	{
 		UseItem(text.c_str());
 	}

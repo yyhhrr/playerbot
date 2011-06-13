@@ -23,46 +23,6 @@ void AiQuestManager::QuestLocalization(string& questTitle, const uint32 questID)
 
 
 
-void AiQuestManager::AcceptQuest( Quest const *qInfo, Player *pGiver )
-{
-	if( !qInfo || !pGiver )
-		return;
-
-	uint32 quest = qInfo->GetQuestId();
-	if( !bot->CanTakeQuest( qInfo, false ) )
-	{
-		// can't take quest
-		bot->SetDividerGuid( ObjectGuid() );
-        aiRegistry->GetSocialManager()->TellMaster("I can't take this quest");
-
-		return;
-	}
-
-	if( !bot->GetDividerGuid().IsEmpty() )
-	{
-		// send msg to quest giving player
-		pGiver->SendPushToPartyResponse( bot, QUEST_PARTY_MSG_ACCEPT_QUEST );
-		bot->SetDividerGuid( ObjectGuid() );
-	}
-
-	if( bot->CanAddQuest( qInfo, false ) )
-	{
-		bot->AddQuest( qInfo, pGiver );
-
-		if( bot->CanCompleteQuest( quest ) )
-			bot->CompleteQuest( quest );
-
-		// Runsttren: did not add typeid switch from WorldSession::HandleQuestgiverAcceptQuestOpcode!
-		// I think it's not needed, cause typeid should be TYPEID_PLAYER - and this one is not handled
-		// there and there is no default case also.
-
-		if( qInfo->GetSrcSpell() > 0 )
-			bot->CastSpell( bot, qInfo->GetSrcSpell(), true );
-
-        aiRegistry->GetSocialManager()->TellMaster("Quest accepted");
-	}
-}
-
 void AiQuestManager::HandleCommand(const string& text, Player& fromPlayer)
 {
 }
@@ -144,40 +104,4 @@ void AiQuestManager::Query(const string& text)
 
 void AiQuestManager::HandleMasterIncomingPacket(const WorldPacket& packet)
 {
-	switch (packet.GetOpcode())
-	{
-	case CMSG_QUESTGIVER_ACCEPT_QUEST:
-		{
-			WorldPacket p(packet);
-			p.rpos(0);
-			uint64 guid;
-			uint32 quest;
-			p >> guid >> quest;
-			Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
-			if (qInfo)
-			{
-				if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
-					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I already completed that quest.");
-				else if (! bot->CanTakeQuest(qInfo, false))
-				{                    	
-					if (! bot->SatisfyQuestStatus(qInfo, false))
-						bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I already have that quest.");
-					else
-						bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I can't take that quest.");
-				}
-				else if (! bot->SatisfyQuestLog(false))
-					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("My quest log is full.");
-				else if (! bot->CanAddQuest(qInfo, false))
-					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
-
-				else
-				{
-					p.rpos(0);
-					bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-					bot->GetPlayerbotAI()->GetAiRegistry()->GetSocialManager()->TellMaster("Got the quest.");
-				}
-			}
-		}
-		break;
-	}
 }
