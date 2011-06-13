@@ -123,3 +123,11 @@ Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* cons
     nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", NULL);
 	return nonCombatEngine;
 }
+
+Engine* AiFactory::createDeadEngine(Player* player, AiManagerRegistry* const facade, AiObjectContext* AiObjectContext) {
+    Engine* deadEngine = NULL;
+    deadEngine = new Engine(facade, AiObjectContext);
+   
+    deadEngine->addStrategies("dead", "stay", "chat", "world packet", NULL);
+    return deadEngine;
+}

@@ -7,6 +7,7 @@
 #include "../GridNotifiers.h"
 #include "../GridNotifiersImpl.h"
 #include "../CellImpl.h"
+#include "strategy/LastMovementValue.h"
 
 using namespace ai;
 using namespace std;
@@ -33,6 +34,7 @@ PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
     combatEngine = NULL;
     nonCombatEngine = NULL;
     currentEngine = NULL;
+    deadEngine = NULL;
 }
 
 PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) : PlayerbotAIBase()
@@ -46,23 +48,31 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
 
     combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, aiObjectContext);
     nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, aiObjectContext);
+    deadEngine = AiFactory::createDeadEngine(bot, aiRegistry, aiObjectContext);
 
     currentEngine = nonCombatEngine;
 
-    packetHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
+    masterPacketHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
+    masterPacketHandlers[CMSG_AREATRIGGER] = "area trigger";
+    masterPacketHandlers[CMSG_GAMEOBJ_USE] = "use game object";
+    masterPacketHandlers[CMSG_LOOT_ROLL] = "loot roll";
+
+    masterPacketHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
+    masterPacketHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
+    masterPacketHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
+    masterPacketHandlers[CMSG_QUESTGIVER_ACCEPT_QUEST] = "accept quest";
+    
+    masterPacketHandlers[CMSG_ACTIVATETAXI] = "activate taxi";
+    masterPacketHandlers[CMSG_ACTIVATETAXIEXPRESS] = "activate taxi";
+    
+    packetHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
     packetHandlers[SMSG_GROUP_INVITE] = "group invite";
-    packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
     packetHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
     packetHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
+    packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
+    packetHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
+    packetHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
 
-    packetHandlers[CMSG_GAMEOBJ_USE] = "use game object";
-    packetHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
-    packetHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
-    packetHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
-    packetHandlers[CMSG_QUESTGIVER_ACCEPT_QUEST] = "accept quest";
-    packetHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
-
-    packetHandlers[CMSG_LOOT_ROLL] = "loot roll";
 }
 
 PlayerbotAI::~PlayerbotAI()
@@ -73,6 +83,9 @@ PlayerbotAI::~PlayerbotAI()
     if (nonCombatEngine) 
         delete nonCombatEngine;
 
+    if (deadEngine)
+        delete deadEngine;
+
     if (aiObjectContext)
         delete aiObjectContext;
 
@@ -82,17 +95,12 @@ PlayerbotAI::~PlayerbotAI()
 
 void PlayerbotAI::UpdateAI(uint32 elapsed)
 {
-	if (bot->isAlive())
-		ChangeStrategyIfNecessary();
+	ChangeStrategyIfNecessary();
 
 	if (!CanUpdateAI() || bot->IsBeingTeleported())
 		return;
 
-	if (bot->isAlive())
-		DoNextAction();
-	else
-		aiRegistry->GetMoveManager()->Resurrect();
-
+	DoNextAction();
 	YieldThread();
 }
 
@@ -121,7 +129,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 		text.find("CTRA") != wstring::npos)
 		return;
 
-	if (fromPlayer.GetGuildId() != bot->GetGuildId())
+	if (fromPlayer.GetGuildId() != bot->GetGuildId() || !bot->GetGuildId())
 	    return;
 
 	AiManagerBase** managers = aiRegistry->GetManagers();
@@ -150,6 +158,9 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
         currentEngine = nonCombatEngine;
         nextAICheckTime = 0;
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
+        
+        bot->GetMotionMaster()->Clear();
+        bot->m_taxi.ClearTaxiDestinations();
     }
 
 
@@ -168,6 +179,29 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 
     ExternalEventHelper helper(aiObjectContext);
     helper.HandlePacket(packetHandlers, packet);
+
+    switch (packet.GetOpcode())
+    {
+    case SMSG_MOVE_SET_CAN_FLY:
+        {
+            WorldPacket p(packet);
+            uint64 guid = p.readPackGUID();
+            if (guid != bot->GetGUID())
+                return;
+
+            bot->m_movementInfo.SetMovementFlags((MovementFlags)(MOVEFLAG_FLYING|MOVEFLAG_CAN_FLY));
+            return;
+        }
+    case SMSG_MOVE_UNSET_CAN_FLY:
+        {
+            WorldPacket p(packet);
+            uint64 guid = p.readPackGUID();
+            if (guid != bot->GetGUID())
+                return;
+            bot->m_movementInfo.RemoveMovementFlag(MOVEFLAG_FLYING);
+            return;
+        }
+    }
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -177,7 +211,7 @@ void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
         managers[i]->HandleMasterIncomingPacket(packet);
 
     ExternalEventHelper helper(aiObjectContext);
-    helper.HandlePacket(packetHandlers, packet);
+    helper.HandlePacket(masterPacketHandlers, packet);
 }
 
 void PlayerbotAI::UpdateNextCheckDelay()
@@ -194,29 +228,31 @@ void PlayerbotAI::UpdateNextCheckDelay()
 
 void PlayerbotAI::ChangeStrategyIfNecessary()
 {
-    Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
-    if (target && !bot->isInFrontInMap(target, BOT_REACT_DISTANCE))
+    if (!bot->isAlive())
     {
-        bot->SetFacingTo(bot->GetAngle(target));
+        ChangeEngine(deadEngine);
+        return;
     }
 
+    Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
     if (target && target->isAlive() && target->IsHostileTo(bot))
     {
-        if (currentEngine != combatEngine)
-        {
-            currentEngine = combatEngine;
-            ReInitCurrentEngine();
-        }
+        ChangeEngine(combatEngine);
     }
     else 
     {
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
-        if (currentEngine != nonCombatEngine)
-        {
-            currentEngine = nonCombatEngine;
-            ReInitCurrentEngine();
-        }
+        ChangeEngine(nonCombatEngine);
+    }
+}
+
+void PlayerbotAI::ChangeEngine(Engine* engine)
+{
+    if (currentEngine != engine)
+    {
+        currentEngine = engine;
+        ReInitCurrentEngine();
     }
 }
 
@@ -230,6 +266,33 @@ void PlayerbotAI::DoNextAction()
         managers[i]->Update();
 
     currentEngine->DoNextAction(NULL);
+
+    if (!bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty())
+    {
+        bot->m_movementInfo.SetMovementFlags((MovementFlags)(MOVEFLAG_FLYING|MOVEFLAG_CAN_FLY));
+
+        WorldPacket packet(CMSG_MOVE_SET_FLY);
+        packet << bot->GetObjectGuid().WriteAsPacked();
+        packet << bot->m_movementInfo;
+        bot->SetMover(bot);
+        bot->GetSession()->HandleMovementOpcodes(packet);
+    }
+
+    if (bot->IsMounted() && bot->IsFlying())
+    {
+        bot->m_movementInfo.SetMovementFlags((MovementFlags)(MOVEFLAG_FLYING|MOVEFLAG_CAN_FLY));
+        bot->SetSpeedRate(MOVE_FLIGHT, 1.0f, true);
+        bot->SetSpeedRate(MOVE_FLIGHT, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
+
+        bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
+        bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
+    }
+
+    if (aiObjectContext->GetValue<bool>("moving", "self target")->Get())
+        return;
+
+    LastMovement& movement = aiObjectContext->GetValue<LastMovement&>("last movement")->Get();
+    movement.Update(bot);
 }
 
 void PlayerbotAI::ReInitCurrentEngine()

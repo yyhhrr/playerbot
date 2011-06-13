@@ -51,8 +51,8 @@ public:
 	void HandleBotOutgoingPacket(const WorldPacket& packet);
     void HandleMasterIncomingPacket(const WorldPacket& packet);
 	void HandleTeleportAck();
-
     void ChangeStrategyIfNecessary();
+    void ChangeEngine(Engine* engine);
     void DoNextAction();
     void DoSpecificAction(const char* name);
     void ChangeStrategy( const char* name, Engine* e );
@@ -78,6 +78,8 @@ protected:
     Engine* currentEngine;
     Engine* combatEngine;
     Engine* nonCombatEngine;
+    Engine* deadEngine;
     map<uint16, string> packetHandlers;
+    map<uint16, string> masterPacketHandlers;
 };
 

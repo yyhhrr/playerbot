@@ -22,7 +22,6 @@ namespace ai
         bool IsMovingAllowed(Unit* target);
         bool IsMovingAllowed(uint32 mapId, float x, float y, float z);
         bool IsMovingAllowed();
-        void SetInFront(const Unit* obj);
         bool Flee(Unit *target);
 
     protected:

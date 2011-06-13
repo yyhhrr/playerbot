@@ -4,6 +4,7 @@
 #include "RacialsStrategy.h"
 #include "ChatCommandHandlerStrategy.h"
 #include "WorldPacketHandlerStrategy.h"
+#include "DeadStrategy.h"
 
 namespace ai
 {
@@ -29,9 +30,11 @@ namespace ai
             creators["food"] = &StrategyContext::food;
             creators["chat"] = &StrategyContext::chat;
             creators["world packet"] = &StrategyContext::world_packet;
+            creators["dead"] = &StrategyContext::dead;
         }
 
     private:
+        static Strategy* dead(AiManagerRegistry* ai) { return new DeadStrategy(ai); }
         static Strategy* racials(AiManagerRegistry* ai) { return new RacialsStrategy(ai); }
         static Strategy* follow_master(AiManagerRegistry* ai) { return new FollowMasterNonCombatStrategy(ai); }
         static Strategy* follow_line(AiManagerRegistry* ai) { return new FollowLineNonCombatStrategy(ai); }

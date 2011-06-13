@@ -133,7 +133,6 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
     mm.Clear();
     mm.MoveFollow(target, distance, angle);
 
-    SetInFront(target);
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
 
@@ -148,13 +147,6 @@ void MovementAction::WaitForReach(float distance)
 
     bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }
-
-void MovementAction::SetInFront(const Unit* obj)
-{
-    bot->SetInFront(obj);
-    ai->GetMoveManager()->UpdatePosition();
-}
-
 
 bool MovementAction::Flee(Unit *target)
 {

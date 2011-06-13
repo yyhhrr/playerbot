@@ -51,6 +51,7 @@ namespace ai
 
             creators["medium threat"] = &TriggerContext::MediumThreat;
 
+            creators["dead"] = &TriggerContext::Dead;
             creators["party member dead"] = &TriggerContext::PartyMemberDead;
             creators["no pet"] = &TriggerContext::no_pet;
             creators["has attackers"] = &TriggerContext::has_attackers;
@@ -93,6 +94,7 @@ namespace ai
         static Trigger* EnemyTooClose(AiManagerRegistry* ai) { return new EnemyTooCloseTrigger(ai); }
         static Trigger* ComboPointsAvailable(AiManagerRegistry* ai) { return new ComboPointsAvailableTrigger(ai); }
         static Trigger* MediumThreat(AiManagerRegistry* ai) { return new MediumThreatTrigger(ai); }
+        static Trigger* Dead(AiManagerRegistry* ai) { return new DeadTrigger(ai); }
         static Trigger* PartyMemberDead(AiManagerRegistry* ai) { return new PartyMemberDeadTrigger(ai); }
         static Trigger* PartyMemberLowHealth(AiManagerRegistry* ai) { return new PartyMemberLowHealthTrigger(ai); }
         static Trigger* PartyMemberMediumHealth(AiManagerRegistry* ai) { return new PartyMemberMediumHealthTrigger(ai); }

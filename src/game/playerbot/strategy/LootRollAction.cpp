@@ -9,7 +9,7 @@ bool LootRollAction::Execute(Event event)
 {
     Player *bot = ai->GetAi()->GetBot();
 
-    WorldPacket p = event.getPacket(); //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
+    WorldPacket p(event.getPacket()); //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
     ObjectGuid Guid;
     uint32 NumberOfPlayers;
     uint8 rollType;

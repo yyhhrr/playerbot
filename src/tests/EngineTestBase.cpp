@@ -70,7 +70,6 @@ void EngineTestBase::setUp()
 {
 	ai = new MockAiManagerRegistry();
 	spellManager = (MockAiSpellManager*)ai->GetSpellManager();
-	moveManager = (MockAiMoveManager*)ai->GetMoveManager();
 	inventoryManager = (MockAiInventoryManager*)ai->GetInventoryManager();
 	socialManager = (MockAiSocialManager*)ai->GetSocialManager();
 }

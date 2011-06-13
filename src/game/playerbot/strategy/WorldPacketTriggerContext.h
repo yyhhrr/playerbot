@@ -19,9 +19,16 @@ namespace ai
             creators["accept quest"] = &WorldPacketTriggerContext::accept_quest;
             creators["quest share"] = &WorldPacketTriggerContext::quest_share;
             creators["loot roll"] = &WorldPacketTriggerContext::loot_roll;
+            creators["resurrect request"] = &WorldPacketTriggerContext::resurrect_request;
+            creators["area trigger"] = &WorldPacketTriggerContext::area_trigger;
+            creators["check mount state"] = &WorldPacketTriggerContext::check_mount_state;
+            creators["activate taxi"] = &WorldPacketTriggerContext::taxi;
         }
 
     private:
+        static Trigger* check_mount_state(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
+        static Trigger* area_trigger(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "area trigger"); }
+        static Trigger* resurrect_request(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "resurrect request"); }
         static Trigger* gossip_hello(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "gossip hello"); }
         static Trigger* group_invite(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "group invite"); }
         static Trigger* group_set_leader(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "group set leader"); }
@@ -32,5 +39,6 @@ namespace ai
         static Trigger* accept_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "accept quest"); }
         static Trigger* quest_share(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "quest share"); }
         static Trigger* loot_roll(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "loot roll"); }
+        static Trigger* taxi(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "activate taxi"); }
     };
 };

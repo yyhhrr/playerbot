@@ -247,10 +247,7 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
 		target = bot;
 
     if (!bot->isInFrontInMap(target, 10))
-    {
         bot->SetInFront(target);
-		aiRegistry->GetMoveManager()->UpdatePosition();
-    }
 
     lastSpellId = spellId;
     lastSpellTarget = target->GetObjectGuid();

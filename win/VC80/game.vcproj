@@ -1797,14 +1797,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiMoveManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiMoveManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\AiSocialManager.cpp"
 					>
 				</File>
@@ -1865,6 +1857,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AcceptResurrectAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Action.cpp"
 					>
 				</File>
@@ -1902,6 +1898,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AlwaysLootListValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AreaTriggerAction.h"
 					>
 				</File>
 				<File
@@ -1961,6 +1961,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CheckMountStateAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChooseTargetActions.h"
 					>
 				</File>
@@ -1986,6 +1990,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\CurrentTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DeadStrategy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DeadStrategy.h"
 					>
 				</File>
 				<File
@@ -2369,6 +2381,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\RememberTaxiAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\RememberTaxiAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ReviveFromCorpseAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ReviveFromCorpseAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SelfTargetValue.h"
 					>
 				</File>
@@ -2482,6 +2510,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TurnInQuestAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\UseMeetingStoneAction.h"
 					>
 				</File>
 				<File

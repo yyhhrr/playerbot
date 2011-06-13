@@ -54,7 +54,6 @@ bool AttackAction::Attack(Unit* target)
     bot->SetSelectionGuid(target->GetObjectGuid());
     bot->Attack(target, true);
     bot->SetInFront(target);
-    ai->GetMoveManager()->UpdatePosition();
 
     Pet* pet = bot->GetPet();
     if (pet)

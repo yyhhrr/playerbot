@@ -26,7 +26,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "use game object", 
-        NextAction::array(0, new NextAction("turn in quest", relevance), new NextAction("add loot", relevance), NULL)));
+        NextAction::array(0, 
+            new NextAction("turn in quest", relevance), 
+            new NextAction("add loot", relevance), 
+            new NextAction("use meeting stone", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "gossip hello", 
@@ -39,10 +42,16 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "quest share", 
         NextAction::array(0, new NextAction("accept quest share", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "activate taxi", 
+        NextAction::array(0, new NextAction("remember taxi", relevance), new NextAction("taxi", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
 {
     supported.push_back("accept quest");
     supported.push_back("loot roll");
+    supported.push_back("area trigger");
+    supported.push_back("check mount state");
 }

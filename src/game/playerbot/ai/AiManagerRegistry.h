@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define MAX_AI_MANAGER_TYPE 4
+#define MAX_AI_MANAGER_TYPE 3
 
 class Player;
 class PlayerbotAI;
@@ -12,18 +12,15 @@ namespace ai
     class AiManagerBase;
     
 	class AiSpellManager;
-	class AiMoveManager;
 	class AiInventoryManager;
 	class AiSocialManager;
-	class AiStrategyManager;
 	class AiManagerBase;
 
 	enum AiManagerType
 	{
 		AiSpellManagerType = 0,
-		AiMoveManagerType = 1,
-		AiInventoryManagerType = 2,
-		AiSocialManagerType = 3
+		AiInventoryManagerType = 1,
+		AiSocialManagerType = 2
 	};
 
 	class AiManagerRegistry
@@ -36,7 +33,6 @@ namespace ai
 
 	public:
 		AiSpellManager* GetSpellManager() { return (AiSpellManager*)managers[AiSpellManagerType]; }
-		AiMoveManager* GetMoveManager() { return (AiMoveManager*)managers[AiMoveManagerType]; }
 		AiInventoryManager* GetInventoryManager() { return (AiInventoryManager*)managers[AiInventoryManagerType]; }
 		AiSocialManager* GetSocialManager() { return (AiSocialManager*)managers[AiSocialManagerType]; }
 

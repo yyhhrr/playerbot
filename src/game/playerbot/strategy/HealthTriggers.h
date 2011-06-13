@@ -89,4 +89,11 @@ namespace ai
 		virtual bool IsActive();
 	};
 
+    class DeadTrigger : public Trigger {
+    public:
+        DeadTrigger(AiManagerRegistry* const ai) : Trigger(ai, "dead", 10) {}
+        virtual const char* GetTargetName() { return "self target"; }
+        virtual bool IsActive();
+    };
+
 }

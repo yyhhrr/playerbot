@@ -20,6 +20,11 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( quest_share );
       CPPUNIT_TEST( useGameObject );
       CPPUNIT_TEST( roll );
+      CPPUNIT_TEST( revive );
+      CPPUNIT_TEST( resurrect_request );
+      CPPUNIT_TEST( area_trigger );
+      CPPUNIT_TEST( mount );
+      CPPUNIT_TEST( taxi );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -62,8 +67,9 @@ protected:
         trigger("use game object");
         tick();
         tick();
+        tick();
 
-        assertActions(">S:turn in quest>S:add loot");
+        assertActions(">S:turn in quest>S:add loot>S:use meeting stone");
     }
     
     void turn_in_quest()
@@ -100,6 +106,51 @@ protected:
         tick();
 
         assertActions(">S:loot roll");
+    }
+
+    void revive()
+    {
+        engine->addStrategy("dead");
+
+        trigger("dead");
+        tick();
+
+        assertActions(">S:revive from corpse");
+    }
+
+    void resurrect_request()
+    {
+        engine->addStrategy("dead");
+
+        trigger("resurrect request");
+        tick();
+
+        assertActions(">S:accept resurrect");
+    }
+
+    void area_trigger()
+    {
+        trigger("area trigger");
+        tick();
+
+        assertActions(">S:area trigger");
+    }
+
+    void mount()
+    {
+        trigger("check mount state");
+        tick();
+
+        assertActions(">S:check mount state");
+    }
+
+    void taxi()
+    {
+        trigger("activate taxi");
+        tick();
+        tick();
+
+        assertActions(">S:remember taxi>S:taxi");
     }
 };
 

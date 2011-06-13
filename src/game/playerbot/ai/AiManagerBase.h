@@ -33,8 +33,6 @@ namespace ai
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet) {}
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet) {}
         virtual void Query(const string& text) {}
-
-	protected:
 		uint64 extractGuid(WorldPacket& packet);
 
 	protected:
