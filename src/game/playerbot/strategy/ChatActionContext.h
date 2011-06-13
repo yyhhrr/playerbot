@@ -9,6 +9,7 @@
 #include "DropQuestAction.h"
 #include "QueryQuestAction.h"
 #include "QueryQuestItemAction.h"
+#include "QueryItemUsageAction.h"
 
 namespace ai
 {
@@ -26,9 +27,11 @@ namespace ai
             creators["drop"] = &ChatActionContext::drop;
             creators["query quest"] = &ChatActionContext::query_quest;
             creators["query quest item"] = &ChatActionContext::query_quest_item;
+            creators["query item usage"] = &ChatActionContext::query_item_usage;
         }
 
     private:
+        static Action* query_item_usage(AiManagerRegistry* ai) { return new QueryItemUsageAction(ai); }
         static Action* query_quest(AiManagerRegistry* ai) { return new QueryQuestAction(ai); }
         static Action* query_quest_item(AiManagerRegistry* ai) { return new QueryQuestItemAction(ai); }
         static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }

@@ -124,14 +124,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 
 	AiManagerBase** managers = aiRegistry->GetManagers();
 
-    if (text.size() > 2 && text.substr(0, 2) == "q ")
-    {
-        string query = text.substr(text.find(" ") + 1);
-        for (int i=0; i<aiRegistry->GetManagerCount(); i++)
-            managers[i]->Query(query);
-        return;
-    }
-    else if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
+    if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
     {
         std::string action = text.substr(text.find(" ") + 1);
         DoSpecificAction(action.c_str());

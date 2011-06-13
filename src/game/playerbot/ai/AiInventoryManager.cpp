@@ -911,63 +911,9 @@ void AiInventoryManager::HandleMasterIncomingPacket(const WorldPacket& packet)
     }
 }
 
-void AiInventoryManager::QueryItemUsage(ItemPrototype const *item)
-{
-    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
-        return;
-
-    if (item->InventoryType == INVTYPE_NON_EQUIP)
-        return;
-
-    uint16 eDest;
-    uint8 msg = bot->CanEquipNewItem(NULL_SLOT, eDest, item->ItemId, true);
-    if( msg != EQUIP_ERR_OK )
-        return;
-
-    Item* existingItem = bot->GetItemByPos(eDest);
-    if (!existingItem)
-    {
-        aiRegistry->GetSocialManager()->TellMaster("Equip");
-        return;
-    }
-
-    bool equip = false;
-    const ItemPrototype* oldItem = existingItem->GetProto();
-    if (oldItem->ItemLevel < item->ItemLevel && oldItem->ItemId != item->ItemId)
-    {
-        switch (item->Class)
-        {
-        case ITEM_CLASS_ARMOR:
-            equip = (oldItem->SubClass <= item->SubClass);
-            break;
-        default:
-            equip = true;
-        }
-    }
-
-    if (equip)
-    {
-        ostringstream out;
-        out << "Replace +";
-        out << (item->ItemLevel - oldItem->ItemLevel);
-        out << " lvl";
-        aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
-    }
-}
-
-void AiInventoryManager::QueryItemsUsage(list<uint32> items) 
-{
-    for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
-    {
-        ItemPrototype const *item = sItemStorage.LookupEntry<ItemPrototype>(*i);
-        QueryItemUsage(item);
-    }
-}
 
 void AiInventoryManager::Query(const string& text)
 {
-    list<uint32> items; /* = */ extractItemIds(text, items);
-    QueryItemsUsage(items);
 }
 
 void AiInventoryManager::QueryItemCount(ItemPrototype const * item) 

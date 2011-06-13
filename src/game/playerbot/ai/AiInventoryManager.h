@@ -101,7 +101,6 @@ namespace ai
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
         virtual void Query(const string& text);
-        virtual void QueryItemUsage(ItemPrototype const *item);
 
 	private:
         void UseItem(FindItemVisitor* visitor, const uint32 delay = 0);
@@ -116,7 +115,6 @@ namespace ai
 
         void Sell(FindItemVisitor* visitor);
 
-        void QueryItemsUsage(list<uint32> items);
         void QueryItemCount(ItemPrototype const * item);
         void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);
         void IterateItemsInBags(IterateItemsVisitor* visitor);

@@ -17,23 +17,6 @@ bool QueryQuestItemAction::Execute(Event event)
     for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
         QueryQuestItem(*i);
 
-    PlayerbotChatHandler ch(master);
-    uint32 questId = ch.extractQuestId(text.c_str());
-    if (!questId)
-        return false;
-
-    for (uint16 slot = 0; slot < MAX_QUEST_LOG_SIZE; ++slot)
-    {
-        if(questId == bot->GetQuestSlotQuestId(slot))
-        {
-            ostringstream out;
-            out << "Quest ";
-            out << (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE ? "completed" : "not completed");
-            TellMaster(out.str().c_str());
-            return true;
-        }
-    }
-
     return false;
 }
 
@@ -48,9 +31,6 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId)
             continue;
 
         QuestStatusData *questStatus = &i->second;
-        if( questStatus->m_status != QUEST_STATUS_INCOMPLETE )
-            continue;
-
         QueryQuestItem(itemId, questTemplate, questStatus);
     }    
 }
@@ -66,7 +46,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId, const Quest *questTempl
         int required = questTemplate->ReqItemCount[i];
         int available = questStatus->m_itemcount[i];
 
-        if (!required || available >= required)
+        if (!required)
             continue;
 
         ostringstream out;

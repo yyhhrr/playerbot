@@ -1,0 +1,17 @@
+#pragma once
+
+#include "Action.h"
+
+namespace ai
+{
+    class QueryItemUsageAction : public Action {
+    public:
+        QueryItemUsageAction(AiManagerRegistry* const ai) : Action(ai, "query item usage") {}
+        virtual bool Execute(Event event);
+
+    private:
+        void QueryItemsUsage(list<uint32> items);
+        void QueryItemUsage(ItemPrototype const *item);
+
+    };
+}

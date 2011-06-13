@@ -2253,6 +2253,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\QueryItemUsageAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\QueryItemUsageAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\QueryQuestAction.cpp"
 					>
 				</File>

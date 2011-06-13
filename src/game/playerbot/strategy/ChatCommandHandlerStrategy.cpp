@@ -14,7 +14,10 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "q", 
-        NextAction::array(0, new NextAction("query quest", relevance), new NextAction("query quest item", relevance), NULL)));
+        NextAction::array(0, 
+            new NextAction("query quest", relevance), 
+            new NextAction("query quest item", relevance), 
+            new NextAction("query item usage", relevance), NULL)));
 }
 
 ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
