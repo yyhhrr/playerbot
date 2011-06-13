@@ -6,6 +6,5 @@
 #include "AiManagerRegistry.h"
 #include "AiManagerRegistryAware.h"
 #include "AiMoveManager.h"
-#include "AiQuestManager.h"
 #include "AiSocialManager.h"
 #include "AiSpellManager.h"

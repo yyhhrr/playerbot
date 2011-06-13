@@ -604,7 +604,6 @@ void AiInventoryManager::Reward(const char* link)
 					bot->RewardQuest(pQuest, rewardIdx, pNpc, false);
 
 					string questTitle  = pQuest->GetTitle();
-					aiRegistry->GetQuestManager()->QuestLocalization(questTitle, questID);
 					string itemName = pRewardItem->Name1;
 					ItemLocalization(itemName, pRewardItem->ItemId);
 

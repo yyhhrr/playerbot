@@ -1805,14 +1805,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiQuestManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiQuestManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\AiSocialManager.cpp"
 					>
 				</File>

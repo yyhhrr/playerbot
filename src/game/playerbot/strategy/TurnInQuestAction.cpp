@@ -55,7 +55,6 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 
             std::ostringstream out;
             std::string questTitle  = pQuest->GetTitle();
-            ai->GetQuestManager()->QuestLocalization(questTitle, questID);
 
             QuestStatus status = bot->GetQuestStatus(questID);
 
