@@ -21,6 +21,7 @@
 #include "PartyMemberToDispel.h"
 #include "StatsValues.h"
 #include "AttackerCountValues.h"
+#include "AttackersValue.h"
 
 namespace ai
 {
@@ -58,7 +59,6 @@ namespace ai
             creators["attacker count"] = &ValueContext::attacker_count;
             creators["my attacker count"] = &ValueContext::my_attacker_count;
             creators["has aggro"] = &ValueContext::has_aggro;
-            creators["balance"] = &ValueContext::balance;
             creators["mounted"] = &ValueContext::mounted;
         }
 
@@ -66,7 +66,6 @@ namespace ai
         static UntypedValue* attacker_count(AiManagerRegistry* ai) { return new AttackerCountValue(ai); }
         static UntypedValue* my_attacker_count(AiManagerRegistry* ai) { return new MyAttackerCountValue(ai); }
         static UntypedValue* has_aggro(AiManagerRegistry* ai) { return new HasAggroValue(ai); }
-        static UntypedValue* balance(AiManagerRegistry* ai) { return new BalancePercentValue(ai); }
         static UntypedValue* mounted(AiManagerRegistry* ai) { return new IsMountedValue(ai); }
         static UntypedValue* health(AiManagerRegistry* ai) { return new HealthValue(ai); }
         static UntypedValue* rage(AiManagerRegistry* ai) { return new RageValue(ai); }

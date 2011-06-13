@@ -40,7 +40,7 @@ class PlayerbotAI : public PlayerbotAIBase
 {
 public:
 	PlayerbotAI();
-	PlayerbotAI(PlayerbotMgr* mgr, Player* bot);
+	PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues);
 	virtual ~PlayerbotAI();
 
 public:
@@ -68,7 +68,6 @@ public:
 	Player* GetBot() { return bot; }
 	Player* GetMaster() { return mgr->GetMaster(); }
 	AiManagerRegistry* GetAiRegistry() { return aiRegistry; }
-    AiGroupStatsManager* GetGroupStatsManager() { return mgr->GetGroupStatsManager(); }
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
 
 protected:

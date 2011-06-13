@@ -1,10 +1,23 @@
 #include "Config/Config.h"
 #include "../pchdef.h"
 #include "playerbot.h"
+#include "strategy/SharedValueContext.h"
+
 
 class LoginQueryHolder;
 class CharacterHandler;
 
+class SharedPlayerbotAI : public PlayerbotAIBase
+{
+public:
+    SharedPlayerbotAI() : PlayerbotAIBase() { }
+    virtual ~SharedPlayerbotAI() { }
+
+    SharedValueContext* GetSharedValues() { return &sharedValues; }
+
+private:
+    SharedValueContext sharedValues;
+};
 
 PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(master) 
 {
@@ -14,14 +27,17 @@ PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(
     m_confFollowDistance[0] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 0.5f );
     m_confFollowDistance[1] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 1.0f );
 
-    groupStatsManager = new ai::AiGroupStatsManager(master);
+    sharedAi = new SharedPlayerbotAI();
 }
 
 PlayerbotMgr::~PlayerbotMgr() 
 {
     LogoutAllBots();
-    if (groupStatsManager)
-        delete groupStatsManager;
+    if (sharedAi)
+    {
+        delete sharedAi;
+        sharedAi = NULL;
+    }
 }
 
 void PlayerbotMgr::UpdateAI(const uint32 p_time) 
@@ -30,8 +46,6 @@ void PlayerbotMgr::UpdateAI(const uint32 p_time)
         return;
 
     SetNextCheckDelay(GLOBAL_COOLDOWN);
-
-    groupStatsManager->Update();
 }
 
 void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -90,7 +104,7 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
     // give the bot some AI, object is owned by the player class
-    PlayerbotAI* ai = new PlayerbotAI(this, bot);
+    PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
     bot->SetPlayerbotAI(ai);
 
     // tell the world session that they now manage this new bot

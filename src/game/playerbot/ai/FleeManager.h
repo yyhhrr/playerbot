@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackerMapProvider.h"
 
 using namespace std;
 

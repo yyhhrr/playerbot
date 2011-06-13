@@ -9,7 +9,6 @@ class Player;
 class Unit;
 class Object;
 class Item;
-class PlayerbotClassAI;
 
 typedef UNORDERED_MAP<uint64, Player*> PlayerBotMap;
 
@@ -33,8 +32,6 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
         void LogoutAllBots();
         void OnBotLogin(Player * const bot);
 
-        ai::AiGroupStatsManager* GetGroupStatsManager() { return groupStatsManager; }
-
     public:
         // config variables
 		bool m_confDisableBots;
@@ -44,7 +41,7 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
     private:
         Player* const m_master;
         PlayerBotMap m_playerBots;     
-        ai::AiGroupStatsManager *groupStatsManager;
+        PlayerbotAIBase *sharedAi;
 };
 
 #endif

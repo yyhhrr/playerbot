@@ -35,13 +35,14 @@ PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
     currentEngine = NULL;
 }
 
-PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot) : PlayerbotAIBase()
+PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) : PlayerbotAIBase()
 {
 	this->mgr = mgr;
 	this->bot = bot;
     aiRegistry = new AiManagerRegistry(this);
 
     aiObjectContext = AiFactory::createAiObjectContext(bot, aiRegistry);
+    aiObjectContext->AddShared(sharedValues);
 
     combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, aiObjectContext);
     nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, aiObjectContext);

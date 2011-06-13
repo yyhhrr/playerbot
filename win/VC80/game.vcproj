@@ -1765,14 +1765,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiGroupStatsManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiGroupStatsManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\AiInventoryManager.cpp"
 					>
 				</File>
@@ -1914,6 +1906,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AttackerCountValues.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AttackersValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AttackersValue.h"
 					>
 				</File>
 				<File
@@ -2262,6 +2262,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SelfTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SharedValueContext.h"
 					>
 				</File>
 				<File

@@ -77,6 +77,8 @@ namespace ai
             }
         }
 
+        virtual bool IsShared() { return false; }
+
     protected:
         map<string, T*> created;
     };
@@ -87,7 +89,11 @@ namespace ai
         virtual ~NamedObjectContextList()
         {
             for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
-                delete *i;
+            {
+                NamedObjectContext<T>* context = *i;
+                if (!context->IsShared())
+                    delete context;
+            }
         }
 
         void Add(NamedObjectContext<T>* context)
