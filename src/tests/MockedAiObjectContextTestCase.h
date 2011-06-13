@@ -45,4 +45,10 @@ protected:
     {
         context->GetTrigger(name)->ExternalEvent(param);
     }
+
+    void tickWithTrigger(const char* name)
+    {
+        trigger(name);
+        tick();
+    }
 };

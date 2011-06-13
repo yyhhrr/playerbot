@@ -11,11 +11,12 @@ using namespace ai;
 class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
 {
   CPPUNIT_TEST_SUITE( WorldPacketHandlerTestCase );
-  CPPUNIT_TEST( gossip_hello );
-  CPPUNIT_TEST( groupInvite );
-  CPPUNIT_TEST( groupSetLeader );
-  CPPUNIT_TEST( notEnoughMoney );
-  CPPUNIT_TEST( notEnoughReputation );
+      CPPUNIT_TEST( groupInvite );
+      CPPUNIT_TEST( groupSetLeader );
+      CPPUNIT_TEST( notEnoughMoney );
+      CPPUNIT_TEST( notEnoughReputation );
+      CPPUNIT_TEST( drop );
+      CPPUNIT_TEST( turn_in_quest );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -26,25 +27,51 @@ public:
     }
 
 protected:
- 	void gossip_hello()
-	{
-        assertCommand("gossip hello");
-	}
     void groupInvite()
     {
-        assertCommand("group invite", "accept invitation");
+        trigger("group invite");
+        tick();
+
+        assertActions(">S:accept invitation");
     }
     void groupSetLeader()
     {
-        assertCommand("group set leader", "pass leadership to master");
+        trigger("group set leader");
+        tick();
+
+        assertActions(">S:pass leadership to master");
     }
     void notEnoughMoney()
     {
-        assertCommand("not enough money", "tell not enough money");
+        trigger("not enough money");
+        tick();
+        assertActions(">S:tell not enough money");
     }
     void notEnoughReputation()
     {
-        assertCommand("not enough reputation", "tell not enough reputation");
+        trigger("not enough reputation");
+        tick();
+        assertActions(">S:tell not enough reputation");
+    }
+    void drop()
+    {
+        trigger("drop");
+        tick();
+        assertActions(">S:drop");
+    }
+    void turn_in_quest()
+    {
+        trigger("use game object");
+        tick();
+
+        trigger("complete quest");
+        tick();
+
+        trigger("gossip hello");
+        tick();
+        tick();
+
+        assertActions(">S:turn in quest>S:turn in quest>S:turn in quest>S:gossip hello");
     }
 };
 

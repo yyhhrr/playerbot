@@ -15,7 +15,9 @@ public:
 public:
     virtual Event Check()
     {
-        return event;
+        Event copy = event;
+        event = Event();
+        return copy;
     }
 
     virtual void ExternalEvent(string param)
@@ -63,15 +65,31 @@ MockAiObjectContext::MockAiObjectContext(AiManagerRegistry* const ai, AiObjectCo
 {
 }
 
+void MockAiObjectContext::reportNotFound(const char* what, const char* name)
+{
+    std::cout << "\n===\n";
+    cout << what << " " << name << " not found in context";
+    std::cout << "\n===\n";
+}
+
 Strategy* MockAiObjectContext::GetStrategy(const char* name)
 {
+    if (!realContext->GetStrategy(name))
+    {
+        reportNotFound("Strategy", name);
+        CPPUNIT_ASSERT(false);
+    }
+
     return realContext->GetStrategy(name);
 }
 
 Trigger* MockAiObjectContext::GetTrigger(const char* name)
 {
     if (!realContext->GetTrigger(name))
+    {
+        reportNotFound("Trigger", name);
         CPPUNIT_ASSERT(false);
+    }
 
     Trigger* trigger = triggers[name];
     if (trigger)
@@ -82,7 +100,11 @@ Trigger* MockAiObjectContext::GetTrigger(const char* name)
 
 Action* MockAiObjectContext::GetAction(const char* name)
 {
-    CPPUNIT_ASSERT(realContext->GetAction(name) != NULL);
+    if (!realContext->GetAction(name))
+    {
+        reportNotFound("Action", name);
+        CPPUNIT_ASSERT(false);
+    }
 
     Action* action = actions[name];
     if (action)

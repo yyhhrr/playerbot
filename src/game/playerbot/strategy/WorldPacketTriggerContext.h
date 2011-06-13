@@ -15,6 +15,8 @@ namespace ai
             creators["not enough money"] = &WorldPacketTriggerContext::no_money;
             creators["not enough reputation"] = &WorldPacketTriggerContext::no_reputation;
             creators["drop"] = &WorldPacketTriggerContext::drop;
+            creators["use game object"] = &WorldPacketTriggerContext::use_game_object;
+            creators["complete quest"] = &WorldPacketTriggerContext::complete_quest;
         }
 
     private:
@@ -24,5 +26,7 @@ namespace ai
         static Trigger* group_set_leader(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "group set leader"); }
         static Trigger* no_money(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "not enough money"); }
         static Trigger* no_reputation(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "not enough reputation"); }
+        static Trigger* use_game_object(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "use game object"); }
+        static Trigger* complete_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "complete quest"); }
     };
 };

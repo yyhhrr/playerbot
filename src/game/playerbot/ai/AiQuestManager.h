@@ -15,11 +15,8 @@ namespace ai
 		}
 
 	public:
-		void UpdateQuestNeedItems();
-		void DropQuest(const char* link);
 		void QuestLocalization(std::string& questTitle, const uint32 questID);
 		map<uint32, uint32> GetQuestItems() { return questNeedItems; }
-		void TurnInQuests( WorldObject *questgiver );
 		void AcceptQuest( Quest const *qInfo, Player *pGiver );
         void QueryQuestItem(uint32 itemId);
 

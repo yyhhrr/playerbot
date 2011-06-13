@@ -17,18 +17,15 @@ public:
 	void setUp()
 	{
 		EngineTestBase::setUp();
-        setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "nc", NULL);
+        setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "emote", NULL);
 	}
 
 protected:
     void emote()
     {
-        engine->addStrategy("emote");
+        tickWithTrigger("random");
 
-        trigger("random");
-        tick();
-
-        CPPUNIT_ASSERT(strstr(ai->buffer.c_str(), ">S:emote"));
+        assertActions(">S:emote");
     }
 };
 

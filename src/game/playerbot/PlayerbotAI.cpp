@@ -54,6 +54,11 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
     packetHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
     packetHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
+
+    packetHandlers[CMSG_GAMEOBJ_USE] = "use game object";
+    packetHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
+    packetHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
+    packetHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
 }
 
 PlayerbotAI::~PlayerbotAI()

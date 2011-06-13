@@ -46,7 +46,6 @@ bool GossipHelloAction::Execute(Event event)
             }
         case GOSSIP_OPTION_QUESTGIVER:
             {
-                ai->GetQuestManager()->TurnInQuests(pCreature);
                 // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_QUESTGIVER");
                 break;
             }

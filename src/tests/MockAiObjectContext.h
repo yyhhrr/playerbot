@@ -18,6 +18,9 @@ namespace ai
         virtual Trigger* GetTrigger(const char* name);
         virtual Action* GetAction(const char* name);
 
+    private:
+        void reportNotFound(const char* what, const char* name);
+
 	private:
 		string *buffer;
         AiObjectContext *realContext;

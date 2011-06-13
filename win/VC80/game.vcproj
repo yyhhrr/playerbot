@@ -1981,6 +1981,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DropQuestAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\DropQuestAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\EmoteAction.h"
 					>
 				</File>
@@ -2342,6 +2350,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TriggerContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TurnInQuestAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TurnInQuestAction.h"
 					>
 				</File>
 				<File
