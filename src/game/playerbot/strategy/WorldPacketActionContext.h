@@ -4,6 +4,7 @@
 #include "AcceptInvitationAction.h"
 #include "PassLeadershipToMasterAction.h"
 #include "TellMasterAction.h"
+#include "DropQuestAction.h"
 
 namespace ai
 {
@@ -17,6 +18,7 @@ namespace ai
             creators["pass leadership to master"] = &WorldPacketActionContext::pass_leadership_to_master;
             creators["tell not enough money"] = &WorldPacketActionContext::tell_not_enough_money;
             creators["tell not enough reputation"] = &WorldPacketActionContext::tell_not_enough_reputation;
+            creators["drop"] = &WorldPacketActionContext::drop;
         }
 
     private:
@@ -25,7 +27,7 @@ namespace ai
         static Action* pass_leadership_to_master(AiManagerRegistry* ai) { return new PassLeadershipToMasterAction(ai); }
         static Action* tell_not_enough_money(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough money"); }
         static Action* tell_not_enough_reputation(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough reputation"); }
-
+        static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }
     };
 
 

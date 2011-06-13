@@ -28,4 +28,5 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
 {
     supported.push_back("gossip hello");
+    supported.push_back("drop");
 }
