@@ -39,7 +39,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
     uint64 giverGUID = questgiver->GetGUID();
 
     if( !bot->IsInMap( questgiver ) )
-        TellMaster("hey you are turning in quests without me!");
+        ai->GetAi()->TellMaster("hey you are turning in quests without me!");
     else
     {
         bot->SetSelectionGuid( ObjectGuid(giverGUID) );
@@ -133,7 +133,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
             }
 
             if (! out.str().empty())
-                TellMaster(out.str().c_str());
+                ai->GetAi()->TellMaster(out.str().c_str());
         }
     }
 }

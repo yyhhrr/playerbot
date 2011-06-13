@@ -61,7 +61,7 @@ bool TellReputationAction::Execute(Event event)
         base -= ReputationMgr::PointsInRank[i];
 
     out << " (" << (reputation - base) << "/" << ReputationMgr::PointsInRank[rank] << ")";
-    ai->GetSocialManager()->TellMaster(out.str().c_str());
+    ai->GetAi()->TellMaster(out);
 
     return true;
 }

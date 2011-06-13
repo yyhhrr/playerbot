@@ -453,11 +453,11 @@ void AiSpellManager::ListSpells()
 			<< pSpellInfo->SpellName[loc] << "]|h|r";
 	}
 
-	aiRegistry->GetSocialManager()->TellMaster("here's my non-attack spells:");
-	aiRegistry->GetSocialManager()->TellMaster(posOut.str().c_str());
+	ai->TellMaster("here's my non-attack spells:");
+	ai->TellMaster(posOut.str().c_str());
 	
-	aiRegistry->GetSocialManager()->TellMaster("here's my attack spells:");
-	aiRegistry->GetSocialManager()->TellMaster(negOut.str().c_str());
+	ai->TellMaster("here's my attack spells:");
+	ai->TellMaster(negOut.str().c_str());
 }
 
 void AiSpellManager::Mount(int32 master_speed1, int32 master_speed2)
@@ -533,19 +533,19 @@ void AiSpellManager::HandleCommand(const string& text, Player& fromPlayer)
 	else if (text == "talents 1" || text == "talents primary")
 	{
 		bot->ActivateSpec(0);
-		aiRegistry->GetSocialManager()->TellMaster("Primary talents activated");
+		ai->TellMaster("Primary talents activated");
 	}
 	else if (text == "talents 2" || text == "talents secondary")
 	{
 		bot->ActivateSpec(1);
-		aiRegistry->GetSocialManager()->TellMaster("Secondary talents activated");
+		ai->TellMaster("Secondary talents activated");
 	}
 	else if (text.size() > 5 && text.substr(0, 5) == "cast ")
 	{
 		Unit* unit = sObjectAccessor.GetUnit(*bot, ai->GetMaster()->GetSelectionGuid());
 		bool cast = CastSpell(text.substr(text.find(" ") + 1).c_str(), unit);
 		if (!cast) 
-			aiRegistry->GetSocialManager()->TellMaster("Cannot cast spell");
+			ai->TellMaster("Cannot cast spell");
 	}
 }
 

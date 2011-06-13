@@ -63,6 +63,10 @@ public:
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);
     GameObject* GetGameObject(ObjectGuid guid);
+    void TellMaster(ostringstream &stream) { TellMaster(stream.str().c_str()); }
+    void TellMaster(string &text) { TellMaster(text.c_str()); }
+    void TellMaster(const char* text);
+    void TellMaster(LogLevel level, const char* text);
 
 public:
 	Player* GetBot() { return bot; }

@@ -32,7 +32,7 @@ namespace ai
             PlayerbotChatHandler ch(master);
             if (!ch.teleport(*bot))
             {
-                TellMaster("You cannot summon me");
+                ai->GetAi()->TellMaster("You cannot summon me");
                 return false;
             }
 

@@ -8,7 +8,6 @@
 
 #include "MockAiSpellManager.h"
 #include "MockAiInventoryManager.h"
-#include "MockAiSocialManager.h" 
 #include "MockAiManagerRegistry.h"
 
 using namespace ai;
@@ -83,7 +82,6 @@ protected:
     MockAiManagerRegistry *ai;
 	MockAiSpellManager* spellManager;
 	MockAiInventoryManager* inventoryManager;
-	MockAiSocialManager* socialManager;
     Engine *engine;
     AiObjectContext *context;
 };

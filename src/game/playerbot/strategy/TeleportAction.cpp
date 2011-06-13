@@ -23,7 +23,7 @@ bool TeleportAction::Execute(Event event)
             continue;
 
         ostringstream out; out << "Teleporting using " << goInfo->name;
-        TellMaster(out);
+        ai->GetAi()->TellMaster(out);
 
         Spell *spell = new Spell(bot, pSpellInfo, false);
         SpellCastTargets targets;
@@ -46,6 +46,6 @@ bool TeleportAction::Execute(Event event)
         return true;
     }
 
-    TellMaster("Cannot find any portal to teleport");
+    ai->GetAi()->TellMaster("Cannot find any portal to teleport");
     return false;
 }

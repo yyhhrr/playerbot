@@ -89,7 +89,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     if (bot->GetDistance(target) > BOT_REACT_DISTANCE)
     {
-        ai->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
+        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
         return false;
     }
 
@@ -100,7 +100,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
     if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE || !bot->IsWithinLOS(x, y, z))
     {
-        ai->GetSocialManager()->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
+        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
         return false;
     }
 

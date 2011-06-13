@@ -19,7 +19,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         os << "Will resurrect in ";
         os << (reclaimTime - time(0));
         os << " secs";
-        TellMaster(os.str().c_str());
+        ai->GetAi()->TellMaster(os.str().c_str());
         ai->GetAi()->SetNextCheckDelay(reclaimTime - time(0));
     }
     else
@@ -27,7 +27,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         PlayerbotChatHandler ch(master);
         if (! ch.revive(*bot))
         {
-            TellMaster(".. could not be revived ..");
+            ai->GetAi()->TellMaster(".. could not be revived ..");
             return false;
         }
         ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(NULL);

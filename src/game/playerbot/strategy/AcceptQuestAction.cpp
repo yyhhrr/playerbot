@@ -19,24 +19,24 @@ bool AcceptQuestAction::Execute(Event event)
     if (qInfo)
     {
         if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
-            TellMaster("I already completed that quest.");
+            ai->GetAi()->TellMaster("I already completed that quest.");
         else if (! bot->CanTakeQuest(qInfo, false))
         {                    	
             if (! bot->SatisfyQuestStatus(qInfo, false))
-                TellMaster("I already have that quest.");
+                ai->GetAi()->TellMaster("I already have that quest.");
             else
-                TellMaster("I can't take that quest.");
+                ai->GetAi()->TellMaster("I can't take that quest.");
         }
         else if (! bot->SatisfyQuestLog(false))
-            TellMaster("My quest log is full.");
+            ai->GetAi()->TellMaster("My quest log is full.");
         else if (! bot->CanAddQuest(qInfo, false))
-            TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+            ai->GetAi()->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
 
         else
         {
             p.rpos(0);
             bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-            TellMaster("Got the quest.");
+            ai->GetAi()->TellMaster("Got the quest.");
         }
     }
 
@@ -64,7 +64,7 @@ bool AcceptQuestShareAction::Execute(Event event)
     {
         // can't take quest
         bot->SetDividerGuid( ObjectGuid() );
-        TellMaster("I can't take this quest");
+        ai->GetAi()->TellMaster("I can't take this quest");
 
         return false;
     }
@@ -90,7 +90,7 @@ bool AcceptQuestShareAction::Execute(Event event)
         if( qInfo->GetSrcSpell() > 0 )
             bot->CastSpell( bot, qInfo->GetSrcSpell(), true );
 
-        TellMaster("Quest accepted");
+        ai->GetAi()->TellMaster("Quest accepted");
         return true;
     }
 

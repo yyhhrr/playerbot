@@ -21,19 +21,19 @@ bool TaxiAction::Execute(Event event)
         {
             ostringstream out;
             out << "I will order the taxi from " << npc->GetName() << ". Please start flying, then instruct me again";
-            TellMaster(out);
+            ai->GetAi()->TellMaster(out);
             return true;
         }
 
         if (!bot->ActivateTaxiPathTo(movement.taxiNodes, npc))
         {
-            TellMaster("I can not fly with you");
+            ai->GetAi()->TellMaster("I can not fly with you");
             return false;
         }
 
         return true;
     }
 
-    TellMaster("Cannot find any flightmaster to talk");
+    ai->GetAi()->TellMaster("Cannot find any flightmaster to talk");
     return false;
 }

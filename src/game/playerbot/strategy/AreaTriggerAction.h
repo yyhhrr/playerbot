@@ -22,7 +22,7 @@ namespace ai
             p >> movement.lastAreaTrigger;
             MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
             
-            TellMaster("Something is triggered in the area");
+            ai->GetAi()->TellMaster("Something is triggered in the area");
             return true;
         }
     };

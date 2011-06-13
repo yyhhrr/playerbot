@@ -545,7 +545,7 @@ void AiInventoryManager::Buy(const char* link)
     Creature *pCreature = bot->GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
 	if (!pCreature)
 	{
-		ai->GetAiRegistry()->GetSocialManager()->TellMaster("Cannot talk to vendor");
+		ai->TellMaster("Cannot talk to vendor");
 		return;
 	}
 
@@ -607,7 +607,7 @@ void AiInventoryManager::Reward(const char* link)
 
 					ostringstream out;
 					out << "|cffffffff|Hitem:" << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r rewarded";
-					aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+					ai->TellMaster(out.str().c_str());
 					wasRewarded = true;
 				}
 			}
@@ -644,7 +644,7 @@ void AiInventoryManager::Sell(Item* item)
     uint64 vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     if (!vendorguid)
     {
-        aiRegistry->GetSocialManager()->TellMaster("Select a vendor first");
+        ai->TellMaster("Select a vendor first");
         return;
     }
 
@@ -714,7 +714,7 @@ void AiInventoryManager::HandleBotOutgoingPacket(const WorldPacket& packet)
 	{
 	case SMSG_INVENTORY_CHANGE_FAILURE:
         {
-		    aiRegistry->GetSocialManager()->TellMaster("I can't use that.");
+		    ai->TellMaster("I can't use that.");
 		    return;
         }
     case SMSG_TRADE_STATUS:
@@ -814,7 +814,7 @@ void AiInventoryManager::QueryItemCount(ItemPrototype const * item)
     {
         ostringstream out;
         out << count << "x";
-        aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str().c_str());
     }
 }
 
@@ -944,55 +944,55 @@ void AiInventoryManager::BeginTrade()
 			switch (proto->Class)
 			{
 			case ITEM_CLASS_CONSUMABLE:
-				aiRegistry->GetSocialManager()->TellMaster("--- consumable ---");
+				ai->TellMaster("--- consumable ---");
 				break;
 			case ITEM_CLASS_CONTAINER:
-				aiRegistry->GetSocialManager()->TellMaster("--- container ---");
+				ai->TellMaster("--- container ---");
 				break;
 			case ITEM_CLASS_WEAPON:
-				aiRegistry->GetSocialManager()->TellMaster("--- weapon ---");
+				ai->TellMaster("--- weapon ---");
 				break;
 			case ITEM_CLASS_GEM:
-				aiRegistry->GetSocialManager()->TellMaster("--- gem ---");
+				ai->TellMaster("--- gem ---");
 				break;
 			case ITEM_CLASS_ARMOR:
-				aiRegistry->GetSocialManager()->TellMaster("--- armor ---");
+				ai->TellMaster("--- armor ---");
 				break;
 			case ITEM_CLASS_REAGENT:
-				aiRegistry->GetSocialManager()->TellMaster("--- reagent ---");
+				ai->TellMaster("--- reagent ---");
 				break;
 			case ITEM_CLASS_PROJECTILE:
-				aiRegistry->GetSocialManager()->TellMaster("--- projectile ---");
+				ai->TellMaster("--- projectile ---");
 				break;
 			case ITEM_CLASS_TRADE_GOODS:
-				aiRegistry->GetSocialManager()->TellMaster("--- trade goods ---");
+				ai->TellMaster("--- trade goods ---");
 				break;
 			case ITEM_CLASS_GENERIC:
-				aiRegistry->GetSocialManager()->TellMaster("--- generic ---");
+				ai->TellMaster("--- generic ---");
 				break;
 			case ITEM_CLASS_RECIPE:
-				aiRegistry->GetSocialManager()->TellMaster("--- recipe ---");
+				ai->TellMaster("--- recipe ---");
 				break;
 			case ITEM_CLASS_MONEY:
-				aiRegistry->GetSocialManager()->TellMaster("--- money ---");
+				ai->TellMaster("--- money ---");
 				break;
 			case ITEM_CLASS_QUIVER:
-				aiRegistry->GetSocialManager()->TellMaster("--- quiver ---");
+				ai->TellMaster("--- quiver ---");
 				break;
 			case ITEM_CLASS_QUEST:
-				aiRegistry->GetSocialManager()->TellMaster("--- quest items ---");
+				ai->TellMaster("--- quest items ---");
 				break;
 			case ITEM_CLASS_KEY:
-				aiRegistry->GetSocialManager()->TellMaster("--- keys ---");
+				ai->TellMaster("--- keys ---");
 				break;
 			case ITEM_CLASS_PERMANENT:
-				aiRegistry->GetSocialManager()->TellMaster("--- permanent ---");
+				ai->TellMaster("--- permanent ---");
 				break;
 			case ITEM_CLASS_MISC:
-				aiRegistry->GetSocialManager()->TellMaster("--- other ---");
+				ai->TellMaster("--- other ---");
 				break;
 			case ITEM_CLASS_GLYPH:
-				aiRegistry->GetSocialManager()->TellMaster("--- glyph ---");
+				ai->TellMaster("--- glyph ---");
 				break;
 			}
 		}
@@ -1127,5 +1127,5 @@ void AiInventoryManager::TellItem(ItemPrototype const * proto, int count)
 	if (count > 1)
 		out << "x" << count;
 
-	aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+	ai->TellMaster(out.str().c_str());
 }

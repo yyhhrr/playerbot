@@ -18,11 +18,11 @@ bool DropQuestAction::Execute(Event event)
     if (!ch.dropQuest(link.c_str()))
     {
         ostringstream out; out << "Could not drop quest: " << link;
-        TellMaster(out);
+        ai->GetAi()->TellMaster(out);
         return false;
     }
 
     master->SetSelectionGuid(oldSelection);
-    TellMaster("Quest removed");
+    ai->GetAi()->TellMaster("Quest removed");
     return true;
 }

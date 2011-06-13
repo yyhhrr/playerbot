@@ -71,7 +71,6 @@ void EngineTestBase::setUp()
 	ai = new MockAiManagerRegistry();
 	spellManager = (MockAiSpellManager*)ai->GetSpellManager();
 	inventoryManager = (MockAiInventoryManager*)ai->GetInventoryManager();
-	socialManager = (MockAiSocialManager*)ai->GetSocialManager();
 }
 
 void EngineTestBase::tearDown()

@@ -54,7 +54,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId, const Quest *questTempl
         out << available;
         out << "/";
         out << required;
-        TellMaster(out.str().c_str());
+        ai->GetAi()->TellMaster(out.str().c_str());
     }
 }
 

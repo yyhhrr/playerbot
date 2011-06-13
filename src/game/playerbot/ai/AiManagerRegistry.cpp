@@ -19,7 +19,6 @@ AiManagerRegistry::AiManagerRegistry(PlayerbotAI* ai) : ai(ai)
 
 	managers[AiSpellManagerType] = new AiSpellManager(ai, this);
 	managers[AiInventoryManagerType] = new AiInventoryManager(ai, this);
-	managers[AiSocialManagerType] = new AiSocialManager(ai, this);
 }
 
 AiManagerRegistry::~AiManagerRegistry()

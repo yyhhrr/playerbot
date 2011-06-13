@@ -8,6 +8,7 @@
 #include "../GridNotifiersImpl.h"
 #include "../CellImpl.h"
 #include "strategy/LastMovementValue.h"
+#include "strategy/LogLevelAction.h"
 
 using namespace ai;
 using namespace std;
@@ -323,7 +324,7 @@ void PlayerbotAI::ChangeStrategy( const char* names, Engine* e )
             e->toggleStrategy(name+1);
             break;
         case '?':
-            aiRegistry->GetSocialManager()->TellMaster(e->ListStrategies().c_str());
+            TellMaster(e->ListStrategies().c_str());
             break;
         }
     }
@@ -336,7 +337,7 @@ void PlayerbotAI::DoSpecificAction(const char* name)
         ostringstream out;
         out << "I cannot do ";
         out << name;
-        aiRegistry->GetSocialManager()->TellMaster(out.str().c_str());
+        TellMaster(out.str().c_str());
         return;
     }
 }
@@ -450,4 +451,25 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
     }
 
     return NULL;
+}
+
+void PlayerbotAI::TellMaster(const char* text)
+{
+    WorldPacket data(SMSG_MESSAGECHAT, 1024);
+    bot->BuildPlayerChat(&data, CHAT_MSG_WHISPER, text, LANG_UNIVERSAL);
+    GetMaster()->GetSession()->SendPacket(&data);
+    bot->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
+
+}
+
+void PlayerbotAI::TellMaster(LogLevel level, const char* text)
+{
+    LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
+
+    if (logLevel < level)
+        return;
+
+    ostringstream out;
+    out << LogLevelAction::logLevel2string(level) << ": " << text;
+    TellMaster(out.str().c_str());
 }

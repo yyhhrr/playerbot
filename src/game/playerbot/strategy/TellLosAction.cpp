@@ -41,16 +41,16 @@ bool TellLosAction::Execute(Event event)
 
 void TellLosAction::ListUnits(const char* title, list<Unit*> units)
 {
-    TellMaster(title);
+    ai->GetAi()->TellMaster(title);
 
     for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
-        TellMaster((*i)->GetName());
+        ai->GetAi()->TellMaster((*i)->GetName());
 
 }
 void TellLosAction::ListGameObjects(const char* title, list<GameObject*> gos)
 {
-    TellMaster(title);
+    ai->GetAi()->TellMaster(title);
 
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        TellMaster((*i)->GetGOInfo()->name);
+        ai->GetAi()->TellMaster((*i)->GetGOInfo()->name);
 }

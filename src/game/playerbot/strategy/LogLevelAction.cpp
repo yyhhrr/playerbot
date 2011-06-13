@@ -20,7 +20,7 @@ bool LogLevelAction::Execute(Event event)
     {
         out << "My log level is " << logLevel2string(value->Get());
     }
-    TellMaster(out);
+    ai->GetAi()->TellMaster(out);
     return true;    
 }
 

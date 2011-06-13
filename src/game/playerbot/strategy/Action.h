@@ -62,9 +62,6 @@ namespace ai
 
     protected:
         Player* GetBot();
-        void TellMaster(ostringstream &stream) { TellMaster(stream.str().c_str()); }
-        void TellMaster(string &text) { TellMaster(text.c_str()); }
-        void TellMaster(const char* text) { ai->GetSocialManager()->TellMaster(text); }
 
     protected:
         string name;

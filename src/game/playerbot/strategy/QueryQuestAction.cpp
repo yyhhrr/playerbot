@@ -23,7 +23,7 @@ bool QueryQuestAction::Execute(Event event)
             ostringstream out;
             out << "Quest ";
             out << (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE ? "completed" : "not completed");
-            TellMaster(out.str().c_str());
+            ai->GetAi()->TellMaster(out.str().c_str());
             return true;
         }
     }

@@ -35,12 +35,12 @@ bool AttackAction::Attack(Unit* target)
 
     if (bot->IsFriendlyTo(target))
     {
-        TellMaster("Target is friendly");
+        ai->GetAi()->TellMaster("Target is friendly");
         return false;
     }
     if (!bot->IsWithinLOSInMap(target))
     {
-        TellMaster("Target is not in my sight");
+        ai->GetAi()->TellMaster("Target is not in my sight");
         return false;
     }
 

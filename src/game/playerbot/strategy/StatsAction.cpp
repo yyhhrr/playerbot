@@ -17,7 +17,7 @@ bool StatsAction::Execute(Event event)
     out << ", ";
     ListRepairCost(out);
 
-    TellMaster(out);
+    ai->GetAi()->TellMaster(out);
     return true;
 }
 

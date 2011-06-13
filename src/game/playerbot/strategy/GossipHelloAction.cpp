@@ -27,51 +27,51 @@ bool GossipHelloAction::Execute(Event event)
         return false;
 
     ostringstream out; out << "--- " << pCreature->GetName() << " ---";
-    TellMaster(out.str().c_str());
+    ai->GetAi()->TellMaster(out.str().c_str());
     for (GossipMenuItemsMap::const_iterator itr = pMenuItemBounds.first; itr != pMenuItemBounds.second; ++itr)
     {
         uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
         if (!(itr->second.npc_option_npcflag & npcflags))
             continue;
 
-        TellMaster(itr->second.option_text.c_str());
+        ai->GetAi()->TellMaster(itr->second.option_text.c_str());
 
         switch (itr->second.option_id)
         {
         case GOSSIP_OPTION_TAXIVENDOR:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_TAXIVENDOR");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_TAXIVENDOR");
                 bot->GetSession()->SendLearnNewTaxiNode(pCreature);
                 break;
             }
         case GOSSIP_OPTION_QUESTGIVER:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_QUESTGIVER");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_QUESTGIVER");
                 break;
             }
         case GOSSIP_OPTION_VENDOR:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_VENDOR");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_VENDOR");
                 break;
             }
         case GOSSIP_OPTION_STABLEPET:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_STABLEPET");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_STABLEPET");
                 break;
             }
         case GOSSIP_OPTION_AUCTIONEER:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_AUCTIONEER");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_AUCTIONEER");
                 break;
             }
         case GOSSIP_OPTION_BANKER:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_BANKER");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_BANKER");
                 break;
             }
         case GOSSIP_OPTION_INNKEEPER:
             {
-                // bot->GetPlayerbotAI()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_INNKEEPER");
+                // bot->GetPlayerbotAI()->ai->GetAi()->TellMaster("PlayerbotMgr:GOSSIP_OPTION_INNKEEPER");
                 break;
             }
         }

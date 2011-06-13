@@ -31,7 +31,7 @@ bool LootStrategyAction::Execute(Event event)
                 << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
                 << "]|h|r";
         }
-        TellMaster(out);
+        ai->GetAi()->TellMaster(out);
     }
     else
     {
@@ -42,7 +42,7 @@ bool LootStrategyAction::Execute(Event event)
             lootStrategy->Set(String2LootStrategy(strategy));
             ostringstream out;
             out << "Loot strategy set to " << LootStrategy2string(lootStrategy->Get());
-            TellMaster(out);
+            ai->GetAi()->TellMaster(out);
             return true;
         }
 
@@ -56,12 +56,12 @@ bool LootStrategyAction::Execute(Event event)
                 if (j != alwaysLootItems.end())
                     alwaysLootItems.erase(j);
                 
-                TellMaster("Item(s) removed from always loot list");
+                ai->GetAi()->TellMaster("Item(s) removed from always loot list");
             }
             else
             {
                 alwaysLootItems.insert(itemid);
-                TellMaster("Item(s) added to always loot list");
+                ai->GetAi()->TellMaster("Item(s) added to always loot list");
             }
         }
     }    

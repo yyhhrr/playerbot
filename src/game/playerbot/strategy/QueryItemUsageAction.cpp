@@ -31,7 +31,7 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
     Item* existingItem = bot->GetItemByPos(eDest);
     if (!existingItem)
     {
-        TellMaster("Equip");
+        ai->GetAi()->TellMaster("Equip");
         return;
     }
 
@@ -55,7 +55,7 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
         out << "Replace +";
         out << (item->ItemLevel - oldItem->ItemLevel);
         out << " lvl";
-        TellMaster(out.str().c_str());
+        ai->GetAi()->TellMaster(out.str().c_str());
     }
 }
 

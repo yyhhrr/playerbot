@@ -10,7 +10,7 @@ namespace ai
 
         virtual bool Execute(Event event)
         {
-            TellMaster(text);
+            ai->GetAi()->TellMaster(text);
             return true;
         }
 
