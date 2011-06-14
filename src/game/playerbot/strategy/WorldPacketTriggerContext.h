@@ -24,9 +24,11 @@ namespace ai
             creators["area trigger"] = &WorldPacketTriggerContext::area_trigger;
             creators["check mount state"] = &WorldPacketTriggerContext::check_mount_state;
             creators["activate taxi"] = &WorldPacketTriggerContext::taxi;
+            creators["trade status"] = &WorldPacketTriggerContext::trade_status;
         }
 
     private:
+        static Trigger* trade_status(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "trade status"); }
         static Trigger* cannot_equip(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
         static Trigger* check_mount_state(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
         static Trigger* area_trigger(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "area trigger"); }

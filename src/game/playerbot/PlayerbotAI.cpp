@@ -28,6 +28,67 @@ vector<string> split(const string &s, char delim) {
     return split(s, delim, elems);
 }
 
+
+char * strstri (const char * str1, const char * str2)
+{
+    char *cp = (char *) str1;
+    char *s1, *s2;
+
+    if ( !*str2 )
+        return((char *)str1);
+
+    while (*cp)
+    {
+        s1 = cp;
+        s2 = (char *) str2;
+
+        while ( *s1 && *s2 && !(tolower(*s1)-tolower(*s2)) )
+            s1++, s2++;
+
+        if (!*s2)
+            return(cp);
+
+        cp++;
+    }
+
+    return(NULL);
+}
+
+uint32 extractMoney(const string& text)
+{
+    // if user specified money in ##g##s##c format
+    string acum = "";
+    uint32 copper = 0;
+    for (uint8 i = 0; i < text.length(); i++)
+    {
+        if (text[i] == 'g')
+        {
+            copper += (atol(acum.c_str()) * 100 * 100);
+            acum = "";
+        }
+        else if (text[i] == 'c')
+        {
+            copper += atol(acum.c_str());
+            acum = "";
+        }
+        else if (text[i] == 's')
+        {
+            copper += (atol(acum.c_str()) * 100);
+            acum = "";
+        }
+        else if (text[i] == ' ')
+            break;
+        else if (text[i] >= 48 && text[i] <= 57)
+            acum += text[i];
+        else
+        {
+            copper = 0;
+            break;
+        }
+    }
+    return copper;
+}
+
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
 {
 	aiRegistry = NULL;
@@ -74,6 +135,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     packetHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
     packetHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
     packetHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
+    packetHandlers[SMSG_TRADE_STATUS] = "trade status";
 
 }
 

@@ -13,6 +13,7 @@
 #include "AreaTriggerAction.h"
 #include "CheckMountStateAction.h"
 #include "RememberTaxiAction.h"
+#include "TradeStatusAction.h"
 
 namespace ai
 {
@@ -37,9 +38,11 @@ namespace ai
             creators["area trigger"] = &WorldPacketActionContext::area_trigger;
             creators["check mount state"] = &WorldPacketActionContext::check_mount_state;
             creators["remember taxi"] = &WorldPacketActionContext::remember_taxi;
+            creators["accept trade"] = &WorldPacketActionContext::accept_trade;
         }
 
     private:
+        static Action* accept_trade(AiManagerRegistry* ai) { return new TradeStatusAction(ai); }
         static Action* remember_taxi(AiManagerRegistry* ai) { return new RememberTaxiAction(ai); }
         static Action* check_mount_state(AiManagerRegistry* ai) { return new CheckMountStateAction(ai); }
         static Action* area_trigger(AiManagerRegistry* ai) { return new AreaTriggerAction(ai); }

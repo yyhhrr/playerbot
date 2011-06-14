@@ -50,6 +50,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "activate taxi", 
         NextAction::array(0, new NextAction("remember taxi", relevance), new NextAction("taxi", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "trade status", 
+        NextAction::array(0, new NextAction("accept trade", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)

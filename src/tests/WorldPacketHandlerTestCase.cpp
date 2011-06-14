@@ -26,6 +26,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( mount );
       CPPUNIT_TEST( taxi );
       CPPUNIT_TEST( cannot_equip );
+      CPPUNIT_TEST( trade_status );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -158,6 +159,13 @@ protected:
         trigger("cannot equip");
         tick();
         assertActions(">S:tell cannot equip");
+    }
+
+    void trade_status()
+    {
+        trigger("trade status");
+        tick();
+        assertActions(">S:accept trade");
     }
 };
 

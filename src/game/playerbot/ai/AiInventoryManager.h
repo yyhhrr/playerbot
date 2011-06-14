@@ -86,14 +86,14 @@ namespace ai
 		virtual void extractItemIds(const string& text, list<uint32>& itemIds);
 
         virtual void Trade(const char* text);
-        virtual void AcceptTrade();
-        virtual void BeginTrade();
 
 	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
         virtual void Query(const string& text);
+        void TellItem(ItemPrototype const * proto, int count);
+        void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);
 
 	private:
         void UseItem(FindItemVisitor* visitor, const uint32 delay = 0);
@@ -109,7 +109,6 @@ namespace ai
         void Sell(FindItemVisitor* visitor);
 
         void QueryItemCount(ItemPrototype const * item);
-        void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);
         void IterateItemsInBags(IterateItemsVisitor* visitor);
         void IterateItemsInEquip(IterateItemsVisitor* visitor);
 
@@ -117,7 +116,6 @@ namespace ai
         bool TradeItem(FindItemVisitor *visitor, int8 slot = -1);
 
 		uint32 TextToItemQuality(const char* text);
-		void TellItem(ItemPrototype const * proto, int count);
 	};
 
 };

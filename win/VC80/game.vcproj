@@ -2113,6 +2113,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ItemVisitors.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LastMovementValue.h"
 					>
 				</File>
@@ -2490,6 +2494,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TellReputationAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TradeStatusAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TradeStatusAction.h"
 					>
 				</File>
 				<File

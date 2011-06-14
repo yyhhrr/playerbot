@@ -17,7 +17,7 @@ namespace ai
             while (true)
             {
                 size_t found = command.rfind(" ", i);
-                if (found == string::npos)
+                if (found == string::npos || !found)
                     break;
 
                 string name = command.substr(0, found);
