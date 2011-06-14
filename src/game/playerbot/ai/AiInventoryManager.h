@@ -51,26 +51,8 @@ namespace ai
         virtual ~AiInventoryManager();
 
 	public:
-		virtual void UseHealingPotion();
-        virtual bool HasHealingPotion();
-		
-        virtual void UseManaPotion();
-        virtual bool HasManaPotion();
-		
-        virtual void UsePanicPotion();
-        virtual bool HasPanicPotion();
-        
-        virtual void UseFood();
-        virtual bool HasFood();
-        
-        virtual void UseDrink();
-		virtual bool HasDrink();
-
-		virtual void FindAndUse(const char* item, uint8 delay = 0);
-				
         virtual void UnequipItem(const char* link);
         virtual void EquipItem(const char* link);
-		virtual void UseItem(const char* link);
 		virtual void Reward(const char* link);
         
         virtual void Buy(const char* link);
@@ -78,7 +60,6 @@ namespace ai
         virtual void Sell(string link);
         virtual void Sell(Item* item);
         
-        virtual void ListCount(const char* link);
         virtual void ListQuestItems();
 		
         virtual void ItemLocalization(std::string& itemName, const uint32 itemID);
@@ -94,11 +75,7 @@ namespace ai
         void TellItem(ItemPrototype const * proto, int count);
         void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);
 
-	private:
-        void UseItem(FindItemVisitor* visitor, const uint32 delay = 0);
-        bool HasItem(FindItemVisitor* visitor);
-		void UseItem(Item& item);
-		
+	private:		
         void EquipItem(Item& item);
         void EquipItem(FindItemVisitor* visitor);
 
@@ -114,7 +91,6 @@ namespace ai
         bool TradeItem(const Item& item, int8 slot = -1);
         bool TradeItem(FindItemVisitor *visitor, int8 slot = -1);
 
-		uint32 TextToItemQuality(const char* text);
 	};
 
 };

@@ -1,37 +1,29 @@
 #pragma once
 
 #include "Action.h"
+#include "UseItemAction.h"
 
 namespace ai
 {
-    class DrinkAction : public Action 
+    class DrinkAction : public UseItemAction 
     {
     public:
-        DrinkAction(AiManagerRegistry* const ai) : Action(ai, "drink") {}
-        virtual bool Execute(Event event) 
-        {
-            ai->GetInventoryManager()->UseDrink();
-            return true;
-        }
+        DrinkAction(AiManagerRegistry* const ai) : UseItemAction(ai, "drink") {}
+        
         virtual bool isUseful() 
         {
-            return AI_VALUE2(uint8, "mana", "self target") < LOW_HEALTH_PERCENT && ai->GetInventoryManager()->HasDrink();
+            return UseItemAction::isUseful() && AI_VALUE2(uint8, "mana", "self target") < LOW_HEALTH_PERCENT;
         }
     };
 
-    class EatAction : public Action 
+    class EatAction : public UseItemAction 
     {
     public:
-        EatAction(AiManagerRegistry* const ai) : Action(ai, "eat") {}
-        virtual bool Execute(Event event) 
-        {
-            ai->GetInventoryManager()->UseFood();
-            return true;
-        }
+        EatAction(AiManagerRegistry* const ai) : UseItemAction(ai, "food") {}
+
         virtual bool isUseful() 
         {
-            return AI_VALUE2(uint8, "health", "self target") < LOW_HEALTH_PERCENT && 
-				ai->GetInventoryManager()->HasFood();
+            return UseItemAction::isUseful() && AI_VALUE2(uint8, "health", "self target") < LOW_HEALTH_PERCENT;
         }
     };
 

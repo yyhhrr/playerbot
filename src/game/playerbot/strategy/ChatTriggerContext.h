@@ -25,9 +25,14 @@ namespace ai
             creators["teleport"] = &ChatTriggerContext::teleport;
             creators["taxi"] = &ChatTriggerContext::taxi;
             creators["repair"] = &ChatTriggerContext::repair;
+            creators["u"] = &ChatTriggerContext::use;
+            creators["use"] = &ChatTriggerContext::use;
+            creators["c"] = &ChatTriggerContext::item_count;
         }
 
     private:
+        static Trigger* item_count(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "c"); }
+        static Trigger* use(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "use"); }
         static Trigger* repair(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "repair"); }
         static Trigger* taxi(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "taxi"); }
         static Trigger* teleport(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "teleport"); }

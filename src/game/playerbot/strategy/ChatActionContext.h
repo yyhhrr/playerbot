@@ -16,6 +16,8 @@
 #include "TeleportAction.h"
 #include "TaxiAction.h"
 #include "RepairAllAction.h"
+#include "UseItemAction.h"
+#include "TellItemCountAction.h"
 
 namespace ai
 {
@@ -40,9 +42,13 @@ namespace ai
             creators["teleport"] = &ChatActionContext::teleport;
             creators["taxi"] = &ChatActionContext::taxi;
             creators["repair"] = &ChatActionContext::repair;
+            creators["use"] = &ChatActionContext::use;
+            creators["item count"] = &ChatActionContext::item_count;
         }
 
     private:
+        static Action* item_count(AiManagerRegistry* ai) { return new TellItemCountAction(ai); }
+        static Action* use(AiManagerRegistry* ai) { return new UseItemAction(ai); }
         static Action* repair(AiManagerRegistry* ai) { return new RepairAllAction(ai); }
         static Action* taxi(AiManagerRegistry* ai) { return new TaxiAction(ai); }
         static Action* teleport(AiManagerRegistry* ai) { return new TeleportAction(ai); }

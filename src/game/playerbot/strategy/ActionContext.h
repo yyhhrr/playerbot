@@ -27,10 +27,9 @@ namespace ai
             creators["arcane torrent"] = &ActionContext::arcane_torrent;
             creators["end pull"] = &ActionContext::end_pull;
             creators["healthstone"] = &ActionContext::healthstone;
-            creators["panic potion"] = &ActionContext::panic_potion;
             creators["healing potion"] = &ActionContext::healing_potion;
             creators["mana potion"] = &ActionContext::mana_potion;
-            creators["eat"] = &ActionContext::eat;
+            creators["food"] = &ActionContext::food;
             creators["drink"] = &ActionContext::drink;
             creators["tank assist"] = &ActionContext::tank_assist;
             creators["dps assist"] = &ActionContext::dps_assist;
@@ -76,10 +75,9 @@ namespace ai
         static Action* dps_assist(AiManagerRegistry* ai) { return new DpsAssistAction(ai); }
         static Action* tank_assist(AiManagerRegistry* ai) { return new TankAssistAction(ai); }
         static Action* drink(AiManagerRegistry* ai) { return new DrinkAction(ai); }
-        static Action* eat(AiManagerRegistry* ai) { return new EatAction(ai); }
+        static Action* food(AiManagerRegistry* ai) { return new EatAction(ai); }
         static Action* mana_potion(AiManagerRegistry* ai) { return new UseManaPotion(ai); }
         static Action* healing_potion(AiManagerRegistry* ai) { return new UseHealingPotion(ai); }
-        static Action* panic_potion(AiManagerRegistry* ai) { return new UsePanicPotion(ai); }
         static Action* healthstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "healthstone"); }
     };
 

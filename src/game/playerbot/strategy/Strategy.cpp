@@ -19,10 +19,9 @@ public:
         creators["reach melee"] = &ActionNodeFactoryInternal::reach_melee;
         creators["reach spell"] = &ActionNodeFactoryInternal::reach_spell;
         creators["healthstone"] = &ActionNodeFactoryInternal::healthstone;
-        creators["panic potion"] = &ActionNodeFactoryInternal::panic_potion;
         creators["healing potion"] = &ActionNodeFactoryInternal::healing_potion;
         creators["mana potion"] = &ActionNodeFactoryInternal::mana_potion;
-        creators["eat"] = &ActionNodeFactoryInternal::eat;
+        creators["food"] = &ActionNodeFactoryInternal::food;
         creators["drink"] = &ActionNodeFactoryInternal::drink;
         creators["tank assist"] = &ActionNodeFactoryInternal::tank_assist;
         creators["dps assist"] = &ActionNodeFactoryInternal::dps_assist;
@@ -74,13 +73,6 @@ private:
     {
         return new ActionNode ("healthstone",  
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("panic potion"), NULL), 
-            /*C*/ NULL);
-    }
-    static ActionNode* panic_potion(AiManagerRegistry* ai)
-    {
-        return new ActionNode ("panic potion",  
-            /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("healing potion"), NULL), 
             /*C*/ NULL);
     }
@@ -88,19 +80,19 @@ private:
     {
         return new ActionNode ("healing potion",  
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("mana potion"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
             /*C*/ NULL);
     }
     static ActionNode* mana_potion(AiManagerRegistry* ai)
     {
         return new ActionNode ("mana potion",  
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
+            /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* eat(AiManagerRegistry* ai)
+    static ActionNode* food(AiManagerRegistry* ai)
     {
-        return new ActionNode ("eat",  
+        return new ActionNode ("food",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

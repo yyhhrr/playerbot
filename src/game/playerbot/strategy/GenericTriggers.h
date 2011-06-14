@@ -190,13 +190,13 @@ namespace ai
     class NoFoodTrigger : public Trigger {
     public:
         NoFoodTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no food trigger") {}
-        virtual bool IsActive() { return !ai->GetInventoryManager()->HasFood(); }
+        virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "food"); }
     };
 
     class NoDrinkTrigger : public Trigger {
     public:
         NoDrinkTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no drink trigger") {}
-        virtual bool IsActive() { return !ai->GetInventoryManager()->HasDrink(); }
+        virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "drink"); }
     };
 
     class LightAoeTrigger : public AoeTrigger

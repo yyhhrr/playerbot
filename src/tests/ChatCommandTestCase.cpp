@@ -25,6 +25,8 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( teleport );
       CPPUNIT_TEST( taxi );
       CPPUNIT_TEST( repair );
+      CPPUNIT_TEST( use );
+      CPPUNIT_TEST( item_count );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -126,6 +128,22 @@ protected:
     void repair()
     {
         assertCommand("repair");
+    }
+
+    void use()
+    {
+        trigger("u");
+        tick();
+
+        assertActions(">S:use");
+    }
+
+    void item_count()
+    {
+        trigger("c");
+        tick();
+
+        assertActions(">S:item count");
     }
 };
 

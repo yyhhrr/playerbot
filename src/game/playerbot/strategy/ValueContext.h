@@ -78,10 +78,13 @@ namespace ai
             creators["distance"] = &ValueContext::distance;
             creators["moving"] = &ValueContext::moving;
             creators["behind"] = &ValueContext::behind;
+            
             creators["item count"] = &ValueContext::item_count;
+            creators["inventory item"] = &ValueContext::inventory_item;
         }
 
     private:
+        static UntypedValue* inventory_item(AiManagerRegistry* ai) { return new InventoryItemValue(ai); }
         static UntypedValue* item_count(AiManagerRegistry* ai) { return new ItemCountValue(ai); }
         static UntypedValue* behind(AiManagerRegistry* ai) { return new IsBehindValue(ai); }
         static UntypedValue* moving(AiManagerRegistry* ai) { return new IsMovingValue(ai); }

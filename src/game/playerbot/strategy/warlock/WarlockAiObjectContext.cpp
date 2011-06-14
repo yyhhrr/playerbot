@@ -8,6 +8,7 @@
 #include "../PullStrategy.h"
 #include "WarlockTriggers.h"
 #include "../NamedObjectContext.h"
+#include "../UseItemAction.h"
 
 using namespace ai;
 
@@ -113,7 +114,7 @@ namespace ai
             static Action* create_healthstone(AiManagerRegistry* ai) { return new CastCreateHealthstoneAction(ai); }
             static Action* create_firestone(AiManagerRegistry* ai) { return new CastCreateFirestoneAction(ai); }
             static Action* create_spellstone(AiManagerRegistry* ai) { return new CastCreateSpellstoneAction(ai); }
-            static Action* spellstone(AiManagerRegistry* ai) { return new UseItemAction(ai, "spellstone"); }
+            static Action* spellstone(AiManagerRegistry* ai) { return new UseSpellItemAction(ai, "spellstone"); }
             static Action* summon_voidwalker(AiManagerRegistry* ai) { return new CastSummonVoidwalkerAction(ai); }
             static Action* corruption(AiManagerRegistry* ai) { return new CastCorruptionAction(ai); }
             static Action* curse_of_agony(AiManagerRegistry* ai) { return new CastCurseOfAgonyAction(ai); }

@@ -71,7 +71,7 @@ namespace ai
             if (item->GetProto()->Quality != quality)
                 return true;
 
-            if (result.size() >= count)
+            if (result.size() >= (size_t)count)
                 return false;
 
             result.push_back(item);

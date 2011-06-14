@@ -96,11 +96,13 @@ protected:
     void eatDrink()
     {
         engine->addStrategy("food");
+        set<uint8>("item count", "food", 1);
+        set<uint8>("item count", "drink", 1);
 
 		tickWithLowHealth(1);
 		tickWithLowMana(1);
 
-        assertActions(">S:eat>S:drink");
+        assertActions(">S:food>S:drink");
     }
 
     void passive()

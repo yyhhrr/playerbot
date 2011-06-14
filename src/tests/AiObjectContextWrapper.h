@@ -21,6 +21,12 @@ namespace ai
         MockFloatValue(AiManagerRegistry* const ai) : ManualSetValue<float>(ai, 0) {}
     };
 
+    class MockItemValue : public ManualSetValue<Item*>, public Qualified
+    {
+    public:
+        MockItemValue(AiManagerRegistry* const ai) : ManualSetValue<Item*>(ai, NULL) {}
+    };
+
     class MockLogicalValue : public ManualSetValue<bool>, public Qualified
     {
     public:
@@ -102,11 +108,13 @@ namespace ai
             creators["distance"] = &MockValueContext::floating;
             creators["moving"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
-            creators["item count"] = &MockValueContext::stats;
+            creators["item count"] = &MockValueContext::stats;        
+            creators["inventory item"] = &MockValueContext::item;
         }
 
     private:
         static UntypedValue* stats(AiManagerRegistry* ai) { return new MockStatsValue(ai); }
+        static UntypedValue* item(AiManagerRegistry* ai) { return new MockItemValue(ai); }
         static UntypedValue* floating(AiManagerRegistry* ai) { return new MockFloatValue(ai); }
         static UntypedValue* logical(AiManagerRegistry* ai) { return new MockLogicalValue(ai); }
         static UntypedValue* mock(AiManagerRegistry* ai) { return new MockTargetValue(ai); }
@@ -154,6 +162,9 @@ namespace ai
               GetValue<float>("distance", "current target")->Set(15.0f);
               
               GetValue<bool>("has aggro", "current target")->Set(true);
+          
+              GetValue<Item*>("inventory item", "drink")->Set((Item*)(void*)0x01);
+              GetValue<Item*>("inventory item", "food")->Set((Item*)(void*)0x01);
           }
 
     public:
@@ -161,7 +172,14 @@ namespace ai
         {
             UntypedValue* value = mockValueContext.create(name, ai);
             UntypedValue* real = realContext->GetUntypedValue(name);
-            CPPUNIT_ASSERT(real);
+            if (!real)
+            {
+                std::cout << "\n===\n";
+                cout << "Value " << name << " not found in context";
+                std::cout << "\n===\n";
+                
+                CPPUNIT_ASSERT(false);
+            }
             return value ? value : real;
         }
         virtual Strategy* GetStrategy(const char* name) { return realContext->GetStrategy(name); }

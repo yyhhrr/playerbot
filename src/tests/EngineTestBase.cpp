@@ -389,16 +389,16 @@ void EngineTestBase::tickWithLootAvailable()
 
 void EngineTestBase::tickWithNoDrink()
 {
-	inventoryManager->hasDrink = false;
+    set<Item*>("inventory item", "drink", NULL);
 	tick();
-	inventoryManager->hasDrink = true;
+    set<Item*>("inventory item", "drink", (Item*)(void*)0x01);
 }
 
 void EngineTestBase::tickWithNoFood()
 {
-	inventoryManager->hasFood = false;
+    set<Item*>("inventory item", "food", NULL);
 	tick();
-	inventoryManager->hasFood = true;
+    set<Item*>("inventory item", "food", (Item*)(void*)0x01);
 }
 
 void EngineTestBase::itemAvailable(const char* item, int amount)

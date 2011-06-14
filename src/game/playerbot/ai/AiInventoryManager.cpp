@@ -6,6 +6,7 @@
 #include "../../GridNotifiersImpl.h"
 
 #include "../strategy/ItemVisitors.h"
+#include "../strategy/ItemCountValue.h"
 
 using namespace ai;
 using namespace std;
@@ -64,72 +65,7 @@ void AiInventoryManager::IterateItemsInEquip(IterateItemsVisitor* visitor)
 }
 
 
-void AiInventoryManager::UseItem(FindItemVisitor* visitor, const uint32 delay)
-{
-    IterateItems(visitor, ITERATE_ALL_ITEMS);
-    Item* item = visitor->GetResult();
-    if (!item) 
-        return;
-    
-    UseItem(*item);
-    if (delay) bot->GetPlayerbotAI()->SetNextCheckDelay(delay);
-}
 
-bool AiInventoryManager::HasItem(FindItemVisitor* visitor)
-{
-    IterateItems(visitor, ITERATE_ALL_ITEMS);
-    return visitor->GetResult();
-}
-
-void AiInventoryManager::UseItem(Item& item)
-{
-	uint8 bagIndex = item.GetBagSlot();
-	uint8 slot = item.GetSlot();
-	uint8 cast_count = 1;
-	uint32 spellid = 0; // only used in combat
-	uint64 item_guid = item.GetGUID();
-	uint32 glyphIndex = 0; // ??
-	uint8 unk_flags = 0; // not 0x02
-
-	// create target data
-	// note other targets are possible but not supported at the moment
-	// see SpellCastTargets::read in Spell.cpp to see other options
-	// for setting target
-
-    WorldPacket* const packet = new WorldPacket(CMSG_USE_ITEM, 1 + 1 + 1 + 4 + 8 + 4 + 1 + 8 + 1);
-    *packet << bagIndex << slot << cast_count << spellid << item_guid
-        << glyphIndex << unk_flags;
-
-    for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
-    {
-        uint32 spellId = item.GetProto()->Spells[i].SpellId;
-        if (!spellId)
-            continue;
-
-        const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-        Item* itemForSpell = aiRegistry->GetSpellManager()->FindItemForSpell(pSpellInfo);
-        if (itemForSpell)
-        {
-            if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-                continue;
-
-            if (bot->GetTrader())
-            {
-                *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
-            }
-            else
-            {
-                *packet << TARGET_FLAG_ITEM;
-                *packet << itemForSpell->GetPackGUID();
-            }
-            bot->GetSession()->QueuePacket(packet);
-            return;
-        }
-    }
-
-    *packet << TARGET_FLAG_SELF;
- 	bot->GetSession()->QueuePacket(packet);
-}
 
 void AiInventoryManager::extractItemIds(const string& text, list<uint32>& itemIds)
 {
@@ -203,12 +139,6 @@ void AiInventoryManager::UnequipItem(Item& item)
     bot->GetSession()->QueuePacket(packet);
 }
 
-void AiInventoryManager::UseItem(const char* link)
-{
-    list<uint32> ids; /* = */ extractItemIds(link, ids);
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
-        UseItem(&FindItemByIdVisitor(*i));
-}
 
 void AiInventoryManager::ItemLocalization(string& itemName, const uint32 itemID)
 {
@@ -355,11 +285,7 @@ void AiInventoryManager::Sell(Item* item)
 
 void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
 {
-	if (text.size() > 2 && text.substr(0, 2) == "u " || text.size() > 4 && text.substr(0, 4) == "use ")
-	{
-		UseItem(text.c_str());
-	}
-	else if (text.size() > 2 && text.substr(0, 2) == "e " || text.size() > 6 && text.substr(0, 6) == "equip ")
+	if (text.size() > 2 && text.substr(0, 2) == "e " || text.size() > 6 && text.substr(0, 6) == "equip ")
 	{
 		EquipItem(text.c_str());
 	}
@@ -380,28 +306,12 @@ void AiInventoryManager::HandleCommand(const string& text, Player& fromPlayer)
         string link = text.substr(text.find(" ") + 1);
         Sell(link.c_str());
     }
-    else if (text.size() > 2 && text.substr(0, 2) == "c " || text.size() > 4 && text.substr(0, 6) == "count ")
-    {
-        ListCount(text.c_str());
-    }
     else if (bot->GetTrader() && bot->GetTrader()->GetGUID() == fromPlayer.GetGUID())
     {
         Trade(text.c_str());
     }
 	else
 	{
-		uint32 quality = TextToItemQuality(text.c_str());
-		if (quality == MAX_ITEM_QUALITY)
-		{
-			ListCount(text.c_str());
-			return;
-		}
-
-		FindItemsToTradeByQualityVisitor visitor(quality, 100);
-		IterateItems(&visitor);
-		list<Item*> found = visitor.GetResult();
-		for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
-			TellItem((*i)->GetProto(), (*i)->GetCount());
 	}
 }
 
@@ -418,93 +328,6 @@ void AiInventoryManager::Query(const string& text)
 {
 }
 
-void AiInventoryManager::QueryItemCount(ItemPrototype const * item) 
-{
-    QueryItemCountVisitor visitor(item->ItemId);
-    IterateItems(&visitor, ITERATE_ALL_ITEMS);
-
-    int count = visitor.GetCount();
-    if (count)
-    {
-        ostringstream out;
-        out << count << "x";
-        ai->TellMaster(out.str().c_str());
-    }
-}
-
-void AiInventoryManager::ListCount(const char* link)
-{
-    list<uint32> items; /* = */ extractItemIds(link, items);
-    for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
-    {
-        ItemPrototype const *item = sItemStorage.LookupEntry<ItemPrototype>(*i);
-        QueryItemCount(item);
-    }
-
-}
-
-
-void AiInventoryManager::UseHealingPotion() 
-{
-    UseItem(&FindPotionVisitor(bot, 441));
-}
-
-bool AiInventoryManager::HasHealingPotion() 
-{
-    return HasItem(&FindPotionVisitor(bot, 441));
-}
-
-
-void AiInventoryManager::UseManaPotion() 
-{
-    UseItem(&FindPotionVisitor(bot, 438));
-}
-
-bool AiInventoryManager::HasManaPotion() 
-{
-    return HasItem(&FindPotionVisitor(bot, 438));
-}
-
-
-void AiInventoryManager::UsePanicPotion() 
-{
-}
-
-bool AiInventoryManager::HasPanicPotion() 
-{
-    return false;
-}
-
-
-void AiInventoryManager::UseFood() 
-{
-    UseItem(&FindFoodVisitor(bot, 11), 30);
-}
-
-bool AiInventoryManager::HasFood() 
-{
-    return HasItem(&FindFoodVisitor(bot, 11));
-}
-
-
-void AiInventoryManager::UseDrink() 
-{
-    UseItem(&FindFoodVisitor(bot, 59), 30);
-}
-
-bool AiInventoryManager::HasDrink() 
-{
-    return HasItem(&FindFoodVisitor(bot, 59));
-}
-
-void AiInventoryManager::FindAndUse(const char* item, uint8 delay)
-{
-    UseItem(&FindUsableNamedItemVisitor(bot, item), delay);
-}
-
-
-
-
 
 
 
@@ -520,7 +343,7 @@ void AiInventoryManager::Trade(const char* text)
 
     int8 slot = !strncmp(text, "nt ", 3) ? TRADE_SLOT_NONTRADED : -1;
 
-	uint32 quality = TextToItemQuality(text);
+    uint32 quality = InventoryItemValue::TextToItemQuality(text);
 
 	if (quality != MAX_ITEM_QUALITY) 
 	{
@@ -601,23 +424,6 @@ bool AiInventoryManager::TradeItem(const Item& item, int8 slot)
 	return true;
 }
 
-uint32 AiInventoryManager::TextToItemQuality( const char* text ) 
-{
-	uint32 quality = MAX_ITEM_QUALITY;
-
-	if (strstr(text, "poor") || strstr(text, "gray"))
-		quality = ITEM_QUALITY_POOR;
-	else if (strstr(text, "normal") || strstr(text, "white"))
-		quality = ITEM_QUALITY_NORMAL;
-	else if (strstr(text, "uncommon") || strstr(text, "green"))
-		quality = ITEM_QUALITY_UNCOMMON;
-	else if (strstr(text, "rare") || strstr(text, "blue"))
-		quality = ITEM_QUALITY_RARE;
-	else if (strstr(text, "epic") || strstr(text, "violet"))
-		quality = ITEM_QUALITY_EPIC;
-	
-	return quality;
-}
 
 void AiInventoryManager::TellItem(ItemPrototype const * proto, int count) 
 {

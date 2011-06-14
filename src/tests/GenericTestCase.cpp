@@ -33,6 +33,9 @@ protected:
     }
 	void flee()
 	{
+        set<Item*>("inventory item", "food", NULL);
+        set<Item*>("inventory item", "drink", NULL);
+
 		lowHealth(1);
 		lowMana(1);
 		tick(); 
