@@ -89,6 +89,26 @@ uint32 extractMoney(const string& text)
     return copper;
 }
 
+void extractItemIds(const string& text, list<uint32>& itemIds)
+{
+    uint8 pos = 0;
+    while (true)
+    {
+        int i = text.find("Hitem:", pos);
+        if (i == -1)
+            break;
+        pos = i + 6;
+        int endPos = text.find(':', pos);
+        if (endPos == -1)
+            break;
+        string idC = text.substr(pos, endPos - pos);
+        uint32 id = atol(idC.c_str());
+        pos = endPos;
+        if (id)
+            itemIds.push_back(id);
+    }
+}
+
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
 {
 	aiRegistry = NULL;

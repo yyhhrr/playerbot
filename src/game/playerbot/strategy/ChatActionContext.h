@@ -18,6 +18,12 @@
 #include "RepairAllAction.h"
 #include "UseItemAction.h"
 #include "TellItemCountAction.h"
+#include "RewardAction.h"
+#include "BuyAction.h"
+#include "SellAction.h"
+#include "UnequipAction.h"
+#include "EquipAction.h"
+#include "TradeAction.h"
 
 namespace ai
 {
@@ -44,9 +50,22 @@ namespace ai
             creators["repair"] = &ChatActionContext::repair;
             creators["use"] = &ChatActionContext::use;
             creators["item count"] = &ChatActionContext::item_count;
+            creators["equip"] = &ChatActionContext::equip;
+            creators["unequip"] = &ChatActionContext::unequip;
+            creators["sell"] = &ChatActionContext::sell;
+            creators["buy"] = &ChatActionContext::buy;
+            creators["reward"] = &ChatActionContext::reward;
+            creators["trade"] = &ChatActionContext::trade;
         }
 
     private:
+        static Action* equip(AiManagerRegistry* ai) { return new EquipAction(ai); }
+        static Action* unequip(AiManagerRegistry* ai) { return new UnequipAction(ai); }
+        static Action* sell(AiManagerRegistry* ai) { return new SellAction(ai); }
+        static Action* buy(AiManagerRegistry* ai) { return new BuyAction(ai); }
+        static Action* reward(AiManagerRegistry* ai) { return new RewardAction(ai); }
+        static Action* trade(AiManagerRegistry* ai) { return new TradeAction(ai); }
+
         static Action* item_count(AiManagerRegistry* ai) { return new TellItemCountAction(ai); }
         static Action* use(AiManagerRegistry* ai) { return new UseItemAction(ai); }
         static Action* repair(AiManagerRegistry* ai) { return new RepairAllAction(ai); }

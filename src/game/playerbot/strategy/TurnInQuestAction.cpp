@@ -84,13 +84,11 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                         int rewardIdx = 0;
                         ItemPrototype const *pRewardItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[rewardIdx]);
                         std::string itemName = pRewardItem->Name1;
-                        ai->GetInventoryManager()->ItemLocalization(itemName, pRewardItem->ItemId);
                         if (bot->CanRewardQuest(pQuest, rewardIdx, false))
                         {
                             bot->RewardQuest(pQuest, rewardIdx, questgiver, true);
 
                             std::string itemName = pRewardItem->Name1;
-                            ai->GetInventoryManager()->ItemLocalization(itemName, pRewardItem->ItemId);
 
                             out << "Quest complete: "
                                 << " |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() 
@@ -115,7 +113,6 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                         {
                             ItemPrototype const * const pRewardItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
                             std::string itemName = pRewardItem->Name1;
-                            ai->GetInventoryManager()->ItemLocalization(itemName, pRewardItem->ItemId);
                             out << "|cffffffff|Hitem:" << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
                         }
                     }

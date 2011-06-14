@@ -5,6 +5,9 @@
 
 using namespace ai;
 
+void extractItemIds(const string& text, list<uint32>& itemIds);
+
+
 bool QueryQuestItemAction::Execute(Event event)
 {
     Player *master = ai->GetAi()->GetMaster();
@@ -12,7 +15,7 @@ bool QueryQuestItemAction::Execute(Event event)
     string text = event.getParam();
 
     list<uint32> items;
-    ai->GetInventoryManager()->extractItemIds(text, items);
+    extractItemIds(text, items);
 
     for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
         QueryQuestItem(*i);

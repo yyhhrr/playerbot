@@ -62,7 +62,7 @@ void TradeStatusAction::BeginTrade()
     bot->GetSession()->HandleBeginTradeOpcode(p);
 
     ListItemsVisitor visitor;
-    ai->GetInventoryManager()->IterateItems(&visitor);
+    IterateItems(&visitor);
 
     list<ItemPrototype const*> items;
     for (map<uint32, int>::iterator i = visitor.items.begin(); i != visitor.items.end(); i++)
@@ -135,7 +135,7 @@ void TradeStatusAction::BeginTrade()
             }
         }
 
-        ai->GetInventoryManager()->TellItem(proto, visitor.items[proto->ItemId]);
+        TellItem(proto, visitor.items[proto->ItemId]);
     }
 }
 

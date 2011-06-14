@@ -51,45 +51,10 @@ namespace ai
         virtual ~AiInventoryManager();
 
 	public:
-        virtual void UnequipItem(const char* link);
-        virtual void EquipItem(const char* link);
-		virtual void Reward(const char* link);
-        
-        virtual void Buy(const char* link);
-        
-        virtual void Sell(string link);
-        virtual void Sell(Item* item);
-        
-        virtual void ListQuestItems();
-		
-        virtual void ItemLocalization(std::string& itemName, const uint32 itemID);
-		virtual void extractItemIds(const string& text, list<uint32>& itemIds);
-
-        virtual void Trade(const char* text);
-
-	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
         virtual void HandleMasterIncomingPacket(const WorldPacket& packet);
         virtual void Query(const string& text);
-        void TellItem(ItemPrototype const * proto, int count);
-        void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);
-
-	private:		
-        void EquipItem(Item& item);
-        void EquipItem(FindItemVisitor* visitor);
-
-        void UnequipItem(Item& item);
-        void UnequipItem(FindItemVisitor* visitor);
-
-        void Sell(FindItemVisitor* visitor);
-
-        void QueryItemCount(ItemPrototype const * item);
-        void IterateItemsInBags(IterateItemsVisitor* visitor);
-        void IterateItemsInEquip(IterateItemsVisitor* visitor);
-
-        bool TradeItem(const Item& item, int8 slot = -1);
-        bool TradeItem(FindItemVisitor *visitor, int8 slot = -1);
 
 	};
 

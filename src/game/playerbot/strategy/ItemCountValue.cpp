@@ -4,9 +4,11 @@
 
 using namespace ai;
 
+void extractItemIds(const string& text, list<uint32>& itemIds);
+
 uint8 ItemCountValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = InventoryAction::ai->GetAi()->GetBot();
 
     if (qualifier == "food")
         return Find(FindFoodVisitor(bot, 11)) ? 1 : 0;
@@ -21,12 +23,12 @@ uint8 ItemCountValue::Calculate()
         return Find(FindFoodVisitor(bot, 441)) ? 1 : 0;
 
     const char* name = qualifier.c_str();
-    list<uint32> ids; /* = */ ai->GetInventoryManager()->extractItemIds(name, ids);
+    list<uint32> ids; /* = */ extractItemIds(name, ids);
     for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
     {
         ItemPrototype const *item = sItemStorage.LookupEntry<ItemPrototype>(*i);
         QueryItemCountVisitor visitor(item->ItemId);
-        ai->GetInventoryManager()->IterateItems(&visitor, ITERATE_ALL_ITEMS);
+        IterateItems(&visitor, ITERATE_ALL_ITEMS);
 
         int count = visitor.GetCount();
         if (count)
@@ -34,25 +36,25 @@ uint8 ItemCountValue::Calculate()
     }
 
     QueryNamedItemCountVisitor visitor(name);
-    ai->GetInventoryManager()->IterateItems(&visitor, ITERATE_ALL_ITEMS);
+    IterateItems(&visitor, ITERATE_ALL_ITEMS);
     return visitor.GetCount();
 }
 
 Item* ItemCountValue::Find(FindItemVisitor &visitor)
 {
-    ai->GetInventoryManager()->IterateItems(&visitor, ITERATE_ALL_ITEMS);
+    IterateItems(&visitor, ITERATE_ALL_ITEMS);
     return visitor.GetResult();
 }
 
 Item* InventoryItemValue::Find(FindItemVisitor &visitor)
 {
-    ai->GetInventoryManager()->IterateItems(&visitor, ITERATE_ALL_ITEMS);
+    IterateItems(&visitor, ITERATE_ALL_ITEMS);
     return visitor.GetResult();
 }
 
 Item* InventoryItemValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = InventoryAction::ai->GetAi()->GetBot();
 
     if (qualifier == "food")
         return Find(FindFoodVisitor(bot, 11));
@@ -66,7 +68,7 @@ Item* InventoryItemValue::Calculate()
     if (qualifier == "healing potion")
         return Find(FindFoodVisitor(bot, 441));
 
-    list<uint32> ids; /* = */ ai->GetInventoryManager()->extractItemIds(qualifier.c_str(), ids);
+    list<uint32> ids; /* = */ extractItemIds(qualifier.c_str(), ids);
     for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
         return Find(FindItemByIdVisitor(*i));
 

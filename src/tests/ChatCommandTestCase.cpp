@@ -27,6 +27,12 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( repair );
       CPPUNIT_TEST( use );
       CPPUNIT_TEST( item_count );
+      CPPUNIT_TEST( reward );
+      CPPUNIT_TEST( trade );
+      CPPUNIT_TEST( equip );
+      CPPUNIT_TEST( unequip );
+      CPPUNIT_TEST( sell );
+      CPPUNIT_TEST( buy );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -144,6 +150,51 @@ protected:
         tick();
 
         assertActions(">S:item count");
+    }
+
+    void reward()
+    {
+        trigger("r");
+        tick();
+
+        assertActions(">S:reward");
+    }
+    void trade()
+    {
+        trigger("t");
+        tick();
+        trigger("nt");
+        tick();
+
+        assertActions(">S:trade>S:trade");
+    }
+    void sell()
+    {
+        trigger("s");
+        tick();
+
+        assertActions(">S:sell");
+    }
+    void buy()
+    {
+        trigger("b");
+        tick();
+
+        assertActions(">S:buy");
+    }
+    void equip()
+    {
+        trigger("e");
+        tick();
+
+        assertActions(">S:equip");
+    }
+    void unequip()
+    {
+        trigger("ue");
+        tick();
+
+        assertActions(">S:unequip");
     }
 };
 

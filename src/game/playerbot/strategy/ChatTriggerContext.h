@@ -28,9 +28,24 @@ namespace ai
             creators["u"] = &ChatTriggerContext::use;
             creators["use"] = &ChatTriggerContext::use;
             creators["c"] = &ChatTriggerContext::item_count;
+            creators["e"] = &ChatTriggerContext::equip;
+            creators["ue"] = &ChatTriggerContext::uneqip;
+            creators["s"] = &ChatTriggerContext::sell;
+            creators["b"] = &ChatTriggerContext::buy;
+            creators["r"] = &ChatTriggerContext::reward;
+            creators["t"] = &ChatTriggerContext::trade;
+            creators["nt"] = &ChatTriggerContext::nontrade;
         }
 
     private:
+        static Trigger* equip(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "e"); }
+        static Trigger* uneqip(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "ue"); }
+        static Trigger* sell(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "s"); }
+        static Trigger* buy(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "b"); }
+        static Trigger* reward(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "r"); }
+        static Trigger* trade(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "t"); }
+        static Trigger* nontrade(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "nt"); }
+        
         static Trigger* item_count(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "c"); }
         static Trigger* use(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "use"); }
         static Trigger* repair(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "repair"); }

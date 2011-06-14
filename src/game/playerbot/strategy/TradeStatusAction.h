@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Action.h"
+#include "InventoryAction.h"
 
 namespace ai
 {
-    class TradeStatusAction : public Action 
+    class TradeStatusAction : public InventoryAction 
     {
     public:
-        TradeStatusAction(AiManagerRegistry* const ai) : Action(ai, "accept trade") {}
+        TradeStatusAction(AiManagerRegistry* const ai) : InventoryAction(ai, "accept trade") {}
         virtual bool Execute(Event event);
 
     private:

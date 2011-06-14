@@ -27,10 +27,10 @@ bool TellItemCountAction::Execute(Event event)
     }
 
     FindItemsToTradeByQualityVisitor visitor(quality, 100);
-    ai->GetInventoryManager()->IterateItems(&visitor);
+    IterateItems(&visitor);
     list<Item*> found = visitor.GetResult();
     for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
-        ai->GetInventoryManager()->TellItem((*i)->GetProto(), (*i)->GetCount());
+        TellItem((*i)->GetProto(), (*i)->GetCount());
 
     return true;
 }

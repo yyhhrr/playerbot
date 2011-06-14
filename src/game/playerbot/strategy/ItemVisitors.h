@@ -25,38 +25,6 @@ namespace ai
     };
 
 
-    class SellItemsVisitor : public IterateItemsVisitor
-    {
-    public:
-        SellItemsVisitor(AiInventoryManager* inventoryManager) : IterateItemsVisitor() 
-        {
-            this->inventoryManager = inventoryManager;
-        }
-
-        virtual bool Visit(Item* item)
-        {
-            inventoryManager->Sell(item);
-            return true;
-        }
-
-    private:
-        AiInventoryManager* inventoryManager;
-    };
-
-    class SellGrayItemsVisitor : public SellItemsVisitor
-    {
-    public:
-        SellGrayItemsVisitor(AiInventoryManager* inventoryManager) : SellItemsVisitor(inventoryManager) {}
-
-        virtual bool Visit(Item* item)
-        {
-            if (item->GetProto()->Quality != ITEM_QUALITY_POOR)
-                return true;
-
-            return SellItemsVisitor::Visit(item);
-        }
-    };
-
     class FindItemsByQualityVisitor : public IterateItemsVisitor
     {
     public:

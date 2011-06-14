@@ -5,6 +5,8 @@
 
 using namespace ai;
 
+void extractItemIds(const string& text, list<uint32>& itemIds);
+
 bool LootStrategyAction::Execute(Event event)
 {
     Player *master = ai->GetAi()->GetMaster();
@@ -35,7 +37,7 @@ bool LootStrategyAction::Execute(Event event)
     }
     else
     {
-        list<uint32> items; /* = */ ai->GetInventoryManager()->extractItemIds(strategy, items);
+        list<uint32> items; /* = */ extractItemIds(strategy, items);
 
         if (items.size() == 0)
         {

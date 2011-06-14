@@ -30,7 +30,36 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "c", 
         NextAction::array(0, new NextAction("item count", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "e", 
+        NextAction::array(0, new NextAction("equip", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "ue", 
+        NextAction::array(0, new NextAction("unequip", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "t", 
+        NextAction::array(0, new NextAction("trade", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "nt", 
+        NextAction::array(0, new NextAction("trade", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "s", 
+        NextAction::array(0, new NextAction("sell", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "b", 
+        NextAction::array(0, new NextAction("buy", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "r", 
+        NextAction::array(0, new NextAction("reward", relevance), NULL)));
 }
+
 
 
 ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)

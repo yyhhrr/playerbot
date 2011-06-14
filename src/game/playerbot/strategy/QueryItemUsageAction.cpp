@@ -5,11 +5,13 @@
 
 using namespace ai;
 
+void extractItemIds(const string& text, list<uint32>& itemIds);
+
 bool QueryItemUsageAction::Execute(Event event)
 {
     string text = event.getParam();
 
-    list<uint32> items; /* = */ ai->GetInventoryManager()->extractItemIds(text, items);
+    list<uint32> items; /* = */ extractItemIds(text, items);
     QueryItemsUsage(items);   
     return false;
 }
