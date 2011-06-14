@@ -4,6 +4,42 @@ char * strstri (const char * str1, const char * str2);
 
 namespace ai
 {
+    class IterateItemsVisitor 
+    {
+    public:
+        IterateItemsVisitor() {}
+
+        virtual bool Visit(Item* item) = 0;
+    };
+
+    class FindItemVisitor : public IterateItemsVisitor {
+    public:
+        FindItemVisitor() : IterateItemsVisitor(), result(NULL) {}
+
+        virtual bool Visit(Item* item)
+        {
+            if (!Accept(item->GetProto()))
+                return true;
+
+            result = item;
+            return false;
+        }
+
+        Item* GetResult() { return result; }
+
+    protected:
+        virtual bool Accept(const ItemPrototype* proto) = 0;
+
+    private:
+        Item* result;
+    };
+
+    enum IterateItemsMask
+    {
+        ITERATE_ITEMS_IN_BAGS = 1,
+        ITERATE_ITEMS_IN_EQUIP = 2,
+        ITERATE_ALL_ITEMS = 255
+    };
 
     class FindUsableItemVisitor : public FindItemVisitor {
     public:

@@ -7,7 +7,6 @@
 #include "../game/playerbot/strategy/Engine.h"
 
 #include "MockAiSpellManager.h"
-#include "MockAiInventoryManager.h"
 #include "MockAiManagerRegistry.h"
 
 using namespace ai;
@@ -81,7 +80,6 @@ protected:
 protected:
     MockAiManagerRegistry *ai;
 	MockAiSpellManager* spellManager;
-	MockAiInventoryManager* inventoryManager;
     Engine *engine;
     AiObjectContext *context;
 };

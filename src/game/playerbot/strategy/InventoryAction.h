@@ -1,9 +1,12 @@
 #pragma once
 
 #include "Action.h"
+#include "ItemVisitors.h"
 
 namespace ai
 {
+   
+
     class InventoryAction : public Action {
     public:
         InventoryAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) {}

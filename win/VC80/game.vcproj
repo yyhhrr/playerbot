@@ -1765,14 +1765,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiInventoryManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiInventoryManager.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\game\playerbot\ai\AiManagerBase.cpp"
 					>
 				</File>
@@ -1925,6 +1917,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\BuyAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\BuyAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\CcTargetValue.cpp"
 					>
 				</File>
@@ -2025,6 +2025,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\EquipAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\EquipAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Event.cpp"
 					>
 				</File>
@@ -2102,6 +2110,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\HealthTriggers.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\InventoryAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\InventoryAction.h"
 					>
 				</File>
 				<File
@@ -2409,7 +2425,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\RewardAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\RewardAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SelfTargetValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SellAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SellAction.h"
 					>
 				</File>
 				<File
@@ -2485,6 +2517,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellItemCountAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TellItemCountAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TellLosAction.cpp"
 					>
 				</File>
@@ -2502,6 +2542,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TellReputationAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TradeAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\TradeAction.h"
 					>
 				</File>
 				<File
@@ -2530,6 +2578,22 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\TurnInQuestAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\UnequipAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\UnequipAction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\UseItemAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\UseItemAction.h"
 					>
 				</File>
 				<File
