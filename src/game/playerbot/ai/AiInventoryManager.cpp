@@ -712,11 +712,6 @@ void AiInventoryManager::HandleBotOutgoingPacket(const WorldPacket& packet)
 {
 	switch (packet.GetOpcode())
 	{
-	case SMSG_INVENTORY_CHANGE_FAILURE:
-        {
-		    ai->TellMaster("I can't use that.");
-		    return;
-        }
     case SMSG_TRADE_STATUS:
         {
             if (bot->GetTrader() == NULL)

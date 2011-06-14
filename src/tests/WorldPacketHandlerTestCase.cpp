@@ -25,6 +25,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( area_trigger );
       CPPUNIT_TEST( mount );
       CPPUNIT_TEST( taxi );
+      CPPUNIT_TEST( cannot_equip );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -151,6 +152,12 @@ protected:
         tick();
 
         assertActions(">S:remember taxi>S:taxi");
+    }
+    void cannot_equip()
+    {
+        trigger("cannot equip");
+        tick();
+        assertActions(">S:tell cannot equip");
     }
 };
 

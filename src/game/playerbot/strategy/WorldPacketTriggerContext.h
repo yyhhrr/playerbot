@@ -14,6 +14,7 @@ namespace ai
             creators["group set leader"] = &WorldPacketTriggerContext::group_set_leader;
             creators["not enough money"] = &WorldPacketTriggerContext::no_money;
             creators["not enough reputation"] = &WorldPacketTriggerContext::no_reputation;
+            creators["cannot equip"] = &WorldPacketTriggerContext::cannot_equip;
             creators["use game object"] = &WorldPacketTriggerContext::use_game_object;
             creators["complete quest"] = &WorldPacketTriggerContext::complete_quest;
             creators["accept quest"] = &WorldPacketTriggerContext::accept_quest;
@@ -26,6 +27,7 @@ namespace ai
         }
 
     private:
+        static Trigger* cannot_equip(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
         static Trigger* check_mount_state(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
         static Trigger* area_trigger(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "area trigger"); }
         static Trigger* resurrect_request(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "resurrect request"); }

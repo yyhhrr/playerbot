@@ -73,6 +73,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
     packetHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
     packetHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
+    packetHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
 
 }
 
