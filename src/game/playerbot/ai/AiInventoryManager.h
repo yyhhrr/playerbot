@@ -66,7 +66,6 @@ namespace ai
         virtual void UseDrink();
 		virtual bool HasDrink();
 
-		virtual int GetItemCount(const char* name);
 		virtual void FindAndUse(const char* item, uint8 delay = 0);
 				
         virtual void UnequipItem(const char* link);

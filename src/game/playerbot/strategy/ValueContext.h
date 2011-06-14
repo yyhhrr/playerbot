@@ -30,6 +30,7 @@
 #include "DistanceValue.h"
 #include "IsMovingValue.h"
 #include "IsBehindValue.h"
+#include "ItemCountValue.h"
 
 namespace ai
 {
@@ -77,9 +78,11 @@ namespace ai
             creators["distance"] = &ValueContext::distance;
             creators["moving"] = &ValueContext::moving;
             creators["behind"] = &ValueContext::behind;
+            creators["item count"] = &ValueContext::item_count;
         }
 
     private:
+        static UntypedValue* item_count(AiManagerRegistry* ai) { return new ItemCountValue(ai); }
         static UntypedValue* behind(AiManagerRegistry* ai) { return new IsBehindValue(ai); }
         static UntypedValue* moving(AiManagerRegistry* ai) { return new IsMovingValue(ai); }
         static UntypedValue* distance(AiManagerRegistry* ai) { return new DistanceValue(ai); }

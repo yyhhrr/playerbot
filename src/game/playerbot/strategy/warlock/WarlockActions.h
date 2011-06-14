@@ -30,7 +30,7 @@ namespace ai
 		CastDrainSoulAction(AiManagerRegistry* const ai) : CastDebuffSpellAction(ai, "drain soul") {}
 		virtual bool isUseful() 
 		{
-			return ai->GetInventoryManager()->GetItemCount("soul shard") < 2;
+			return AI_VALUE2(uint8, "item count", "soul shard") < 2;
 		}
 	};
 

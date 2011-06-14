@@ -72,7 +72,7 @@ namespace ai
         virtual bool isUseful();
 		virtual bool isPossible() 
         {
-			return ai->GetInventoryManager()->GetItemCount(getName()) > 0;
+			return AI_VALUE2(uint8, "item count", getName()) > 0;
 		}
 	};
 

@@ -102,6 +102,7 @@ namespace ai
             creators["distance"] = &MockValueContext::floating;
             creators["moving"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
+            creators["item count"] = &MockValueContext::stats;
         }
 
     private:

@@ -2113,6 +2113,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ItemCountValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ItemCountValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ItemVisitors.h"
 					>
 				</File>

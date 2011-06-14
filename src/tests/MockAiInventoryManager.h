@@ -29,7 +29,6 @@ namespace ai
 		virtual bool HasHealingPotion() { return false; }
 		virtual bool HasManaPotion() { return false; }
 		virtual bool HasPanicPotion() { return false; }
-		virtual int GetItemCount(const char* name)  { return itemCounts[std::string(name)]; }
 		virtual void FindAndUse(const char* item, uint8 ignore_time = 0) { buffer->append(">").append(item); }
 		virtual bool CanLoot() { return lootAvailable; }
 		virtual void DoLoot() { buffer->append(">loot"); }
@@ -40,7 +39,6 @@ namespace ai
 	public:
 		bool hasDrink, hasFood;
 		bool lootAvailable;
-		std::map<string, int> itemCounts;
     };
 
 }

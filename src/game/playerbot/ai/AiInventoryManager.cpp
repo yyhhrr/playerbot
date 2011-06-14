@@ -131,13 +131,6 @@ void AiInventoryManager::UseItem(Item& item)
  	bot->GetSession()->QueuePacket(packet);
 }
 
-int AiInventoryManager::GetItemCount(const char* name) 
-{
-    QueryNamedItemCountVisitor visitor(name);
-    IterateItems(&visitor, ITERATE_ALL_ITEMS);
-    return visitor.GetCount();
-}
-
 void AiInventoryManager::extractItemIds(const string& text, list<uint32>& itemIds)
 {
 	uint8 pos = 0;

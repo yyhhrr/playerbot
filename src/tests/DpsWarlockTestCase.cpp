@@ -33,8 +33,8 @@ protected:
         tick(); 
 
 		tickWithTargetLowHealth(19);
-		
-		inventoryManager->itemCounts["soul shard"] = 2;
+
+        set<uint8>("item count", "soul shard", 2);
 		spellAvailable("drain soul");
 		tick();
 

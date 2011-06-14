@@ -403,7 +403,7 @@ void EngineTestBase::tickWithNoFood()
 
 void EngineTestBase::itemAvailable(const char* item, int amount)
 {
-	inventoryManager->itemCounts[std::string(item)] = amount;
+    set<uint8>("item count", item, 2);
 }
 
 void EngineTestBase::tickWithDeadPartyMember() 

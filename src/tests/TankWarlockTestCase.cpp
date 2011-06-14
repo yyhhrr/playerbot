@@ -24,7 +24,7 @@ protected:
 
     void summonPet()
     {
-        inventoryManager->itemCounts["soul shard"] = 2;
+        itemAvailable("soul shard", 2);
         tickWithNoPet();
 
 		assertActions(">S:summon voidwalker");
