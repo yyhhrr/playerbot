@@ -24,6 +24,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( release );
       CPPUNIT_TEST( teleport );
       CPPUNIT_TEST( taxi );
+      CPPUNIT_TEST( repair );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -120,6 +121,11 @@ protected:
     void taxi()
     {
         assertCommand("taxi");
+    }
+
+    void repair()
+    {
+        assertCommand("repair");
     }
 };
 

@@ -24,9 +24,11 @@ namespace ai
             creators["release"] = &ChatTriggerContext::release;
             creators["teleport"] = &ChatTriggerContext::teleport;
             creators["taxi"] = &ChatTriggerContext::taxi;
+            creators["repair"] = &ChatTriggerContext::repair;
         }
 
     private:
+        static Trigger* repair(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "repair"); }
         static Trigger* taxi(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "taxi"); }
         static Trigger* teleport(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "teleport"); }
         static Trigger* q(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "q"); }

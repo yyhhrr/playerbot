@@ -15,6 +15,7 @@
 #include "ReleaseSpiritAction.h"
 #include "TeleportAction.h"
 #include "TaxiAction.h"
+#include "RepairAllAction.h"
 
 namespace ai
 {
@@ -38,9 +39,11 @@ namespace ai
             creators["release"] = &ChatActionContext::release;
             creators["teleport"] = &ChatActionContext::teleport;
             creators["taxi"] = &ChatActionContext::taxi;
+            creators["repair"] = &ChatActionContext::repair;
         }
 
     private:
+        static Action* repair(AiManagerRegistry* ai) { return new RepairAllAction(ai); }
         static Action* taxi(AiManagerRegistry* ai) { return new TaxiAction(ai); }
         static Action* teleport(AiManagerRegistry* ai) { return new TeleportAction(ai); }
         static Action* release(AiManagerRegistry* ai) { return new ReleaseSpiritAction(ai); }

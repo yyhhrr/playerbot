@@ -746,55 +746,7 @@ void AiInventoryManager::HandleMasterIncomingPacket(const WorldPacket& packet)
     {
 	case CMSG_REPAIR_ITEM:
 		{
-			WorldPacket p(packet); // WorldPacket packet for CMSG_REPAIR_ITEM, (8+8+1)
-
-			sLog.outDebug("PlayerbotMgr: CMSG_REPAIR_ITEM");
-
-			uint64 npcGUID, itemGUID;
-			uint8 guildBank;
-
-			p.rpos(0); //reset packet pointer
-			p >> npcGUID;
-			p >> itemGUID;  // Not used for bot but necessary opcode data retrieval
-			p >> guildBank; // Flagged if guild repair selected
-
-			Group* group = bot->GetGroup();  // check if bot is a member of group
-			if(!group)
-				return;
-
-			Creature *unit = bot->GetNPCIfCanInteractWith(npcGUID, UNIT_NPC_FLAG_REPAIR);
-			if (!unit) // Check if NPC can repair bot or not
-				return;
-
-			// remove fake death
-			if(bot->hasUnitState(UNIT_STAT_DIED))
-				bot->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
-
-			// reputation discount
-			float discountMod = bot->GetReputationPriceDiscount(unit);
-
-			uint32 TotalCost = 0;
-			if (itemGUID) // Handle redundant feature (repair individual item) for bot
-			{
-				sLog.outDebug("ITEM: Repair single item is not applicable for %s",bot->GetName());
-				return;
-			}
-			else  // Handle feature (repair all items) for bot
-			{
-				TotalCost = bot->DurabilityRepairAll(true,discountMod,guildBank>0?true:false);
-			}
-			if (guildBank) // Handle guild repair
-			{
-				uint32 GuildId = bot->GetGuildId();
-				if (!GuildId)
-					return;
-				Guild *pGuild = sGuildMgr.GetGuildById(GuildId);
-				if (!pGuild)
-					return;
-				pGuild->LogBankEvent(GUILD_BANK_LOG_REPAIR_MONEY, 0, bot->GetGUIDLow(), TotalCost);
-				pGuild->SendMoneyInfo(bot->GetSession(), bot->GetGUIDLow());
-			}
-			return;
+			
 		}
     }
 }

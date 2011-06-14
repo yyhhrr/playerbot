@@ -37,4 +37,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const 
     supported.push_back("release");
     supported.push_back("teleport");
     supported.push_back("taxi");
+    supported.push_back("repair");
 }
