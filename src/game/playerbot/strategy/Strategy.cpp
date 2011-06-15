@@ -2,9 +2,6 @@
 #include "../playerbot.h"
 #include "Strategy.h"
 #include "NamedObjectContext.h"
-#include "GenericActions.h"
-#include "NonCombatActions.h"
-#include "GenericTriggers.h"
 
 using namespace ai;
 

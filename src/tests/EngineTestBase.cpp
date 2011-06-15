@@ -3,7 +3,7 @@
 #include "EngineTestBase.h"
 #include "MockedTargets.h"
 #include "AiObjectContextWrapper.h"
-#include "playerbot\strategy\SharedValueContext.h"
+#include "playerbot\strategy\values\SharedValueContext.h"
 
 class TestActionExecutionListener : public ActionExecutionListener
 {

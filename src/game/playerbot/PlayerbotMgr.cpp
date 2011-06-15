@@ -1,7 +1,7 @@
 #include "Config/Config.h"
 #include "../pchdef.h"
 #include "playerbot.h"
-#include "strategy/SharedValueContext.h"
+#include "strategy/values/SharedValueContext.h"
 
 
 class LoginQueryHolder;

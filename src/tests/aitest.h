@@ -11,6 +11,5 @@
 #include "../game/playerbot/strategy/Queue.h"
 #include "../game/playerbot/strategy/Trigger.h"
 #include "../game/playerbot/strategy/Engine.h"
-#include "../game/playerbot/strategy/GenericActions.h"
 
 #include "EngineTestBase.h"

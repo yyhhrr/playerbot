@@ -1,5 +1,5 @@
 #pragma once
-#include "../GenericActions.h"
+#include "../actions/GenericActions.h"
 
 namespace ai
 {

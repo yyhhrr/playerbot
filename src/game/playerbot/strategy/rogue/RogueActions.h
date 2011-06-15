@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GenericActions.h"
+#include "../actions/GenericActions.h"
 #include "RogueComboActions.h"
 #include "RogueOpeningActions.h"
 #include "RogueFinishingActions.h"

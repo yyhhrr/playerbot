@@ -1,6 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "../GenericActions.h"
+#include "../actions/GenericActions.h"
 #include "HunterActions.h"
 
 using namespace ai;

@@ -1,0 +1,226 @@
+#pragma once
+
+#include "../Action.h"
+
+#define BEGIN_SPELL_ACTION(clazz, name) \
+class clazz : public CastSpellAction \
+        { \
+        public: \
+        clazz(PlayerbotAI* ai) : CastSpellAction(ai, name) {} \
+
+
+#define END_SPELL_ACTION() \
+    };
+
+#define BEGIN_DEBUFF_ACTION(clazz, name) \
+class clazz : public CastDebuffSpellAction \
+        { \
+        public: \
+        clazz(PlayerbotAI* ai) : CastDebuffSpellAction(ai, name) {} \
+
+#define BEGIN_RANGED_SPELL_ACTION(clazz, name) \
+class clazz : public CastSpellAction \
+        { \
+        public: \
+        clazz(PlayerbotAI* ai) : CastSpellAction(ai, name) {} \
+
+#define BEGIN_MELEE_SPELL_ACTION(clazz, name) \
+class clazz : public CastMeleeSpellAction \
+        { \
+        public: \
+        clazz(PlayerbotAI* ai) : CastMeleeSpellAction(ai, name) {} \
+
+
+#define END_RANGED_SPELL_ACTION() \
+    };
+
+
+#define BEGIN_BUFF_ON_PARTY_ACTION(clazz, name) \
+class clazz : public BuffOnPartyAction \
+        { \
+        public: \
+        clazz(PlayerbotAI* ai) : BuffOnPartyAction(ai, name) {} 
+
+namespace ai
+{
+    class CastSpellAction : public Action
+    {
+    public:
+        CastSpellAction(PlayerbotAI* ai, const char* spell) : Action(ai, spell),
+			range(SPELL_DISTANCE)
+        {
+            this->spell = spell;
+        }
+
+		virtual const char* GetTargetName() { return "current target"; };
+        virtual bool Execute(Event event);
+        virtual bool isPossible();
+		virtual bool isUseful();
+
+		virtual NextAction** getPrerequisites() 
+		{
+			if (range > SPELL_DISTANCE)
+				return NULL;
+			else if (range > ATTACK_DISTANCE)
+				return NextAction::merge( NextAction::array(0, new NextAction("reach spell"), NULL), Action::getPrerequisites());
+			else
+				return NextAction::merge( NextAction::array(0, new NextAction("reach melee"), NULL), Action::getPrerequisites());
+		}
+
+    protected:
+        const char* spell;
+		float range;
+    };
+
+	//---------------------------------------------------------------------------------------------------------------------
+	class CastAuraSpellAction : public CastSpellAction
+	{
+	public:
+		CastAuraSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
+
+		virtual bool isPossible();
+		virtual bool isUseful();
+	};
+
+    //---------------------------------------------------------------------------------------------------------------------
+    class CastMeleeSpellAction : public CastSpellAction
+    {
+    public:
+        CastMeleeSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {
+			range = ATTACK_DISTANCE;
+		}
+    };
+
+    //---------------------------------------------------------------------------------------------------------------------
+    class CastDebuffSpellAction : public CastAuraSpellAction
+    {
+    public:
+        CastDebuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) {}
+    };
+
+	class CastBuffSpellAction : public CastAuraSpellAction
+	{
+	public:
+		CastBuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) 
+		{
+			range = BOT_REACT_DISTANCE;
+		}
+		
+        virtual const char* GetTargetName() { return "self target"; }
+	};
+
+    //---------------------------------------------------------------------------------------------------------------------
+    
+    class CastHealingSpellAction : public CastAuraSpellAction
+    {
+    public:
+        CastHealingSpellAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
+		{
+            this->estAmount = estAmount;
+			range = BOT_REACT_DISTANCE;
+        }
+		virtual const char* GetTargetName() { return "self target"; }
+        virtual bool isUseful();
+
+    protected:
+        uint8 estAmount;
+    };
+
+	class CastCureSpellAction : public CastSpellAction
+	{
+	public:
+		CastCureSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) 
+		{
+			range = BOT_REACT_DISTANCE;
+		}
+
+		virtual const char* GetTargetName() { return "self target"; }
+	};
+
+	class PartyMemberActionNameSupport {
+	public:
+		PartyMemberActionNameSupport(const char* spell) 
+		{
+			name = string(spell) + " on party";
+		}
+
+		virtual const char* getName() { return name.c_str(); }
+
+	private:
+		string name;
+	};
+
+    class HealPartyMemberAction : public CastHealingSpellAction, public PartyMemberActionNameSupport
+    {
+    public:
+        HealPartyMemberAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : 
+			CastHealingSpellAction(ai, spell, estAmount), PartyMemberActionNameSupport(spell) {}
+
+		virtual const char* GetTargetName() { return "party member to heal"; }
+		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+    };
+
+	class ResurrectPartyMemberAction : public CastSpellAction
+	{
+	public:
+		ResurrectPartyMemberAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
+
+		virtual const char* GetTargetName() { return "party member to resurrect"; }
+	};
+    //---------------------------------------------------------------------------------------------------------------------
+
+    class CurePartyMemberAction : public CastSpellAction, public PartyMemberActionNameSupport
+    {
+    public:
+        CurePartyMemberAction(PlayerbotAI* ai, const char* spell, uint32 dispelType) : 
+			CastSpellAction(ai, spell), PartyMemberActionNameSupport(spell)
+        {
+            this->dispelType = dispelType;
+        }
+
+		virtual Value<Unit*>* GetTargetValue();
+		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+
+    protected:
+        uint32 dispelType;
+    };
+
+    //---------------------------------------------------------------------------------------------------------------------
+
+    class BuffOnPartyAction : public CastBuffSpellAction, public PartyMemberActionNameSupport
+    {
+    public:
+        BuffOnPartyAction(PlayerbotAI* ai, const char* spell) : 
+			CastBuffSpellAction(ai, spell), PartyMemberActionNameSupport(spell) {}
+    public: 
+		virtual Value<Unit*>* GetTargetValue();
+		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+    };
+
+    //---------------------------------------------------------------------------------------------------------------------
+
+    class CastShootAction : public CastSpellAction
+    {
+    public:
+        CastShootAction(PlayerbotAI* ai) : CastSpellAction(ai, "shoot") {}
+    };
+
+	class CastLifeBloodAction : public CastHealingSpellAction
+	{
+	public:
+		CastLifeBloodAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "lifeblood") {}
+	};
+
+	class CastGiftOfTheNaaruAction : public CastHealingSpellAction
+	{
+	public:
+		CastGiftOfTheNaaruAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "gift of the naaru") {}
+	};
+
+    class CastArcaneTorrentAction : public CastBuffSpellAction
+    {
+    public:
+        CastArcaneTorrentAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "arcane torrent") {}
+    };
+    
+}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GenericActions.h"
+#include "../actions/GenericActions.h"
 #include "DruidShapeshiftActions.h"
 #include "DruidBearActions.h"
 #include "DruidCatActions.h"

@@ -1,9 +1,6 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "RacialsStrategy.h"
-#include "HealthTriggers.h"
-#include "GenericSpellActions.h"
-#include "GenericTriggers.h"
 
 using namespace ai;
 

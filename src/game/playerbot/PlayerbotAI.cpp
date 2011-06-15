@@ -8,9 +8,9 @@
 #include "../GridNotifiers.h"
 #include "../GridNotifiersImpl.h"
 #include "../CellImpl.h"
-#include "strategy/LastMovementValue.h"
-#include "strategy/LogLevelAction.h"
-#include "strategy/LastSpellCastValue.h"
+#include "strategy/values/LastMovementValue.h"
+#include "strategy/actions/LogLevelAction.h"
+#include "strategy/values/LastSpellCastValue.h"
 
 using namespace ai;
 using namespace std;

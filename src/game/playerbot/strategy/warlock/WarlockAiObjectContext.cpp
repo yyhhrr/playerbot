@@ -8,7 +8,7 @@
 #include "../PullStrategy.h"
 #include "WarlockTriggers.h"
 #include "../NamedObjectContext.h"
-#include "../UseItemAction.h"
+#include "../actions/UseItemAction.h"
 
 using namespace ai;
 

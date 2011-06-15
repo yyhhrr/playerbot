@@ -1,0 +1,418 @@
+#pragma once
+#include "../Trigger.h"
+
+#define BUFF_TRIGGER(clazz, spell, action) \
+    class clazz : public BuffTrigger \
+    { \
+    public: \
+        clazz(PlayerbotAI* ai) : BuffTrigger(ai, spell) {} \
+    };
+
+#define BUFF_ON_PARTY_TRIGGER(clazz, spell, action) \
+    class clazz : public BuffOnPartyTrigger \
+    { \
+    public: \
+        clazz(PlayerbotAI* ai) : BuffOnPartyTrigger(ai, spell) {}  \
+    };
+
+#define DEBUFF_TRIGGER(clazz, spell, action) \
+    class clazz : public DebuffTrigger \
+    { \
+    public: \
+        clazz(PlayerbotAI* ai) : DebuffTrigger(ai, spell) {} \
+    };
+
+namespace ai
+{
+	class StatAvailable : public Trigger
+	{
+	public:
+		StatAvailable(PlayerbotAI* ai, int amount) : Trigger(ai)
+		{
+			this->amount = amount;
+		}
+
+	protected:
+		int amount;
+	};
+
+	class RageAvailable : public StatAvailable
+    {
+    public:
+        RageAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
+        virtual bool IsActive();
+    };
+
+    class LightRageAvailableTrigger : public RageAvailable
+    {
+    public:
+        LightRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 20) {}
+    };
+
+    class MediumRageAvailableTrigger : public RageAvailable
+    {
+    public:
+        MediumRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 40) {}
+    };
+
+    class HighRageAvailableTrigger : public RageAvailable
+    {
+    public:
+        HighRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 60) {}
+    };
+
+	class EnergyAvailable : public StatAvailable
+	{
+	public:
+		EnergyAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
+		virtual bool IsActive();
+	};
+
+    class LightEnergyAvailableTrigger : public EnergyAvailable
+    {
+    public:
+        LightEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 20) {}
+    };
+
+    class MediumEnergyAvailableTrigger : public EnergyAvailable
+    {
+    public:
+        MediumEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 40) {}
+    };
+
+    class HighEnergyAvailableTrigger : public EnergyAvailable
+    {
+    public:
+        HighEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 60) {}
+    };
+
+	class ComboPointsAvailableTrigger : public StatAvailable
+	{
+	public:
+	    ComboPointsAvailableTrigger(PlayerbotAI* ai, int amount = 5) : StatAvailable(ai, amount) {}
+		virtual bool IsActive();
+	};
+
+	class LoseAggroTrigger : public Trigger {
+	public:
+		LoseAggroTrigger(PlayerbotAI* ai) : Trigger(ai, "lose aggro") {}
+		virtual bool IsActive();
+	};
+
+	class SpellTrigger : public Trigger
+	{
+	public:
+		SpellTrigger(PlayerbotAI* ai, const char* spell, int checkInterval = 1) : Trigger(ai, spell, checkInterval)
+		{
+			this->spell = spell;
+		}
+
+		virtual const char* GetTargetName() { return "current target"; }
+		virtual const char* getName() { return spell; }
+		virtual bool IsActive();
+
+	protected:
+		const char* spell;
+	};
+
+	class SpellCanBeCastTrigger : public SpellTrigger
+	{
+	public:
+		SpellCanBeCastTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell) {}
+		virtual bool IsActive();
+	};
+
+	// TODO: check other targets
+    class InterruptSpellTrigger : public SpellTrigger
+	{
+    public:
+        InterruptSpellTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell) {}
+        virtual bool IsActive();
+    };
+
+
+    class AttackerCountTrigger : public Trigger
+    {
+    public:
+        AttackerCountTrigger(PlayerbotAI* ai, int amount, float distance = BOT_SIGHT_DISTANCE) : Trigger(ai)
+        {
+            this->amount = amount;
+            this->distance = distance;
+        }
+    public:
+        virtual bool IsActive()
+		{
+            return AI_VALUE(uint8, "attacker count") >= amount;
+        }
+        virtual const char* getName() { return "attacker count"; }
+
+    protected:
+        int amount;
+        float distance;
+    };
+
+    class HasAttackersTrigger : public AttackerCountTrigger
+    {
+    public:
+        HasAttackersTrigger(PlayerbotAI* ai) : AttackerCountTrigger(ai, 1) {}
+    };
+
+    class MyAttackerCountTrigger : public AttackerCountTrigger
+    {
+    public:
+        MyAttackerCountTrigger(PlayerbotAI* ai, int amount) : AttackerCountTrigger(ai, amount) {}
+    public:
+        virtual bool IsActive();
+        virtual const char* getName() { return "my attacker count"; }
+    };
+
+    class MediumThreatTrigger : public MyAttackerCountTrigger
+    {
+    public:
+        MediumThreatTrigger(PlayerbotAI* ai) : MyAttackerCountTrigger(ai, 2) {}
+    };
+
+    class AoeTrigger : public AttackerCountTrigger
+    {
+    public:
+        AoeTrigger(PlayerbotAI* ai, int amount = 3, float range = 15.0f) : AttackerCountTrigger(ai, amount)
+        {
+            this->range = range;
+        }
+    public:
+        virtual bool IsActive();
+        virtual const char* getName() { return "aoe"; }
+
+    private:
+        float range;
+    };
+
+    class NoFoodTrigger : public Trigger {
+    public:
+        NoFoodTrigger(PlayerbotAI* ai) : Trigger(ai, "no food trigger") {}
+        virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "food"); }
+    };
+
+    class NoDrinkTrigger : public Trigger {
+    public:
+        NoDrinkTrigger(PlayerbotAI* ai) : Trigger(ai, "no drink trigger") {}
+        virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "drink"); }
+    };
+
+    class LightAoeTrigger : public AoeTrigger
+    {
+    public:
+        LightAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 2, 15.0f) {}
+    };
+
+    class MediumAoeTrigger : public AoeTrigger
+    {
+    public:
+        MediumAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 3, 17.0f) {}
+    };
+
+    class HighAoeTrigger : public AoeTrigger
+    {
+    public:
+        HighAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 4, 20.0f) {}
+    };
+
+    class BuffTrigger : public SpellTrigger
+    {
+    public:
+        BuffTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell, 5) {}
+    public:
+		virtual const char* GetTargetName() { return "self target"; }
+        virtual bool IsActive();
+    };
+
+    class BuffOnPartyTrigger : public BuffTrigger
+    {
+    public:
+        BuffOnPartyTrigger(PlayerbotAI* ai, const char* spell) : BuffTrigger(ai, spell) {}
+    public:
+		virtual Value<Unit*>* GetTargetValue();
+    };
+
+    BEGIN_TRIGGER(NoAttackersTrigger, Trigger)
+    END_TRIGGER()
+
+    BEGIN_TRIGGER(NoTargetTrigger, Trigger)
+    END_TRIGGER()
+
+    class DebuffTrigger : public BuffTrigger
+    {
+    public:
+        DebuffTrigger(PlayerbotAI* ai, const char* spell) : BuffTrigger(ai, spell) {
+			checkInterval = 1;
+		}
+    public:
+		virtual const char* GetTargetName() { return "current target"; }
+        virtual bool IsActive();
+    };
+
+    BEGIN_TRIGGER(LootAvailableTrigger, Trigger)
+    END_TRIGGER()
+
+
+	class BoostTrigger : public BuffTrigger
+	{
+	public:
+		BoostTrigger(PlayerbotAI* ai, const char* spell, float balance = 50) : BuffTrigger(ai, spell)
+		{
+			this->balance = balance;
+		}
+	public:
+		virtual bool IsActive();
+
+	protected:
+		float balance;
+	};
+
+    class RandomTrigger : public Trigger
+    {
+    public:
+        RandomTrigger(PlayerbotAI* ai, int probability = 20) : Trigger(ai)
+        {
+            this->probability = probability;
+        }
+    public:
+        virtual bool IsActive();
+        virtual const char* getName() { return "random"; }
+
+    protected:
+        int probability;
+    };
+
+    class AndTrigger : public Trigger
+    {
+    public:
+        AndTrigger(PlayerbotAI* ai, Trigger* ls, Trigger* rs) : Trigger(ai)
+        {
+            this->ls = ls;
+            this->rs = rs;
+        }
+        virtual ~AndTrigger()
+        {
+            delete ls;
+            delete rs;
+        }
+    public:
+        virtual bool IsActive();
+        virtual const char* getName();
+
+    protected:
+        Trigger* ls;
+        Trigger* rs;
+    };
+
+    class SnareTargetTrigger : public DebuffTrigger
+    {
+    public:
+        SnareTargetTrigger(PlayerbotAI* ai, const char* aura) : DebuffTrigger(ai, aura) {}
+    public:
+        virtual bool IsActive();
+        virtual const char* getName() { return "target is moving"; }
+    };
+
+	class LowManaTrigger : public Trigger
+	{
+	public:
+		LowManaTrigger(PlayerbotAI* ai) : Trigger(ai, "low mana", 5) {}
+
+		virtual bool IsActive();
+	};
+
+    BEGIN_TRIGGER(PanicTrigger, Trigger)
+        virtual const char* getName() { return "panic"; }
+    END_TRIGGER()
+
+
+	class NoPetTrigger : public Trigger
+	{
+	public:
+		NoPetTrigger(PlayerbotAI* ai) : Trigger(ai, "no pet", 5) {}
+
+		virtual bool IsActive() {
+			return !AI_VALUE(Unit*, "pet target") && !AI_VALUE(bool, "mounted");
+		}
+	};
+
+	class ItemCountTrigger : public Trigger {
+	public:
+		ItemCountTrigger(PlayerbotAI* ai, const char* item, int count) : Trigger(ai, item, 5) {
+			this->item = item;
+			this->count = count;
+		}
+	public:
+		virtual bool IsActive();
+		virtual const char* getName() { return "item count"; }
+
+	protected:
+		const char* item;
+		int count;
+	};
+
+	class HasAuraTrigger : public Trigger {
+	public:
+		HasAuraTrigger(PlayerbotAI* ai, const char* spell) : Trigger(ai, spell) {
+			this->spell = spell;
+		}
+
+		virtual const char* GetTargetName() { return "self target"; }
+		virtual bool IsActive();
+
+	protected:
+		const char* spell;
+	};
+
+    class TimerTrigger : public Trigger
+    {
+    public:
+        TimerTrigger(PlayerbotAI* ai, int checkInterval = 5) : Trigger(ai, "timer", checkInterval) {}
+
+    public:
+        virtual bool IsActive() { return true; }
+    };
+
+	class TankAoeTrigger : public NoAttackersTrigger
+	{
+	public:
+		TankAoeTrigger(PlayerbotAI* ai) : NoAttackersTrigger(ai) {}
+
+	public:
+		virtual bool IsActive();
+
+	};
+
+    class IsBehindTargetTrigger : public Trigger
+    {
+    public:
+        IsBehindTargetTrigger(PlayerbotAI* ai) : Trigger(ai) {}
+
+    public:
+        virtual bool IsActive();
+    };
+
+    class HasCcTargetTrigger : public Trigger
+    {
+    public:
+        HasCcTargetTrigger(PlayerbotAI* ai, const char* name) : Trigger(ai, name) {}
+
+    public:
+        virtual bool IsActive();
+    };
+
+	class NoMovementTrigger : public Trigger
+	{
+	public:
+		NoMovementTrigger(PlayerbotAI* ai, const char* name) : Trigger(ai, name, 5) {}
+
+	public:
+		virtual bool IsActive();
+	};
+}
+
+#include "RangeTriggers.h"
+#include "HealthTriggers.h"
+#include "CureTriggers.h"

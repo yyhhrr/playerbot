@@ -1,0 +1,161 @@
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
+#include "GenericTriggers.h"
+#include "../../LootObjectStack.h"
+
+using namespace ai;
+
+bool LowManaTrigger::IsActive()
+{
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < LOW_HEALTH_PERCENT;
+}
+
+
+bool RageAvailable::IsActive()
+{
+    return AI_VALUE2(uint8, "rage", "self target") >= amount;
+}
+
+bool EnergyAvailable::IsActive()
+{
+	return AI_VALUE2(uint8, "energy", "self target") >= amount;
+}
+
+bool ComboPointsAvailableTrigger::IsActive()
+{
+    return AI_VALUE2(uint8, "combo", "self target") >= amount;
+}
+
+bool LoseAggroTrigger::IsActive()
+{
+    return !AI_VALUE2(bool, "has aggro", "current target");
+}
+
+bool PanicTrigger::IsActive()
+{
+    return AI_VALUE2(uint8, "health", "self target") < 25 &&
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") < 25);
+}
+
+bool BuffTrigger::IsActive()
+{
+    Unit* target = GetTarget();
+	return SpellTrigger::IsActive() &&
+		!ai->HasAura(spell, target) &&
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > 40);
+}
+
+Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()
+{
+	return ai->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
+}
+
+bool NoAttackersTrigger::IsActive()
+{
+    return !AI_VALUE(Unit*, "current target") && AI_VALUE(uint8, "attacker count") > 0;
+}
+
+bool NoTargetTrigger::IsActive()
+{
+	return !AI_VALUE(Unit*, "current target");
+}
+
+bool MyAttackerCountTrigger::IsActive()
+{
+    return AI_VALUE(uint8, "my attacker count") >= amount;
+}
+
+bool AoeTrigger::IsActive()
+{
+    return AI_VALUE(uint8, "attacker count") >= amount;
+}
+
+bool DebuffTrigger::IsActive()
+{
+	return BuffTrigger::IsActive() && AI_VALUE2(uint8, "health", "current target") > 25;
+}
+
+bool SpellTrigger::IsActive()
+{
+	return GetTarget();
+}
+
+bool SpellCanBeCastTrigger::IsActive()
+{
+	Unit* target = GetTarget();
+	return target && ai->CanCastSpell(spell, target);
+}
+
+bool LootAvailableTrigger::IsActive()
+{
+    return AI_VALUE(bool, "has available loot");
+}
+
+bool RandomTrigger::IsActive()
+{
+    int vl  = rand() % probability;
+    return vl == 0;
+}
+
+bool AndTrigger::IsActive()
+{
+    return ls->IsActive() && rs->IsActive();
+}
+
+const char* AndTrigger::getName()
+{
+    std::string name(ls->getName());
+    name = name + " and ";
+    name = name + rs->getName();
+    return name.c_str();
+}
+
+bool BoostTrigger::IsActive()
+{
+	return BuffTrigger::IsActive() && AI_VALUE(uint8, "balance") <= balance;
+}
+
+bool SnareTargetTrigger::IsActive()
+{
+	Unit* target = GetTarget();
+	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !ai->HasAura(spell, target);
+}
+
+bool ItemCountTrigger::IsActive()
+{
+	return AI_VALUE2(uint8, "item count", item) < count;
+}
+
+bool InterruptSpellTrigger::IsActive()
+{
+	return SpellTrigger::IsActive() && ai->IsSpellCasting(GetTarget());
+}
+
+bool HasAuraTrigger::IsActive()
+{
+	return ai->HasAura(spell, GetTarget());
+}
+
+bool TankAoeTrigger::IsActive()
+{
+    Unit* target = AI_VALUE(Unit*, "current target");
+    return AI_VALUE(uint8, "attacker count") > 0 &&
+        (!target || target->getVictim() == AI_VALUE(Unit*, "self target"));
+}
+
+bool IsBehindTargetTrigger::IsActive()
+{
+    Unit* target = AI_VALUE(Unit*, "current target");
+    return target && AI_VALUE2(bool, "behind", "current target");
+}
+
+bool HasCcTargetTrigger::IsActive()
+{
+    return AI_VALUE(uint8, "attacker count") > 2 && AI_VALUE2(Unit*, "cc target", getName()) && 
+        !AI_VALUE2(Unit*, "current cc target", getName());
+}
+
+bool NoMovementTrigger::IsActive()
+{
+	return !AI_VALUE2(bool, "moving", "self target");
+}

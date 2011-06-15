@@ -3,13 +3,13 @@
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
 #include "StrategyContext.h"
-#include "TriggerContext.h"
-#include "ActionContext.h"
-#include "ChatTriggerContext.h"
-#include "ChatActionContext.h"
-#include "WorldPacketTriggerContext.h"
-#include "WorldPacketActionContext.h"
-#include "ValueContext.h"
+#include "triggers/TriggerContext.h"
+#include "actions/ActionContext.h"
+#include "triggers/ChatTriggerContext.h"
+#include "actions/ChatActionContext.h"
+#include "triggers/WorldPacketTriggerContext.h"
+#include "actions/WorldPacketActionContext.h"
+#include "values/ValueContext.h"
 
 using namespace ai;
 

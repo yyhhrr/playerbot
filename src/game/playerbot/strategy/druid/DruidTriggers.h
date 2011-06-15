@@ -1,5 +1,5 @@
 #pragma once
-#include "../GenericTriggers.h"
+#include "../triggers/GenericTriggers.h"
 
 namespace ai {
     class MarkOfTheWildOnPartyTrigger : public BuffOnPartyTrigger {

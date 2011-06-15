@@ -2,7 +2,7 @@
 
 #include "aitest.h"
 #include "MockPlayerbotAIBase.h"
-#include "../game/playerbot/strategy/ChatCommandTrigger.h"
+#include "../game/playerbot/strategy/triggers/ChatCommandTrigger.h"
 #include "../game/playerbot/strategy/ExternalEventHelper.h"
 
 using namespace ai;
