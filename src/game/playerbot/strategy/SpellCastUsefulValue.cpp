@@ -1,6 +1,7 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "SpellCastUsefulValue.h"
+#include "LastSpellCastValue.h"
 
 using namespace ai;
 
@@ -33,7 +34,7 @@ bool SpellCastUsefulValue::Calculate()
 			return false;
 	}
 
-    uint32 lastSpellId = AI_VALUE(uint32, "last spell id");
+    uint32 lastSpellId = AI_VALUE(LastSpellCast&, "last spell id").id;
     if (spellid == lastSpellId) 
     {
         Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);

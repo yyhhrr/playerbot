@@ -67,6 +67,24 @@ public:
     void TellMaster(string &text) { TellMaster(text.c_str()); }
     void TellMaster(const char* text);
     void TellMaster(LogLevel level, const char* text);
+    void WaitForSpellCast();
+    void SpellInterrupted(uint32 spellid);
+    int32 CalculateGlobalCooldown(uint32 spellid);
+    void InterruptSpell();
+    void RemoveAura(const char* name);
+
+    virtual bool CanCastSpell(const char* name, Unit* target);
+    virtual bool CastSpell(const char* name, Unit* target);
+    virtual bool HasAura(const char* spellName, Unit* player);
+    virtual bool HasAnyAuraOf(Unit* player, ...);
+
+    virtual bool IsSpellCasting(Unit* player);
+    virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
+    bool CanCastSpell(uint32 spellid, Unit* target);
+
+    bool HasAura(uint32 spellId, const Unit* player);
+    bool CastSpell(uint32 spellId, Unit* target);
+    bool canDispel(const SpellEntry* entry, uint32 dispelType);
 
 public:
 	Player* GetBot() { return bot; }

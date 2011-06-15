@@ -6,10 +6,10 @@ namespace ai {
 		CastBearFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "bear form") {} 
 
         virtual bool isPossible() {
-			return CastBuffSpellAction::isPossible() && !spellManager->HasAura("dire bear form", GetTarget());
+			return CastBuffSpellAction::isPossible() && !ai->GetAi()->HasAura("dire bear form", GetTarget());
 		}
         virtual bool isUseful() {
-			return CastBuffSpellAction::isUseful() && !spellManager->HasAura("dire bear form", GetTarget());
+			return CastBuffSpellAction::isUseful() && !ai->GetAi()->HasAura("dire bear form", GetTarget());
 		}
 	};
 
@@ -37,7 +37,7 @@ namespace ai {
 		CastCasterFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "caster form") {} 
 
 		virtual bool isUseful() {
-			return spellManager->HasAnyAuraOf(GetTarget(), "dire bear form", "bear form", "cat form", "travel form", "aquatic form", 
+			return ai->GetAi()->HasAnyAuraOf(GetTarget(), "dire bear form", "bear form", "cat form", "travel form", "aquatic form", 
 				"flight form", "swift flight form", "moonkin form", NULL); 
 		}
 		virtual bool isPossible() { return true; }

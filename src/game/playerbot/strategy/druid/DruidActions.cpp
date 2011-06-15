@@ -6,12 +6,12 @@ using namespace ai;
 
 bool CastCasterFormAction::Execute(Event event)
 {
-    spellManager->RemoveAura("dire bear form");
-    spellManager->RemoveAura("bear form");
-    spellManager->RemoveAura("cat form");
-	spellManager->RemoveAura("moonkin form");
-    spellManager->RemoveAura("travel form");
-	spellManager->RemoveAura("aquatic form");
+    ai->GetAi()->RemoveAura("dire bear form");
+    ai->GetAi()->RemoveAura("bear form");
+    ai->GetAi()->RemoveAura("cat form");
+	ai->GetAi()->RemoveAura("moonkin form");
+    ai->GetAi()->RemoveAura("travel form");
+	ai->GetAi()->RemoveAura("aquatic form");
     return true;
 }
 
@@ -33,5 +33,5 @@ Value<Unit*>* CastEntanglingRootsCcAction::GetTargetValue()
 
 bool CastEntanglingRootsCcAction::Execute(Event event)
 {
-    return spellManager->CastSpell("entangling roots", GetTarget()); 
+    return ai->GetAi()->CastSpell("entangling roots", GetTarget()); 
 }

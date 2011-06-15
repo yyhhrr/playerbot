@@ -26,7 +26,7 @@ protected:
         int tankCount, dpsCount;
         GetPlayerCount(bot, creature, &tankCount, &dpsCount);
 
-        if (tankCount || dpsCount || !aiRegistry->GetSpellManager()->CanCastSpell(spell, creature))
+        if (tankCount || dpsCount || !aiRegistry->GetAi()->CanCastSpell(spell, creature))
             return;
 
         float minDistance = BOT_REACT_DISTANCE;

@@ -41,7 +41,7 @@ bool BuffTrigger::IsActive()
 {
     Unit* target = GetTarget();
 	return SpellTrigger::IsActive() &&
-		!spellManager->HasAura(spell, target) &&
+		!ai->GetAi()->HasAura(spell, target) &&
 		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > 40);
 }
 
@@ -83,7 +83,7 @@ bool SpellTrigger::IsActive()
 bool SpellCanBeCastTrigger::IsActive()
 {
 	Unit* target = GetTarget();
-	return target && spellManager->CanCastSpell(spell, target);
+	return target && ai->GetAi()->CanCastSpell(spell, target);
 }
 
 bool LootAvailableTrigger::IsActive()
@@ -118,7 +118,7 @@ bool BoostTrigger::IsActive()
 bool SnareTargetTrigger::IsActive()
 {
 	Unit* target = GetTarget();
-	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !spellManager->HasAura(spell, target);
+	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !ai->GetAi()->HasAura(spell, target);
 }
 
 bool ItemCountTrigger::IsActive()
@@ -128,12 +128,12 @@ bool ItemCountTrigger::IsActive()
 
 bool InterruptSpellTrigger::IsActive()
 {
-	return SpellTrigger::IsActive() && spellManager->IsSpellCasting(GetTarget());
+	return SpellTrigger::IsActive() && ai->GetAi()->IsSpellCasting(GetTarget());
 }
 
 bool HasAuraTrigger::IsActive()
 {
-	return spellManager->HasAura(spell, GetTarget());
+	return ai->GetAi()->HasAura(spell, GetTarget());
 }
 
 bool TankAoeTrigger::IsActive()

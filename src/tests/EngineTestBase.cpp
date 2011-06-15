@@ -29,20 +29,18 @@ public:
             ai->buffer.append(")");
         }
 
-        MockAiSpellManager* spellManager = (MockAiSpellManager*)ai->GetSpellManager();
-
         if (name == "caster form")
         {
-            spellManager->auras[MockedTargets::GetSelf()].remove("dire bear form");
-            spellManager->auras[MockedTargets::GetSelf()].remove("bear form");
-            spellManager->auras[MockedTargets::GetSelf()].remove("cat form");
-            spellManager->auras[MockedTargets::GetSelf()].remove("moonkin form");
-            spellManager->auras[MockedTargets::GetSelf()].remove("travel form");
-            spellManager->auras[MockedTargets::GetSelf()].remove("aquatic form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("dire bear form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("bear form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("cat form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("moonkin form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("travel form");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("aquatic form");
         }
         if (name == "remove shadowform")
         {
-            spellManager->auras[MockedTargets::GetSelf()].remove("shadowform");
+            ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove("shadowform");
         }
 
         remove(name, " on party");
@@ -51,7 +49,7 @@ public:
             name = "cleanse";
         if (name.find("purify") != string::npos)
             name = "purify";
-        spellManager->spellCooldowns.push_back(name); 
+        ai->GetMockAi()->spellCooldowns.push_back(name); 
     }
 
     void remove(string& name, string pattern)
@@ -69,7 +67,6 @@ private:
 void EngineTestBase::setUp()
 {
 	ai = new MockAiManagerRegistry();
-	spellManager = (MockAiSpellManager*)ai->GetSpellManager();
 }
 
 void EngineTestBase::tearDown()
@@ -148,7 +145,7 @@ void EngineTestBase::tickWithNoTarget()
 
 void EngineTestBase::spellUnavailable(const char* spell)
 {
-	spellManager->spellCooldowns.push_back(spell);
+	ai->GetMockAi()->spellCooldowns.push_back(spell);
 }
 
 void EngineTestBase::tickWithSpellUnavailable(const char* spell)
@@ -166,24 +163,24 @@ void EngineTestBase::tickWithSpellAvailable(const char* spell)
 void EngineTestBase::spellAvailable(const char* spell)
 {
     list<string> remove;
-    for (list<string>::iterator i = spellManager->spellCooldowns.begin(); i != spellManager->spellCooldowns.end(); i++)
+    for (list<string>::iterator i = ai->GetMockAi()->spellCooldowns.begin(); i != ai->GetMockAi()->spellCooldowns.end(); i++)
     {
         if (i->find(spell) != string::npos) remove.push_back(*i);
     }
     for (list<string>::iterator i = remove.begin(); i != remove.end(); i++)
     {
-        spellManager->spellCooldowns.remove(*i);
+        ai->GetMockAi()->spellCooldowns.remove(*i);
     }
 }
 
 void EngineTestBase::addAura(const char* spell)
 {
-	spellManager->auras[MockedTargets::GetSelf()].push_back(spell);
+	ai->GetMockAi()->auras[MockedTargets::GetSelf()].push_back(spell);
 }
 
 void EngineTestBase::removeAura(const char* spell)
 {
-	spellManager->auras[MockedTargets::GetSelf()].remove(spell);
+	ai->GetMockAi()->auras[MockedTargets::GetSelf()].remove(spell);
 }
 
 void EngineTestBase::tickOutOfSpellRange()
@@ -257,23 +254,23 @@ void EngineTestBase::tickWithPartyLowHealth(int amount)
 
 void EngineTestBase::tickWithAuraToDispel(uint32 type)
 {
-	spellManager->dispels[MockedTargets::GetSelf()] = type;
+	ai->GetMockAi()->dispels[MockedTargets::GetSelf()] = type;
 	tick();
-	spellManager->dispels[MockedTargets::GetSelf()] = 0;
+	ai->GetMockAi()->dispels[MockedTargets::GetSelf()] = 0;
 }
 
 void EngineTestBase::tickWithPartyAuraToDispel(uint32 type)
 {
-	spellManager->dispels[MockedTargets::GetPartyMember()] = type;
+	ai->GetMockAi()->dispels[MockedTargets::GetPartyMember()] = type;
 	tick();
-	spellManager->dispels[MockedTargets::GetPartyMember()] = 0;
+	ai->GetMockAi()->dispels[MockedTargets::GetPartyMember()] = 0;
 }
 
 void EngineTestBase::tickWithTargetAuraToDispel(uint32 type)
 {
-	spellManager->dispels[MockedTargets::GetCurrentTarget()] = type;
+	ai->GetMockAi()->dispels[MockedTargets::GetCurrentTarget()] = type;
 	tick();
-	spellManager->dispels[MockedTargets::GetCurrentTarget()] = 0;
+	ai->GetMockAi()->dispels[MockedTargets::GetCurrentTarget()] = 0;
 }
 
 void EngineTestBase::lowHealth(int amount)
@@ -300,9 +297,9 @@ void EngineTestBase::tickWithComboPoints(int amount)
 
 void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell() 
 {
-    spellManager->targetIsCastingNonMeleeSpell = true;
+    ai->GetMockAi()->targetIsCastingNonMeleeSpell = true;
     tick();
-    spellManager->targetIsCastingNonMeleeSpell = false;
+    ai->GetMockAi()->targetIsCastingNonMeleeSpell = false;
 }
 
 void EngineTestBase::tickWithBalancePercent(int percent)
@@ -361,22 +358,22 @@ void EngineTestBase::tickInSpellRange()
 
 void EngineTestBase::addTargetAura(const char* spell)
 {
-	spellManager->auras[MockedTargets::GetCurrentTarget()].push_back(spell);
+	ai->GetMockAi()->auras[MockedTargets::GetCurrentTarget()].push_back(spell);
 }
 
 void EngineTestBase::removeTargetAura(const char* spell)
 {
-    spellManager->auras[MockedTargets::GetCurrentTarget()].remove(spell);
+    ai->GetMockAi()->auras[MockedTargets::GetCurrentTarget()].remove(spell);
 }
 
 void EngineTestBase::addPartyAura(const char* spell)
 {
-    spellManager->auras[MockedTargets::GetPartyMember()].push_back(spell);
+    ai->GetMockAi()->auras[MockedTargets::GetPartyMember()].push_back(spell);
 }
 
 void EngineTestBase::removePartyAura(const char* spell)
 {
-    spellManager->auras[MockedTargets::GetPartyMember()].remove(spell);
+    ai->GetMockAi()->auras[MockedTargets::GetPartyMember()].remove(spell);
 }
 
 void EngineTestBase::tickWithLootAvailable()

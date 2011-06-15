@@ -32,7 +32,7 @@ bool CastAimedShotAction::isUseful()
 
 bool CastAspectOfTheCheetahAction::isUseful() 
 {
-    return !spellManager->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
+    return !ai->GetAi()->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
 }
 
 bool CastAspectOfTheViperAction::isUseful() 

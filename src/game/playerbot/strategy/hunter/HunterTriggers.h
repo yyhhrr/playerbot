@@ -14,7 +14,7 @@ namespace ai
 			checkInterval = 1;
 		}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !spellManager->HasAura("aspect of the viper", GetTarget());
+			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the viper", GetTarget());
         };
     };
 
@@ -25,7 +25,7 @@ namespace ai
 			checkInterval = 1;
 		}
 		virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !spellManager->HasAura("aspect of the viper", GetTarget());
+			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the viper", GetTarget());
 		};
 	};
 
@@ -36,8 +36,8 @@ namespace ai
         virtual bool IsActive() 
 		{
 			Unit* target = GetTarget();
-            return !spellManager->HasAura(spell, target) && 
-				spellManager->CanCastSpell(spell, target) && 
+            return !ai->GetAi()->HasAura(spell, target) && 
+				ai->GetAi()->CanCastSpell(spell, target) && 
 				AI_VALUE2(uint8, "mana", "self target") < 50; 
         };
     };
@@ -47,7 +47,7 @@ namespace ai
     public: 
         HunterAspectOfThePackTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "aspect of the pack") {}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !spellManager->HasAura("aspect of the cheetah", GetTarget());
+			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the cheetah", GetTarget());
         };
     };
 

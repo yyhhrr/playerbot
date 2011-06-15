@@ -6,12 +6,12 @@ using namespace ai;
 
 bool CastSpellAction::Execute(Event event) 
 {
-	return spellManager->CastSpell(spell, GetTarget()); 
+	return ai->GetAi()->CastSpell(spell, GetTarget()); 
 }
 
 bool CastSpellAction::isPossible() 
 {
-	return spellManager->CanCastSpell(spell, GetTarget());
+	return ai->GetAi()->CanCastSpell(spell, GetTarget());
 }
 
 bool CastSpellAction::isUseful() 
@@ -22,12 +22,12 @@ bool CastSpellAction::isUseful()
 
 bool CastAuraSpellAction::isPossible() 
 {
-	return CastSpellAction::isPossible() && !spellManager->HasAura(spell, GetTarget());
+	return CastSpellAction::isPossible() && !ai->GetAi()->HasAura(spell, GetTarget());
 }
 
 bool CastAuraSpellAction::isUseful() 
 {
-	return CastSpellAction::isUseful() && !spellManager->HasAura(spell, GetTarget());
+	return CastSpellAction::isUseful() && !ai->GetAi()->HasAura(spell, GetTarget());
 }
 
 bool CastHealingSpellAction::isUseful() 

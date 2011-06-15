@@ -34,7 +34,7 @@
 #include "SpellIdValue.h"
 #include "ItemForSpellValue.h"
 #include "SpellCastUsefulValue.h"
-#include "LastSpellIdValue.h"
+#include "LastSpellCastValue.h"
 
 namespace ai
 {
@@ -89,11 +89,11 @@ namespace ai
             creators["spell id"] = &ValueContext::spell_id;
             creators["item for spell"] = &ValueContext::item_for_spell;
             creators["spell cast useful"] = &ValueContext::spell_cast_useful;
-            creators["last spell id"] = &ValueContext::last_spell_id;
+            creators["last spell cast"] = &ValueContext::last_spell_cast;
         }
 
     private:
-        static UntypedValue* last_spell_id(AiManagerRegistry* ai) { return new LastSpellIdValue(ai); }
+        static UntypedValue* last_spell_cast(AiManagerRegistry* ai) { return new LastSpellCastValue(ai); }
         static UntypedValue* spell_cast_useful(AiManagerRegistry* ai) { return new SpellCastUsefulValue(ai); }
         static UntypedValue* item_for_spell(AiManagerRegistry* ai) { return new ItemForSpellValue(ai); }
         static UntypedValue* spell_id(AiManagerRegistry* ai) { return new SpellIdValue(ai); }

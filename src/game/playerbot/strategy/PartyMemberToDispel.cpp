@@ -20,11 +20,11 @@ Unit* PartyMemberToDispel::Calculate()
         if( !player || !player->isAlive() || player == bot)
             continue;
 
-        if (ai->GetSpellManager()->HasAuraToDispel(player, dispelType))
+        if (ai->GetAi()->HasAuraToDispel(player, dispelType))
             return player;
 
         Pet* pet = player->GetPet();
-        if (pet && ai->GetSpellManager()->HasAuraToDispel(pet, dispelType))
+        if (pet && ai->GetAi()->HasAuraToDispel(pet, dispelType))
             return pet;
     }
 

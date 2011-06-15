@@ -49,7 +49,7 @@ namespace ai
         {
             const char* spell = qualifier.c_str();
             Unit* target = MockedTargets::GetPartyMember();
-            return ai->GetSpellManager()->HasAura(spell, target) ? NULL : target;
+            return ai->GetAi()->HasAura(spell, target) ? NULL : target;
         }
     };
 
@@ -74,7 +74,7 @@ namespace ai
         {
             uint32 dispelType = atoi(qualifier.c_str());
             Unit* target = MockedTargets::GetPartyMember();
-            return ai->GetSpellManager()->HasAuraToDispel(target, dispelType) ? target : NULL;
+            return ai->GetAi()->HasAuraToDispel(target, dispelType) ? target : NULL;
         }
     };
 

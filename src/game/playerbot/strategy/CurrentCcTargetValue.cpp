@@ -17,7 +17,7 @@ protected:
     {
         float threat = threatManager->getThreat(bot);
         Unit* creature = threatManager->getOwner();
-        if (aiRegistry->GetSpellManager()->HasAura(spell, creature))
+        if (aiRegistry->GetAi()->HasAura(spell, creature))
             result = creature;
     }
 

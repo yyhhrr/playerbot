@@ -9,6 +9,7 @@
 #include "../CellImpl.h"
 #include "strategy/LastMovementValue.h"
 #include "strategy/LogLevelAction.h"
+#include "strategy/LastSpellCastValue.h"
 
 using namespace ai;
 using namespace std;
@@ -107,6 +108,29 @@ void extractItemIds(const string& text, list<uint32>& itemIds)
         if (id)
             itemIds.push_back(id);
     }
+}
+
+uint64 extractGuid(WorldPacket& packet)
+{
+    uint8 mask;
+    packet >> mask;
+    uint64 guid = 0;
+    uint8 bit = 0;
+    uint8 testMask = 1;
+    while (true)
+    {
+        if (mask & testMask)
+        {
+            uint8 word;
+            packet >> word;
+            guid += (word << bit);
+        }
+        if (bit == 7)
+            break;
+        ++bit;
+        testMask <<= 1;
+    }
+    return guid;
 }
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
@@ -285,7 +309,89 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             bot->m_movementInfo.RemoveMovementFlag(MOVEFLAG_FLYING);
             return;
         }
+    case SMSG_SPELL_FAILURE:
+        {
+            WorldPacket p(packet);
+            uint64 casterGuid = extractGuid(p);
+            if (casterGuid != bot->GetGUID())
+                return;
+            uint8  castCount;
+            uint32 spellId;
+            p >> castCount;
+            p >> spellId;
+            SpellInterrupted(spellId);
+            return;
+        }
+
+    case SMSG_SPELL_GO:
+        {
+            WorldPacket p(packet);
+            uint64 casterGuid = extractGuid(p);
+            if (casterGuid != bot->GetGUID())
+                return;
+            WaitForSpellCast();
+            return;
+        }
+    case SMSG_SPELL_DELAYED:
+        {
+            WorldPacket p(packet);
+            uint64 casterGuid = extractGuid(p);
+            if (casterGuid != bot->GetGUID())
+                return;
+            IncreaseNextCheckDelay(1);
+        }
     }
+}
+
+
+void PlayerbotAI::WaitForSpellCast()
+{
+    uint32 lastSpellId = aiObjectContext->GetValue<LastSpellCast&>("last spell id")->Get().id;
+    Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);
+    if (!pSpell)
+        return;
+
+    if (pSpell->IsChannelActive())
+        SetNextCheckDelay(GetSpellDuration(pSpell->m_spellInfo) / 1000);
+}
+
+
+void PlayerbotAI::SpellInterrupted(uint32 spellid)
+{
+    LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
+    if (lastSpell.id != spellid)
+        return;
+
+    int castTimeSpent = time(0) - lastSpell.time;
+
+    int32 globalCooldown = CalculateGlobalCooldown(lastSpell.id);
+    if (castTimeSpent < globalCooldown)
+        SetNextCheckDelay(globalCooldown - castTimeSpent);
+    else
+        SetNextCheckDelay(1);
+
+    lastSpell.Reset();
+}
+
+int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
+{
+    if (!spellid) 
+        return 0;
+
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
+
+    if (!spellInfo || 
+        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 || 
+        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2 || 
+        spellInfo->Attributes & SPELL_ATTR_OUTDOORS_ONLY ||
+        spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE ||
+        !spellInfo->StartRecoveryCategory)
+        return 0;
+
+    if (spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQ_WAND)
+        return GLOBAL_COOLDOWN;
+
+    return GLOBAL_COOLDOWN;
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -381,7 +487,7 @@ void PlayerbotAI::DoNextAction()
 
 void PlayerbotAI::ReInitCurrentEngine()
 {
-    aiRegistry->GetSpellManager()->InterruptSpell();
+    InterruptSpell();
     currentEngine->Init();
     SetNextCheckDelay(0);
 }
@@ -443,7 +549,7 @@ bool PlayerbotAI::IsTank(Player* player)
     case CLASS_WARRIOR:
         return true;
     case CLASS_DRUID:
-        return aiRegistry->GetSpellManager()->HasAnyAuraOf(player, "bear form", "dire bear form");
+        return HasAnyAuraOf(player, "bear form", "dire bear form");
     }
     return false;
 }
@@ -556,3 +662,246 @@ void PlayerbotAI::TellMaster(LogLevel level, const char* text)
     out << LogLevelAction::logLevel2string(level) << ": " << text;
     TellMaster(out.str().c_str());
 }
+
+
+bool PlayerbotAI::HasAura(const char* name, Unit* player) 
+{
+    return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), player);
+}
+
+bool PlayerbotAI::HasAura(uint32 spellId, const Unit* player) 
+{
+    if (!spellId || !player) 
+        return false;
+
+    Unit* unit = (Unit*)player;
+    if (unit->GetAura(spellId, EFFECT_INDEX_0) ||
+        unit->GetAura(spellId, EFFECT_INDEX_1) ||
+        unit->GetAura(spellId, EFFECT_INDEX_2))
+        return true;
+    return false;
+}
+
+bool PlayerbotAI::HasAnyAuraOf(Unit* player, ...)
+{
+    if (!player)
+        return false;
+
+    va_list vl;
+    va_start(vl, player);
+
+    const char* cur = NULL;
+    do {
+        cur = va_arg(vl, const char*);
+        if (cur && HasAura(cur, player)) {
+            va_end(vl);
+            return true;
+        }
+    }
+    while (cur);
+
+    va_end(vl);
+    return false;
+}
+
+bool PlayerbotAI::CanCastSpell(const char* name, Unit* target)
+{
+    return CanCastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
+}
+
+bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
+{
+    if (!spellid)
+        return false;
+
+    if (!target)
+        target = bot;
+
+    if (!bot->HasSpell(spellid) || bot->HasSpellCooldown(spellid))
+        return false;
+
+    bool positiveSpell = IsPositiveSpell(spellid);
+    if (positiveSpell && bot->IsHostileTo(target))
+        return false;
+
+    if (!positiveSpell && bot->IsFriendlyTo(target))
+        return false;
+
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
+    if (!spellInfo)
+        return false;
+
+    ObjectGuid oldSel = bot->GetSelectionGuid();
+    bot->SetSelectionGuid(target->GetObjectGuid());
+    Spell *spell = new Spell(bot, spellInfo, false );
+    SpellCastTargets targets;
+    targets.setUnitTarget(target);
+    spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellid)->Get();
+    targets.setItemTarget(spell->m_CastItem);
+    SpellCastResult result = spell->CheckCast(false);
+    delete spell;
+    bot->SetSelectionGuid(oldSel);
+
+    switch (result)
+    {
+    case SPELL_FAILED_TOO_CLOSE:
+    case SPELL_FAILED_NOT_BEHIND:
+    case SPELL_FAILED_NOT_INFRONT:
+    case SPELL_FAILED_NOT_STANDING:
+    case SPELL_FAILED_UNIT_NOT_BEHIND:
+    case SPELL_FAILED_UNIT_NOT_INFRONT:
+    case SPELL_FAILED_OUT_OF_RANGE:
+    case SPELL_FAILED_SUCCESS:
+    case SPELL_FAILED_LINE_OF_SIGHT:
+    case SPELL_FAILED_MOVING:
+    case SPELL_FAILED_ONLY_STEALTHED:
+    case SPELL_FAILED_ONLY_SHAPESHIFT:
+    case SPELL_FAILED_SPELL_IN_PROGRESS:
+    case SPELL_FAILED_TRY_AGAIN:
+    case SPELL_FAILED_NOT_ON_STEALTHED:
+    case SPELL_FAILED_NOT_ON_SHAPESHIFT:
+    case SPELL_FAILED_NOT_IDLE:
+    case SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW:
+    case SPELL_FAILED_SUMMON_PENDING:
+    case SPELL_FAILED_BAD_IMPLICIT_TARGETS:
+    case SPELL_FAILED_BAD_TARGETS:
+    case SPELL_CAST_OK:
+    case SPELL_FAILED_ITEM_NOT_FOUND:
+        return true;
+    default:
+        return false;
+    }
+}
+
+
+bool PlayerbotAI::CastSpell(const char* name, Unit* target) 
+{
+    return CastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
+}
+
+bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
+{
+    if (!spellId)
+        return false;
+
+    if (!target)
+        target = bot;
+
+    if (!bot->isInFrontInMap(target, 10))
+        bot->SetInFront(target);
+
+    aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get().Set(spellId, target->GetObjectGuid(), time(0));
+    aiObjectContext->GetValue<LastMovement&>("last movement")->Get().Set(NULL);
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+    bot->clearUnitState( UNIT_STAT_CHASE );
+    bot->clearUnitState( UNIT_STAT_FOLLOW );
+
+    if (!bot->IsStandState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
+
+    const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+    ObjectGuid oldSel = bot->GetSelectionGuid().GetRawValue();
+    bot->SetSelectionGuid(target->GetObjectGuid());
+
+    Spell *spell = new Spell(bot, pSpellInfo, false);
+    SpellCastTargets targets;
+    targets.setUnitTarget(target);
+    spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellId)->Get();
+    targets.setItemTarget(spell->m_CastItem);
+    spell->prepare(&targets, false);
+
+    bot->SetSelectionGuid(oldSel);
+
+    float castTime = GetSpellCastTime(pSpellInfo);
+
+    if (pSpellInfo->AttributesEx & SPELL_ATTR_EX_CHANNELED_1 ||
+        pSpellInfo->AttributesEx & SPELL_ATTR_EX_CHANNELED_2)
+        castTime += GetSpellDuration(pSpellInfo);
+
+    castTime = ceil(castTime / 1000.0);
+
+    uint32 globalCooldown = CalculateGlobalCooldown(spellId);
+    if (castTime < globalCooldown)
+        castTime = globalCooldown;
+
+    SetNextCheckDelay(castTime);
+    return true;
+}
+
+void PlayerbotAI::InterruptSpell()
+{
+    WorldPacket* const packet = new WorldPacket(CMSG_CANCEL_CAST, 5);
+    LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
+    *packet << lastSpell.id;
+    *packet << lastSpell.target;
+    bot->GetSession()->QueuePacket(packet);
+
+    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_MAX_SPELL; type++)
+        bot->InterruptSpell((CurrentSpellTypes)type);
+
+    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_MAX_SPELL; type++)
+        bot->GetMover()->InterruptSpell((CurrentSpellTypes)type);
+
+    SpellInterrupted(lastSpell.id);
+}
+
+
+void PlayerbotAI::RemoveAura(const char* name)
+{
+    uint32 spellid = aiObjectContext->GetValue<uint32>("spell id", name)->Get();
+    if (spellid && HasAura(spellid, bot))
+        bot->RemoveAurasDueToSpell(spellid);
+}
+
+bool PlayerbotAI::IsSpellCasting(Unit* player)
+{
+    return player->IsNonMeleeSpellCasted(true);
+}
+
+bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType) 
+{
+    for (uint32 type = SPELL_AURA_NONE; type < TOTAL_AURAS; ++type)
+    {
+        Unit::AuraList auras = target->GetAurasByType((AuraType)type);
+        for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+        {
+            Aura* aura = *itr;
+            const SpellEntry* entry = aura->GetSpellProto();
+            uint32 spellId = entry->Id;
+
+            bool isPositiveSpell = IsPositiveSpell(spellId);
+            if (bot->IsFriendlyTo(target) && isPositiveSpell)
+                continue;
+
+            if (bot->IsHostileTo(target) && !isPositiveSpell)
+                continue;
+
+            if (canDispel(entry, dispelType))
+                return true;
+        }
+    }
+    return false;
+}
+
+#ifndef WIN32
+int strcmpi(const char *s1, const char *s2)
+{
+    for (; *s1 && *s2 && (toupper(*s1) == toupper(*s2)); ++s1, ++s2);
+    return *s1 - *s2;
+}
+#endif
+
+bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType) 
+{
+    if (entry->Dispel == dispelType) {
+        return !entry->SpellName[0] ||
+            (strcmpi((const char*)entry->SpellName[0], "demon skin") &&
+            strcmpi((const char*)entry->SpellName[0], "mage armor") &&
+            strcmpi((const char*)entry->SpellName[0], "frost armor") &&
+            strcmpi((const char*)entry->SpellName[0], "ice armor"));
+    }
+    return false;
+}
+

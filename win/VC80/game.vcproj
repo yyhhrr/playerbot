@@ -2165,7 +2165,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\game\playerbot\strategy\LastSpellIdValue.h"
+					RelativePath="..\..\src\game\playerbot\strategy\LastSpellCastValue.h"
 					>
 				</File>
 				<File
