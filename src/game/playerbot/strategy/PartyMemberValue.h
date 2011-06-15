@@ -18,7 +18,7 @@ namespace ai
     class PartyMemberValue : public CalculatedValue<Unit*>
 	{
 	public:
-        PartyMemberValue(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        PartyMemberValue(PlayerbotAI* ai) : CalculatedValue<Unit*>(ai) {}
 
     public:
         bool IsTargetOfSpellCast(Player* target, SpellEntryPredicate &predicate);

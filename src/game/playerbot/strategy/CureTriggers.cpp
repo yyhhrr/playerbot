@@ -8,10 +8,10 @@ using namespace ai;
 bool NeedCureTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
-	return target && ai->GetAi()->HasAuraToDispel(target, dispelType);
+	return target && ai->HasAuraToDispel(target, dispelType);
 }
 
 Value<Unit*>* PartyMemberNeedCureTrigger::GetTargetValue()
 {
-	return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
+	return ai->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
 }

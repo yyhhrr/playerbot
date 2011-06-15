@@ -7,7 +7,7 @@ namespace ai
 {
     class TellItemCountAction : public InventoryAction {
     public:
-        TellItemCountAction(AiManagerRegistry* const ai) : InventoryAction(ai, "c") {}
+        TellItemCountAction(PlayerbotAI* ai) : InventoryAction(ai, "c") {}
         virtual bool Execute(Event event);
     };
 

@@ -6,8 +6,8 @@ using namespace ai;
 
 uint32 LastSpellIdValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
 
     string namepart = qualifier;
     wstring wnamepart;

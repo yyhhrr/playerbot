@@ -6,7 +6,7 @@ namespace ai
 {
     class LeaveGroupAction : public Action {
     public:
-        LeaveGroupAction(AiManagerRegistry* const ai) : Action(ai, "leave") {}
+        LeaveGroupAction(PlayerbotAI* ai) : Action(ai, "leave") {}
         
         virtual bool Execute(Event event)
         {

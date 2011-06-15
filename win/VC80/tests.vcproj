@@ -844,14 +844,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\MockAiManagerRegistry.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\MockAiManagerRegistry.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\tests\MockAiObjectContext.cpp"
 				>
 			</File>
@@ -860,15 +852,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\MockAiSpellManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\MockAiSpellManager.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\tests\MockedTargets.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\MockPlayerbotAIBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\MockPlayerbotAIBase.h"
 				>
 			</File>
 		</Filter>

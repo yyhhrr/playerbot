@@ -4,8 +4,8 @@
 #include "MovementActions.h"
 #include "../../MotionMaster.h"
 #include "../../MovementGenerator.h"
-#include "../ai/AttackerMapProvider.h"
-#include "../ai/FleeManager.h"
+#include "../AttackerMapProvider.h"
+#include "../FleeManager.h"
 
 using namespace ai;
 
@@ -89,7 +89,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     if (bot->GetDistance(target) > BOT_REACT_DISTANCE)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "I am too far away");
+        ai->TellMaster(LOG_LVL_DEBUG, "I am too far away");
         return false;
     }
 
@@ -100,7 +100,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
     if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE || !bot->IsWithinLOS(x, y, z))
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
+        ai->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
         return false;
     }
 
@@ -156,7 +156,7 @@ bool MovementAction::Flee(Unit *target)
     if (!IsMovingAllowed())
         return true;
 
-    AttackerMap attackers = ai->GetAi()->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap attackers = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
     FleeManager manager(bot, &attackers, SPELL_DISTANCE, GetFollowAngle());
 
     float rx, ry, rz;

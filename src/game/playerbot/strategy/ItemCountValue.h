@@ -8,7 +8,7 @@ namespace ai
     class ItemCountValue : public CalculatedValue<uint8>, public Qualified, InventoryAction
 	{
 	public:
-        ItemCountValue(AiManagerRegistry* const ai) : CalculatedValue<uint8>(ai), InventoryAction(ai, "empty") {}
+        ItemCountValue(PlayerbotAI* ai) : CalculatedValue<uint8>(ai), InventoryAction(ai, "empty") {}
 
     public:
         virtual uint8 Calculate();
@@ -19,7 +19,7 @@ namespace ai
     class InventoryItemValue : public CalculatedValue<Item*>, public Qualified, InventoryAction
     {
     public:
-        InventoryItemValue(AiManagerRegistry* const ai) : CalculatedValue<Item*>(ai), InventoryAction(ai, "empty") {}
+        InventoryItemValue(PlayerbotAI* ai) : CalculatedValue<Item*>(ai), InventoryAction(ai, "empty") {}
 
         virtual Item* Calculate();
 

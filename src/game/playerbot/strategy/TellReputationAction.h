@@ -6,7 +6,7 @@ namespace ai
 {
     class TellReputationAction : public Action {
     public:
-        TellReputationAction(AiManagerRegistry* const ai) : Action(ai, "reputation") {}
+        TellReputationAction(PlayerbotAI* ai) : Action(ai, "reputation") {}
         virtual bool Execute(Event event);
 
     private:

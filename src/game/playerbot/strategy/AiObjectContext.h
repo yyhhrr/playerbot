@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ai/AiManagerRegistryAware.h"
+#include "../PlayerbotAIAware.h"
 #include "Action.h"
 #include "Strategy.h"
 #include "Value.h"
@@ -8,10 +8,10 @@
 
 namespace ai
 {
-    class AiObjectContext : public AiManagerRegistryAware
+    class AiObjectContext : public PlayerbotAIAware
     {
     public:
-        AiObjectContext(AiManagerRegistry* const ai);
+        AiObjectContext(PlayerbotAI* ai);
         virtual ~AiObjectContext() {}
 
     public:

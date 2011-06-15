@@ -7,7 +7,7 @@ using namespace ai;
 class FindTargetForDpsStrategy : public FindTargetStrategy
 {
 public:
-    FindTargetForDpsStrategy(AiManagerRegistry* aiRegistry) : FindTargetStrategy(aiRegistry)
+    FindTargetForDpsStrategy(PlayerbotAI* ai) : FindTargetStrategy(ai)
     {
         minThreat = 0;
         maxTankCount = 0;

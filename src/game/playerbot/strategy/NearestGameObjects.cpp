@@ -29,7 +29,7 @@ private:
 
 list<GameObject*> NearestGameObjects::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     list<GameObject *> targets;
 

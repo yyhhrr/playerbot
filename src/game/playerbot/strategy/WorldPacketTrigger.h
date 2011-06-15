@@ -6,7 +6,7 @@ namespace ai
 {
     class WorldPacketTrigger : public Trigger {
     public:
-        WorldPacketTrigger(AiManagerRegistry* const ai, string command) : Trigger(ai, command.c_str()), triggered(false) {}
+        WorldPacketTrigger(PlayerbotAI* ai, string command) : Trigger(ai, command.c_str()), triggered(false) {}
 
         virtual void ExternalEvent(WorldPacket &packet) 
         {

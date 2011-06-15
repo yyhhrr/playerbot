@@ -6,7 +6,7 @@
 class clazz : public CastSpellAction \
         { \
         public: \
-        clazz(AiManagerRegistry* const ai) : CastSpellAction(ai, name) {} \
+        clazz(PlayerbotAI* ai) : CastSpellAction(ai, name) {} \
 
 
 #define END_SPELL_ACTION() \
@@ -16,19 +16,19 @@ class clazz : public CastSpellAction \
 class clazz : public CastDebuffSpellAction \
         { \
         public: \
-        clazz(AiManagerRegistry* const ai) : CastDebuffSpellAction(ai, name) {} \
+        clazz(PlayerbotAI* ai) : CastDebuffSpellAction(ai, name) {} \
 
 #define BEGIN_RANGED_SPELL_ACTION(clazz, name) \
 class clazz : public CastSpellAction \
         { \
         public: \
-        clazz(AiManagerRegistry* const ai) : CastSpellAction(ai, name) {} \
+        clazz(PlayerbotAI* ai) : CastSpellAction(ai, name) {} \
 
 #define BEGIN_MELEE_SPELL_ACTION(clazz, name) \
 class clazz : public CastMeleeSpellAction \
         { \
         public: \
-        clazz(AiManagerRegistry* const ai) : CastMeleeSpellAction(ai, name) {} \
+        clazz(PlayerbotAI* ai) : CastMeleeSpellAction(ai, name) {} \
 
 
 #define END_RANGED_SPELL_ACTION() \
@@ -39,18 +39,17 @@ class clazz : public CastMeleeSpellAction \
 class clazz : public BuffOnPartyAction \
         { \
         public: \
-        clazz(AiManagerRegistry* const ai) : BuffOnPartyAction(ai, name) {} 
+        clazz(PlayerbotAI* ai) : BuffOnPartyAction(ai, name) {} 
 
 namespace ai
 {
     class CastSpellAction : public Action
     {
     public:
-        CastSpellAction(AiManagerRegistry* const ai, const char* spell) : Action(ai, spell),
+        CastSpellAction(PlayerbotAI* ai, const char* spell) : Action(ai, spell),
 			range(SPELL_DISTANCE)
         {
             this->spell = spell;
-			this->spellManager = ai->GetSpellManager();
         }
 
 		virtual const char* GetTargetName() { return "current target"; };
@@ -71,14 +70,13 @@ namespace ai
     protected:
         const char* spell;
 		float range;
-		AiSpellManager* spellManager;
     };
 
 	//---------------------------------------------------------------------------------------------------------------------
 	class CastAuraSpellAction : public CastSpellAction
 	{
 	public:
-		CastAuraSpellAction(AiManagerRegistry* const ai, const char* spell) : CastSpellAction(ai, spell) {}
+		CastAuraSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
 
 		virtual bool isPossible();
 		virtual bool isUseful();
@@ -88,7 +86,7 @@ namespace ai
     class CastMeleeSpellAction : public CastSpellAction
     {
     public:
-        CastMeleeSpellAction(AiManagerRegistry* const ai, const char* spell) : CastSpellAction(ai, spell) {
+        CastMeleeSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {
 			range = ATTACK_DISTANCE;
 		}
     };
@@ -97,13 +95,13 @@ namespace ai
     class CastDebuffSpellAction : public CastAuraSpellAction
     {
     public:
-        CastDebuffSpellAction(AiManagerRegistry* const ai, const char* spell) : CastAuraSpellAction(ai, spell) {}
+        CastDebuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) {}
     };
 
 	class CastBuffSpellAction : public CastAuraSpellAction
 	{
 	public:
-		CastBuffSpellAction(AiManagerRegistry* const ai, const char* spell) : CastAuraSpellAction(ai, spell) 
+		CastBuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) 
 		{
 			range = BOT_REACT_DISTANCE;
 		}
@@ -116,7 +114,7 @@ namespace ai
     class CastHealingSpellAction : public CastAuraSpellAction
     {
     public:
-        CastHealingSpellAction(AiManagerRegistry* const ai, const char* spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
+        CastHealingSpellAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
 		{
             this->estAmount = estAmount;
 			range = BOT_REACT_DISTANCE;
@@ -131,7 +129,7 @@ namespace ai
 	class CastCureSpellAction : public CastSpellAction
 	{
 	public:
-		CastCureSpellAction(AiManagerRegistry* const ai, const char* spell) : CastSpellAction(ai, spell) 
+		CastCureSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) 
 		{
 			range = BOT_REACT_DISTANCE;
 		}
@@ -155,7 +153,7 @@ namespace ai
     class HealPartyMemberAction : public CastHealingSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        HealPartyMemberAction(AiManagerRegistry* const ai, const char* spell, uint8 estAmount = 15.0f) : 
+        HealPartyMemberAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : 
 			CastHealingSpellAction(ai, spell, estAmount), PartyMemberActionNameSupport(spell) {}
 
 		virtual const char* GetTargetName() { return "party member to heal"; }
@@ -165,7 +163,7 @@ namespace ai
 	class ResurrectPartyMemberAction : public CastSpellAction
 	{
 	public:
-		ResurrectPartyMemberAction(AiManagerRegistry* const ai, const char* spell) : CastSpellAction(ai, spell) {}
+		ResurrectPartyMemberAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
 
 		virtual const char* GetTargetName() { return "party member to resurrect"; }
 	};
@@ -174,7 +172,7 @@ namespace ai
     class CurePartyMemberAction : public CastSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        CurePartyMemberAction(AiManagerRegistry* const ai, const char* spell, uint32 dispelType) : 
+        CurePartyMemberAction(PlayerbotAI* ai, const char* spell, uint32 dispelType) : 
 			CastSpellAction(ai, spell), PartyMemberActionNameSupport(spell)
         {
             this->dispelType = dispelType;
@@ -192,7 +190,7 @@ namespace ai
     class BuffOnPartyAction : public CastBuffSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        BuffOnPartyAction(AiManagerRegistry* const ai, const char* spell) : 
+        BuffOnPartyAction(PlayerbotAI* ai, const char* spell) : 
 			CastBuffSpellAction(ai, spell), PartyMemberActionNameSupport(spell) {}
     public: 
 		virtual Value<Unit*>* GetTargetValue();
@@ -204,25 +202,25 @@ namespace ai
     class CastShootAction : public CastSpellAction
     {
     public:
-        CastShootAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "shoot") {}
+        CastShootAction(PlayerbotAI* ai) : CastSpellAction(ai, "shoot") {}
     };
 
 	class CastLifeBloodAction : public CastHealingSpellAction
 	{
 	public:
-		CastLifeBloodAction(AiManagerRegistry* const ai) : CastHealingSpellAction(ai, "lifeblood") {}
+		CastLifeBloodAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "lifeblood") {}
 	};
 
 	class CastGiftOfTheNaaruAction : public CastHealingSpellAction
 	{
 	public:
-		CastGiftOfTheNaaruAction(AiManagerRegistry* const ai) : CastHealingSpellAction(ai, "gift of the naaru") {}
+		CastGiftOfTheNaaruAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "gift of the naaru") {}
 	};
 
     class CastArcaneTorrentAction : public CastBuffSpellAction
     {
     public:
-        CastArcaneTorrentAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "arcane torrent") {}
+        CastArcaneTorrentAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "arcane torrent") {}
     };
     
 }

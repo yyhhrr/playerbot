@@ -11,7 +11,7 @@ namespace ai
     class MeleeAction : public AttackAction 
     {
     public:
-        MeleeAction(AiManagerRegistry* const ai) : AttackAction(ai, "melee") {}
+        MeleeAction(PlayerbotAI* ai) : AttackAction(ai, "melee") {}
 
         virtual const char* GetTargetName() { return "current target"; }
     };
@@ -19,7 +19,7 @@ namespace ai
     class ChangeCombatStrategyAction : public Action 
     {
     public:
-        ChangeCombatStrategyAction(AiManagerRegistry* const ai, const char* name);
+        ChangeCombatStrategyAction(PlayerbotAI* ai, const char* name);
         virtual bool Execute(Event event);
 
     private:

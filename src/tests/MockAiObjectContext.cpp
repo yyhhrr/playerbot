@@ -8,7 +8,7 @@ using namespace ai;
 class MockTrigger : public Trigger
 {
 public:
-    MockTrigger(AiManagerRegistry* const ai) : Trigger(ai)
+    MockTrigger(PlayerbotAI* const ai) : Trigger(ai)
     {
     }
 
@@ -32,7 +32,7 @@ private:
 class MockAction : public Action
 {
 public:
-    MockAction(AiManagerRegistry* const ai, string *buffer, const char* name) : Action(ai, name), buffer(buffer)
+    MockAction(PlayerbotAI* const ai, string *buffer, const char* name) : Action(ai, name), buffer(buffer)
     {
 
     }
@@ -60,7 +60,7 @@ private:
     string *buffer;
 };
 
-MockAiObjectContext::MockAiObjectContext(AiManagerRegistry* const ai, AiObjectContext *realContext, string *buffer) : 
+MockAiObjectContext::MockAiObjectContext(PlayerbotAI* const ai, AiObjectContext *realContext, string *buffer) : 
     AiObjectContext(ai), buffer(buffer), realContext(realContext)
 {
 }

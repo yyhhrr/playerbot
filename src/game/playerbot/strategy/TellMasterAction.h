@@ -6,11 +6,11 @@ namespace ai
 {
     class TellMasterAction : public Action {
     public:
-        TellMasterAction(AiManagerRegistry* const ai, const char* text) : Action(ai, "tell master"), text(text) {}
+        TellMasterAction(PlayerbotAI* ai, const char* text) : Action(ai, "tell master"), text(text) {}
 
         virtual bool Execute(Event event)
         {
-            ai->GetAi()->TellMaster(text);
+            ai->TellMaster(text);
             return true;
         }
 

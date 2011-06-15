@@ -10,34 +10,34 @@ namespace ai
     class HunterAspectOfTheHawkTrigger : public BuffTrigger
     { 
     public: 
-        HunterAspectOfTheHawkTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "aspect of the hawk") {
+        HunterAspectOfTheHawkTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the hawk") {
 			checkInterval = 1;
 		}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the viper", GetTarget());
+			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the viper", GetTarget());
         };
     };
 
 	class HunterAspectOfTheWildTrigger : public BuffTrigger
 	{ 
 	public: 
-		HunterAspectOfTheWildTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "aspect of the wild") {
+		HunterAspectOfTheWildTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the wild") {
 			checkInterval = 1;
 		}
 		virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the viper", GetTarget());
+			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the viper", GetTarget());
 		};
 	};
 
     class HunterAspectOfTheViperTrigger : public BuffTrigger
     { 
     public: 
-        HunterAspectOfTheViperTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "aspect of the viper") {}
+        HunterAspectOfTheViperTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the viper") {}
         virtual bool IsActive() 
 		{
 			Unit* target = GetTarget();
-            return !ai->GetAi()->HasAura(spell, target) && 
-				ai->GetAi()->CanCastSpell(spell, target) && 
+            return !ai->HasAura(spell, target) && 
+				ai->CanCastSpell(spell, target) && 
 				AI_VALUE2(uint8, "mana", "self target") < 50; 
         };
     };
@@ -45,9 +45,9 @@ namespace ai
     class HunterAspectOfThePackTrigger : public BuffTrigger
     { 
     public: 
-        HunterAspectOfThePackTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "aspect of the pack") {}
+        HunterAspectOfThePackTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the pack") {}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->GetAi()->HasAura("aspect of the cheetah", GetTarget());
+			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the cheetah", GetTarget());
         };
     };
 
@@ -60,25 +60,25 @@ namespace ai
     class BlackArrowTrigger : public DebuffTrigger
     { 
     public: 
-        BlackArrowTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "black arrow") {}
+        BlackArrowTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "black arrow") {}
     };
 
     class HuntersMarkTrigger : public DebuffTrigger
     { 
     public: 
-        HuntersMarkTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "hunter's mark") {}
+        HuntersMarkTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "hunter's mark") {}
     };
     
     class FreezingTrapTrigger : public HasCcTargetTrigger
     { 
     public: 
-        FreezingTrapTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "freezing trap") {}
+        FreezingTrapTrigger(PlayerbotAI* ai) : HasCcTargetTrigger(ai, "freezing trap") {}
     };
 
     class RapidFireTrigger : public BoostTrigger
     { 
     public: 
-        RapidFireTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "rapid fire") {}
+        RapidFireTrigger(PlayerbotAI* ai) : BoostTrigger(ai, "rapid fire") {}
     };
     
 }

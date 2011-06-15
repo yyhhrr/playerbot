@@ -8,7 +8,7 @@ uint64 extractGuid(WorldPacket& packet);
 
 bool CheckMountStateAction::Execute(Event event)
 {
-    Player*  bot = ai->GetAi()->GetBot();
+    Player*  bot = ai->GetBot();
     Player* master = bot->GetPlayerbotAI()->GetMaster();
 
     WorldPacket p(event.getPacket());
@@ -40,17 +40,17 @@ bool CheckMountStateAction::Execute(Event event)
 
 void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
 {
-    ai->GetAi()->RemoveAura("bear form");
-    ai->GetAi()->RemoveAura("dire bear form");
-    ai->GetAi()->RemoveAura("moonkin form");
-    ai->GetAi()->RemoveAura("travel form");
-    ai->GetAi()->RemoveAura("cat form");
-    ai->GetAi()->RemoveAura("flight form");
-    ai->GetAi()->RemoveAura("swift flight form");
-    ai->GetAi()->RemoveAura("aquatic form");
-    ai->GetAi()->RemoveAura("ghost wolf");
+    ai->RemoveAura("bear form");
+    ai->RemoveAura("dire bear form");
+    ai->RemoveAura("moonkin form");
+    ai->RemoveAura("travel form");
+    ai->RemoveAura("cat form");
+    ai->RemoveAura("flight form");
+    ai->RemoveAura("swift flight form");
+    ai->RemoveAura("aquatic form");
+    ai->RemoveAura("ghost wolf");
 
-    Player*  bot = ai->GetAi()->GetBot();
+    Player*  bot = ai->GetBot();
     uint32 spellMount = 0;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
     {
@@ -66,7 +66,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
 
         if(pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
         {
-            if(pSpellInfo->EffectBasePoints[1] == master_speed1 && ai->GetAi()->CanCastSpell(spellId, bot))
+            if(pSpellInfo->EffectBasePoints[1] == master_speed1 && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
@@ -76,7 +76,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
             && (pSpellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED))
         {
             if((pSpellInfo->EffectBasePoints[1] == master_speed1)
-                && (pSpellInfo->EffectBasePoints[2] == master_speed2) && ai->GetAi()->CanCastSpell(spellId, bot))
+                && (pSpellInfo->EffectBasePoints[2] == master_speed2) && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
@@ -86,7 +86,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
             && (pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED))
         {
             if((pSpellInfo->EffectBasePoints[2] == master_speed2) 
-                && (pSpellInfo->EffectBasePoints[1] == master_speed1) && ai->GetAi()->CanCastSpell(spellId, bot))
+                && (pSpellInfo->EffectBasePoints[1] == master_speed1) && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
@@ -95,5 +95,5 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
     }
 
     if(spellMount > 0) 
-        ai->GetAi()->CastSpell(spellMount, bot);
+        ai->CastSpell(spellMount, bot);
 }

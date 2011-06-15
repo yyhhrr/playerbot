@@ -6,14 +6,14 @@ namespace ai
 	class DemonArmorTrigger : public BuffTrigger
 	{
 	public:
-		DemonArmorTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "demon armor") {}
+		DemonArmorTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "demon armor") {}
 		virtual bool IsActive();
 	};
 
     class SpellstoneTrigger : public BuffTrigger
     {
     public:
-        SpellstoneTrigger(AiManagerRegistry* const ai) : BuffTrigger(ai, "spellstone") {}
+        SpellstoneTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "spellstone") {}
         virtual bool IsActive();
     };
 
@@ -24,30 +24,30 @@ namespace ai
     class ShadowTranceTrigger : public HasAuraTrigger
     {
     public:
-        ShadowTranceTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "shadow trance") {}
+        ShadowTranceTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "shadow trance") {}
     };
 
     class BanishTrigger : public HasCcTargetTrigger
     {
     public:
-        BanishTrigger(AiManagerRegistry* const ai) : HasCcTargetTrigger(ai, "banish") {}
+        BanishTrigger(PlayerbotAI* ai) : HasCcTargetTrigger(ai, "banish") {}
     };
 
     class HasSpellstoneTrigger : public ItemCountTrigger
     {
     public:
-        HasSpellstoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "spellstone", 1) {}
+        HasSpellstoneTrigger(PlayerbotAI* ai) : ItemCountTrigger(ai, "spellstone", 1) {}
     };
 
     class HasFirestoneTrigger : public ItemCountTrigger
     {
     public:
-        HasFirestoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "firestone", 1) {}
+        HasFirestoneTrigger(PlayerbotAI* ai) : ItemCountTrigger(ai, "firestone", 1) {}
     };
 
     class HasHealthstoneTrigger : public ItemCountTrigger
     {
     public:
-        HasHealthstoneTrigger(AiManagerRegistry* const ai) : ItemCountTrigger(ai, "healthstone", 1) {}
+        HasHealthstoneTrigger(PlayerbotAI* ai) : ItemCountTrigger(ai, "healthstone", 1) {}
     };
 }

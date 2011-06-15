@@ -9,7 +9,7 @@ Unit* PartyMemberToDispel::Calculate()
 {
     uint32 dispelType = atoi(qualifier.c_str());
 
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
@@ -20,11 +20,11 @@ Unit* PartyMemberToDispel::Calculate()
         if( !player || !player->isAlive() || player == bot)
             continue;
 
-        if (ai->GetAi()->HasAuraToDispel(player, dispelType))
+        if (ai->HasAuraToDispel(player, dispelType))
             return player;
 
         Pet* pet = player->GetPet();
-        if (pet && ai->GetAi()->HasAuraToDispel(pet, dispelType))
+        if (pet && ai->HasAuraToDispel(pet, dispelType))
             return pet;
     }
 

@@ -6,9 +6,9 @@ namespace ai
 {
     class MovementAction : public Action {
     public:
-        MovementAction(AiManagerRegistry* const ai, const char* name) : Action(ai, name) 
+        MovementAction(PlayerbotAI* ai, const char* name) : Action(ai, name) 
         {
-            bot = ai->GetAi()->GetBot();
+            bot = ai->GetBot();
         }
 
     protected:
@@ -30,7 +30,7 @@ namespace ai
 
     class FleeAction : public MovementAction {
     public:
-        FleeAction(AiManagerRegistry* const ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") {
+        FleeAction(PlayerbotAI* ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") {
 			this->distance = distance;
 		}
 
@@ -43,7 +43,7 @@ namespace ai
 
     class GoAwayAction : public MovementAction {
     public:
-        GoAwayAction(AiManagerRegistry* const ai) : MovementAction(ai, "goaway") {}
+        GoAwayAction(PlayerbotAI* ai) : MovementAction(ai, "goaway") {}
         virtual bool Execute(Event event);
     };
 }

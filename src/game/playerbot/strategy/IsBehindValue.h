@@ -6,7 +6,7 @@ namespace ai
     class IsBehindValue : public CalculatedValue<bool>, public Qualified
 	{
 	public:
-        IsBehindValue(AiManagerRegistry* const ai) : CalculatedValue<bool>(ai) {}
+        IsBehindValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
 
         virtual bool Calculate() 
         {
@@ -14,7 +14,7 @@ namespace ai
             if (!target)
                 return false;
 
-            Player* bot = ai->GetAi()->GetBot();
+            Player* bot = ai->GetBot();
             float targetOrientation = target->GetOrientation();
             float orientation = bot->GetOrientation();
             float distance = bot->GetDistance(target);

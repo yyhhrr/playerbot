@@ -7,19 +7,19 @@ namespace ai
     class QualifiedStatsValue : public CalculatedValue<T>, public Qualified
 	{
 	public:
-        QualifiedStatsValue(AiManagerRegistry* const ai) : CalculatedValue<T>(ai) {}
+        QualifiedStatsValue(PlayerbotAI* ai) : CalculatedValue<T>(ai) {}
 
     protected:
         Unit* GetTarget()
         {
-            return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>(qualifier.c_str())->Get();
+            return ai->GetAiObjectContext()->GetValue<Unit*>(qualifier.c_str())->Get();
         }
     };
 
     class HealthValue : public QualifiedStatsValue<uint8>
     {
     public:
-        HealthValue(AiManagerRegistry* const ai) : QualifiedStatsValue<uint8>(ai) {}
+        HealthValue(PlayerbotAI* ai) : QualifiedStatsValue<uint8>(ai) {}
 
         virtual uint8 Calculate();
     };
@@ -27,7 +27,7 @@ namespace ai
     class IsDeadValue : public QualifiedStatsValue<bool>
     {
     public:
-        IsDeadValue(AiManagerRegistry* const ai) : QualifiedStatsValue<bool>(ai) {}
+        IsDeadValue(PlayerbotAI* ai) : QualifiedStatsValue<bool>(ai) {}
 
         virtual bool Calculate();
     };
@@ -35,7 +35,7 @@ namespace ai
     class RageValue : public QualifiedStatsValue<uint8>
     {
     public:
-        RageValue(AiManagerRegistry* const ai) : QualifiedStatsValue<uint8>(ai) {}
+        RageValue(PlayerbotAI* ai) : QualifiedStatsValue<uint8>(ai) {}
 
         virtual uint8 Calculate();
     };
@@ -43,7 +43,7 @@ namespace ai
     class EnergyValue : public QualifiedStatsValue<uint8>
     {
     public:
-        EnergyValue(AiManagerRegistry* const ai) : QualifiedStatsValue<uint8>(ai) {}
+        EnergyValue(PlayerbotAI* ai) : QualifiedStatsValue<uint8>(ai) {}
 
         virtual uint8 Calculate();
     };
@@ -51,7 +51,7 @@ namespace ai
     class ManaValue : public QualifiedStatsValue<uint8>
     {
     public:
-        ManaValue(AiManagerRegistry* const ai) : QualifiedStatsValue<uint8>(ai) {}
+        ManaValue(PlayerbotAI* ai) : QualifiedStatsValue<uint8>(ai) {}
 
         virtual uint8 Calculate();
     };
@@ -59,7 +59,7 @@ namespace ai
     class HasManaValue : public QualifiedStatsValue<bool>
     {
     public:
-        HasManaValue(AiManagerRegistry* const ai) : QualifiedStatsValue<bool>(ai) {}
+        HasManaValue(PlayerbotAI* ai) : QualifiedStatsValue<bool>(ai) {}
 
         virtual bool Calculate();
     };
@@ -67,7 +67,7 @@ namespace ai
     class ComboPointsValue : public QualifiedStatsValue<uint8>
     {
     public:
-        ComboPointsValue(AiManagerRegistry* const ai) : QualifiedStatsValue(ai) {}
+        ComboPointsValue(PlayerbotAI* ai) : QualifiedStatsValue(ai) {}
 
         virtual uint8 Calculate();
     };
@@ -75,7 +75,7 @@ namespace ai
     class IsMountedValue : public QualifiedStatsValue<bool>
     {
     public:
-        IsMountedValue(AiManagerRegistry* const ai) : QualifiedStatsValue<bool>(ai) {}
+        IsMountedValue(PlayerbotAI* ai) : QualifiedStatsValue<bool>(ai) {}
 
         virtual bool Calculate();
     };

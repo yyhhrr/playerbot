@@ -9,7 +9,7 @@ namespace ai
     class GenericDruidStrategy : public CombatStrategy
     {
     protected:
-        GenericDruidStrategy(AiManagerRegistry* const ai) : CombatStrategy(ai) {}
+        GenericDruidStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

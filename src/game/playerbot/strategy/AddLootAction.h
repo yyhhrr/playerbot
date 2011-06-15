@@ -6,7 +6,7 @@ namespace ai
 {
     class AddLootAction : public Action {
     public:
-        AddLootAction(AiManagerRegistry* const ai) : Action(ai, "add loot") {}
+        AddLootAction(PlayerbotAI* ai) : Action(ai, "add loot") {}
         virtual bool Execute(Event event);
 
    
@@ -14,7 +14,7 @@ namespace ai
 
     class AddAllLootAction : public Action {
     public:
-        AddAllLootAction(AiManagerRegistry* const ai) : Action(ai, "add all loot") {}
+        AddAllLootAction(PlayerbotAI* ai) : Action(ai, "add all loot") {}
         virtual bool Execute(Event event);
 
 

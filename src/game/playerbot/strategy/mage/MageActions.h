@@ -7,31 +7,31 @@ namespace ai
     class CastFireballAction : public CastSpellAction
     {
     public:
-        CastFireballAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "fireball") {}
+        CastFireballAction(PlayerbotAI* ai) : CastSpellAction(ai, "fireball") {}
     };
 
     class CastScorchAction : public CastSpellAction
     {
     public:
-        CastScorchAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "scorch") {}
+        CastScorchAction(PlayerbotAI* ai) : CastSpellAction(ai, "scorch") {}
     };
 
     class CastFireBlastAction : public CastSpellAction
     {
     public:
-        CastFireBlastAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "fire blast") {}
+        CastFireBlastAction(PlayerbotAI* ai) : CastSpellAction(ai, "fire blast") {}
     };
 
     class CastPyroblastAction : public CastSpellAction
     {
     public:
-        CastPyroblastAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "pyroblast") {}
+        CastPyroblastAction(PlayerbotAI* ai) : CastSpellAction(ai, "pyroblast") {}
     };
 
     class CastFlamestrikeAction : public CastSpellAction
     {
     public:
-        CastFlamestrikeAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "flamestrike") {}
+        CastFlamestrikeAction(PlayerbotAI* ai) : CastSpellAction(ai, "flamestrike") {}
     };
 
 	BEGIN_SPELL_ACTION(CastFrostNovaAction, "frost nova")
@@ -40,43 +40,43 @@ namespace ai
 	class CastFrostboltAction : public CastSpellAction
 	{
 	public:
-		CastFrostboltAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "frostbolt") {}
+		CastFrostboltAction(PlayerbotAI* ai) : CastSpellAction(ai, "frostbolt") {}
 	};
 
 	class CastBlizzardAction : public CastSpellAction
 	{
 	public:
-		CastBlizzardAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "blizzard") {}
+		CastBlizzardAction(PlayerbotAI* ai) : CastSpellAction(ai, "blizzard") {}
 	};
 
 	class CastArcaneIntellectAction : public CastBuffSpellAction
     {
 	public:
-		CastArcaneIntellectAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "arcane intellect") {}
+		CastArcaneIntellectAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "arcane intellect") {}
 	};
 
 	class CastArcaneIntellectOnPartyAction : public BuffOnPartyAction
     {
 	public:
-		CastArcaneIntellectOnPartyAction(AiManagerRegistry* const ai) : BuffOnPartyAction(ai, "arcane intellect") {}
+		CastArcaneIntellectOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "arcane intellect") {}
 	};
 
 	class CastRemoveCurseAction : public CastCureSpellAction
     {
 	public:
-		CastRemoveCurseAction(AiManagerRegistry* const ai) : CastCureSpellAction(ai, "remove curse") {}
+		CastRemoveCurseAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "remove curse") {}
 	};
 
 	class CastIcyVeinsAction : public CastBuffSpellAction
     {
 	public:
-		CastIcyVeinsAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "icy veins") {}
+		CastIcyVeinsAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "icy veins") {}
 	};
 
 	class CastCombustionAction : public CastBuffSpellAction
     {
 	public:
-		CastCombustionAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "combustion") {}
+		CastCombustionAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "combustion") {}
 	};
 
     BEGIN_SPELL_ACTION(CastCounterspellAction, "counterspell")
@@ -85,55 +85,55 @@ namespace ai
     class CastRemoveCurseOnPartyAction : public CurePartyMemberAction
     {
     public:
-        CastRemoveCurseOnPartyAction(AiManagerRegistry* const ai) : CurePartyMemberAction(ai, "remove curse", DISPEL_CURSE) {}
+        CastRemoveCurseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "remove curse", DISPEL_CURSE) {}
     };
 
 	class CastConjureFoodAction : public CastBuffSpellAction
     {
 	public:
-		CastConjureFoodAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "conjure food") {}
+		CastConjureFoodAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "conjure food") {}
 	};
 
 	class CastConjureWaterAction : public CastBuffSpellAction
     {
 	public:
-		CastConjureWaterAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "conjure water") {}
+		CastConjureWaterAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "conjure water") {}
 	};
 
 	class CastIceBlockAction : public CastBuffSpellAction
     {
 	public:
-		CastIceBlockAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "ice block") {}
+		CastIceBlockAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "ice block") {}
 	};
 
     class CastMageArmorAction : public CastBuffSpellAction
     {
     public:
-        CastMageArmorAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "mage armor") {}
+        CastMageArmorAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "mage armor") {}
     };
 
     class CastIceArmorAction : public CastBuffSpellAction
     {
     public:
-        CastIceArmorAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "ice armor") {}
+        CastIceArmorAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "ice armor") {}
     };
 
     class CastFrostArmorAction : public CastBuffSpellAction
     {
     public:
-        CastFrostArmorAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "frost armor") {}
+        CastFrostArmorAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "frost armor") {}
     };
 
     class CastPolymorphAction : public CastBuffSpellAction
     {
     public:
-        CastPolymorphAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "polymorph") {}
+        CastPolymorphAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "polymorph") {}
         virtual Value<Unit*>* GetTargetValue();
     };
 
 	class CastSpellstealAction : public CastSpellAction
 	{
 	public:
-		CastSpellstealAction(AiManagerRegistry* const ai) : CastSpellAction(ai, "spellsteal") {}
+		CastSpellstealAction(PlayerbotAI* ai) : CastSpellAction(ai, "spellsteal") {}
 	};
 }

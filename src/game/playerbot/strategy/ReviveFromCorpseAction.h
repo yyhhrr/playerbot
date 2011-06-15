@@ -4,7 +4,7 @@ namespace ai
 {
 	class ReviveFromCorpseAction : public Action {
 	public:
-		ReviveFromCorpseAction(AiManagerRegistry* const ai) : Action(ai, "revive") {}
+		ReviveFromCorpseAction(PlayerbotAI* ai) : Action(ai, "revive") {}
 
     public:
         virtual bool Execute(Event event);

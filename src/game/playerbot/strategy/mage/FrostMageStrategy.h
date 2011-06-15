@@ -7,7 +7,7 @@ namespace ai
     class FrostMageStrategy : public GenericMageStrategy
     {
     public:
-        FrostMageStrategy(AiManagerRegistry* const ai) : GenericMageStrategy(ai) {}
+        FrostMageStrategy(PlayerbotAI* ai) : GenericMageStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

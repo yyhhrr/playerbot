@@ -6,18 +6,18 @@ using namespace ai;
 
 bool ChangeTalentsAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     string text = event.getParam();
     if (text == "1" || text == "primary")
     {
         bot->ActivateSpec(0);
-        ai->GetAi()->TellMaster("Primary talents activated");
+        ai->TellMaster("Primary talents activated");
     }
     else if (text == "2" || text == "secondary")
     {
         bot->ActivateSpec(1);
-        ai->GetAi()->TellMaster("Secondary talents activated");
+        ai->TellMaster("Secondary talents activated");
     }
     else
     {
@@ -30,7 +30,7 @@ bool ChangeTalentsAction::Execute(Event event)
             break;
         }
         out << " talents are active";
-        ai->GetAi()->TellMaster(out);
+        ai->TellMaster(out);
     }
 
     return true;

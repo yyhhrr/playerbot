@@ -18,7 +18,7 @@ bool QueryItemUsageAction::Execute(Event event)
 
 void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
 {
-    Player *bot = ai->GetAi()->GetBot();
+    Player *bot = ai->GetBot();
     if (bot->CanUseItem(item) != EQUIP_ERR_OK)
         return;
 
@@ -33,7 +33,7 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
     Item* existingItem = bot->GetItemByPos(eDest);
     if (!existingItem)
     {
-        ai->GetAi()->TellMaster("Equip");
+        ai->TellMaster("Equip");
         return;
     }
 
@@ -57,7 +57,7 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
         out << "Replace +";
         out << (item->ItemLevel - oldItem->ItemLevel);
         out << " lvl";
-        ai->GetAi()->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str().c_str());
     }
 }
 

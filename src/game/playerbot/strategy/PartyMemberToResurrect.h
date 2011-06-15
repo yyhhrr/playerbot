@@ -7,7 +7,7 @@ namespace ai
     class PartyMemberToResurrect : public PartyMemberValue
 	{
 	public:
-        PartyMemberToResurrect(AiManagerRegistry* const ai) : 
+        PartyMemberToResurrect(PlayerbotAI* ai) : 
           PartyMemberValue(ai) {}
     
     protected:

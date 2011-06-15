@@ -17,7 +17,7 @@ void InventoryAction::IterateItems(IterateItemsVisitor* visitor, IterateItemsMas
 
 void InventoryAction::IterateItemsInBags(IterateItemsVisitor* visitor)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     for(int i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; ++i)
         if (Item *pItem = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, i))
@@ -39,7 +39,7 @@ void InventoryAction::IterateItemsInBags(IterateItemsVisitor* visitor)
 
 void InventoryAction::IterateItemsInEquip(IterateItemsVisitor* visitor)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; slot++)
     {
@@ -66,6 +66,6 @@ void InventoryAction::TellItem(ItemPrototype const * proto, int count)
     if (count > 1)
         out << "x" << count;
 
-    ai->GetAi()->TellMaster(out);
+    ai->TellMaster(out);
 }
 

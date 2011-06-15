@@ -6,11 +6,11 @@ namespace ai
 {
     class AcceptInvitationAction : public Action {
     public:
-        AcceptInvitationAction(AiManagerRegistry* const ai) : Action(ai, "accept invitation") {}
+        AcceptInvitationAction(PlayerbotAI* ai) : Action(ai, "accept invitation") {}
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetAi()->GetBot();
+            Player*  bot = ai->GetBot();
 
             Group* grp = bot->GetGroupInvite();
             if (!grp)

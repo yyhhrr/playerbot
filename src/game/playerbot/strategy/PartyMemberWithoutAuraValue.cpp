@@ -4,16 +4,16 @@
 
 using namespace ai;
 
-class PlayerWithoutAuraPredicate : public FindPlayerPredicate, public AiManagerRegistryAware
+class PlayerWithoutAuraPredicate : public FindPlayerPredicate, public PlayerbotAIAware
 {
 public:
-    PlayerWithoutAuraPredicate(AiManagerRegistry* const ai, string aura) : 
-        AiManagerRegistryAware(ai), FindPlayerPredicate(), aura(aura) {}
+    PlayerWithoutAuraPredicate(PlayerbotAI* ai, string aura) : 
+        PlayerbotAIAware(ai), FindPlayerPredicate(), aura(aura) {}
 
 public:
     virtual bool Check(Unit* unit)
     {
-        return unit->isAlive() && !ai->GetAi()->HasAura(aura.c_str(), unit);
+        return unit->isAlive() && !ai->HasAura(aura.c_str(), unit);
     }
 
 private:

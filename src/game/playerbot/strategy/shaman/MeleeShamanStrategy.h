@@ -7,7 +7,7 @@ namespace ai
     class MeleeShamanStrategy : public GenericShamanStrategy
     {
     public:
-        MeleeShamanStrategy(AiManagerRegistry* const ai) : GenericShamanStrategy(ai) {}
+        MeleeShamanStrategy(PlayerbotAI* ai) : GenericShamanStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

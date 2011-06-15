@@ -1722,6 +1722,42 @@
 			Name="playerbot"
 			>
 			<File
+				RelativePath="..\..\src\game\playerbot\AiFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\AiFactory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\AttackerMapProvider.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\AttackerMapProvider.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\FleeManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\FleeManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\LazyCalculatedValue.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\LootObjectStack.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\LootObjectStack.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\playerbot\playerbot.h"
 				>
 			</File>
@@ -1753,78 +1789,6 @@
 				RelativePath="..\..\src\game\playerbot\PlayerbotMgr.h"
 				>
 			</File>
-			<Filter
-				Name="ai"
-				>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiFactory.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiFactory.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagerBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagerBase.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagerRegistry.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagerRegistry.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagerRegistryAware.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiManagers.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiSpellManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AiSpellManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AttackerMapProvider.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\AttackerMapProvider.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\FleeManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\FleeManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\LazyCalculatedValue.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\LootObjectStack.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\game\playerbot\ai\LootObjectStack.h"
-					>
-				</File>
-			</Filter>
 			<Filter
 				Name="strategy"
 				>

@@ -1,7 +1,7 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "GenericTriggers.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 using namespace ai;
 
@@ -41,13 +41,13 @@ bool BuffTrigger::IsActive()
 {
     Unit* target = GetTarget();
 	return SpellTrigger::IsActive() &&
-		!ai->GetAi()->HasAura(spell, target) &&
+		!ai->HasAura(spell, target) &&
 		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > 40);
 }
 
 Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()
 {
-	return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
+	return ai->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
 }
 
 bool NoAttackersTrigger::IsActive()
@@ -83,7 +83,7 @@ bool SpellTrigger::IsActive()
 bool SpellCanBeCastTrigger::IsActive()
 {
 	Unit* target = GetTarget();
-	return target && ai->GetAi()->CanCastSpell(spell, target);
+	return target && ai->CanCastSpell(spell, target);
 }
 
 bool LootAvailableTrigger::IsActive()
@@ -118,7 +118,7 @@ bool BoostTrigger::IsActive()
 bool SnareTargetTrigger::IsActive()
 {
 	Unit* target = GetTarget();
-	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !ai->GetAi()->HasAura(spell, target);
+	return DebuffTrigger::IsActive() && AI_VALUE2(bool, "moving", "current target") && !ai->HasAura(spell, target);
 }
 
 bool ItemCountTrigger::IsActive()
@@ -128,12 +128,12 @@ bool ItemCountTrigger::IsActive()
 
 bool InterruptSpellTrigger::IsActive()
 {
-	return SpellTrigger::IsActive() && ai->GetAi()->IsSpellCasting(GetTarget());
+	return SpellTrigger::IsActive() && ai->IsSpellCasting(GetTarget());
 }
 
 bool HasAuraTrigger::IsActive()
 {
-	return ai->GetAi()->HasAura(spell, GetTarget());
+	return ai->HasAura(spell, GetTarget());
 }
 
 bool TankAoeTrigger::IsActive()

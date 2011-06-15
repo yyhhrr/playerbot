@@ -6,57 +6,57 @@ namespace ai
     class MockTargetValue : public ManualSetValue<Unit*>, public Qualified
     {
     public:
-        MockTargetValue(AiManagerRegistry* const ai) : ManualSetValue<Unit*>(ai, NULL) {}
+        MockTargetValue(PlayerbotAI* const ai) : ManualSetValue<Unit*>(ai, NULL) {}
     };
 
     class MockStatsValue : public ManualSetValue<uint8>, public Qualified
     {
     public:
-        MockStatsValue(AiManagerRegistry* const ai) : ManualSetValue<uint8>(ai, 0) {}
+        MockStatsValue(PlayerbotAI* const ai) : ManualSetValue<uint8>(ai, 0) {}
     };
     
     class MockFloatValue : public ManualSetValue<float>, public Qualified
     {
     public:
-        MockFloatValue(AiManagerRegistry* const ai) : ManualSetValue<float>(ai, 0) {}
+        MockFloatValue(PlayerbotAI* const ai) : ManualSetValue<float>(ai, 0) {}
     };
 
     class MockItemValue : public ManualSetValue<Item*>, public Qualified
     {
     public:
-        MockItemValue(AiManagerRegistry* const ai) : ManualSetValue<Item*>(ai, NULL) {}
+        MockItemValue(PlayerbotAI* const ai) : ManualSetValue<Item*>(ai, NULL) {}
     };
 
     class MockLogicalValue : public ManualSetValue<bool>, public Qualified
     {
     public:
-        MockLogicalValue(AiManagerRegistry* const ai) : ManualSetValue<bool>(ai, false) {}
+        MockLogicalValue(PlayerbotAI* const ai) : ManualSetValue<bool>(ai, false) {}
     };
 
     class AlwaysTrueValue : public CalculatedValue<bool>, public Qualified
     {
     public:
-        AlwaysTrueValue(AiManagerRegistry* const ai) : CalculatedValue<bool>(ai) {}
+        AlwaysTrueValue(PlayerbotAI* const ai) : CalculatedValue<bool>(ai) {}
         virtual bool Calculate() { return true; }
     };
 
     class MockPartyMemberWithoutAuraValue : public CalculatedValue<Unit*>, public Qualified
     {
     public:
-        MockPartyMemberWithoutAuraValue(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        MockPartyMemberWithoutAuraValue(PlayerbotAI* const ai) : CalculatedValue<Unit*>(ai) {}
         
         virtual Unit* Calculate()
         {
             const char* spell = qualifier.c_str();
             Unit* target = MockedTargets::GetPartyMember();
-            return ai->GetAi()->HasAura(spell, target) ? NULL : target;
+            return ai->HasAura(spell, target) ? NULL : target;
         }
     };
 
     class MockPartyMemberToHeal : public CalculatedValue<Unit*>
     {
     public:
-        MockPartyMemberToHeal(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        MockPartyMemberToHeal(PlayerbotAI* const ai) : CalculatedValue<Unit*>(ai) {}
 
         virtual Unit* Calculate()
         {
@@ -68,13 +68,13 @@ namespace ai
     class MockPartyMemberToDispel : public CalculatedValue<Unit*>, public Qualified
     {
     public:
-        MockPartyMemberToDispel(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        MockPartyMemberToDispel(PlayerbotAI* const ai) : CalculatedValue<Unit*>(ai) {}
 
         virtual Unit* Calculate()
         {
             uint32 dispelType = atoi(qualifier.c_str());
             Unit* target = MockedTargets::GetPartyMember();
-            return ai->GetAi()->HasAuraToDispel(target, dispelType) ? target : NULL;
+            return ai->HasAuraToDispel(target, dispelType) ? target : NULL;
         }
     };
 
@@ -121,21 +121,21 @@ namespace ai
         }
 
     private:
-        static UntypedValue* always_true(AiManagerRegistry* ai) { return new AlwaysTrueValue(ai); }
-        static UntypedValue* stats(AiManagerRegistry* ai) { return new MockStatsValue(ai); }
-        static UntypedValue* item(AiManagerRegistry* ai) { return new MockItemValue(ai); }
-        static UntypedValue* floating(AiManagerRegistry* ai) { return new MockFloatValue(ai); }
-        static UntypedValue* logical(AiManagerRegistry* ai) { return new MockLogicalValue(ai); }
-        static UntypedValue* mock(AiManagerRegistry* ai) { return new MockTargetValue(ai); }
-        static UntypedValue* party_member_without_aura(AiManagerRegistry* ai) { return new MockPartyMemberWithoutAuraValue(ai); }
-        static UntypedValue* party_member_to_heal(AiManagerRegistry* ai) { return new MockPartyMemberToHeal(ai); }
-        static UntypedValue* party_member_to_dispel(AiManagerRegistry* ai) { return new MockPartyMemberToDispel(ai); }
+        static UntypedValue* always_true(PlayerbotAI* ai) { return new AlwaysTrueValue(ai); }
+        static UntypedValue* stats(PlayerbotAI* ai) { return new MockStatsValue(ai); }
+        static UntypedValue* item(PlayerbotAI* ai) { return new MockItemValue(ai); }
+        static UntypedValue* floating(PlayerbotAI* ai) { return new MockFloatValue(ai); }
+        static UntypedValue* logical(PlayerbotAI* ai) { return new MockLogicalValue(ai); }
+        static UntypedValue* mock(PlayerbotAI* ai) { return new MockTargetValue(ai); }
+        static UntypedValue* party_member_without_aura(PlayerbotAI* ai) { return new MockPartyMemberWithoutAuraValue(ai); }
+        static UntypedValue* party_member_to_heal(PlayerbotAI* ai) { return new MockPartyMemberToHeal(ai); }
+        static UntypedValue* party_member_to_dispel(PlayerbotAI* ai) { return new MockPartyMemberToDispel(ai); }
     };
 
     class AiObjectContextWrapper : public AiObjectContext
     {
     public:
-        AiObjectContextWrapper(AiManagerRegistry* const ai, AiObjectContext *realContext) : 
+        AiObjectContextWrapper(PlayerbotAI* const ai, AiObjectContext *realContext) : 
           AiObjectContext(ai), realContext(realContext) 
           {
               GetValue<Unit*>("self target")->Set(MockedTargets::GetSelf());

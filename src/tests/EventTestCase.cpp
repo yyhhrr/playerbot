@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 
 using namespace ai;
 

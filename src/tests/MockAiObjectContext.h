@@ -11,7 +11,7 @@ namespace ai
     class MockAiObjectContext : public AiObjectContext
     {
     public:
-        MockAiObjectContext(AiManagerRegistry* const ai, AiObjectContext *realContext, string *buffer);
+        MockAiObjectContext(PlayerbotAI* const ai, AiObjectContext *realContext, string *buffer);
     
     public:
         virtual Strategy* GetStrategy(const char* name);

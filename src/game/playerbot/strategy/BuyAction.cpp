@@ -11,7 +11,7 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool BuyAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     string link = event.getParam().c_str();
 
@@ -28,7 +28,7 @@ bool BuyAction::Execute(Event event)
     Creature *pCreature = bot->GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
     if (!pCreature)
     {
-        ai->GetAi()->TellMaster("Cannot talk to vendor");
+        ai->TellMaster("Cannot talk to vendor");
         return false;
     }
 

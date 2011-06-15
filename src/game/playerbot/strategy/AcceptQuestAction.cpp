@@ -7,8 +7,8 @@ using namespace ai;
 
 bool AcceptQuestAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
-    Player *bot = ai->GetAi()->GetBot();
+    Player *master = ai->GetMaster();
+    Player *bot = ai->GetBot();
 
     WorldPacket& p = event.getPacket();
     p.rpos(0);
@@ -19,24 +19,24 @@ bool AcceptQuestAction::Execute(Event event)
     if (qInfo)
     {
         if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
-            ai->GetAi()->TellMaster("I already completed that quest.");
+            ai->TellMaster("I already completed that quest.");
         else if (! bot->CanTakeQuest(qInfo, false))
         {                    	
             if (! bot->SatisfyQuestStatus(qInfo, false))
-                ai->GetAi()->TellMaster("I already have that quest.");
+                ai->TellMaster("I already have that quest.");
             else
-                ai->GetAi()->TellMaster("I can't take that quest.");
+                ai->TellMaster("I can't take that quest.");
         }
         else if (! bot->SatisfyQuestLog(false))
-            ai->GetAi()->TellMaster("My quest log is full.");
+            ai->TellMaster("My quest log is full.");
         else if (! bot->CanAddQuest(qInfo, false))
-            ai->GetAi()->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+            ai->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
 
         else
         {
             p.rpos(0);
             bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-            ai->GetAi()->TellMaster("Got the quest.");
+            ai->TellMaster("Got the quest.");
         }
     }
 
@@ -45,8 +45,8 @@ bool AcceptQuestAction::Execute(Event event)
 
 bool AcceptQuestShareAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
-    Player *bot = ai->GetAi()->GetBot();
+    Player *master = ai->GetMaster();
+    Player *bot = ai->GetBot();
 
     WorldPacket& p = event.getPacket();
     p.rpos(0);
@@ -64,7 +64,7 @@ bool AcceptQuestShareAction::Execute(Event event)
     {
         // can't take quest
         bot->SetDividerGuid( ObjectGuid() );
-        ai->GetAi()->TellMaster("I can't take this quest");
+        ai->TellMaster("I can't take this quest");
 
         return false;
     }
@@ -90,7 +90,7 @@ bool AcceptQuestShareAction::Execute(Event event)
         if( qInfo->GetSrcSpell() > 0 )
             bot->CastSpell( bot, qInfo->GetSrcSpell(), true );
 
-        ai->GetAi()->TellMaster("Quest accepted");
+        ai->TellMaster("Quest accepted");
         return true;
     }
 

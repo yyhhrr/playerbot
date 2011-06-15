@@ -2,13 +2,13 @@
 #include "../playerbot.h"
 #include "LootAction.h"
 #include "../PlayerbotAI.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 using namespace ai;
 
 bool LootAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
+    Player *master = ai->GetMaster();
     
     ObjectGuid masterSelection = master->GetSelectionGuid();
     if (masterSelection) 
@@ -43,7 +43,7 @@ void LootAction::DoLoot()
 {
     if (!AI_VALUE(bool, "has available loot"))
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: nothing more available");
+        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: nothing more available");
         return;
     }
 
@@ -67,7 +67,7 @@ void LootAction::DoLoot(LootObject &lootObject)
     if (isLooted)
         StoreLootItems(lootObject, LOOT_SKINNING);
     else
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not yet looted");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not yet looted");
 
     AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
 }
@@ -98,14 +98,14 @@ Item* LootAction::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, uin
     ItemPosCountVec dest;
     if( bot->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, item->itemid, item->count ) != EQUIP_ERR_OK )
     {
-        ai->GetAi()->TellMaster("Insufficient bag space");
+        ai->TellMaster("Insufficient bag space");
         return NULL;
     }
 
     Item * newitem = bot->StoreNewItem( dest, item->itemid, true, item->randomPropertyId);
     if (!newitem)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Insufficient bag space");
+        ai->TellMaster(LOG_LVL_DEBUG, "Insufficient bag space");
         return NULL;
     }
 
@@ -114,8 +114,8 @@ Item* LootAction::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, uin
 
     // TODO: query item after looting
     //ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
-    //bot->GetPlayerbotAI()->GetAiRegistry()->GetInventoryManager()->QueryItemUsage(proto);
-    //bot->GetPlayerbotAI()->GetAiRegistry()->GetQuestManager()->QueryQuestItem(item->itemid);
+    //bot->GetPlayerbotAI()->Getai()->GetInventoryManager()->QueryItemUsage(proto);
+    //bot->GetPlayerbotAI()->Getai()->GetQuestManager()->QueryQuestItem(item->itemid);
 
     NotifyLootItemRemoved(item, qitem, loot, lootIndex, ffaitem, conditem);
 
@@ -156,25 +156,23 @@ void LootAction::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTyp
     QuestItem *qitem=0, *ffaitem=0, *conditem=0;
     LootItem *item = loot->LootItemInSlot( lootIndex, bot, &qitem, &ffaitem, &conditem );
 
-    AiManagerRegistry* aIRegistry = bot->GetPlayerbotAI()->GetAiRegistry();
-
     if (!item || !item->AllowedForPlayer(bot))
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
+        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
         return;
     }
 
-    GameObject* go = aIRegistry->GetAi()->GetGameObject(lootObject.guid);
+    GameObject* go = ai->GetGameObject(lootObject.guid);
     if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
+        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
         return;
     }
 
-    Creature* creature = aIRegistry->GetAi()->GetCreature(lootObject.guid);
+    Creature* creature = ai->GetCreature(lootObject.guid);
     if (lootType == LOOT_SKINNING && creature && !CheckLevelBasedSkill(creature->GetCreatureInfo()->GetRequiredLootSkill(), creature->getLevel()))
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
+        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
         return;
     }
 
@@ -234,7 +232,7 @@ bool LootAction::IsLootAllowed(LootItem * item)
     ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
     if (!proto)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: invalid item");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: invalid item");
         return false;
     }
 
@@ -243,25 +241,25 @@ bool LootAction::IsLootAllowed(LootItem * item)
 
     if (lootStrategy == LOOTSTRATEGY_QUEST)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a quest item");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a quest item");
         return false;
     }
 
     if (lootStrategy == LOOTSTRATEGY_GRAY && proto->Quality == ITEM_QUALITY_POOR)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a gray item");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a gray item");
         return true;
     }
 
     if (proto->Bonding == BIND_WHEN_PICKED_UP)
     {
-        ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: item is BOP");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: item is BOP");
         return false;
     }
 
     if (item->freeforall || item->is_underthreshold)
         return true;
 
-    ai->GetAi()->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: unknown");
+    ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: unknown");
     return false;
 }

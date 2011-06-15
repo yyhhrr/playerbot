@@ -6,11 +6,11 @@ namespace ai
 {
     class AcceptResurrectAction : public Action {
     public:
-        AcceptResurrectAction(AiManagerRegistry* const ai) : Action(ai, "accept resurrect") {}
+        AcceptResurrectAction(PlayerbotAI* ai) : Action(ai, "accept resurrect") {}
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetAi()->GetBot();
+            Player*  bot = ai->GetBot();
 
             if (bot->isAlive())
                 return false;

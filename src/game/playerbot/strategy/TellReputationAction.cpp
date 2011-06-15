@@ -7,8 +7,8 @@ using namespace ai;
 
 bool TellReputationAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player *master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player *master = ai->GetMaster();
 
     ObjectGuid selection = master->GetSelectionGuid();
     if (selection.IsEmpty())
@@ -61,7 +61,7 @@ bool TellReputationAction::Execute(Event event)
         base -= ReputationMgr::PointsInRank[i];
 
     out << " (" << (reputation - base) << "/" << ReputationMgr::PointsInRank[rank] << ")";
-    ai->GetAi()->TellMaster(out);
+    ai->TellMaster(out);
 
     return true;
 }

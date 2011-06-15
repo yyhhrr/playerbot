@@ -19,7 +19,7 @@ public:
 protected:
 	void queueMustHaveOrder()
 	{
-		MockAiManagerRegistry mock;
+		MockPlayerbotAIBase mock;
 		CastSpellAction action1(&mock, "1");
         CastSpellAction action2(&mock, "2");
         CastSpellAction action3(&mock, "3");

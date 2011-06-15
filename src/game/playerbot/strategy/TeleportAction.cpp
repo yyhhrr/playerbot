@@ -7,9 +7,9 @@ using namespace ai;
 
 bool TeleportAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
-    list<GameObject*> gos = *ai->GetAi()->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
+    list<GameObject*> gos = *ai->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
     {
         GameObject* go = *i;
@@ -23,7 +23,7 @@ bool TeleportAction::Execute(Event event)
             continue;
 
         ostringstream out; out << "Teleporting using " << goInfo->name;
-        ai->GetAi()->TellMaster(out);
+        ai->TellMaster(out);
 
         Spell *spell = new Spell(bot, pSpellInfo, false);
         SpellCastTargets targets;
@@ -34,7 +34,7 @@ bool TeleportAction::Execute(Event event)
     }
 
 
-    LastMovement& movement = ai->GetAi()->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+    LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
     if (movement.lastAreaTrigger)
     {
         WorldPacket p(CMSG_AREATRIGGER);
@@ -46,6 +46,6 @@ bool TeleportAction::Execute(Event event)
         return true;
     }
 
-    ai->GetAi()->TellMaster("Cannot find any portal to teleport");
+    ai->TellMaster("Cannot find any portal to teleport");
     return false;
 }

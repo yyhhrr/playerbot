@@ -28,9 +28,9 @@ namespace ai
             }
 
         private:
-            static Strategy* dps(AiManagerRegistry* ai) { return new DpsRogueStrategy(ai); }
-            static Strategy* nc(AiManagerRegistry* ai) { return new GenericRogueNonCombatStrategy(ai); }
-            static Strategy* pull(AiManagerRegistry* ai) { return new PullStrategy(ai, "shoot"); }
+            static Strategy* dps(PlayerbotAI* ai) { return new DpsRogueStrategy(ai); }
+            static Strategy* nc(PlayerbotAI* ai) { return new GenericRogueNonCombatStrategy(ai); }
+            static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
         };
     };
 };
@@ -51,7 +51,7 @@ namespace ai
             }
 
         private:
-            static Trigger* kick(AiManagerRegistry* ai) { return new KickInterruptSpellTrigger(ai); }
+            static Trigger* kick(PlayerbotAI* ai) { return new KickInterruptSpellTrigger(ai); }
         };
     };
 };
@@ -82,22 +82,22 @@ namespace ai
             }
 
         private:
-            static Action* mutilate(AiManagerRegistry* ai) { return new CastMutilateAction(ai); }
-            static Action* sinister_strike(AiManagerRegistry* ai) { return new CastSinisterStrikeAction(ai); }
-            static Action* kidney_shot(AiManagerRegistry* ai) { return new CastKidneyShotAction(ai); }
-            static Action* rupture(AiManagerRegistry* ai) { return new CastRuptureAction(ai); }
-            static Action* slice_and_dice(AiManagerRegistry* ai) { return new CastSliceAndDiceAction(ai); }
-            static Action* eviscerate(AiManagerRegistry* ai) { return new CastEviscerateAction(ai); }
-            static Action* vanish(AiManagerRegistry* ai) { return new CastVanishAction(ai); }
-            static Action* evasion(AiManagerRegistry* ai) { return new CastEvasionAction(ai); }
-            static Action* kick(AiManagerRegistry* ai) { return new CastKickAction(ai); }
-            static Action* feint(AiManagerRegistry* ai) { return new CastFeintAction(ai); }
-            static Action* backstab(AiManagerRegistry* ai) { return new CastBackstabAction(ai); }
+            static Action* mutilate(PlayerbotAI* ai) { return new CastMutilateAction(ai); }
+            static Action* sinister_strike(PlayerbotAI* ai) { return new CastSinisterStrikeAction(ai); }
+            static Action* kidney_shot(PlayerbotAI* ai) { return new CastKidneyShotAction(ai); }
+            static Action* rupture(PlayerbotAI* ai) { return new CastRuptureAction(ai); }
+            static Action* slice_and_dice(PlayerbotAI* ai) { return new CastSliceAndDiceAction(ai); }
+            static Action* eviscerate(PlayerbotAI* ai) { return new CastEviscerateAction(ai); }
+            static Action* vanish(PlayerbotAI* ai) { return new CastVanishAction(ai); }
+            static Action* evasion(PlayerbotAI* ai) { return new CastEvasionAction(ai); }
+            static Action* kick(PlayerbotAI* ai) { return new CastKickAction(ai); }
+            static Action* feint(PlayerbotAI* ai) { return new CastFeintAction(ai); }
+            static Action* backstab(PlayerbotAI* ai) { return new CastBackstabAction(ai); }
         };
     };
 };
 
-RogueAiObjectContext::RogueAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+RogueAiObjectContext::RogueAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::rogue::StrategyFactoryInternal());
     actionContexts.Add(new ai::rogue::AiObjectContextInternal());

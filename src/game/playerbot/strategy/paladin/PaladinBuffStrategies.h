@@ -7,7 +7,7 @@ namespace ai
     class PaladinBuffManaStrategy : public Strategy
     {
     public:
-        PaladinBuffManaStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        PaladinBuffManaStrategy(PlayerbotAI* ai) : Strategy(ai) {}
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -18,7 +18,7 @@ namespace ai
     class PaladinBuffHealthStrategy : public Strategy
     {
     public:
-        PaladinBuffHealthStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        PaladinBuffHealthStrategy(PlayerbotAI* ai) : Strategy(ai) {}
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -29,7 +29,7 @@ namespace ai
     class PaladinBuffDpsStrategy : public Strategy
     {
     public:
-        PaladinBuffDpsStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        PaladinBuffDpsStrategy(PlayerbotAI* ai) : Strategy(ai) {}
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -40,7 +40,7 @@ namespace ai
 	class PaladinBuffArmorStrategy : public Strategy
 	{
 	public:
-		PaladinBuffArmorStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+		PaladinBuffArmorStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -51,7 +51,7 @@ namespace ai
 	class PaladinShadowResistanceStrategy : public Strategy
 	{
 	public:
-		PaladinShadowResistanceStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+		PaladinShadowResistanceStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -62,7 +62,7 @@ namespace ai
 	class PaladinFrostResistanceStrategy : public Strategy
 	{
 	public:
-		PaladinFrostResistanceStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+		PaladinFrostResistanceStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -73,7 +73,7 @@ namespace ai
 	class PaladinFireResistanceStrategy : public Strategy
 	{
 	public:
-		PaladinFireResistanceStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+		PaladinFireResistanceStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);

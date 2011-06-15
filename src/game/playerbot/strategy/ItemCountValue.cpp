@@ -8,7 +8,7 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 uint8 ItemCountValue::Calculate()
 {
-    Player* bot = InventoryAction::ai->GetAi()->GetBot();
+    Player* bot = InventoryAction::ai->GetBot();
 
     if (qualifier == "food")
         return Find(FindFoodVisitor(bot, 11)) ? 1 : 0;
@@ -54,7 +54,7 @@ Item* InventoryItemValue::Find(FindItemVisitor &visitor)
 
 Item* InventoryItemValue::Calculate()
 {
-    Player* bot = InventoryAction::ai->GetAi()->GetBot();
+    Player* bot = InventoryAction::ai->GetBot();
 
     if (qualifier == "food")
         return Find(FindFoodVisitor(bot, 11));

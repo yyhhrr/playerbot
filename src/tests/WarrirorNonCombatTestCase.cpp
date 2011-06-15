@@ -13,7 +13,7 @@ class WarriorNonCombatTestCase : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
 protected:
-    MockAiManagerRegistry *ai;
+    MockPlayerbotAIBase *ai;
 
 public:
     void setUp()
@@ -23,7 +23,7 @@ public:
 protected:
     void buff()
     {
-        ai = new MockAiManagerRegistry();
+        ai = new MockPlayerbotAIBase();
 
         Engine engine(ai, new WarriorAiObjectContext(ai));
         engine.addStrategy("nc");

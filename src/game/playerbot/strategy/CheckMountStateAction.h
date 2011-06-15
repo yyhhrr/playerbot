@@ -8,7 +8,7 @@ namespace ai
 {
     class CheckMountStateAction : public Action {
     public:
-        CheckMountStateAction(AiManagerRegistry* const ai) : Action(ai, "check mount state") {}
+        CheckMountStateAction(PlayerbotAI* ai) : Action(ai, "check mount state") {}
 
         virtual bool Execute(Event event);
 

@@ -6,12 +6,12 @@ using namespace ai;
 
 bool CastSpellAction::Execute(Event event) 
 {
-	return ai->GetAi()->CastSpell(spell, GetTarget()); 
+	return ai->CastSpell(spell, GetTarget()); 
 }
 
 bool CastSpellAction::isPossible() 
 {
-	return ai->GetAi()->CanCastSpell(spell, GetTarget());
+	return ai->CanCastSpell(spell, GetTarget());
 }
 
 bool CastSpellAction::isUseful() 
@@ -22,12 +22,12 @@ bool CastSpellAction::isUseful()
 
 bool CastAuraSpellAction::isPossible() 
 {
-	return CastSpellAction::isPossible() && !ai->GetAi()->HasAura(spell, GetTarget());
+	return CastSpellAction::isPossible() && !ai->HasAura(spell, GetTarget());
 }
 
 bool CastAuraSpellAction::isUseful() 
 {
-	return CastSpellAction::isUseful() && !ai->GetAi()->HasAura(spell, GetTarget());
+	return CastSpellAction::isUseful() && !ai->HasAura(spell, GetTarget());
 }
 
 bool CastHealingSpellAction::isUseful() 
@@ -38,10 +38,10 @@ bool CastHealingSpellAction::isUseful()
 
 Value<Unit*>* CurePartyMemberAction::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
 }
 
 Value<Unit*>* BuffOnPartyAction::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
+    return ai->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
 }

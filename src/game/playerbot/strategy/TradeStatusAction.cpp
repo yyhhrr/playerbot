@@ -26,7 +26,7 @@ bool compare_items(const ItemPrototype *proto1, const ItemPrototype *proto2)
 
 bool TradeStatusAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     if (!bot->GetTrader())
         return false;
@@ -56,7 +56,7 @@ bool TradeStatusAction::Execute(Event event)
 
 void TradeStatusAction::BeginTrade()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     WorldPacket p;
     bot->GetSession()->HandleBeginTradeOpcode(p);
@@ -82,55 +82,55 @@ void TradeStatusAction::BeginTrade()
             switch (proto->Class)
             {
             case ITEM_CLASS_CONSUMABLE:
-                ai->GetAi()->TellMaster("--- consumable ---");
+                ai->TellMaster("--- consumable ---");
                 break;
             case ITEM_CLASS_CONTAINER:
-                ai->GetAi()->TellMaster("--- container ---");
+                ai->TellMaster("--- container ---");
                 break;
             case ITEM_CLASS_WEAPON:
-                ai->GetAi()->TellMaster("--- weapon ---");
+                ai->TellMaster("--- weapon ---");
                 break;
             case ITEM_CLASS_GEM:
-                ai->GetAi()->TellMaster("--- gem ---");
+                ai->TellMaster("--- gem ---");
                 break;
             case ITEM_CLASS_ARMOR:
-                ai->GetAi()->TellMaster("--- armor ---");
+                ai->TellMaster("--- armor ---");
                 break;
             case ITEM_CLASS_REAGENT:
-                ai->GetAi()->TellMaster("--- reagent ---");
+                ai->TellMaster("--- reagent ---");
                 break;
             case ITEM_CLASS_PROJECTILE:
-                ai->GetAi()->TellMaster("--- projectile ---");
+                ai->TellMaster("--- projectile ---");
                 break;
             case ITEM_CLASS_TRADE_GOODS:
-                ai->GetAi()->TellMaster("--- trade goods ---");
+                ai->TellMaster("--- trade goods ---");
                 break;
             case ITEM_CLASS_GENERIC:
-                ai->GetAi()->TellMaster("--- generic ---");
+                ai->TellMaster("--- generic ---");
                 break;
             case ITEM_CLASS_RECIPE:
-                ai->GetAi()->TellMaster("--- recipe ---");
+                ai->TellMaster("--- recipe ---");
                 break;
             case ITEM_CLASS_MONEY:
-                ai->GetAi()->TellMaster("--- money ---");
+                ai->TellMaster("--- money ---");
                 break;
             case ITEM_CLASS_QUIVER:
-                ai->GetAi()->TellMaster("--- quiver ---");
+                ai->TellMaster("--- quiver ---");
                 break;
             case ITEM_CLASS_QUEST:
-                ai->GetAi()->TellMaster("--- quest items ---");
+                ai->TellMaster("--- quest items ---");
                 break;
             case ITEM_CLASS_KEY:
-                ai->GetAi()->TellMaster("--- keys ---");
+                ai->TellMaster("--- keys ---");
                 break;
             case ITEM_CLASS_PERMANENT:
-                ai->GetAi()->TellMaster("--- permanent ---");
+                ai->TellMaster("--- permanent ---");
                 break;
             case ITEM_CLASS_MISC:
-                ai->GetAi()->TellMaster("--- other ---");
+                ai->TellMaster("--- other ---");
                 break;
             case ITEM_CLASS_GLYPH:
-                ai->GetAi()->TellMaster("--- glyph ---");
+                ai->TellMaster("--- glyph ---");
                 break;
             }
         }

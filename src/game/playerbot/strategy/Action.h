@@ -38,10 +38,10 @@ namespace ai
     
     class ActionBasket;
 
-    class Action : public AiManagerRegistryAware
+    class Action : public PlayerbotAIAware
 	{
 	public:
-        Action(AiManagerRegistry* const ai, const char* name = "action") : AiManagerRegistryAware(ai) {
+        Action(PlayerbotAI* ai, const char* name = "action") : PlayerbotAIAware(ai) {
             this->name = name;
         }
         virtual ~Action(void) {}
@@ -130,5 +130,5 @@ namespace ai
    
 }
 
-#define AI_VALUE(type, name) ai->GetAi()->GetAiObjectContext()->GetValue<type>(name)->Get()
-#define AI_VALUE2(type, name, param) ai->GetAi()->GetAiObjectContext()->GetValue<type>(name, param)->Get()
+#define AI_VALUE(type, name) ai->GetAiObjectContext()->GetValue<type>(name)->Get()
+#define AI_VALUE2(type, name, param) ai->GetAiObjectContext()->GetValue<type>(name, param)->Get()

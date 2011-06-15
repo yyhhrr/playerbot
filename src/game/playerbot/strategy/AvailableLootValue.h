@@ -1,6 +1,6 @@
 #pragma once
 #include "Value.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 namespace ai
 {
@@ -8,9 +8,9 @@ namespace ai
     class AvailableLootValue : public ManualSetValue<LootObjectStack*>
 	{
 	public:
-        AvailableLootValue(AiManagerRegistry* const ai) : ManualSetValue<LootObjectStack*>(ai, NULL) 
+        AvailableLootValue(PlayerbotAI* ai) : ManualSetValue<LootObjectStack*>(ai, NULL) 
         {
-            value = new LootObjectStack(ai->GetAi()->GetBot());
+            value = new LootObjectStack(ai->GetBot());
         }
 
         virtual ~AvailableLootValue()

@@ -1,7 +1,7 @@
 #pragma once
 #include "Action.h"
 #include "Event.h"
-#include "../ai/AiManagerRegistryAware.h"
+#include "../PlayerbotAIAware.h"
 
 #define NEXT_TRIGGERS(name, relevance) \
     virtual NextAction* getNextAction() { return new NextAction(name, relevance); }
@@ -10,7 +10,7 @@
 class clazz : public super \
     { \
     public: \
-        clazz(AiManagerRegistry* const ai) : super(ai) {} \
+        clazz(PlayerbotAI* ai) : super(ai) {} \
     public: \
         virtual bool IsActive();
 
@@ -19,14 +19,13 @@ class clazz : public super \
 
 namespace ai
 {
-    class Trigger : public AiManagerRegistryAware
+    class Trigger : public PlayerbotAIAware
 	{
 	public:
-        Trigger(AiManagerRegistry* const ai, const char* name = "trigger", int checkInterval = 1) : AiManagerRegistryAware(ai) {
+        Trigger(PlayerbotAI* ai, const char* name = "trigger", int checkInterval = 1) : PlayerbotAIAware(ai) {
             this->name = name;
 			this->checkInterval = checkInterval;
 			ticksElapsed = 0;
-			this->spellManager = ai->GetSpellManager();
         }
         virtual ~Trigger() {}
 
@@ -54,7 +53,6 @@ namespace ai
         string name;
 		int checkInterval;
 		int ticksElapsed;
-		AiSpellManager* spellManager;
 	};
 
 

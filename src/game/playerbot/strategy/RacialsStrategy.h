@@ -7,7 +7,7 @@ namespace ai
     class RacialsStrategy : public Strategy
     {
     public:
-        RacialsStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        RacialsStrategy(PlayerbotAI* ai) : Strategy(ai) {}
         virtual const char* getName() { return "racials"; }
     
     public:

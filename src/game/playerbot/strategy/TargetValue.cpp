@@ -6,7 +6,7 @@ using namespace ai;
 
 Unit* TargetValue::FindTarget(FindTargetStrategy* strategy)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     Group* group = bot->GetGroup();
     if (!group)
     {
@@ -70,7 +70,7 @@ void FindTargetStrategy::GetPlayerCount(Player* bot, Unit* creature, int* tankCo
         if (!player)
             continue;
 
-        if (aiRegistry->GetAi()->IsTank(player))
+        if (ai->IsTank(player))
             (*tankCount)++;
         else
             (*dpsCount)++;

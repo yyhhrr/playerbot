@@ -7,8 +7,8 @@ using namespace ai;
 
 bool SpellCastUsefulValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
 
     uint32 spellid = AI_VALUE2(uint32, "spell id", qualifier.c_str());
 	if (!spellid)

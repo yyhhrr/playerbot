@@ -5,7 +5,7 @@ namespace ai
 {
     class ValueInRangeTrigger : public Trigger {
     public:
-        ValueInRangeTrigger(AiManagerRegistry* const ai, const char* name, float maxValue, float minValue) : Trigger(ai, name) {
+        ValueInRangeTrigger(PlayerbotAI* ai, const char* name, float maxValue, float minValue) : Trigger(ai, name) {
             this->maxValue = maxValue;
             this->minValue = minValue;
         }
@@ -22,7 +22,7 @@ namespace ai
 
 	class HealthInRangeTrigger : public ValueInRangeTrigger {
 	public:
-		HealthInRangeTrigger(AiManagerRegistry* const ai, const char* name, float maxValue, float minValue = 0) :
+		HealthInRangeTrigger(PlayerbotAI* ai, const char* name, float maxValue, float minValue = 0) :
 		  ValueInRangeTrigger(ai, name, maxValue, minValue) {}
 
 		  virtual float GetValue();
@@ -30,7 +30,7 @@ namespace ai
         
     class LowHealthTrigger : public HealthInRangeTrigger {
     public:
-        LowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
+        LowHealthTrigger(PlayerbotAI* ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "low health", value, minValue) {}
 
 		virtual const char* GetTargetName() { return "self target"; }
@@ -39,19 +39,19 @@ namespace ai
     class CriticalHealthTrigger : public LowHealthTrigger 
     {
     public:
-        CriticalHealthTrigger(AiManagerRegistry* const ai) : LowHealthTrigger(ai, 25) {}
+        CriticalHealthTrigger(PlayerbotAI* ai) : LowHealthTrigger(ai, 25) {}
     };
 
     class MediumHealthTrigger : public LowHealthTrigger 
     {
     public:
-        MediumHealthTrigger(AiManagerRegistry* const ai) : LowHealthTrigger(ai, 60, 40) {}
+        MediumHealthTrigger(PlayerbotAI* ai) : LowHealthTrigger(ai, 60, 40) {}
     };
 
     class PartyMemberLowHealthTrigger : public HealthInRangeTrigger 
     {
     public:
-        PartyMemberLowHealthTrigger(AiManagerRegistry* const ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
+        PartyMemberLowHealthTrigger(PlayerbotAI* ai, float value = LOW_HEALTH_PERCENT, float minValue = 0) :
             HealthInRangeTrigger(ai, "party member low health", value, minValue) {}
         
         virtual const char* GetTargetName() { return "party member to heal"; }
@@ -60,18 +60,18 @@ namespace ai
     class PartyMemberCriticalHealthTrigger : public PartyMemberLowHealthTrigger 
     {
     public:
-        PartyMemberCriticalHealthTrigger(AiManagerRegistry* const ai) : PartyMemberLowHealthTrigger(ai, 25) {}
+        PartyMemberCriticalHealthTrigger(PlayerbotAI* ai) : PartyMemberLowHealthTrigger(ai, 25) {}
     };
 
     class PartyMemberMediumHealthTrigger : public PartyMemberLowHealthTrigger 
     {
     public:
-        PartyMemberMediumHealthTrigger(AiManagerRegistry* const ai) : PartyMemberLowHealthTrigger(ai, 60, 40) {}
+        PartyMemberMediumHealthTrigger(PlayerbotAI* ai) : PartyMemberLowHealthTrigger(ai, 60, 40) {}
     };
 
     class TargetLowHealthTrigger : public HealthInRangeTrigger {
     public:
-        TargetLowHealthTrigger(AiManagerRegistry* const ai, float value, float minValue = 0) : 
+        TargetLowHealthTrigger(PlayerbotAI* ai, float value, float minValue = 0) : 
             HealthInRangeTrigger(ai, "target low health", value, minValue) {}
         virtual const char* GetTargetName() { return "current target"; }
     };
@@ -79,19 +79,19 @@ namespace ai
     class TargetCriticalHealthTrigger : public TargetLowHealthTrigger 
     {
     public:
-        TargetCriticalHealthTrigger(AiManagerRegistry* const ai) : TargetLowHealthTrigger(ai, 20) {}
+        TargetCriticalHealthTrigger(PlayerbotAI* ai) : TargetLowHealthTrigger(ai, 20) {}
     };
 
 	class PartyMemberDeadTrigger : public Trigger {
 	public:
-		PartyMemberDeadTrigger(AiManagerRegistry* const ai) : Trigger(ai, "resurrect", 10) {}
+		PartyMemberDeadTrigger(PlayerbotAI* ai) : Trigger(ai, "resurrect", 10) {}
         virtual const char* GetTargetName() { return "party member to resurrect"; }
 		virtual bool IsActive();
 	};
 
     class DeadTrigger : public Trigger {
     public:
-        DeadTrigger(AiManagerRegistry* const ai) : Trigger(ai, "dead", 10) {}
+        DeadTrigger(PlayerbotAI* ai) : Trigger(ai, "dead", 10) {}
         virtual const char* GetTargetName() { return "self target"; }
         virtual bool IsActive();
     };

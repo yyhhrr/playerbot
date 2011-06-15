@@ -7,7 +7,7 @@ namespace ai
     class KickInterruptSpellTrigger : public InterruptSpellTrigger
     {
     public:
-        KickInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "kick") {}
+        KickInterruptSpellTrigger(PlayerbotAI* ai) : InterruptSpellTrigger(ai, "kick") {}
     };
 
 }

@@ -6,11 +6,11 @@ namespace ai
 {
     class UseMeetingStoneAction : public Action {
     public:
-        UseMeetingStoneAction(AiManagerRegistry* const ai) : Action(ai, "use meeting stone") {}
+        UseMeetingStoneAction(PlayerbotAI* ai) : Action(ai, "use meeting stone") {}
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetAi()->GetBot();
+            Player*  bot = ai->GetBot();
 
             WorldPacket p(event.getPacket());
             p.rpos(0);
@@ -32,7 +32,7 @@ namespace ai
             PlayerbotChatHandler ch(master);
             if (!ch.teleport(*bot))
             {
-                ai->GetAi()->TellMaster("You cannot summon me");
+                ai->TellMaster("You cannot summon me");
                 return false;
             }
 

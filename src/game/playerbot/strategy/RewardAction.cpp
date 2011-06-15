@@ -12,7 +12,7 @@ uint32 extractMoney(const string& text);
 
 bool RewardAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     string link = event.getParam().c_str();
 
@@ -26,7 +26,7 @@ bool RewardAction::Execute(Event event)
     const ObjectGuid &questRewarder = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
     uint64 questRewarderGUID = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     bot->SetSelectionGuid(questRewarder);
-    Object* pNpc = ai->GetAi()->GetGameObject(questRewarder);
+    Object* pNpc = ai->GetGameObject(questRewarder);
     if (!pNpc)
         pNpc = ObjectAccessor::GetUnit(*bot, questRewarder);
 
@@ -60,7 +60,7 @@ bool RewardAction::Execute(Event event)
 
                     ostringstream out;
                     out << "|cffffffff|Hitem:" << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r rewarded";
-                    ai->GetAi()->TellMaster(out);
+                    ai->TellMaster(out);
                     wasRewarded = true;
                 }
             }

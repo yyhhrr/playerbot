@@ -5,7 +5,7 @@ namespace ai
 {
     class EnemyTooCloseTrigger : public Trigger {
     public:
-        EnemyTooCloseTrigger(AiManagerRegistry* const ai) : Trigger(ai, "enemy too close") {}
+        EnemyTooCloseTrigger(PlayerbotAI* ai) : Trigger(ai, "enemy too close") {}
         virtual bool IsActive() 
 		{
 			Unit* target = AI_VALUE(Unit*, "current target");
@@ -15,7 +15,7 @@ namespace ai
 
     class EnemyOutOfRangeTrigger : public Trigger {
     public:
-        EnemyOutOfRangeTrigger(AiManagerRegistry* const ai, const char* name, float distance) : Trigger(ai, name) 
+        EnemyOutOfRangeTrigger(PlayerbotAI* ai, const char* name, float distance) : Trigger(ai, name) 
 		{
             this->distance = distance;
         }
@@ -32,12 +32,12 @@ namespace ai
     class EnemyOutOfMeleeTrigger : public EnemyOutOfRangeTrigger 
 	{
     public:
-        EnemyOutOfMeleeTrigger(AiManagerRegistry* const ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", ATTACK_DISTANCE) {}
+        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", ATTACK_DISTANCE) {}
     };
 
     class EnemyOutOfSpellRangeTrigger : public EnemyOutOfRangeTrigger 
 	{
     public:
-        EnemyOutOfSpellRangeTrigger(AiManagerRegistry* const ai) : EnemyOutOfRangeTrigger(ai, "enemy out of spell range", SPELL_DISTANCE) {}
+        EnemyOutOfSpellRangeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of spell range", SPELL_DISTANCE) {}
     };
 }

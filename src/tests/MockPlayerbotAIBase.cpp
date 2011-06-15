@@ -1,21 +1,10 @@
 #include "pch.h"
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 #include "MockedTargets.h"
 
 using namespace std;
 using namespace ai;
-
-MockAiManagerRegistry::MockAiManagerRegistry() : AiManagerRegistry()
-{
-    ai = new MockPlayerbotAIBase();
-	managers[AiSpellManagerType] = new MockAiSpellManager(ai, this, &buffer);
-}
-
-MockAiManagerRegistry::~MockAiManagerRegistry()
-{
-}
-
 
 void MockPlayerbotAIBase::InterruptSpell()
 {
@@ -26,8 +15,8 @@ void MockPlayerbotAIBase::RemoveAura(const char* name)
     Unit* target = MockedTargets::GetSelf();
     if (HasAura(name, target)) {
         auras[target].remove(name);
-        buffer->append(">-");
-        buffer->append(name);
+        buffer.append(">-");
+        buffer.append(name);
     }
 }
 
@@ -49,18 +38,18 @@ bool MockPlayerbotAIBase::IsSpellCastUseful(const char* name, Unit* target)
 
 bool MockPlayerbotAIBase::CastSpell(const char* name, Unit* target)
 {
-    buffer->append(">");
+    buffer.append(">");
     if (target == MockedTargets::GetPartyMember()) 
-        buffer->append("P:"); 
+        buffer.append("P:"); 
     if (target == MockedTargets::GetCurrentTarget()) 
-        buffer->append("T:"); 
+        buffer.append("T:"); 
     if (target == MockedTargets::GetSelf()) 
-        buffer->append("S:"); 
+        buffer.append("S:"); 
     if (target == MockedTargets::GetPet()) 
-        buffer->append("Pet:"); 
+        buffer.append("Pet:"); 
     if (target == MockedTargets::GetCc()) 
-        buffer->append("Cc:"); 
-    buffer->append(name); 
+        buffer.append("Cc:"); 
+    buffer.append(name); 
 
     spellCooldowns.push_back(name); 
 

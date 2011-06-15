@@ -1,7 +1,7 @@
 #pragma once
 #include "Value.h"
 #include "TargetValue.h"
-#include "..\ai\AttackerMapProvider.h"
+#include "../AttackerMapProvider.h"
 
 namespace ai
 {
@@ -9,7 +9,7 @@ namespace ai
     class AttackersValue : public CalculatedValue<AttackerMap>
 	{
 	public:
-        AttackersValue(AiManagerRegistry* const ai) : CalculatedValue<AttackerMap>(ai), attackerMapProvider(NULL) 
+        AttackersValue(PlayerbotAI* ai) : CalculatedValue<AttackerMap>(ai), attackerMapProvider(NULL) 
         {
         }
         virtual ~AttackersValue() 

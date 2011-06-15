@@ -18,7 +18,7 @@ namespace ai
         virtual bool IsShared() { return true; }
 
     private:
-        static UntypedValue* balance(AiManagerRegistry* ai) { return new BalancePercentValue(ai); }
-        static UntypedValue* attackers(AiManagerRegistry* ai) { return new AttackersValue(ai); }
+        static UntypedValue* balance(PlayerbotAI* ai) { return new BalancePercentValue(ai); }
+        static UntypedValue* attackers(PlayerbotAI* ai) { return new AttackersValue(ai); }
     };
 };

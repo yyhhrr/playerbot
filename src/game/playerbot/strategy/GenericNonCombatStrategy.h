@@ -8,14 +8,14 @@ namespace ai
     class GenericNonCombatStrategy : public Strategy
     {
     public:
-        GenericNonCombatStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        GenericNonCombatStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 		virtual StrategyType GetType() { return STRATEGY_TYPE_NONCOMBAT; }
     };
 
     class FollowMasterNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
-        FollowMasterNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        FollowMasterNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "follow master"; }
         virtual NextAction** getDefaultActions();
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -26,7 +26,7 @@ namespace ai
 	class FollowLineNonCombatStrategy : public GenericNonCombatStrategy
 	{
 	public:
-		FollowLineNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		FollowLineNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "follow line"; }
 		virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow master"; }
@@ -35,7 +35,7 @@ namespace ai
     class GoAwayNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
-        GoAwayNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        GoAwayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "goaway"; }
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-follow master"; }
@@ -44,7 +44,7 @@ namespace ai
     class StayNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
-        StayNonCombatStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        StayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "stay"; }
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-follow master"; }
@@ -53,7 +53,7 @@ namespace ai
     class DpsAssistStrategy : public GenericNonCombatStrategy
     {
     public:
-        DpsAssistStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        DpsAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "dps assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps aoe,-tank aoe,-grind"; }
@@ -65,7 +65,7 @@ namespace ai
 	class DpsAoeStrategy : public GenericNonCombatStrategy
 	{
 	public:
-		DpsAoeStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		DpsAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "dps aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-tank aoe,-grind"; }
@@ -77,7 +77,7 @@ namespace ai
     class TankAssistStrategy : public GenericNonCombatStrategy
     {
     public:
-        TankAssistStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        TankAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "tank assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-dps assist,-dps aoe,-tank aoe,-grind"; }
@@ -89,7 +89,7 @@ namespace ai
 	class TankAoeStrategy : public GenericNonCombatStrategy
 	{
 	public:
-		TankAoeStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		TankAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "tank aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-grind"; }
@@ -101,7 +101,7 @@ namespace ai
     class GrindingStrategy : public GenericNonCombatStrategy
     {
     public:
-        GrindingStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+        GrindingStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "grind"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-tank aoe"; }
@@ -114,7 +114,7 @@ namespace ai
     class LootNonCombatStrategy : public Strategy
     {
     public:
-        LootNonCombatStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        LootNonCombatStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -124,7 +124,7 @@ namespace ai
     class RandomEmoteStrategy : public Strategy
     {
     public:
-        RandomEmoteStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        RandomEmoteStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -134,7 +134,7 @@ namespace ai
     class PassiveStrategy : public Strategy
     {
     public:
-        PassiveStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        PassiveStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
     public:
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
@@ -144,7 +144,7 @@ namespace ai
     class LowManaStrategy : public Strategy
     {
     public:
-        LowManaStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        LowManaStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
     public:
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
@@ -154,7 +154,7 @@ namespace ai
     class UseFoodStrategy : public Strategy
     {
     public:
-        UseFoodStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        UseFoodStrategy(PlayerbotAI* ai) : Strategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

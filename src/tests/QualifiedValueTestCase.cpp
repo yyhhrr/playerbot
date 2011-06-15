@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 
 using namespace ai;
 
@@ -21,13 +21,13 @@ public:
     }
 
 private:
-    static UntypedValue* value(AiManagerRegistry* ai) { return new TestQualifiedValue(); }
+    static UntypedValue* value(PlayerbotAI* ai) { return new TestQualifiedValue(); }
 };
 
 class TestQualifiedValueAiObjectContext : public AiObjectContext
 {
 public:
-    TestQualifiedValueAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+    TestQualifiedValueAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai)
     {
         valueContexts.Add(new TestQualifiedValueContext());
     }
@@ -52,7 +52,7 @@ public:
 protected:
     void qualifier()
 	{
-        MockAiManagerRegistry ai;
+        MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
         
         Value<string> *value = context.GetValue<string>("value", "data");
@@ -61,7 +61,7 @@ protected:
 
     void empty()
     {
-        MockAiManagerRegistry ai;
+        MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
 
         Value<string> *value = context.GetValue<string>("value");
@@ -70,7 +70,7 @@ protected:
 
     void number()
     {
-        MockAiManagerRegistry ai;
+        MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
 
         Value<string> *value = context.GetValue<string>("value", 5);

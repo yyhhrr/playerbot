@@ -8,7 +8,7 @@ namespace ai
     class TradeStatusAction : public InventoryAction 
     {
     public:
-        TradeStatusAction(AiManagerRegistry* const ai) : InventoryAction(ai, "accept trade") {}
+        TradeStatusAction(PlayerbotAI* ai) : InventoryAction(ai, "accept trade") {}
         virtual bool Execute(Event event);
 
     private:

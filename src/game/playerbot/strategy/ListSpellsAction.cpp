@@ -6,7 +6,7 @@ using namespace ai;
 
 bool ListSpellsAction::Execute(Event event)
 {
-    Player*  bot = ai->GetAi()->GetBot();
+    Player*  bot = ai->GetBot();
     Player* master = bot->GetPlayerbotAI()->GetMaster();
 
     int loc = master->GetSession()->GetSessionDbcLocale();
@@ -47,11 +47,11 @@ bool ListSpellsAction::Execute(Event event)
             << pSpellInfo->SpellName[loc] << "]|h|r";
     }
 
-    ai->GetAi()->TellMaster("here's my non-attack spells:");
-    ai->GetAi()->TellMaster(posOut);
+    ai->TellMaster("here's my non-attack spells:");
+    ai->TellMaster(posOut);
 
-    ai->GetAi()->TellMaster("here's my attack spells:");
-    ai->GetAi()->TellMaster(negOut);
+    ai->TellMaster("here's my attack spells:");
+    ai->TellMaster(negOut);
 
     return true;
 }

@@ -63,34 +63,34 @@ namespace ai
         }
 
     private:
-        static Action* spells(AiManagerRegistry* ai) { return new ListSpellsAction(ai); }
-        static Action* talents(AiManagerRegistry* ai) { return new ChangeTalentsAction(ai); }
+        static Action* spells(PlayerbotAI* ai) { return new ListSpellsAction(ai); }
+        static Action* talents(PlayerbotAI* ai) { return new ChangeTalentsAction(ai); }
 
-        static Action* equip(AiManagerRegistry* ai) { return new EquipAction(ai); }
-        static Action* unequip(AiManagerRegistry* ai) { return new UnequipAction(ai); }
-        static Action* sell(AiManagerRegistry* ai) { return new SellAction(ai); }
-        static Action* buy(AiManagerRegistry* ai) { return new BuyAction(ai); }
-        static Action* reward(AiManagerRegistry* ai) { return new RewardAction(ai); }
-        static Action* trade(AiManagerRegistry* ai) { return new TradeAction(ai); }
+        static Action* equip(PlayerbotAI* ai) { return new EquipAction(ai); }
+        static Action* unequip(PlayerbotAI* ai) { return new UnequipAction(ai); }
+        static Action* sell(PlayerbotAI* ai) { return new SellAction(ai); }
+        static Action* buy(PlayerbotAI* ai) { return new BuyAction(ai); }
+        static Action* reward(PlayerbotAI* ai) { return new RewardAction(ai); }
+        static Action* trade(PlayerbotAI* ai) { return new TradeAction(ai); }
 
-        static Action* item_count(AiManagerRegistry* ai) { return new TellItemCountAction(ai); }
-        static Action* use(AiManagerRegistry* ai) { return new UseItemAction(ai); }
-        static Action* repair(AiManagerRegistry* ai) { return new RepairAllAction(ai); }
-        static Action* taxi(AiManagerRegistry* ai) { return new TaxiAction(ai); }
-        static Action* teleport(AiManagerRegistry* ai) { return new TeleportAction(ai); }
-        static Action* release(AiManagerRegistry* ai) { return new ReleaseSpiritAction(ai); }
-        static Action* query_item_usage(AiManagerRegistry* ai) { return new QueryItemUsageAction(ai); }
-        static Action* query_quest(AiManagerRegistry* ai) { return new QueryQuestAction(ai); }
-        static Action* query_quest_item(AiManagerRegistry* ai) { return new QueryQuestItemAction(ai); }
-        static Action* drop(AiManagerRegistry* ai) { return new DropQuestAction(ai); }
-        static Action* stats(AiManagerRegistry* ai) { return new StatsAction(ai); }
-        static Action* quests(AiManagerRegistry* ai) { return new ListQuestsAction(ai); }
-        static Action* leave(AiManagerRegistry* ai) { return new LeaveGroupAction(ai); }
-        static Action* reputation(AiManagerRegistry* ai) { return new TellReputationAction(ai); }
-        static Action* log(AiManagerRegistry* ai) { return new LogLevelAction(ai); }
-        static Action* los(AiManagerRegistry* ai) { return new TellLosAction(ai); }
-        static Action* ll(AiManagerRegistry* ai) { return new LootStrategyAction(ai); }
-        static Action* add_all_loot(AiManagerRegistry* ai) { return new AddAllLootAction(ai); }
+        static Action* item_count(PlayerbotAI* ai) { return new TellItemCountAction(ai); }
+        static Action* use(PlayerbotAI* ai) { return new UseItemAction(ai); }
+        static Action* repair(PlayerbotAI* ai) { return new RepairAllAction(ai); }
+        static Action* taxi(PlayerbotAI* ai) { return new TaxiAction(ai); }
+        static Action* teleport(PlayerbotAI* ai) { return new TeleportAction(ai); }
+        static Action* release(PlayerbotAI* ai) { return new ReleaseSpiritAction(ai); }
+        static Action* query_item_usage(PlayerbotAI* ai) { return new QueryItemUsageAction(ai); }
+        static Action* query_quest(PlayerbotAI* ai) { return new QueryQuestAction(ai); }
+        static Action* query_quest_item(PlayerbotAI* ai) { return new QueryQuestItemAction(ai); }
+        static Action* drop(PlayerbotAI* ai) { return new DropQuestAction(ai); }
+        static Action* stats(PlayerbotAI* ai) { return new StatsAction(ai); }
+        static Action* quests(PlayerbotAI* ai) { return new ListQuestsAction(ai); }
+        static Action* leave(PlayerbotAI* ai) { return new LeaveGroupAction(ai); }
+        static Action* reputation(PlayerbotAI* ai) { return new TellReputationAction(ai); }
+        static Action* log(PlayerbotAI* ai) { return new LogLevelAction(ai); }
+        static Action* los(PlayerbotAI* ai) { return new TellLosAction(ai); }
+        static Action* ll(PlayerbotAI* ai) { return new LootStrategyAction(ai); }
+        static Action* add_all_loot(PlayerbotAI* ai) { return new AddAllLootAction(ai); }
     };
 
 

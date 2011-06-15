@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PlayerbotMgr.h"
 #include "PlayerbotAIBase.h"
 #include "strategy/AiObjectContext.h"
 #include "strategy/Engine.h"
@@ -11,10 +12,19 @@ class ChatHandler;
 using namespace std;
 using namespace ai;
 
+class PlayerbotChatHandler: protected ChatHandler
+{
+public:
+    explicit PlayerbotChatHandler(Player* pMasterPlayer) : ChatHandler(pMasterPlayer) {}
+    bool revive(const Player& botPlayer) { return HandleReviveCommand((char*)botPlayer.GetName()); }
+    bool teleport(const Player& botPlayer) { return HandleNamegoCommand((char*)botPlayer.GetName()); }
+    void sysmessage(const char *str) { SendSysMessage(str); }
+    bool dropQuest(const char *str) { return HandleQuestRemoveCommand((char*)str); }
+    uint32 extractQuestId(const char *str);
+};
+
 namespace ai 
 {
-	class AiManagerRegistry;
-
 	class MinValueCalculator {
 	public:
 		MinValueCalculator(float def = 0.0f) {
@@ -89,14 +99,12 @@ public:
 public:
 	Player* GetBot() { return bot; }
 	Player* GetMaster() { return mgr->GetMaster(); }
-	AiManagerRegistry* GetAiRegistry() { return aiRegistry; }
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
 
 protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
     AiObjectContext* aiObjectContext;
-	AiManagerRegistry* aiRegistry;
     Engine* currentEngine;
     Engine* combatEngine;
     Engine* nonCombatEngine;

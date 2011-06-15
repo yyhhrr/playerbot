@@ -8,7 +8,7 @@ using namespace ai;
 
 bool TellItemCountAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     string text = event.getParam();
 
     uint32 quality = InventoryItemValue::TextToItemQuality(text.c_str());
@@ -21,7 +21,7 @@ bool TellItemCountAction::Execute(Event event)
 
         ostringstream out;
         out << text << "x" << (int)count;
-        ai->GetAi()->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str().c_str());
 
         return true;
     }

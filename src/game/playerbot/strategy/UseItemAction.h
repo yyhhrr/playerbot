@@ -6,7 +6,7 @@ namespace ai
 {
 	class UseItemAction : public Action {
 	public:
-		UseItemAction(AiManagerRegistry* const ai, const char* name = "use") : Action(ai, name) {}
+		UseItemAction(PlayerbotAI* ai, const char* name = "use") : Action(ai, name) {}
 
     public:
         virtual bool Execute(Event event);
@@ -18,7 +18,7 @@ namespace ai
 
     class UseSpellItemAction : public UseItemAction {
     public:
-        UseSpellItemAction(AiManagerRegistry* const ai, const char* name) : UseItemAction(ai, name) {}
+        UseSpellItemAction(PlayerbotAI* ai, const char* name) : UseItemAction(ai, name) {}
 
     public:
         virtual bool isUseful();
@@ -26,12 +26,12 @@ namespace ai
 
     class UseHealingPotion : public UseItemAction {
     public:
-        UseHealingPotion(AiManagerRegistry* const ai) : UseItemAction(ai, "healing potion") {}
+        UseHealingPotion(PlayerbotAI* ai) : UseItemAction(ai, "healing potion") {}
     };
 
     class UseManaPotion : public UseItemAction 
     {
     public:
-        UseManaPotion(AiManagerRegistry* const ai) : UseItemAction(ai, "mana potion") {}
+        UseManaPotion(PlayerbotAI* ai) : UseItemAction(ai, "mana potion") {}
     };
 }

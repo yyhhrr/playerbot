@@ -48,10 +48,10 @@ namespace ai
 
     // -----------------------------------------------------------------------------------------------------------------------
 
-    class Engine : public AiManagerRegistryAware
+    class Engine : public PlayerbotAIAware
     {
     public:
-        Engine(AiManagerRegistry* const ai, AiObjectContext *factory) : AiManagerRegistryAware(ai), aiObjectContext(factory)
+        Engine(PlayerbotAI* ai, AiObjectContext *factory) : PlayerbotAIAware(ai), aiObjectContext(factory)
         {
             lastRelevance = 0.0f;
             maxIterations = 10;

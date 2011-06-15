@@ -1,19 +1,19 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
-#include "../ai/AttackerMapProvider.h"
+#include "../AttackerMapProvider.h"
 #include "AttackerCountValues.h"
 
 using namespace ai;
 
 uint8 MyAttackerCountValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     return bot->getAttackers().size();
 }
 
 bool HasAggroValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     Unit* target = GetTarget();
     if (!target)
         return true;
@@ -36,12 +36,12 @@ bool HasAggroValue::Calculate()
 
 uint8 AttackerCountValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     int count = 0;
     float range = BOT_SIGHT_DISTANCE;
 
-    AttackerMap attackers = ai->GetAi()->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap attackers = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
     for (AttackerMapIterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* unit = sObjectAccessor.GetUnit(*bot, i->first);
@@ -58,8 +58,8 @@ uint8 AttackerCountValue::Calculate()
 
 uint8 BalancePercentValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
 
     float playerLevel = 0,
         attackerLevel = 0;
@@ -78,7 +78,7 @@ uint8 BalancePercentValue::Calculate()
         }
     }
 
-    AttackerMap v = ai->GetAi()->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap v = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
 
     for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
     {  

@@ -10,8 +10,8 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool QueryQuestItemAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
-    Player *bot = ai->GetAi()->GetBot();
+    Player *master = ai->GetMaster();
+    Player *bot = ai->GetBot();
     string text = event.getParam();
 
     list<uint32> items;
@@ -25,7 +25,7 @@ bool QueryQuestItemAction::Execute(Event event)
 
 void QueryQuestItemAction::QueryQuestItem(uint32 itemId) 
 {
-    Player *bot = ai->GetAi()->GetBot();
+    Player *bot = ai->GetBot();
     QuestStatusMap& questMap = bot->getQuestStatusMap();
     for (QuestStatusMap::iterator i = questMap.begin(); i != questMap.end(); i++)
     {
@@ -57,7 +57,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId, const Quest *questTempl
         out << available;
         out << "/";
         out << required;
-        ai->GetAi()->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str().c_str());
     }
 }
 

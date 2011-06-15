@@ -30,11 +30,11 @@ namespace ai
             }
 
         private:
-            static Strategy* dps(AiManagerRegistry* ai) { return new DpsHunterStrategy(ai); }
-            static Strategy* nc(AiManagerRegistry* ai) { return new GenericHunterNonCombatStrategy(ai); }
-            static Strategy* bspeed(AiManagerRegistry* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
-            static Strategy* bdps(AiManagerRegistry* ai) { return new HunterBuffDpsStrategy(ai); }
-            static Strategy* rnature(AiManagerRegistry* ai) { return new HunterNatureResistanceStrategy(ai); }
+            static Strategy* dps(PlayerbotAI* ai) { return new DpsHunterStrategy(ai); }
+            static Strategy* nc(PlayerbotAI* ai) { return new GenericHunterNonCombatStrategy(ai); }
+            static Strategy* bspeed(PlayerbotAI* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
+            static Strategy* bdps(PlayerbotAI* ai) { return new HunterBuffDpsStrategy(ai); }
+            static Strategy* rnature(PlayerbotAI* ai) { return new HunterNatureResistanceStrategy(ai); }
         };
     };
 };
@@ -65,17 +65,17 @@ namespace ai
             }
 
         private:
-            static Trigger* aspect_of_the_viper(AiManagerRegistry* ai) { return new HunterAspectOfTheViperTrigger(ai); }
-            static Trigger* black_arrow(AiManagerRegistry* ai) { return new BlackArrowTrigger(ai); }
-            static Trigger* NoStings(AiManagerRegistry* ai) { return new HunterNoStingsActiveTrigger(ai); }
-            static Trigger* hunters_pet_dead(AiManagerRegistry* ai) { return new HuntersPetDeadTrigger(ai); }
-            static Trigger* hunters_pet_low_health(AiManagerRegistry* ai) { return new HuntersPetLowHealthTrigger(ai); }
-            static Trigger* hunters_mark(AiManagerRegistry* ai) { return new HuntersMarkTrigger(ai); }
-            static Trigger* freezing_trap(AiManagerRegistry* ai) { return new FreezingTrapTrigger(ai); }
-            static Trigger* aspect_of_the_pack(AiManagerRegistry* ai) { return new HunterAspectOfThePackTrigger(ai); }
-            static Trigger* rapid_fire(AiManagerRegistry* ai) { return new RapidFireTrigger(ai); }
-            static Trigger* aspect_of_the_hawk(AiManagerRegistry* ai) { return new HunterAspectOfTheHawkTrigger(ai); }
-            static Trigger* aspect_of_the_wild(AiManagerRegistry* ai) { return new HunterAspectOfTheWildTrigger(ai); }
+            static Trigger* aspect_of_the_viper(PlayerbotAI* ai) { return new HunterAspectOfTheViperTrigger(ai); }
+            static Trigger* black_arrow(PlayerbotAI* ai) { return new BlackArrowTrigger(ai); }
+            static Trigger* NoStings(PlayerbotAI* ai) { return new HunterNoStingsActiveTrigger(ai); }
+            static Trigger* hunters_pet_dead(PlayerbotAI* ai) { return new HuntersPetDeadTrigger(ai); }
+            static Trigger* hunters_pet_low_health(PlayerbotAI* ai) { return new HuntersPetLowHealthTrigger(ai); }
+            static Trigger* hunters_mark(PlayerbotAI* ai) { return new HuntersMarkTrigger(ai); }
+            static Trigger* freezing_trap(PlayerbotAI* ai) { return new FreezingTrapTrigger(ai); }
+            static Trigger* aspect_of_the_pack(PlayerbotAI* ai) { return new HunterAspectOfThePackTrigger(ai); }
+            static Trigger* rapid_fire(PlayerbotAI* ai) { return new RapidFireTrigger(ai); }
+            static Trigger* aspect_of_the_hawk(PlayerbotAI* ai) { return new HunterAspectOfTheHawkTrigger(ai); }
+            static Trigger* aspect_of_the_wild(PlayerbotAI* ai) { return new HunterAspectOfTheWildTrigger(ai); }
         };
     };
 };
@@ -122,36 +122,36 @@ namespace ai
             }
 
         private:
-            static Action* auto_shot(AiManagerRegistry* ai) { return new CastAutoShotAction(ai); }
-            static Action* aimed_shot(AiManagerRegistry* ai) { return new CastAimedShotAction(ai); }
-            static Action* explosive_shot(AiManagerRegistry* ai) { return new CastExplosiveShotAction(ai); }
-            static Action* arcane_shot(AiManagerRegistry* ai) { return new CastArcaneShotAction(ai); }
-            static Action* concussive_shot(AiManagerRegistry* ai) { return new CastConcussiveShotAction(ai); }
-            static Action* distracting_shot(AiManagerRegistry* ai) { return new CastDistractingShotAction(ai); }
-            static Action* multi_shot(AiManagerRegistry* ai) { return new CastMultiShotAction(ai); }
-            static Action* volley(AiManagerRegistry* ai) { return new CastVolleyAction(ai); }
-            static Action* serpent_sting(AiManagerRegistry* ai) { return new CastSerpentStingAction(ai); }
-            static Action* wyvern_sting(AiManagerRegistry* ai) { return new CastWyvernStingAction(ai); }
-            static Action* viper_sting(AiManagerRegistry* ai) { return new CastViperStingAction(ai); }
-            static Action* scorpid_sting(AiManagerRegistry* ai) { return new CastScorpidStingAction(ai); }
-            static Action* hunters_mark(AiManagerRegistry* ai) { return new CastHuntersMarkAction(ai); }
-            static Action* mend_pet(AiManagerRegistry* ai) { return new CastMendPetAction(ai); }
-            static Action* revive_pet(AiManagerRegistry* ai) { return new CastRevivePetAction(ai); }
-            static Action* call_pet(AiManagerRegistry* ai) { return new CastCallPetAction(ai); }
-            static Action* black_arrow(AiManagerRegistry* ai) { return new CastBlackArrow(ai); }
-            static Action* freezing_trap(AiManagerRegistry* ai) { return new CastFreezingTrap(ai); }
-            static Action* rapid_fire(AiManagerRegistry* ai) { return new CastRapidFireAction(ai); }
-            static Action* readyness(AiManagerRegistry* ai) { return new CastReadynessAction(ai); }
-            static Action* aspect_of_the_hawk(AiManagerRegistry* ai) { return new CastAspectOfTheHawkAction(ai); }
-            static Action* aspect_of_the_wild(AiManagerRegistry* ai) { return new CastAspectOfTheWildAction(ai); }
-            static Action* aspect_of_the_viper(AiManagerRegistry* ai) { return new CastAspectOfTheViperAction(ai); }
-            static Action* aspect_of_the_pack(AiManagerRegistry* ai) { return new CastAspectOfThePackAction(ai); }
-            static Action* aspect_of_the_cheetah(AiManagerRegistry* ai) { return new CastAspectOfTheCheetahAction(ai); }
+            static Action* auto_shot(PlayerbotAI* ai) { return new CastAutoShotAction(ai); }
+            static Action* aimed_shot(PlayerbotAI* ai) { return new CastAimedShotAction(ai); }
+            static Action* explosive_shot(PlayerbotAI* ai) { return new CastExplosiveShotAction(ai); }
+            static Action* arcane_shot(PlayerbotAI* ai) { return new CastArcaneShotAction(ai); }
+            static Action* concussive_shot(PlayerbotAI* ai) { return new CastConcussiveShotAction(ai); }
+            static Action* distracting_shot(PlayerbotAI* ai) { return new CastDistractingShotAction(ai); }
+            static Action* multi_shot(PlayerbotAI* ai) { return new CastMultiShotAction(ai); }
+            static Action* volley(PlayerbotAI* ai) { return new CastVolleyAction(ai); }
+            static Action* serpent_sting(PlayerbotAI* ai) { return new CastSerpentStingAction(ai); }
+            static Action* wyvern_sting(PlayerbotAI* ai) { return new CastWyvernStingAction(ai); }
+            static Action* viper_sting(PlayerbotAI* ai) { return new CastViperStingAction(ai); }
+            static Action* scorpid_sting(PlayerbotAI* ai) { return new CastScorpidStingAction(ai); }
+            static Action* hunters_mark(PlayerbotAI* ai) { return new CastHuntersMarkAction(ai); }
+            static Action* mend_pet(PlayerbotAI* ai) { return new CastMendPetAction(ai); }
+            static Action* revive_pet(PlayerbotAI* ai) { return new CastRevivePetAction(ai); }
+            static Action* call_pet(PlayerbotAI* ai) { return new CastCallPetAction(ai); }
+            static Action* black_arrow(PlayerbotAI* ai) { return new CastBlackArrow(ai); }
+            static Action* freezing_trap(PlayerbotAI* ai) { return new CastFreezingTrap(ai); }
+            static Action* rapid_fire(PlayerbotAI* ai) { return new CastRapidFireAction(ai); }
+            static Action* readyness(PlayerbotAI* ai) { return new CastReadynessAction(ai); }
+            static Action* aspect_of_the_hawk(PlayerbotAI* ai) { return new CastAspectOfTheHawkAction(ai); }
+            static Action* aspect_of_the_wild(PlayerbotAI* ai) { return new CastAspectOfTheWildAction(ai); }
+            static Action* aspect_of_the_viper(PlayerbotAI* ai) { return new CastAspectOfTheViperAction(ai); }
+            static Action* aspect_of_the_pack(PlayerbotAI* ai) { return new CastAspectOfThePackAction(ai); }
+            static Action* aspect_of_the_cheetah(PlayerbotAI* ai) { return new CastAspectOfTheCheetahAction(ai); }
         };
     };
 };
 
-HunterAiObjectContext::HunterAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+HunterAiObjectContext::HunterAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::hunter::StrategyFactoryInternal());
     actionContexts.Add(new ai::hunter::AiObjectContextInternal());

@@ -67,7 +67,7 @@ bool StayCircleAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetAi()->GetMaster();
+    Player* master = ai->GetMaster();
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -85,7 +85,7 @@ bool StayLineAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetAi()->GetMaster();
+    Player* master = ai->GetMaster();
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -116,7 +116,7 @@ bool StayCombatAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetAi()->GetMaster();
+    Player* master = ai->GetMaster();
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -130,7 +130,7 @@ bool StayCombatAction::Execute(Event event)
         Player* member = gref->getSource();
         if (member != master)
         {
-            if (ai->GetAi()->IsTank(member))
+            if (ai->IsTank(member))
                 tanks.push_back(member);
             else
                 dps.push_back(member);
@@ -139,28 +139,28 @@ bool StayCombatAction::Execute(Event event)
         gref = gref->next();
     }
 
-    if (ai->GetAi()->IsTank(master))
+    if (ai->IsTank(master))
         tanks.insert(tanks.begin() + (tanks.size() + 1) / 2, master);
     else
         dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
 
-    if (ai->GetAi()->IsTank(bot) && ai->GetAi()->IsTank(master))
+    if (ai->IsTank(bot) && ai->IsTank(master))
     {
         StayLine(tanks, 0.0f, x, y, z, orientation, range);
         return true;
     }
-    if (!ai->GetAi()->IsTank(bot) && !ai->GetAi()->IsTank(master))
+    if (!ai->IsTank(bot) && !ai->IsTank(master))
     {
         StayLine(dps, 0.0f, x, y, z, orientation, range);
         return true;
     }
-    if (ai->GetAi()->IsTank(bot) && !ai->GetAi()->IsTank(master))
+    if (ai->IsTank(bot) && !ai->IsTank(master))
     {
         float diff = tanks.size() % 2 == 0 ? -range / 2.0f : 0.0f;
         StayLine(tanks, diff, x + cos(orientation) * range, y + sin(orientation) * range, z, orientation, range);
         return true;
     }
-    if (!ai->GetAi()->IsTank(bot) && ai->GetAi()->IsTank(master))
+    if (!ai->IsTank(bot) && ai->IsTank(master))
     {
         float diff = dps.size() % 2 == 0 ? -range / 2.0f : 0.0f;
         StayLine(dps, diff, x - cos(orientation) * range, y - sin(orientation) * range, z, orientation, range);

@@ -6,7 +6,7 @@ namespace ai
 {
     class TurnInQuestAction : public Action {
     public:
-        TurnInQuestAction(AiManagerRegistry* const ai) : Action(ai, "turn in quest") {}
+        TurnInQuestAction(PlayerbotAI* ai) : Action(ai, "turn in quest") {}
         virtual bool Execute(Event event);
 
     private:

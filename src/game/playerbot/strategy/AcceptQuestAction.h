@@ -6,13 +6,13 @@ namespace ai
 {
     class AcceptQuestAction : public Action {
     public:
-        AcceptQuestAction(AiManagerRegistry* const ai) : Action(ai, "accept quest") {}
+        AcceptQuestAction(PlayerbotAI* ai) : Action(ai, "accept quest") {}
         virtual bool Execute(Event event);
     };
 
     class AcceptQuestShareAction : public Action {
     public:
-        AcceptQuestShareAction(AiManagerRegistry* const ai) : Action(ai, "accept quest share") {}
+        AcceptQuestShareAction(PlayerbotAI* ai) : Action(ai, "accept quest share") {}
         virtual bool Execute(Event event);
     };
 }

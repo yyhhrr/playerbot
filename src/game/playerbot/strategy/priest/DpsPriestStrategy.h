@@ -7,7 +7,7 @@ namespace ai
     class DpsPriestStrategy : public HealPriestStrategy
     {
     public:
-        DpsPriestStrategy(AiManagerRegistry* const ai) : HealPriestStrategy(ai) {}
+        DpsPriestStrategy(PlayerbotAI* ai) : HealPriestStrategy(ai) {}
 
     public:
         virtual NextAction** getDefaultActions();

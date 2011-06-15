@@ -7,7 +7,7 @@ namespace ai
 {
     class ListSpellsAction : public Action {
     public:
-        ListSpellsAction(AiManagerRegistry* const ai) : Action(ai, "spells") {}
+        ListSpellsAction(PlayerbotAI* ai) : Action(ai, "spells") {}
 
         virtual bool Execute(Event event);
   

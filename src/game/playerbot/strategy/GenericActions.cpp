@@ -4,13 +4,13 @@
 
 using namespace ai;
 
-ChangeCombatStrategyAction::ChangeCombatStrategyAction(AiManagerRegistry* const ai, const char* name) : Action(ai, "change strategy")
+ChangeCombatStrategyAction::ChangeCombatStrategyAction(PlayerbotAI* ai, const char* name) : Action(ai, "change strategy")
 {
     this->name = name;
 }
 
 bool ChangeCombatStrategyAction::Execute(Event event)
 {
-    ai->GetAi()->ChangeCombatStrategy(name.c_str());
+    ai->ChangeCombatStrategy(name.c_str());
     return true;
 }

@@ -6,7 +6,7 @@ namespace ai
 {
     class GossipHelloAction : public Action {
     public:
-        GossipHelloAction(AiManagerRegistry* const ai) : Action(ai, "gossip hello") {}
+        GossipHelloAction(PlayerbotAI* ai) : Action(ai, "gossip hello") {}
         virtual bool Execute(Event event);
     };
 

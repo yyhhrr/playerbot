@@ -7,7 +7,7 @@ namespace ai
 {
     class StayActionBase : public MovementAction {
     public:
-        StayActionBase(AiManagerRegistry* const ai, const char* name) : MovementAction(ai, name) {}
+        StayActionBase(PlayerbotAI* ai, const char* name) : MovementAction(ai, name) {}
 
     protected:
         void Stay();
@@ -16,25 +16,25 @@ namespace ai
 
     class StayAction : public StayActionBase {
     public:
-        StayAction(AiManagerRegistry* const ai) : StayActionBase(ai, "stay") {}
+        StayAction(PlayerbotAI* ai) : StayActionBase(ai, "stay") {}
         virtual bool Execute(Event event);
     };
 
     class StayCircleAction : public StayActionBase {
     public:
-        StayCircleAction(AiManagerRegistry* const ai) : StayActionBase(ai, "stay circle") {}
+        StayCircleAction(PlayerbotAI* ai) : StayActionBase(ai, "stay circle") {}
         virtual bool Execute(Event event);
     };
 
     class StayCombatAction : public StayActionBase {
     public:
-        StayCombatAction(AiManagerRegistry* const ai) : StayActionBase(ai, "stay combat") {}
+        StayCombatAction(PlayerbotAI* ai) : StayActionBase(ai, "stay combat") {}
         virtual bool Execute(Event event);
     };
 
     class StayLineAction : public StayActionBase {
     public:
-        StayLineAction(AiManagerRegistry* const ai) : StayActionBase(ai, "stay line") {}
+        StayLineAction(PlayerbotAI* ai) : StayActionBase(ai, "stay line") {}
         virtual bool Execute(Event event);
     };
 

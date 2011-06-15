@@ -6,10 +6,10 @@ namespace ai
     class FindTargetStrategy
     {
     public:
-        FindTargetStrategy(AiManagerRegistry* aiRegistry)
+        FindTargetStrategy(PlayerbotAI* ai)
         {
             result = NULL;
-            this->aiRegistry = aiRegistry;
+            this->ai = ai;
         }
 
     public:
@@ -22,7 +22,7 @@ namespace ai
 
     protected:
         Unit* result;
-        AiManagerRegistry* aiRegistry;
+        PlayerbotAI* ai;
 
     protected:
         map<Unit*, int> tankCountCache;
@@ -33,7 +33,7 @@ namespace ai
     class TargetValue : public CalculatedValue<Unit*>
 	{
 	public:
-        TargetValue(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        TargetValue(PlayerbotAI* ai) : CalculatedValue<Unit*>(ai) {}
 
     protected:
         Unit* FindTarget(FindTargetStrategy* strategy);

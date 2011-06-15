@@ -8,7 +8,7 @@ namespace ai
     class CurrentCcTargetValue : public TargetValue, public Qualified
 	{
 	public:
-        CurrentCcTargetValue(AiManagerRegistry* const ai) : TargetValue(ai) {}
+        CurrentCcTargetValue(PlayerbotAI* ai) : TargetValue(ai) {}
 
     public:
         Unit* Calculate();

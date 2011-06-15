@@ -6,6 +6,6 @@ namespace ai
     class LootStrategyValue : public ManualSetValue<LootStrategy>
 	{
 	public:
-        LootStrategyValue(AiManagerRegistry* const ai) : ManualSetValue<LootStrategy>(ai, LOOTSTRATEGY_QUEST) {}
+        LootStrategyValue(PlayerbotAI* ai) : ManualSetValue<LootStrategy>(ai, LOOTSTRATEGY_QUEST) {}
     };
 }

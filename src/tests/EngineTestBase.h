@@ -6,8 +6,7 @@
 #include "../game/playerbot/strategy/Trigger.h"
 #include "../game/playerbot/strategy/Engine.h"
 
-#include "MockAiSpellManager.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 
 using namespace ai;
 
@@ -78,8 +77,7 @@ protected:
     void tickWithCcTarget(const char*  spell);
 
 protected:
-    MockAiManagerRegistry *ai;
-	MockAiSpellManager* spellManager;
+    MockPlayerbotAIBase *ai;
     Engine *engine;
     AiObjectContext *context;
 };

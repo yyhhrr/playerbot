@@ -7,7 +7,7 @@ namespace ai
     class PartyMemberToDispel : public PartyMemberValue, Qualified
 	{
 	public:
-        PartyMemberToDispel(AiManagerRegistry* const ai) : 
+        PartyMemberToDispel(PlayerbotAI* ai) : 
           PartyMemberValue(ai) {}
     
     protected:

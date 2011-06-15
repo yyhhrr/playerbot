@@ -6,12 +6,12 @@ using namespace ai;
 
 bool CastCasterFormAction::Execute(Event event)
 {
-    ai->GetAi()->RemoveAura("dire bear form");
-    ai->GetAi()->RemoveAura("bear form");
-    ai->GetAi()->RemoveAura("cat form");
-	ai->GetAi()->RemoveAura("moonkin form");
-    ai->GetAi()->RemoveAura("travel form");
-	ai->GetAi()->RemoveAura("aquatic form");
+    ai->RemoveAura("dire bear form");
+    ai->RemoveAura("bear form");
+    ai->RemoveAura("cat form");
+	ai->RemoveAura("moonkin form");
+    ai->RemoveAura("travel form");
+	ai->RemoveAura("aquatic form");
     return true;
 }
 
@@ -28,10 +28,10 @@ NextAction** CastAbolishPoisonOnPartyAction::getAlternatives()
 
 Value<Unit*>* CastEntanglingRootsCcAction::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", "entangling roots");
+    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", "entangling roots");
 }
 
 bool CastEntanglingRootsCcAction::Execute(Event event)
 {
-    return ai->GetAi()->CastSpell("entangling roots", GetTarget()); 
+    return ai->CastSpell("entangling roots", GetTarget()); 
 }

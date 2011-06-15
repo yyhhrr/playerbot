@@ -9,7 +9,7 @@ namespace ai
     class ChatCommandHandlerStrategy : public PassTroughStrategy
     {
     public:
-        ChatCommandHandlerStrategy(AiManagerRegistry* const ai);
+        ChatCommandHandlerStrategy(PlayerbotAI* ai);
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

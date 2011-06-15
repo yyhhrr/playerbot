@@ -14,7 +14,6 @@ namespace ai
 		MockPlayerbotAIBase() : PlayerbotAI() 
         {
             targetIsCastingNonMeleeSpell = false;
-            this->buffer = buffer;
         }
         void SetContext(AiObjectContext* context) { this->aiObjectContext = context; }
 	
@@ -32,7 +31,7 @@ namespace ai
         void resetSpells() {spellCooldowns.clear(); }
 
     public:
-        string *buffer;
+        string buffer;
 
     public:
         list<string> spellCooldowns;
@@ -42,19 +41,5 @@ namespace ai
 
         bool targetIsCastingNonMeleeSpell;
     };
-
-    class MockAiManagerRegistry : public AiManagerRegistry
-    {
-    public:
-		MockAiManagerRegistry();
-		virtual ~MockAiManagerRegistry();
-
-    public:
-        void SetContext(AiObjectContext* context) { GetMockAi()->SetContext(context); }
-        MockPlayerbotAIBase* GetMockAi() { return (MockPlayerbotAIBase*)ai; }
-
-	public:
-		std::string buffer;
-	};
 
 }

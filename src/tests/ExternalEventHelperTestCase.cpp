@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 #include "../game/playerbot/strategy/ChatCommandTrigger.h"
 #include "../game/playerbot/strategy/ExternalEventHelper.h"
 
@@ -17,8 +17,8 @@ public:
     }
 
 private:
-    static Trigger* message(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "message"); }
-    static Trigger* message_from(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "message from"); }
+    static Trigger* message(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "message"); }
+    static Trigger* message_from(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "message from"); }
 };
 
 
@@ -26,7 +26,7 @@ private:
 class ExternalEventTestAiObjectContext : public AiObjectContext
 {
 public:
-    ExternalEventTestAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+    ExternalEventTestAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai)
     {
         triggerContexts.Add(new ExternalEventTestTriggerContext());
     }
@@ -50,7 +50,7 @@ public:
 protected:
 	void externalEvent()
 	{
-        MockAiManagerRegistry ai;
+        MockPlayerbotAIBase ai;
         ExternalEventTestAiObjectContext aiObjectContext(&ai);
         ExternalEventHelper helper(&aiObjectContext);
         
@@ -66,7 +66,7 @@ protected:
 
     void emptyExternalEvent()
     {
-        MockAiManagerRegistry ai;
+        MockPlayerbotAIBase ai;
         ExternalEventTestAiObjectContext aiObjectContext(&ai);
         ExternalEventHelper helper(&aiObjectContext);
 

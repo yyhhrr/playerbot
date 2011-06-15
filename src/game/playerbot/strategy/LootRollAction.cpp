@@ -7,7 +7,7 @@ using namespace ai;
 
 bool LootRollAction::Execute(Event event)
 {
-    Player *bot = ai->GetAi()->GetBot();
+    Player *bot = ai->GetBot();
 
     WorldPacket p(event.getPacket()); //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
     ObjectGuid Guid;

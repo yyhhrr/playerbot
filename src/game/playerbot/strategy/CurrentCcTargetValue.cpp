@@ -7,7 +7,7 @@ using namespace ai;
 class FindCurrentCcTargetStrategy : public FindTargetStrategy
 {
 public:
-    FindCurrentCcTargetStrategy(AiManagerRegistry* aiRegistry, const char* spell) : FindTargetStrategy(aiRegistry)
+    FindCurrentCcTargetStrategy(PlayerbotAI* ai, const char* spell) : FindTargetStrategy(ai)
     {
         this->spell = spell;
     }
@@ -17,7 +17,7 @@ protected:
     {
         float threat = threatManager->getThreat(bot);
         Unit* creature = threatManager->getOwner();
-        if (aiRegistry->GetAi()->HasAura(spell, creature))
+        if (ai->HasAura(spell, creature))
             result = creature;
     }
 

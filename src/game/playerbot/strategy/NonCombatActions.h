@@ -8,7 +8,7 @@ namespace ai
     class DrinkAction : public UseItemAction 
     {
     public:
-        DrinkAction(AiManagerRegistry* const ai) : UseItemAction(ai, "drink") {}
+        DrinkAction(PlayerbotAI* ai) : UseItemAction(ai, "drink") {}
         
         virtual bool isUseful() 
         {
@@ -19,7 +19,7 @@ namespace ai
     class EatAction : public UseItemAction 
     {
     public:
-        EatAction(AiManagerRegistry* const ai) : UseItemAction(ai, "food") {}
+        EatAction(PlayerbotAI* ai) : UseItemAction(ai, "food") {}
 
         virtual bool isUseful() 
         {

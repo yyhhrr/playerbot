@@ -7,7 +7,7 @@ namespace ai
     class FireMageStrategy : public GenericMageStrategy
     {
     public:
-        FireMageStrategy(AiManagerRegistry* const ai) : GenericMageStrategy(ai) {}
+        FireMageStrategy(PlayerbotAI* ai) : GenericMageStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

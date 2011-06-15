@@ -243,7 +243,7 @@ void Engine::addStrategy(const char* name)
 	{
         strategies.push_back(strategy);
 
-		PlayerbotAI* manager = ai->GetAi();
+		PlayerbotAI* manager = ai;
 		if (manager)
 		{
 			string list = strategy->GetIncompatibleStrategies();

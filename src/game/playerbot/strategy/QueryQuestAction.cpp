@@ -7,8 +7,8 @@ using namespace ai;
 
 bool QueryQuestAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
-    Player *bot = ai->GetAi()->GetBot();
+    Player *master = ai->GetMaster();
+    Player *bot = ai->GetBot();
     string text = event.getParam();
 
     PlayerbotChatHandler ch(master);
@@ -23,7 +23,7 @@ bool QueryQuestAction::Execute(Event event)
             ostringstream out;
             out << "Quest ";
             out << (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE ? "completed" : "not completed");
-            ai->GetAi()->TellMaster(out.str().c_str());
+            ai->TellMaster(out.str().c_str());
             return true;
         }
     }

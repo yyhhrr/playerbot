@@ -7,7 +7,7 @@ using namespace ai;
 class FindTargetForCcStrategy : public FindTargetStrategy
 {
 public:
-    FindTargetForCcStrategy(AiManagerRegistry* aiRegistry, const char* spell) : FindTargetStrategy(aiRegistry)
+    FindTargetForCcStrategy(PlayerbotAI* ai, const char* spell) : FindTargetStrategy(ai)
     {
         this->spell = spell;
         maxDistance = 0;
@@ -26,7 +26,7 @@ protected:
         int tankCount, dpsCount;
         GetPlayerCount(bot, creature, &tankCount, &dpsCount);
 
-        if (tankCount || dpsCount || !aiRegistry->GetAi()->CanCastSpell(spell, creature))
+        if (tankCount || dpsCount || !ai->CanCastSpell(spell, creature))
             return;
 
         float minDistance = BOT_REACT_DISTANCE;
@@ -40,7 +40,7 @@ protected:
                 if( !member || !member->isAlive() || member == bot)
                     continue;
 
-                if (!aiRegistry->GetAi()->IsTank(member))
+                if (!ai->IsTank(member))
                     continue;
 
                 float distance = member->GetDistance(creature);

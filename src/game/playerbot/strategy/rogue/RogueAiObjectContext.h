@@ -7,6 +7,6 @@ namespace ai
     class RogueAiObjectContext : public AiObjectContext
     {
     public:
-        RogueAiObjectContext(AiManagerRegistry* const ai);
+        RogueAiObjectContext(PlayerbotAI* ai);
     };
 }

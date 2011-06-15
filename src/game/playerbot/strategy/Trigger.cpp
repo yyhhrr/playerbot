@@ -12,7 +12,7 @@ Event Trigger::Check()
 
 Value<Unit*>* Trigger::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
+    return ai->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
 }
 
 Unit* Trigger::GetTarget()

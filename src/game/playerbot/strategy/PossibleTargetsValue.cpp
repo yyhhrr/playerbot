@@ -12,7 +12,7 @@ using namespace MaNGOS;
 
 list<Unit*> PossibleTargetsValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     list<Unit *> targets;
 

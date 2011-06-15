@@ -6,8 +6,8 @@ using namespace ai;
 
 Unit* LineTargetValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
 
     Group* group = master->GetGroup();
     if (!group)

@@ -7,8 +7,8 @@ using namespace ai;
 
 bool TellLosAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
-    AiObjectContext *context = ai->GetAi()->GetAiObjectContext();
+    Player* bot = ai->GetBot();
+    AiObjectContext *context = ai->GetAiObjectContext();
 
     string &param = event.getParam();
 
@@ -41,16 +41,16 @@ bool TellLosAction::Execute(Event event)
 
 void TellLosAction::ListUnits(const char* title, list<Unit*> units)
 {
-    ai->GetAi()->TellMaster(title);
+    ai->TellMaster(title);
 
     for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
-        ai->GetAi()->TellMaster((*i)->GetName());
+        ai->TellMaster((*i)->GetName());
 
 }
 void TellLosAction::ListGameObjects(const char* title, list<GameObject*> gos)
 {
-    ai->GetAi()->TellMaster(title);
+    ai->TellMaster(title);
 
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        ai->GetAi()->TellMaster((*i)->GetGOInfo()->name);
+        ai->TellMaster((*i)->GetGOInfo()->name);
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include "Action.h"
 #include "Event.h"
-#include "../ai/AiManagerRegistryAware.h"
+#include "../PlayerbotAIAware.h"
 
 namespace ai
 {
-    class UntypedValue : public AiManagerRegistryAware
+    class UntypedValue : public PlayerbotAIAware
     {
     public:
-        UntypedValue(AiManagerRegistry* const ai) : AiManagerRegistryAware(ai) {}
+        UntypedValue(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
         virtual void Update() {}
     };
     
@@ -26,7 +26,7 @@ namespace ai
     class CalculatedValue : public UntypedValue, public Value<T>
 	{
 	public:
-        CalculatedValue(AiManagerRegistry* const ai, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
+        CalculatedValue(PlayerbotAI* ai, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
             name(name), checkInterval(checkInterval), ticksElapsed(checkInterval) 
         { }
         virtual ~CalculatedValue() {}
@@ -63,7 +63,7 @@ namespace ai
     class ManualSetValue : public UntypedValue, public Value<T>
     {
     public:
-        ManualSetValue(AiManagerRegistry* const ai, T defaultValue, const char* name = "value") : 
+        ManualSetValue(PlayerbotAI* ai, T defaultValue, const char* name = "value") : 
             UntypedValue(ai), name(name), value(defaultValue) {}
         virtual ~ManualSetValue() {}
 

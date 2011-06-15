@@ -17,24 +17,24 @@ namespace ai
     class DispelMagicTrigger : public NeedCureTrigger 
     {
     public:
-        DispelMagicTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
+        DispelMagicTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
     };
 
     class DispelMagicPartyMemberTrigger : public PartyMemberNeedCureTrigger 
     {
     public:
-        DispelMagicPartyMemberTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
+        DispelMagicPartyMemberTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "dispel magic", DISPEL_MAGIC) {}
     };
 
     class CureDiseaseTrigger : public NeedCureTrigger 
     {
     public:
-        CureDiseaseTrigger(AiManagerRegistry* const ai) : NeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
+        CureDiseaseTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
     };
 
     class PartyMemberCureDiseaseTrigger : public PartyMemberNeedCureTrigger 
     {
     public:
-        PartyMemberCureDiseaseTrigger(AiManagerRegistry* const ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
+        PartyMemberCureDiseaseTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
     };
 }

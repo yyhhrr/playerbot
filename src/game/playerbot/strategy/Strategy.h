@@ -15,10 +15,10 @@ namespace ai
 		STRATEGY_TYPE_HEAL = 16,
 	};
 
-    class Strategy : public AiManagerRegistryAware
+    class Strategy : public PlayerbotAIAware
     {
     public:
-        Strategy(AiManagerRegistry* const ai) : AiManagerRegistryAware(ai) {}
+        Strategy(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
         virtual ~Strategy() {}
 
     public:
@@ -35,7 +35,7 @@ namespace ai
     class CombatStrategy : public Strategy
     {
     public:
-        CombatStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+        CombatStrategy(PlayerbotAI* ai) : Strategy(ai) {}
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 		virtual StrategyType GetType() { return STRATEGY_TYPE_COMBAT; }
     };
@@ -44,7 +44,7 @@ namespace ai
     class MeleeCombatStrategy : public CombatStrategy
     {
     public:
-        MeleeCombatStrategy(AiManagerRegistry* const ai) : CombatStrategy(ai) {}
+        MeleeCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
 
@@ -52,7 +52,7 @@ namespace ai
     class RangedCombatStrategy : public CombatStrategy
     {
     public:
-        RangedCombatStrategy(AiManagerRegistry* const ai) : CombatStrategy(ai) {}
+        RangedCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
 }

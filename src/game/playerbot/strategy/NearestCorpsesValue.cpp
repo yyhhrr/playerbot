@@ -25,7 +25,7 @@ private:
 
 list<Unit*> NearestCorpsesValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     list<Unit *> targets;
 

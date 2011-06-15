@@ -9,8 +9,8 @@ bool DemonArmorTrigger::IsActive()
 {
 	Unit* target = GetTarget();
 	return AI_VALUE2(uint8, "mana", "self target") > 30 && 
-		!ai->GetAi()->HasAura("demon skin", target) &&
-		!ai->GetAi()->HasAura("demon armor", target);
+		!ai->HasAura("demon skin", target) &&
+		!ai->HasAura("demon armor", target);
 }
 
 bool SpellstoneTrigger::IsActive() 

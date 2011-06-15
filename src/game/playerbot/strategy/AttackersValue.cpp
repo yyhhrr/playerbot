@@ -6,8 +6,8 @@ using namespace ai;
 
 AttackerMap AttackersValue::Calculate()
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
 
     if (!attackerMapProvider)
         attackerMapProvider = new AttackerMapProvider(master);

@@ -7,7 +7,7 @@ namespace ai
     class TankWarlockStrategy : public GenericWarlockStrategy
     {
     public:
-        TankWarlockStrategy(AiManagerRegistry* const ai) : GenericWarlockStrategy(ai) {}
+        TankWarlockStrategy(PlayerbotAI* ai) : GenericWarlockStrategy(ai) {}
         virtual const char* getName() { return "tank"; }
     
     public:

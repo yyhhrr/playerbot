@@ -6,7 +6,7 @@ namespace ai
 {
     class DropQuestAction : public Action {
     public:
-        DropQuestAction(AiManagerRegistry* const ai) : Action(ai, "drop quest") {}
+        DropQuestAction(PlayerbotAI* ai) : Action(ai, "drop quest") {}
         virtual bool Execute(Event event);
     };
 

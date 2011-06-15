@@ -17,7 +17,7 @@ namespace ai
     template <class T> class NamedObjectContextBase
     {
     public:
-        T* create(string name, AiManagerRegistry* ai)
+        T* create(string name, PlayerbotAI* ai)
         {
             size_t found = name.find("::");
             string qualifier;
@@ -40,7 +40,7 @@ namespace ai
         }
 
     protected:
-        typedef T* (*ActionCreator) (AiManagerRegistry* ai);
+        typedef T* (*ActionCreator) (PlayerbotAI* ai);
         map<string, ActionCreator> creators;
     };
 
@@ -48,7 +48,7 @@ namespace ai
     template <class T> class NamedObjectContext : public NamedObjectContextBase<T>
     {
     public:
-        T* create(string name, AiManagerRegistry* ai)
+        T* create(string name, PlayerbotAI* ai)
         {
             T* result = created[name];
             if (result) 
@@ -101,7 +101,7 @@ namespace ai
             contexts.push_back(context);
         }
 
-        T* GetObject(const char* name, AiManagerRegistry* const ai)
+        T* GetObject(const char* name, PlayerbotAI* ai)
         {
             for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {

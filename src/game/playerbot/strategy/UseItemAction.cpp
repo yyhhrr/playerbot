@@ -13,15 +13,15 @@ bool UseItemAction::Execute(Event event)
     Item* item = AI_VALUE2(Item*, "inventory item", name.c_str());
     if (!item)
     {
-        ai->GetAi()->TellMaster("Item not found");
+        ai->TellMaster("Item not found");
         return false;
     }
 
     UseItem(*item);
     if (name == "food" || name == "drink")
     {
-        ai->GetAi()->SetNextCheckDelay(30);
-        ai->GetAi()->TellMaster("I will eat/drink for 30 sec");
+        ai->SetNextCheckDelay(30);
+        ai->TellMaster("I will eat/drink for 30 sec");
     }
 
     return true;
@@ -29,7 +29,7 @@ bool UseItemAction::Execute(Event event)
 
 void UseItemAction::UseItem(Item& item)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
     uint8 cast_count = 1;

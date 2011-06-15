@@ -13,7 +13,7 @@
 
 using namespace ai;
 
-AiObjectContext::AiObjectContext(AiManagerRegistry* const ai) : AiManagerRegistryAware(ai) 
+AiObjectContext::AiObjectContext(PlayerbotAI* ai) : PlayerbotAIAware(ai) 
 {
     strategyContexts.Add(new StrategyContext());
     

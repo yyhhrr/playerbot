@@ -8,7 +8,7 @@ namespace ai
     class FeralDruidStrategy : public GenericDruidStrategy
     {
     protected:
-        FeralDruidStrategy(AiManagerRegistry* const ai) : GenericDruidStrategy(ai) {}
+        FeralDruidStrategy(PlayerbotAI* ai) : GenericDruidStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

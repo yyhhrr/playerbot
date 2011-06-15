@@ -12,13 +12,13 @@ namespace ai
 	class RevengeAvailableTrigger : public SpellCanBeCastTrigger
 	{
 	public:
-		RevengeAvailableTrigger(AiManagerRegistry* const ai) : SpellCanBeCastTrigger(ai, "revenge") {}
+		RevengeAvailableTrigger(PlayerbotAI* ai) : SpellCanBeCastTrigger(ai, "revenge") {}
 	};
 
     class BloodrageDebuffTrigger : public DebuffTrigger 
     {
     public:
-        BloodrageDebuffTrigger(AiManagerRegistry* const ai) : DebuffTrigger(ai, "bloodrage") {}
+        BloodrageDebuffTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "bloodrage") {}
         virtual bool IsActive() 
         {
             return DebuffTrigger::IsActive() &&
@@ -30,37 +30,37 @@ namespace ai
     class ShieldBashInterruptSpellTrigger : public InterruptSpellTrigger
     {
     public:
-        ShieldBashInterruptSpellTrigger(AiManagerRegistry* const ai) : InterruptSpellTrigger(ai, "shield bash") {}
+        ShieldBashInterruptSpellTrigger(PlayerbotAI* ai) : InterruptSpellTrigger(ai, "shield bash") {}
     };
 
     class VictoryRushTrigger : public HasAuraTrigger
     {
     public:
-        VictoryRushTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "victory rush") {}
+        VictoryRushTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "victory rush") {}
     };
 
     class SwordAndBoardTrigger : public HasAuraTrigger
     {
     public:
-        SwordAndBoardTrigger(AiManagerRegistry* const ai) : HasAuraTrigger(ai, "sword and board") {}
+        SwordAndBoardTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "sword and board") {}
     };
 
     class ConcussionBlowTrigger : public SnareTargetTrigger
     {
     public:
-        ConcussionBlowTrigger(AiManagerRegistry* const ai) : SnareTargetTrigger(ai, "concussion blow") {}
+        ConcussionBlowTrigger(PlayerbotAI* ai) : SnareTargetTrigger(ai, "concussion blow") {}
     };
 
     class HamstringTrigger : public SnareTargetTrigger
     {
     public:
-        HamstringTrigger(AiManagerRegistry* const ai) : SnareTargetTrigger(ai, "hamstring") {}
+        HamstringTrigger(PlayerbotAI* ai) : SnareTargetTrigger(ai, "hamstring") {}
     };
 
     class DeathWishTrigger : public BoostTrigger
     {
     public:
-        DeathWishTrigger(AiManagerRegistry* const ai) : BoostTrigger(ai, "death wish") {}
+        DeathWishTrigger(PlayerbotAI* ai) : BoostTrigger(ai, "death wish") {}
     };
 
     

@@ -6,7 +6,7 @@ namespace ai
     class IsMovingValue : public CalculatedValue<bool>, public Qualified
 	{
 	public:
-        IsMovingValue(AiManagerRegistry* const ai) : CalculatedValue<bool>(ai) {}
+        IsMovingValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
 
         virtual bool Calculate() 
         {

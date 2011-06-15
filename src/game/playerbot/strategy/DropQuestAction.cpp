@@ -7,8 +7,8 @@ using namespace ai;
 
 bool DropQuestAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player *master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player *master = ai->GetMaster();
     string link = event.getParam();
     
     ObjectGuid oldSelection = master->GetSelectionGuid();
@@ -18,11 +18,11 @@ bool DropQuestAction::Execute(Event event)
     if (!ch.dropQuest(link.c_str()))
     {
         ostringstream out; out << "Could not drop quest: " << link;
-        ai->GetAi()->TellMaster(out);
+        ai->TellMaster(out);
         return false;
     }
 
     master->SetSelectionGuid(oldSelection);
-    ai->GetAi()->TellMaster("Quest removed");
+    ai->TellMaster("Quest removed");
     return true;
 }

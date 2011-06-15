@@ -7,12 +7,12 @@ namespace ai
 {
 	class ReleaseSpiritAction : public Action {
 	public:
-		ReleaseSpiritAction(AiManagerRegistry* const ai) : Action(ai, "release") {}
+		ReleaseSpiritAction(PlayerbotAI* ai) : Action(ai, "release") {}
 
     public:
         virtual bool Execute(Event event)
         {
-            Player* bot = ai->GetAi()->GetBot();
+            Player* bot = ai->GetBot();
 
             if (bot->isAlive() || bot->GetCorpse())
                 return false;

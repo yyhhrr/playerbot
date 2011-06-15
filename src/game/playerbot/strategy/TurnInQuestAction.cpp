@@ -7,13 +7,13 @@ using namespace ai;
 
 bool TurnInQuestAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
+    Player *master = ai->GetMaster();
 
     ObjectGuid guid = event.getObject();
     if (!guid)
         return false;
 
-    GameObject *obj = ai->GetAi()->GetGameObject(guid);
+    GameObject *obj = ai->GetGameObject(guid);
     if (obj && obj->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
         TurnInQuests(obj);
@@ -33,13 +33,13 @@ bool TurnInQuestAction::Execute(Event event)
 
 void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player *master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player *master = ai->GetMaster();
 
     uint64 giverGUID = questgiver->GetGUID();
 
     if( !bot->IsInMap( questgiver ) )
-        ai->GetAi()->TellMaster("hey you are turning in quests without me!");
+        ai->TellMaster("hey you are turning in quests without me!");
     else
     {
         bot->SetSelectionGuid( ObjectGuid(giverGUID) );
@@ -130,7 +130,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
             }
 
             if (! out.str().empty())
-                ai->GetAi()->TellMaster(out.str().c_str());
+                ai->TellMaster(out.str().c_str());
         }
     }
 }

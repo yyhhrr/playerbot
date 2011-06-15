@@ -83,12 +83,12 @@ void NextAction::destroy(NextAction** actions)
 
 Player* Action::GetBot()
 {
-    return ai->GetAi()->GetBot();
+    return ai->GetBot();
 }
 
 Value<Unit*>* Action::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
+    return ai->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
 }
 
 Unit* Action::GetTarget()

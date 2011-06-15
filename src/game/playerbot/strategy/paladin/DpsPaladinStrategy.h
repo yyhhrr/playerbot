@@ -7,7 +7,7 @@ namespace ai
     class DpsPaladinStrategy : public GenericPaladinStrategy
     {
     public:
-        DpsPaladinStrategy(AiManagerRegistry* const ai) : GenericPaladinStrategy(ai) {}
+        DpsPaladinStrategy(PlayerbotAI* ai) : GenericPaladinStrategy(ai) {}
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

@@ -8,7 +8,7 @@ namespace ai
     class PassTroughStrategy : public Strategy
     {
     public:
-        PassTroughStrategy(AiManagerRegistry* const ai, float relevance = 100.0f) : Strategy(ai), relevance(relevance) {}
+        PassTroughStrategy(PlayerbotAI* ai, float relevance = 100.0f) : Strategy(ai), relevance(relevance) {}
 
         virtual void InitTriggers(std::list<TriggerNode*> &triggers)
         {

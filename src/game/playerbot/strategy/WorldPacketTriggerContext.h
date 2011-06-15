@@ -28,21 +28,21 @@ namespace ai
         }
 
     private:
-        static Trigger* trade_status(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "trade status"); }
-        static Trigger* cannot_equip(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
-        static Trigger* check_mount_state(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
-        static Trigger* area_trigger(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "area trigger"); }
-        static Trigger* resurrect_request(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "resurrect request"); }
-        static Trigger* gossip_hello(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "gossip hello"); }
-        static Trigger* group_invite(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "group invite"); }
-        static Trigger* group_set_leader(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "group set leader"); }
-        static Trigger* no_money(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "not enough money"); }
-        static Trigger* no_reputation(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "not enough reputation"); }
-        static Trigger* use_game_object(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "use game object"); }
-        static Trigger* complete_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "complete quest"); }
-        static Trigger* accept_quest(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "accept quest"); }
-        static Trigger* quest_share(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "quest share"); }
-        static Trigger* loot_roll(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "loot roll"); }
-        static Trigger* taxi(AiManagerRegistry* ai) { return new WorldPacketTrigger(ai, "activate taxi"); }
+        static Trigger* trade_status(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "trade status"); }
+        static Trigger* cannot_equip(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
+        static Trigger* check_mount_state(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
+        static Trigger* area_trigger(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "area trigger"); }
+        static Trigger* resurrect_request(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "resurrect request"); }
+        static Trigger* gossip_hello(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "gossip hello"); }
+        static Trigger* group_invite(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "group invite"); }
+        static Trigger* group_set_leader(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "group set leader"); }
+        static Trigger* no_money(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "not enough money"); }
+        static Trigger* no_reputation(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "not enough reputation"); }
+        static Trigger* use_game_object(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "use game object"); }
+        static Trigger* complete_quest(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "complete quest"); }
+        static Trigger* accept_quest(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "accept quest"); }
+        static Trigger* quest_share(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "quest share"); }
+        static Trigger* loot_roll(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "loot roll"); }
+        static Trigger* taxi(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "activate taxi"); }
     };
 };

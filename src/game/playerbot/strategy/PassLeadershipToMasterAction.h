@@ -6,12 +6,12 @@ namespace ai
 {
     class PassLeadershipToMasterAction : public Action {
     public:
-        PassLeadershipToMasterAction(AiManagerRegistry* const ai) : Action(ai, "pass leadership to master") {}
+        PassLeadershipToMasterAction(PlayerbotAI* ai) : Action(ai, "pass leadership to master") {}
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetAi()->GetBot();
-            Player* master = ai->GetAi()->GetMaster();
+            Player*  bot = ai->GetBot();
+            Player* master = ai->GetMaster();
             WorldPacket &p = event.getPacket();
 
             string name;

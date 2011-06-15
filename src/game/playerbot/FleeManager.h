@@ -8,7 +8,6 @@ class Player;
 namespace ai 
 {
     class Engine;
-    class AiManagerRegistry;
     
 	class RangePair {
 	public:

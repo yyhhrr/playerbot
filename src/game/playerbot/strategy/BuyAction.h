@@ -7,7 +7,7 @@ namespace ai
 {
     class BuyAction : public InventoryAction {
     public:
-        BuyAction(AiManagerRegistry* const ai) : InventoryAction(ai, "buy") {}
+        BuyAction(PlayerbotAI* ai) : InventoryAction(ai, "buy") {}
         virtual bool Execute(Event event);
 
     private:

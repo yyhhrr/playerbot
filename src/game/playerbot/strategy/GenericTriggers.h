@@ -5,21 +5,21 @@
     class clazz : public BuffTrigger \
     { \
     public: \
-        clazz(AiManagerRegistry* const ai) : BuffTrigger(ai, spell) {} \
+        clazz(PlayerbotAI* ai) : BuffTrigger(ai, spell) {} \
     };
 
 #define BUFF_ON_PARTY_TRIGGER(clazz, spell, action) \
     class clazz : public BuffOnPartyTrigger \
     { \
     public: \
-        clazz(AiManagerRegistry* const ai) : BuffOnPartyTrigger(ai, spell) {}  \
+        clazz(PlayerbotAI* ai) : BuffOnPartyTrigger(ai, spell) {}  \
     };
 
 #define DEBUFF_TRIGGER(clazz, spell, action) \
     class clazz : public DebuffTrigger \
     { \
     public: \
-        clazz(AiManagerRegistry* const ai) : DebuffTrigger(ai, spell) {} \
+        clazz(PlayerbotAI* ai) : DebuffTrigger(ai, spell) {} \
     };
 
 namespace ai
@@ -27,7 +27,7 @@ namespace ai
 	class StatAvailable : public Trigger
 	{
 	public:
-		StatAvailable(AiManagerRegistry* const ai, int amount) : Trigger(ai)
+		StatAvailable(PlayerbotAI* ai, int amount) : Trigger(ai)
 		{
 			this->amount = amount;
 		}
@@ -39,70 +39,70 @@ namespace ai
 	class RageAvailable : public StatAvailable
     {
     public:
-        RageAvailable(AiManagerRegistry* const ai, int amount) : StatAvailable(ai, amount) {}
+        RageAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
         virtual bool IsActive();
     };
 
     class LightRageAvailableTrigger : public RageAvailable
     {
     public:
-        LightRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 20) {}
+        LightRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 20) {}
     };
 
     class MediumRageAvailableTrigger : public RageAvailable
     {
     public:
-        MediumRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 40) {}
+        MediumRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 40) {}
     };
 
     class HighRageAvailableTrigger : public RageAvailable
     {
     public:
-        HighRageAvailableTrigger(AiManagerRegistry* const ai) : RageAvailable(ai, 60) {}
+        HighRageAvailableTrigger(PlayerbotAI* ai) : RageAvailable(ai, 60) {}
     };
 
 	class EnergyAvailable : public StatAvailable
 	{
 	public:
-		EnergyAvailable(AiManagerRegistry* const ai, int amount) : StatAvailable(ai, amount) {}
+		EnergyAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
 		virtual bool IsActive();
 	};
 
     class LightEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        LightEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 20) {}
+        LightEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 20) {}
     };
 
     class MediumEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        MediumEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 40) {}
+        MediumEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 40) {}
     };
 
     class HighEnergyAvailableTrigger : public EnergyAvailable
     {
     public:
-        HighEnergyAvailableTrigger(AiManagerRegistry* const ai) : EnergyAvailable(ai, 60) {}
+        HighEnergyAvailableTrigger(PlayerbotAI* ai) : EnergyAvailable(ai, 60) {}
     };
 
 	class ComboPointsAvailableTrigger : public StatAvailable
 	{
 	public:
-	    ComboPointsAvailableTrigger(AiManagerRegistry* const ai, int amount = 5) : StatAvailable(ai, amount) {}
+	    ComboPointsAvailableTrigger(PlayerbotAI* ai, int amount = 5) : StatAvailable(ai, amount) {}
 		virtual bool IsActive();
 	};
 
 	class LoseAggroTrigger : public Trigger {
 	public:
-		LoseAggroTrigger(AiManagerRegistry* const ai) : Trigger(ai, "lose aggro") {}
+		LoseAggroTrigger(PlayerbotAI* ai) : Trigger(ai, "lose aggro") {}
 		virtual bool IsActive();
 	};
 
 	class SpellTrigger : public Trigger
 	{
 	public:
-		SpellTrigger(AiManagerRegistry* const ai, const char* spell, int checkInterval = 1) : Trigger(ai, spell, checkInterval)
+		SpellTrigger(PlayerbotAI* ai, const char* spell, int checkInterval = 1) : Trigger(ai, spell, checkInterval)
 		{
 			this->spell = spell;
 		}
@@ -118,7 +118,7 @@ namespace ai
 	class SpellCanBeCastTrigger : public SpellTrigger
 	{
 	public:
-		SpellCanBeCastTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell) {}
+		SpellCanBeCastTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell) {}
 		virtual bool IsActive();
 	};
 
@@ -126,7 +126,7 @@ namespace ai
     class InterruptSpellTrigger : public SpellTrigger
 	{
     public:
-        InterruptSpellTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell) {}
+        InterruptSpellTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell) {}
         virtual bool IsActive();
     };
 
@@ -134,7 +134,7 @@ namespace ai
     class AttackerCountTrigger : public Trigger
     {
     public:
-        AttackerCountTrigger(AiManagerRegistry* const ai, int amount, float distance = BOT_SIGHT_DISTANCE) : Trigger(ai)
+        AttackerCountTrigger(PlayerbotAI* ai, int amount, float distance = BOT_SIGHT_DISTANCE) : Trigger(ai)
         {
             this->amount = amount;
             this->distance = distance;
@@ -154,13 +154,13 @@ namespace ai
     class HasAttackersTrigger : public AttackerCountTrigger
     {
     public:
-        HasAttackersTrigger(AiManagerRegistry* const ai) : AttackerCountTrigger(ai, 1) {}
+        HasAttackersTrigger(PlayerbotAI* ai) : AttackerCountTrigger(ai, 1) {}
     };
 
     class MyAttackerCountTrigger : public AttackerCountTrigger
     {
     public:
-        MyAttackerCountTrigger(AiManagerRegistry* const ai, int amount) : AttackerCountTrigger(ai, amount) {}
+        MyAttackerCountTrigger(PlayerbotAI* ai, int amount) : AttackerCountTrigger(ai, amount) {}
     public:
         virtual bool IsActive();
         virtual const char* getName() { return "my attacker count"; }
@@ -169,13 +169,13 @@ namespace ai
     class MediumThreatTrigger : public MyAttackerCountTrigger
     {
     public:
-        MediumThreatTrigger(AiManagerRegistry* const ai) : MyAttackerCountTrigger(ai, 2) {}
+        MediumThreatTrigger(PlayerbotAI* ai) : MyAttackerCountTrigger(ai, 2) {}
     };
 
     class AoeTrigger : public AttackerCountTrigger
     {
     public:
-        AoeTrigger(AiManagerRegistry* const ai, int amount = 3, float range = 15.0f) : AttackerCountTrigger(ai, amount)
+        AoeTrigger(PlayerbotAI* ai, int amount = 3, float range = 15.0f) : AttackerCountTrigger(ai, amount)
         {
             this->range = range;
         }
@@ -189,38 +189,38 @@ namespace ai
 
     class NoFoodTrigger : public Trigger {
     public:
-        NoFoodTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no food trigger") {}
+        NoFoodTrigger(PlayerbotAI* ai) : Trigger(ai, "no food trigger") {}
         virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "food"); }
     };
 
     class NoDrinkTrigger : public Trigger {
     public:
-        NoDrinkTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no drink trigger") {}
+        NoDrinkTrigger(PlayerbotAI* ai) : Trigger(ai, "no drink trigger") {}
         virtual bool IsActive() { return !AI_VALUE2(Item*, "inventory item", "drink"); }
     };
 
     class LightAoeTrigger : public AoeTrigger
     {
     public:
-        LightAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 2, 15.0f) {}
+        LightAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 2, 15.0f) {}
     };
 
     class MediumAoeTrigger : public AoeTrigger
     {
     public:
-        MediumAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 3, 17.0f) {}
+        MediumAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 3, 17.0f) {}
     };
 
     class HighAoeTrigger : public AoeTrigger
     {
     public:
-        HighAoeTrigger(AiManagerRegistry* const ai) : AoeTrigger(ai, 4, 20.0f) {}
+        HighAoeTrigger(PlayerbotAI* ai) : AoeTrigger(ai, 4, 20.0f) {}
     };
 
     class BuffTrigger : public SpellTrigger
     {
     public:
-        BuffTrigger(AiManagerRegistry* const ai, const char* spell) : SpellTrigger(ai, spell, 5) {}
+        BuffTrigger(PlayerbotAI* ai, const char* spell) : SpellTrigger(ai, spell, 5) {}
     public:
 		virtual const char* GetTargetName() { return "self target"; }
         virtual bool IsActive();
@@ -229,7 +229,7 @@ namespace ai
     class BuffOnPartyTrigger : public BuffTrigger
     {
     public:
-        BuffOnPartyTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {}
+        BuffOnPartyTrigger(PlayerbotAI* ai, const char* spell) : BuffTrigger(ai, spell) {}
     public:
 		virtual Value<Unit*>* GetTargetValue();
     };
@@ -243,7 +243,7 @@ namespace ai
     class DebuffTrigger : public BuffTrigger
     {
     public:
-        DebuffTrigger(AiManagerRegistry* const ai, const char* spell) : BuffTrigger(ai, spell) {
+        DebuffTrigger(PlayerbotAI* ai, const char* spell) : BuffTrigger(ai, spell) {
 			checkInterval = 1;
 		}
     public:
@@ -258,7 +258,7 @@ namespace ai
 	class BoostTrigger : public BuffTrigger
 	{
 	public:
-		BoostTrigger(AiManagerRegistry* const ai, const char* spell, float balance = 50) : BuffTrigger(ai, spell)
+		BoostTrigger(PlayerbotAI* ai, const char* spell, float balance = 50) : BuffTrigger(ai, spell)
 		{
 			this->balance = balance;
 		}
@@ -272,7 +272,7 @@ namespace ai
     class RandomTrigger : public Trigger
     {
     public:
-        RandomTrigger(AiManagerRegistry* const ai, int probability = 20) : Trigger(ai)
+        RandomTrigger(PlayerbotAI* ai, int probability = 20) : Trigger(ai)
         {
             this->probability = probability;
         }
@@ -287,7 +287,7 @@ namespace ai
     class AndTrigger : public Trigger
     {
     public:
-        AndTrigger(AiManagerRegistry* const ai, Trigger* ls, Trigger* rs) : Trigger(ai)
+        AndTrigger(PlayerbotAI* ai, Trigger* ls, Trigger* rs) : Trigger(ai)
         {
             this->ls = ls;
             this->rs = rs;
@@ -309,7 +309,7 @@ namespace ai
     class SnareTargetTrigger : public DebuffTrigger
     {
     public:
-        SnareTargetTrigger(AiManagerRegistry* const ai, const char* aura) : DebuffTrigger(ai, aura) {}
+        SnareTargetTrigger(PlayerbotAI* ai, const char* aura) : DebuffTrigger(ai, aura) {}
     public:
         virtual bool IsActive();
         virtual const char* getName() { return "target is moving"; }
@@ -318,7 +318,7 @@ namespace ai
 	class LowManaTrigger : public Trigger
 	{
 	public:
-		LowManaTrigger(AiManagerRegistry* const ai) : Trigger(ai, "low mana", 5) {}
+		LowManaTrigger(PlayerbotAI* ai) : Trigger(ai, "low mana", 5) {}
 
 		virtual bool IsActive();
 	};
@@ -331,7 +331,7 @@ namespace ai
 	class NoPetTrigger : public Trigger
 	{
 	public:
-		NoPetTrigger(AiManagerRegistry* const ai) : Trigger(ai, "no pet", 5) {}
+		NoPetTrigger(PlayerbotAI* ai) : Trigger(ai, "no pet", 5) {}
 
 		virtual bool IsActive() {
 			return !AI_VALUE(Unit*, "pet target") && !AI_VALUE(bool, "mounted");
@@ -340,7 +340,7 @@ namespace ai
 
 	class ItemCountTrigger : public Trigger {
 	public:
-		ItemCountTrigger(AiManagerRegistry* const ai, const char* item, int count) : Trigger(ai, item, 5) {
+		ItemCountTrigger(PlayerbotAI* ai, const char* item, int count) : Trigger(ai, item, 5) {
 			this->item = item;
 			this->count = count;
 		}
@@ -355,7 +355,7 @@ namespace ai
 
 	class HasAuraTrigger : public Trigger {
 	public:
-		HasAuraTrigger(AiManagerRegistry* const ai, const char* spell) : Trigger(ai, spell) {
+		HasAuraTrigger(PlayerbotAI* ai, const char* spell) : Trigger(ai, spell) {
 			this->spell = spell;
 		}
 
@@ -369,7 +369,7 @@ namespace ai
     class TimerTrigger : public Trigger
     {
     public:
-        TimerTrigger(AiManagerRegistry* const ai, int checkInterval = 5) : Trigger(ai, "timer", checkInterval) {}
+        TimerTrigger(PlayerbotAI* ai, int checkInterval = 5) : Trigger(ai, "timer", checkInterval) {}
 
     public:
         virtual bool IsActive() { return true; }
@@ -378,7 +378,7 @@ namespace ai
 	class TankAoeTrigger : public NoAttackersTrigger
 	{
 	public:
-		TankAoeTrigger(AiManagerRegistry* const ai) : NoAttackersTrigger(ai) {}
+		TankAoeTrigger(PlayerbotAI* ai) : NoAttackersTrigger(ai) {}
 
 	public:
 		virtual bool IsActive();
@@ -388,7 +388,7 @@ namespace ai
     class IsBehindTargetTrigger : public Trigger
     {
     public:
-        IsBehindTargetTrigger(AiManagerRegistry* const ai) : Trigger(ai) {}
+        IsBehindTargetTrigger(PlayerbotAI* ai) : Trigger(ai) {}
 
     public:
         virtual bool IsActive();
@@ -397,7 +397,7 @@ namespace ai
     class HasCcTargetTrigger : public Trigger
     {
     public:
-        HasCcTargetTrigger(AiManagerRegistry* const ai, const char* name) : Trigger(ai, name) {}
+        HasCcTargetTrigger(PlayerbotAI* ai, const char* name) : Trigger(ai, name) {}
 
     public:
         virtual bool IsActive();
@@ -406,7 +406,7 @@ namespace ai
 	class NoMovementTrigger : public Trigger
 	{
 	public:
-		NoMovementTrigger(AiManagerRegistry* const ai, const char* name) : Trigger(ai, name, 5) {}
+		NoMovementTrigger(PlayerbotAI* ai, const char* name) : Trigger(ai, name, 5) {}
 
 	public:
 		virtual bool IsActive();

@@ -9,12 +9,12 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool LootStrategyAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
+    Player *master = ai->GetMaster();
     string strategy = event.getParam();
     
     LootObjectStack* lootItems = AI_VALUE(LootObjectStack*, "available loot");
     set<uint32>& alwaysLootItems = AI_VALUE(set<uint32>&, "always loot list");
-    Value<LootStrategy>* lootStrategy = ai->GetAi()->GetAiObjectContext()->GetValue<LootStrategy>("loot strategy");
+    Value<LootStrategy>* lootStrategy = ai->GetAiObjectContext()->GetValue<LootStrategy>("loot strategy");
 
     if (strategy == "?")
     {
@@ -33,7 +33,7 @@ bool LootStrategyAction::Execute(Event event)
                 << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
                 << "]|h|r";
         }
-        ai->GetAi()->TellMaster(out);
+        ai->TellMaster(out);
     }
     else
     {
@@ -44,7 +44,7 @@ bool LootStrategyAction::Execute(Event event)
             lootStrategy->Set(String2LootStrategy(strategy));
             ostringstream out;
             out << "Loot strategy set to " << LootStrategy2string(lootStrategy->Get());
-            ai->GetAi()->TellMaster(out);
+            ai->TellMaster(out);
             return true;
         }
 
@@ -58,12 +58,12 @@ bool LootStrategyAction::Execute(Event event)
                 if (j != alwaysLootItems.end())
                     alwaysLootItems.erase(j);
                 
-                ai->GetAi()->TellMaster("Item(s) removed from always loot list");
+                ai->TellMaster("Item(s) removed from always loot list");
             }
             else
             {
                 alwaysLootItems.insert(itemid);
-                ai->GetAi()->TellMaster("Item(s) added to always loot list");
+                ai->TellMaster("Item(s) added to always loot list");
             }
         }
     }    

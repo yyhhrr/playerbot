@@ -7,7 +7,7 @@ namespace ai
     class DistanceValue : public CalculatedValue<float>, public Qualified
 	{
 	public:
-        DistanceValue(AiManagerRegistry* const ai) : CalculatedValue<float>(ai) {}
+        DistanceValue(PlayerbotAI* ai) : CalculatedValue<float>(ai) {}
 
     public:
         float Calculate()
@@ -16,7 +16,7 @@ namespace ai
             if (!target)
                 return 0.0f;
 
-            return ai->GetAi()->GetBot()->GetDistance(target);
+            return ai->GetBot()->GetDistance(target);
         }
     };
 }

@@ -2,7 +2,7 @@
 #include "../playerbot.h"
 #include "AddLootAction.h"
 #include "../PlayerbotAI.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 using namespace ai;
 
@@ -18,9 +18,9 @@ bool AddLootAction::Execute(Event event)
 
 bool AddAllLootAction::Execute(Event event)
 {
-    Player *master = ai->GetAi()->GetMaster();
+    Player *master = ai->GetMaster();
 
-    AiObjectContext *context = ai->GetAi()->GetAiObjectContext();
+    AiObjectContext *context = ai->GetAiObjectContext();
     
     list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)

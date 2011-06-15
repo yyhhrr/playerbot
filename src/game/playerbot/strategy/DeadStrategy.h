@@ -9,7 +9,7 @@ namespace ai
     class DeadStrategy : public PassTroughStrategy
     {
     public:
-        DeadStrategy(AiManagerRegistry* const ai);
+        DeadStrategy(PlayerbotAI* ai);
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

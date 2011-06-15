@@ -3,7 +3,7 @@
 #include "AttackAction.h"
 #include "../../MovementGenerator.h"
 #include "../../CreatureAI.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 using namespace ai;
 
@@ -19,12 +19,12 @@ bool AttackAction::Execute(Event event)
 
 bool AttackMyTargetAction::Execute(Event event)
 {
-    Player* master = ai->GetAi()->GetMaster();
+    Player* master = ai->GetMaster();
     ObjectGuid guid = master->GetSelectionGuid();
     if (!guid)
         return false;
 
-    return Attack(ai->GetAi()->GetCreature(guid));
+    return Attack(ai->GetCreature(guid));
 }
 
 bool AttackAction::Attack(Unit* target)
@@ -35,12 +35,12 @@ bool AttackAction::Attack(Unit* target)
 
     if (bot->IsFriendlyTo(target))
     {
-        ai->GetAi()->TellMaster("Target is friendly");
+        ai->TellMaster("Target is friendly");
         return false;
     }
     if (!bot->IsWithinLOSInMap(target))
     {
-        ai->GetAi()->TellMaster("Target is not in my sight");
+        ai->TellMaster("Target is not in my sight");
         return false;
     }
 
@@ -67,8 +67,8 @@ bool AttackAction::Attack(Unit* target)
     }
 
     
-    ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
-    ai->GetAi()->GetAiObjectContext()->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
+    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
+    ai->GetAiObjectContext()->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
     return true;
 }

@@ -34,24 +34,24 @@ namespace ai
         }
 
     private:
-        static Strategy* dead(AiManagerRegistry* ai) { return new DeadStrategy(ai); }
-        static Strategy* racials(AiManagerRegistry* ai) { return new RacialsStrategy(ai); }
-        static Strategy* follow_master(AiManagerRegistry* ai) { return new FollowMasterNonCombatStrategy(ai); }
-        static Strategy* follow_line(AiManagerRegistry* ai) { return new FollowLineNonCombatStrategy(ai); }
-        static Strategy* stay(AiManagerRegistry* ai) { return new StayNonCombatStrategy(ai); }
-        static Strategy* dps_assist(AiManagerRegistry* ai) { return new DpsAssistStrategy(ai); }
-        static Strategy* dps_aoe(AiManagerRegistry* ai) { return new DpsAoeStrategy(ai); }
-        static Strategy* tank_assist(AiManagerRegistry* ai) { return new TankAssistStrategy(ai); }
-        static Strategy* tank_aoe(AiManagerRegistry* ai) { return new TankAoeStrategy(ai); }
-        static Strategy* grind(AiManagerRegistry* ai) { return new GrindingStrategy(ai); }
-        static Strategy* loot(AiManagerRegistry* ai) { return new LootNonCombatStrategy(ai); }
-        static Strategy* goaway(AiManagerRegistry* ai) { return new GoAwayNonCombatStrategy(ai); }
-        static Strategy* emote(AiManagerRegistry* ai) { return new RandomEmoteStrategy(ai); }
-        static Strategy* passive(AiManagerRegistry* ai) { return new PassiveStrategy(ai); }
-        static Strategy* low_mana(AiManagerRegistry* ai) { return new LowManaStrategy(ai); }
-        static Strategy* food(AiManagerRegistry* ai) { return new UseFoodStrategy(ai); }
-        static Strategy* chat(AiManagerRegistry* ai) { return new ChatCommandHandlerStrategy(ai); }
-        static Strategy* world_packet(AiManagerRegistry* ai) { return new WorldPacketHandlerStrategy(ai); }
+        static Strategy* dead(PlayerbotAI* ai) { return new DeadStrategy(ai); }
+        static Strategy* racials(PlayerbotAI* ai) { return new RacialsStrategy(ai); }
+        static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterNonCombatStrategy(ai); }
+        static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineNonCombatStrategy(ai); }
+        static Strategy* stay(PlayerbotAI* ai) { return new StayNonCombatStrategy(ai); }
+        static Strategy* dps_assist(PlayerbotAI* ai) { return new DpsAssistStrategy(ai); }
+        static Strategy* dps_aoe(PlayerbotAI* ai) { return new DpsAoeStrategy(ai); }
+        static Strategy* tank_assist(PlayerbotAI* ai) { return new TankAssistStrategy(ai); }
+        static Strategy* tank_aoe(PlayerbotAI* ai) { return new TankAoeStrategy(ai); }
+        static Strategy* grind(PlayerbotAI* ai) { return new GrindingStrategy(ai); }
+        static Strategy* loot(PlayerbotAI* ai) { return new LootNonCombatStrategy(ai); }
+        static Strategy* goaway(PlayerbotAI* ai) { return new GoAwayNonCombatStrategy(ai); }
+        static Strategy* emote(PlayerbotAI* ai) { return new RandomEmoteStrategy(ai); }
+        static Strategy* passive(PlayerbotAI* ai) { return new PassiveStrategy(ai); }
+        static Strategy* low_mana(PlayerbotAI* ai) { return new LowManaStrategy(ai); }
+        static Strategy* food(PlayerbotAI* ai) { return new UseFoodStrategy(ai); }
+        static Strategy* chat(PlayerbotAI* ai) { return new ChatCommandHandlerStrategy(ai); }
+        static Strategy* world_packet(PlayerbotAI* ai) { return new WorldPacketHandlerStrategy(ai); }
     };
 
 };

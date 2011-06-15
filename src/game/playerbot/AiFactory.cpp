@@ -1,55 +1,55 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
+#include "../pchdef.h"
+#include "playerbot.h"
 #include "AiFactory.h"
-#include "../strategy/Engine.h"
+#include "strategy/Engine.h"
 
-#include "../strategy/priest/PriestAiObjectContext.h"
-#include "../strategy/mage/MageAiObjectContext.h"
-#include "../strategy/warlock/WarlockAiObjectContext.h"
-#include "../strategy/warrior/WarriorAiObjectContext.h"
-#include "../strategy/shaman/ShamanAiObjectContext.h"
-#include "../strategy/paladin/PaladinAiObjectContext.h"
-#include "../strategy/druid/DruidAiObjectContext.h"
-#include "../strategy/hunter/HunterAiObjectContext.h"
-#include "../strategy/rogue/RogueAiObjectContext.h"
+#include "strategy/priest/PriestAiObjectContext.h"
+#include "strategy/mage/MageAiObjectContext.h"
+#include "strategy/warlock/WarlockAiObjectContext.h"
+#include "strategy/warrior/WarriorAiObjectContext.h"
+#include "strategy/shaman/ShamanAiObjectContext.h"
+#include "strategy/paladin/PaladinAiObjectContext.h"
+#include "strategy/druid/DruidAiObjectContext.h"
+#include "strategy/hunter/HunterAiObjectContext.h"
+#include "strategy/rogue/RogueAiObjectContext.h"
 
 
-AiObjectContext* AiFactory::createAiObjectContext(Player* player, AiManagerRegistry* const aiRegistry)
+AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* ai)
 {
     switch (player->getClass())
     {
     case CLASS_PRIEST:
-        return new PriestAiObjectContext(aiRegistry);
+        return new PriestAiObjectContext(ai);
         break;
     case CLASS_MAGE:
-        return new MageAiObjectContext(aiRegistry);
+        return new MageAiObjectContext(ai);
         break;
     case CLASS_WARLOCK:
-        return new WarlockAiObjectContext(aiRegistry);
+        return new WarlockAiObjectContext(ai);
         break;
     case CLASS_WARRIOR:
-        return new WarriorAiObjectContext(aiRegistry);
+        return new WarriorAiObjectContext(ai);
         break;
     case CLASS_SHAMAN:
-        return new ShamanAiObjectContext(aiRegistry);
+        return new ShamanAiObjectContext(ai);
         break;
     case CLASS_PALADIN:
-        return new PaladinAiObjectContext(aiRegistry);
+        return new PaladinAiObjectContext(ai);
         break;
     case CLASS_DRUID:
-        return new DruidAiObjectContext(aiRegistry);
+        return new DruidAiObjectContext(ai);
         break;
     case CLASS_HUNTER:
-        return new HunterAiObjectContext(aiRegistry);
+        return new HunterAiObjectContext(ai);
         break;
     case CLASS_ROGUE:
-        return new RogueAiObjectContext(aiRegistry);
+        return new RogueAiObjectContext(ai);
         break;
     }
     return NULL;
 }
 
-Engine* AiFactory::createCombatEngine(Player* player, AiManagerRegistry* const facade, AiObjectContext* AiObjectContext) {
+Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
 	Engine* engine = NULL;
 
     engine = new Engine(facade, AiObjectContext);
@@ -87,7 +87,7 @@ Engine* AiFactory::createCombatEngine(Player* player, AiManagerRegistry* const f
 	return engine;
 }
 
-Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* const facade, AiObjectContext* AiObjectContext) {
+Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
 	Engine* nonCombatEngine = NULL;
     nonCombatEngine = new Engine(facade, AiObjectContext);
 	switch (player->getClass())
@@ -124,7 +124,7 @@ Engine* AiFactory::createNonCombatEngine(Player* player, AiManagerRegistry* cons
 	return nonCombatEngine;
 }
 
-Engine* AiFactory::createDeadEngine(Player* player, AiManagerRegistry* const facade, AiObjectContext* AiObjectContext) {
+Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
     Engine* deadEngine = NULL;
     deadEngine = new Engine(facade, AiObjectContext);
    

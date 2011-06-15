@@ -1,8 +1,9 @@
 #include "../pchdef.h"
+#include "PlayerbotMgr.h"
 #include "playerbot.h"
 
 #include "strategy/ExternalEventHelper.h"
-#include "ai/AiFactory.h"
+#include "AiFactory.h"
 
 #include "../GridNotifiers.h"
 #include "../GridNotifiersImpl.h"
@@ -133,9 +134,16 @@ uint64 extractGuid(WorldPacket& packet)
     return guid;
 }
 
+uint32 PlayerbotChatHandler::extractQuestId(const char *str)
+{
+    char* source = (char*)str;
+    char* cId = ExtractKeyFromLink(&source,"Hquest");
+    return cId ? atol(cId) : 0;
+}
+
+
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
 {
-	aiRegistry = NULL;
     aiObjectContext = NULL;
     combatEngine = NULL;
     nonCombatEngine = NULL;
@@ -147,14 +155,13 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
 {
 	this->mgr = mgr;
 	this->bot = bot;
-    aiRegistry = new AiManagerRegistry(this);
 
-    aiObjectContext = AiFactory::createAiObjectContext(bot, aiRegistry);
+    aiObjectContext = AiFactory::createAiObjectContext(bot, this);
     aiObjectContext->AddShared(sharedValues);
 
-    combatEngine = AiFactory::createCombatEngine(bot, aiRegistry, aiObjectContext);
-    nonCombatEngine = AiFactory::createNonCombatEngine(bot, aiRegistry, aiObjectContext);
-    deadEngine = AiFactory::createDeadEngine(bot, aiRegistry, aiObjectContext);
+    combatEngine = AiFactory::createCombatEngine(bot, this, aiObjectContext);
+    nonCombatEngine = AiFactory::createNonCombatEngine(bot, this, aiObjectContext);
+    deadEngine = AiFactory::createDeadEngine(bot, this, aiObjectContext);
 
     currentEngine = nonCombatEngine;
 
@@ -196,9 +203,6 @@ PlayerbotAI::~PlayerbotAI()
 
     if (aiObjectContext)
         delete aiObjectContext;
-
-	if (aiRegistry)
-		delete aiRegistry;
 }
 
 void PlayerbotAI::UpdateAI(uint32 elapsed)
@@ -240,8 +244,6 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 	if (fromPlayer.GetGuildId() != bot->GetGuildId() || !bot->GetGuildId())
 	    return;
 
-	AiManagerBase** managers = aiRegistry->GetManagers();
-
     if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
     {
         std::string action = text.substr(text.find(" ") + 1);
@@ -272,19 +274,12 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
     }
 
 
-	for (int i=0; i<aiRegistry->GetManagerCount(); i++)
-		managers[i]->HandleCommand(text, fromPlayer);
-
     ExternalEventHelper helper(aiObjectContext);
     helper.ParseChatCommand(text);
 }
 
 void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 {
-	AiManagerBase** managers = aiRegistry->GetManagers();
-	for (int i=0; i<aiRegistry->GetManagerCount(); i++)
-		managers[i]->HandleBotOutgoingPacket(packet);
-
     ExternalEventHelper helper(aiObjectContext);
     helper.HandlePacket(packetHandlers, packet);
 
@@ -396,10 +391,6 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
 {
-    AiManagerBase** managers = aiRegistry->GetManagers();
-    for (int i=0; i<aiRegistry->GetManagerCount(); i++)
-        managers[i]->HandleMasterIncomingPacket(packet);
-
     ExternalEventHelper helper(aiObjectContext);
     helper.HandlePacket(masterPacketHandlers, packet);
 }
@@ -450,10 +441,6 @@ void PlayerbotAI::DoNextAction()
 {
     bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
     bot->CheckAreaExploreAndOutdoor();
-
-    AiManagerBase** managers = aiRegistry->GetManagers();
-    for (int i=0; i<aiRegistry->GetManagerCount(); i++)
-        managers[i]->Update();
 
     currentEngine->DoNextAction(NULL);
 

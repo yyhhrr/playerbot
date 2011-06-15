@@ -1,13 +1,13 @@
 #pragma once
 #include "Value.h"
-#include "../ai/AiManagerRegistryAware.h"
+#include "../PlayerbotAIAware.h"
 
 namespace ai
 {
     class LogLevelValue : public ManualSetValue<LogLevel>
 	{
 	public:
-        LogLevelValue(AiManagerRegistry* const ai) : 
+        LogLevelValue(PlayerbotAI* ai) : 
             ManualSetValue<LogLevel>(ai, LOG_LVL_BASIC) {}    
 	};
 }

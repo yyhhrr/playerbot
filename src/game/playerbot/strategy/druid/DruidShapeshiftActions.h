@@ -3,19 +3,19 @@
 namespace ai {
 	class CastBearFormAction : public CastBuffSpellAction { 
 	public: 
-		CastBearFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "bear form") {} 
+		CastBearFormAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "bear form") {} 
 
         virtual bool isPossible() {
-			return CastBuffSpellAction::isPossible() && !ai->GetAi()->HasAura("dire bear form", GetTarget());
+			return CastBuffSpellAction::isPossible() && !ai->HasAura("dire bear form", GetTarget());
 		}
         virtual bool isUseful() {
-			return CastBuffSpellAction::isUseful() && !ai->GetAi()->HasAura("dire bear form", GetTarget());
+			return CastBuffSpellAction::isUseful() && !ai->HasAura("dire bear form", GetTarget());
 		}
 	};
 
 	class CastDireBearFormAction : public CastBuffSpellAction { 
 	public: 
-		CastDireBearFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "dire bear form") {} 
+		CastDireBearFormAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "dire bear form") {} 
         
         virtual NextAction** getAlternatives() {
 			return NextAction::merge(NextAction::array(0, new NextAction("bear form"), NULL), CastSpellAction::getAlternatives());
@@ -24,20 +24,20 @@ namespace ai {
 
 	class CastCatFormAction : public CastBuffSpellAction { 
 	public: 
-		CastCatFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "cat form") {} 
+		CastCatFormAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "cat form") {} 
 	};
 
 	class CastMoonkinFormAction : public CastBuffSpellAction { 
 	public: 
-		CastMoonkinFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "moonkin form") {} 
+		CastMoonkinFormAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "moonkin form") {} 
 	};
 
 	class CastCasterFormAction : public CastBuffSpellAction { 
 	public: 
-		CastCasterFormAction(AiManagerRegistry* const ai) : CastBuffSpellAction(ai, "caster form") {} 
+		CastCasterFormAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "caster form") {} 
 
 		virtual bool isUseful() {
-			return ai->GetAi()->HasAnyAuraOf(GetTarget(), "dire bear form", "bear form", "cat form", "travel form", "aquatic form", 
+			return ai->HasAnyAuraOf(GetTarget(), "dire bear form", "bear form", "cat form", "travel form", "aquatic form", 
 				"flight form", "swift flight form", "moonkin form", NULL); 
 		}
 		virtual bool isPossible() { return true; }

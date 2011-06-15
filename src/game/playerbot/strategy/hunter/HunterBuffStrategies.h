@@ -8,7 +8,7 @@ namespace ai
 	class HunterBuffDpsStrategy : public GenericNonCombatStrategy
 	{
 	public:
-		HunterBuffDpsStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		HunterBuffDpsStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "bdps"; }
 
 	public:
@@ -19,7 +19,7 @@ namespace ai
 	class HunterNatureResistanceStrategy : public GenericNonCombatStrategy
 	{
 	public:
-		HunterNatureResistanceStrategy(AiManagerRegistry* const ai) : GenericNonCombatStrategy(ai) {}
+		HunterNatureResistanceStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual const char* getName() { return "rnature"; }
 
 	public:

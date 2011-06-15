@@ -9,7 +9,7 @@ namespace ai
     class WorldPacketHandlerStrategy : public PassTroughStrategy
     {
     public:
-        WorldPacketHandlerStrategy(AiManagerRegistry* const ai);
+        WorldPacketHandlerStrategy(PlayerbotAI* ai);
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

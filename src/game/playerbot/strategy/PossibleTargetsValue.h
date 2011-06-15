@@ -7,7 +7,7 @@ namespace ai
     class PossibleTargetsValue : public NearestUnitsValue
 	{
 	public:
-        PossibleTargetsValue(AiManagerRegistry* const ai, float range = BOT_SIGHT_DISTANCE) : 
+        PossibleTargetsValue(PlayerbotAI* ai, float range = BOT_SIGHT_DISTANCE) : 
           NearestUnitsValue(ai) {}
     
     protected:

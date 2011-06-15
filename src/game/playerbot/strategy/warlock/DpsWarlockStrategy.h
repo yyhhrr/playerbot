@@ -7,7 +7,7 @@ namespace ai
     class DpsWarlockStrategy : public GenericWarlockStrategy
     {
     public:
-        DpsWarlockStrategy(AiManagerRegistry* const ai) : GenericWarlockStrategy(ai) {}
+        DpsWarlockStrategy(PlayerbotAI* ai) : GenericWarlockStrategy(ai) {}
         virtual const char* getName() { return "dps"; }
     
     public:

@@ -2,7 +2,6 @@
 
 #include "aitest.h"
 #include "EngineTestBase.h"
-#include "EverythingUnavailableAiManagerRegistry.h"
 #include <time.inl>
 #include "../game/playerbot/strategy/druid/DruidAiObjectContext.h"
 #include "../game/playerbot/strategy/paladin/PaladinAiObjectContext.h"
@@ -33,7 +32,8 @@ class PerformanceTestCase : public EngineTestBase
 public:
     void setUp()
     {
-        ai = new EverythingUnavailableAiManagerRegistry();
+        EngineTestBase::setUp();
+        setupEngine(new AiObjectContext(ai), "melee", NULL);
     }
 
 protected:

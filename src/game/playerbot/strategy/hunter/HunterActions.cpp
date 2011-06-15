@@ -32,7 +32,7 @@ bool CastAimedShotAction::isUseful()
 
 bool CastAspectOfTheCheetahAction::isUseful() 
 {
-    return !ai->GetAi()->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
+    return !ai->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
 }
 
 bool CastAspectOfTheViperAction::isUseful() 
@@ -42,5 +42,5 @@ bool CastAspectOfTheViperAction::isUseful()
 
 Value<Unit*>* CastFreezingTrap::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", "freezing trap");
+    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", "freezing trap");
 }

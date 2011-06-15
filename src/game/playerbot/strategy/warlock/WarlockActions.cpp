@@ -6,5 +6,5 @@ using namespace ai;
 
 Value<Unit*>* CastBanishAction::GetTargetValue()
 {
-    return ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("cc target", getName());
+    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", getName());
 }

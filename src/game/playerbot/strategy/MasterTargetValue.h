@@ -6,8 +6,8 @@ namespace ai
     class MasterTargetValue : public CalculatedValue<Unit*>
 	{
 	public:
-        MasterTargetValue(AiManagerRegistry* const ai) : CalculatedValue<Unit*>(ai) {}
+        MasterTargetValue(PlayerbotAI* ai) : CalculatedValue<Unit*>(ai) {}
 
-        virtual Unit* Calculate() { return ai->GetAi()->GetMaster(); }
+        virtual Unit* Calculate() { return ai->GetMaster(); }
     };
 }

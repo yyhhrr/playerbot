@@ -1,13 +1,13 @@
 #pragma once
 #include "Value.h"
-#include "../ai/LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 namespace ai
 {
     class HasAvailableLootValue : public CalculatedValue<bool>
 	{
 	public:
-        HasAvailableLootValue(AiManagerRegistry* const ai) : CalculatedValue<bool>(ai) {}
+        HasAvailableLootValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
 
     public:
         virtual bool Calculate()

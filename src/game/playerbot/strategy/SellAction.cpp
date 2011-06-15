@@ -68,11 +68,11 @@ void SellAction::Sell(FindItemVisitor* visitor)
 
 void SellAction::Sell(Item* item)
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
     uint64 vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     if (!vendorguid)
     {
-        ai->GetAi()->TellMaster("Select a vendor first");
+        ai->TellMaster("Select a vendor first");
         return;
     }
 

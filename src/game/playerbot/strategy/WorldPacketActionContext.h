@@ -42,23 +42,23 @@ namespace ai
         }
 
     private:
-        static Action* accept_trade(AiManagerRegistry* ai) { return new TradeStatusAction(ai); }
-        static Action* remember_taxi(AiManagerRegistry* ai) { return new RememberTaxiAction(ai); }
-        static Action* check_mount_state(AiManagerRegistry* ai) { return new CheckMountStateAction(ai); }
-        static Action* area_trigger(AiManagerRegistry* ai) { return new AreaTriggerAction(ai); }
-        static Action* use_meeting_stone(AiManagerRegistry* ai) { return new UseMeetingStoneAction(ai); }
-        static Action* accept_resurrect(AiManagerRegistry* ai) { return new AcceptResurrectAction(ai); }
-        static Action* revive_from_corpse(AiManagerRegistry* ai) { return new ReviveFromCorpseAction(ai); }
-        static Action* gossip_hello(AiManagerRegistry* ai) { return new GossipHelloAction(ai); }
-        static Action* accept_invitation(AiManagerRegistry* ai) { return new AcceptInvitationAction(ai); }
-        static Action* pass_leadership_to_master(AiManagerRegistry* ai) { return new PassLeadershipToMasterAction(ai); }
-        static Action* tell_not_enough_money(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough money"); }
-        static Action* tell_not_enough_reputation(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Not enough reputation"); }
-        static Action* tell_cannot_equip(AiManagerRegistry* ai) { return new TellMasterAction(ai, "Cannot equip/unequip item"); }
-        static Action* turn_in_quest(AiManagerRegistry* ai) { return new TurnInQuestAction(ai); }
-        static Action* accept_quest(AiManagerRegistry* ai) { return new AcceptQuestAction(ai); }
-        static Action* accept_quest_share(AiManagerRegistry* ai) { return new AcceptQuestShareAction(ai); }
-        static Action* loot_roll(AiManagerRegistry* ai) { return new LootRollAction(ai); }
+        static Action* accept_trade(PlayerbotAI* ai) { return new TradeStatusAction(ai); }
+        static Action* remember_taxi(PlayerbotAI* ai) { return new RememberTaxiAction(ai); }
+        static Action* check_mount_state(PlayerbotAI* ai) { return new CheckMountStateAction(ai); }
+        static Action* area_trigger(PlayerbotAI* ai) { return new AreaTriggerAction(ai); }
+        static Action* use_meeting_stone(PlayerbotAI* ai) { return new UseMeetingStoneAction(ai); }
+        static Action* accept_resurrect(PlayerbotAI* ai) { return new AcceptResurrectAction(ai); }
+        static Action* revive_from_corpse(PlayerbotAI* ai) { return new ReviveFromCorpseAction(ai); }
+        static Action* gossip_hello(PlayerbotAI* ai) { return new GossipHelloAction(ai); }
+        static Action* accept_invitation(PlayerbotAI* ai) { return new AcceptInvitationAction(ai); }
+        static Action* pass_leadership_to_master(PlayerbotAI* ai) { return new PassLeadershipToMasterAction(ai); }
+        static Action* tell_not_enough_money(PlayerbotAI* ai) { return new TellMasterAction(ai, "Not enough money"); }
+        static Action* tell_not_enough_reputation(PlayerbotAI* ai) { return new TellMasterAction(ai, "Not enough reputation"); }
+        static Action* tell_cannot_equip(PlayerbotAI* ai) { return new TellMasterAction(ai, "Cannot equip/unequip item"); }
+        static Action* turn_in_quest(PlayerbotAI* ai) { return new TurnInQuestAction(ai); }
+        static Action* accept_quest(PlayerbotAI* ai) { return new AcceptQuestAction(ai); }
+        static Action* accept_quest_share(PlayerbotAI* ai) { return new AcceptQuestShareAction(ai); }
+        static Action* loot_roll(PlayerbotAI* ai) { return new LootRollAction(ai); }
     };
 
 

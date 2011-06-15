@@ -6,7 +6,7 @@ namespace ai
 {
 	class ChangeTalentsAction : public Action {
 	public:
-		ChangeTalentsAction(AiManagerRegistry* const ai) : Action(ai, "talents") {}
+		ChangeTalentsAction(PlayerbotAI* ai) : Action(ai, "talents") {}
 
     public:
         virtual bool Execute(Event event);

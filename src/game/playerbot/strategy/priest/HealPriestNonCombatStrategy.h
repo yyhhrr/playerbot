@@ -7,7 +7,7 @@ namespace ai
     class HealPriestNonCombatStrategy : public CombatStrategy
     {
     public:
-        HealPriestNonCombatStrategy(AiManagerRegistry* const ai) : CombatStrategy(ai) {}
+        HealPriestNonCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

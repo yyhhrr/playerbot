@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 
 using namespace ai;
 
@@ -31,14 +31,14 @@ public:
     }
 
 private:
-    static UntypedValue* value(AiManagerRegistry* ai) { return new TestValue(); }
-    static UntypedValue* manual_value(AiManagerRegistry* ai) { return new TestManualValue(); }
+    static UntypedValue* value(PlayerbotAI* ai) { return new TestValue(); }
+    static UntypedValue* manual_value(PlayerbotAI* ai) { return new TestManualValue(); }
 };
 
 class TestValueAiObjectContext : public AiObjectContext
 {
 public:
-    TestValueAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai)
+    TestValueAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai)
     {
         valueContexts.Add(new TestValueContext());
     }

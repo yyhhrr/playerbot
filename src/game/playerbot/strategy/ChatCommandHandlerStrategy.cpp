@@ -62,7 +62,7 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 
 
-ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(AiManagerRegistry* const ai) : PassTroughStrategy(ai)
+ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* ai) : PassTroughStrategy(ai)
 {
     supported.push_back("quests");
     supported.push_back("stats");

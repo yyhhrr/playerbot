@@ -6,8 +6,8 @@ using namespace ai;
 
 bool ReviveFromCorpseAction::Execute(Event event)
 {
-    Player* bot = ai->GetAi()->GetBot();
-    Player* master = ai->GetAi()->GetMaster();
+    Player* bot = ai->GetBot();
+    Player* master = ai->GetMaster();
     Corpse* corpse = bot->GetCorpse();
     if (!corpse)
         return false;
@@ -19,18 +19,18 @@ bool ReviveFromCorpseAction::Execute(Event event)
         os << "Will resurrect in ";
         os << (reclaimTime - time(0));
         os << " secs";
-        ai->GetAi()->TellMaster(os.str().c_str());
-        ai->GetAi()->SetNextCheckDelay(reclaimTime - time(0));
+        ai->TellMaster(os.str().c_str());
+        ai->SetNextCheckDelay(reclaimTime - time(0));
     }
     else
     {
         PlayerbotChatHandler ch(master);
         if (! ch.revive(*bot))
         {
-            ai->GetAi()->TellMaster(".. could not be revived ..");
+            ai->TellMaster(".. could not be revived ..");
             return false;
         }
-        ai->GetAi()->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(NULL);
+        ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
     }
     return true;

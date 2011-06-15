@@ -41,161 +41,161 @@ public:
     }
 
 private:
-    static ActionNode* flee(AiManagerRegistry* ai)
+    static ActionNode* flee(PlayerbotAI* ai)
     {
         return new ActionNode ("flee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* melee(AiManagerRegistry* ai)
+    static ActionNode* melee(PlayerbotAI* ai)
     {
         return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* reach_melee(AiManagerRegistry* ai)
+    static ActionNode* reach_melee(PlayerbotAI* ai)
     {
         return new ActionNode ("reach melee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* reach_spell(AiManagerRegistry* ai)
+    static ActionNode* reach_spell(PlayerbotAI* ai)
     {
         return new ActionNode ("reach spell",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* healthstone(AiManagerRegistry* ai)
+    static ActionNode* healthstone(PlayerbotAI* ai)
     {
         return new ActionNode ("healthstone",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("healing potion"), NULL), 
             /*C*/ NULL);
     }
-    static ActionNode* healing_potion(AiManagerRegistry* ai)
+    static ActionNode* healing_potion(PlayerbotAI* ai)
     {
         return new ActionNode ("healing potion",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL), 
             /*C*/ NULL);
     }
-    static ActionNode* mana_potion(AiManagerRegistry* ai)
+    static ActionNode* mana_potion(PlayerbotAI* ai)
     {
         return new ActionNode ("mana potion",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* food(AiManagerRegistry* ai)
+    static ActionNode* food(PlayerbotAI* ai)
     {
         return new ActionNode ("food",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* drink(AiManagerRegistry* ai)
+    static ActionNode* drink(PlayerbotAI* ai)
     {
         return new ActionNode ("drink",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* tank_assist(AiManagerRegistry* ai)
+    static ActionNode* tank_assist(PlayerbotAI* ai)
     {
         return new ActionNode ("tank assist",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* dps_assist(AiManagerRegistry* ai)
+    static ActionNode* dps_assist(PlayerbotAI* ai)
     {
         return new ActionNode ("dps assist",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* loot(AiManagerRegistry* ai)
+    static ActionNode* loot(PlayerbotAI* ai)
     {
         return new ActionNode ("loot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* loot_all(AiManagerRegistry* ai)
+    static ActionNode* loot_all(PlayerbotAI* ai)
     {
         return new ActionNode ("loot all",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* shoot(AiManagerRegistry* ai)
+    static ActionNode* shoot(PlayerbotAI* ai)
     {
         return new ActionNode ("shoot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* follow_line(AiManagerRegistry* ai)
+    static ActionNode* follow_line(PlayerbotAI* ai)
     {
         return new ActionNode ("follow line",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* follow_master(AiManagerRegistry* ai)
+    static ActionNode* follow_master(PlayerbotAI* ai)
     {
         return new ActionNode ("follow master",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* goaway(AiManagerRegistry* ai)
+    static ActionNode* goaway(PlayerbotAI* ai)
     {
         return new ActionNode ("goaway",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* stay(AiManagerRegistry* ai)
+    static ActionNode* stay(PlayerbotAI* ai)
     {
         return new ActionNode ("stay",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* stay_circle(AiManagerRegistry* ai)
+    static ActionNode* stay_circle(PlayerbotAI* ai)
     {
         return new ActionNode ("stay circle",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* stay_line(AiManagerRegistry* ai)
+    static ActionNode* stay_line(PlayerbotAI* ai)
     {
         return new ActionNode ("stay line",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* stay_combat(AiManagerRegistry* ai)
+    static ActionNode* stay_combat(PlayerbotAI* ai)
     {
         return new ActionNode ("stay combat",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* attack_anything(AiManagerRegistry* ai)
+    static ActionNode* attack_anything(PlayerbotAI* ai)
     {
         return new ActionNode ("attack anything",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("follow"), NULL), 
             /*C*/ NULL);
     }
-    static ActionNode* emote(AiManagerRegistry* ai)
+    static ActionNode* emote(PlayerbotAI* ai)
     {
         return new ActionNode ("emote",  
             /*P*/ NULL,

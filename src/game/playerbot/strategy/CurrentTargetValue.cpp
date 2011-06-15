@@ -6,7 +6,7 @@ using namespace ai;
 
 Unit* CurrentTargetValue::Get()
 {
-    Player* bot = ai->GetAi()->GetBot();
+    Player* bot = ai->GetBot();
 
     if (selection.IsEmpty())
         return NULL;

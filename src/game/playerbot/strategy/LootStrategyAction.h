@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Action.h"
-#include "..\ai\LootObjectStack.h"
+#include "../LootObjectStack.h"
 
 namespace ai
 {
     class LootStrategyAction : public Action {
     public:
-        LootStrategyAction(AiManagerRegistry* const ai) : Action(ai, "ll") {}
+        LootStrategyAction(PlayerbotAI* ai) : Action(ai, "ll") {}
         virtual bool Execute(Event event);
 
     private:

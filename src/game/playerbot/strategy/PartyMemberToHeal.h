@@ -7,7 +7,7 @@ namespace ai
     class PartyMemberToHeal : public PartyMemberValue
 	{
 	public:
-        PartyMemberToHeal(AiManagerRegistry* const ai) : 
+        PartyMemberToHeal(PlayerbotAI* ai) : 
           PartyMemberValue(ai) {}
     
     protected:

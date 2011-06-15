@@ -1,14 +1,14 @@
 #include "pch.h"
 
 #include "aitest.h"
-#include "MockAiManagerRegistry.h"
+#include "MockPlayerbotAIBase.h"
 
 using namespace ai;
 
 class PrerequisiteAction : public Action
 {
 public:
-    PrerequisiteAction(AiManagerRegistry* const ai) : Action(ai) {}
+    PrerequisiteAction(PlayerbotAI* const ai) : Action(ai) {}
     virtual ~PrerequisiteAction() { destroyed = TRUE; }
 
     bool Execute(Event event) { executed++; return TRUE; }
@@ -24,7 +24,7 @@ int PrerequisiteAction::destroyed = 0;
 class AlternativeAction : public Action
 {
 public:
-    AlternativeAction(AiManagerRegistry* const ai) : Action(ai) {}
+    AlternativeAction(PlayerbotAI* const ai) : Action(ai) {}
     virtual ~AlternativeAction() {destroyed = TRUE;}
 
     bool Execute(Event event) { executed++; return TRUE; }
@@ -40,7 +40,7 @@ int AlternativeAction::destroyed = 0;
 class RepeatingAction : public Action
 {
 public:
-	RepeatingAction(AiManagerRegistry* const ai) : Action(ai) {}
+	RepeatingAction(PlayerbotAI* const ai) : Action(ai) {}
 
 	virtual ~RepeatingAction()
 	{
@@ -63,7 +63,7 @@ int RepeatingAction::executed = 0;
 class TriggeredAction : public Action
 {
 public:
-	TriggeredAction(AiManagerRegistry* const ai) : Action(ai) { fired = false; }
+	TriggeredAction(PlayerbotAI* const ai) : Action(ai) { fired = false; }
 	virtual ~TriggeredAction() {}
 
     bool Execute(Event event) { param = event.getParam(); fired = TRUE; return true; }
@@ -79,7 +79,7 @@ string TriggeredAction::param;
 class TestTrigger : public Trigger
 {
 public:
-	TestTrigger(AiManagerRegistry* const ai) : Trigger(ai) {count = 0;}
+	TestTrigger(PlayerbotAI* const ai) : Trigger(ai) {count = 0;}
     virtual Event Check()
     {
         return IsActive() ? Event(getName(), "test") : Event();
@@ -107,7 +107,7 @@ int TestMultiplier::asked;
 class TestStrategy : public Strategy
 {
 public:
-    TestStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+    TestStrategy(PlayerbotAI* const ai) : Strategy(ai) {}
 
     virtual const char* getName() { return "TestStrategy"; }
 
@@ -162,7 +162,7 @@ public:
 class AnotherTestStrategy : public Strategy
 {
 public:
-    AnotherTestStrategy(AiManagerRegistry* const ai) : Strategy(ai) {}
+    AnotherTestStrategy(PlayerbotAI* const ai) : Strategy(ai) {}
     
     virtual const char* getName() { return "AnotherTestStrategy"; }
 };
@@ -177,8 +177,8 @@ public:
     }
 
 private:
-    static Strategy* Test(AiManagerRegistry* ai) { return new TestStrategy(ai); }
-    static Strategy* AnotherTest(AiManagerRegistry* ai) { return new AnotherTestStrategy(ai); }
+    static Strategy* Test(PlayerbotAI* ai) { return new TestStrategy(ai); }
+    static Strategy* AnotherTest(PlayerbotAI* ai) { return new AnotherTestStrategy(ai); }
 };
 
 class TestTriggerContext : public NamedObjectContext<Trigger>
@@ -190,7 +190,7 @@ public:
     }
 
 private:
-    static Trigger* Test(AiManagerRegistry* ai) { return new TestTrigger(ai); }
+    static Trigger* Test(PlayerbotAI* ai) { return new TestTrigger(ai); }
 };
 
 
@@ -206,16 +206,16 @@ public:
     }
 
 private:
-    static Action* Triggered(AiManagerRegistry* ai) { return new TriggeredAction(ai); }
-    static Action* Repeating(AiManagerRegistry* ai) { return new RepeatingAction(ai); }
-    static Action* Alternative(AiManagerRegistry* ai) { return new AlternativeAction(ai); }
-    static Action* Prerequisite(AiManagerRegistry* ai) { return new PrerequisiteAction(ai); }
+    static Action* Triggered(PlayerbotAI* ai) { return new TriggeredAction(ai); }
+    static Action* Repeating(PlayerbotAI* ai) { return new RepeatingAction(ai); }
+    static Action* Alternative(PlayerbotAI* ai) { return new AlternativeAction(ai); }
+    static Action* Prerequisite(PlayerbotAI* ai) { return new PrerequisiteAction(ai); }
 };
 
 class TestAiObjectContext : public AiObjectContext
 {
 public:
-    TestAiObjectContext(AiManagerRegistry* const ai) : AiObjectContext(ai) 
+    TestAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai) 
     {
         strategyContexts.Add(new TestStrategyContext());
         triggerContexts.Add(new TestTriggerContext());
@@ -242,7 +242,7 @@ public:
 protected:
 	void engineMustRepeatActions()
 	{
-		MockAiManagerRegistry mock;
+		MockPlayerbotAIBase mock;
 		Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("TestStrategy");
         engine.Init();
@@ -263,7 +263,7 @@ protected:
 
     void addRemoveStrategies()
     {
-		MockAiManagerRegistry mock;
+		MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("AnotherTestStrategy");
         engine.removeStrategy("AnotherTestStrategy");
@@ -278,7 +278,7 @@ protected:
 
     void listStrategies()
     {
-		MockAiManagerRegistry mock;
+		MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("AnotherTestStrategy");
         engine.addStrategy("TestStrategy");
@@ -290,7 +290,7 @@ protected:
 
     void eventMustPassToAction()
     {
-        MockAiManagerRegistry mock;
+        MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
         engine.addStrategy("TestStrategy");
         engine.Init();

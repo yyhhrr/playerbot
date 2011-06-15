@@ -6,7 +6,7 @@ namespace ai
 {
     class LogLevelAction : public Action {
     public:
-        LogLevelAction(AiManagerRegistry* const ai) : Action(ai, "log") {}
+        LogLevelAction(PlayerbotAI* ai) : Action(ai, "log") {}
         virtual bool Execute(Event event);
 
     public:
