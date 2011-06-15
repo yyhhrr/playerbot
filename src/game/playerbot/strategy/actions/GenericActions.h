@@ -16,13 +16,4 @@ namespace ai
         virtual const char* GetTargetName() { return "current target"; }
     };
 
-    class ChangeCombatStrategyAction : public Action 
-    {
-    public:
-        ChangeCombatStrategyAction(PlayerbotAI* ai, const char* name);
-        virtual bool Execute(Event event);
-
-    private:
-        string name;
-    };
 }

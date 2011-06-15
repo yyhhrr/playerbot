@@ -48,6 +48,9 @@ namespace ai
     template <class T> class NamedObjectContext : public NamedObjectContextBase<T>
     {
     public:
+        NamedObjectContext() : NamedObjectContextBase<T>(), shared(false) {}
+        NamedObjectContext(bool shared) : NamedObjectContextBase<T>(), shared(shared) {}
+
         T* create(string name, PlayerbotAI* ai)
         {
             T* result = created[name];
@@ -77,10 +80,11 @@ namespace ai
             }
         }
 
-        virtual bool IsShared() { return false; }
+        bool IsShared() { return shared; }
 
     protected:
         map<string, T*> created;
+        bool shared;
     };
 
     template <class T> class NamedObjectContextList

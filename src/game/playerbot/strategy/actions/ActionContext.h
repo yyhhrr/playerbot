@@ -8,6 +8,7 @@
 #include "AddLootAction.h"
 #include "StayActions.h"
 #include "FollowActions.h"
+#include "ChangeStrategyAction.h"
 
 namespace ai
 {

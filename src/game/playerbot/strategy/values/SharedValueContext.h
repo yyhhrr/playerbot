@@ -8,15 +8,12 @@ namespace ai
     class SharedValueContext : public NamedObjectContext<UntypedValue>
     {
     public:
-        SharedValueContext()
+        SharedValueContext() : NamedObjectContext<UntypedValue>(true)
         {
             creators["balance"] = &SharedValueContext::balance;
             creators["attackers"] = &SharedValueContext::attackers;
         }
     
-    public:
-        virtual bool IsShared() { return true; }
-
     private:
         static UntypedValue* balance(PlayerbotAI* ai) { return new BalancePercentValue(ai); }
         static UntypedValue* attackers(PlayerbotAI* ai) { return new AttackersValue(ai); }

@@ -37,9 +37,13 @@ namespace ai
             creators["nt"] = &ChatTriggerContext::nontrade;
             creators["talents"] = &ChatTriggerContext::talents;
             creators["spells"] = &ChatTriggerContext::spells;
+            creators["co"] = &ChatTriggerContext::co;
+            creators["nc"] = &ChatTriggerContext::nc;
         }
 
     private:
+        static Trigger* co(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "co"); }
+        static Trigger* nc(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "nc"); }
         static Trigger* spells(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "spells"); }
         static Trigger* talents(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "talents"); }
         static Trigger* equip(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "e"); }

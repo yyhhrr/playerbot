@@ -26,6 +26,7 @@
 #include "TradeAction.h"
 #include "ChangeTalentsAction.h"
 #include "ListSpellsAction.h"
+#include "ChangeStrategyAction.h"
 
 namespace ai
 {
@@ -60,9 +61,13 @@ namespace ai
             creators["trade"] = &ChatActionContext::trade;
             creators["talents"] = &ChatActionContext::talents;
             creators["spells"] = &ChatActionContext::spells;
+            creators["co"] = &ChatActionContext::co;
+            creators["nc"] = &ChatActionContext::nc;
         }
 
     private:
+        static Action* co(PlayerbotAI* ai) { return new ChangeCombatStrategyAction(ai); }
+        static Action* nc(PlayerbotAI* ai) { return new ChangeNonCombatStrategyAction(ai); }
         static Action* spells(PlayerbotAI* ai) { return new ListSpellsAction(ai); }
         static Action* talents(PlayerbotAI* ai) { return new ChangeTalentsAction(ai); }
 

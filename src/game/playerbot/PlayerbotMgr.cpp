@@ -19,15 +19,13 @@ private:
     SharedValueContext sharedValues;
 };
 
-PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(master) 
+PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(master) , sharedAi(NULL)
 {
     // load config variables
 	m_confDisableBots = sConfig.GetBoolDefault( "PlayerbotAI.DisableBots", false );
     m_confDebugWhisper = sConfig.GetBoolDefault( "PlayerbotAI.DebugWhisper", false );
     m_confFollowDistance[0] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 0.5f );
     m_confFollowDistance[1] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 1.0f );
-
-    sharedAi = new SharedPlayerbotAI();
 }
 
 PlayerbotMgr::~PlayerbotMgr() 
@@ -94,7 +92,6 @@ void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
     }
 }
 
-// Playerbot mod: Gets a player bot Player object for this WorldSession master
 Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 {
     PlayerBotMap::const_iterator it = m_playerBots.find(playerGuid);
@@ -103,14 +100,14 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
-    // give the bot some AI, object is owned by the player class
+    if (!sharedAi)
+        sharedAi = new SharedPlayerbotAI();
+
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
     bot->SetPlayerbotAI(ai);
 
-    // tell the world session that they now manage this new bot
     m_playerBots[bot->GetGUID()] = bot;
 
-    // sometimes master can lose leadership, pass leadership to master check
     const uint64 masterGuid = m_master->GetGUID();
     if (m_master->GetGroup() && 
         ! m_master->GetGroup()->IsLeader(masterGuid))

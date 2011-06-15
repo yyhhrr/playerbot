@@ -1746,6 +1746,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\playerbot\Helpers.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\playerbot\LazyCalculatedValue.h"
 				>
 			</File>
@@ -2649,6 +2653,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\BuyAction.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.h"
 						>
 					</File>
 					<File
