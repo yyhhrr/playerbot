@@ -341,7 +341,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 
 void PlayerbotAI::WaitForSpellCast()
 {
-    uint32 lastSpellId = aiObjectContext->GetValue<LastSpellCast&>("last spell id")->Get().id;
+    uint32 lastSpellId = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get().id;
     Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);
     if (!pSpell)
         return;

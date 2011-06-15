@@ -1,6 +1,6 @@
-#include "../../pchdef.h"
+#include "../pchdef.h"
 #include "LootObjectStack.h"
-#include "../playerbot.h"
+#include "playerbot.h"
 
 using namespace ai;
 using namespace std;

@@ -34,7 +34,7 @@ bool SpellCastUsefulValue::Calculate()
 			return false;
 	}
 
-    uint32 lastSpellId = AI_VALUE(LastSpellCast&, "last spell id").id;
+    uint32 lastSpellId = AI_VALUE(LastSpellCast&, "last spell cast").id;
     if (spellid == lastSpellId) 
     {
         Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);
