@@ -16,8 +16,7 @@ bool CastSpellAction::isPossible()
 
 bool CastSpellAction::isUseful() 
 {
-	Unit* target = GetTarget();
-	return target && spellManager->IsSpellCastUseful(spell, target);
+	return GetTarget() && AI_VALUE2(bool, "spell cast useful", spell);
 }
 
 

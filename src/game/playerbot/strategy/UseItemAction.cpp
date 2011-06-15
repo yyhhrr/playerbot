@@ -48,25 +48,24 @@ void UseItemAction::UseItem(Item& item)
         if (!spellId)
             continue;
 
-        const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-        Item* itemForSpell = ai->GetSpellManager()->FindItemForSpell(pSpellInfo);
-        if (itemForSpell)
-        {
-            if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-                continue;
+        Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
+        if (!itemForSpell)
+            continue;
+        
+        if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
+            continue;
 
-            if (bot->GetTrader())
-            {
-                *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
-            }
-            else
-            {
-                *packet << TARGET_FLAG_ITEM;
-                *packet << itemForSpell->GetPackGUID();
-            }
-            bot->GetSession()->QueuePacket(packet);
-            return;
+        if (bot->GetTrader())
+        {
+            *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
         }
+        else
+        {
+            *packet << TARGET_FLAG_ITEM;
+            *packet << itemForSpell->GetPackGUID();
+        }
+        bot->GetSession()->QueuePacket(packet);
+        return;
     }
 
     *packet << TARGET_FLAG_SELF;
@@ -80,5 +79,5 @@ bool UseItemAction::isPossible()
 
 bool UseSpellItemAction::isUseful()
 {
-    return ai->GetSpellManager()->IsSpellCastUseful(getName(), AI_VALUE(Unit*, "self target"));
+    return AI_VALUE2(bool, "spell cast useful", getName());
 }

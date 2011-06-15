@@ -90,8 +90,8 @@ bool AiSpellManager::CanCastSpell(uint32 spellid, Unit* target)
 	Spell *spell = new Spell(bot, spellInfo, false );
     SpellCastTargets targets;
     targets.setUnitTarget(target);
-    targets.setItemTarget(FindItemForSpell(spellInfo));
-    spell->m_CastItem = FindItemForSpell(spellInfo);
+    spell->m_CastItem = ai->GetAiObjectContext()->GetValue<Item*>("item for spell", spellid)->Get();
+    targets.setItemTarget(spell->m_CastItem);
 	SpellCastResult result = spell->CheckCast(false);
 	delete spell;
 	bot->SetSelectionGuid(oldSel);
@@ -127,67 +127,6 @@ bool AiSpellManager::CanCastSpell(uint32 spellid, Unit* target)
 	}
 }
 
-bool AiSpellManager::IsSpellCastUseful(const char* name, Unit* target)
-{
-	uint32 spellid = ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get();
-	if (!spellid)
-		return true; // there can be known alternatives
-
-	if (!target)
-		target = bot;
-
-	SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
-	if (!spellInfo)
-		return true; // there can be known alternatives
-
-    // TODO: this prevents shoot and auto-shot from changing its target
-	/*if (spellInfo->AttributesEx2 & SPELL_ATTR_EX2_AUTOREPEAT_FLAG)
-	{
-		Spell* spell = bot->GetCurrentSpell(CURRENT_AUTOREPEAT_SPELL);
-		if (spell && spell->m_spellInfo->Id == spellid && spell->IsAutoRepeat())
-			return false;
-	}*/
-	
-	if (spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 || 
-		spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2)
-	{
-		Spell* spell = bot->GetCurrentSpell(CURRENT_MELEE_SPELL);
-		if (spell && spell->m_spellInfo->Id == spellid && spell->IsNextMeleeSwingSpell())
-			return false;
-	}
-
-    if (spellid == lastSpellId) 
-    {
-        Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);
-        if (pSpell)
-            return false;
-    }
-
-    Item *item = FindItemForSpell(spellInfo);
-    if (item && item->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-        return false;
-
-	return true;
-}
-
-Item* AiSpellManager::FindItemForSpell(const SpellEntry* const pSpellInfo) 
-{
-    Player* trader = bot->GetTrader();
-    if (trader)
-    {
-        return trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
-    }
-    for( uint8 slot=EQUIPMENT_SLOT_START; slot<EQUIPMENT_SLOT_END; slot++ ) {
-        Item* const pItem = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );
-        if( !pItem )
-            continue;
-
-        if (pItem->IsFitToSpellRequirements(pSpellInfo))
-            return pItem;
-    }
-    return NULL;
-}
-
 bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
 {
 	if (!spellId)
@@ -199,7 +138,7 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
     if (!bot->isInFrontInMap(target, 10))
         bot->SetInFront(target);
 
-    lastSpellId = spellId;
+    ai->GetAiObjectContext()->GetValue<uint32>("last spell id")->Set(spellId);
     lastSpellTarget = target->GetObjectGuid();
     lastCastTime = time(0);
 
@@ -213,6 +152,7 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
+    uint32 lastSpellId = ai->GetAiObjectContext()->GetValue<uint32>("last spell id")->Get();
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(lastSpellId);
     ObjectGuid oldSel = bot->GetSelectionGuid().GetRawValue();
     bot->SetSelectionGuid(lastSpellTarget);
@@ -220,7 +160,8 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
     Spell *spell = new Spell(bot, pSpellInfo, false);
     SpellCastTargets targets;
     targets.setUnitTarget(target);
-    targets.setItemTarget(FindItemForSpell(pSpellInfo));
+    spell->m_CastItem = ai->GetAiObjectContext()->GetValue<Item*>("item for spell", spellId)->Get();
+    targets.setItemTarget(spell->m_CastItem);
     spell->prepare(&targets, false);
     
     bot->SetSelectionGuid(oldSel);
@@ -243,6 +184,7 @@ bool AiSpellManager::CastSpell(uint32 spellId, Unit* target)
 
 void AiSpellManager::FinishSpell()
 {
+    uint32 lastSpellId = ai->GetAiObjectContext()->GetValue<uint32>("last spell id")->Get();
     Spell* const pSpell = bot->FindCurrentSpellBySpellId(lastSpellId);
     if (!pSpell)
         return;
@@ -254,6 +196,7 @@ void AiSpellManager::FinishSpell()
 void AiSpellManager::InterruptSpell()
 {
 	WorldPacket* const packet = new WorldPacket(CMSG_CANCEL_CAST, 5);
+    uint32 lastSpellId = ai->GetAiObjectContext()->GetValue<uint32>("last spell id")->Get();
 	*packet << lastSpellId;
 	*packet << lastSpellTarget;
 	bot->GetSession()->QueuePacket(packet);
@@ -269,6 +212,7 @@ void AiSpellManager::InterruptSpell()
 
 void AiSpellManager::SpellInterrupted(uint32 spellid)
 {
+    uint32 lastSpellId = ai->GetAiObjectContext()->GetValue<uint32>("last spell id")->Get();
     if (lastSpellId != spellid)
         return;
 

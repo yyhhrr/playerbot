@@ -32,6 +32,9 @@
 #include "IsBehindValue.h"
 #include "ItemCountValue.h"
 #include "SpellIdValue.h"
+#include "ItemForSpellValue.h"
+#include "SpellCastUsefulValue.h"
+#include "LastSpellIdValue.h"
 
 namespace ai
 {
@@ -84,9 +87,15 @@ namespace ai
             creators["inventory item"] = &ValueContext::inventory_item;
         
             creators["spell id"] = &ValueContext::spell_id;
+            creators["item for spell"] = &ValueContext::item_for_spell;
+            creators["spell cast useful"] = &ValueContext::spell_cast_useful;
+            creators["last spell id"] = &ValueContext::last_spell_id;
         }
 
     private:
+        static UntypedValue* last_spell_id(AiManagerRegistry* ai) { return new LastSpellIdValue(ai); }
+        static UntypedValue* spell_cast_useful(AiManagerRegistry* ai) { return new SpellCastUsefulValue(ai); }
+        static UntypedValue* item_for_spell(AiManagerRegistry* ai) { return new ItemForSpellValue(ai); }
         static UntypedValue* spell_id(AiManagerRegistry* ai) { return new SpellIdValue(ai); }
         static UntypedValue* inventory_item(AiManagerRegistry* ai) { return new InventoryItemValue(ai); }
         static UntypedValue* item_count(AiManagerRegistry* ai) { return new ItemCountValue(ai); }

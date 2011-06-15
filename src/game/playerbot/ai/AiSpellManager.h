@@ -17,7 +17,6 @@ namespace ai
 		virtual void SpellInterrupted(uint32 spellid);
         virtual void FinishSpell();
 		virtual void RemoveAura(const char* name);
-		virtual bool IsSpellCastUseful(const char* name, Unit* target);
 
 		virtual bool CanCastSpell(const char* name, Unit* target);
 		virtual bool CastSpell(const char* name, Unit* target);
@@ -33,17 +32,14 @@ namespace ai
 		bool canDispel(const SpellEntry* entry, uint32 dispelType);
 
 	public:
-		uint32 GetLastSpellId() { return lastSpellId; }
 		uint64 GetLastSpellTarget() { return lastSpellTarget.GetRawValue(); }
 		int32 CalculateGlobalCooldown(uint32 spellid);
-        Item* FindItemForSpell(const SpellEntry* const pSpellInfo);
 	
 	public:
 		virtual void HandleCommand(const string& text, Player& fromPlayer);
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
 
 	private:
-		uint32 lastSpellId;
 		ObjectGuid lastSpellTarget;
 		time_t lastCastTime;
 	};

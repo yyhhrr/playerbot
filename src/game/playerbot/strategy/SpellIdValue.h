@@ -12,7 +12,7 @@ namespace ai
         SpellIdValue(AiManagerRegistry* const ai) : CalculatedValue<uint32>(ai) {}
       
     public:
-        uint32 Calculate();
+        virtual uint32 Calculate();
 
     };
 }

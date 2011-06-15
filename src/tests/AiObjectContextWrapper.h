@@ -14,7 +14,7 @@ namespace ai
     public:
         MockStatsValue(AiManagerRegistry* const ai) : ManualSetValue<uint8>(ai, 0) {}
     };
-
+    
     class MockFloatValue : public ManualSetValue<float>, public Qualified
     {
     public:
@@ -31,6 +31,13 @@ namespace ai
     {
     public:
         MockLogicalValue(AiManagerRegistry* const ai) : ManualSetValue<bool>(ai, false) {}
+    };
+
+    class AlwaysTrueValue : public CalculatedValue<bool>, public Qualified
+    {
+    public:
+        AlwaysTrueValue(AiManagerRegistry* const ai) : CalculatedValue<bool>(ai) {}
+        virtual bool Calculate() { return true; }
     };
 
     class MockPartyMemberWithoutAuraValue : public CalculatedValue<Unit*>, public Qualified
@@ -110,9 +117,11 @@ namespace ai
             creators["behind"] = &MockValueContext::logical;
             creators["item count"] = &MockValueContext::stats;        
             creators["inventory item"] = &MockValueContext::item;
+            creators["spell cast useful"] = &MockValueContext::always_true;
         }
 
     private:
+        static UntypedValue* always_true(AiManagerRegistry* ai) { return new AlwaysTrueValue(ai); }
         static UntypedValue* stats(AiManagerRegistry* ai) { return new MockStatsValue(ai); }
         static UntypedValue* item(AiManagerRegistry* ai) { return new MockItemValue(ai); }
         static UntypedValue* floating(AiManagerRegistry* ai) { return new MockFloatValue(ai); }

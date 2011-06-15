@@ -2149,11 +2149,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ItemForSpellValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ItemForSpellValue.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ItemVisitors.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LastMovementValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LastSpellIdValue.h"
 					>
 				</File>
 				<File
@@ -2466,6 +2478,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SharedValueContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SpellCastUsefulValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SpellCastUsefulValue.h"
 					>
 				</File>
 				<File
