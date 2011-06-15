@@ -35,9 +35,13 @@ namespace ai
             creators["r"] = &ChatTriggerContext::reward;
             creators["t"] = &ChatTriggerContext::trade;
             creators["nt"] = &ChatTriggerContext::nontrade;
+            creators["talents"] = &ChatTriggerContext::talents;
+            creators["spells"] = &ChatTriggerContext::spells;
         }
 
     private:
+        static Trigger* spells(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "spells"); }
+        static Trigger* talents(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "talents"); }
         static Trigger* equip(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "e"); }
         static Trigger* uneqip(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "ue"); }
         static Trigger* sell(AiManagerRegistry* ai) { return new ChatCommandTrigger(ai, "s"); }

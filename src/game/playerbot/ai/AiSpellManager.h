@@ -38,14 +38,10 @@ namespace ai
 
 		virtual bool IsSpellCasting(Unit* player);
 		virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
-		virtual void ListSpells();
-		virtual void Mount(int32 master_speed1, int32 master_speed2);
-		virtual void Unmount();
+        bool CanCastSpell(uint32 spellid, Unit* target);
 
-	private:
 		uint32 FindSpellId(const char* args);
 		bool HasAura(uint32 spellId, const Unit* player);
-		bool CanCastSpell(uint32 spellid, Unit* target);
 		bool CastSpell(uint32 spellId, Unit* target);
 		bool canDispel(const SpellEntry* entry, uint32 dispelType);
 

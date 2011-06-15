@@ -24,6 +24,8 @@
 #include "UnequipAction.h"
 #include "EquipAction.h"
 #include "TradeAction.h"
+#include "ChangeTalentsAction.h"
+#include "ListSpellsAction.h"
 
 namespace ai
 {
@@ -56,9 +58,14 @@ namespace ai
             creators["buy"] = &ChatActionContext::buy;
             creators["reward"] = &ChatActionContext::reward;
             creators["trade"] = &ChatActionContext::trade;
+            creators["talents"] = &ChatActionContext::talents;
+            creators["spells"] = &ChatActionContext::spells;
         }
 
     private:
+        static Action* spells(AiManagerRegistry* ai) { return new ListSpellsAction(ai); }
+        static Action* talents(AiManagerRegistry* ai) { return new ChangeTalentsAction(ai); }
+
         static Action* equip(AiManagerRegistry* ai) { return new EquipAction(ai); }
         static Action* unequip(AiManagerRegistry* ai) { return new UnequipAction(ai); }
         static Action* sell(AiManagerRegistry* ai) { return new SellAction(ai); }

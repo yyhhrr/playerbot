@@ -48,7 +48,10 @@ bool AttackAction::Attack(Unit* target)
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     if (bot->IsMounted())
-        ai->GetSpellManager()->Unmount();
+    {
+        WorldPacket emptyPacket;
+        bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
+    }
 
     uint64 guid = target->GetGUID();
     bot->SetSelectionGuid(target->GetObjectGuid());
