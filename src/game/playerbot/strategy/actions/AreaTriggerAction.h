@@ -22,7 +22,7 @@ namespace ai
             p >> movement.lastAreaTrigger;
             MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
             
-            ai->TellMaster("Something is triggered in the area");
+            ai->TellMaster("Got an area event. Can be a teleport");
             return true;
         }
     };
