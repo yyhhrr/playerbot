@@ -13,69 +13,19 @@ AiSpellManager::AiSpellManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry) :
 {
 }
 
-
-uint32 AiSpellManager::GetSpellId(const char* args) 
+bool AiSpellManager::CanCastSpell(const char* name, Unit* target)
 {
-	string s = args;
-
-	if (spellMap.find(s) != spellMap.end())
-		return spellMap[s];
-
-	uint32 id = FindSpellId(args);
-	spellMap.insert(pair<string, uint32>(s, id));
-	return id;
+    return CanCastSpell(ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get(), target);
 }
 
-uint32 AiSpellManager::FindSpellId(const char* args) 
+bool AiSpellManager::CastSpell(const char* name, Unit* target) 
 {
-	if (!*args)
-		return 0;
+    return CastSpell(ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get(), target);
+}
 
-	string namepart = args;
-	wstring wnamepart;
-
-	if (!Utf8toWStr(namepart, wnamepart))
-		return 0;
-
-	wstrToLower(wnamepart);
-
-	int loc = bot->GetSession()->GetSessionDbcLocale();
-
-	uint32 foundSpellId = 0;
-	bool foundMatchUsesNoReagents = false;
-
-	for (PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr) 
-    {
-		uint32 spellId = itr->first;
-
-		if (itr->second.state == PLAYERSPELL_REMOVED || itr->second.disabled || IsPassiveSpell(spellId))
-			continue;
-
-		const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
-		if (!pSpellInfo)
-			continue;
-
-		const string name = pSpellInfo->SpellName[loc];
-		if (name.empty() || name.length() != wnamepart.length() || !Utf8FitTo(name, wnamepart))
-			continue;
-
-		bool usesNoReagents = (pSpellInfo->Reagent[0] <= 0);
-
-		// if we already found a spell
-		bool useThisSpell = true;
-		if (foundSpellId > 0) {
-			if (usesNoReagents && !foundMatchUsesNoReagents) {}
-			else if (spellId > foundSpellId) {}
-			else
-				useThisSpell = false;
-		}
-		if (useThisSpell) {
-			foundSpellId = spellId;
-			foundMatchUsesNoReagents = usesNoReagents;
-		}
-	}
-
-	return foundSpellId;
+bool AiSpellManager::HasAura(const char* name, Unit* player) 
+{
+    return HasAura(ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get(), player);
 }
 
 bool AiSpellManager::HasAura(uint32 spellId, const Unit* player) 
@@ -179,7 +129,7 @@ bool AiSpellManager::CanCastSpell(uint32 spellid, Unit* target)
 
 bool AiSpellManager::IsSpellCastUseful(const char* name, Unit* target)
 {
-	uint32 spellid = GetSpellId(name);
+	uint32 spellid = ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get();
 	if (!spellid)
 		return true; // there can be known alternatives
 
@@ -358,7 +308,7 @@ int32 AiSpellManager::CalculateGlobalCooldown(uint32 spellid)
 
 void AiSpellManager::RemoveAura(const char* name)
 {
-	uint32 spellid = GetSpellId(name);
+	uint32 spellid = ai->GetAiObjectContext()->GetValue<uint32>("spell id", name)->Get();
 	if (spellid && HasAura(spellid, bot))
 		bot->RemoveAurasDueToSpell(spellid);
 }

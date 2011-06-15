@@ -6,9 +6,9 @@
 
 namespace ai
 {
-    class CheckMountStateAction : public MovementAction {
+    class CheckMountStateAction : public Action {
     public:
-        CheckMountStateAction(AiManagerRegistry* const ai) : MovementAction(ai, "check mount state") {}
+        CheckMountStateAction(AiManagerRegistry* const ai) : Action(ai, "check mount state") {}
 
         virtual bool Execute(Event event);
 

@@ -13,34 +13,21 @@ namespace ai
 		AiSpellManager(PlayerbotAI* ai, AiManagerRegistry* aiRegistry);
 
 	public:
-		virtual uint32 GetSpellId(const char* args);
 		virtual void InterruptSpell();
 		virtual void SpellInterrupted(uint32 spellid);
         virtual void FinishSpell();
 		virtual void RemoveAura(const char* name);
 		virtual bool IsSpellCastUseful(const char* name, Unit* target);
 
-		virtual bool CanCastSpell(const char* name, Unit* target)
-		{
-			return CanCastSpell(GetSpellId(name), target);
-		}
-
-		virtual bool CastSpell(const char* name, Unit* target) 
-		{
-			return CastSpell(GetSpellId(name), target);
-		}
-
-		virtual bool HasAura(const char* spellName, Unit* player) 
-		{
-			return HasAura(GetSpellId(spellName), player);
-		}
+		virtual bool CanCastSpell(const char* name, Unit* target);
+		virtual bool CastSpell(const char* name, Unit* target);
+		virtual bool HasAura(const char* spellName, Unit* player);
 		virtual bool HasAnyAuraOf(Unit* player, ...);
 
 		virtual bool IsSpellCasting(Unit* player);
 		virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
         bool CanCastSpell(uint32 spellid, Unit* target);
 
-		uint32 FindSpellId(const char* args);
 		bool HasAura(uint32 spellId, const Unit* player);
 		bool CastSpell(uint32 spellId, Unit* target);
 		bool canDispel(const SpellEntry* entry, uint32 dispelType);
@@ -56,8 +43,6 @@ namespace ai
 		virtual void HandleBotOutgoingPacket(const WorldPacket& packet);
 
 	private:
-		std::map<std::string, uint32> spellMap;
-
 		uint32 lastSpellId;
 		ObjectGuid lastSpellTarget;
 		time_t lastCastTime;

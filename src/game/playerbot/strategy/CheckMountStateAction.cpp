@@ -49,6 +49,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
     spellManager->RemoveAura("aquatic form");
     spellManager->RemoveAura("ghost wolf");
 
+    Player*  bot = ai->GetAi()->GetBot();
     uint32 spellMount = 0;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
     {

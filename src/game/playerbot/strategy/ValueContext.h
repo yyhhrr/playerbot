@@ -31,6 +31,7 @@
 #include "IsMovingValue.h"
 #include "IsBehindValue.h"
 #include "ItemCountValue.h"
+#include "SpellIdValue.h"
 
 namespace ai
 {
@@ -81,9 +82,12 @@ namespace ai
             
             creators["item count"] = &ValueContext::item_count;
             creators["inventory item"] = &ValueContext::inventory_item;
+        
+            creators["spell id"] = &ValueContext::spell_id;
         }
 
     private:
+        static UntypedValue* spell_id(AiManagerRegistry* ai) { return new SpellIdValue(ai); }
         static UntypedValue* inventory_item(AiManagerRegistry* ai) { return new InventoryItemValue(ai); }
         static UntypedValue* item_count(AiManagerRegistry* ai) { return new ItemCountValue(ai); }
         static UntypedValue* behind(AiManagerRegistry* ai) { return new IsBehindValue(ai); }

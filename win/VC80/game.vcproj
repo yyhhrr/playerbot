@@ -1933,6 +1933,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChangeTalentsAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ChangeTalentsAction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChatActionContext.h"
 					>
 				</File>
@@ -1950,6 +1958,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ChatTriggerContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\CheckMountStateAction.cpp"
 					>
 				</File>
 				<File
@@ -2162,6 +2174,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\ListQuestsActions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ListSpellsAction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\ListSpellsAction.h"
 					>
 				</File>
 				<File
@@ -2446,6 +2466,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\game\playerbot\strategy\SharedValueContext.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SpellIdValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\SpellIdValue.h"
 					>
 				</File>
 				<File
