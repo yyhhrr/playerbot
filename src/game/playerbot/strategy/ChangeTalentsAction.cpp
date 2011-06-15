@@ -9,18 +9,29 @@ bool ChangeTalentsAction::Execute(Event event)
     Player* bot = ai->GetAi()->GetBot();
 
     string text = event.getParam();
-    if (text == "talents 1" || text == "talents primary")
+    if (text == "1" || text == "primary")
     {
         bot->ActivateSpec(0);
         ai->GetAi()->TellMaster("Primary talents activated");
     }
-    else if (text == "talents 2" || text == "talents secondary")
+    else if (text == "2" || text == "secondary")
     {
         bot->ActivateSpec(1);
         ai->GetAi()->TellMaster("Secondary talents activated");
     }
     else
-        return false;
+    {
+        ostringstream out; 
+        switch (bot->GetActiveSpec())
+        {
+        case 0: out << "Primary";
+            break;
+        default: out << "Secondary";
+            break;
+        }
+        out << " talents are active";
+        ai->GetAi()->TellMaster(out);
+    }
 
     return true;
 }
