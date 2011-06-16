@@ -30,6 +30,12 @@ bool ReachAreaTriggerAction::Execute(Event event)
         return true;
     }
 
+    if (bot->GetMapId() != atEntry->mapid || bot->GetDistance(atEntry->x, atEntry->y, atEntry->z) > BOT_SIGHT_DISTANCE)
+    {
+        ai->TellMaster("I will not follow you - too far away");
+        return true;
+    }
+
     ai->ChangeNonCombatStrategy("-follow,+stay");
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
