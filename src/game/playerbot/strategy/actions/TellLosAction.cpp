@@ -8,7 +8,7 @@ using namespace ai;
 bool TellLosAction::Execute(Event event)
 {
     
-    AiObjectContext *context = context;
+    
 
     string &param = event.getParam();
 

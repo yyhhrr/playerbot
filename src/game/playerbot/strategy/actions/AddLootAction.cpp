@@ -20,7 +20,7 @@ bool AddAllLootAction::Execute(Event event)
 {
     
 
-    AiObjectContext *context = context;
+    
     
     list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)

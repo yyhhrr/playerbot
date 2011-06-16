@@ -8,7 +8,7 @@ using namespace ai;
 bool TaxiAction::Execute(Event event)
 {
     
-    AiObjectContext *context = context;
+    
     list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
     for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
     {

@@ -30,7 +30,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
     if (!group)
         return NULL;
 
-    AiObjectContext *context = context;
+    
     list<Unit*> targets = *context->GetValue<list<Unit*>>("possible targets");
 
     if(targets.empty())
