@@ -6,7 +6,7 @@ using namespace ai;
 
 Unit* TargetValue::FindTarget(FindTargetStrategy* strategy)
 {
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     if (!group)
     {

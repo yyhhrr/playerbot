@@ -28,7 +28,7 @@ NextAction** CastAbolishPoisonOnPartyAction::getAlternatives()
 
 Value<Unit*>* CastEntanglingRootsCcAction::GetTargetValue()
 {
-    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", "entangling roots");
+    return context->GetValue<Unit*>("cc target", "entangling roots");
 }
 
 bool CastEntanglingRootsCcAction::Execute(Event event)

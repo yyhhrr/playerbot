@@ -26,7 +26,7 @@ bool compare_items(const ItemPrototype *proto1, const ItemPrototype *proto2)
 
 bool TradeStatusAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     if (!bot->GetTrader())
         return false;
@@ -56,7 +56,7 @@ bool TradeStatusAction::Execute(Event event)
 
 void TradeStatusAction::BeginTrade()
 {
-    Player* bot = ai->GetBot();
+    
 
     WorldPacket p;
     bot->GetSession()->HandleBeginTradeOpcode(p);

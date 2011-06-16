@@ -7,7 +7,7 @@ using namespace ai;
 
 bool RepairAllAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
     for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end(); i++)

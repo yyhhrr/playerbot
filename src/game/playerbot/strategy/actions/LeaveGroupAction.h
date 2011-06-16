@@ -10,11 +10,11 @@ namespace ai
         
         virtual bool Execute(Event event)
         {
-            Group* group = GetBot()->GetGroup();
+            Group* group = bot->GetGroup();
             if (!group) 
                 return false;
 
-            group->RemoveMember(GetBot()->GetObjectGuid(), 0);
+            group->RemoveMember(bot->GetObjectGuid(), 0);
             return true;
         }
     };

@@ -9,12 +9,12 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool LootStrategyAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
     string strategy = event.getParam();
     
     LootObjectStack* lootItems = AI_VALUE(LootObjectStack*, "available loot");
     set<uint32>& alwaysLootItems = AI_VALUE(set<uint32>&, "always loot list");
-    Value<LootStrategy>* lootStrategy = ai->GetAiObjectContext()->GetValue<LootStrategy>("loot strategy");
+    Value<LootStrategy>* lootStrategy = context->GetValue<LootStrategy>("loot strategy");
 
     if (strategy == "?")
     {

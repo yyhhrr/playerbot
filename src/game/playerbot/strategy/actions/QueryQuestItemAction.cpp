@@ -10,7 +10,7 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool QueryQuestItemAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
     Player *bot = ai->GetBot();
     string text = event.getParam();
 

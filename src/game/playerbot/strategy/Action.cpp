@@ -1,5 +1,6 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
+#include "AiObjectContext.h"
 #include "Action.h"
 
 using namespace ai;
@@ -81,14 +82,9 @@ void NextAction::destroy(NextAction** actions)
         delete actions[i];
 }
 
-Player* Action::GetBot()
-{
-    return ai->GetBot();
-}
-
 Value<Unit*>* Action::GetTargetValue()
 {
-    return ai->GetAiObjectContext()->GetValue<Unit*>(GetTargetName());
+    return context->GetValue<Unit*>(GetTargetName());
 }
 
 Unit* Action::GetTarget()

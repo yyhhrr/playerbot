@@ -1813,6 +1813,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AiObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\AiObject.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\AiObjectContext.cpp"
 					>
 				</File>

@@ -29,7 +29,7 @@ bool UseItemAction::Execute(Event event)
 
 void UseItemAction::UseItem(Item& item)
 {
-    Player* bot = ai->GetBot();
+    
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
     uint8 cast_count = 1;

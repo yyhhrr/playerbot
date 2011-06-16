@@ -7,7 +7,7 @@ using namespace ai;
 
 bool ReachAreaTriggerAction::Execute(Event event)
 {
-    Player*  bot = ai->GetBot();
+    
     Player* master = bot->GetPlayerbotAI()->GetMaster();
 
     uint32 triggerId;
@@ -44,7 +44,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
     ai->SetNextCheckDelay(3);
     ai->TellMaster("I will teleport in 3 seconds");
     
-    ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get().lastAreaTrigger = triggerId;
+    context->GetValue<LastMovement&>("last movement")->Get().lastAreaTrigger = triggerId;
     
     return true;
 }
@@ -53,10 +53,10 @@ bool ReachAreaTriggerAction::Execute(Event event)
 
 bool AreaTriggerAction::Execute(Event event)
 {
-    Player*  bot = ai->GetBot();
+    
     Player* master = bot->GetPlayerbotAI()->GetMaster();
 
-    LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+    LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
     
     uint32 triggerId = movement.lastAreaTrigger;
     movement.lastAreaTrigger = 0;

@@ -6,8 +6,8 @@ using namespace ai;
 
 bool ReviveFromCorpseAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    Player* master = ai->GetMaster();
+    
+    
     Corpse* corpse = bot->GetCorpse();
     if (!corpse)
         return false;
@@ -30,7 +30,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
             ai->TellMaster(".. could not be revived ..");
             return false;
         }
-        ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(NULL);
+        context->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
     }
     return true;

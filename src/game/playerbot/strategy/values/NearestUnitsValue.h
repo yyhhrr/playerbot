@@ -12,7 +12,7 @@ namespace ai
     protected:
         void RemoveNotInLOS( list<Unit *> &targets ) 
         {
-            Player* bot = ai->GetBot();
+            
 
             for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
             {

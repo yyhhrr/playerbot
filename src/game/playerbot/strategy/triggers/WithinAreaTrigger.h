@@ -10,9 +10,9 @@ namespace ai
 
         virtual bool IsActive()
 		{
-            Player*  bot = ai->GetBot();
+            
 
-            LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+            LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
             if (!movement.lastAreaTrigger)
                 return false;
 

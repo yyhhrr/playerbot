@@ -19,7 +19,7 @@ bool AttackAction::Execute(Event event)
 
 bool AttackMyTargetAction::Execute(Event event)
 {
-    Player* master = ai->GetMaster();
+    
     ObjectGuid guid = master->GetSelectionGuid();
     if (!guid)
         return false;
@@ -67,8 +67,8 @@ bool AttackAction::Attack(Unit* target)
     }
 
     
-    ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Set(target);
-    ai->GetAiObjectContext()->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
+    context->GetValue<Unit*>("current target")->Set(target);
+    context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
     return true;
 }

@@ -5,7 +5,7 @@ namespace ai
     class PlayerbotAIAware 
     {
     public:
-        PlayerbotAIAware(PlayerbotAI* const ai) { this->ai = ai; }
+        PlayerbotAIAware(PlayerbotAI* const ai) : ai(ai) { }
 
     protected:
         PlayerbotAI* ai;

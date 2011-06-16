@@ -156,7 +156,7 @@ bool MovementAction::Flee(Unit *target)
     if (!IsMovingAllowed())
         return true;
 
-    AttackerMap attackers = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
     FleeManager manager(bot, &attackers, SPELL_DISTANCE, GetFollowAngle());
 
     float rx, ry, rz;

@@ -22,7 +22,7 @@ public:
 
 Unit* PartyMemberToHeal::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
     IsTargetOfHealingSpell predicate;
 
     Group* group = bot->GetGroup();

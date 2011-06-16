@@ -6,7 +6,7 @@ using namespace ai;
 
 Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
 {
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
@@ -26,7 +26,7 @@ Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
 
 bool PartyMemberValue::Check(Unit* player) 
 {
-    Player* bot = ai->GetBot();
+    
 
     return player != bot && 
         bot->GetDistance(player) < BOT_SIGHT_DISTANCE &&
@@ -35,7 +35,7 @@ bool PartyMemberValue::Check(Unit* player)
 
 bool PartyMemberValue::IsTargetOfSpellCast(Player* target, SpellEntryPredicate &predicate) 
 {
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     ObjectGuid targetGuid = target ? target->GetObjectGuid() : bot->GetObjectGuid();
     ObjectGuid corpseGuid = target && target->GetCorpse() ? target->GetCorpse()->GetObjectGuid() : ObjectGuid();

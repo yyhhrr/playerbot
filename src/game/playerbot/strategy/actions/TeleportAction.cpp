@@ -7,9 +7,9 @@ using namespace ai;
 
 bool TeleportAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
-    list<GameObject*> gos = *ai->GetAiObjectContext()->GetValue<list<GameObject*>>("nearest game objects");
+    list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
     {
         GameObject* go = *i;
@@ -34,7 +34,7 @@ bool TeleportAction::Execute(Event event)
     }
 
 
-    LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+    LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
     if (movement.lastAreaTrigger)
     {
         WorldPacket p(CMSG_AREATRIGGER);

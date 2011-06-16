@@ -7,7 +7,7 @@ using namespace ai;
 
 bool AcceptQuestAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
     Player *bot = ai->GetBot();
 
     WorldPacket& p = event.getPacket();
@@ -45,7 +45,7 @@ bool AcceptQuestAction::Execute(Event event)
 
 bool AcceptQuestShareAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
     Player *bot = ai->GetBot();
 
     WorldPacket& p = event.getPacket();

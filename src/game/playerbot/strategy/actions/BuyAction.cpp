@@ -11,7 +11,7 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool BuyAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     string link = event.getParam().c_str();
 

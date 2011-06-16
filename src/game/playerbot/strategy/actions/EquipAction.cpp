@@ -32,7 +32,7 @@ void EquipAction::EquipItem(Item& item)
 {
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
-    Player* bot = ai->GetBot();
+    
 
     WorldPacket* const packet = new WorldPacket(CMSG_AUTOEQUIP_ITEM, 2);
     *packet << bagIndex << slot;

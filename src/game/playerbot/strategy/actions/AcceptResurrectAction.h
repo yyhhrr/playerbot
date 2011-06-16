@@ -10,7 +10,7 @@ namespace ai
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetBot();
+            
 
             if (bot->isAlive())
                 return false;

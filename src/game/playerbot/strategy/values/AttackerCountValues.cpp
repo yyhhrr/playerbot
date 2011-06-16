@@ -7,13 +7,13 @@ using namespace ai;
 
 uint8 MyAttackerCountValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
     return bot->getAttackers().size();
 }
 
 bool HasAggroValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
     Unit* target = GetTarget();
     if (!target)
         return true;
@@ -36,12 +36,12 @@ bool HasAggroValue::Calculate()
 
 uint8 AttackerCountValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
 
     int count = 0;
     float range = BOT_SIGHT_DISTANCE;
 
-    AttackerMap attackers = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
     for (AttackerMapIterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* unit = sObjectAccessor.GetUnit(*bot, i->first);
@@ -58,8 +58,8 @@ uint8 AttackerCountValue::Calculate()
 
 uint8 BalancePercentValue::Calculate()
 {
-    Player* bot = ai->GetBot();
-    Player* master = ai->GetMaster();
+    
+    
 
     float playerLevel = 0,
         attackerLevel = 0;
@@ -78,7 +78,7 @@ uint8 BalancePercentValue::Calculate()
         }
     }
 
-    AttackerMap v = ai->GetAiObjectContext()->GetValue<AttackerMap>("attackers")->Get();
+    AttackerMap v = context->GetValue<AttackerMap>("attackers")->Get();
 
     for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
     {  

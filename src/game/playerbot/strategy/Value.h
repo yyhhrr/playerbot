@@ -2,13 +2,14 @@
 #include "Action.h"
 #include "Event.h"
 #include "../PlayerbotAIAware.h"
+#include "AiObject.h"
 
 namespace ai
 {
-    class UntypedValue : public PlayerbotAIAware
+    class UntypedValue : public AiObject
     {
     public:
-        UntypedValue(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
+        UntypedValue(PlayerbotAI* ai) : AiObject(ai) {}
         virtual void Update() {}
     };
     

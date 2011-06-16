@@ -68,7 +68,7 @@ void SellAction::Sell(FindItemVisitor* visitor)
 
 void SellAction::Sell(Item* item)
 {
-    Player* bot = ai->GetBot();
+    
     uint64 vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
     if (!vendorguid)
     {

@@ -19,10 +19,10 @@ class clazz : public super \
 
 namespace ai
 {
-    class Trigger : public PlayerbotAIAware
+    class Trigger : public AiObject
 	{
 	public:
-        Trigger(PlayerbotAI* ai, const char* name = "trigger", int checkInterval = 1) : PlayerbotAIAware(ai) {
+        Trigger(PlayerbotAI* ai, const char* name = "trigger", int checkInterval = 1) : AiObject(ai) {
             this->name = name;
 			this->checkInterval = checkInterval;
 			ticksElapsed = 0;

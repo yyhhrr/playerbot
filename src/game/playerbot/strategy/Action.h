@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "Value.h"
+#include "AiObject.h"
 
 namespace ai
 {
@@ -38,12 +39,10 @@ namespace ai
     
     class ActionBasket;
 
-    class Action : public PlayerbotAIAware
+    class Action : public AiObject
 	{
 	public:
-        Action(PlayerbotAI* ai, const char* name = "action") : PlayerbotAIAware(ai) {
-            this->name = name;
-        }
+        Action(PlayerbotAI* ai, const char* name = "action") : AiObject(ai), name(name) { }
         virtual ~Action(void) {}
 
     public:
@@ -59,9 +58,6 @@ namespace ai
         virtual Unit* GetTarget();
         virtual Value<Unit*>* GetTargetValue();
         virtual const char* GetTargetName() { return "self target"; }
-
-    protected:
-        Player* GetBot();
 
     protected:
         string name;
@@ -130,5 +126,5 @@ namespace ai
    
 }
 
-#define AI_VALUE(type, name) ai->GetAiObjectContext()->GetValue<type>(name)->Get()
-#define AI_VALUE2(type, name, param) ai->GetAiObjectContext()->GetValue<type>(name, param)->Get()
+#define AI_VALUE(type, name) context->GetValue<type>(name)->Get()
+#define AI_VALUE2(type, name, param) context->GetValue<type>(name, param)->Get()

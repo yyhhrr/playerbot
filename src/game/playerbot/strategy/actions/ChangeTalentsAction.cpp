@@ -6,7 +6,7 @@ using namespace ai;
 
 bool ChangeTalentsAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     string text = event.getParam();
     if (text == "1" || text == "primary")

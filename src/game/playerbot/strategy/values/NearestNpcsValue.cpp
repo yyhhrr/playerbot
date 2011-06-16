@@ -12,7 +12,7 @@ using namespace MaNGOS;
 
 list<Unit*> NearestNpcsValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
 
     list<Unit *> targets;
 

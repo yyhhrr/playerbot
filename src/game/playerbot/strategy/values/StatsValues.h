@@ -12,7 +12,7 @@ namespace ai
     protected:
         Unit* GetTarget()
         {
-            return ai->GetAiObjectContext()->GetValue<Unit*>(qualifier.c_str())->Get();
+            return context->GetValue<Unit*>(qualifier.c_str())->Get();
         }
     };
 

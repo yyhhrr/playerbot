@@ -8,7 +8,7 @@ uint64 extractGuid(WorldPacket& packet);
 
 bool CheckMountStateAction::Execute(Event event)
 {
-    Player*  bot = ai->GetBot();
+    
     Player* master = bot->GetPlayerbotAI()->GetMaster();
 
     WorldPacket p(event.getPacket());
@@ -50,7 +50,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
     ai->RemoveAura("aquatic form");
     ai->RemoveAura("ghost wolf");
 
-    Player*  bot = ai->GetBot();
+    
     uint32 spellMount = 0;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
     {

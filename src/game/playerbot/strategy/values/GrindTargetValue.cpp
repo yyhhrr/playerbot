@@ -6,7 +6,7 @@ using namespace ai;
 
 Unit* GrindTargetValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
@@ -24,13 +24,13 @@ Unit* GrindTargetValue::Calculate()
 
 Unit* GrindTargetValue::FindTargetForGrinding(int assistCount) 
 {
-    Player* bot = ai->GetBot();
-    Player* master = ai->GetMaster();
+    
+    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
 
-    AiObjectContext *context = ai->GetAiObjectContext();
+    AiObjectContext *context = context;
     list<Unit*> targets = *context->GetValue<list<Unit*>>("possible targets");
 
     if(targets.empty())
@@ -73,7 +73,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
 
 int GrindTargetValue::GetTargetingPlayerCount( Unit* unit ) 
 {
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     if (!group)
         return 0;
@@ -87,7 +87,7 @@ int GrindTargetValue::GetTargetingPlayerCount( Unit* unit )
             continue;
 
         PlayerbotAI* ai = member->GetPlayerbotAI();
-        if ((ai && ai->GetAiObjectContext()->GetValue<Unit*>("current target")->Get() == unit) ||
+        if ((ai && context->GetValue<Unit*>("current target")->Get() == unit) ||
             (!ai && member->GetSelectionGuid() == unit->GetObjectGuid()))
             count++;
     }

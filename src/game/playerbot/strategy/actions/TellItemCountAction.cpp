@@ -7,7 +7,7 @@ using namespace ai;
 
 bool TellItemCountAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
     string text = event.getParam();
 
     uint32 quality = InventoryItemValue::TextToItemQuality(text.c_str());

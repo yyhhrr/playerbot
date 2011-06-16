@@ -7,7 +7,7 @@ using namespace ai;
 
 bool TurnInQuestAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
 
     ObjectGuid guid = event.getObject();
     if (!guid)
@@ -33,8 +33,8 @@ bool TurnInQuestAction::Execute(Event event)
 
 void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 {
-    Player* bot = ai->GetBot();
-    Player *master = ai->GetMaster();
+    
+    
 
     uint64 giverGUID = questgiver->GetGUID();
 

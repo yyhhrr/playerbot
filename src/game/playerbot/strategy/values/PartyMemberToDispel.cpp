@@ -9,7 +9,7 @@ Unit* PartyMemberToDispel::Calculate()
 {
     uint32 dispelType = atoi(qualifier.c_str());
 
-    Player* bot = ai->GetBot();
+    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;

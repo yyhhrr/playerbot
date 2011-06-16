@@ -42,5 +42,5 @@ bool CastAspectOfTheViperAction::isUseful()
 
 Value<Unit*>* CastFreezingTrap::GetTargetValue()
 {
-    return ai->GetAiObjectContext()->GetValue<Unit*>("cc target", "freezing trap");
+    return context->GetValue<Unit*>("cc target", "freezing trap");
 }

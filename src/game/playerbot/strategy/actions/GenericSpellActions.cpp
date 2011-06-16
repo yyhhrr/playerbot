@@ -38,10 +38,10 @@ bool CastHealingSpellAction::isUseful()
 
 Value<Unit*>* CurePartyMemberAction::GetTargetValue()
 {
-    return ai->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
+    return context->GetValue<Unit*>("party member to dispel", dispelType);
 }
 
 Value<Unit*>* BuffOnPartyAction::GetTargetValue()
 {
-    return ai->GetAiObjectContext()->GetValue<Unit*>("party member without aura", spell);
+    return context->GetValue<Unit*>("party member without aura", spell);
 }

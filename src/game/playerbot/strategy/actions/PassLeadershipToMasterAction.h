@@ -10,8 +10,8 @@ namespace ai
 
         virtual bool Execute(Event event)
         {
-            Player*  bot = ai->GetBot();
-            Player* master = ai->GetMaster();
+            
+            
             WorldPacket &p = event.getPacket();
 
             string name;

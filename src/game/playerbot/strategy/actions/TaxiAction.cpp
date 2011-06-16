@@ -7,8 +7,8 @@ using namespace ai;
 
 bool TaxiAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    AiObjectContext *context = ai->GetAiObjectContext();
+    
+    AiObjectContext *context = context;
     list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
     for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
     {
@@ -16,7 +16,7 @@ bool TaxiAction::Execute(Event event)
         if (!npc)
             continue;
 
-        LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
+        LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
         if (movement.taxiNodes.empty())
         {
             ostringstream out;

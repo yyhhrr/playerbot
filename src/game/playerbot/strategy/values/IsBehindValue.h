@@ -14,7 +14,7 @@ namespace ai
             if (!target)
                 return false;
 
-            Player* bot = ai->GetBot();
+            
             float targetOrientation = target->GetOrientation();
             float orientation = bot->GetOrientation();
             float distance = bot->GetDistance(target);

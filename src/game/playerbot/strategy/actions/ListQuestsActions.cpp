@@ -50,12 +50,12 @@ int ListQuestsAction::ListQuests(bool completed, bool silent)
     int count = 0;
     for (uint16 slot = 0; slot < MAX_QUEST_LOG_SIZE; ++slot)
     {
-        uint32 questId = GetBot()->GetQuestSlotQuestId(slot);
+        uint32 questId = bot->GetQuestSlotQuestId(slot);
         if (!questId)
             continue;
 
         Quest const* pQuest = sObjectMgr.GetQuestTemplate(questId);
-        bool isCompletedQuest = GetBot()->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE;
+        bool isCompletedQuest = bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE;
         if (completed != isCompletedQuest)
             continue;
 

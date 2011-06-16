@@ -7,8 +7,8 @@ using namespace ai;
 
 bool TellLosAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    AiObjectContext *context = ai->GetAiObjectContext();
+    
+    AiObjectContext *context = context;
 
     string &param = event.getParam();
 

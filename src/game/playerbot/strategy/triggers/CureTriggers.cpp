@@ -13,5 +13,5 @@ bool NeedCureTrigger::IsActive()
 
 Value<Unit*>* PartyMemberNeedCureTrigger::GetTargetValue()
 {
-	return ai->GetAiObjectContext()->GetValue<Unit*>("party member to dispel", dispelType);
+	return context->GetValue<Unit*>("party member to dispel", dispelType);
 }

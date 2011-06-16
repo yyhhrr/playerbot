@@ -23,7 +23,7 @@ bool StatsAction::Execute(Event event)
 
 void StatsAction::ListGold(ostringstream &out)
 {
-    uint32 copper = GetBot()->GetMoney();
+    uint32 copper = bot->GetMoney();
     uint32 gold = uint32(copper / 10000);
     copper -= (gold * 10000);
     uint32 silver = uint32(copper / 100);
@@ -38,7 +38,7 @@ void StatsAction::ListBagSlots(ostringstream &out)
     // list out items in main backpack
     for (uint8 slot = INVENTORY_SLOT_ITEM_START; slot < INVENTORY_SLOT_ITEM_END; slot++)
     {
-        const Item* const pItem = GetBot()->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
+        const Item* const pItem = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
         if (pItem)
             totalused++;
     }
@@ -46,7 +46,7 @@ void StatsAction::ListBagSlots(ostringstream &out)
     // list out items in other removable backpacks
     for (uint8 bag = INVENTORY_SLOT_BAG_START; bag < INVENTORY_SLOT_BAG_END; ++bag)
     {
-        const Bag* const pBag = (Bag*) GetBot()->GetItemByPos(INVENTORY_SLOT_BAG_0, bag);
+        const Bag* const pBag = (Bag*) bot->GetItemByPos(INVENTORY_SLOT_BAG_0, bag);
         if (pBag)
         {
             ItemPrototype const* pBagProto = pBag->GetProto();
@@ -61,8 +61,8 @@ void StatsAction::ListBagSlots(ostringstream &out)
 
 void StatsAction::ListXP( ostringstream &out )
 {
-    uint32 curXP = GetBot()->GetUInt32Value(PLAYER_XP);
-    uint32 nextLevelXP = GetBot()->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+    uint32 curXP = bot->GetUInt32Value(PLAYER_XP);
+    uint32 nextLevelXP = bot->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
     uint32 xpPercent = 0;
     if (nextLevelXP)
         xpPercent = 100 * curXP / nextLevelXP;
@@ -100,7 +100,7 @@ uint32 StatsAction::EstRepairAll()
 
 uint32 StatsAction::EstRepair(uint16 pos)
 {
-    Item* item = GetBot()->GetItemByPos(pos);
+    Item* item = bot->GetItemByPos(pos);
 
     uint32 TotalCost = 0;
     if(!item)

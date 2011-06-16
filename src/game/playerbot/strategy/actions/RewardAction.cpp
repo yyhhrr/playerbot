@@ -12,7 +12,7 @@ uint32 extractMoney(const string& text);
 
 bool RewardAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     string link = event.getParam().c_str();
 

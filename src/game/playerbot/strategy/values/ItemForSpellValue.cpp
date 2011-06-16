@@ -6,8 +6,8 @@ using namespace ai;
 
 Item* ItemForSpellValue::Calculate()
 {
-    Player* bot = ai->GetBot();
-    Player* master = ai->GetMaster();
+    
+    
 
     uint32 spellid = atoi(qualifier.c_str());
     if (!spellid)

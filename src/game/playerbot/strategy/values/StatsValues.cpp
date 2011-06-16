@@ -64,7 +64,7 @@ uint8 ComboPointsValue::Calculate()
 
 bool IsMountedValue::Calculate()
 {
-    Player* bot = ai->GetBot();
+    
     return bot->IsMounted();
 }
 

@@ -7,8 +7,8 @@ using namespace ai;
 
 bool GossipHelloAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    Player *master = ai->GetMaster();
+    
+    
     WorldPacket &p = event.getPacket();
 
     ObjectGuid guid;

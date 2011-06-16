@@ -18,9 +18,9 @@ bool AddLootAction::Execute(Event event)
 
 bool AddAllLootAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
 
-    AiObjectContext *context = ai->GetAiObjectContext();
+    AiObjectContext *context = context;
     
     list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)

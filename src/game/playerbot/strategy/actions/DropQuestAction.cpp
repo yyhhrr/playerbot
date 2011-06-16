@@ -7,8 +7,8 @@ using namespace ai;
 
 bool DropQuestAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    Player *master = ai->GetMaster();
+    
+    
     string link = event.getParam();
     
     ObjectGuid oldSelection = master->GetSelectionGuid();

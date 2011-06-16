@@ -7,8 +7,8 @@ using namespace ai;
 
 bool TellReputationAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
-    Player *master = ai->GetMaster();
+    
+    
 
     ObjectGuid selection = master->GetSelectionGuid();
     if (selection.IsEmpty())

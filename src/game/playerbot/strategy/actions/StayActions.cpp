@@ -67,7 +67,7 @@ bool StayCircleAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetMaster();
+    
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -85,7 +85,7 @@ bool StayLineAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetMaster();
+    
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -116,7 +116,7 @@ bool StayCombatAction::Execute(Event event)
 
     float range = 2.0f;
 
-    Player* master = ai->GetMaster();
+    
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();

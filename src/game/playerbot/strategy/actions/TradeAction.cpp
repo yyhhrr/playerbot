@@ -11,7 +11,7 @@ void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool TradeAction::Execute(Event event)
 {
-    Player* bot = ai->GetBot();
+    
 
     string text = event.getParam();
     uint32 copper = extractMoney(text);
@@ -57,7 +57,7 @@ bool TradeAction::TradeItem(FindItemVisitor *visitor, int8 slot)
 
 bool TradeAction::TradeItem(const Item& item, int8 slot)
 {
-    Player* bot = ai->GetBot();
+    
 
     if (!bot->GetTrader() || item.IsInTrade())
         return false;

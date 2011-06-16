@@ -8,7 +8,7 @@ using namespace ai;
 
 bool LootAction::Execute(Event event)
 {
-    Player *master = ai->GetMaster();
+    
     
     ObjectGuid masterSelection = master->GetSelectionGuid();
     if (masterSelection) 
