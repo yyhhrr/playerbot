@@ -2636,6 +2636,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\AreaTriggerAction.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\AreaTriggerAction.h"
 						>
 					</File>
@@ -3409,6 +3413,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\triggers\TriggerContext.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\triggers\WithinAreaTrigger.h"
 						>
 					</File>
 					<File

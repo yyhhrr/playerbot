@@ -54,12 +54,19 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "trade status", 
         NextAction::array(0, new NextAction("accept trade", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "area trigger", 
+        NextAction::array(0, new NextAction("reach area trigger", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "within area trigger", 
+        NextAction::array(0, new NextAction("area trigger", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTroughStrategy(ai)
 {
     supported.push_back("accept quest");
     supported.push_back("loot roll");
-    supported.push_back("area trigger");
     supported.push_back("check mount state");
 }

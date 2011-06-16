@@ -1,6 +1,7 @@
 #pragma once;
 
 #include "WorldPacketTrigger.h"
+#include "WithinAreaTrigger.h"
 
 namespace ai
 {
@@ -22,6 +23,7 @@ namespace ai
             creators["loot roll"] = &WorldPacketTriggerContext::loot_roll;
             creators["resurrect request"] = &WorldPacketTriggerContext::resurrect_request;
             creators["area trigger"] = &WorldPacketTriggerContext::area_trigger;
+            creators["within area trigger"] = &WorldPacketTriggerContext::within_area_trigger;
             creators["check mount state"] = &WorldPacketTriggerContext::check_mount_state;
             creators["activate taxi"] = &WorldPacketTriggerContext::taxi;
             creators["trade status"] = &WorldPacketTriggerContext::trade_status;
@@ -32,6 +34,7 @@ namespace ai
         static Trigger* cannot_equip(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
         static Trigger* check_mount_state(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "check mount state"); }
         static Trigger* area_trigger(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "area trigger"); }
+        static Trigger* within_area_trigger(PlayerbotAI* ai) { return new WithinAreaTrigger(ai); }
         static Trigger* resurrect_request(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "resurrect request"); }
         static Trigger* gossip_hello(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "gossip hello"); }
         static Trigger* group_invite(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "group invite"); }

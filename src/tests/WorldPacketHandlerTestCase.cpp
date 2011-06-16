@@ -134,8 +134,10 @@ protected:
     {
         trigger("area trigger");
         tick();
+        trigger("within area trigger");
+        tick();
 
-        assertActions(">S:area trigger");
+        assertActions(">S:reach area trigger>S:area trigger");
     }
 
     void mount()

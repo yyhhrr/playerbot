@@ -6,25 +6,18 @@
 
 namespace ai
 {
+    class ReachAreaTriggerAction : public MovementAction {
+    public:
+        ReachAreaTriggerAction(PlayerbotAI* ai) : MovementAction(ai, "reach area trigger") {}
+
+        virtual bool Execute(Event event);
+    };
+
     class AreaTriggerAction : public MovementAction {
     public:
         AreaTriggerAction(PlayerbotAI* ai) : MovementAction(ai, "area trigger") {}
 
-        virtual bool Execute(Event event)
-        {
-            Player*  bot = ai->GetBot();
-            Player* master = bot->GetPlayerbotAI()->GetMaster();
-
-            LastMovement& movement = ai->GetAiObjectContext()->GetValue<LastMovement&>("last movement")->Get();
-
-            WorldPacket p(event.getPacket());
-            p.rpos(0);
-            p >> movement.lastAreaTrigger;
-            MoveTo(master->GetMapId(), master->GetPositionX(), master->GetPositionY(), master->GetPositionZ());
-            
-            ai->TellMaster("Got an area event. Can be a teleport");
-            return true;
-        }
+        virtual bool Execute(Event event);
     };
 
 }

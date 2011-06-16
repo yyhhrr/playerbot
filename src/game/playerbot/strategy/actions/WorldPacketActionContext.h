@@ -36,6 +36,7 @@ namespace ai
             creators["accept resurrect"] = &WorldPacketActionContext::accept_resurrect;
             creators["use meeting stone"] = &WorldPacketActionContext::use_meeting_stone;
             creators["area trigger"] = &WorldPacketActionContext::area_trigger;
+            creators["reach area trigger"] = &WorldPacketActionContext::reach_area_trigger;
             creators["check mount state"] = &WorldPacketActionContext::check_mount_state;
             creators["remember taxi"] = &WorldPacketActionContext::remember_taxi;
             creators["accept trade"] = &WorldPacketActionContext::accept_trade;
@@ -46,6 +47,7 @@ namespace ai
         static Action* remember_taxi(PlayerbotAI* ai) { return new RememberTaxiAction(ai); }
         static Action* check_mount_state(PlayerbotAI* ai) { return new CheckMountStateAction(ai); }
         static Action* area_trigger(PlayerbotAI* ai) { return new AreaTriggerAction(ai); }
+        static Action* reach_area_trigger(PlayerbotAI* ai) { return new ReachAreaTriggerAction(ai); }
         static Action* use_meeting_stone(PlayerbotAI* ai) { return new UseMeetingStoneAction(ai); }
         static Action* accept_resurrect(PlayerbotAI* ai) { return new AcceptResurrectAction(ai); }
         static Action* revive_from_corpse(PlayerbotAI* ai) { return new ReviveFromCorpseAction(ai); }
