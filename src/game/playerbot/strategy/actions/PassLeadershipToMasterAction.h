@@ -18,10 +18,10 @@ namespace ai
             p >> name;
             if (bot->GetGroup() && name == bot->GetName())
             {
-                if (bot->GetGroup()->IsMember(master->GetGUID()))
+                if (bot->GetGroup()->IsMember(master->GetObjectGuid()))
                 {
                     p.resize(8);
-                    p << master->GetGUID();
+                    p << master->GetObjectGuid();
                     bot->GetSession()->HandleGroupSetLeaderOpcode(p);
                     return true;
                 }

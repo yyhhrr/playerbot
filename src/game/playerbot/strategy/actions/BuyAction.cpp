@@ -21,7 +21,7 @@ bool BuyAction::Execute(Event event)
         return false;
 
     Player* master = bot->GetPlayerbotAI()->GetMaster();
-    uint64 vendorguid = master->GetSelectionGuid().GetRawValue();
+    ObjectGuid vendorguid = master->GetSelectionGuid();
     if (!vendorguid)
         return false;
 

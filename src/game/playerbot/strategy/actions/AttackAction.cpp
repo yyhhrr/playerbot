@@ -53,7 +53,7 @@ bool AttackAction::Attack(Unit* target)
         bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
     }
 
-    uint64 guid = target->GetGUID();
+    ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
     bot->Attack(target, true);
     bot->SetInFront(target);

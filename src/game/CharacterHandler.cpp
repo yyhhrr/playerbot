@@ -69,7 +69,7 @@ private:
     uint32 m_masterAccountId;
 
 public:
-    PlayerbotLoginQueryHolder(uint32 masterAccount, uint32 accountId, uint64 guid) 
+    PlayerbotLoginQueryHolder(uint32 masterAccount, uint32 accountId, ObjectGuid guid) 
         : LoginQueryHolder(accountId, guid), m_masterAccountId(masterAccount) { }
 
 public:
@@ -181,7 +181,7 @@ class CharacterHandler
             }
             else
             {
-                masterSession->GetPlayer()->GetPlayerbotMgr()->LogoutPlayerBot(bot->GetGUID());
+                masterSession->GetPlayer()->GetPlayerbotMgr()->LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
             }
         }
 } chrHandler;
@@ -191,14 +191,14 @@ class CharacterHandler
 void PlayerbotMgr::AddPlayerBot(uint64 playerGuid, WorldSession* session)
 {
     // has bot already been added?
-    if (sObjectMgr.GetPlayer(playerGuid))
+    if (sObjectMgr.GetPlayer(ObjectGuid(playerGuid)))
         return;
 
-    uint32 accountId = sObjectMgr.GetPlayerAccountIdByGUID(playerGuid);
+    uint32 accountId = sObjectMgr.GetPlayerAccountIdByGUID(ObjectGuid(playerGuid));
     if (accountId == 0)
         return;
 
-    PlayerbotLoginQueryHolder *holder = new PlayerbotLoginQueryHolder(session->GetAccountId(), accountId, playerGuid);
+    PlayerbotLoginQueryHolder *holder = new PlayerbotLoginQueryHolder(session->GetAccountId(), accountId, ObjectGuid(playerGuid));
     if(!holder->Initialize())
     {
         delete holder;                                      // delete all unprocessed queries

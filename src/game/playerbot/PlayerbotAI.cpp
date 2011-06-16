@@ -106,7 +106,7 @@ void PlayerbotAI::HandleTeleportAck()
 	if (bot->IsBeingTeleportedNear())
 	{
 		WorldPacket p = WorldPacket(MSG_MOVE_TELEPORT_ACK, 8 + 4 + 4);
-		p.appendPackGUID(bot->GetGUID());
+		p.appendPackGUID(bot->GetObjectGuid().GetRawValue());
 		p << (uint32) 0; // supposed to be flags? not used currently
 		p << (uint32) time(0); // time - not currently used
 		bot->GetSession()->HandleMoveTeleportAckOpcode(p);
@@ -161,7 +161,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
         {
             WorldPacket p(packet);
             uint64 guid = p.readPackGUID();
-            if (guid != bot->GetGUID())
+            if (guid != bot->GetObjectGuid().GetRawValue())
                 return;
 
             bot->m_movementInfo.SetMovementFlags((MovementFlags)(MOVEFLAG_FLYING|MOVEFLAG_CAN_FLY));
@@ -171,7 +171,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
         {
             WorldPacket p(packet);
             uint64 guid = p.readPackGUID();
-            if (guid != bot->GetGUID())
+            if (guid != bot->GetObjectGuid().GetRawValue())
                 return;
             bot->m_movementInfo.RemoveMovementFlag(MOVEFLAG_FLYING);
             return;
@@ -180,7 +180,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
         {
             WorldPacket p(packet);
             uint64 casterGuid = extractGuid(p);
-            if (casterGuid != bot->GetGUID())
+            if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
             uint8  castCount;
             uint32 spellId;
@@ -194,7 +194,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
         {
             WorldPacket p(packet);
             uint64 casterGuid = extractGuid(p);
-            if (casterGuid != bot->GetGUID())
+            if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
             WaitForSpellCast();
             return;
@@ -203,7 +203,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
         {
             WorldPacket p(packet);
             uint64 casterGuid = extractGuid(p);
-            if (casterGuid != bot->GetGUID())
+            if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
             IncreaseNextCheckDelay(1);
         }
@@ -661,7 +661,7 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-    ObjectGuid oldSel = bot->GetSelectionGuid().GetRawValue();
+    ObjectGuid oldSel = bot->GetSelectionGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
 
     Spell *spell = new Spell(bot, pSpellInfo, false);

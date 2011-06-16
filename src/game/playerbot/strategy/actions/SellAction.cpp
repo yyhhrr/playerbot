@@ -69,14 +69,14 @@ void SellAction::Sell(FindItemVisitor* visitor)
 void SellAction::Sell(Item* item)
 {
     
-    uint64 vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
+    ObjectGuid vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
     if (!vendorguid)
     {
         ai->TellMaster("Select a vendor first");
         return;
     }
 
-    uint64 itemguid = item->GetGUID();
+    ObjectGuid itemguid = item->GetObjectGuid();
     uint32 count = item->GetCount();
 
     WorldPacket p;

@@ -23,7 +23,7 @@ protected:
         GetPlayerCount(bot, creature, &tankCount, &dpsCount);
 
         if (!result || 
-            (bot->GetSelectionGuid().GetRawValue() != creature->GetGUID() && minThreat >= threat && 
+            (bot->GetSelectionGuid() != creature->GetObjectGuid() && minThreat >= threat && 
             (minTankCount >= tankCount || maxDpsCount <= dpsCount)))
         {
             minThreat = threat;

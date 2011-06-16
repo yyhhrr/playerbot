@@ -14,11 +14,11 @@ namespace ai
 
             WorldPacket p(event.getPacket());
             p.rpos(0);
-            uint64 guid;
+            ObjectGuid guid;
             p >> guid;
 
             Player* master = bot->GetPlayerbotAI()->GetMaster();
-            if (master->GetSelectionGuid().GetRawValue() != bot->GetGUID())
+            if (master->GetSelectionGuid() != bot->GetObjectGuid())
                 return false;
 
             GameObject* gameObject = master->GetMap()->GetGameObject(guid);

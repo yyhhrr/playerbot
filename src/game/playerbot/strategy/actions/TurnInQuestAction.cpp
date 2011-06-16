@@ -36,7 +36,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
     
     
 
-    uint64 giverGUID = questgiver->GetGUID();
+    ObjectGuid giverGUID = questgiver->GetObjectGuid();
 
     if( !bot->IsInMap( questgiver ) )
         ai->TellMaster("hey you are turning in quests without me!");

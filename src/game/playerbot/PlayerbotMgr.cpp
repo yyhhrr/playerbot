@@ -75,7 +75,7 @@ void PlayerbotMgr::LogoutAllBots()
         PlayerBotMap::const_iterator itr = GetPlayerBotsBegin();
         if (itr == GetPlayerBotsEnd()) break;
         Player* bot= itr->second;
-        LogoutPlayerBot(bot->GetGUID());
+        LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
     }
 }
 
@@ -106,9 +106,9 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
     bot->SetPlayerbotAI(ai);
 
-    m_playerBots[bot->GetGUID()] = bot;
+    m_playerBots[bot->GetObjectGuid().GetRawValue()] = bot;
 
-    const uint64 masterGuid = m_master->GetGUID();
+    ObjectGuid masterGuid = m_master->GetObjectGuid();
     if (m_master->GetGroup() && 
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
@@ -198,12 +198,12 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         Group::MemberSlotList slots = group->GetMemberSlots();
         for (Group::member_citerator i = slots.begin(); i != slots.end(); i++) 
         {
-			uint64 member = i->guid.GetRawValue();
+			ObjectGuid member = i->guid;
 			
-			if (member == m_session->GetPlayer()->GetObjectGuid().GetRawValue())
+			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-            if (member != player->GetGUID() && !processBotCommand(m_session, cmdStr, member))
+            if (member != player->GetObjectGuid().GetRawValue() && !processBotCommand(m_session, cmdStr, member))
             {
                 PSendSysMessage("Error processing bot command for %s", i->name.c_str());
                 SetSentErrorMessage(true);
