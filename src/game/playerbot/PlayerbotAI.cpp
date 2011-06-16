@@ -30,13 +30,9 @@ uint32 PlayerbotChatHandler::extractQuestId(const char *str)
 }
 
 
-PlayerbotAI::PlayerbotAI() : PlayerbotAIBase()
+PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL), 
+    combatEngine(NULL), nonCombatEngine(NULL), currentEngine(NULL), deadEngine(NULL)
 {
-    aiObjectContext = NULL;
-    combatEngine = NULL;
-    nonCombatEngine = NULL;
-    currentEngine = NULL;
-    deadEngine = NULL;
 }
 
 PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) : PlayerbotAIBase()

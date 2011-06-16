@@ -98,7 +98,7 @@ public:
 
 public:
 	Player* GetBot() { return bot; }
-	Player* GetMaster() { return mgr->GetMaster(); }
+    Player* GetMaster() { return mgr ? mgr->GetMaster() : NULL; }
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
 
 protected:

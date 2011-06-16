@@ -349,21 +349,17 @@ namespace ai
 		virtual const char* getName() { return "item count"; }
 
 	protected:
-		const char* item;
+		string item;
 		int count;
 	};
 
 	class HasAuraTrigger : public Trigger {
 	public:
-		HasAuraTrigger(PlayerbotAI* ai, const char* spell) : Trigger(ai, spell) {
-			this->spell = spell;
-		}
+		HasAuraTrigger(PlayerbotAI* ai, const char* spell) : Trigger(ai, spell) {}
 
 		virtual const char* GetTargetName() { return "self target"; }
 		virtual bool IsActive();
 
-	protected:
-		const char* spell;
 	};
 
     class TimerTrigger : public Trigger

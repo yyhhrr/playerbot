@@ -8,7 +8,7 @@ using namespace ai;
 class TestValue : public CalculatedValue<int>
 {
 public:
-    TestValue() : CalculatedValue<int>(NULL, "name", 2), increment(0) {}
+    TestValue(PlayerbotAI* ai) : CalculatedValue<int>(ai, "name", 2), increment(0) {}
     virtual int Calculate() { return ++increment; }
 
 private:
@@ -18,7 +18,7 @@ private:
 class TestManualValue : public ManualSetValue<int>
 {
 public:
-    TestManualValue() : ManualSetValue<int>(NULL, 0, "name") {}
+    TestManualValue(PlayerbotAI* ai) : ManualSetValue<int>(ai, 0, "name") {}
 };
 
 class TestValueContext : public NamedObjectContext<UntypedValue>
@@ -31,8 +31,8 @@ public:
     }
 
 private:
-    static UntypedValue* value(PlayerbotAI* ai) { return new TestValue(); }
-    static UntypedValue* manual_value(PlayerbotAI* ai) { return new TestManualValue(); }
+    static UntypedValue* value(PlayerbotAI* ai) { return new TestValue(ai); }
+    static UntypedValue* manual_value(PlayerbotAI* ai) { return new TestManualValue(ai); }
 };
 
 class TestValueAiObjectContext : public AiObjectContext
@@ -64,13 +64,15 @@ public:
 protected:
     void empty()
 	{
-        TestValue value;
+        MockPlayerbotAIBase ai;
+        TestValue value(&ai);
         CPPUNIT_ASSERT(value == 1);
 	}
     
     void calculate()
     {
-        TestValue value;
+        MockPlayerbotAIBase ai;
+        TestValue value(&ai);
 
         value.Update();
         CPPUNIT_ASSERT(value == 1);
@@ -87,7 +89,8 @@ protected:
 
     void manual()
     {
-        TestManualValue value;
+        MockPlayerbotAIBase ai;
+        TestManualValue value(&ai);
         CPPUNIT_ASSERT(value == 0);
 
         value.Set(3);
@@ -99,7 +102,8 @@ protected:
 
     void fromContext()
     {
-        TestValueAiObjectContext context(NULL);
+        MockPlayerbotAIBase ai;
+        TestValueAiObjectContext context(&ai);
         Value<int> *value = context.GetValue<int>("manual value");
         CPPUNIT_ASSERT(value);
 

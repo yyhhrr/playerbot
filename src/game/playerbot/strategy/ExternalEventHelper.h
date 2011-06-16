@@ -8,10 +8,10 @@ namespace ai
     public:
         ExternalEventHelper(AiObjectContext* aiObjectContext) : aiObjectContext(aiObjectContext) {}
 
-        void ParseChatCommand(string command) 
+        bool ParseChatCommand(string command) 
         {
-            if (Check(command, ""))
-                return;
+            if (HandleCommand(command, ""))
+                return true;
 
             size_t i = string::npos;
             while (true)
@@ -25,9 +25,14 @@ namespace ai
 
                 i = found - 1;
 
-                if (Check(name, param))
-                    break;
+                if (HandleCommand(name, param))
+                    return true;
             }
+
+            HandleCommand("q", command);
+            HandleCommand("c", command);
+            HandleCommand("t", command);
+            return true;
         }
 
         void HandlePacket(map<uint16, string> &handlers, const WorldPacket &packet)
@@ -44,8 +49,7 @@ namespace ai
             trigger->ExternalEvent(WorldPacket(packet));
         }
 
-    private:
-        bool Check(string name, string param)
+        bool HandleCommand(string name, string param)
         {
             Trigger* trigger = aiObjectContext->GetTrigger(name.c_str());
             if (!trigger)

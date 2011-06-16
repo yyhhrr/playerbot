@@ -8,7 +8,7 @@ using namespace ai;
 class TestQualifiedValue : public ManualSetValue<string>, public Qualified
 {
 public:
-    TestQualifiedValue() : ManualSetValue<string>(NULL, "", "name"), Qualified() {}
+    TestQualifiedValue(PlayerbotAI* ai) : ManualSetValue<string>(ai, "", "name"), Qualified() {}
     virtual string Get() { return qualifier; }
 };
 
@@ -21,7 +21,7 @@ public:
     }
 
 private:
-    static UntypedValue* value(PlayerbotAI* ai) { return new TestQualifiedValue(); }
+    static UntypedValue* value(PlayerbotAI* ai) { return new TestQualifiedValue(ai); }
 };
 
 class TestQualifiedValueAiObjectContext : public AiObjectContext

@@ -118,7 +118,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
                 if (action->isPossible()) {
                     if ((!skipPrerequisites || lastRelevance-relevance > 0.02) && 
                             MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01, false, event)) {
-                        PushAgain(actionNode, relevance, basket->getEvent());
+                        PushAgain(actionNode, relevance, event);
                         continue;
                     }
 

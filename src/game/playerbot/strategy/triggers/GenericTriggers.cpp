@@ -123,7 +123,7 @@ bool SnareTargetTrigger::IsActive()
 
 bool ItemCountTrigger::IsActive()
 {
-	return AI_VALUE2(uint8, "item count", item) < count;
+	return AI_VALUE2(uint8, "item count", item.c_str()) < count;
 }
 
 bool InterruptSpellTrigger::IsActive()
@@ -133,7 +133,7 @@ bool InterruptSpellTrigger::IsActive()
 
 bool HasAuraTrigger::IsActive()
 {
-	return ai->HasAura(spell, GetTarget());
+	return ai->HasAura(getName(), GetTarget());
 }
 
 bool TankAoeTrigger::IsActive()
