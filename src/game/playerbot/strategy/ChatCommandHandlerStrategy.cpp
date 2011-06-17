@@ -80,4 +80,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("spells");
     supported.push_back("co");
     supported.push_back("nc");
+    supported.push_back("trainer");
 }

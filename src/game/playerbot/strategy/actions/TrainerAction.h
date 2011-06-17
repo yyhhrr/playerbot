@@ -1,0 +1,20 @@
+#pragma once
+
+#include "../Action.h"
+
+namespace ai
+{
+	class TrainerAction : public Action {
+	public:
+		TrainerAction(PlayerbotAI* ai) : Action(ai, "trainer") {}
+
+    public:
+        virtual bool Execute(Event event);
+
+    private:
+        typedef void (TrainerAction::*TrainerSpellAction)(uint32, TrainerSpell const*, ostringstream& msg);
+        void List(Creature* creature, TrainerSpellAction action, set<uint32>& spells);
+        void Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream& msg);
+    };
+
+}
