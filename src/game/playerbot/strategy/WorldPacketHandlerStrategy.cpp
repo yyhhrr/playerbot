@@ -37,7 +37,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "gossip hello", 
-        NextAction::array(0, new NextAction("turn in quest", relevance), new NextAction("gossip hello", relevance), NULL)));
+        NextAction::array(0, 
+            new NextAction("turn in quest", relevance), 
+            new NextAction("trainer", relevance), 
+            new NextAction("gossip hello", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "complete quest", 

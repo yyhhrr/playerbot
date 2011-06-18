@@ -82,8 +82,9 @@ protected:
         trigger("gossip hello");
         tick();
         tick();
+        tick();
 
-        assertActions(">S:turn in quest>S:turn in quest>S:gossip hello");
+        assertActions(">S:turn in quest>S:turn in quest>S:trainer>S:gossip hello");
     }
 
     void accept_quest()
