@@ -6,21 +6,14 @@
 
 using namespace ai;
 
-uint32 extractMoney(const string& text);
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 bool BuyAction::Execute(Event event)
 {
-    
-
     string link = event.getParam().c_str();
 
-    list<uint32> itemIds;
-    extractItemIds(link, itemIds);
+    ItemIds itemIds = chat->parseItems(link);
     if (itemIds.empty()) 
         return false;
 
-    Player* master = bot->GetPlayerbotAI()->GetMaster();
     ObjectGuid vendorguid = master->GetSelectionGuid();
     if (!vendorguid)
         return false;
@@ -33,7 +26,7 @@ bool BuyAction::Execute(Event event)
     }
 
     VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
-    for (list<uint32>::iterator i = itemIds.begin(); i != itemIds.end(); i++) 
+    for (ItemIds::iterator i = itemIds.begin(); i != itemIds.end(); i++) 
     {
         for (uint32 slot = 0; slot < tItems->GetItemCount(); slot++)
         {

@@ -5,11 +5,9 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool LootStrategyAction::Execute(Event event)
 {
-    
     string strategy = event.getParam();
     
     LootObjectStack* lootItems = AI_VALUE(LootObjectStack*, "available loot");
@@ -37,7 +35,7 @@ bool LootStrategyAction::Execute(Event event)
     }
     else
     {
-        list<uint32> items; /* = */ extractItemIds(strategy, items);
+        ItemIds items = chat->parseItems(strategy);
 
         if (items.size() == 0)
         {
@@ -49,7 +47,7 @@ bool LootStrategyAction::Execute(Event event)
         }
 
         bool remove = strategy.size() > 1 && strategy.substr(0, 1) == "-";
-        for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
+        for (ItemIds::iterator i = items.begin(); i != items.end(); i++)
         {
             uint32 itemid = *i;
             if (remove)

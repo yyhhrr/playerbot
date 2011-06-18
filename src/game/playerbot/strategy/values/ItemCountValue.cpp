@@ -4,8 +4,6 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 uint8 ItemCountValue::Calculate()
 {
     Player* bot = InventoryAction::ai->GetBot();
@@ -23,8 +21,8 @@ uint8 ItemCountValue::Calculate()
         return Find(FindFoodVisitor(bot, 441)) ? 1 : 0;
 
     const char* name = qualifier.c_str();
-    list<uint32> ids; /* = */ extractItemIds(name, ids);
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
+    ItemIds ids = InventoryAction::chat->parseItems(qualifier);
+    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
     {
         ItemPrototype const *item = sItemStorage.LookupEntry<ItemPrototype>(*i);
         QueryItemCountVisitor visitor(item->ItemId);
@@ -68,8 +66,8 @@ Item* InventoryItemValue::Calculate()
     if (qualifier == "healing potion")
         return Find(FindFoodVisitor(bot, 441));
 
-    list<uint32> ids; /* = */ extractItemIds(qualifier.c_str(), ids);
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
+    ItemIds ids = InventoryAction::chat->parseItems(qualifier);
+    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
         return Find(FindItemByIdVisitor(*i));
 
     return NULL;

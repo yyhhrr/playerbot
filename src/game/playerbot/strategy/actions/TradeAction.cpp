@@ -6,15 +6,10 @@
 
 using namespace ai;
 
-uint32 extractMoney(const string& text);
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 bool TradeAction::Execute(Event event)
 {
-    
-
     string text = event.getParam();
-    uint32 copper = extractMoney(text);
+    uint32 copper = chat->parseMoney(text);
     if (copper > 0)
     {
         WorldPacket* const packet = new WorldPacket(CMSG_SET_TRADE_GOLD, 4);
@@ -40,8 +35,8 @@ bool TradeAction::Execute(Event event)
         return true;
     }
 
-    list<uint32> ids; /* = */ extractItemIds(text, ids);
-    for (list<uint32>::iterator i = ids.begin(); i != ids.end(); i++)
+    ItemIds ids = chat->parseItems(text);
+    for (ItemIds::iterator i = ids.begin(); i != ids.end(); i++)
         TradeItem(&FindItemByIdVisitor(*i), slot);
 
     return true;

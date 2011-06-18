@@ -17,7 +17,6 @@ namespace ai
             ObjectGuid guid;
             p >> guid;
 
-            Player* master = bot->GetPlayerbotAI()->GetMaster();
             if (master->GetSelectionGuid() != bot->GetObjectGuid())
                 return false;
 

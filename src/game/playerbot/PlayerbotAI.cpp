@@ -18,8 +18,6 @@ using namespace std;
 vector<string>& split(const string &s, char delim, vector<string> &elems);
 vector<string> split(const string &s, char delim);
 char * strstri (const char * str1, const char * str2);
-uint32 extractMoney(const string& text);
-void extractItemIds(const string& text, list<uint32>& itemIds);
 uint64 extractGuid(WorldPacket& packet);
 
 uint32 PlayerbotChatHandler::extractQuestId(const char *str)
@@ -31,11 +29,12 @@ uint32 PlayerbotChatHandler::extractQuestId(const char *str)
 
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL), 
-    combatEngine(NULL), nonCombatEngine(NULL), currentEngine(NULL), deadEngine(NULL)
+    combatEngine(NULL), nonCombatEngine(NULL), currentEngine(NULL), deadEngine(NULL), chatHelper(this)
 {
 }
 
-PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) : PlayerbotAIBase()
+PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) :
+    PlayerbotAIBase(), chatHelper(this)
 {
 	this->mgr = mgr;
 	this->bot = bot;

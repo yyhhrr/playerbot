@@ -5,19 +5,15 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 
 bool QueryQuestItemAction::Execute(Event event)
 {
-    
     Player *bot = ai->GetBot();
     string text = event.getParam();
 
-    list<uint32> items;
-    extractItemIds(text, items);
+    ItemIds items = chat->parseItems(text);
 
-    for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
+    for (ItemIds::iterator i = items.begin(); i != items.end(); i++)
         QueryQuestItem(*i);
 
     return false;

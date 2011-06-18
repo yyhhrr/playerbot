@@ -5,6 +5,7 @@ class PlayerbotAI;
 namespace ai
 {
     class AiObjectContext;
+    class ChatHelper;
 
     class AiObject : public PlayerbotAIAware
 	{
@@ -15,5 +16,6 @@ namespace ai
         Player* bot;
         Player* master;
         AiObjectContext* context;
+        ChatHelper* chat;
 	};
 }

@@ -1,9 +1,8 @@
 #pragma once;
 
-#include "../game/playerbot/PlayerbotAI.h"
 #include "../game/playerbot/PlayerbotAIAware.h"
-
 #include "../game/playerbot/PlayerbotMgr.h"
+#include "../game/playerbot/ChatHelper.h"
 #include "../game/playerbot/PlayerbotAI.h"
 
 #include "../game/playerbot/strategy/Action.h"

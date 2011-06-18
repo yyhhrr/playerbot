@@ -10,7 +10,7 @@ namespace ai
         virtual bool Execute(Event event);
 
     private:
-        void QueryItemsUsage(list<uint32> items);
+        void QueryItemsUsage(ItemIds items);
         void QueryItemUsage(ItemPrototype const *item);
 
     };

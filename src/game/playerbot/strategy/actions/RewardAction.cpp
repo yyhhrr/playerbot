@@ -6,25 +6,18 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
-uint32 extractMoney(const string& text);
-
 bool RewardAction::Execute(Event event)
 {
-    
-
     string link = event.getParam().c_str();
 
-    list<uint32> itemIds;
-    extractItemIds(link, itemIds);
+    ItemIds itemIds = chat->parseItems(link);
     if (itemIds.empty()) 
         return false;
 
-    uint32 itemId = itemIds.front();
+    uint32 itemId = *itemIds.begin();
     bool wasRewarded = false;
-    const ObjectGuid &questRewarder = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
-    uint64 questRewarderGUID = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid().GetRawValue();
+    const ObjectGuid &questRewarder = master->GetSelectionGuid();
+    uint64 questRewarderGUID = master->GetSelectionGuid().GetRawValue();
     bot->SetSelectionGuid(questRewarder);
     Object* pNpc = ai->GetGameObject(questRewarder);
     if (!pNpc)

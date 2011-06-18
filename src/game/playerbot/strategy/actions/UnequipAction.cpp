@@ -5,15 +5,13 @@
 #include "../values/ItemCountValue.h"
 
 using namespace ai;
-void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool UnequipAction::Execute(Event event)
 {
     string text = event.getParam();
 
-    list<uint32> ids; /* = */ extractItemIds(text, ids);
-
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
+    ItemIds ids = chat->parseItems(text);
+    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
         UnequipItem(&FindItemByIdVisitor(*i));
 
     return true;

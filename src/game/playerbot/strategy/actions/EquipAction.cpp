@@ -6,15 +6,12 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 bool EquipAction::Execute(Event event)
 {
     string text = event.getParam();
+    ItemIds ids = chat->parseItems(text);
 
-    list<uint32> ids; /* = */ extractItemIds(text, ids);
-
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
+    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
         EquipItem(&FindItemByIdVisitor(*i));
 
     return true;

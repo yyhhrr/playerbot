@@ -5,13 +5,12 @@
 
 using namespace ai;
 
-void extractItemIds(const string& text, list<uint32>& itemIds);
 
 bool QueryItemUsageAction::Execute(Event event)
 {
     string text = event.getParam();
 
-    list<uint32> items; /* = */ extractItemIds(text, items);
+    ItemIds items = chat->parseItems(text);
     QueryItemsUsage(items);   
     return false;
 }
@@ -61,9 +60,9 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
     }
 }
 
-void QueryItemUsageAction::QueryItemsUsage(list<uint32> items) 
+void QueryItemUsageAction::QueryItemsUsage(ItemIds items) 
 {
-    for (list<uint32>::iterator i = items.begin(); i != items.end(); i++)
+    for (ItemIds::iterator i = items.begin(); i != items.end(); i++)
     {
         ItemPrototype const *item = sItemStorage.LookupEntry<ItemPrototype>(*i);
         QueryItemUsage(item);

@@ -6,7 +6,8 @@ AiObject::AiObject(PlayerbotAI* ai) :
     PlayerbotAIAware(ai), 
     bot(ai->GetBot()), 
     master(ai->GetMaster()), 
-    context(ai->GetAiObjectContext()) 
+    context(ai->GetAiObjectContext()),
+    chat(ai->GetChatHelper())
 {
 }
 

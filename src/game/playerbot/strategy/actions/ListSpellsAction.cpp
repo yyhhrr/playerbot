@@ -6,9 +6,6 @@ using namespace ai;
 
 bool ListSpellsAction::Execute(Event event)
 {
-    
-    Player* master = bot->GetPlayerbotAI()->GetMaster();
-
     int loc = master->GetSession()->GetSessionDbcLocale();
 
     std::ostringstream posOut;

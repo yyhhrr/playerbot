@@ -1738,6 +1738,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\playerbot\ChatHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\ChatHelper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\playerbot\FleeManager.cpp"
 				>
 			</File>

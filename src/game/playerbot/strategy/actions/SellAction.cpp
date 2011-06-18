@@ -4,8 +4,6 @@
 #include "../ItemVisitors.h"
 
 using namespace ai;
-void extractItemIds(const string& text, list<uint32>& itemIds);
-
 
 class SellItemsVisitor : public IterateItemsVisitor
 {
@@ -50,9 +48,9 @@ bool SellAction::Execute(Event event)
         return true;
     }
 
-    list<uint32> ids; /* = */ extractItemIds(text, ids);
+    ItemIds ids = chat->parseItems(text);
 
-    for (list<uint32>::iterator i =ids.begin(); i != ids.end(); i++)
+    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
         Sell(&FindItemByIdVisitor(*i));
 
     return true;
@@ -69,7 +67,7 @@ void SellAction::Sell(FindItemVisitor* visitor)
 void SellAction::Sell(Item* item)
 {
     
-    ObjectGuid vendorguid = bot->GetPlayerbotAI()->GetMaster()->GetSelectionGuid();
+    ObjectGuid vendorguid = master->GetSelectionGuid();
     if (!vendorguid)
     {
         ai->TellMaster("Select a vendor first");

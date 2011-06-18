@@ -23,4 +23,5 @@ int strcmpi(const char *s1, const char *s2);
 #include "playerbotDefs.h"
 #include "PlayerbotAIAware.h"
 #include "PlayerbotMgr.h"
+#include "ChatHelper.h"
 #include "PlayerbotAI.h"

@@ -7,9 +7,6 @@ using namespace ai;
 
 bool ReachAreaTriggerAction::Execute(Event event)
 {
-    
-    Player* master = bot->GetPlayerbotAI()->GetMaster();
-
     uint32 triggerId;
     WorldPacket p(event.getPacket());
     p.rpos(0);
@@ -53,9 +50,6 @@ bool ReachAreaTriggerAction::Execute(Event event)
 
 bool AreaTriggerAction::Execute(Event event)
 {
-    
-    Player* master = bot->GetPlayerbotAI()->GetMaster();
-
     LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
     
     uint32 triggerId = movement.lastAreaTrigger;

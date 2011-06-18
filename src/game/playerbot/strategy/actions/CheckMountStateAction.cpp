@@ -8,9 +8,6 @@ uint64 extractGuid(WorldPacket& packet);
 
 bool CheckMountStateAction::Execute(Event event)
 {
-    
-    Player* master = bot->GetPlayerbotAI()->GetMaster();
-
     WorldPacket p(event.getPacket());
     p.rpos(0);
     uint64 guid = extractGuid(p);

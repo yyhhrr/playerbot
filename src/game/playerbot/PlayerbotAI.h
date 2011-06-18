@@ -100,11 +100,13 @@ public:
 	Player* GetBot() { return bot; }
     Player* GetMaster() { return mgr ? mgr->GetMaster() : NULL; }
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
+    ChatHelper* GetChatHelper() { return &chatHelper; }
 
 protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
     AiObjectContext* aiObjectContext;
+    ChatHelper chatHelper;
     Engine* currentEngine;
     Engine* combatEngine;
     Engine* nonCombatEngine;
