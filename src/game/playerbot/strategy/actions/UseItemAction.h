@@ -14,6 +14,7 @@ namespace ai
 
     private:
         void UseItem(Item& item);
+        void UseGameObject(ObjectGuid guid);
     };
 
     class UseSpellItemAction : public UseItemAction {

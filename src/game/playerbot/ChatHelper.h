@@ -21,6 +21,7 @@ namespace ai
         static string formatItem(ItemPrototype const * proto, int count = 0);
         static string formatSpell(SpellEntry const *sInfo);
         static string formatGameobject(GameObject* go);
+        static list<ObjectGuid> parseGameobjects(string& text);
 
         static ChatMsg parseChat(string& text);
         static string formatChat(ChatMsg chat);

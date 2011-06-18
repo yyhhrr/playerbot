@@ -11,20 +11,40 @@ bool UseItemAction::Execute(Event event)
         name = getName();
 
     Item* item = AI_VALUE2(Item*, "inventory item", name.c_str());
-    if (!item)
+    if (item)
     {
-        ai->TellMaster("Item not found");
+        UseItem(*item);
+        if (name == "food" || name == "drink")
+        {
+            ai->SetNextCheckDelay(30);
+            ai->TellMaster("I will eat/drink for 30 sec");
+        }
+
+        return true;
+    }
+
+    list<ObjectGuid> gos = chat->parseGameobjects(name);
+    if (gos.empty())
+    {
+        ai->TellMaster("Nothing to use");
         return false;
     }
 
-    UseItem(*item);
-    if (name == "food" || name == "drink")
-    {
-        ai->SetNextCheckDelay(30);
-        ai->TellMaster("I will eat/drink for 30 sec");
-    }
+    for (list<ObjectGuid>::iterator i = gos.begin();i != gos.end(); i++)
+        UseGameObject(*i);
 
     return true;
+}
+
+void UseItemAction::UseGameObject(ObjectGuid guid)
+{
+    GameObject* go = ai->GetGameObject(guid);
+    if (!go || !go->isSpawned())
+        return;
+
+    go->Use(bot);
+    ostringstream out; out << "Used " << chat->formatGameobject(go);
+    ai->TellMaster(out);
 }
 
 void UseItemAction::UseItem(Item& item)
