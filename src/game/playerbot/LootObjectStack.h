@@ -7,9 +7,10 @@ namespace ai
     enum LootStrategy 
     {
         LOOTSTRATEGY_QUEST = 1,
-        LOOTSTRATEGY_GRAY = 2,
-        LOOTSTRATEGY_NORMAL = 3,
-        LOOTSTRATEGY_ALL = 4
+        LOOTSTRATEGY_SKILL = 2,
+        LOOTSTRATEGY_GRAY = 3,
+        LOOTSTRATEGY_NORMAL = 4,
+        LOOTSTRATEGY_ALL = 5
     };
 
     class LootObject

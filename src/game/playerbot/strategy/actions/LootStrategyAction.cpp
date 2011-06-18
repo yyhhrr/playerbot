@@ -78,6 +78,8 @@ LootStrategy LootStrategyAction::String2LootStrategy(string strategy)
         return LOOTSTRATEGY_ALL;
     else if (strategy == "q" || strategy == "quest")
         return LOOTSTRATEGY_QUEST;
+    else if (strategy == "s" || strategy == "skill")
+        return LOOTSTRATEGY_SKILL;
     else if (strategy == "g" || strategy == "gray")
         return LOOTSTRATEGY_GRAY;
     else 
@@ -92,6 +94,8 @@ string LootStrategyAction::LootStrategy2string(LootStrategy lootStrategy)
         return "all";
     case LOOTSTRATEGY_QUEST:
         return "quest";
+    case LOOTSTRATEGY_SKILL:
+        return "skill";
     case LOOTSTRATEGY_GRAY:
         return "gray";
     default:

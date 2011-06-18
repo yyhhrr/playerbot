@@ -218,14 +218,83 @@ bool LootAction::CheckLevelBasedSkill(uint32 skill, int32 level)
     return ReqValue <= skillValue;
 }
 
+bool LootAction::IsLootAllowedBySkill(ItemPrototype const * proto) 
+{
+    switch (proto->Class)
+    {
+    case ITEM_CLASS_KEY:
+        return true;
+    case ITEM_CLASS_TRADE_GOODS:
+        switch (proto->SubClass)
+        {
+        case ITEM_SUBCLASS_PARTS:
+        case ITEM_SUBCLASS_EXPLOSIVES:
+        case ITEM_SUBCLASS_DEVICES:
+            return bot->HasSkill(SKILL_ENGINEERING);
+        case ITEM_SUBCLASS_JEWELCRAFTING:
+            return bot->HasSkill(SKILL_JEWELCRAFTING);
+        case ITEM_SUBCLASS_CLOTH:
+            return bot->HasSkill(SKILL_TAILORING);
+        case ITEM_SUBCLASS_LEATHER:
+            return bot->HasSkill(SKILL_LEATHERWORKING) || bot->HasSkill(SKILL_SKINNING);
+        case ITEM_SUBCLASS_METAL_STONE:
+            return (bot->HasSkill(SKILL_BLACKSMITHING) ||
+                bot->HasSkill(SKILL_ENGINEERING) ||
+                bot->HasSkill(SKILL_MINING));
+        case ITEM_SUBCLASS_MEAT:
+            return bot->HasSkill(SKILL_COOKING);
+        case ITEM_SUBCLASS_HERB:
+            return (bot->HasSkill(SKILL_HERBALISM) ||
+                bot->HasSkill(SKILL_ALCHEMY) ||
+                bot->HasSkill(SKILL_INSCRIPTION));
+        case ITEM_SUBCLASS_ELEMENTAL:
+            return true;
+        case ITEM_SUBCLASS_ENCHANTING:
+            return bot->HasSkill(SKILL_ENCHANTING);
+        }
+        break;
+    case ITEM_CLASS_RECIPE:
+        {
+            if (bot->HasSpell(proto->Spells[2].SpellId))
+                break;
+
+            switch (proto->SubClass)
+            {
+            case ITEM_SUBCLASS_LEATHERWORKING_PATTERN:
+                return bot->HasSkill(SKILL_LEATHERWORKING);
+            case ITEM_SUBCLASS_TAILORING_PATTERN:
+                return bot->HasSkill(SKILL_TAILORING);
+            case ITEM_SUBCLASS_ENGINEERING_SCHEMATIC:
+                return bot->HasSkill(SKILL_ENGINEERING);
+            case ITEM_SUBCLASS_BLACKSMITHING:
+                return bot->HasSkill(SKILL_BLACKSMITHING);
+            case ITEM_SUBCLASS_COOKING_RECIPE:
+                return bot->HasSkill(SKILL_COOKING);
+            case ITEM_SUBCLASS_ALCHEMY_RECIPE:
+                return bot->HasSkill(SKILL_ALCHEMY);
+            case ITEM_SUBCLASS_FIRST_AID_MANUAL:
+                return bot->HasSkill(SKILL_FIRST_AID);
+            case ITEM_SUBCLASS_ENCHANTING_FORMULA:
+                return bot->HasSkill(SKILL_ENCHANTING);
+            case ITEM_SUBCLASS_FISHING_MANUAL:
+                return bot->HasSkill(SKILL_FISHING);
+            case ITEM_SUBCLASS_JEWELCRAFTING_RECIPE:
+                return bot->HasSkill(SKILL_JEWELCRAFTING);
+            }
+        }
+    }
+    return false;
+}
+
+
 bool LootAction::IsLootAllowed(LootItem * item) 
 {
     LootStrategy lootStrategy = AI_VALUE(LootStrategy, "loot strategy");
-    set<uint32>& lootItems = AI_VALUE(set<uint32>&, "always loot list");
 
     if (lootStrategy == LOOTSTRATEGY_ALL)
         return true;
 
+    set<uint32>& lootItems = AI_VALUE(set<uint32>&, "always loot list");
     if (lootItems.find(item->itemid) != lootItems.end())
         return true;
 
@@ -245,7 +314,19 @@ bool LootAction::IsLootAllowed(LootItem * item)
         return false;
     }
 
-    if (lootStrategy == LOOTSTRATEGY_GRAY && proto->Quality == ITEM_QUALITY_POOR)
+    if (IsLootAllowedBySkill(proto))
+        return true;
+
+    if (lootStrategy == LOOTSTRATEGY_SKILL)
+    {
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a quest item");
+        return false;
+    }
+
+    if (proto->Quality == ITEM_QUALITY_POOR)
+        return true;
+
+    if (lootStrategy == LOOTSTRATEGY_GRAY)
     {
         ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a gray item");
         return true;
@@ -260,6 +341,6 @@ bool LootAction::IsLootAllowed(LootItem * item)
     if (item->freeforall || item->is_underthreshold)
         return true;
 
-    ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: unknown");
+    ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not under threshold");
     return false;
 }
