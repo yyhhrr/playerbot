@@ -53,6 +53,12 @@ void LootAction::DoLoot()
 
 void LootAction::DoLoot(LootObject &lootObject)
 {
+    if (!lootObject.worldObject)
+    {
+        AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
+        return;
+    }
+
     float distance = bot->GetDistance(lootObject.worldObject);
     if (distance > INTERACTION_DISTANCE)
     {
