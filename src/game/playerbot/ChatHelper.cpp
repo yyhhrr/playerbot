@@ -63,3 +63,10 @@ ItemIds ChatHelper::parseItems(string& text)
 
     return itemIds;
 }
+
+string ChatHelper::formatQuest(Quest const* quest)
+{
+    ostringstream out;
+    out << "|cFFFFFF00|Hquest:" << quest->GetQuestId() << ':' << quest->GetQuestLevel() << "|h[" << quest->GetTitle() << "]|h|r";
+    return out.str();
+}

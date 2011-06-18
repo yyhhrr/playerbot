@@ -14,5 +14,6 @@ namespace ai
     public:
         static uint32 parseMoney(string& text);
         static ItemIds parseItems(string& text);
+        static string formatQuest(Quest const* quest);
     };
 };

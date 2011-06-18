@@ -64,9 +64,7 @@ int ListQuestsAction::ListQuests(bool completed, bool silent)
         if (silent)
             continue;
 
-        std::ostringstream stream;
-        stream << " |cFFFFFF00|Hquest:" << questId << ':' << pQuest->GetQuestLevel() << "|h[" << pQuest->GetTitle() << "]|h|r";
-        ai->TellMaster(stream);
+        ai->TellMaster(chat->formatQuest(pQuest));
     }
 
     return count;

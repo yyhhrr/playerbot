@@ -33,9 +33,6 @@ bool TurnInQuestAction::Execute(Event event)
 
 void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 {
-    
-    
-
     ObjectGuid giverGUID = questgiver->GetObjectGuid();
 
     if( !bot->IsInMap( questgiver ) )
@@ -70,11 +67,11 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                         if (bot->CanRewardQuest(pQuest, false))
                         {
                             bot->RewardQuest(pQuest, 0, questgiver, false);
-                            out << "Quest complete: |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() << "|h[" << questTitle << "]|h|r";
+                            out << "Quest completed: " << chat->formatQuest(pQuest);
                         }
                         else
                         {
-                            out << "|cffff0000Unable to turn quest in:|r |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() << "|h[" << questTitle << "]|h|r";
+                            out << "|cffff0000Unable to turn quest in:|r " << chat->formatQuest(pQuest);
                         }
                     }
 
@@ -90,16 +87,13 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 
                             std::string itemName = pRewardItem->Name1;
 
-                            out << "Quest complete: "
-                                << " |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() 
-                                << "|h[" << questTitle << "]|h|r reward: |cffffffff|Hitem:" 
+                            out << "Quest complete: " << chat->formatQuest(pQuest)
+                                << " reward: |cffffffff|Hitem:" 
                                 << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
                         }
                         else
                         {
-                            out << "|cffff0000Unable to turn quest in:|r "
-                                << "|cff808080|Hquest:" << questID << ':' 
-                                << pQuest->GetQuestLevel() << "|h[" << questTitle << "]|h|r"
+                            out << "|cffff0000Unable to turn quest in:|r " << chat->formatQuest(pQuest)
                                 << " reward: |cffffffff|Hitem:" 
                                 << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
                         }
@@ -107,8 +101,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
 
                     // else multiple rewards - let master pick
                     else {
-                        out << "What reward should I take for |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() 
-                            << "|h[" << questTitle << "]|h|r? ";
+                        out << "What reward should I take for " << chat->formatQuest(pQuest) << "? ";
                         for (uint8 i=0; i < pQuest->GetRewChoiceItemsCount(); ++i)
                         {
                             ItemPrototype const * const pRewardItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
@@ -119,18 +112,18 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                 }
             }
 
-            else if (status == QUEST_STATUS_INCOMPLETE) {
-                out << "|cffff0000Quest incomplete:|r " 
-                    << " |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() << "|h[" << questTitle << "]|h|r";
+            else if (status == QUEST_STATUS_INCOMPLETE) 
+            {
+                out << "|cffff0000Quest incomplete:|r " << chat->formatQuest(pQuest);
             }
 
-            else if (status == QUEST_STATUS_AVAILABLE){
-                out << "|cff00ff00Quest available:|r " 
-                    << " |cff808080|Hquest:" << questID << ':' << pQuest->GetQuestLevel() << "|h[" << questTitle << "]|h|r";
+            else if (status == QUEST_STATUS_AVAILABLE)
+            {
+                out << "|cff00ff00Quest available:|r " << chat->formatQuest(pQuest);
             }
 
             if (! out.str().empty())
-                ai->TellMaster(out.str().c_str());
+                ai->TellMaster(out);
         }
     }
 }
