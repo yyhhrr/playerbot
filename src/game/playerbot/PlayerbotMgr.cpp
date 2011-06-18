@@ -85,6 +85,8 @@ void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
     Player* bot= GetPlayerBot(guid);
     if (bot)
     {
+        bot->GetPlayerbotAI()->TellMaster("Goodbue!");
+
         WorldSession * botWorldSessionPtr = bot->GetSession();
         m_playerBots.erase(guid);    // deletes bot player ptr inside this WorldSession PlayerBotMap
         botWorldSessionPtr->LogoutPlayer(true); // this will delete the bot Player object and PlayerbotAI object
@@ -205,7 +207,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-            PSendSysMessage("Adding bot for %s...", i->name.c_str());
+            PSendSysMessage("Adding/removing bot for %s...", i->name.c_str());
             if (!processBotCommand(m_session, cmdStr, member))
             {
                 PSendSysMessage("Error processing bot command for %s", i->name.c_str());
@@ -225,7 +227,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         if (member == m_session->GetPlayer()->GetObjectGuid())
             continue;
 
-        PSendSysMessage("Adding bot for %s...", s.c_str());
+        PSendSysMessage("Adding/removing bot for %s...", s.c_str());
         res &= processBotCommand(m_session, cmdStr, member);
         if (!res)
         {

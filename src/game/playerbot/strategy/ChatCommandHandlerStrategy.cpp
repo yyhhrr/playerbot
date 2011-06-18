@@ -62,6 +62,10 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "attack", 
         NextAction::array(0, new NextAction("attack my target", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "accept", 
+        NextAction::array(0, new NextAction("accept quest", relevance), NULL)));
 }
 
 

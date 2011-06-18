@@ -7,14 +7,31 @@ using namespace ai;
 
 bool AcceptQuestAction::Execute(Event event)
 {
-    
     Player *bot = ai->GetBot();
-
-    WorldPacket& p = event.getPacket();
-    p.rpos(0);
     uint64 guid;
     uint32 quest;
-    p >> guid >> quest;
+
+    string text = event.getParam();
+    PlayerbotChatHandler ch(master);
+    quest = ch.extractQuestId(text.c_str());
+    if (quest)
+    {
+        guid = master->GetSelectionGuid().GetRawValue();
+        if (!guid)
+        {
+            ai->TellMaster("Please select questgiver first");
+            return false;
+        }
+    }
+    else if (!event.getPacket().empty())
+    {
+        WorldPacket& p = event.getPacket();
+        p.rpos(0);
+        p >> guid >> quest;
+    }
+    else
+        return false;
+
     Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
     if (qInfo)
     {
@@ -34,9 +51,14 @@ bool AcceptQuestAction::Execute(Event event)
 
         else
         {
+            WorldPacket p(CMSG_QUESTGIVER_ACCEPT_QUEST);
+            uint32 unk1 = 0;
+            p << guid << quest << unk1;
             p.rpos(0);
             bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-            ai->TellMaster("Got the quest.");
+
+            if (bot->GetQuestStatus(quest) != QUEST_STATUS_NONE && bot->GetQuestStatus(quest) != QUEST_STATUS_AVAILABLE)
+                ai->TellMaster("Got the quest.");
         }
     }
 

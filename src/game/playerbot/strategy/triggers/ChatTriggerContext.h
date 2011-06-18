@@ -42,9 +42,11 @@ namespace ai
             creators["trainer"] = &ChatTriggerContext::trainer;
             creators["attack"] = &ChatTriggerContext::attack;
             creators["chat"] = &ChatTriggerContext::chat;
+            creators["accept"] = &ChatTriggerContext::accept;
         }
 
     private:
+        static Trigger* accept(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "accept"); }
         static Trigger* chat(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "chat"); }
         static Trigger* attack(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "attack"); }
         static Trigger* trainer(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "trainer"); }
