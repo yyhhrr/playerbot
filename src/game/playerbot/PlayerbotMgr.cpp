@@ -13,7 +13,16 @@ public:
     SharedPlayerbotAI() : PlayerbotAIBase() { }
     virtual ~SharedPlayerbotAI() { }
 
-    SharedValueContext* GetSharedValues() { return &sharedValues; }
+public:
+    SharedValueContext* GetSharedValues() 
+    {
+        return &sharedValues; 
+    }
+
+    virtual void UpdateAI(uint32 elapsed)
+    {
+        sharedValues.Update();
+    }
 
 private:
     SharedValueContext sharedValues;
@@ -42,6 +51,9 @@ void PlayerbotMgr::UpdateAI(const uint32 p_time)
 {
     if (!CanUpdateAI())
         return;
+
+    if (sharedAi) 
+        sharedAi->UpdateAI(p_time);
 
     SetNextCheckDelay(GLOBAL_COOLDOWN);
 }

@@ -118,7 +118,10 @@ namespace ai
         void Update()
         {
             for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
-                (*i)->Update();
+            {
+                if (!(*i)->IsShared())
+                    (*i)->Update();
+            }
         }
 
     private:

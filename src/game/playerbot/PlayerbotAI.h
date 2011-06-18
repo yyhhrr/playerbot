@@ -54,7 +54,7 @@ public:
 	virtual ~PlayerbotAI();
 
 public:
-	void UpdateAI(uint32 elapsed);
+	virtual void UpdateAI(uint32 elapsed);
 
     void UpdateNextCheckDelay();
     void HandleCommand(const string& text, Player& fromPlayer);
