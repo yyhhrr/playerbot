@@ -82,7 +82,7 @@ uint8 BalancePercentValue::Calculate()
 
     for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
     {  
-        Creature* creature = master->GetMap()->GetCreature(i->first);
+        Creature* creature = ai->GetCreature(i->first);
         if (!creature || !creature->isAlive())
             continue;
 
@@ -105,6 +105,10 @@ uint8 BalancePercentValue::Calculate()
         attackerLevel += level;
     }
 
-    return attackerLevel ? playerLevel * 100 / attackerLevel : 100;
+    if (!attackerLevel)
+        return 100;
+
+    float percent = playerLevel * 100 / attackerLevel;
+    return percent <= 200 ? (uint8)percent : 200;
 }
 

@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "TargetValue.h"
+#include "../Unit.h"
 
 using namespace ai;
 
@@ -60,7 +61,8 @@ void FindTargetStrategy::GetPlayerCount(Player* bot, Unit* creature, int* tankCo
     *tankCount = 0;
     *dpsCount = 0;
 
-    for (set<Unit*>::const_iterator i = creature->getAttackers().begin(); i != creature->getAttackers().end(); i++)
+    Unit::AttackerSet attackers(creature->getAttackers());
+    for (set<Unit*>::const_iterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* attacker = *i;
         if (!attacker || !attacker->isAlive() || attacker == bot)

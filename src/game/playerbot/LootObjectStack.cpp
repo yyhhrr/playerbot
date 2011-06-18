@@ -73,13 +73,14 @@ bool LootObjectStack::CanLoot(float maxDistance)
 LootObject LootObjectStack::GetLoot(float maxDistance)
 {
     vector<LootObject> ordered = OrderByDistance(maxDistance);
-    return *ordered.begin();
+    return ordered.empty() ? LootObject() : *ordered.begin();
 }
 
 vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
 {
     map<float, LootObject> sortedMap;
-    for (set<ObjectGuid>::iterator i = availableLoot.begin(); i != availableLoot.end(); i++)
+    set<ObjectGuid> safeCopy(availableLoot);
+    for (set<ObjectGuid>::iterator i = safeCopy.begin(); i != safeCopy.end(); i++)
     {
         ObjectGuid guid = *i;
         LootObject lootObject(bot, guid);
