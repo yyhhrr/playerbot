@@ -65,9 +65,11 @@ namespace ai
             creators["co"] = &ChatActionContext::co;
             creators["nc"] = &ChatActionContext::nc;
             creators["trainer"] = &ChatActionContext::trainer;
+            creators["attack my target"] = &ChatActionContext::attack_my_target;
         }
 
     private:
+        static Action* attack_my_target(PlayerbotAI* ai) { return new AttackMyTargetAction(ai); }
         static Action* trainer(PlayerbotAI* ai) { return new TrainerAction(ai); }
         static Action* co(PlayerbotAI* ai) { return new ChangeCombatStrategyAction(ai); }
         static Action* nc(PlayerbotAI* ai) { return new ChangeNonCombatStrategyAction(ai); }

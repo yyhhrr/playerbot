@@ -19,7 +19,7 @@ namespace ai
 
     class AttackMyTargetAction : public AttackAction {
     public:
-        AttackMyTargetAction(PlayerbotAI* ai, const char* name) : AttackAction(ai, name) {}
+        AttackMyTargetAction(PlayerbotAI* ai, const char* name = "attack my target") : AttackAction(ai, name) {}
 
     public:
         virtual bool Execute(Event event);

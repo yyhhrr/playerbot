@@ -58,6 +58,10 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "r", 
         NextAction::array(0, new NextAction("reward", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "attack", 
+        NextAction::array(0, new NextAction("attack my target", relevance), NULL)));
 }
 
 

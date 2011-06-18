@@ -33,6 +33,9 @@ bool AttackAction::Attack(Unit* target)
     if (mm->GetMovementGeneratorType() == FLIGHT_MOTION_TYPE)
         return false;
 
+    if (!target)
+        return false;
+
     if (bot->IsFriendlyTo(target))
     {
         ai->TellMaster("Target is friendly");
