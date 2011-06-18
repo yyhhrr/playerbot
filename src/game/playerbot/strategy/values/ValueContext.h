@@ -53,7 +53,7 @@ namespace ai
             creators["party member to resurrect"] = &ValueContext::party_member_to_resurrect;
             creators["current target"] = &ValueContext::current_target;
             creators["self target"] = &ValueContext::self_target;
-            creators["master"] = &ValueContext::master;
+            creators["master target"] = &ValueContext::master;
             creators["line target"] = &ValueContext::line_target;
             creators["tank target"] = &ValueContext::tank_target;
             creators["dps target"] = &ValueContext::dps_target;

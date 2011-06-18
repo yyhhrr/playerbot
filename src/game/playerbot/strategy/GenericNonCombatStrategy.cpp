@@ -108,3 +108,10 @@ void LowManaStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 {
     multipliers.push_back(new LowManaMultiplier());
 }
+
+void FollowMasterRandomStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "far from master", 
+        NextAction::array(0, new NextAction("follow master random", 1.0f), NULL)));
+}

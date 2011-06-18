@@ -28,6 +28,7 @@ public:
         creators["follow line"] = &ActionNodeFactoryInternal::follow_line;
         creators["follow"] = &ActionNodeFactoryInternal::follow_master;
         creators["follow master"] = &ActionNodeFactoryInternal::follow_master;
+        creators["follow master random"] = &ActionNodeFactoryInternal::follow_master_random;
         creators["goaway"] = &ActionNodeFactoryInternal::goaway;
         creators["stay"] = &ActionNodeFactoryInternal::stay;
         creators["stay circle"] = &ActionNodeFactoryInternal::stay_circle;
@@ -146,6 +147,13 @@ private:
     static ActionNode* follow_master(PlayerbotAI* ai)
     {
         return new ActionNode ("follow master",  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    static ActionNode* follow_master_random(PlayerbotAI* ai)
+    {
+        return new ActionNode ("follow master random",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

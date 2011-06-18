@@ -40,4 +40,14 @@ namespace ai
     public:
         EnemyOutOfSpellRangeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of spell range", SPELL_DISTANCE) {}
     };
+
+    class FarFromMasterTrigger : public Trigger {
+    public:
+        FarFromMasterTrigger(PlayerbotAI* ai) : Trigger(ai, "far from master") {}
+
+        virtual bool IsActive() 
+        {
+            return AI_VALUE2(float, "distance", "master target") > 12.0f;
+        }
+    };
 }

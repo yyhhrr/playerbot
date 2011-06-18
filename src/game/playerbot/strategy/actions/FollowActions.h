@@ -21,4 +21,10 @@ namespace ai
 		FollowMasterAction(PlayerbotAI* ai) : MovementAction(ai, "follow master") {}
 		virtual bool Execute(Event event);
 	};
+
+    class FollowMasterRandomAction : public MovementAction {
+    public:
+        FollowMasterRandomAction(PlayerbotAI* ai) : MovementAction(ai, "follow master random") {}
+        virtual bool Execute(Event event);
+    };
 }

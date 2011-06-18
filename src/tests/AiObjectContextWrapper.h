@@ -89,7 +89,7 @@ namespace ai
             creators["party member to resurrect"] = &MockValueContext::mock;
             creators["current target"] = &MockValueContext::mock;
             creators["self target"] = &MockValueContext::mock;
-            creators["master"] = &MockValueContext::mock;
+            creators["master target"] = &MockValueContext::mock;
             creators["line target"] = &MockValueContext::mock;
             creators["tank target"] = &MockValueContext::mock;
             creators["dps target"] = &MockValueContext::mock;
@@ -139,7 +139,7 @@ namespace ai
           AiObjectContext(ai), realContext(realContext) 
           {
               GetValue<Unit*>("self target")->Set(MockedTargets::GetSelf());
-              GetValue<Unit*>("master")->Set(MockedTargets::GetMaster());
+              GetValue<Unit*>("master target")->Set(MockedTargets::GetMaster());
               GetValue<Unit*>("line target")->Set(MockedTargets::GetLineTarget());
               GetValue<Unit*>("tank target")->Set(MockedTargets::GetTargetForTank());
               GetValue<Unit*>("dps target")->Set(MockedTargets::GetTargetForDps());

@@ -61,9 +61,11 @@ namespace ai
 
             creators["panic"] = &TriggerContext::panic;
             creators["behind target"] = &TriggerContext::behind_target;
+            creators["far from master"] = &TriggerContext::far_from_master;
         }
 
     private:
+        static Trigger* far_from_master(PlayerbotAI* ai) { return new FarFromMasterTrigger(ai); }
         static Trigger* behind_target(PlayerbotAI* ai) { return new IsBehindTargetTrigger(ai); }
         static Trigger* panic(PlayerbotAI* ai) { return new PanicTrigger(ai); }
         static Trigger* no_drink(PlayerbotAI* ai) { return new NoDrinkTrigger(ai); }

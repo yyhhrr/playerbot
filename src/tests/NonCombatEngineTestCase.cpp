@@ -9,15 +9,16 @@ using namespace ai;
 class NonCombatEngineTestCase : public EngineTestBase
 {
   CPPUNIT_TEST_SUITE( NonCombatEngineTestCase );
-  CPPUNIT_TEST( followMaster );
-  CPPUNIT_TEST( followLine );
-  CPPUNIT_TEST( stay );
-  CPPUNIT_TEST( eatDrink );
-  CPPUNIT_TEST( dpsAssist );
-  CPPUNIT_TEST( tankAssist );
-  CPPUNIT_TEST( loot );
-  CPPUNIT_TEST( goaway );
-  CPPUNIT_TEST( passive );
+      CPPUNIT_TEST( followMasterRandom );
+      CPPUNIT_TEST( followMaster );
+      CPPUNIT_TEST( followLine );
+      CPPUNIT_TEST( stay );
+      CPPUNIT_TEST( eatDrink );
+      CPPUNIT_TEST( dpsAssist );
+      CPPUNIT_TEST( tankAssist );
+      CPPUNIT_TEST( loot );
+      CPPUNIT_TEST( goaway );
+      CPPUNIT_TEST( passive );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -41,6 +42,16 @@ protected:
 
 		tickWithAttackerCount(0);
 		assertActions(">S:follow master");
+    }
+
+    void followMasterRandom()
+    {
+        engine->addStrategy("follow master random");
+
+        set<float>("distance", "master target", 20);
+        tick();
+
+        assertActions(">S:follow master random");
     }
 
 	void followLine()

@@ -15,6 +15,7 @@ namespace ai
         {
             creators["racials"] = &StrategyContext::racials;
             creators["follow master"] = &StrategyContext::follow_master;
+            creators["follow master random"] = &StrategyContext::follow_master_random;
             creators["follow line"] = &StrategyContext::follow_line;
             creators["stay"] = &StrategyContext::stay;
             creators["dps assist"] = &StrategyContext::dps_assist;
@@ -36,6 +37,7 @@ namespace ai
     private:
         static Strategy* dead(PlayerbotAI* ai) { return new DeadStrategy(ai); }
         static Strategy* racials(PlayerbotAI* ai) { return new RacialsStrategy(ai); }
+        static Strategy* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomStrategy(ai); }
         static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterNonCombatStrategy(ai); }
         static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineNonCombatStrategy(ai); }
         static Strategy* stay(PlayerbotAI* ai) { return new StayNonCombatStrategy(ai); }

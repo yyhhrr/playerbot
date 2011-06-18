@@ -1,7 +1,5 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "../triggers/GenericTriggers.h"
-#include "../actions/GenericActions.h"
 
 #include "HunterMultipliers.h"
 #include "DpsHunterStrategy.h"
