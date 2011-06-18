@@ -43,9 +43,11 @@ namespace ai
             creators["attack"] = &ChatTriggerContext::attack;
             creators["chat"] = &ChatTriggerContext::chat;
             creators["accept"] = &ChatTriggerContext::accept;
+            creators["home"] = &ChatTriggerContext::home;
         }
 
     private:
+        static Trigger* home(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "home"); }
         static Trigger* accept(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "accept"); }
         static Trigger* chat(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "chat"); }
         static Trigger* attack(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "attack"); }

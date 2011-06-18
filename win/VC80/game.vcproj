@@ -2920,6 +2920,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\SetHomeAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\SetHomeAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\StatsAction.cpp"
 						>
 					</File>

@@ -29,6 +29,7 @@
 #include "ChangeStrategyAction.h"
 #include "TrainerAction.h"
 #include "ChangeChatAction.h"
+#include "SetHomeAction.h"
 
 namespace ai
 {
@@ -68,9 +69,11 @@ namespace ai
             creators["trainer"] = &ChatActionContext::trainer;
             creators["attack my target"] = &ChatActionContext::attack_my_target;
             creators["chat"] = &ChatActionContext::chat;
+            creators["home"] = &ChatActionContext::home;
         }
 
     private:
+        static Action* home(PlayerbotAI* ai) { return new SetHomeAction(ai); }
         static Action* chat(PlayerbotAI* ai) { return new ChangeChatAction(ai); }
         static Action* attack_my_target(PlayerbotAI* ai) { return new AttackMyTargetAction(ai); }
         static Action* trainer(PlayerbotAI* ai) { return new TrainerAction(ai); }

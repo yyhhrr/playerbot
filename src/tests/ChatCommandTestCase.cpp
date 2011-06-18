@@ -40,6 +40,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( attack );
       CPPUNIT_TEST( chat );
       CPPUNIT_TEST( accept );
+      CPPUNIT_TEST( home );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -243,6 +244,11 @@ protected:
         trigger("accept");
         tick();
         assertActions(">S:accept quest");
+    }
+
+    void home()
+    {
+        assertCommand("home");
     }
 };
 
