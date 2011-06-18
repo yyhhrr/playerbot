@@ -27,9 +27,7 @@ bool LootStrategyAction::Execute(Event event)
             if (!proto)
                 continue;
 
-            out << " |cffffffff|Hitem:" << proto->ItemId
-                << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
-                << "]|h|r";
+            out << chat->formatItem(proto);
         }
         ai->TellMaster(out);
     }

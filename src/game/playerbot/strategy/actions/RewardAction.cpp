@@ -51,8 +51,7 @@ bool RewardAction::Execute(Event event)
                     string questTitle  = pQuest->GetTitle();
                     string itemName = pRewardItem->Name1;
 
-                    ostringstream out;
-                    out << "|cffffffff|Hitem:" << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r rewarded";
+                    ostringstream out; out << chat->formatItem(pRewardItem) << " rewarded";
                     ai->TellMaster(out);
                     wasRewarded = true;
                 }

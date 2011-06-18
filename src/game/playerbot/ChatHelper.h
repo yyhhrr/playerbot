@@ -15,5 +15,9 @@ namespace ai
         static uint32 parseMoney(string& text);
         static ItemIds parseItems(string& text);
         static string formatQuest(Quest const* quest);
+        static string formatItem(ItemPrototype const * proto, int count = 0);
+
+        static ChatMsg parseChat(string& text);
+        static string formatChat(ChatMsg chat);
     };
 };

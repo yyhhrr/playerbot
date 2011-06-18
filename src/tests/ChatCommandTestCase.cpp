@@ -38,6 +38,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( strategy );
       CPPUNIT_TEST( trainer );
       CPPUNIT_TEST( attack );
+      CPPUNIT_TEST( chat );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -228,6 +229,12 @@ protected:
     void attack()
     {
         assertCommand("spells");
+    }
+
+    void chat()
+    {
+        assertParametrizedCommand("chat", "?");
+        assertParametrizedCommand("chat", "raid");
     }
 };
 

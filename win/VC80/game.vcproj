@@ -2676,6 +2676,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChangeChatAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChangeChatAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.cpp"
 						>
 					</File>
@@ -3061,6 +3069,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\values\CcTargetValue.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\values\ChatValue.h"
 						>
 					</File>
 					<File

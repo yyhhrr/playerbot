@@ -35,6 +35,7 @@
 #include "ItemForSpellValue.h"
 #include "SpellCastUsefulValue.h"
 #include "LastSpellCastValue.h"
+#include "ChatValue.h"
 
 namespace ai
 {
@@ -90,9 +91,11 @@ namespace ai
             creators["item for spell"] = &ValueContext::item_for_spell;
             creators["spell cast useful"] = &ValueContext::spell_cast_useful;
             creators["last spell cast"] = &ValueContext::last_spell_cast;
+            creators["chat"] = &ValueContext::chat;
         }
 
     private:
+        static UntypedValue* chat(PlayerbotAI* ai) { return new ChatValue(ai); }
         static UntypedValue* last_spell_cast(PlayerbotAI* ai) { return new LastSpellCastValue(ai); }
         static UntypedValue* spell_cast_useful(PlayerbotAI* ai) { return new SpellCastUsefulValue(ai); }
         static UntypedValue* item_for_spell(PlayerbotAI* ai) { return new ItemForSpellValue(ai); }

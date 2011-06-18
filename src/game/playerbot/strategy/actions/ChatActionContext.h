@@ -28,6 +28,7 @@
 #include "ListSpellsAction.h"
 #include "ChangeStrategyAction.h"
 #include "TrainerAction.h"
+#include "ChangeChatAction.h"
 
 namespace ai
 {
@@ -66,9 +67,11 @@ namespace ai
             creators["nc"] = &ChatActionContext::nc;
             creators["trainer"] = &ChatActionContext::trainer;
             creators["attack my target"] = &ChatActionContext::attack_my_target;
+            creators["chat"] = &ChatActionContext::chat;
         }
 
     private:
+        static Action* chat(PlayerbotAI* ai) { return new ChangeChatAction(ai); }
         static Action* attack_my_target(PlayerbotAI* ai) { return new AttackMyTargetAction(ai); }
         static Action* trainer(PlayerbotAI* ai) { return new TrainerAction(ai); }
         static Action* co(PlayerbotAI* ai) { return new ChangeCombatStrategyAction(ai); }

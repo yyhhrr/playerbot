@@ -55,17 +55,6 @@ void InventoryAction::IterateItemsInEquip(IterateItemsVisitor* visitor)
 
 void InventoryAction::TellItem(ItemPrototype const * proto, int count) 
 {
-    ostringstream out;
-
-    char color[32];
-    sprintf(color, "%x", ItemQualityColors[proto->Quality]);
-
-    out << " |c" << color << "|Hitem:" << proto->ItemId
-        << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
-        << "]|h|r";
-    if (count > 1)
-        out << "x" << count;
-
-    ai->TellMaster(out);
+    ai->TellMaster(chat->formatItem(proto, count));
 }
 

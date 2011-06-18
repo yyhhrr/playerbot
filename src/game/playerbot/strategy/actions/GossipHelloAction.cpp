@@ -27,14 +27,14 @@ bool GossipHelloAction::Execute(Event event)
         return false;
 
     ostringstream out; out << "--- " << pCreature->GetName() << " ---";
-    ai->TellMaster(out.str().c_str());
+    ai->TellMaster(LOG_LVL_DEBUG, out.str().c_str());
     for (GossipMenuItemsMap::const_iterator itr = pMenuItemBounds.first; itr != pMenuItemBounds.second; ++itr)
     {
         uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
         if (!(itr->second.npc_option_npcflag & npcflags))
             continue;
 
-        ai->TellMaster(itr->second.option_text.c_str());
+        ai->TellMaster(LOG_LVL_DEBUG, itr->second.option_text.c_str());
 
         switch (itr->second.option_id)
         {

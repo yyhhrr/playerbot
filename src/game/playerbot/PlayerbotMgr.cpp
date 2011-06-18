@@ -112,6 +112,8 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     if (m_master->GetGroup() && 
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
+
+    ai->TellMaster("Hello!");
 }
 
 bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
@@ -203,7 +205,8 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-            if (member != player->GetObjectGuid().GetRawValue() && !processBotCommand(m_session, cmdStr, member))
+            PSendSysMessage("Adding bot for %s...", i->name.c_str());
+            if (!processBotCommand(m_session, cmdStr, member))
             {
                 PSendSysMessage("Error processing bot command for %s", i->name.c_str());
                 SetSentErrorMessage(true);
@@ -218,7 +221,12 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     for (vector<string>::iterator i = chars.begin(); i != chars.end(); i++)
     {
         string s = *i;
-        res &= processBotCommand(m_session, cmdStr, sObjectMgr.GetPlayerGuidByName(s.c_str()));
+        ObjectGuid member = sObjectMgr.GetPlayerGuidByName(s.c_str());
+        if (member == m_session->GetPlayer()->GetObjectGuid())
+            continue;
+
+        PSendSysMessage("Adding bot for %s...", s.c_str());
+        res &= processBotCommand(m_session, cmdStr, member);
         if (!res)
         {
             PSendSysMessage("Error processing bot command for %s", s.c_str());

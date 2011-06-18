@@ -70,3 +70,50 @@ string ChatHelper::formatQuest(Quest const* quest)
     out << "|cFFFFFF00|Hquest:" << quest->GetQuestId() << ':' << quest->GetQuestLevel() << "|h[" << quest->GetTitle() << "]|h|r";
     return out.str();
 }
+
+string ChatHelper::formatItem(ItemPrototype const * proto, int count)
+{
+    char color[32];
+    sprintf(color, "%x", ItemQualityColors[proto->Quality]);
+
+    ostringstream out;
+    out << " |c" << color << "|Hitem:" << proto->ItemId
+        << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
+        << "]|h|r";
+    
+    if (count > 1)
+        out << "x" << count;
+
+    return out.str();
+}
+
+ChatMsg ChatHelper::parseChat(string& text)
+{
+    if (text == "party" || text == "p")
+        return CHAT_MSG_PARTY;
+    if (text == "guild" || text == "g")
+        return CHAT_MSG_GUILD;
+    if (text == "raid" || text == "r")
+        return CHAT_MSG_RAID;
+    if (text == "whisper" || text == "w")
+        return CHAT_MSG_WHISPER;
+    
+    return CHAT_MSG_SYSTEM;
+}
+
+string ChatHelper::formatChat(ChatMsg chat)
+{
+    switch (chat)
+    {
+    case CHAT_MSG_GUILD:
+        return "guild";
+    case CHAT_MSG_PARTY:
+        return "party";
+    case CHAT_MSG_WHISPER:
+        return "whisper";
+    case CHAT_MSG_RAID:
+        return "raid";
+    }
+
+    return "unknown";
+}

@@ -88,14 +88,12 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                             std::string itemName = pRewardItem->Name1;
 
                             out << "Quest complete: " << chat->formatQuest(pQuest)
-                                << " reward: |cffffffff|Hitem:" 
-                                << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
+                                << " reward: " << chat->formatItem(pRewardItem);
                         }
                         else
                         {
                             out << "|cffff0000Unable to turn quest in:|r " << chat->formatQuest(pQuest)
-                                << " reward: |cffffffff|Hitem:" 
-                                << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
+                                << " reward: " << chat->formatItem(pRewardItem);
                         }
                     }
 
@@ -105,8 +103,7 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                         for (uint8 i=0; i < pQuest->GetRewChoiceItemsCount(); ++i)
                         {
                             ItemPrototype const * const pRewardItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
-                            std::string itemName = pRewardItem->Name1;
-                            out << "|cffffffff|Hitem:" << pRewardItem->ItemId << ":0:0:0:0:0:0:0" << "|h[" << itemName << "]|h|r";
+                            out << chat->formatItem(pRewardItem);
                         }
                     }
                 }
@@ -117,9 +114,14 @@ void TurnInQuestAction::TurnInQuests(WorldObject *questgiver)
                 out << "|cffff0000Quest incomplete:|r " << chat->formatQuest(pQuest);
             }
 
-            else if (status == QUEST_STATUS_AVAILABLE)
+            else if (status == QUEST_STATUS_AVAILABLE || status == QUEST_STATUS_NONE)
             {
                 out << "|cff00ff00Quest available:|r " << chat->formatQuest(pQuest);
+            }
+            
+            else if (status == QUEST_STATUS_FAILED) 
+            {
+                out << "|cffff0000Quest failed:|r " << chat->formatQuest(pQuest);
             }
 
             if (! out.str().empty())

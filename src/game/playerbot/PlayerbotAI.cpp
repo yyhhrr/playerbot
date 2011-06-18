@@ -503,7 +503,7 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 void PlayerbotAI::TellMaster(const char* text)
 {
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
-    bot->BuildPlayerChat(&data, CHAT_MSG_GUILD, text, LANG_UNIVERSAL);
+    bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
     GetMaster()->GetSession()->SendPacket(&data);
     bot->HandleEmoteCommand(EMOTE_ONESHOT_TALK);
 
