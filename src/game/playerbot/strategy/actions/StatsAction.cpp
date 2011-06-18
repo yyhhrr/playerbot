@@ -23,18 +23,12 @@ bool StatsAction::Execute(Event event)
 
 void StatsAction::ListGold(ostringstream &out)
 {
-    uint32 copper = bot->GetMoney();
-    uint32 gold = uint32(copper / 10000);
-    copper -= (gold * 10000);
-    uint32 silver = uint32(copper / 100);
-    copper -= (silver * 100);
-
-    out << "|r|cff00ff00" << gold << "|r|cfffffc00g|r|cff00ff00" << silver << "|r|cffcdcdcds|r|cff00ff00" << copper << "|r|cffffd333c";
+    out << chat->formatMoney(bot->GetMoney());
 }
 
 void StatsAction::ListBagSlots(ostringstream &out)
 {
-    uint32 totalused = 0;
+    uint32 totalused = 0, total = 16;
     // list out items in main backpack
     for (uint8 slot = INVENTORY_SLOT_ITEM_START; slot < INVENTORY_SLOT_ITEM_END; slot++)
     {
@@ -51,12 +45,15 @@ void StatsAction::ListBagSlots(ostringstream &out)
         {
             ItemPrototype const* pBagProto = pBag->GetProto();
             if (pBagProto->Class == ITEM_CLASS_CONTAINER && pBagProto->SubClass == ITEM_SUBCLASS_CONTAINER)
-                totalfree =  totalfree + pBag->GetFreeSlots();
+            {
+                total += pBag->GetBagSize();
+                totalfree += pBag->GetFreeSlots();
+            }
         }
 
     }
 
-    out << "|h|cff00ff00" << totalfree << "|h|cffffffff bag slots";
+    out << "|h|cff00ff00" << totalfree << "/" << total << "|h|cffffffff Bag";
 }
 
 void StatsAction::ListXP( ostringstream &out )
@@ -72,14 +69,7 @@ void StatsAction::ListXP( ostringstream &out )
 
 void StatsAction::ListRepairCost(ostringstream &out)
 {
-    uint32 copper = EstRepairAll();
-    uint32 gold = uint32(copper / 10000);
-    copper -= (gold * 10000);
-    uint32 silver = uint32(copper / 100);
-    copper -= (silver * 100);
-
-    out << "|r|cff00ff00" << gold << "|r|cfffffc00g|r|cff00ff00" << silver << "|r|cffcdcdcds|r|cff00ff00" << copper << "|r|cffffd333c"
-        << "|h|cffffffff repair";
+    out << chat->formatMoney(EstRepairAll()) << " repair";
 }
 
 uint32 StatsAction::EstRepairAll()

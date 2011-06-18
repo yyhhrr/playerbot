@@ -90,7 +90,7 @@ PlayerbotAI::~PlayerbotAI()
 
 void PlayerbotAI::UpdateAI(uint32 elapsed)
 {
-	ChangeStrategyIfNecessary();
+	ChangeActiveEngineIfNecessary();
 
 	if (!CanUpdateAI() || bot->IsBeingTeleported())
 		return;
@@ -278,7 +278,7 @@ void PlayerbotAI::UpdateNextCheckDelay()
 }
 
 
-void PlayerbotAI::ChangeStrategyIfNecessary()
+void PlayerbotAI::ChangeActiveEngineIfNecessary()
 {
     if (!bot->isAlive())
     {

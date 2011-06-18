@@ -4,87 +4,6 @@
 
 using namespace ai;
 
-void AppendSpellLink(const SpellEntry *sInfo, std::ostringstream& out)
-{
-    out << "|cffffffff|Hspell:" << sInfo->Id << "|h[" << sInfo->SpellName[LOCALE_enUS] << "]|h|r";
-}
-
-
-void AppendCost( uint32 cost, ostringstream& msg ) 
-{
-    uint32 gold = uint32(cost / 10000);
-    cost -= (gold * 10000);
-    uint32 silver = uint32(cost / 100);
-    cost -= (silver * 100);
-    msg << " ";
-    if (gold > 0)
-        msg << gold <<  " |TInterface\\Icons\\INV_Misc_Coin_01:8|t";
-    if (silver > 0)
-        msg << silver <<  " |TInterface\\Icons\\INV_Misc_Coin_03:8|t";
-    msg << cost <<  " |TInterface\\Icons\\INV_Misc_Coin_05:8|t";
-}
-
-
-void extractSpellId(const std::string& text, uint32 &spellId)
-{
-
-    //   Link format
-    //   |cffffffff|Hspell:" << spellId << ":" << "|h[" << pSpellInfo->SpellName[loc] << "]|h|r";
-    //   cast |cff71d5ff|Hspell:686|h[Shadow Bolt]|h|r";
-    //   012345678901234567890123456
-    //        base = 16 >|  +7 >|
-
-    uint8 pos = 0;
-
-    int i = text.find("Hspell:", pos);
-    if (i == -1)
-        return;
-
-    // DEBUG_LOG("[PlayerbotAI]: extractSpellId - first pos %u i %u",pos,i);
-    pos = i + 7;     // start of window in text 16 + 7 = 23
-    int endPos = text.find('|', pos);
-    if (endPos == -1)
-        return;
-
-    // DEBUG_LOG("[PlayerbotAI]: extractSpellId - second endpos : %u pos : %u",endPos,pos);
-    std::string idC = text.substr(pos, endPos - pos);     // 26 - 23
-    spellId = atol(idC.c_str());
-    pos = endPos;     // end
-}
-
-
-void extractSpellIdList(const std::string& text, set<uint32>& m_spellsToLearn)
-{
-
-    //   Link format
-    //   |cffffffff|Hspell:" << spellId << ":" << "|h[" << pSpellInfo->SpellName[loc] << "]|h|r";
-    //   cast |cff71d5ff|Hspell:686|h[Shadow Bolt]|h|r";
-    //   012345678901234567890123456
-    //        base = 16 >|  +7 >|
-
-    uint8 pos = 0;
-    while (true)
-    {
-        int i = text.find("Hspell:", pos);
-        if (i == -1)
-            break;
-
-        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - first pos %u i %u",pos,i);
-        pos = i + 7;     // start of window in text 16 + 7 = 23
-        int endPos = text.find('|', pos);
-        if (endPos == -1)
-            break;
-
-        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - second endpos : %u pos : %u",endPos,pos);
-        std::string idC = text.substr(pos, endPos - pos);     // 26 - 23
-        uint32 spellId = atol(idC.c_str());
-        pos = endPos;     // end
-
-        if (spellId)
-            m_spellsToLearn.insert(spellId);
-    }
-}
-
 void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream& msg) 
 {
     if (bot->GetMoney() < cost)
@@ -99,7 +18,7 @@ void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream
     msg << " - learned";
 }
 
-void TrainerAction::List(Creature* creature, TrainerSpellAction action, set<uint32>& spells) 
+void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds& spells) 
 {
     ostringstream msg;
     msg << "The spells I can learn and their cost:\r";
@@ -138,8 +57,7 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, set<uint
         uint32 cost = uint32(floor(tSpell->spellCost *  fDiscountMod));
         totalCost += cost;
 
-        AppendSpellLink(pSpellInfo, msg);
-        AppendCost(cost, msg);
+        msg << chat->formatSpell(pSpellInfo) << chat->formatMoney(cost);
 
         if (action && (spells.empty() || spells.find(tSpell->spell) != spells.end() || spells.find(tSpell->learnedSpell) != spells.end()))
             (this->*action)(cost, tSpell, msg);
@@ -147,8 +65,7 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, set<uint
         msg << "\r";
     }
 
-    msg << "Total cost: ";
-    AppendCost(totalCost, msg);
+    msg << "Total cost: " << chat->formatMoney(totalCost);
 
     ai->TellMaster(msg);
 }
@@ -180,7 +97,7 @@ bool TrainerAction::Execute(Event event)
         return false;
     }
 
-    set<uint32> spells; extractSpellIdList(text, spells);
+    SpellIds spells = chat->parseSpells(text);
 
     if (text == "learn")
         List(creature, &TrainerAction::Learn, spells);

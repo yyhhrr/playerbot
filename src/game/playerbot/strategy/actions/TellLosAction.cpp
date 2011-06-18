@@ -52,5 +52,5 @@ void TellLosAction::ListGameObjects(const char* title, list<GameObject*> gos)
     ai->TellMaster(title);
 
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        ai->TellMaster((*i)->GetGOInfo()->name);
+        ai->TellMaster(chat->formatGameobject(*i));
 }

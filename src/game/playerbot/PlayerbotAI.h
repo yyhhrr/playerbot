@@ -61,7 +61,7 @@ public:
 	void HandleBotOutgoingPacket(const WorldPacket& packet);
     void HandleMasterIncomingPacket(const WorldPacket& packet);
 	void HandleTeleportAck();
-    void ChangeStrategyIfNecessary();
+    void ChangeActiveEngineIfNecessary();
     void ChangeEngine(Engine* engine);
     void DoNextAction();
     void DoSpecificAction(const char* name);

@@ -13,7 +13,7 @@ namespace ai
 
     private:
         typedef void (TrainerAction::*TrainerSpellAction)(uint32, TrainerSpell const*, ostringstream& msg);
-        void List(Creature* creature, TrainerSpellAction action, set<uint32>& spells);
+        void List(Creature* creature, TrainerSpellAction action, SpellIds& spells);
         void Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream& msg);
     };
 

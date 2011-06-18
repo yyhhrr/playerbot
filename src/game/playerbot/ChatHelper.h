@@ -3,6 +3,7 @@
 using namespace std;
 
 typedef set<uint32> ItemIds;
+typedef set<uint32> SpellIds;
 
 namespace ai
 {
@@ -12,10 +13,14 @@ namespace ai
         ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
 
     public:
+        static string formatMoney(uint32 copper);
         static uint32 parseMoney(string& text);
         static ItemIds parseItems(string& text);
+        static SpellIds parseSpells(string& text);
         static string formatQuest(Quest const* quest);
         static string formatItem(ItemPrototype const * proto, int count = 0);
+        static string formatSpell(SpellEntry const *sInfo);
+        static string formatGameobject(GameObject* go);
 
         static ChatMsg parseChat(string& text);
         static string formatChat(ChatMsg chat);

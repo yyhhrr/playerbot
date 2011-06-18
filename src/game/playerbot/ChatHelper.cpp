@@ -5,6 +5,23 @@
 using namespace ai;
 using namespace std;
 
+string ChatHelper::formatMoney(uint32 copper)
+{
+    ostringstream out;
+    uint32 gold = uint32(copper / 10000);
+    copper -= (gold * 10000);
+    uint32 silver = uint32(copper / 100);
+    copper -= (silver * 100);
+    out << " ";
+    if (gold > 0)
+        out << gold <<  "|TInterface\\AddOns\\AtlasLoot\\Images\\gold:0|t ";
+    if (silver > 0)
+        out << silver <<  "|TInterface\\AddOns\\AtlasLoot\\Images\\silver:0|t ";
+    out << copper <<  "|TInterface\\AddOns\\AtlasLoot\\Images\\bronze:0|t";
+
+    return out.str();
+}
+
 uint32 ChatHelper::parseMoney(string& text)
 {
     // if user specified money in ##g##s##c format
@@ -71,6 +88,20 @@ string ChatHelper::formatQuest(Quest const* quest)
     return out.str();
 }
 
+string ChatHelper::formatGameobject(GameObject* go)
+{
+    ostringstream out;
+    out << "|cFFFFFF00|Hfound:" << go->GetObjectGuid().GetRawValue() << ":" << go->GetEntry() << ":" <<  "|h[" << go->GetGOInfo()->name << "]|h|r";
+    return out.str();
+}
+
+string ChatHelper::formatSpell(SpellEntry const *sInfo)
+{
+    ostringstream out;
+    out << "|cffffffff|Hspell:" << sInfo->Id << "|h[" << sInfo->SpellName[LOCALE_enUS] << "]|h|r";
+    return out.str();
+}
+
 string ChatHelper::formatItem(ItemPrototype const * proto, int count)
 {
     char color[32];
@@ -116,4 +147,40 @@ string ChatHelper::formatChat(ChatMsg chat)
     }
 
     return "unknown";
+}
+
+
+SpellIds ChatHelper::parseSpells(string& text)
+{
+    SpellIds spells;
+
+    //   Link format
+    //   |cffffffff|Hspell:" << spellId << ":" << "|h[" << pSpellInfo->SpellName[loc] << "]|h|r";
+    //   cast |cff71d5ff|Hspell:686|h[Shadow Bolt]|h|r";
+    //   012345678901234567890123456
+    //        base = 16 >|  +7 >|
+
+    uint8 pos = 0;
+    while (true)
+    {
+        int i = text.find("Hspell:", pos);
+        if (i == -1)
+            break;
+
+        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - first pos %u i %u",pos,i);
+        pos = i + 7;     // start of window in text 16 + 7 = 23
+        int endPos = text.find('|', pos);
+        if (endPos == -1)
+            break;
+
+        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - second endpos : %u pos : %u",endPos,pos);
+        std::string idC = text.substr(pos, endPos - pos);     // 26 - 23
+        uint32 spellId = atol(idC.c_str());
+        pos = endPos;     // end
+
+        if (spellId)
+            spells.insert(spellId);
+    }
+    
+    return spells;
 }
