@@ -61,15 +61,15 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     masterPacketHandlers[CMSG_ACTIVATETAXI] = "activate taxi";
     masterPacketHandlers[CMSG_ACTIVATETAXIEXPRESS] = "activate taxi";
     
-    packetHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
-    packetHandlers[SMSG_GROUP_INVITE] = "group invite";
-    packetHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
-    packetHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
-    packetHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
-    packetHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
-    packetHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
-    packetHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
-    packetHandlers[SMSG_TRADE_STATUS] = "trade status";
+    botPacketHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
+    botPacketHandlers[SMSG_GROUP_INVITE] = "group invite";
+    botPacketHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
+    botPacketHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
+    botPacketHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
+    botPacketHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
+    botPacketHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
+    botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
+    botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
 
 }
 
@@ -94,6 +94,25 @@ void PlayerbotAI::UpdateAI(uint32 elapsed)
 
 	if (!CanUpdateAI() || bot->IsBeingTeleported())
 		return;
+
+    ExternalEventHelper helper(aiObjectContext);
+    while (!chatCommands.empty())
+    {
+        helper.ParseChatCommand(chatCommands.top());
+        chatCommands.pop();
+    }
+    
+    while (!botPackets.empty())
+    {
+        helper.HandlePacket(botPacketHandlers, botPackets.top());
+        botPackets.pop();
+    }
+    
+    while (!masterPackets.empty())
+    {
+        helper.HandlePacket(masterPacketHandlers, masterPackets.top());
+        masterPackets.pop();
+    }
 
 	DoNextAction();
 	YieldThread();
@@ -143,17 +162,14 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
         bot->GetMotionMaster()->Clear();
         bot->m_taxi.ClearTaxiDestinations();
     }
-
-
-    ExternalEventHelper helper(aiObjectContext);
-    helper.ParseChatCommand(text);
+    else
+    {
+        chatCommands.push(text);
+    }
 }
 
 void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 {
-    ExternalEventHelper helper(aiObjectContext);
-    helper.HandlePacket(packetHandlers, packet);
-
     switch (packet.GetOpcode())
     {
     case SMSG_MOVE_SET_CAN_FLY:
@@ -205,7 +221,12 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
             IncreaseNextCheckDelay(1);
+            return;
         }
+    default:
+        WorldPacket p(packet);
+        p.rpos(0);
+        botPackets.push(p);
     }
 }
 
@@ -262,8 +283,9 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
 {
-    ExternalEventHelper helper(aiObjectContext);
-    helper.HandlePacket(masterPacketHandlers, packet);
+    WorldPacket p(packet);
+    p.rpos(0);
+    masterPackets.push(p);
 }
 
 void PlayerbotAI::UpdateNextCheckDelay()

@@ -111,7 +111,10 @@ protected:
     Engine* combatEngine;
     Engine* nonCombatEngine;
     Engine* deadEngine;
-    map<uint16, string> packetHandlers;
+    map<uint16, string> botPacketHandlers;
     map<uint16, string> masterPacketHandlers;
+    stack<string> chatCommands;
+    stack<WorldPacket> botPackets;
+    stack<WorldPacket> masterPackets;
 };
 
