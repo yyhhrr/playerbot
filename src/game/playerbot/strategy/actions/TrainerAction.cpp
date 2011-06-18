@@ -167,7 +167,7 @@ bool TrainerAction::Execute(Event event)
 
     if (!creature->IsTrainerOf(bot, false))
     {
-        ai->TellMaster("This trainer can not teach me anything!");
+        ai->TellMaster(LOG_LVL_DEBUG, "This trainer can not teach me anything!");
         return false;
     }
 
