@@ -21,5 +21,18 @@ list<Unit*> NearestNpcsValue::Calculate()
     Cell::VisitAllObjects(bot, searcher, range);
 
     RemoveNotInLOS(targets);
+
+    for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
+    {
+        if (dynamic_cast<Player*>(*tIter))
+        {
+            list<Unit *>::iterator tIter2 = tIter;
+            ++tIter;
+            targets.erase(tIter2);
+        }
+        else
+            ++tIter;
+    }
+
     return targets;
 }

@@ -51,7 +51,7 @@ void LootAction::DoLoot()
 
 void LootAction::DoLoot(LootObject &lootObject)
 {
-    if (!lootObject.worldObject)
+    if (!lootObject.worldObject || !lootObject.guid)
     {
         AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
         return;

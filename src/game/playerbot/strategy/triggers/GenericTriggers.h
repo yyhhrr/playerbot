@@ -240,6 +240,12 @@ namespace ai
     BEGIN_TRIGGER(NoTargetTrigger, Trigger)
     END_TRIGGER()
 
+    class TargetInSightTrigger : public Trigger {
+    public:
+        TargetInSightTrigger(PlayerbotAI* ai) : Trigger(ai, "target in sight") {}
+        virtual bool IsActive() { return AI_VALUE(Unit*, "grind target"); }
+    };
+
     class DebuffTrigger : public BuffTrigger
     {
     public:

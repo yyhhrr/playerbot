@@ -10,7 +10,8 @@ using namespace ai;
 class NonCombatEngineTestCase2 : public MockedAiObjectContextTestCase
 {
   CPPUNIT_TEST_SUITE( NonCombatEngineTestCase2 );
-  CPPUNIT_TEST( emote );
+      CPPUNIT_TEST( emote );
+      CPPUNIT_TEST( followMasterRandom );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -26,6 +27,17 @@ protected:
         tickWithTrigger("random");
 
         assertActions(">S:emote");
+    }
+
+    void followMasterRandom()
+    {
+        engine->removeStrategy("emote");
+        engine->addStrategy("be near");
+
+        tickWithTrigger("random");
+        tickWithTrigger("target in sight");
+
+        assertActions(">S:move random>S:stay combat");
     }
 };
 

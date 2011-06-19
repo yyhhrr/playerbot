@@ -46,12 +46,12 @@ protected:
 
     void followMasterRandom()
     {
-        engine->addStrategy("follow master random");
+        engine->addStrategy("be near");
 
         set<float>("distance", "master target", 20);
         tick();
 
-        assertActions(">S:follow master random");
+        assertActions(">S:be near");
     }
 
 	void followLine()

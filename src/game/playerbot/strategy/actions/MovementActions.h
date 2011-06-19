@@ -30,9 +30,11 @@ namespace ai
         Player* bot;
     };
 
-    class FleeAction : public MovementAction {
+    class FleeAction : public MovementAction 
+    {
     public:
-        FleeAction(PlayerbotAI* ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") {
+        FleeAction(PlayerbotAI* ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") 
+        {
 			this->distance = distance;
 		}
 
@@ -43,9 +45,17 @@ namespace ai
     };
 
 
-    class GoAwayAction : public MovementAction {
+    class GoAwayAction : public MovementAction 
+    {
     public:
         GoAwayAction(PlayerbotAI* ai) : MovementAction(ai, "goaway") {}
+        virtual bool Execute(Event event);
+    };
+
+    class MoveRandomAction : public MovementAction 
+    {
+    public:
+        MoveRandomAction(PlayerbotAI* ai) : MovementAction(ai, "move random") {}
         virtual bool Execute(Event event);
     };
 }

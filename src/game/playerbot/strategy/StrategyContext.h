@@ -15,7 +15,7 @@ namespace ai
         {
             creators["racials"] = &StrategyContext::racials;
             creators["follow master"] = &StrategyContext::follow_master;
-            creators["follow master random"] = &StrategyContext::follow_master_random;
+            creators["be near"] = &StrategyContext::follow_master_random;
             creators["follow line"] = &StrategyContext::follow_line;
             creators["stay"] = &StrategyContext::stay;
             creators["dps assist"] = &StrategyContext::dps_assist;

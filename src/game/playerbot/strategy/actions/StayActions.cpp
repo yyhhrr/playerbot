@@ -8,7 +8,7 @@ using namespace ai;
 
 void StayActionBase::Stay()
 {
-    if (!AI_VALUE2(bool, "moving", "self target"))
+    if (!bot->isMoving())
         return;
 
     AI_VALUE(LastMovement&, "last movement").Set(NULL);
@@ -143,6 +143,22 @@ bool StayCombatAction::Execute(Event event)
         tanks.insert(tanks.begin() + (tanks.size() + 1) / 2, master);
     else
         dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
+
+    switch (rand() % 5)
+    {
+    case 0:
+        ai->TellMaster("Combat can begin in any minute!");
+        break;
+    case 1:
+        ai->TellMaster("Keep your eyes open!");
+        break;
+    case 2:
+        ai->TellMaster("Stay alert!");
+        break;
+    case 3:
+        ai->TellMaster("I hear something, keep order!");
+        break;
+    }
 
     if (ai->IsTank(bot) && ai->IsTank(master))
     {

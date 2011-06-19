@@ -19,7 +19,7 @@ namespace ai
         virtual const char* getName() { return "follow master"; }
         virtual NextAction** getDefaultActions();
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-follow master random"; }
+		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-be near"; }
 
     };
 
@@ -28,7 +28,7 @@ namespace ai
     {
     public:
         FollowMasterRandomStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "follow master random"; }
+        virtual const char* getName() { return "be near"; }
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-follow master"; }
 
@@ -49,7 +49,7 @@ namespace ai
         GoAwayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "goaway"; }
         virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-follow master random,-follow master"; }
+		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-be near,-follow master"; }
     };
 
     class StayNonCombatStrategy : public GenericNonCombatStrategy
@@ -58,7 +58,7 @@ namespace ai
         StayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual const char* getName() { return "stay"; }
         virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-follow master random,-follow master"; }
+		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-be near,-follow master"; }
     };
 
     class DpsAssistStrategy : public GenericNonCombatStrategy

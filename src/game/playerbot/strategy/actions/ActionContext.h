@@ -41,7 +41,7 @@ namespace ai
             creators["follow line"] = &ActionContext::follow_line;
             creators["follow"] = &ActionContext::follow_master;
             creators["follow master"] = &ActionContext::follow_master;
-            creators["follow master random"] = &ActionContext::follow_master_random;
+            creators["be near"] = &ActionContext::follow_master_random;
             creators["goaway"] = &ActionContext::goaway;
             creators["stay"] = &ActionContext::stay;
             creators["stay circle"] = &ActionContext::stay_circle;
@@ -49,9 +49,11 @@ namespace ai
             creators["stay combat"] = &ActionContext::stay_combat;
             creators["attack anything"] = &ActionContext::attack_anything;
             creators["emote"] = &ActionContext::emote;
+            creators["move random"] = &ActionContext::move_random;
         }
 
     private:
+        static Action* move_random(PlayerbotAI* ai) { return new MoveRandomAction(ai); }
         static Action* shoot(PlayerbotAI* ai) { return new CastShootAction(ai); }
         static Action* melee(PlayerbotAI* ai) { return new MeleeAction(ai); }
         static Action* ReachSpell(PlayerbotAI* ai) { return new ReachSpellAction(ai); }

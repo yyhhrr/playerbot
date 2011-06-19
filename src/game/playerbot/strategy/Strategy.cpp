@@ -28,7 +28,7 @@ public:
         creators["follow line"] = &ActionNodeFactoryInternal::follow_line;
         creators["follow"] = &ActionNodeFactoryInternal::follow_master;
         creators["follow master"] = &ActionNodeFactoryInternal::follow_master;
-        creators["follow master random"] = &ActionNodeFactoryInternal::follow_master_random;
+        creators["be near"] = &ActionNodeFactoryInternal::follow_master_random;
         creators["goaway"] = &ActionNodeFactoryInternal::goaway;
         creators["stay"] = &ActionNodeFactoryInternal::stay;
         creators["stay circle"] = &ActionNodeFactoryInternal::stay_circle;
@@ -36,6 +36,7 @@ public:
         creators["stay combat"] = &ActionNodeFactoryInternal::stay_combat;
         creators["attack anything"] = &ActionNodeFactoryInternal::attack_anything;
         creators["emote"] = &ActionNodeFactoryInternal::emote;
+        creators["move random"] = &ActionNodeFactoryInternal::move_random;
     }
 
 private:
@@ -153,9 +154,9 @@ private:
     }
     static ActionNode* follow_master_random(PlayerbotAI* ai)
     {
-        return new ActionNode ("follow master random",  
+        return new ActionNode ("be near",  
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NextAction::array(0, new NextAction("follow master"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* goaway(PlayerbotAI* ai)
@@ -205,6 +206,13 @@ private:
         return new ActionNode ("emote",  
             /*P*/ NULL,
             /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    static ActionNode* move_random(PlayerbotAI* ai)
+    {
+        return new ActionNode ("move random",  
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("stay line"), NULL),
             /*C*/ NULL);
     }
 };

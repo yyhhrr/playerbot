@@ -159,9 +159,13 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN));
-    if (delay > GLOBAL_COOLDOWN)
+    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN)) + 1;
+    
+    if (delay < GLOBAL_COOLDOWN)
         delay = GLOBAL_COOLDOWN;
+    
+    if (delay > 8)
+        delay = 8;
 
     bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }
@@ -193,4 +197,54 @@ bool FleeAction::Execute(Event event)
 bool GoAwayAction::Execute(Event event)
 {
     return Flee(AI_VALUE(Unit*, "master target")); 
+}
+
+bool MoveRandomAction::Execute(Event event)
+{
+    WorldObject* target = NULL;
+
+    if (rand() % 2)
+    {
+        list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
+        if (!npcs.empty())
+        {
+            size_t pos = rand() % npcs.size();
+            for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end() && pos; i++)
+            {
+                target = *i;
+                pos--;
+                if (!pos)
+                {
+                    ostringstream out; out << "I will check " << (*i)->GetName();
+                    ai->TellMaster(out);
+                }
+            }
+        }
+    }
+
+    if (!target)
+    {
+        list<GameObject*> gos = AI_VALUE(list<GameObject*>, "nearest game objects");
+        if (!gos.empty())
+        {
+            size_t pos = rand() % gos.size();
+            for (list<GameObject*>::iterator i = gos.begin(); i != gos.end() && pos; i++)
+            {
+                target = *i;
+                pos--;
+                if (!pos)
+                {
+                    ostringstream out; out << "I will check " << chat->formatGameobject(*i);
+                    ai->TellMaster(out);
+                }
+            }
+        }
+    }
+
+    if (!target)
+        return false;
+    
+    float distance = (rand() % 15) / 10.0f;
+    MoveNear(target);
+    return true;
 }

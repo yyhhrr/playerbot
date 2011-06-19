@@ -35,6 +35,7 @@ namespace ai
             creators["loot available"] = &TriggerContext::LootAvailable;
             creators["no attackers"] = &TriggerContext::NoAttackers;
             creators["no target"] = &TriggerContext::NoTarget;
+            creators["target in sight"] = &TriggerContext::TargetInSight;
 
             creators["tank aoe"] = &TriggerContext::TankAoe;
             creators["lose aggro"] = &TriggerContext::LoseAggro;
@@ -90,6 +91,7 @@ namespace ai
         static Trigger* TankAoe(PlayerbotAI* ai) { return new TankAoeTrigger(ai); }
         static Trigger* Timer(PlayerbotAI* ai) { return new TimerTrigger(ai); }
         static Trigger* NoTarget(PlayerbotAI* ai) { return new NoTargetTrigger(ai); }
+        static Trigger* TargetInSight(PlayerbotAI* ai) { return new TargetInSightTrigger(ai); }
         static Trigger* Random(PlayerbotAI* ai) { return new RandomTrigger(ai); }
         static Trigger* EnemyOutOfMelee(PlayerbotAI* ai) { return new EnemyOutOfMeleeTrigger(ai); }
         static Trigger* EnemyOutOfSpell(PlayerbotAI* ai) { return new EnemyOutOfSpellRangeTrigger(ai); }
