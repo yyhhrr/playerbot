@@ -144,18 +144,15 @@ bool StayCombatAction::Execute(Event event)
     else
         dps.insert(dps.begin() + (dps.size() + 1) / 2, master);
 
-    switch (rand() % 5)
+    switch (rand() % 50)
     {
-    case 0:
-        ai->TellMaster("Combat can begin in any minute!");
-        break;
-    case 1:
+    case 5:
         ai->TellMaster("Keep your eyes open!");
         break;
-    case 2:
+    case 15:
         ai->TellMaster("Stay alert!");
         break;
-    case 3:
+    case 30:
         ai->TellMaster("I hear something, keep order!");
         break;
     }
