@@ -12,6 +12,7 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
 {
     worldObject = NULL;
     loot = NULL;
+    time = time_t();
 
 	PlayerbotAI* ai = bot->GetPlayerbotAI();
 
@@ -37,6 +38,7 @@ LootObject::LootObject(const LootObject& other)
     worldObject = other.worldObject;
     loot = other.loot;
     guid = other.guid;
+    time = other.time;
 }
 
 LootObjectStack::LootObjectStack(Player* bot)

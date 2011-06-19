@@ -9,6 +9,24 @@
 
 using namespace ai;
 
+void MovementAction::MoveNear(uint32 mapId, float x, float y, float z, float distance)
+{
+    float angle = GetFollowAngle();
+    MoveTo(mapId, x + cos(angle) * distance, y + sin(angle) * distance, z);
+}
+
+void MovementAction::MoveNear(WorldObject* target, float distance)
+{
+    if (!target)
+        return;
+
+    float angle = GetFollowAngle();
+    MoveTo(target->GetMapId(), 
+        target->GetPositionX() + cos(angle) * distance, 
+        target->GetPositionY()+ sin(angle) * distance, 
+        target->GetPositionZ());
+}
+
 void MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
 {
     if (!IsMovingAllowed(mapId, x, y, z))

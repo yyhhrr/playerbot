@@ -21,10 +21,11 @@ namespace ai
         LootObject(const LootObject& other);
 
     public:
-        bool IsEmpty() { return !worldObject || !loot; }
+        bool IsEmpty() { return !worldObject || !loot || (time_t() - time) > 60; }
         WorldObject* worldObject;
         Loot* loot;
         ObjectGuid guid;
+        time_t time;
     };
 
     class LootObjectStack

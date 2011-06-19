@@ -8,8 +8,6 @@ using namespace ai;
 
 bool LootAction::Execute(Event event)
 {
-    
-    
     ObjectGuid masterSelection = master->GetSelectionGuid();
     if (masterSelection) 
         AI_VALUE(LootObjectStack*, "available loot")->Add(masterSelection);
@@ -59,14 +57,14 @@ void LootAction::DoLoot(LootObject &lootObject)
         return;
     }
 
+    bot->GetMotionMaster()->Clear();
+
     float distance = bot->GetDistance(lootObject.worldObject);
     if (distance > INTERACTION_DISTANCE)
     {
-        MoveTo(lootObject.worldObject);
+        MoveNear(lootObject.worldObject, 1.0f);
         return;
     }
-
-    bot->GetMotionMaster()->Clear();
 
     bool isLooted = StoreLootItems(lootObject, LOOT_CORPSE);
 
