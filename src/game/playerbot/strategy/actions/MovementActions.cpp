@@ -6,6 +6,7 @@
 #include "../../../MovementGenerator.h"
 #include "../../AttackerMapProvider.h"
 #include "../../FleeManager.h"
+#include "../../LootObjectStack.h"
 
 using namespace ai;
 
@@ -234,6 +235,7 @@ bool MoveRandomAction::Execute(Event event)
                 pos--;
                 if (!pos)
                 {
+                    AI_VALUE(LootObjectStack*, "available loot")->Add(target->GetObjectGuid());
                     ostringstream out; out << "I will check " << chat->formatGameobject(*i);
                     ai->TellMaster(out);
                 }

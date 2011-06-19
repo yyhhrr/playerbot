@@ -18,13 +18,17 @@ bool AddLootAction::Execute(Event event)
 
 bool AddAllLootAction::Execute(Event event)
 {
-    
-
-    
-    
     list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        AI_VALUE(LootObjectStack*, "available loot")->Add((*i)->GetObjectGuid());
+    {
+        GameObject* go = *i;
+        uint32 type = go->GetGOInfo()->type;
+
+        if (type != GAMEOBJECT_TYPE_CHEST && type != GAMEOBJECT_TYPE_GOOBER)
+            continue;
+
+        AI_VALUE(LootObjectStack*, "available loot")->Add(go->GetObjectGuid());
+    }
 
     list<Unit*> corpses = *context->GetValue<list<Unit*>>("nearest corpses");
     for (list<Unit*>::iterator i = corpses.begin(); i != corpses.end(); i++)

@@ -167,10 +167,19 @@ void LootAction::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootTyp
     }
 
     GameObject* go = ai->GetGameObject(lootObject.guid);
-    if (go && go->isSpawned() && !CheckSkill(go->GetGOInfo()->GetLockId()))
+    if (go)
     {
-        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
-        return;
+        if (!go->isSpawned())
+        {
+            ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
+            return;
+        }
+
+        if (!CheckSkill(go->GetGOInfo()->GetLockId()))
+        {
+            ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: insufficient skill");
+            return;
+        }
     }
 
     Creature* creature = ai->GetCreature(lootObject.guid);
@@ -309,7 +318,11 @@ bool LootAction::IsLootAllowed(LootItem * item)
         return false;
     }
 
-    if (item->needs_quest || proto->Bonding == BIND_QUEST_ITEM || proto->Bonding == BIND_QUEST_ITEM1)
+    if (item->needs_quest || 
+        proto->StartQuest || 
+        proto->Bonding == BIND_QUEST_ITEM || 
+        proto->Bonding == BIND_QUEST_ITEM1 || 
+        proto->Class == ITEM_CLASS_QUEST)
         return true;
 
     if (lootStrategy == LOOTSTRATEGY_QUEST)
