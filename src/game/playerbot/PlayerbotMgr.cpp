@@ -219,10 +219,10 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-            PSendSysMessage("Adding/removing bot for %s...", i->name);
+            PSendSysMessage("Processing bot %s...", i->name.c_str());
             if (!processBotCommand(m_session, cmdStr, member))
             {
-                PSendSysMessage("Error processing bot command for %s", i->name);
+                PSendSysMessage("Error processing bot command for %s", i->name.c_str());
                 SetSentErrorMessage(true);
                 res = false;
             }
@@ -239,11 +239,11 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         if (member == m_session->GetPlayer()->GetObjectGuid())
             continue;
 
-        PSendSysMessage("Adding/removing bot for %s...", s);
+        PSendSysMessage("Processing bot %s...", s.c_str());
         res &= processBotCommand(m_session, cmdStr, member);
         if (!res)
         {
-            PSendSysMessage("Error processing bot command for %s", s);
+            PSendSysMessage("Error processing bot command for %s", s.c_str());
             SetSentErrorMessage(true);
         }
     }

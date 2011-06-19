@@ -135,6 +135,16 @@ void PlayerbotAI::HandleTeleportAck()
 
 void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 {
+    if (fromPlayer.GetGuildId() != bot->GetGuildId() || !bot->GetGuildId())
+        return;
+
+    for (string::const_iterator i = text.begin(); i != text.end(); i++)
+    {
+        char symbol = *i;
+        if (symbol < 32 || symbol > 127)
+            return;
+    }
+
 	// ignore any messages from Addons
 	if (text.empty() ||
 		text.find("X-Perl") != wstring::npos ||
@@ -142,9 +152,6 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 		text.find("LOOT_OPENED") != wstring::npos ||
 		text.find("CTRA") != wstring::npos)
 		return;
-
-	if (fromPlayer.GetGuildId() != bot->GetGuildId() || !bot->GetGuildId())
-	    return;
 
     if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
     {

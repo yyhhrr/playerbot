@@ -62,6 +62,13 @@ void UseItemAction::UseItem(Item& item)
     *packet << bagIndex << slot << cast_count << spellid << item_guid
         << glyphIndex << unk_flags;
 
+    ObjectGuid masterSelection = master->GetSelectionGuid();
+    if (masterSelection)
+    {
+        uint32 targetFlag = TARGET_FLAG_UNIT;
+        *packet << targetFlag << masterSelection.WriteAsPacked();
+    }
+
     if(uint32 questid = item.GetProto()->StartQuest)
     {
         Quest const* qInfo = sObjectMgr.GetQuestTemplate(questid);
