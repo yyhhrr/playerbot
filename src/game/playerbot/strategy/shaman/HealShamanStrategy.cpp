@@ -23,13 +23,13 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
 
-ActionNode* HealShamanStrategy::GetAction(const char* name)
+ActionNode* HealShamanStrategy::GetAction(string name)
 {
     ActionNode* node = GenericShamanStrategy::GetAction(name);
     if (node)
         return node;
 
-	if (!strcmp("earthliving weapon", name))
+	if (name == "earthliving weapon")
 	{
 		return new ActionNode ("earthliving weapon",
 			/*P*/ NULL,

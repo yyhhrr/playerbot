@@ -10,17 +10,17 @@ bool TellItemCountAction::Execute(Event event)
     
     string text = event.getParam();
 
-    uint32 quality = InventoryItemValue::TextToItemQuality(text.c_str());
+    uint32 quality = InventoryItemValue::TextToItemQuality(text);
     if (quality == MAX_ITEM_QUALITY)
     {
-        uint8 count = AI_VALUE2(uint8, "item count", text.c_str());
+        uint8 count = AI_VALUE2(uint8, "item count", text);
 
         if (!count)
             return false;
 
         ostringstream out;
         out << text << "x" << (int)count;
-        ai->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str());
 
         return true;
     }

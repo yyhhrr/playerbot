@@ -7,11 +7,11 @@ namespace ai
 
     class NeedCureTrigger : public SpellTrigger {
     public:
-        NeedCureTrigger(PlayerbotAI* ai, const char* spell, uint32 dispelType) : SpellTrigger(ai, spell) 
+        NeedCureTrigger(PlayerbotAI* ai, string spell, uint32 dispelType) : SpellTrigger(ai, spell) 
   	    {
 			this->dispelType = dispelType;
         }
-        virtual const char* GetTargetName() { return "self target"; }
+        virtual string GetTargetName() { return "self target"; }
         virtual bool IsActive();
 
     protected:
@@ -20,14 +20,14 @@ namespace ai
 
     class TargetAuraDispelTrigger : public NeedCureTrigger {
     public:
-        TargetAuraDispelTrigger(PlayerbotAI* ai, const char* spell, uint32 dispelType) : 
+        TargetAuraDispelTrigger(PlayerbotAI* ai, string spell, uint32 dispelType) : 
 			NeedCureTrigger(ai, spell, dispelType) {}
-		virtual const char* GetTargetName() { return "current target"; }
+		virtual string GetTargetName() { return "current target"; }
     };
 
     class PartyMemberNeedCureTrigger : public NeedCureTrigger {
     public:
-        PartyMemberNeedCureTrigger(PlayerbotAI* ai, const char* spell, uint32 dispelType) : 
+        PartyMemberNeedCureTrigger(PlayerbotAI* ai, string spell, uint32 dispelType) : 
             NeedCureTrigger(ai, spell, dispelType) {}
 
 		virtual Value<Unit*>* GetTargetValue();

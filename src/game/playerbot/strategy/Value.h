@@ -6,10 +6,10 @@
 
 namespace ai
 {
-    class UntypedValue : public AiObject
+    class UntypedValue : public AiNamedObject
     {
     public:
-        UntypedValue(PlayerbotAI* ai) : AiObject(ai) {}
+        UntypedValue(PlayerbotAI* ai, string name) : AiNamedObject(ai, name) {}
         virtual void Update() {}
     };
     
@@ -17,7 +17,6 @@ namespace ai
     class Value
     {
     public:
-        virtual const char* getName() = NULL;
         virtual T Get() = NULL;
         virtual void Set(T value) = NULL;
         operator T() { return Get(); }
@@ -27,13 +26,12 @@ namespace ai
     class CalculatedValue : public UntypedValue, public Value<T>
 	{
 	public:
-        CalculatedValue(PlayerbotAI* ai, const char* name = "value", int checkInterval = 1) : UntypedValue(ai),
-            name(name), checkInterval(checkInterval), ticksElapsed(checkInterval) 
+        CalculatedValue(PlayerbotAI* ai, string name = "value", int checkInterval = 1) : UntypedValue(ai, name),
+            checkInterval(checkInterval), ticksElapsed(checkInterval) 
         { }
         virtual ~CalculatedValue() {}
 
 	public:
-        virtual const char* getName() { return name.c_str(); }
         virtual T Get()
         {
             if (ticksElapsed >= checkInterval) {
@@ -54,7 +52,6 @@ namespace ai
         virtual T Calculate() = NULL;
 
     protected:
-        string name;
 		int checkInterval;
 		int ticksElapsed;
         T value;
@@ -64,18 +61,16 @@ namespace ai
     class ManualSetValue : public UntypedValue, public Value<T>
     {
     public:
-        ManualSetValue(PlayerbotAI* ai, T defaultValue, const char* name = "value") : 
-            UntypedValue(ai), name(name), value(defaultValue) {}
+        ManualSetValue(PlayerbotAI* ai, T defaultValue, string name = "value") : 
+            UntypedValue(ai, name), value(defaultValue) {}
         virtual ~ManualSetValue() {}
 
     public:
-        virtual const char* getName() { return name.c_str(); }
         virtual T Get() { return value; }
         virtual void Set(T value) { this->value = value; }
         virtual void Update() { }
 
     protected:
-        string name;
         T value;
     };
 }

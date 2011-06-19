@@ -2,7 +2,7 @@
 
 std::vector<std::string> split(const std::string &s, char delim);
 #ifndef WIN32
-int strcmpi(const char *s1, const char *s2);
+int strcmpi(strings1, strings2);
 #endif
 
 #include "../Spell.h"

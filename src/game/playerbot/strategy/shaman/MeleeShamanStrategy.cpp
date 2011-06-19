@@ -23,27 +23,27 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
 }
 
-ActionNode* MeleeShamanStrategy::GetAction(const char* name)
+ActionNode* MeleeShamanStrategy::GetAction(string name)
 {
     ActionNode* node = GenericShamanStrategy::GetAction(name);
     if (node)
         return node;
 
-	if (!strcmp("stormstrike", name))
+	if (name == "stormstrike")
 	{
 		return new ActionNode ("stormstrike",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("lava lash"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("lava lash", name))
+	else if (name == "lava lash")
 	{
 		return new ActionNode ("lava lash",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("melee"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("lightning shield", name))
+	else if (name == "lightning shield")
 	{
 		return new ActionNode ("lightning shield",
 			/*P*/ NULL,

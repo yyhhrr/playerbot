@@ -42,7 +42,7 @@ namespace ai
             if (name.empty())
                 return;
 
-            Trigger* trigger = aiObjectContext->GetTrigger(name.c_str());
+            Trigger* trigger = aiObjectContext->GetTrigger(name);
             if (!trigger)
                 return;
 
@@ -51,7 +51,7 @@ namespace ai
 
         bool HandleCommand(string name, string param)
         {
-            Trigger* trigger = aiObjectContext->GetTrigger(name.c_str());
+            Trigger* trigger = aiObjectContext->GetTrigger(name);
             if (!trigger)
                 return false;
 

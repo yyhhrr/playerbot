@@ -13,7 +13,7 @@ public:
 public:
     virtual bool Check(Unit* unit)
     {
-        return unit->isAlive() && !ai->HasAura(aura.c_str(), unit);
+        return unit->isAlive() && !ai->HasAura(aura, unit);
     }
 
 private:

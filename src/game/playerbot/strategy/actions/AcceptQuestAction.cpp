@@ -13,7 +13,7 @@ bool AcceptQuestAction::Execute(Event event)
 
     string text = event.getParam();
     PlayerbotChatHandler ch(master);
-    quest = ch.extractQuestId(text.c_str());
+    quest = ch.extractQuestId(text);
     if (quest)
     {
         guid = master->GetSelectionGuid().GetRawValue();

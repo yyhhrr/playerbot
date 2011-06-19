@@ -14,7 +14,7 @@ namespace ai
         {
             for (list<string>::iterator i = supported.begin(); i != supported.end(); i++)
             {
-                const char* s = i->c_str();
+                string s = i->c_str();
 
                 triggers.push_back(new TriggerNode(
                     s, 
@@ -22,7 +22,7 @@ namespace ai
             }
         }
 
-        virtual ActionNode* GetAction(const char* name)
+        virtual ActionNode* GetAction(string name)
         {
             return new ActionNode(name,  
                 /*P*/ NULL,

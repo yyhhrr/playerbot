@@ -10,7 +10,7 @@ bool UseItemAction::Execute(Event event)
     if (name.empty())
         name = getName();
 
-    Item* item = AI_VALUE2(Item*, "inventory item", name.c_str());
+    Item* item = AI_VALUE2(Item*, "inventory item", name);
     if (item)
     {
         UseItem(*item);
@@ -94,7 +94,7 @@ void UseItemAction::UseItem(Item& item)
 
 bool UseItemAction::isPossible() 
 {
-    return !strcmp(getName(), "use") || AI_VALUE2(uint8, "item count", getName()) > 0;
+    return getName() == "use" || AI_VALUE2(uint8, "item count", getName()) > 0;
 }
 
 bool UseSpellItemAction::isUseful()

@@ -16,23 +16,23 @@ void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* RacialsStrategy::GetAction(const char* name)
+ActionNode* RacialsStrategy::GetAction(string name)
 {
-	if (!strcmp("lifeblood", name)) 
+	if (name == "lifeblood") 
 	{
 		return new ActionNode ("lifeblood",  
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("gift of the naaru"), NULL), 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("gift of the naaru", name)) 
+	else if (name == "gift of the naaru") 
 	{
 		return new ActionNode ("gift of the naaru",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("arcane torrent", name)) 
+    else if (name == "arcane torrent") 
     {
         return new ActionNode ("arcane torrent",  
             /*P*/ NULL,

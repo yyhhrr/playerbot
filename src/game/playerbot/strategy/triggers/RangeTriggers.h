@@ -15,7 +15,7 @@ namespace ai
 
     class EnemyOutOfRangeTrigger : public Trigger {
     public:
-        EnemyOutOfRangeTrigger(PlayerbotAI* ai, const char* name, float distance) : Trigger(ai, name) 
+        EnemyOutOfRangeTrigger(PlayerbotAI* ai, string name, float distance) : Trigger(ai, name) 
 		{
             this->distance = distance;
         }

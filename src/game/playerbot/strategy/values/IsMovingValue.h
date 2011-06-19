@@ -10,7 +10,7 @@ namespace ai
 
         virtual bool Calculate() 
         {
-            Unit* target = AI_VALUE(Unit*, qualifier.c_str());
+            Unit* target = AI_VALUE(Unit*, qualifier);
 
             if (!target)
                 return false;

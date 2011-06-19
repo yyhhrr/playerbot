@@ -42,93 +42,93 @@ void CasterDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* CasterDruidStrategy::GetAction(const char* name)
+ActionNode* CasterDruidStrategy::GetAction(string name)
 {
-    if (!strcmp("faerie fire", name))
+    if (name == "faerie fire")
     {
         return new ActionNode ("faerie fire",
             /*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("reach spell", name))
+	else if (name == "reach spell")
 	{
 		return new ActionNode ("reach spell",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("flee", name))
+	else if (name == "flee")
 	{
 		return new ActionNode ("flee",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("moonkin form", name))
+    else if (name == "moonkin form")
     {
         return new ActionNode ("moonkin form",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("hibernate", name))
+	else if (name == "hibernate")
 	{
 		return new ActionNode ("hibernate",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NextAction::array(0, new NextAction("entangling roots"), NULL),
 			/*C*/ NextAction::array(0, new NextAction("flee", 49.0f), NULL));
 	}
-	else if (!strcmp("entangling roots", name))
+	else if (name == "entangling roots")
 	{
 		return new ActionNode ("entangling roots",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NextAction::array(0, new NextAction("flee", 49.0f), NULL));
 	}
-    else if (!strcmp("entangling roots on cc", name))
+    else if (name == "entangling roots on cc")
     {
         return new ActionNode ("entangling roots on cc",
             /*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("wrath", name))
+    else if (name == "wrath")
 	{
 		return new ActionNode ("wrath",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("starfall", name))
+    else if (name == "starfall")
 	{
 		return new ActionNode ("starfall",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("insect swarm", name))
+	else if (name == "insect swarm")
 	{
 		return new ActionNode ("insect swarm",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("moonfire", name))
+	else if (name == "moonfire")
 	{
 		return new ActionNode ("moonfire",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("starfire", name))
+	else if (name == "starfire")
 	{
 		return new ActionNode ("starfire",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("nature's grasp", name))
+	else if (name == "nature's grasp")
 	{
 		return new ActionNode ("nature's grasp",
 			/*P*/ NextAction::array(0, new NextAction("moonkin form"), NULL),

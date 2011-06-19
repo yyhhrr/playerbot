@@ -1,6 +1,6 @@
 #pragma once
 
-char * strstri (const char * str1, const char * str2);
+char * strstri (const char* str1, const char* str2);
 
 namespace ai
 {
@@ -135,7 +135,7 @@ namespace ai
     class QueryNamedItemCountVisitor : public QueryItemCountVisitor 
     {
     public:
-        QueryNamedItemCountVisitor(const char* name) : QueryItemCountVisitor(0)
+        QueryNamedItemCountVisitor(string name) : QueryItemCountVisitor(0)
         {
             this->name = name;
         }
@@ -143,14 +143,14 @@ namespace ai
         virtual bool Visit(Item* item)
         {
             const ItemPrototype* proto = item->GetProto();
-            if (proto && proto->Name1 && strstri(proto->Name1, name))
+            if (proto && proto->Name1 && strstri(proto->Name1, name.c_str()))
                 count += item->GetCount();
 
             return true;
         }
 
     private:
-        const char* name;
+        string name;
     };
 
 
@@ -195,18 +195,18 @@ namespace ai
 
     class FindUsableNamedItemVisitor : public FindUsableItemVisitor {
     public:
-        FindUsableNamedItemVisitor(Player* bot, const char* name) : FindUsableItemVisitor(bot) 
+        FindUsableNamedItemVisitor(Player* bot, string name) : FindUsableItemVisitor(bot) 
         {
             this->name = name;
         }
 
         virtual bool Accept(const ItemPrototype* proto)
         {
-            return proto && proto->Name1 && strstri(proto->Name1, name);
+            return proto && proto->Name1 && strstri(proto->Name1, name.c_str());
         }
 
     private:
-        const char* name;
+        string name;
     };
 
     class FindItemByIdVisitor : public FindItemVisitor {

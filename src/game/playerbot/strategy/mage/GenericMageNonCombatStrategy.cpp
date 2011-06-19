@@ -31,55 +31,55 @@ void GenericMageNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigger
 }
 
 
-ActionNode* GenericMageNonCombatStrategy::GetAction(const char* name)
+ActionNode* GenericMageNonCombatStrategy::GetAction(string name)
 {
     ActionNode* node = GenericMageStrategy::GetAction(name);
     if (node)
         return node;
 
-    if (!strcmp("arcane intellect", name)) 
+    if (name == "arcane intellect") 
     {
         return new ActionNode ("arcane intellect",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("arcane intellect on party", name)) 
+    else if (name == "arcane intellect on party") 
     {
         return new ActionNode ("arcane intellect on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("conjure water", name)) 
+	else if (name == "conjure water") 
 	{
 		return new ActionNode ("conjure water",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("conjure food", name)) 
+	else if (name == "conjure food") 
 	{
 		return new ActionNode ("conjure food",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("mage armor", name)) 
+    else if (name == "mage armor") 
     {
         return new ActionNode ("mage armor",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("ice armor"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("ice armor", name)) 
+    else if (name == "ice armor") 
     {
         return new ActionNode ("ice armor",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("frost armor"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("frost armor", name)) 
+    else if (name == "frost armor") 
     {
         return new ActionNode ("frost armor",  
             /*P*/ NULL,

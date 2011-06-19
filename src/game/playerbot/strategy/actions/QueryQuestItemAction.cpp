@@ -53,7 +53,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId, const Quest *questTempl
         out << available;
         out << "/";
         out << required;
-        ai->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str());
     }
 }
 

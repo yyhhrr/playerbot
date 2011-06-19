@@ -5,10 +5,10 @@
 
 using namespace ai;
 
-class TestQualifiedValue : public ManualSetValue<string>, public Qualified
+class TestQualifiedValue : public ManualSetValue<string >, public Qualified
 {
 public:
-    TestQualifiedValue(PlayerbotAI* ai) : ManualSetValue<string>(ai, "", "name"), Qualified() {}
+    TestQualifiedValue(PlayerbotAI* ai) : ManualSetValue<string >(ai, "", "name"), Qualified() {}
     virtual string Get() { return qualifier; }
 };
 
@@ -55,7 +55,7 @@ protected:
         MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
         
-        Value<string> *value = context.GetValue<string>("value", "data");
+        Value<string > *value = context.GetValue<string >("value", "data");
         CPPUNIT_ASSERT(value->Get() == "data");
 	}
 
@@ -64,7 +64,7 @@ protected:
         MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
 
-        Value<string> *value = context.GetValue<string>("value");
+        Value<string > *value = context.GetValue<string >("value");
         CPPUNIT_ASSERT(value->Get().empty());
     }
 
@@ -73,10 +73,10 @@ protected:
         MockPlayerbotAIBase ai;
         TestQualifiedValueAiObjectContext context(&ai);
 
-        Value<string> *value = context.GetValue<string>("value", 5);
+        Value<string > *value = context.GetValue<string >("value", 5);
         CPPUNIT_ASSERT(value->Get() == "5");
     
-        value = context.GetValue<string>("value", "5");
+        value = context.GetValue<string >("value", "5");
         CPPUNIT_ASSERT(value->Get() == "5");
     }
 };

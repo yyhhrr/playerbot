@@ -45,17 +45,17 @@ public:
 
         remove(name, " on party");
         remove(name, " on cc");
-        if (name.find("cleanse") != string::npos)
+        if (name.find("cleanse") != string ::npos)
             name = "cleanse";
-        if (name.find("purify") != string::npos)
+        if (name.find("purify") != string ::npos)
             name = "purify";
         ai->spellCooldowns.push_back(name); 
     }
 
-    void remove(string& name, string pattern)
+    void remove(string & name, string pattern)
     {
         size_t pos = name.find(pattern);
-        if (pos != string::npos)
+        if (pos != string ::npos)
             name = name.substr(0, pos);
     }
 
@@ -79,7 +79,7 @@ void EngineTestBase::tearDown()
 
 void EngineTestBase::va_generic(void (EngineTestBase::*callback)(const char*), va_list vl)
 {
-	const char* cur = NULL;
+	const char* cur;
 	do 
 	{
 		cur = va_arg(vl, const char*);
@@ -119,7 +119,7 @@ void EngineTestBase::tick()
 	engine->DoNextAction(NULL);
 }
 
-void EngineTestBase::assertActions(const char* expected) 
+void EngineTestBase::assertActions(string  expected) 
 {
 	bool pass = ai->buffer == expected;
 	if (!pass)
@@ -143,42 +143,42 @@ void EngineTestBase::tickWithNoTarget()
     context->GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
 }
 
-void EngineTestBase::spellUnavailable(const char* spell)
+void EngineTestBase::spellUnavailable(string  spell)
 {
 	ai->spellCooldowns.push_back(spell);
 }
 
-void EngineTestBase::tickWithSpellUnavailable(const char* spell)
+void EngineTestBase::tickWithSpellUnavailable(string  spell)
 {
 	spellUnavailable(spell);
 	tick();
 }
 
-void EngineTestBase::tickWithSpellAvailable(const char* spell) 
+void EngineTestBase::tickWithSpellAvailable(string  spell) 
 {
 	spellAvailable(spell);
 	tick();
 }
 
-void EngineTestBase::spellAvailable(const char* spell)
+void EngineTestBase::spellAvailable(string  spell)
 {
-    list<string> remove;
-    for (list<string>::iterator i = ai->spellCooldowns.begin(); i != ai->spellCooldowns.end(); i++)
+    list<string > remove;
+    for (list<string >::iterator i = ai->spellCooldowns.begin(); i != ai->spellCooldowns.end(); i++)
     {
-        if (i->find(spell) != string::npos) remove.push_back(*i);
+        if (i->find(spell) != string ::npos) remove.push_back(*i);
     }
-    for (list<string>::iterator i = remove.begin(); i != remove.end(); i++)
+    for (list<string >::iterator i = remove.begin(); i != remove.end(); i++)
     {
         ai->spellCooldowns.remove(*i);
     }
 }
 
-void EngineTestBase::addAura(const char* spell)
+void EngineTestBase::addAura(string  spell)
 {
 	ai->auras[MockedTargets::GetSelf()].push_back(spell);
 }
 
-void EngineTestBase::removeAura(const char* spell)
+void EngineTestBase::removeAura(string  spell)
 {
 	ai->auras[MockedTargets::GetSelf()].remove(spell);
 }
@@ -356,22 +356,22 @@ void EngineTestBase::tickInSpellRange()
     tick();
 }
 
-void EngineTestBase::addTargetAura(const char* spell)
+void EngineTestBase::addTargetAura(string  spell)
 {
 	ai->auras[MockedTargets::GetCurrentTarget()].push_back(spell);
 }
 
-void EngineTestBase::removeTargetAura(const char* spell)
+void EngineTestBase::removeTargetAura(string  spell)
 {
     ai->auras[MockedTargets::GetCurrentTarget()].remove(spell);
 }
 
-void EngineTestBase::addPartyAura(const char* spell)
+void EngineTestBase::addPartyAura(string  spell)
 {
     ai->auras[MockedTargets::GetPartyMember()].push_back(spell);
 }
 
-void EngineTestBase::removePartyAura(const char* spell)
+void EngineTestBase::removePartyAura(string  spell)
 {
     ai->auras[MockedTargets::GetPartyMember()].remove(spell);
 }
@@ -397,7 +397,7 @@ void EngineTestBase::tickWithNoFood()
     set<Item*>("inventory item", "food", (Item*)(void*)0x01);
 }
 
-void EngineTestBase::itemAvailable(const char* item, int amount)
+void EngineTestBase::itemAvailable(string  item, int amount)
 {
     set<uint8>("item count", item, 2);
 }
@@ -416,7 +416,7 @@ void EngineTestBase::tickBehindTarget()
     set<bool>("behind", "current target", false);
 }
 
-void EngineTestBase::tickWithCcTarget(const char* spell)
+void EngineTestBase::tickWithCcTarget(string  spell)
 {   
     set<uint8>("attacker count", 3);
     context->GetValue<Unit*>("cc target", spell)->Set(MockedTargets::GetCc());

@@ -13,7 +13,7 @@ void Queue::Push(ActionBasket *action)
         for (std::list<ActionBasket*>::iterator iter = actions.begin(); iter != actions.end(); iter++)
         {
             ActionBasket* basket = *iter;
-            if (!strcmp(action->getAction()->getName(), basket->getAction()->getName()))
+            if (action->getAction()->getName() == basket->getAction()->getName())
             {
                 basket->setRelevance(action->getRelevance());
                 delete action;

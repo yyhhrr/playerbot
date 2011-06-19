@@ -102,12 +102,12 @@ bool AndTrigger::IsActive()
     return ls->IsActive() && rs->IsActive();
 }
 
-const char* AndTrigger::getName()
+string AndTrigger::getName()
 {
     std::string name(ls->getName());
     name = name + " and ";
     name = name + rs->getName();
-    return name.c_str();
+    return name;
 }
 
 bool BoostTrigger::IsActive()
@@ -123,7 +123,7 @@ bool SnareTargetTrigger::IsActive()
 
 bool ItemCountTrigger::IsActive()
 {
-	return AI_VALUE2(uint8, "item count", item.c_str()) < count;
+	return AI_VALUE2(uint8, "item count", item) < count;
 }
 
 bool InterruptSpellTrigger::IsActive()

@@ -6,7 +6,7 @@ namespace ai
 {
     class MovementAction : public Action {
     public:
-        MovementAction(PlayerbotAI* ai, const char* name) : Action(ai, name) 
+        MovementAction(PlayerbotAI* ai, string name) : Action(ai, name) 
         {
             bot = ai->GetBot();
         }

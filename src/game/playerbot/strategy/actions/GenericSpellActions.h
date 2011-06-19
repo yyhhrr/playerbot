@@ -46,13 +46,13 @@ namespace ai
     class CastSpellAction : public Action
     {
     public:
-        CastSpellAction(PlayerbotAI* ai, const char* spell) : Action(ai, spell),
+        CastSpellAction(PlayerbotAI* ai, string spell) : Action(ai, spell),
 			range(SPELL_DISTANCE)
         {
             this->spell = spell;
         }
 
-		virtual const char* GetTargetName() { return "current target"; };
+		virtual string GetTargetName() { return "current target"; };
         virtual bool Execute(Event event);
         virtual bool isPossible();
 		virtual bool isUseful();
@@ -68,7 +68,7 @@ namespace ai
 		}
 
     protected:
-        const char* spell;
+        string spell;
 		float range;
     };
 
@@ -76,7 +76,7 @@ namespace ai
 	class CastAuraSpellAction : public CastSpellAction
 	{
 	public:
-		CastAuraSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
+		CastAuraSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) {}
 
 		virtual bool isPossible();
 		virtual bool isUseful();
@@ -86,7 +86,7 @@ namespace ai
     class CastMeleeSpellAction : public CastSpellAction
     {
     public:
-        CastMeleeSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {
+        CastMeleeSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) {
 			range = ATTACK_DISTANCE;
 		}
     };
@@ -95,18 +95,18 @@ namespace ai
     class CastDebuffSpellAction : public CastAuraSpellAction
     {
     public:
-        CastDebuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) {}
+        CastDebuffSpellAction(PlayerbotAI* ai, string spell) : CastAuraSpellAction(ai, spell) {}
     };
 
 	class CastBuffSpellAction : public CastAuraSpellAction
 	{
 	public:
-		CastBuffSpellAction(PlayerbotAI* ai, const char* spell) : CastAuraSpellAction(ai, spell) 
+		CastBuffSpellAction(PlayerbotAI* ai, string spell) : CastAuraSpellAction(ai, spell) 
 		{
 			range = BOT_REACT_DISTANCE;
 		}
 		
-        virtual const char* GetTargetName() { return "self target"; }
+        virtual string GetTargetName() { return "self target"; }
 	};
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -114,12 +114,12 @@ namespace ai
     class CastHealingSpellAction : public CastAuraSpellAction
     {
     public:
-        CastHealingSpellAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
+        CastHealingSpellAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
 		{
             this->estAmount = estAmount;
 			range = BOT_REACT_DISTANCE;
         }
-		virtual const char* GetTargetName() { return "self target"; }
+		virtual string GetTargetName() { return "self target"; }
         virtual bool isUseful();
 
     protected:
@@ -129,22 +129,22 @@ namespace ai
 	class CastCureSpellAction : public CastSpellAction
 	{
 	public:
-		CastCureSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) 
+		CastCureSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) 
 		{
 			range = BOT_REACT_DISTANCE;
 		}
 
-		virtual const char* GetTargetName() { return "self target"; }
+		virtual string GetTargetName() { return "self target"; }
 	};
 
 	class PartyMemberActionNameSupport {
 	public:
-		PartyMemberActionNameSupport(const char* spell) 
+		PartyMemberActionNameSupport(string spell) 
 		{
 			name = string(spell) + " on party";
 		}
 
-		virtual const char* getName() { return name.c_str(); }
+		virtual string getName() { return name; }
 
 	private:
 		string name;
@@ -153,33 +153,33 @@ namespace ai
     class HealPartyMemberAction : public CastHealingSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        HealPartyMemberAction(PlayerbotAI* ai, const char* spell, uint8 estAmount = 15.0f) : 
+        HealPartyMemberAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : 
 			CastHealingSpellAction(ai, spell, estAmount), PartyMemberActionNameSupport(spell) {}
 
-		virtual const char* GetTargetName() { return "party member to heal"; }
-		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+		virtual string GetTargetName() { return "party member to heal"; }
+		virtual string getName() { return PartyMemberActionNameSupport::getName(); }
     };
 
 	class ResurrectPartyMemberAction : public CastSpellAction
 	{
 	public:
-		ResurrectPartyMemberAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
+		ResurrectPartyMemberAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) {}
 
-		virtual const char* GetTargetName() { return "party member to resurrect"; }
+		virtual string GetTargetName() { return "party member to resurrect"; }
 	};
     //---------------------------------------------------------------------------------------------------------------------
 
     class CurePartyMemberAction : public CastSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        CurePartyMemberAction(PlayerbotAI* ai, const char* spell, uint32 dispelType) : 
+        CurePartyMemberAction(PlayerbotAI* ai, string spell, uint32 dispelType) : 
 			CastSpellAction(ai, spell), PartyMemberActionNameSupport(spell)
         {
             this->dispelType = dispelType;
         }
 
 		virtual Value<Unit*>* GetTargetValue();
-		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+		virtual string getName() { return PartyMemberActionNameSupport::getName(); }
 
     protected:
         uint32 dispelType;
@@ -190,11 +190,11 @@ namespace ai
     class BuffOnPartyAction : public CastBuffSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        BuffOnPartyAction(PlayerbotAI* ai, const char* spell) : 
+        BuffOnPartyAction(PlayerbotAI* ai, string spell) : 
 			CastBuffSpellAction(ai, spell), PartyMemberActionNameSupport(spell) {}
     public: 
 		virtual Value<Unit*>* GetTargetValue();
-		virtual const char* getName() { return PartyMemberActionNameSupport::getName(); }
+		virtual string getName() { return PartyMemberActionNameSupport::getName(); }
     };
 
     //---------------------------------------------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ bool GossipHelloAction::Execute(Event event)
     Creature *pCreature = bot->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_NONE);
     if (!pCreature)
     {
-        DEBUG_LOG ("[PlayerbotMgr]: HandleMasterIncomingPacket - Received  CMSG_GOSSIP_HELLO %s not found or you can't interact with him.", guid.GetString().c_str());
+        DEBUG_LOG ("[PlayerbotMgr]: HandleMasterIncomingPacket - Received  CMSG_GOSSIP_HELLO %s not found or you can't interact with him.", guid.GetString());
         return false;
     }
 
@@ -27,14 +27,14 @@ bool GossipHelloAction::Execute(Event event)
         return false;
 
     ostringstream out; out << "--- " << pCreature->GetName() << " ---";
-    ai->TellMaster(LOG_LVL_DEBUG, out.str().c_str());
+    ai->TellMaster(LOG_LVL_DEBUG, out.str());
     for (GossipMenuItemsMap::const_iterator itr = pMenuItemBounds.first; itr != pMenuItemBounds.second; ++itr)
     {
         uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
         if (!(itr->second.npc_option_npcflag & npcflags))
             continue;
 
-        ai->TellMaster(LOG_LVL_DEBUG, itr->second.option_text.c_str());
+        ai->TellMaster(LOG_LVL_DEBUG, itr->second.option_text);
 
         switch (itr->second.option_id)
         {

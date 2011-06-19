@@ -9,7 +9,7 @@ namespace ai
 		{
 			managers[AiSpellManagerType] = new EverythingUnavailableAiSpellManager(ai, this, &buffer);
 		}
-        virtual bool CanCastSpell(const char* name, Unit* target) { return false; }
+        virtual bool CanCastSpell(string  name, Unit* target) { return false; }
     };
 
 }

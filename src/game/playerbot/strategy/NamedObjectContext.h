@@ -105,7 +105,7 @@ namespace ai
             contexts.push_back(context);
         }
 
-        T* GetObject(const char* name, PlayerbotAI* ai)
+        T* GetObject(string name, PlayerbotAI* ai)
         {
             for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {

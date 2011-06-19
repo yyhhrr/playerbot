@@ -165,7 +165,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
     return actionExecuted;
 }
 
-ActionNode* Engine::GetAction(const char* name)
+ActionNode* Engine::GetAction(string name)
 {
     for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
@@ -216,7 +216,7 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
     return pushed;
 }
 
-bool Engine::ExecuteAction(const char* name)
+bool Engine::ExecuteAction(string name)
 {
 	bool result = false;
 
@@ -233,7 +233,7 @@ bool Engine::ExecuteAction(const char* name)
 	return result;
 }
 
-void Engine::addStrategy(const char* name)
+void Engine::addStrategy(string name)
 {
     removeStrategy(name);
 
@@ -246,21 +246,21 @@ void Engine::addStrategy(const char* name)
 		if (manager)
 		{
 			string list = strategy->GetIncompatibleStrategies();
-			manager->ChangeStrategy(list.c_str(), this);
+			manager->ChangeStrategy(list, this);
 		}
 	}
 
     Init();
 }
 
-void Engine::addStrategies(const char* first, ...)
+void Engine::addStrategies(string first, ...)
 {
 	addStrategy(first);
 
 	va_list vl;
 	va_start(vl, first);
 
-	const char* cur = NULL;
+	const char* cur;
 	do 
 	{
 		cur = va_arg(vl, const char*);
@@ -272,12 +272,12 @@ void Engine::addStrategies(const char* first, ...)
 	va_end(vl);
 }
 
-bool Engine::removeStrategy(const char* name)
+bool Engine::removeStrategy(string name)
 {
     for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
         Strategy* strategy = *i;
-        if (!strcmp(strategy->getName(), name))
+        if (name == strategy->getName())
         {
             strategies.remove(strategy);
             Init();
@@ -288,7 +288,7 @@ bool Engine::removeStrategy(const char* name)
     return false;
 }
 
-void Engine::toggleStrategy(const char* name)
+void Engine::toggleStrategy(string name)
 {
     if (!removeStrategy(name)) 
         addStrategy(name);

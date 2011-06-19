@@ -12,7 +12,7 @@ public:
     virtual ~PrerequisiteAction() { destroyed = TRUE; }
 
     bool Execute(Event event) { executed++; return TRUE; }
-    const char* getName() {return "PrerequisiteAction"; }
+    virtual string getName() {return "PrerequisiteAction"; }
 
     static int executed;
     static int destroyed;
@@ -28,7 +28,7 @@ public:
     virtual ~AlternativeAction() {destroyed = TRUE;}
 
     bool Execute(Event event) { executed++; return TRUE; }
-    const char* getName() {return "AlternativeAction"; }
+    string  getName() {return "AlternativeAction"; }
 
     static int executed;
     static int destroyed;
@@ -48,7 +48,7 @@ public:
 	}
 
     bool Execute(Event event) { executed++; return TRUE; }
-    const char* getName() {return "RepeatingAction"; }
+    string  getName() {return "RepeatingAction"; }
     bool isPossible() { return available; }
 
 	static int destroyed;
@@ -67,7 +67,7 @@ public:
 	virtual ~TriggeredAction() {}
 
     bool Execute(Event event) { param = event.getParam(); fired = TRUE; return true; }
-    const char* getName() {return "TriggeredAction"; }
+    string  getName() {return "TriggeredAction"; }
 
 	static int fired;
     static string param;
@@ -109,7 +109,7 @@ class TestStrategy : public Strategy
 public:
     TestStrategy(PlayerbotAI* const ai) : Strategy(ai) {}
 
-    virtual const char* getName() { return "TestStrategy"; }
+    virtual string  getName() { return "TestStrategy"; }
 
     virtual NextAction** getDefaultActions() { return NextAction::array(0, new NextAction("RepeatingAction", 1.0f), NULL); }
 
@@ -125,30 +125,30 @@ public:
             NextAction::array(0, new NextAction("TriggeredAction", 10.0f), NULL)));
     }
 
-    virtual ActionNode* GetAction(const char* name)
+    virtual ActionNode* GetAction(string  name)
     {
-        if (!strcmp("TriggeredAction", name)) 
+        if (name == "TriggeredAction") 
         {
             return new ActionNode ("TriggeredAction",  
                 /*P*/ NULL,
                 /*A*/ NULL, 
                 /*C*/ NULL);
         }
-        else if (!strcmp("RepeatingAction", name)) 
+        else if (name == "RepeatingAction") 
         {
             return new ActionNode ("RepeatingAction",  
                 /*P*/ NULL,
                 /*A*/ NextAction::array(0, new NextAction("AlternativeAction", 1.0f), NULL), 
                 /*C*/ NextAction::array(0, new NextAction("RepeatingAction", 1.0f), NULL));
         }
-        else if (!strcmp("AlternativeAction", name)) 
+        else if (name == "AlternativeAction") 
         {
             return new ActionNode ("AlternativeAction",  
                 /*P*/ NextAction::array(0, new NextAction("PrerequisiteAction", 1.0f), NULL),
                 /*A*/ NULL, 
                 /*C*/ NULL);
         }
-        else if (!strcmp("PrerequisiteAction", name)) 
+        else if (name == "PrerequisiteAction") 
         {
             return new ActionNode ("PrerequisiteAction",  
                 /*P*/ NULL,
@@ -164,7 +164,7 @@ class AnotherTestStrategy : public Strategy
 public:
     AnotherTestStrategy(PlayerbotAI* const ai) : Strategy(ai) {}
     
-    virtual const char* getName() { return "AnotherTestStrategy"; }
+    virtual string  getName() { return "AnotherTestStrategy"; }
 };
 
 class TestStrategyContext : public NamedObjectContext<Strategy>

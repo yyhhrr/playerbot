@@ -36,30 +36,30 @@ void DpsPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* DpsPaladinStrategy::GetAction(const char* name)
+ActionNode* DpsPaladinStrategy::GetAction(string name)
 {
-    if (!strcmp("seal of command", name)) 
+    if (name == "seal of command") 
     {
         return new ActionNode ("seal of command",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("seal of wisdom"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("blessing of might", name)) 
+    else if (name == "blessing of might") 
     {
         return new ActionNode ("blessing of might",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL), 
             /*C*/ NULL);
     }
-	else if (!strcmp("divine storm", name)) 
+	else if (name == "divine storm") 
 	{
 		return new ActionNode ("divine storm",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("crusader strike", name)) 
+	else if (name == "crusader strike") 
 	{
 		return new ActionNode ("crusader strike",  
 			/*P*/ NULL,

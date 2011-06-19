@@ -8,10 +8,10 @@ namespace ai
     {
     public:
         GenericMageStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
-        virtual const char* getName() { return "mage"; }
+        virtual string getName() { return "mage"; }
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(const char* name);
+        virtual ActionNode* GetAction(string name);
     };
 }

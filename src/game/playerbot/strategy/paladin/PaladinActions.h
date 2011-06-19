@@ -103,7 +103,7 @@ namespace ai
 	class CastBlessingOfMightOnPartyAction : public BuffOnPartyAction {
 	public:
 		CastBlessingOfMightOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "blessing of might") {}
-        virtual const char* getName() { return "blessing of might on party";}
+        virtual string getName() { return "blessing of might on party";}
 	};
 
 	class CastBlessingOfWisdomAction : public CastBuffSpellAction {
@@ -114,7 +114,7 @@ namespace ai
 	class CastBlessingOfWisdomOnPartyAction : public BuffOnPartyAction {
 	public:
 		CastBlessingOfWisdomOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "blessing of wisdom") {}
-        virtual const char* getName() { return "blessing of wisdom on party";}
+        virtual string getName() { return "blessing of wisdom on party";}
 	};
 
 	class CastBlessingOfKingsAction : public CastBuffSpellAction {
@@ -125,7 +125,7 @@ namespace ai
 	class CastBlessingOfKingsOnPartyAction : public BuffOnPartyAction {
 	public:
 		CastBlessingOfKingsOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "blessing of kings") {}
-        virtual const char* getName() { return "blessing of kings on party";}
+        virtual string getName() { return "blessing of kings on party";}
 	};
 
 	class CastBlessingOfSanctuaryAction : public CastBuffSpellAction {
@@ -136,7 +136,7 @@ namespace ai
 	class CastBlessingOfSanctuaryOnPartyAction : public BuffOnPartyAction {
 	public:
 		CastBlessingOfSanctuaryOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "blessing of sanctuary") {}
-        virtual const char* getName() { return "blessing of sanctuary on party";}
+        virtual string getName() { return "blessing of sanctuary on party";}
 	};
 
     class CastHolyLightAction : public CastHealingSpellAction {
@@ -149,7 +149,7 @@ namespace ai
     public:
         CastHolyLightOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "holy light") {}
 
-        virtual const char* getName() { return "holy light on party"; }
+        virtual string getName() { return "holy light on party"; }
     };
 
     class CastFlashOfLightAction : public CastHealingSpellAction {
@@ -162,7 +162,7 @@ namespace ai
     public:
         CastFlashOfLightOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "flash of light") {}
 
-        virtual const char* getName() { return "flash of light on party"; }
+        virtual string getName() { return "flash of light on party"; }
     };
 
     class CastLayOnHandsAction : public CastHealingSpellAction {
@@ -175,7 +175,7 @@ namespace ai
     public:
         CastLayOnHandsOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "lay on hands") {}
 
-        virtual const char* getName() { return "lay on hands on party"; }
+        virtual string getName() { return "lay on hands on party"; }
     };
 
 	class CastDivineProtectionAction : public CastBuffSpellAction {
@@ -188,7 +188,7 @@ namespace ai
     public:
         CastDivineProtectionOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "divine protection") {}
 
-        virtual const char* getName() { return "divine protection on party"; }
+        virtual string getName() { return "divine protection on party"; }
     };
 
 	class CastDivineShieldAction: public CastBuffSpellAction {
@@ -227,7 +227,7 @@ namespace ai
     public:
         CastPurifyPoisonOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "purify", DISPEL_POISON) {}
 
-        virtual const char* getName() { return "purify poison on party"; }
+        virtual string getName() { return "purify poison on party"; }
     };
 
 	class CastPurifyDiseaseOnPartyAction : public CurePartyMemberAction
@@ -235,7 +235,7 @@ namespace ai
 	public:
 		CastPurifyDiseaseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "purify", DISPEL_DISEASE) {}
 
-		virtual const char* getName() { return "purify disease on party"; }
+		virtual string getName() { return "purify disease on party"; }
 	};
 
 	class CastHandOfReckoningAction : public CastDebuffSpellAction {
@@ -253,7 +253,7 @@ namespace ai
     public:
         CastCleansePoisonOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse", DISPEL_POISON) {}
 
-        virtual const char* getName() { return "cleanse poison on party"; }
+        virtual string getName() { return "cleanse poison on party"; }
     };
 
 	class CastCleanseDiseaseOnPartyAction : public CurePartyMemberAction
@@ -261,7 +261,7 @@ namespace ai
 	public:
 		CastCleanseDiseaseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse", DISPEL_DISEASE) {}
 
-		virtual const char* getName() { return "cleanse disease on party"; }
+		virtual string getName() { return "cleanse disease on party"; }
 	};
 
 	class CastCleanseMagicOnPartyAction : public CurePartyMemberAction
@@ -269,7 +269,7 @@ namespace ai
 	public:
 		CastCleanseMagicOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse", DISPEL_MAGIC) {}
 
-		virtual const char* getName() { return "cleanse magic on party"; }
+		virtual string getName() { return "cleanse magic on party"; }
 	};
 
     BEGIN_SPELL_ACTION(CastAvengersShieldAction, "avenger's shield")

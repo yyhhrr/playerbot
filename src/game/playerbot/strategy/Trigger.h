@@ -19,11 +19,10 @@ class clazz : public super \
 
 namespace ai
 {
-    class Trigger : public AiObject
+    class Trigger : public AiNamedObject
 	{
 	public:
-        Trigger(PlayerbotAI* ai, const char* name = "trigger", int checkInterval = 1) : AiObject(ai) {
-            this->name = name;
+        Trigger(PlayerbotAI* ai, string name = "trigger", int checkInterval = 1) : AiNamedObject(ai, name) {
 			this->checkInterval = checkInterval;
 			ticksElapsed = 0;
         }
@@ -35,11 +34,10 @@ namespace ai
         virtual void ExternalEvent(WorldPacket &packet) {}
         virtual bool IsActive() { return false; }
         virtual NextAction** getHandlers() { return NULL; }
-        virtual const char* getName() { return name.c_str(); }
         void Update() {}
         virtual Unit* GetTarget();
         virtual Value<Unit*>* GetTargetValue();
-        virtual const char* GetTargetName() { return "self target"; }
+        virtual string GetTargetName() { return "self target"; }
 
 		bool needCheck() {
 			if (++ticksElapsed >= checkInterval) {
@@ -50,7 +48,6 @@ namespace ai
 		}
 
     protected:
-        string name;
 		int checkInterval;
 		int ticksElapsed;
 	};
@@ -59,7 +56,7 @@ namespace ai
     class TriggerNode
     {
     public:
-        TriggerNode(const char* name, NextAction** handlers = NULL)
+        TriggerNode(string name, NextAction** handlers = NULL)
         {
             this->name = name; 
             this->handlers = handlers;
@@ -73,7 +70,7 @@ namespace ai
     public:
         Trigger* getTrigger() { return trigger; }
         void setTrigger(Trigger* trigger) { this->trigger = trigger; }
-        const char* getName() { return name.c_str(); }
+        string getName() { return name; }
 
     public:
         NextAction** getHandlers() { return NextAction::merge(NextAction::clone(handlers), trigger->getHandlers()); }

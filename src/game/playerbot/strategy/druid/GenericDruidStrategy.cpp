@@ -47,107 +47,107 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
 }
 
-ActionNode* GenericDruidStrategy::GetAction(const char* name)
+ActionNode* GenericDruidStrategy::GetAction(string name)
 {
-    if (!strcmp("melee", name)) 
+    if (name == "melee") 
     {
         return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("caster form", name)) 
+    else if (name == "caster form") 
     {
         return new ActionNode ("caster form",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("gift of the naaru", name)) 
+    else if (name == "gift of the naaru") 
     {
         return new ActionNode ("gift of the naaru",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("regrowth"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("regrowth", name)) 
+    else if (name == "regrowth") 
     {
         return new ActionNode ("regrowth",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("rejuvenation", name)) 
+    else if (name == "rejuvenation") 
     {
         return new ActionNode ("rejuvenation",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("healing touch", name)) 
+    else if (name == "healing touch") 
     {
         return new ActionNode ("healing touch",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("regrowth on party", name)) 
+    else if (name == "regrowth on party") 
     {
         return new ActionNode ("regrowth on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("rejuvenation on party", name)) 
+    else if (name == "rejuvenation on party") 
     {
         return new ActionNode ("rejuvenation on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("healing touch on party", name)) 
+    else if (name == "healing touch on party") 
     {
         return new ActionNode ("healing touch on party",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("cure poison", name)) 
+    else if (name == "cure poison") 
     {
         return new ActionNode ("cure poison",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("cure poison on party", name)) 
+    else if (name == "cure poison on party") 
     {
         return new ActionNode ("cure poison on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("abolish poison", name)) 
+    else if (name == "abolish poison") 
     {
         return new ActionNode ("abolish poison",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("abolish poison on party", name)) 
+    else if (name == "abolish poison on party") 
     {
         return new ActionNode ("abolish poison on party",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("rebirth", name)) 
+	else if (name == "rebirth") 
 	{
 		return new ActionNode ("rebirth",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("entangling roots on cc", name)) 
+    else if (name == "entangling roots on cc") 
     {
         return new ActionNode ("entangling roots on cc",  
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),

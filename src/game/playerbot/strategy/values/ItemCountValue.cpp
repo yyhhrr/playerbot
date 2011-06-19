@@ -20,7 +20,7 @@ uint8 ItemCountValue::Calculate()
     if (qualifier == "healing potion")
         return Find(FindFoodVisitor(bot, 441)) ? 1 : 0;
 
-    const char* name = qualifier.c_str();
+    string name = qualifier;
     ItemIds ids = InventoryAction::chat->parseItems(qualifier);
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
     {
@@ -73,19 +73,19 @@ Item* InventoryItemValue::Calculate()
     return NULL;
 }
 
-uint32 InventoryItemValue::TextToItemQuality( const char* text ) 
+uint32 InventoryItemValue::TextToItemQuality( string text ) 
 {
     uint32 quality = MAX_ITEM_QUALITY;
 
-    if (strstr(text, "poor") || strstr(text, "gray"))
+    if (text == "poor" || text == "gray")
         quality = ITEM_QUALITY_POOR;
-    else if (strstr(text, "normal") || strstr(text, "white"))
+    else if (text == "normal" || text == "white")
         quality = ITEM_QUALITY_NORMAL;
-    else if (strstr(text, "uncommon") || strstr(text, "green"))
+    else if (text == "uncommon" || text == "green")
         quality = ITEM_QUALITY_UNCOMMON;
-    else if (strstr(text, "rare") || strstr(text, "blue"))
+    else if (text == "rare" || text == "blue")
         quality = ITEM_QUALITY_RARE;
-    else if (strstr(text, "epic") || strstr(text, "violet"))
+    else if (text == "epic" || text == "violet")
         quality = ITEM_QUALITY_EPIC;
 
     return quality;

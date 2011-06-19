@@ -31,86 +31,86 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("rapid fire", 55.0f), NULL)));
 }
 
-ActionNode* GenericHunterStrategy::GetAction(const char* name)
+ActionNode* GenericHunterStrategy::GetAction(string name)
 {
-    if (!strcmp("call pet", name)) 
+    if (name == "call pet") 
     {
         return new ActionNode ("call pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("reach spell", name)) 
+    else if (name == "reach spell") 
     {
         return new ActionNode ("reach spell",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("flee", name)) 
+    else if (name == "flee") 
     {
         return new ActionNode ("flee",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("mend pet", name)) 
+    else if (name == "mend pet") 
     {
         return new ActionNode ("mend pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("revive pet", name)) 
+    else if (name == "revive pet") 
     {
         return new ActionNode ("revive pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("rapid fire", name) || !strcmp("boost", name)) 
+    else if (name == "rapid fire" || name == "boost") 
     {
         return new ActionNode ("rapid fire",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("readyness"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("readyness", name)) 
+    else if (name == "readyness") 
     {
         return new ActionNode ("readyness",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the hawk", name)) 
+    else if (name == "aspect of the hawk") 
     {
         return new ActionNode ("aspect of the hawk",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the wild", name)) 
+    else if (name == "aspect of the wild") 
     {
         return new ActionNode ("aspect of the wild",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the viper", name)) 
+    else if (name == "aspect of the viper") 
     {
         return new ActionNode ("aspect of the viper",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the pack", name)) 
+    else if (name == "aspect of the pack") 
     {
         return new ActionNode ("aspect of the pack",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("aspect of the cheetah"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("aspect of the cheetah", name)) 
+    else if (name == "aspect of the cheetah") 
     {
         return new ActionNode ("aspect of the cheetah",  
             /*P*/ NULL,

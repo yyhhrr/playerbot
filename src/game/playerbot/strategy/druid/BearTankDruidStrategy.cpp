@@ -53,86 +53,86 @@ void BearTankDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* BearTankDruidStrategy::GetAction(const char* name)
+ActionNode* BearTankDruidStrategy::GetAction(string name)
 {
-    if (!strcmp("melee", name))
+    if (name == "melee")
     {
         return new ActionNode ("melee",
             /*P*/ NextAction::array(0, new NextAction("dire bear form"), new NextAction("feral charge - bear"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("feral charge - bear", name))
+    else if (name == "feral charge - bear")
     {
         return new ActionNode ("feral charge - bear",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("swipe (bear)", name))
+    else if (name == "swipe (bear)")
     {
         return new ActionNode ("swipe (bear)",
             /*P*/ NextAction::array(0, new NextAction("dire bear form"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("faerie fire (feral)", name))
+    else if (name == "faerie fire (feral)")
     {
         return new ActionNode ("faerie fire (feral)",
 			/*P*/ NextAction::array(0, new NextAction("dire bear form"), new NextAction("feral charge - bear"), NULL),
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("bear form", name))
+    else if (name == "bear form")
     {
         return new ActionNode ("bear form",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("dire bear form", name))
+    else if (name == "dire bear form")
     {
         return new ActionNode ("dire bear form",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("mangle (bear)", name))
+    else if (name == "mangle (bear)")
     {
         return new ActionNode ("mangle (bear)",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("maul"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("maul", name))
+    else if (name == "maul")
     {
         return new ActionNode ("maul",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("bash", name))
+    else if (name == "bash")
     {
         return new ActionNode ("bash",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("swipe", name))
+    else if (name == "swipe")
     {
         return new ActionNode ("swipe",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("growl", name))
+    else if (name == "growl")
     {
         return new ActionNode ("growl",
             /*P*/ NextAction::array(0, new NextAction("dire bear form"), new NextAction("reach spell"), NULL),
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("demoralizing roar", name))
+    else if (name == "demoralizing roar")
     {
         return new ActionNode ("demoralizing roar",
             /*P*/ NextAction::array(0, new NextAction("dire bear form"), NULL),

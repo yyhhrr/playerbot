@@ -12,7 +12,7 @@ bool QueryQuestAction::Execute(Event event)
     string text = event.getParam();
 
     PlayerbotChatHandler ch(master);
-    uint32 questId = ch.extractQuestId(text.c_str());
+    uint32 questId = ch.extractQuestId(text);
     if (!questId)
         return false;
 
@@ -23,7 +23,7 @@ bool QueryQuestAction::Execute(Event event)
             ostringstream out;
             out << "Quest ";
             out << (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE ? "completed" : "not completed");
-            ai->TellMaster(out.str().c_str());
+            ai->TellMaster(out.str());
             return true;
         }
     }

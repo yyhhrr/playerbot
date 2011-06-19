@@ -11,42 +11,42 @@ protected:
 
 
 protected:
-    void assertCommand(const char* trigger)
+    void assertCommand(string  trigger)
     {
         assertCommand(trigger, trigger);
     }
 
-    void assertCommand(const char* trigger, const char* expectedAction)
+    void assertCommand(string  trigger, string  expectedAction)
     {
         ai->buffer.clear();
 
         context->GetTrigger(trigger)->ExternalEvent("");
         tick();
 
-        assertActions((string(">S:") + expectedAction).c_str());
+        assertActions(string(">S:") + expectedAction);
     }
 
-    void assertParametrizedCommand(const char* trigger, const char* param)
+    void assertParametrizedCommand(string  trigger, string  param)
     {
         ai->buffer.clear();
 
         context->GetTrigger(trigger)->ExternalEvent(param);
         tick();
 
-        assertActions((string(">S:") + trigger + "(" + param + ")").c_str());
+        assertActions(string (">S:") + trigger + "(" + param + ")");
     }
 
-    void trigger(const char* name)
+    void trigger(string  name)
     {
         context->GetTrigger(name)->ExternalEvent("");
     }
 
-    void trigger(const char* name, const char* param)
+    void trigger(string  name, string  param)
     {
         context->GetTrigger(name)->ExternalEvent(param);
     }
 
-    void tickWithTrigger(const char* name)
+    void tickWithTrigger(string  name)
     {
         trigger(name);
         tick();

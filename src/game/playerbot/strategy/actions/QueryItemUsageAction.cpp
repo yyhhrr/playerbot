@@ -56,7 +56,7 @@ void QueryItemUsageAction::QueryItemUsage(ItemPrototype const *item)
         out << "Replace +";
         out << (item->ItemLevel - oldItem->ItemLevel);
         out << " lvl";
-        ai->TellMaster(out.str().c_str());
+        ai->TellMaster(out.str());
     }
 }
 

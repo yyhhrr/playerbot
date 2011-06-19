@@ -8,12 +8,12 @@ float PassiveMultiplier::GetValue(Action* action) {
     if (!action) 
 		return 1.0f;
 
-    const char* name = action->getName();
+    string name = action->getName();
 
-    if (!strcmp("follow", name) ||
-        !strcmp("co", name) ||
-        !strcmp("nc", name) ||
-        !strcmp("stay", name))
+    if (name == "follow" ||
+        name == "co" ||
+        name == "nc" ||
+        name == "stay")
         return 1.0f;
 
     return 0;

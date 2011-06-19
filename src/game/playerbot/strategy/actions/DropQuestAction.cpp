@@ -15,7 +15,7 @@ bool DropQuestAction::Execute(Event event)
     master->SetSelectionGuid(bot->GetObjectGuid());
 
     PlayerbotChatHandler ch(bot);
-    if (!ch.dropQuest(link.c_str()))
+    if (!ch.dropQuest(link))
     {
         ostringstream out; out << "Could not drop quest: " << link;
         ai->TellMaster(out);

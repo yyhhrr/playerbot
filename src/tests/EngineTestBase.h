@@ -21,27 +21,27 @@ private:
 
 protected:
     template <class T>
-    void set(const char* name, T value) { context->GetValue<T>(name)->Set(value); }
+    void set(string  name, T value) { context->GetValue<T>(name)->Set(value); }
     template <class T>
-    void set(const char* name, const char* param, T value) { context->GetValue<T>(name, param)->Set(value); }
+    void set(string  name, string  param, T value) { context->GetValue<T>(name, param)->Set(value); }
 
 protected:
 	virtual void setupEngine(AiObjectContext* AiObjectContext, ...);
-	void setupEngineCallback(const char* name);
+	void setupEngineCallback(const char*  name);
 	void tick();
-	void assertActions(const char* expected);
+	void assertActions(string  expected);
 
 	void tickWithNoTarget();
-	void spellUnavailable(const char* spell);
-	void tickWithSpellUnavailable(const char* spell);
-	void tickWithSpellAvailable(const char* spell);
-	void spellAvailable(const char* spell);
-	void addAura(const char* spell);
-	void addTargetAura(const char* spell);
-	void removeTargetAura(const char* spell);
-	void addPartyAura(const char* spell);
-	void removePartyAura(const char* spell);
-	void removeAura(const char* spell);
+	void spellUnavailable(string  spell);
+	void tickWithSpellUnavailable(string  spell);
+	void tickWithSpellAvailable(string  spell);
+	void spellAvailable(string  spell);
+	void addAura(string  spell);
+	void addTargetAura(string  spell);
+	void removeTargetAura(string  spell);
+	void addPartyAura(string  spell);
+	void removePartyAura(string  spell);
+	void removeAura(string  spell);
 	void tickOutOfSpellRange();
 	void tickOutOfMeleeRange();
 	void tickInMeleeRange();
@@ -72,9 +72,9 @@ protected:
 	void tickWithLootAvailable();
 	void tickWithNoFood();
 	void tickWithNoDrink();
-	void itemAvailable(const char* item, int amount);
+	void itemAvailable(string  item, int amount);
 	void tickWithDeadPartyMember();
-    void tickWithCcTarget(const char*  spell);
+    void tickWithCcTarget(string   spell);
 
 protected:
     MockPlayerbotAIBase *ai;

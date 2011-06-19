@@ -12,7 +12,7 @@ namespace ai
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
-        virtual ActionNode* GetAction(const char* name);
+        virtual ActionNode* GetAction(string name);
 
     };
 }

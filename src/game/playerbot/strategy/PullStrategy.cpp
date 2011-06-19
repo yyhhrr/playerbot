@@ -8,7 +8,7 @@ using namespace ai;
 class MagePullMultiplier : public PassiveMultiplier
 {
 public:
-    MagePullMultiplier(const char *action) : PassiveMultiplier() 
+    MagePullMultiplier(string action) : PassiveMultiplier() 
     {
         this->action = action;
     }
@@ -17,7 +17,7 @@ public:
     virtual float GetValue(Action* action);
 
 private:
-    const char *action;
+    string action;
 };
 
 float MagePullMultiplier::GetValue(Action* action) 
@@ -25,10 +25,10 @@ float MagePullMultiplier::GetValue(Action* action)
     if (!action) 
         return 1.0f;
 
-    const char* name = action->getName();
-    if (!strcmp(this->action, name) ||
-        !strcmp("reach spell", name) ||
-        !strcmp("change strategy", name))
+    string name = action->getName();
+    if (this->action == name ||
+        name == "reach spell" ||
+        name == "change strategy")
         return 1.0f;
 
     return PassiveMultiplier::GetValue(action);
@@ -50,9 +50,9 @@ void PullStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     RangedCombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* PullStrategy::GetAction(const char* name)
+ActionNode* PullStrategy::GetAction(string name)
 {
-    if (!strcmp("end pull", name)) 
+    if (name == "end pull") 
     {
         return new ActionNode ("end pull",  
             /*P*/ NULL,

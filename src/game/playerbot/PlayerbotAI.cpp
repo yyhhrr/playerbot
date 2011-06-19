@@ -17,12 +17,12 @@ using namespace std;
 
 vector<string>& split(const string &s, char delim, vector<string> &elems);
 vector<string> split(const string &s, char delim);
-char * strstri (const char * str1, const char * str2);
+char * strstri (string str1, string str2);
 uint64 extractGuid(WorldPacket& packet);
 
-uint32 PlayerbotChatHandler::extractQuestId(const char *str)
+uint32 PlayerbotChatHandler::extractQuestId(string str)
 {
-    char* source = (char*)str;
+    char* source = (char*)str.c_str();
     char* cId = ExtractKeyFromLink(&source,"Hquest");
     return cId ? atol(cId) : 0;
 }
@@ -149,7 +149,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
     if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
     {
         std::string action = text.substr(text.find(" ") + 1);
-        DoSpecificAction(action.c_str());
+        DoSpecificAction(action);
     }
     else if (text == "reset")
     {
@@ -372,7 +372,7 @@ void PlayerbotAI::ReInitCurrentEngine()
     SetNextCheckDelay(0);
 }
 
-void PlayerbotAI::ChangeStrategy( const char* names, Engine* e ) 
+void PlayerbotAI::ChangeStrategy( string names, Engine* e ) 
 {
     if (!e)
         return;
@@ -393,20 +393,20 @@ void PlayerbotAI::ChangeStrategy( const char* names, Engine* e )
             e->toggleStrategy(name+1);
             break;
         case '?':
-            TellMaster(e->ListStrategies().c_str());
+            TellMaster(e->ListStrategies());
             break;
         }
     }
 }
 
-void PlayerbotAI::DoSpecificAction(const char* name) 
+void PlayerbotAI::DoSpecificAction(string name) 
 { 
     if (!combatEngine->ExecuteAction(name) && !nonCombatEngine->ExecuteAction(name))
     {
         ostringstream out;
         out << "I cannot do ";
         out << name;
-        TellMaster(out.str().c_str());
+        TellMaster(out.str());
         return;
     }
 }
@@ -429,7 +429,7 @@ bool PlayerbotAI::IsTank(Player* player)
     case CLASS_WARRIOR:
         return true;
     case CLASS_DRUID:
-        return HasAnyAuraOf(player, "bear form", "dire bear form");
+        return HasAnyAuraOf(player, "bear form", "dire bear form", NULL);
     }
     return false;
 }
@@ -522,7 +522,7 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
     return NULL;
 }
 
-void PlayerbotAI::TellMaster(const char* text)
+void PlayerbotAI::TellMaster(string text)
 {
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
@@ -531,7 +531,7 @@ void PlayerbotAI::TellMaster(const char* text)
 
 }
 
-void PlayerbotAI::TellMaster(LogLevel level, const char* text)
+void PlayerbotAI::TellMaster(LogLevel level, string text)
 {
     LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
 
@@ -540,11 +540,11 @@ void PlayerbotAI::TellMaster(LogLevel level, const char* text)
 
     ostringstream out;
     out << LogLevelAction::logLevel2string(level) << ": " << text;
-    TellMaster(out.str().c_str());
+    TellMaster(out.str());
 }
 
 
-bool PlayerbotAI::HasAura(const char* name, Unit* player) 
+bool PlayerbotAI::HasAura(string name, Unit* player) 
 {
     return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), player);
 }
@@ -570,7 +570,7 @@ bool PlayerbotAI::HasAnyAuraOf(Unit* player, ...)
     va_list vl;
     va_start(vl, player);
 
-    const char* cur = NULL;
+    const char* cur;
     do {
         cur = va_arg(vl, const char*);
         if (cur && HasAura(cur, player)) {
@@ -584,7 +584,7 @@ bool PlayerbotAI::HasAnyAuraOf(Unit* player, ...)
     return false;
 }
 
-bool PlayerbotAI::CanCastSpell(const char* name, Unit* target)
+bool PlayerbotAI::CanCastSpell(string name, Unit* target)
 {
     return CanCastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
 }
@@ -654,7 +654,7 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
 }
 
 
-bool PlayerbotAI::CastSpell(const char* name, Unit* target) 
+bool PlayerbotAI::CastSpell(string name, Unit* target) 
 {
     return CastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
 }
@@ -728,7 +728,7 @@ void PlayerbotAI::InterruptSpell()
 }
 
 
-void PlayerbotAI::RemoveAura(const char* name)
+void PlayerbotAI::RemoveAura(string name)
 {
     uint32 spellid = aiObjectContext->GetValue<uint32>("spell id", name)->Get();
     if (spellid && HasAura(spellid, bot))
@@ -766,7 +766,7 @@ bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)
 }
 
 #ifndef WIN32
-int strcmpi(const char *s1, const char *s2)
+int strcmpi(const char* s1, const char* s2)
 {
     for (; *s1 && *s2 && (toupper(*s1) == toupper(*s2)); ++s1, ++s2);
     return *s1 - *s2;

@@ -39,7 +39,7 @@ bool TellLosAction::Execute(Event event)
     return true;
 }
 
-void TellLosAction::ListUnits(const char* title, list<Unit*> units)
+void TellLosAction::ListUnits(string title, list<Unit*> units)
 {
     ai->TellMaster(title);
 
@@ -47,7 +47,7 @@ void TellLosAction::ListUnits(const char* title, list<Unit*> units)
         ai->TellMaster((*i)->GetName());
 
 }
-void TellLosAction::ListGameObjects(const char* title, list<GameObject*> gos)
+void TellLosAction::ListGameObjects(string title, list<GameObject*> gos)
 {
     ai->TellMaster(title);
 

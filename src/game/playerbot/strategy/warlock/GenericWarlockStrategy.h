@@ -8,11 +8,11 @@ namespace ai
     {
     public:
         GenericWarlockStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
-        virtual const char* getName() { return "warlock"; }
+        virtual string getName() { return "warlock"; }
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(const char* name);
+        virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
     };
 }

@@ -31,48 +31,48 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 }
 
 
-ActionNode* GenericWarlockNonCombatStrategy::GetAction(const char* name)
+ActionNode* GenericWarlockNonCombatStrategy::GetAction(string name)
 {
     ActionNode* node = GenericNonCombatStrategy::GetAction(name);
     if (node)
         return node;
 
-    if (!strcmp("demon armor", name)) 
+    if (name == "demon armor") 
     {
         return new ActionNode ("demon armor",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("demon skin"), NULL), 
             /*C*/ NULL);
     }
-	else if (!strcmp("demon skin", name)) 
+	else if (name == "demon skin") 
 	{
 		return new ActionNode ("demon skin",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("create healthstone", name)) 
+	else if (name == "create healthstone") 
 	{
 		return new ActionNode ("create healthstone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("create firestone", name)) 
+	else if (name == "create firestone") 
 	{
 		return new ActionNode ("create firestone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("create spellstone", name)) 
+	else if (name == "create spellstone") 
 	{
 		return new ActionNode ("create spellstone",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("spellstone", name)) 
+    else if (name == "spellstone") 
     {
         return new ActionNode ("spellstone",  
             /*P*/ NULL,

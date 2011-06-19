@@ -32,48 +32,48 @@ void DpsPriestStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     HealPriestStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* DpsPriestStrategy::GetAction(const char* name)
+ActionNode* DpsPriestStrategy::GetAction(string name)
 {
     ActionNode* node = HealPriestStrategy::GetAction(name);
     if (node)
         return node;
 
-    if (!strcmp("shadow word: pain", name)) 
+    if (name == "shadow word: pain") 
     {
         return new ActionNode ("shadow word: pain",  
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("devouring plague", name)) 
+    else if (name == "devouring plague") 
     {
         return new ActionNode ("devouring plague",  
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("mind flay", name)) 
+    else if (name == "mind flay") 
     {
         return new ActionNode ("mind flay",  
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("holy fire", name)) 
+    else if (name == "holy fire") 
     {
         return new ActionNode ("holy fire",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("smite", name)) 
+    else if (name == "smite") 
     {
         return new ActionNode ("smite",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("mind blast", name)) 
+    else if (name == "mind blast") 
     {
         return new ActionNode ("mind blast",  
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),

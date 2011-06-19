@@ -19,7 +19,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         os << "Will resurrect in ";
         os << (reclaimTime - time(0));
         os << " secs";
-        ai->TellMaster(os.str().c_str());
+        ai->TellMaster(os.str());
         ai->SetNextCheckDelay(reclaimTime - time(0));
     }
     else

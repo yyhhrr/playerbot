@@ -8,18 +8,20 @@ float LowManaMultiplier::GetValue(Action* action)
 {
     if (action == NULL) return 1.0f;
 
+    string name = action->getName();
+
     // Hunter
-    if (!strcmp("arcane shot", action->getName()) || 
-        !strcmp("multi-shot", action->getName()) ||
-        !strcmp("serpent sting", action->getName()) ||
-        !strcmp("viper sting", action->getName()) ||
-        !strcmp("scorpid sting", action->getName()) 
+    if (name == "arcane shot" || 
+        name == "multi-shot" ||
+        name == "serpent sting" ||
+        name == "viper sting" ||
+        name == "scorpid sting" 
         ) return !(rand() % 50) ? 1 : 0;
 
     // Priest
-    if (!strcmp("shadow word: pain", action->getName()) || 
-        !strcmp("devouring plague", action->getName()) || 
-        !strcmp("mind blast", action->getName()) 
+    if (name == "shadow word: pain" || 
+        name == "devouring plague" || 
+        name == "mind blast" 
         ) return !(rand() % 50) ? 1 : 0;
 
 

@@ -16,7 +16,7 @@ namespace ai
     {
     public:
         FollowMasterNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "follow master"; }
+        virtual string getName() { return "follow master"; }
         virtual NextAction** getDefaultActions();
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-be near"; }
@@ -28,7 +28,7 @@ namespace ai
     {
     public:
         FollowMasterRandomStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "be near"; }
+        virtual string getName() { return "be near"; }
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-follow master"; }
 
@@ -38,7 +38,7 @@ namespace ai
 	{
 	public:
 		FollowLineNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-		virtual const char* getName() { return "follow line"; }
+		virtual string getName() { return "follow line"; }
 		virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow master"; }
 	};
@@ -47,7 +47,7 @@ namespace ai
     {
     public:
         GoAwayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "goaway"; }
+        virtual string getName() { return "goaway"; }
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-be near,-follow master"; }
     };
@@ -56,7 +56,7 @@ namespace ai
     {
     public:
         StayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "stay"; }
+        virtual string getName() { return "stay"; }
         virtual NextAction** getDefaultActions();
 		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-be near,-follow master"; }
     };
@@ -65,7 +65,7 @@ namespace ai
     {
     public:
         DpsAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "dps assist"; }
+        virtual string getName() { return "dps assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps aoe,-tank aoe,-grind"; }
 
@@ -77,7 +77,7 @@ namespace ai
 	{
 	public:
 		DpsAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-		virtual const char* getName() { return "dps aoe"; }
+		virtual string getName() { return "dps aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-tank aoe,-grind"; }
 
@@ -89,7 +89,7 @@ namespace ai
     {
     public:
         TankAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "tank assist"; }
+        virtual string getName() { return "tank assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-dps assist,-dps aoe,-tank aoe,-grind"; }
 
@@ -101,7 +101,7 @@ namespace ai
 	{
 	public:
 		TankAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-		virtual const char* getName() { return "tank aoe"; }
+		virtual string getName() { return "tank aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-grind"; }
 
@@ -113,7 +113,7 @@ namespace ai
     {
     public:
         GrindingStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "grind"; }
+        virtual string getName() { return "grind"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
 		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-tank aoe"; }
 		NextAction** getDefaultActions();
@@ -129,7 +129,7 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "loot"; }
+        virtual string getName() { return "loot"; }
     };
 
     class RandomEmoteStrategy : public Strategy
@@ -139,7 +139,7 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "emote"; }
+        virtual string getName() { return "emote"; }
    };
 
     class PassiveStrategy : public Strategy
@@ -149,7 +149,7 @@ namespace ai
 
     public:
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
-        virtual const char* getName() { return "passive"; }
+        virtual string getName() { return "passive"; }
     };
 
     class LowManaStrategy : public Strategy
@@ -159,7 +159,7 @@ namespace ai
 
     public:
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
-        virtual const char* getName() { return "low mana"; }
+        virtual string getName() { return "low mana"; }
     };
 
     class UseFoodStrategy : public Strategy
@@ -169,6 +169,6 @@ namespace ai
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "food"; }
+        virtual string getName() { return "food"; }
     };
 }

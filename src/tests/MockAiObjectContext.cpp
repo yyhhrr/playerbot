@@ -32,7 +32,7 @@ private:
 class MockAction : public Action
 {
 public:
-    MockAction(PlayerbotAI* const ai, string *buffer, const char* name) : Action(ai, name), buffer(buffer)
+    MockAction(PlayerbotAI* const ai, string* buffer, string  name) : Action(ai, name), buffer(buffer)
     {
 
     }
@@ -57,22 +57,22 @@ public:
     }
 
 private:
-    string *buffer;
+    string* buffer;
 };
 
-MockAiObjectContext::MockAiObjectContext(PlayerbotAI* const ai, AiObjectContext *realContext, string *buffer) : 
+MockAiObjectContext::MockAiObjectContext(PlayerbotAI* const ai, AiObjectContext *realContext, string* buffer) : 
     AiObjectContext(ai), buffer(buffer), realContext(realContext)
 {
 }
 
-void MockAiObjectContext::reportNotFound(const char* what, const char* name)
+void MockAiObjectContext::reportNotFound(string  what, string  name)
 {
     std::cout << "\n===\n";
     cout << what << " " << name << " not found in context";
     std::cout << "\n===\n";
 }
 
-Strategy* MockAiObjectContext::GetStrategy(const char* name)
+Strategy* MockAiObjectContext::GetStrategy(string  name)
 {
     if (!realContext->GetStrategy(name))
     {
@@ -83,7 +83,7 @@ Strategy* MockAiObjectContext::GetStrategy(const char* name)
     return realContext->GetStrategy(name);
 }
 
-Trigger* MockAiObjectContext::GetTrigger(const char* name)
+Trigger* MockAiObjectContext::GetTrigger(string  name)
 {
     if (!realContext->GetTrigger(name))
     {
@@ -98,7 +98,7 @@ Trigger* MockAiObjectContext::GetTrigger(const char* name)
     return triggers[name] = new MockTrigger(ai);
 }
 
-Action* MockAiObjectContext::GetAction(const char* name)
+Action* MockAiObjectContext::GetAction(string  name)
 {
     if (!realContext->GetAction(name))
     {

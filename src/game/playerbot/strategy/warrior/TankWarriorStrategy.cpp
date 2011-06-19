@@ -56,107 +56,107 @@ void TankWarriorStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* TankWarriorStrategy::GetAction(const char* name)
+ActionNode* TankWarriorStrategy::GetAction(string name)
 {
-    if (!strcmp("melee", name)) 
+    if (name == "melee")
     {
         return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("defensive stance"), new NextAction("reach melee"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("shield wall", name)) 
+    else if (name == "shield wall") 
     {
         return new ActionNode ("shield wall",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("shield block"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("rend", name)) 
+    else if (name == "rend") 
     {
         return new ActionNode ("rend",  
             /*P*/ NextAction::array(0, new NextAction("defensive stance"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("taunt", name)) 
+    else if (name == "taunt") 
     {
         return new ActionNode ("taunt",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("revenge", name)) 
+    else if (name == "revenge") 
     {
         return new ActionNode ("revenge",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("slam"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("slam", name)) 
+    else if (name == "slam") 
     {
         return new ActionNode ("slam",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("shield slam", name)) 
+	else if (name == "shield slam") 
 	{
 		return new ActionNode ("shield slam",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("disarm", name)) 
+    else if (name == "disarm") 
     {
         return new ActionNode ("disarm",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("sunder armor", name)) 
+    else if (name == "sunder armor") 
     {
         return new ActionNode ("sunder armor",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("devastate", name)) 
+    else if (name == "devastate") 
     {
         return new ActionNode ("devastate",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL), 
             /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
     }
-    else if (!strcmp("shield bash", name)) 
+    else if (name == "shield bash") 
     {
         return new ActionNode ("shield bash",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("intimidating shout", name)) 
+    else if (name == "intimidating shout") 
     {
         return new ActionNode ("intimidating shout",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("last stand", name)) 
+	else if (name == "last stand") 
 	{
 		return new ActionNode ("last stand",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("shockwave", name)) 
+	else if (name == "shockwave") 
 	{
 		return new ActionNode ("shockwave",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-	else if (!strcmp("concussion blow", name)) 
+	else if (name == "concussion blow") 
 	{
 		return new ActionNode ("concussion blow",  
 			/*P*/ NULL,

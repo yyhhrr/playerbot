@@ -30,9 +30,9 @@ protected:
 		q.Push(new ActionBasket(new ActionNode("action2", NULL, NULL, NULL), 0.7f, false, Event()));
 		q.Push(new ActionBasket(new ActionNode("action3", NULL, NULL, NULL), 0.3f, false, Event()));
 
-		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action2");
-		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action1");
-		CPPUNIT_ASSERT(string(q.Pop()->getName()) == "action3");
+		CPPUNIT_ASSERT(string (q.Pop()->getName()) == "action2");
+		CPPUNIT_ASSERT(string (q.Pop()->getName()) == "action1");
+		CPPUNIT_ASSERT(string (q.Pop()->getName()) == "action3");
 		CPPUNIT_ASSERT(q.Pop() == NULL);
 	}
 };

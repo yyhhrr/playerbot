@@ -7,7 +7,7 @@ namespace ai
 {
 	class AttackAction : public MovementAction {
 	public:
-		AttackAction(PlayerbotAI* ai, const char* name) : MovementAction(ai, name) {}
+		AttackAction(PlayerbotAI* ai, string name) : MovementAction(ai, name) {}
 
     public:
         virtual bool Execute(Event event);
@@ -19,7 +19,7 @@ namespace ai
 
     class AttackMyTargetAction : public AttackAction {
     public:
-        AttackMyTargetAction(PlayerbotAI* ai, const char* name = "attack my target") : AttackAction(ai, name) {}
+        AttackMyTargetAction(PlayerbotAI* ai, string name = "attack my target") : AttackAction(ai, name) {}
 
     public:
         virtual bool Execute(Event event);

@@ -12,8 +12,8 @@ namespace ai
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
-        virtual const char* getName() { return "bear"; }
-        virtual ActionNode* GetAction(const char* name);
+        virtual string getName() { return "bear"; }
+        virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
 		virtual string GetIncompatibleStrategies() { return "-cat,-caster"; }

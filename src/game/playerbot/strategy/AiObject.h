@@ -18,4 +18,16 @@ namespace ai
         AiObjectContext* context;
         ChatHelper* chat;
 	};
+
+    class AiNamedObject : public AiObject
+    {
+    public:
+        AiNamedObject(PlayerbotAI* ai, string name) : AiObject(ai), name(name) {}
+
+    public:
+        virtual string getName() { return name; }
+
+    protected:
+        string name;
+    };
 }

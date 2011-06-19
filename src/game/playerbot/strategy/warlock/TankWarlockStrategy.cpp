@@ -21,9 +21,9 @@ void TankWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* TankWarlockStrategy::GetAction(const char* name)
+ActionNode* TankWarlockStrategy::GetAction(string name)
 {
-    if (!strcmp("summon voidwalker", name)) 
+    if (name == "summon voidwalker") 
     {
         return new ActionNode ("summon voidwalker",  
             /*P*/ NULL,

@@ -6,7 +6,7 @@ namespace ai
 {
     class TellMasterAction : public Action {
     public:
-        TellMasterAction(PlayerbotAI* ai, const char* text) : Action(ai, "tell master"), text(text) {}
+        TellMasterAction(PlayerbotAI* ai, string text) : Action(ai, "tell master"), text(text) {}
 
         virtual bool Execute(Event event)
         {

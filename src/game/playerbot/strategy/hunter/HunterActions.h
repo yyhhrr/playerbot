@@ -84,7 +84,7 @@ namespace ai
 	class CastMendPetAction : public CastAuraSpellAction {
 	public:
 		CastMendPetAction(PlayerbotAI* ai) : CastAuraSpellAction(ai, "mend pet") {}
-		virtual const char* GetTargetName() { return "pet target"; }
+		virtual string GetTargetName() { return "pet target"; }
 	};
 
 	class CastRevivePetAction : public CastBuffSpellAction {

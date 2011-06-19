@@ -12,7 +12,7 @@ namespace ai
     public:
         float Calculate()
         {
-            Unit* target = AI_VALUE(Unit*, qualifier.c_str());
+            Unit* target = AI_VALUE(Unit*, qualifier);
             if (!target)
                 return 0.0f;
 

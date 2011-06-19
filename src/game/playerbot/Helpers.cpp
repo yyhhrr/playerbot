@@ -20,7 +20,7 @@ vector<string> split(const string &s, char delim)
 }
 
 
-char * strstri (const char * str1, const char * str2)
+char * strstri (const char* str1, const char* str2)
 {
     char *cp = (char *) str1;
     char *s1, *s2;

@@ -7,7 +7,7 @@ using namespace ai;
 class FindTargetForCcStrategy : public FindTargetStrategy
 {
 public:
-    FindTargetForCcStrategy(PlayerbotAI* ai, const char* spell) : FindTargetStrategy(ai)
+    FindTargetForCcStrategy(PlayerbotAI* ai, string spell) : FindTargetStrategy(ai)
     {
         this->spell = spell;
         maxDistance = 0;
@@ -60,12 +60,12 @@ protected:
     }
 
 private:
-    const char* spell;
+    string spell;
     float maxDistance;
 };
 
 Unit* CcTargetValue::Calculate()
 {
-    FindTargetForCcStrategy strategy(ai, qualifier.c_str());
+    FindTargetForCcStrategy strategy(ai, qualifier);
     return FindTarget(&strategy);
 }

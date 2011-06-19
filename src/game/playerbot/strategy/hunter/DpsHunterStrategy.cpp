@@ -65,125 +65,125 @@ void DpsHunterStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     GenericHunterStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* DpsHunterStrategy::GetAction(const char* name)
+ActionNode* DpsHunterStrategy::GetAction(string name)
 {
     ActionNode* node = GenericHunterStrategy::GetAction(name);
     if (node)
         return node;
 
-    if (!strcmp("auto shot", name)) 
+    if (name == "auto shot") 
     {
         return new ActionNode ("auto shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("aimed shot", name)) 
+    else if (name == "aimed shot") 
     {
         return new ActionNode ("aimed shot",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("arcane shot", 10.0f), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("explosive shot", name)) 
+    else if (name == "explosive shot") 
     {
         return new ActionNode ("explosive shot",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("aimed shot"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("arcane shot", name)) 
+    else if (name == "arcane shot") 
     {
         return new ActionNode ("arcane shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("concussive shot", name)) 
+    else if (name == "concussive shot") 
     {
         return new ActionNode ("concussive shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NextAction::array(0, new NextAction("wyvern sting", 11.0f), NULL));
     }
-    else if (!strcmp("distracting shot", name)) 
+    else if (name == "distracting shot") 
     {
         return new ActionNode ("distracting shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("multi-shot", name)) 
+    else if (name == "multi-shot") 
     {
         return new ActionNode ("multi-shot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("volley", name)) 
+	else if (name == "volley") 
 	{
 		return new ActionNode ("volley",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("serpent sting", name)) 
+    else if (name == "serpent sting") 
     {
         return new ActionNode ("serpent sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("wyvern sting", name)) 
+    else if (name == "wyvern sting") 
     {
         return new ActionNode ("wyvern sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("viper sting", name)) 
+    else if (name == "viper sting") 
     {
         return new ActionNode ("viper sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("scorpid sting", name)) 
+    else if (name == "scorpid sting") 
     {
         return new ActionNode ("scorpid sting",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("hunter's mark", name)) 
+    else if (name == "hunter's mark") 
     {
         return new ActionNode ("hunter's mark",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("mend pet", name)) 
+    else if (name == "mend pet") 
     {
         return new ActionNode ("mend pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("revive pet", name)) 
+    else if (name == "revive pet") 
     {
         return new ActionNode ("revive pet",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("black arrow", name)) 
+    else if (name == "black arrow") 
     {
         return new ActionNode ("black arrow",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("freezing trap", name)) 
+    else if (name == "freezing trap") 
     {
         return new ActionNode ("freezing trap",  
             /*P*/ NULL,

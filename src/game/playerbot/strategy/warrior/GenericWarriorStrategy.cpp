@@ -52,100 +52,100 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericWarriorStrategy::GetAction(const char* name)
+ActionNode* GenericWarriorStrategy::GetAction(string name)
 {
-    if (!strcmp("hamstring", name))
+    if (name == "hamstring")
     {
         return new ActionNode ("hamstring",
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("shield bash", name))
+    else if (name == "shield bash")
     {
         return new ActionNode ("shield bash",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("shield block", name))
+    else if (name == "shield block")
     {
         return new ActionNode ("shield block",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("bloodrage", name))
+    else if (name == "bloodrage")
     {
         return new ActionNode ("bloodrage",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("defensive stance", name))
+    else if (name == "defensive stance")
     {
         return new ActionNode ("defensive stance",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("battle stance", name))
+    else if (name == "battle stance")
     {
         return new ActionNode ("battle stance",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("heroic strike", name))
+    else if (name == "heroic strike")
     {
         return new ActionNode ("heroic strike",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("cleave", name))
+    else if (name == "cleave")
     {
         return new ActionNode ("cleave",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("intimidating shout", name))
+	else if (name == "intimidating shout")
 	{
 		return new ActionNode ("intimidating shout",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("demoralizing shout", name))
+    else if (name == "demoralizing shout")
     {
         return new ActionNode ("demoralizing shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("challenging shout", name))
+    else if (name == "challenging shout")
     {
         return new ActionNode ("challenging shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("shield wall", name))
+    else if (name == "shield wall")
     {
         return new ActionNode ("shield wall",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("battle shout", name))
+    else if (name == "battle shout")
     {
         return new ActionNode ("battle shout",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("thunder clap", name))
+    else if (name == "thunder clap")
     {
         return new ActionNode ("thunder clap",
             /*P*/ NULL,

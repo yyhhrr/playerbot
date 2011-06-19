@@ -219,7 +219,7 @@ private:
 
 static ActionNodeFactoryInternal ActionNodeFactoryInternal;
 
-ActionNode* Strategy::GetAction(const char* name)
+ActionNode* Strategy::GetAction(string name)
 {
     return ActionNodeFactoryInternal.create(name, ai);
 }

@@ -74,268 +74,268 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericPaladinStrategy::GetAction(const char* name)
+ActionNode* GenericPaladinStrategy::GetAction(string name)
 {
-    if (!strcmp("seal of light", name))
+    if (name == "seal of light")
     {
         return new ActionNode ("seal of light",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("devotion aura", name))
+    else if (name == "devotion aura")
     {
         return new ActionNode ("devotion aura",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("consecration", name))
+    else if (name == "consecration")
     {
         return new ActionNode ("consecration",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("cleanse", name))
+	else if (name == "cleanse")
     {
         return new ActionNode ("cleanse",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("purify"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("purify", name))
+    else if (name == "purify")
     {
         return new ActionNode ("purify",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("cleanse poison on party", name))
+    else if (name == "cleanse poison on party")
     {
         return new ActionNode ("cleanse poison on party",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("purify poison on party"), NULL),
             /*C*/ NULL);
     }
-	else if (!strcmp("cleanse disease on party", name))
+	else if (name == "cleanse disease on party")
 	{
 		return new ActionNode ("cleanse disease on party",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("purify disease on party"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("cleanse magic on party", name))
+	else if (name == "cleanse magic on party")
 	{
 		return new ActionNode ("cleanse magic on party",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("purify poison on party", name))
+    else if (name == "purify poison on party")
     {
         return new ActionNode ("purify poison on party",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("purify disease on party", name))
+	else if (name == "purify disease on party")
 	{
 		return new ActionNode ("purify disease on party",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("seal of wisdom", name))
+    else if (name == "seal of wisdom")
     {
         return new ActionNode ("seal of wisdom",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("seal of justice", name))
+    else if (name == "seal of justice")
     {
         return new ActionNode ("seal of justice",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("seal of righteousness"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("seal of righteousness", name))
+    else if (name == "seal of righteousness")
     {
         return new ActionNode ("seal of righteousness",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("hand of reckoning", name))
+    else if (name == "hand of reckoning")
     {
         return new ActionNode ("hand of reckoning",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("judgement of justice"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("avenger's shield", name))
+    else if (name == "avenger's shield")
     {
         return new ActionNode ("avenger's shield",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("exorcism", name))
+    else if (name == "exorcism")
     {
         return new ActionNode ("exorcism",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("judgement of light", name))
+    else if (name == "judgement of light")
     {
         return new ActionNode ("judgement of light",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("judgement of wisdom", name))
+    else if (name == "judgement of wisdom")
     {
         return new ActionNode ("judgement of wisdom",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("judgement of light"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("divine shield", name))
+    else if (name == "divine shield")
     {
         return new ActionNode ("divine shield",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("divine protection"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("divine protection", name))
+    else if (name == "divine protection")
     {
         return new ActionNode ("divine protection",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("divine protection on party", name))
+    else if (name == "divine protection on party")
     {
         return new ActionNode ("divine protection on party",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("hammer of justice", name))
+    else if (name == "hammer of justice")
     {
         return new ActionNode ("hammer of justice",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("flash of light", name))
+    else if (name == "flash of light")
     {
         return new ActionNode ("flash of light",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("holy light"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("flash of light on party", name))
+    else if (name == "flash of light on party")
     {
         return new ActionNode ("flash of light on party",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("holy light on party"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("holy light", name))
+    else if (name == "holy light")
     {
         return new ActionNode ("holy light",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("holy light on party", name))
+    else if (name == "holy light on party")
     {
         return new ActionNode ("holy light on party",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("lay on hands", name))
+	else if (name == "lay on hands")
 	{
 		return new ActionNode ("lay on hands",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("lay on hands on party", name))
+	else if (name == "lay on hands on party")
 	{
 		return new ActionNode ("lay on hands on party",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("judgement of justice", name))
+	else if (name == "judgement of justice")
 	{
 		return new ActionNode ("judgement of justice",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("hammer of wrath", name))
+	else if (name == "hammer of wrath")
 	{
 		return new ActionNode ("hammer of wrath",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("holy shield", name))
+    else if (name == "holy shield")
     {
         return new ActionNode ("holy shield",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("hammer of the righteous", name))
+    else if (name == "hammer of the righteous")
     {
         return new ActionNode ("hammer of the righteous",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("holy wrath", name))
+    else if (name == "holy wrath")
     {
         return new ActionNode ("holy wrath",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("consecration"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("blessing of kings", name))
+    else if (name == "blessing of kings")
     {
         return new ActionNode ("blessing of kings",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("retribution aura", name))
+	else if (name == "retribution aura")
 	{
 		return new ActionNode ("retribution aura",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("shadow resistance aura", name))
+	else if (name == "shadow resistance aura")
 	{
 		return new ActionNode ("shadow resistance aura",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("frost resistance aura", name))
+	else if (name == "frost resistance aura")
 	{
 		return new ActionNode ("frost resistance aura",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("fire resistance aura", name))
+	else if (name == "fire resistance aura")
 	{
 		return new ActionNode ("fire resistance aura",
 			/*P*/ NULL,

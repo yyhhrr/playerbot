@@ -26,9 +26,9 @@ void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* DpsWarlockStrategy::GetAction(const char* name)
+ActionNode* DpsWarlockStrategy::GetAction(string name)
 {
-    if (!strcmp("summon imp", name)) 
+    if (name == "summon imp") 
     {
         return new ActionNode ("summon imp",  
             /*P*/ NULL,

@@ -12,8 +12,8 @@ namespace ai
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
-        virtual const char* getName() { return "nc"; }
-        virtual ActionNode* GetAction(const char* name);
+        virtual string getName() { return "nc"; }
+        virtual ActionNode* GetAction(string name);
 
     };
 }

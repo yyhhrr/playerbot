@@ -8,7 +8,7 @@ using namespace ai;
 
 bool BuyAction::Execute(Event event)
 {
-    string link = event.getParam().c_str();
+    string link = event.getParam();
 
     ItemIds itemIds = chat->parseItems(link);
     if (itemIds.empty()) 

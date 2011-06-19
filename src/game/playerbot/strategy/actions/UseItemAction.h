@@ -6,7 +6,7 @@ namespace ai
 {
 	class UseItemAction : public Action {
 	public:
-		UseItemAction(PlayerbotAI* ai, const char* name = "use") : Action(ai, name) {}
+		UseItemAction(PlayerbotAI* ai, string name = "use") : Action(ai, name) {}
 
     public:
         virtual bool Execute(Event event);
@@ -19,7 +19,7 @@ namespace ai
 
     class UseSpellItemAction : public UseItemAction {
     public:
-        UseSpellItemAction(PlayerbotAI* ai, const char* name) : UseItemAction(ai, name) {}
+        UseSpellItemAction(PlayerbotAI* ai, string name) : UseItemAction(ai, name) {}
 
     public:
         virtual bool isUseful();

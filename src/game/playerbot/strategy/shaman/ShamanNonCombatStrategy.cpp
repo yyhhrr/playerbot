@@ -19,41 +19,41 @@ void ShamanNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multiplier
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* ShamanNonCombatStrategy::GetAction(const char* name)
+ActionNode* ShamanNonCombatStrategy::GetAction(string name)
 {
     ActionNode* node = CombatStrategy::GetAction(name);
     if (node)
         return node;
 
-    if (!strcmp("strength of earth totem", name))
+    if (name == "strength of earth totem")
     {
         return new ActionNode ("strength of earth totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("flametongue totem", name))
+    else if (name == "flametongue totem")
     {
         return new ActionNode ("flametongue totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("windfury totem", name))
+    else if (name == "windfury totem")
     {
         return new ActionNode ("windfury totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("mana spring totem", name))
+    else if (name == "mana spring totem")
     {
         return new ActionNode ("mana spring totem",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("ancestral spirit", name))
+	else if (name == "ancestral spirit")
 	{
 		return new ActionNode ("ancestral spirit",
 			/*P*/ NULL,

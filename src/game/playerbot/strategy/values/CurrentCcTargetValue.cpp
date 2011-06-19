@@ -7,7 +7,7 @@ using namespace ai;
 class FindCurrentCcTargetStrategy : public FindTargetStrategy
 {
 public:
-    FindCurrentCcTargetStrategy(PlayerbotAI* ai, const char* spell) : FindTargetStrategy(ai)
+    FindCurrentCcTargetStrategy(PlayerbotAI* ai, string spell) : FindTargetStrategy(ai)
     {
         this->spell = spell;
     }
@@ -22,12 +22,12 @@ protected:
     }
 
 private:
-    const char* spell;
+    string spell;
 };
 
 
 Unit* CurrentCcTargetValue::Calculate()
 {
-    FindCurrentCcTargetStrategy strategy(ai, qualifier.c_str());
+    FindCurrentCcTargetStrategy strategy(ai, qualifier);
     return FindTarget(&strategy);
 }

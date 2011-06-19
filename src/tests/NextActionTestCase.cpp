@@ -25,7 +25,7 @@ protected:
     void array()
     {
         NextAction** actions = NextAction::array(0, new NextAction("1", 1), NULL);
-        CPPUNIT_ASSERT(!strcmp("1", actions[0]->getName()));
+        CPPUNIT_ASSERT(actions[0]->getName() == "1");
         CPPUNIT_ASSERT(!actions[1]);
         NextAction::destroy(actions);
     }
@@ -40,8 +40,8 @@ protected:
         NextAction** cloned = NextAction::clone(actions);
 
 		CPPUNIT_ASSERT(!cloned[2]);
-		CPPUNIT_ASSERT(!strcmp("1", cloned[0]->getName()));
-        CPPUNIT_ASSERT(!strcmp("2", cloned[1]->getName()));
+		CPPUNIT_ASSERT(cloned[0]->getName() == "1");
+        CPPUNIT_ASSERT(cloned[1]->getName() == "2");
 
         // check memory
         NextAction::destroy(cloned);
@@ -55,9 +55,9 @@ protected:
         NextAction** merged = NextAction::merge(left, right);
 
         CPPUNIT_ASSERT(!merged[3]);
-        CPPUNIT_ASSERT(!strcmp("1", merged[0]->getName()));
-        CPPUNIT_ASSERT(!strcmp("2", merged[1]->getName()));
-        CPPUNIT_ASSERT(!strcmp("3", merged[2]->getName()));
+        CPPUNIT_ASSERT(merged[0]->getName() == "1");
+        CPPUNIT_ASSERT(merged[1]->getName() == "2");
+        CPPUNIT_ASSERT(merged[2]->getName() == "3");
 
         // check memory
         NextAction::destroy(merged);
@@ -75,7 +75,7 @@ protected:
         NextAction** merged = NextAction::merge(left, NULL);
 
         CPPUNIT_ASSERT(!merged[1]);
-        CPPUNIT_ASSERT(!strcmp("1", merged[0]->getName()));
+        CPPUNIT_ASSERT(merged[0]->getName() == "1");
     }
 };
 

@@ -10,7 +10,7 @@ namespace ai {
 	class CastCatSpellAction : public CastSpellAction 
 	{
 	public:
-		CastCatSpellAction(PlayerbotAI* ai, const char* spell) : CastSpellAction(ai, spell) {}
+		CastCatSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) {}
 		
 		virtual NextAction** getPrerequisites() 
 		{
@@ -22,7 +22,7 @@ namespace ai {
 	class CastCatBuffSpellAction : public CastBuffSpellAction 
 	{
 	public:
-		CastCatBuffSpellAction(PlayerbotAI* ai, const char* spell) : CastBuffSpellAction(ai, spell) {}
+		CastCatBuffSpellAction(PlayerbotAI* ai, string spell) : CastBuffSpellAction(ai, spell) {}
 
 		virtual NextAction** getPrerequisites() 
 		{
@@ -33,7 +33,7 @@ namespace ai {
 	class CastCatMeleeSpellAction : public CastMeleeSpellAction 
 	{
 	public:
-		CastCatMeleeSpellAction(PlayerbotAI* ai, const char* spell) : CastMeleeSpellAction(ai, spell) {}
+		CastCatMeleeSpellAction(PlayerbotAI* ai, string spell) : CastMeleeSpellAction(ai, spell) {}
 
 		virtual NextAction** getPrerequisites() 
 		{

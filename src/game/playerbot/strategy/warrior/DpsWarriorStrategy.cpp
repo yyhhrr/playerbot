@@ -48,72 +48,72 @@ void DpsWarriorStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* DpsWarriorStrategy::GetAction(const char* name)
+ActionNode* DpsWarriorStrategy::GetAction(string name)
 {
-    if (!strcmp("overpower", name)) 
+    if (name == "overpower") 
     {
         return new ActionNode ("overpower",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("melee", name)) 
+    else if (name == "melee") 
     {
         return new ActionNode ("melee",  
             /*P*/ NextAction::array(0, new NextAction("charge"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("charge", name)) 
+    else if (name == "charge") 
     {
         return new ActionNode ("charge",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, new NextAction("reach melee"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("bloodthirst", name)) 
+    else if (name == "bloodthirst") 
     {
         return new ActionNode ("bloodthirst",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, new NextAction("heroic strike"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("rend", name)) 
+    else if (name == "rend") 
     {
         return new ActionNode ("rend",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("mocking blow", name)) 
+    else if (name == "mocking blow") 
     {
         return new ActionNode ("mocking blow",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
             /*A*/ NextAction::array(0, NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("death wish", name) || !strcmp("boost", name)) 
+    else if (name == "death wish" || name == "boost") 
     {
         return new ActionNode ("death wish",  
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("berserker rage"), NULL), 
             /*C*/ NULL);
     }
-    else if (!strcmp("berserker rage", name)) 
+    else if (name == "berserker rage") 
     {
         return new ActionNode ("berserker rage",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-	else if (!strcmp("victory rush", name)) 
+	else if (name == "victory rush") 
 	{
 		return new ActionNode ("victory rush",  
 			/*P*/ NULL,
 			/*A*/ NULL, 
 			/*C*/ NULL);
 	}
-    else if (!strcmp("execute", name)) 
+    else if (name == "execute") 
     {
         return new ActionNode ("execute",  
             /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),

@@ -39,121 +39,121 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 }
 
 
-ActionNode* GenericMageStrategy::GetAction(const char* name)
+ActionNode* GenericMageStrategy::GetAction(string name)
 {
-    if (!strcmp("frostbolt", name))
+    if (name == "frostbolt")
     {
         return new ActionNode ("frostbolt",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("fireball", name))
+    else if (name == "fireball")
     {
         return new ActionNode ("fireball",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("pyroblast", name))
+    else if (name == "pyroblast")
     {
         return new ActionNode ("pyroblast",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("flamestrike", name))
+    else if (name == "flamestrike")
     {
         return new ActionNode ("flamestrike",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("fire blast", name))
+    else if (name == "fire blast")
     {
         return new ActionNode ("fire blast",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("scorch"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("scorch", name))
+    else if (name == "scorch")
     {
         return new ActionNode ("scorch",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-	else if (!strcmp("reach spell", name))
+	else if (name == "reach spell")
 	{
 		return new ActionNode ("reach spell",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("flee", name))
+	else if (name == "flee")
 	{
 		return new ActionNode ("flee",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("frost nova", name))
+    else if (name == "frost nova")
     {
         return new ActionNode ("frost nova",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("flee"), NULL));
     }
-    else if (!strcmp("counterspell", name))
+    else if (name == "counterspell")
     {
         return new ActionNode ("counterspell",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("remove curse", name))
+    else if (name == "remove curse")
     {
         return new ActionNode ("remove curse",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("remove curse on party", name))
+    else if (name == "remove curse on party")
     {
         return new ActionNode ("remove curse on party",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("icy veins", name) || !strcmp("boost", name))
+    else if (name == "icy veins" || name == "boost")
     {
         return new ActionNode ("icy veins",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("combustion", name) || !strcmp("boost", name))
+    else if (name == "combustion" || name == "boost")
     {
         return new ActionNode ("combustion",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("ice block", name))
+	else if (name == "ice block")
 	{
 		return new ActionNode ("ice block",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("polymorph", name))
+    else if (name == "polymorph")
     {
         return new ActionNode ("polymorph",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("spellsteal", name))
+	else if (name == "spellsteal")
 	{
 		return new ActionNode ("spellsteal",
 			/*P*/ NULL,

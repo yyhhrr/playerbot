@@ -8,7 +8,7 @@ namespace ai
     class NextAction
     {
     public:
-        NextAction(const char* name, float relevance = 0.0f)
+        NextAction(string name, float relevance = 0.0f)
         {
             this->name = name;
             this->relevance = relevance;
@@ -20,7 +20,7 @@ namespace ai
         }
 
     public:
-        const char* getName() { return name.c_str(); }
+        string getName() { return name; }
         float getRelevance() {return relevance;}
 
     public:
@@ -39,10 +39,10 @@ namespace ai
     
     class ActionBasket;
 
-    class Action : public AiObject
+    class Action : public AiNamedObject
 	{
 	public:
-        Action(PlayerbotAI* ai, const char* name = "action") : AiObject(ai), name(name) { }
+        Action(PlayerbotAI* ai, string name = "action") : AiNamedObject(ai, name) { }
         virtual ~Action(void) {}
 
     public:
@@ -52,21 +52,17 @@ namespace ai
         virtual NextAction** getPrerequisites() { return NULL; }
         virtual NextAction** getAlternatives() { return NULL; }
         virtual NextAction** getContinuers() { return NULL; }
-        virtual const char* getName() { return name.empty() ? "action" : name.c_str(); }
         virtual int getKind() { return 0; }
         void Update() {}
         virtual Unit* GetTarget();
         virtual Value<Unit*>* GetTargetValue();
-        virtual const char* GetTargetName() { return "self target"; }
-
-    protected:
-        string name;
+        virtual string GetTargetName() { return "self target"; }
 	};
 
     class ActionNode
     {
     public:
-        ActionNode(const char* name, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
+        ActionNode(string name, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
         {
             this->action = NULL; 
             this->name = name;
@@ -84,7 +80,7 @@ namespace ai
     public:
         Action* getAction() { return action; }
         void setAction(Action* action) { this->action = action; }
-        const char* getName() { return name.c_str(); }
+        string getName() { return name; }
 
     public:
         NextAction** getContinuers() { return NextAction::merge(NextAction::clone(continuers), action->getContinuers()); }

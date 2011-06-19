@@ -50,86 +50,86 @@ void CatDpsDruidStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* CatDpsDruidStrategy::GetAction(const char* name)
+ActionNode* CatDpsDruidStrategy::GetAction(string name)
 {
-    if (!strcmp("reach melee", name))
+    if (name == "reach melee")
     {
         return new ActionNode ("reach melee",
             /*P*/ NextAction::array(0, new NextAction("cat form"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("faerie fire (feral)", name))
+    else if (name == "faerie fire (feral)")
     {
         return new ActionNode ("faerie fire (feral)",
             /*P*/ NextAction::array(0, new NextAction("cat form"), NULL),
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("melee", name))
+    else if (name == "melee")
     {
         return new ActionNode ("melee",
             /*P*/ NextAction::array(0, new NextAction("cat form"), new NextAction("feral charge - cat"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("feral charge - cat", name))
+    else if (name == "feral charge - cat")
     {
         return new ActionNode ("feral_charge_cat",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("reach melee"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("cat form", name))
+    else if (name == "cat form")
     {
         return new ActionNode ("cat form",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
-    else if (!strcmp("claw", name))
+    else if (name == "claw")
     {
         return new ActionNode ("claw",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("claw", 15.0f), NULL));
     }
-    else if (!strcmp("mangle (cat)", name))
+    else if (name == "mangle (cat)")
     {
         return new ActionNode ("mangle (cat)",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("claw"), NULL),
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 15.0f), NULL));
     }
-    else if (!strcmp("swipe (cat)", name))
+    else if (name == "swipe (cat)")
     {
         return new ActionNode ("swipe (cat)",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (!strcmp("rake", name))
+    else if (name == "rake")
     {
         return new ActionNode ("rake",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 15.0f), NULL));
     }
-    else if (!strcmp("ferocious bite", name))
+    else if (name == "ferocious bite")
     {
         return new ActionNode ("ferocious bite",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("rip"), NULL),
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 10.0f), NULL));
     }
-    else if (!strcmp("rip", name))
+    else if (name == "rip")
     {
         return new ActionNode ("rip",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 10.0f), NULL));
     }
-    else if (!strcmp("cower", name))
+    else if (name == "cower")
     {
         return new ActionNode ("cower",
             /*P*/ NULL,

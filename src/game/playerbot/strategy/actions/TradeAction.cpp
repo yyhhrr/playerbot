@@ -19,7 +19,7 @@ bool TradeAction::Execute(Event event)
 
     int8 slot = -1;
 
-    uint32 quality = InventoryItemValue::TextToItemQuality(text.c_str());
+    uint32 quality = InventoryItemValue::TextToItemQuality(text);
 
     if (quality != MAX_ITEM_QUALITY) 
     {

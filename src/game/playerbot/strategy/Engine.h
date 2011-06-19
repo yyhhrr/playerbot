@@ -59,16 +59,16 @@ namespace ai
         }
 
 	    void Init();
-        void addStrategy(const char* name);
-		void addStrategies(const char* first, ...);
-        bool removeStrategy(const char* name);
-        void toggleStrategy(const char* name);
+        void addStrategy(string name);
+		void addStrategies(string first, ...);
+        bool removeStrategy(string name);
+        void toggleStrategy(string name);
         std::string ListStrategies();
 		bool ContainsStrategy(StrategyType type);
 
     public:
 	    virtual bool DoNextAction(Unit*, int depth = 0);
-        bool ExecuteAction(const char* name);
+        bool ExecuteAction(string name);
 
     public:
         void AddActionExecutionListener(ActionExecutionListener* listener)
@@ -89,7 +89,7 @@ namespace ai
         void ProcessTriggers();
         void PushDefaultActions();
         void PushAgain(ActionNode* actionNode, float relevance, Event event);
-        ActionNode* GetAction(const char* name);
+        ActionNode* GetAction(string name);
         Action* InitializeAction(ActionNode* actionNode);
         bool ListenAndExecute(Action* action, Event event);
 

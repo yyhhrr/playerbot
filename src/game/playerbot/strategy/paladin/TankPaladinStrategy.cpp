@@ -48,16 +48,16 @@ void TankPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 }
 
-ActionNode* TankPaladinStrategy::GetAction(const char* name)
+ActionNode* TankPaladinStrategy::GetAction(string name)
 {
-    if (!strcmp("righteous fury", name)) 
+    if (name == "righteous fury") 
     {
         return new ActionNode ("righteous fury",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    else if (!strcmp("blessing of sanctuary", name)) 
+    else if (name == "blessing of sanctuary") 
     {
         return new ActionNode ("blessing of sanctuary",  
             /*P*/ NULL,

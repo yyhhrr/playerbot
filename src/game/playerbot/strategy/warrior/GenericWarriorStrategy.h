@@ -14,7 +14,7 @@ namespace ai
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual AiObjectContext* createAiObjectContext();
-        virtual const char* getName() { return "warrior"; }
-        ActionNode* GetAction(const char* name);
+        virtual string getName() { return "warrior"; }
+        ActionNode* GetAction(string name);
     };
 }

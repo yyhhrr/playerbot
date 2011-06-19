@@ -11,7 +11,7 @@ namespace ai
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "bmana"; }
+        virtual string getName() { return "bmana"; }
 		virtual string GetIncompatibleStrategies() { return "-bhealth,-bpds"; }
     };
 
@@ -22,7 +22,7 @@ namespace ai
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "bhealth"; }
+        virtual string getName() { return "bhealth"; }
 		virtual string GetIncompatibleStrategies() { return "-bmana,-bpds"; }
     };
 
@@ -33,7 +33,7 @@ namespace ai
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual const char* getName() { return "bdps"; }
+        virtual string getName() { return "bdps"; }
 		virtual string GetIncompatibleStrategies() { return "-bhealth,-bmana,-barmor,-rfrost,-rfire,-rshadow"; }
     };
 
@@ -44,7 +44,7 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual const char* getName() { return "barmor"; }
+		virtual string getName() { return "barmor"; }
 		virtual string GetIncompatibleStrategies() { return "-bdps,-rfrost,-rfire,-rshadow"; }
 	};
 
@@ -55,7 +55,7 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual const char* getName() { return "rshadow"; }
+		virtual string getName() { return "rshadow"; }
 		virtual string GetIncompatibleStrategies() { return "-barmor,-bdps,-rfrost,-rfire"; }
 	};
 
@@ -66,7 +66,7 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual const char* getName() { return "rfrost"; }
+		virtual string getName() { return "rfrost"; }
 		virtual string GetIncompatibleStrategies() { return "-barmor,-bdps,-rfire,-rshadow"; }
 	};
 
@@ -77,7 +77,7 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual const char* getName() { return "rfire"; }
+		virtual string getName() { return "rfire"; }
 		virtual string GetIncompatibleStrategies() { return "-barmor,-bdps,-rfrost,-rshadow"; }
 	};
 }

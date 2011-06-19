@@ -10,7 +10,7 @@ void MockPlayerbotAIBase::InterruptSpell()
 {
 }
 
-void MockPlayerbotAIBase::RemoveAura(const char* name)
+void MockPlayerbotAIBase::RemoveAura(string name)
 {
     Unit* target = MockedTargets::GetSelf();
     if (HasAura(name, target)) {
@@ -20,23 +20,23 @@ void MockPlayerbotAIBase::RemoveAura(const char* name)
     }
 }
 
-bool MockPlayerbotAIBase::CanCastSpell(const char* name, Unit* target)
+bool MockPlayerbotAIBase::CanCastSpell(string name, Unit* target)
 {
-    for (list<string>::iterator i = spellCooldowns.begin(); i != spellCooldowns.end(); i++)
+    for (list<string >::iterator i = spellCooldowns.begin(); i != spellCooldowns.end(); i++)
     {
         string s = *i;
-        if (!strcmp(s.c_str(), name))
+        if (s == name)
             return false;
     }
     return true;
 }
 
-bool MockPlayerbotAIBase::IsSpellCastUseful(const char* name, Unit* target)
+bool MockPlayerbotAIBase::IsSpellCastUseful(string name, Unit* target)
 {
     return true;
 }
 
-bool MockPlayerbotAIBase::CastSpell(const char* name, Unit* target)
+bool MockPlayerbotAIBase::CastSpell(string name, Unit* target)
 {
     buffer.append(">");
     if (target == MockedTargets::GetPartyMember()) 
@@ -56,12 +56,12 @@ bool MockPlayerbotAIBase::CastSpell(const char* name, Unit* target)
     return true; 
 }
 
-bool MockPlayerbotAIBase::HasAura(const char* spellName, Unit* player)
+bool MockPlayerbotAIBase::HasAura(string spellName, Unit* player)
 {
-    for (list<string>::iterator i = auras[player].begin(); i != auras[player].end(); i++)
+    for (list<string >::iterator i = auras[player].begin(); i != auras[player].end(); i++)
     {
         string s = *i;
-        if (!strcmp(s.c_str(), spellName))
+        if (s == spellName)
             return TRUE;
     }
     return false;

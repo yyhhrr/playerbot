@@ -10,7 +10,7 @@ bool SpellCastUsefulValue::Calculate()
     
     
 
-    uint32 spellid = AI_VALUE2(uint32, "spell id", qualifier.c_str());
+    uint32 spellid = AI_VALUE2(uint32, "spell id", qualifier);
 	if (!spellid)
 		return true; // there can be known alternatives
 

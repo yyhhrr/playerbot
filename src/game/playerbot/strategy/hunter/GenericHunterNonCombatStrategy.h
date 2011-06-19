@@ -8,18 +8,18 @@ namespace ai
     {
     public:
         GenericHunterNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "nc"; }
+        virtual string getName() { return "nc"; }
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(const char* name);
+        virtual ActionNode* GetAction(string name);
     };
 
     class HunterBuffSpeedNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
         HunterBuffSpeedNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
-        virtual const char* getName() { return "bspeed"; }
+        virtual string getName() { return "bspeed"; }
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);

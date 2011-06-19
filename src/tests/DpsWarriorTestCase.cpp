@@ -113,7 +113,7 @@ protected:
     }
 
 
-    void hamstring()
+    void hamstring ()
     {
 		tickInMeleeRange(); // reach melee
 

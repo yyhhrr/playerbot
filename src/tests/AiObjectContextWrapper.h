@@ -47,7 +47,7 @@ namespace ai
         
         virtual Unit* Calculate()
         {
-            const char* spell = qualifier.c_str();
+            string  spell = qualifier;
             Unit* target = MockedTargets::GetPartyMember();
             return ai->HasAura(spell, target) ? NULL : target;
         }
@@ -177,7 +177,7 @@ namespace ai
           }
 
     public:
-        virtual UntypedValue* GetUntypedValue(const char* name) 
+        virtual UntypedValue* GetUntypedValue(string  name) 
         {
             UntypedValue* value = mockValueContext.create(name, ai);
             UntypedValue* real = realContext->GetUntypedValue(name);
@@ -191,9 +191,9 @@ namespace ai
             }
             return value ? value : real;
         }
-        virtual Strategy* GetStrategy(const char* name) { return realContext->GetStrategy(name); }
-        virtual Trigger* GetTrigger(const char* name) { return realContext->GetTrigger(name); }
-        virtual Action* GetAction(const char* name) { return realContext->GetAction(name); }
+        virtual Strategy* GetStrategy(string  name) { return realContext->GetStrategy(name); }
+        virtual Trigger* GetTrigger(string  name) { return realContext->GetTrigger(name); }
+        virtual Action* GetAction(string  name) { return realContext->GetAction(name); }
         virtual void Update()
         {
             mockValueContext.Update();

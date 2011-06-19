@@ -50,79 +50,79 @@ void DpsRogueStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 }
 
 
-ActionNode* DpsRogueStrategy::GetAction(const char* name)
+ActionNode* DpsRogueStrategy::GetAction(string name)
 {
-    if (!strcmp("mutilate", name))
+    if (name == "mutilate")
     {
         return new ActionNode ("mutilate",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("sinister strike"), NULL),
             /*C*/ NULL);
     }
-    else if (!strcmp("sinister strike", name))
+    else if (name == "sinister strike")
     {
         return new ActionNode ("sinister strike",
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (!strcmp("kidney shot", name))
+	else if (name == "kidney shot")
 	{
 		return new ActionNode ("kidney shot",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("rupture"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("rupture", name))
+	else if (name == "rupture")
 	{
 		return new ActionNode ("rupture",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("slice and dice"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("slice and dice", name))
+	else if (name == "slice and dice")
 	{
 		return new ActionNode ("slice and dice",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("eviscerate"), NULL),
 			/*C*/ NULL);
 	}
-	else if (!strcmp("eviscerate", name))
+	else if (name == "eviscerate")
 	{
 		return new ActionNode ("eviscerate",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("vanish", name))
+	else if (name == "vanish")
 	{
 		return new ActionNode ("vanish",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("evasion", name))
+	else if (name == "evasion")
 	{
 		return new ActionNode ("evasion",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("kick", name))
+	else if (name == "kick")
 	{
 		return new ActionNode ("kick",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-	else if (!strcmp("feint", name))
+	else if (name == "feint")
 	{
 		return new ActionNode ("feint",
 			/*P*/ NULL,
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
-    else if (!strcmp("backstab", name))
+    else if (name == "backstab")
     {
         return new ActionNode ("backstab",
             /*P*/ NULL,

@@ -18,9 +18,9 @@ public:
     explicit PlayerbotChatHandler(Player* pMasterPlayer) : ChatHandler(pMasterPlayer) {}
     bool revive(const Player& botPlayer) { return HandleReviveCommand((char*)botPlayer.GetName()); }
     bool teleport(const Player& botPlayer) { return HandleNamegoCommand((char*)botPlayer.GetName()); }
-    void sysmessage(const char *str) { SendSysMessage(str); }
-    bool dropQuest(const char *str) { return HandleQuestRemoveCommand((char*)str); }
-    uint32 extractQuestId(const char *str);
+    void sysmessage(string str) { SendSysMessage(str.c_str()); }
+    bool dropQuest(string str) { return HandleQuestRemoveCommand((char*)str.c_str()); }
+    uint32 extractQuestId(string str);
 };
 
 namespace ai 
@@ -64,28 +64,27 @@ public:
     void ChangeActiveEngineIfNecessary();
     void ChangeEngine(Engine* engine);
     void DoNextAction();
-    void DoSpecificAction(const char* name);
-    void ChangeStrategy( const char* name, Engine* e );
-    void ChangeCombatStrategy(const char* name) { ChangeStrategy(name, combatEngine); }
-    void ChangeNonCombatStrategy(const char* name) { ChangeStrategy(name, nonCombatEngine); }
+    void DoSpecificAction(string name);
+    void ChangeStrategy( string name, Engine* e );
+    void ChangeCombatStrategy(string name) { ChangeStrategy(name, combatEngine); }
+    void ChangeNonCombatStrategy(string name) { ChangeStrategy(name, nonCombatEngine); }
     bool ContainsStrategy(StrategyType type);
     void ReInitCurrentEngine();
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);
     GameObject* GetGameObject(ObjectGuid guid);
-    void TellMaster(ostringstream &stream) { TellMaster(stream.str().c_str()); }
-    void TellMaster(string &text) { TellMaster(text.c_str()); }
-    void TellMaster(const char* text);
-    void TellMaster(LogLevel level, const char* text);
+    void TellMaster(ostringstream &stream) { TellMaster(stream.str()); }
+    void TellMaster(string text);
+    void TellMaster(LogLevel level, string text);
     void WaitForSpellCast();
     void SpellInterrupted(uint32 spellid);
     int32 CalculateGlobalCooldown(uint32 spellid);
     void InterruptSpell();
-    void RemoveAura(const char* name);
+    void RemoveAura(string name);
 
-    virtual bool CanCastSpell(const char* name, Unit* target);
-    virtual bool CastSpell(const char* name, Unit* target);
-    virtual bool HasAura(const char* spellName, Unit* player);
+    virtual bool CanCastSpell(string name, Unit* target);
+    virtual bool CastSpell(string name, Unit* target);
+    virtual bool HasAura(string spellName, Unit* player);
     virtual bool HasAnyAuraOf(Unit* player, ...);
 
     virtual bool IsSpellCasting(Unit* player);
