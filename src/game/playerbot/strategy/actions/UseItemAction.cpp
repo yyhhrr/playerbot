@@ -62,6 +62,22 @@ void UseItemAction::UseItem(Item& item)
     *packet << bagIndex << slot << cast_count << spellid << item_guid
         << glyphIndex << unk_flags;
 
+    if(uint32 questid = item.GetProto()->StartQuest)
+    {
+        Quest const* qInfo = sObjectMgr.GetQuestTemplate(questid);
+        if (qInfo)
+        {
+            WorldPacket* const packet = new WorldPacket(CMSG_QUESTGIVER_ACCEPT_QUEST, 8+4+4);
+            *packet << item_guid;
+            *packet << questid;
+            *packet << uint32(0);
+            bot->GetSession()->QueuePacket(packet); // queue the packet to get around race condition
+            ostringstream out; out << "Got quest " << chat->formatQuest(qInfo);
+            ai->TellMaster(out);
+        }
+        return;
+    }
+
     for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
     {
         uint32 spellId = item.GetProto()->Spells[i].SpellId;
