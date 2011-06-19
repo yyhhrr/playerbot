@@ -25,14 +25,24 @@ bool BuyAction::Execute(Event event)
         return false;
     }
 
-    VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
+    VendorItemData const* tItems = pCreature->GetVendorItems();
+    if (!tItems)
+    {
+        ai->TellMaster("This vendor has no items");
+        return false;
+    }
+
     for (ItemIds::iterator i = itemIds.begin(); i != itemIds.end(); i++) 
     {
         for (uint32 slot = 0; slot < tItems->GetItemCount(); slot++)
         {
             if (tItems->GetItem(slot)->item == *i)
-                bot->BuyItemFromVendorSlot(vendorguid, *i, slot, 1, NULL_BAG, NULL_SLOT);
+            {
+                bot->BuyItemFromVendorSlot(vendorguid, slot, *i, 1, NULL_BAG, NULL_SLOT);
+                ai->TellMaster("Bought item");
+            }
         }
     }
+    
     return true;
 }
