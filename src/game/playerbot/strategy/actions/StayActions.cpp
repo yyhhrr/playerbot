@@ -8,9 +8,6 @@ using namespace ai;
 
 void StayActionBase::Stay()
 {
-    if (!bot->isMoving())
-        return;
-
     AI_VALUE(LastMovement&, "last movement").Set(NULL);
 
     MotionMaster &mm = *bot->GetMotionMaster();

@@ -20,10 +20,10 @@ bool TurnInQuestAction::Execute(Event event)
         return true;
     }
 
-    WorldObject* pNpc = master->GetMap()->GetWorldObject(guid);
-    if (pNpc)
+    Creature* creature = ai->GetCreature(guid);
+    if (creature)
     {
-        TurnInQuests( pNpc );
+        TurnInQuests( creature );
         return true;
     }
 
