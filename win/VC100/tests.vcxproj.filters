@@ -129,34 +129,37 @@
     <ClCompile Include="..\..\src\tests\DpsRogueTestCase.cpp">
       <Filter>Rogue</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiInventoryManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiManagerRegistry.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiMoveManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiSocialManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiSpellManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiStatsManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiStrategyManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\MockAiTargetManager.cpp">
-      <Filter>Mocks</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\main.cpp" />
     <ClCompile Include="..\..\src\tests\NextActionTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\pch.cpp" />
     <ClCompile Include="..\..\src\tests\QueueTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\MockAiObjectContext.cpp">
+      <Filter>Mocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\MockPlayerbotAIBase.cpp">
+      <Filter>Mocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase2.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\ChatCommandTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\WorldPacketHandlerTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\ValueTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\QualifiedValueTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\EventTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\ExternalEventHelperTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\EngineTestBase.h">
@@ -165,34 +168,22 @@
     <ClInclude Include="..\..\src\tests\EverythingUnavailableAiManagerRegistry.h">
       <Filter>Performance</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiInventoryManager.h">
+    <ClInclude Include="..\..\src\tests\aitest.h" />
+    <ClInclude Include="..\..\src\tests\pch.h" />
+    <ClInclude Include="..\..\src\tests\MockAiObjectContext.h">
       <Filter>Mocks</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiManagerRegistry.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiMoveManager.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiSocialManager.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiSpellManager.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiStatsManager.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiStrategyManager.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\MockAiTargetManager.h">
+    <ClInclude Include="..\..\src\tests\MockedAiObjectContextTestCase.h">
       <Filter>Mocks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\MockedTargets.h">
       <Filter>Mocks</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\aitest.h" />
-    <ClInclude Include="..\..\src\tests\pch.h" />
+    <ClInclude Include="..\..\src\tests\MockPlayerbotAIBase.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\AiObjectContextWrapper.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

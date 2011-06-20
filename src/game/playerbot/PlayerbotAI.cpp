@@ -28,7 +28,7 @@ uint32 PlayerbotChatHandler::extractQuestId(string str)
 }
 
 
-PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL), 
+PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL),
     combatEngine(NULL), nonCombatEngine(NULL), currentEngine(NULL), deadEngine(NULL), chatHelper(this)
 {
 }
@@ -57,10 +57,10 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     masterPacketHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
     masterPacketHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
     masterPacketHandlers[CMSG_QUESTGIVER_ACCEPT_QUEST] = "accept quest";
-    
+
     masterPacketHandlers[CMSG_ACTIVATETAXI] = "activate taxi";
     masterPacketHandlers[CMSG_ACTIVATETAXIEXPRESS] = "activate taxi";
-    
+
     botPacketHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
     botPacketHandlers[SMSG_GROUP_INVITE] = "group invite";
     botPacketHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
@@ -75,10 +75,10 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
 
 PlayerbotAI::~PlayerbotAI()
 {
-    if (combatEngine) 
+    if (combatEngine)
         delete combatEngine;
 
-    if (nonCombatEngine) 
+    if (nonCombatEngine)
         delete nonCombatEngine;
 
     if (deadEngine)
@@ -101,13 +101,13 @@ void PlayerbotAI::UpdateAI(uint32 elapsed)
         helper.ParseChatCommand(chatCommands.top());
         chatCommands.pop();
     }
-    
+
     while (!botPackets.empty())
     {
         helper.HandlePacket(botPacketHandlers, botPackets.top());
         botPackets.pop();
     }
-    
+
     while (!masterPackets.empty())
     {
         helper.HandlePacket(masterPacketHandlers, masterPackets.top());
@@ -165,7 +165,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
         currentEngine = nonCombatEngine;
         nextAICheckTime = 0;
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
-        
+
         bot->GetMotionMaster()->Clear();
         bot->m_taxi.ClearTaxiDestinations();
     }
@@ -211,7 +211,36 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             SpellInterrupted(spellId);
             return;
         }
+    case SMSG_SPELL_START:
+        {
+            WorldPacket p(packet);
 
+            ObjectGuid castItemGuid;
+            p >> castItemGuid.ReadAsPacked();
+            ObjectGuid casterGuid;
+            p >> casterGuid.ReadAsPacked();
+            if (casterGuid != bot->GetObjectGuid())
+                return;
+
+            uint8 castCount;
+            p >> castCount;
+            uint32 spellId;
+            p >> spellId;
+            uint32 castFlags;
+            p >> castFlags;
+            uint32 msTime;
+            p >> msTime;
+
+            const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+            if (!pSpellInfo)
+                return;
+
+            if (pSpellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_NOT_SEATED)
+                return;
+
+            SetNextCheckDelay((uint32)ceil(msTime / 1000.0));
+            return;
+        }
     case SMSG_SPELL_GO:
         {
             WorldPacket p(packet);
@@ -269,14 +298,14 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
 
 int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
 {
-    if (!spellid) 
+    if (!spellid)
         return 0;
 
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
 
-    if (!spellInfo || 
-        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 || 
-        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2 || 
+    if (!spellInfo ||
+        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 ||
+        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2 ||
         spellInfo->Attributes & SPELL_ATTR_OUTDOORS_ONLY ||
         spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE ||
         !spellInfo->StartRecoveryCategory)
@@ -298,11 +327,11 @@ void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
 void PlayerbotAI::UpdateNextCheckDelay()
 {
     int delay = 1;
-    
+
     Group* group = bot->GetGroup();
-    if (group) 
+    if (group)
         delay += group->GetMembersCount() / 10;
-    
+
     SetNextCheckDelay(delay);
 }
 
@@ -320,7 +349,7 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
     {
         ChangeEngine(combatEngine);
     }
-    else 
+    else
     {
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
@@ -337,7 +366,7 @@ void PlayerbotAI::ChangeEngine(Engine* engine)
     }
 }
 
-void PlayerbotAI::DoNextAction() 
+void PlayerbotAI::DoNextAction()
 {
     bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
     bot->CheckAreaExploreAndOutdoor();
@@ -379,7 +408,7 @@ void PlayerbotAI::ReInitCurrentEngine()
     SetNextCheckDelay(0);
 }
 
-void PlayerbotAI::ChangeStrategy( string names, Engine* e ) 
+void PlayerbotAI::ChangeStrategy( string names, Engine* e )
 {
     if (!e)
         return;
@@ -388,7 +417,7 @@ void PlayerbotAI::ChangeStrategy( string names, Engine* e )
     for (vector<string>::iterator i = splitted.begin(); i != splitted.end(); i++)
     {
         const char* name = i->c_str();
-        switch (name[0]) 
+        switch (name[0])
         {
         case '+':
             e->addStrategy(name+1);
@@ -406,8 +435,8 @@ void PlayerbotAI::ChangeStrategy( string names, Engine* e )
     }
 }
 
-void PlayerbotAI::DoSpecificAction(string name) 
-{ 
+void PlayerbotAI::DoSpecificAction(string name)
+{
     if (!combatEngine->ExecuteAction(name) && !nonCombatEngine->ExecuteAction(name))
     {
         ostringstream out;
@@ -429,7 +458,7 @@ bool PlayerbotAI::IsTank(Player* player)
     if (botAi)
         return botAi->ContainsStrategy(STRATEGY_TYPE_TANK);
 
-    switch (player->getClass()) 
+    switch (player->getClass())
     {
     case CLASS_DEATH_KNIGHT:
     case CLASS_PALADIN:
@@ -551,14 +580,14 @@ void PlayerbotAI::TellMaster(LogLevel level, string text)
 }
 
 
-bool PlayerbotAI::HasAura(string name, Unit* player) 
+bool PlayerbotAI::HasAura(string name, Unit* player)
 {
     return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), player);
 }
 
-bool PlayerbotAI::HasAura(uint32 spellId, const Unit* player) 
+bool PlayerbotAI::HasAura(uint32 spellId, const Unit* player)
 {
-    if (!spellId || !player) 
+    if (!spellId || !player)
         return false;
 
     Unit* unit = (Unit*)player;
@@ -661,7 +690,7 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
 }
 
 
-bool PlayerbotAI::CastSpell(string name, Unit* target) 
+bool PlayerbotAI::CastSpell(string name, Unit* target)
 {
     return CastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
 }
@@ -725,10 +754,10 @@ void PlayerbotAI::InterruptSpell()
     *packet << lastSpell.target;
     bot->GetSession()->QueuePacket(packet);
 
-    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_MAX_SPELL; type++)
+    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_CHANNELED_SPELL; type++)
         bot->InterruptSpell((CurrentSpellTypes)type);
 
-    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_MAX_SPELL; type++)
+    for (int type = CURRENT_MELEE_SPELL; type < CURRENT_CHANNELED_SPELL; type++)
         bot->GetMover()->InterruptSpell((CurrentSpellTypes)type);
 
     SpellInterrupted(lastSpell.id);
@@ -747,7 +776,7 @@ bool PlayerbotAI::IsSpellCasting(Unit* player)
     return player->IsNonMeleeSpellCasted(true);
 }
 
-bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType) 
+bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)
 {
     for (uint32 type = SPELL_AURA_NONE; type < TOTAL_AURAS; ++type)
     {
@@ -780,7 +809,7 @@ int strcmpi(const char* s1, const char* s2)
 }
 #endif
 
-bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType) 
+bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType)
 {
     if (entry->Dispel == dispelType) {
         return !entry->SpellName[0] ||

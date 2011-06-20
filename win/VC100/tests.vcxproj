@@ -249,8 +249,11 @@
     <ClCompile Include="..\..\src\tests\BearTankDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CasterDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CatDpsDruidTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\ChatCommandTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DruidNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsHunterEngineTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\EventTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\ExternalEventHelperTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\HunterNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\FireMageTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\FrostMageTestCase.cpp" />
@@ -258,10 +261,15 @@
     <ClCompile Include="..\..\src\tests\EngineTestBase.cpp" />
     <ClCompile Include="..\..\src\tests\EngineTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\GenericTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\MockAiObjectContext.cpp" />
+    <ClCompile Include="..\..\src\tests\MockPlayerbotAIBase.cpp" />
     <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase2.cpp" />
+    <ClCompile Include="..\..\src\tests\QualifiedValueTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\RacialsTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsWarriorTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\TankWarriorTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\ValueTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\WarrirorNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsPriestTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\HealPriestTestCase.cpp" />
@@ -276,14 +284,6 @@
     <ClCompile Include="..\..\src\tests\MeleeShamanTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ShamanNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsRogueTestCase.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiInventoryManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiManagerRegistry.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiMoveManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiSocialManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiSpellManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiStatsManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiStrategyManager.cpp" />
-    <ClCompile Include="..\..\src\tests\MockAiTargetManager.cpp" />
     <ClCompile Include="..\..\src\tests\main.cpp" />
     <ClCompile Include="..\..\src\tests\NextActionTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\pch.cpp">
@@ -291,20 +291,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\QueueTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\WorldPacketHandlerTestCase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\tests\AiObjectContextWrapper.h" />
     <ClInclude Include="..\..\src\tests\EngineTestBase.h" />
     <ClInclude Include="..\..\src\tests\EverythingUnavailableAiManagerRegistry.h" />
-    <ClInclude Include="..\..\src\tests\MockAiInventoryManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiManagerRegistry.h" />
-    <ClInclude Include="..\..\src\tests\MockAiMoveManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiSocialManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiSpellManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiStatsManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiStrategyManager.h" />
-    <ClInclude Include="..\..\src\tests\MockAiTargetManager.h" />
-    <ClInclude Include="..\..\src\tests\MockedTargets.h" />
     <ClInclude Include="..\..\src\tests\aitest.h" />
+    <ClInclude Include="..\..\src\tests\MockAiObjectContext.h" />
+    <ClInclude Include="..\..\src\tests\MockedAiObjectContextTestCase.h" />
+    <ClInclude Include="..\..\src\tests\MockedTargets.h" />
+    <ClInclude Include="..\..\src\tests\MockPlayerbotAIBase.h" />
     <ClInclude Include="..\..\src\tests\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
