@@ -77,10 +77,7 @@ bool TrainerAction::Execute(Event event)
     
     Creature *creature = ai->GetCreature(master->GetSelectionGuid());
     if (!creature)
-    {
-        ai->TellMaster("Please select a trainer");
         return false;
-    }
 
     if (!creature->IsTrainerOf(bot, false))
     {

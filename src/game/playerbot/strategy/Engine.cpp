@@ -122,7 +122,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
                         continue;
                     }
 
-                    sLog.outDetail("A:%s", action->getName());
+                    sLog.outDetail("A:%s", action->getName().c_str());
 
                     actionExecuted = ListenAndExecute(action, event);
 
@@ -134,17 +134,17 @@ bool Engine::DoNextAction(Unit* unit, int depth)
                     }
                     else {
                         MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
-                        sLog.outDetail("NOT EXECUTED:%s", actionNode->getName());
+                        sLog.outDetail("NOT EXECUTED:%s", actionNode->getName().c_str());
                     }
                 }
                 else {
                     MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
-                    sLog.outDetail("IMPOSSIBLE:%s", actionNode->getName());
+                    sLog.outDetail("IMPOSSIBLE:%s", actionNode->getName().c_str());
                 }
             }
             else {
                 lastRelevance = relevance;
-                sLog.outDetail("USELESS:%s", actionNode->getName());
+                sLog.outDetail("USELESS:%s", actionNode->getName().c_str());
             }
             delete actionNode;
         }
