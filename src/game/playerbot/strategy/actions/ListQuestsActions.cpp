@@ -15,13 +15,13 @@ bool ListQuestsAction::Execute(Event event)
     {
         ListQuests(QUEST_LIST_FILTER_INCOMPLETED);
     }
-    else if (event.getParam() == "summary")
+    else if (event.getParam() == "all")
     {
-        ListQuests(QUEST_LIST_FILTER_SUMMARY);
+        ListQuests(QUEST_LIST_FILTER_ALL);
     }
     else
     {
-        ListQuests(QUEST_LIST_FILTER_ALL);
+        ListQuests(QUEST_LIST_FILTER_SUMMARY);
     }
     return true;
 }
@@ -32,14 +32,14 @@ void ListQuestsAction::ListQuests(QuestListFilter filter)
     bool showCompleted = filter & QUEST_LIST_FILTER_COMPLETED;
 
     if (showIncompleted)
-        ai->TellMaster("--- incomplete quests ---");
+        ai->TellMaster("--- Incomplete quests ---");
     int incompleteCount = ListQuests(false, !showIncompleted);
 
     if (showCompleted)
-        ai->TellMaster("--- complete quests ---");
+        ai->TellMaster("--- Complete quests ---");
     int completeCount = ListQuests(true, !showCompleted);
 
-    ai->TellMaster("--- summary ---");
+    ai->TellMaster("--- Summary ---");
     std::ostringstream out;
     out << "Total: " << (completeCount + incompleteCount) << " / 25 (incomplete: " << incompleteCount << ", complete: " << completeCount << ")";
     ai->TellMaster(out);
