@@ -20,6 +20,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( goaway );
       CPPUNIT_TEST( passive );
       CPPUNIT_TEST( movementStrategies );
+      CPPUNIT_TEST( assistStrategies );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -138,6 +139,18 @@ protected:
 
         cout << engine->ListStrategies();
         CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: stay");
+    }
+
+    void assistStrategies()
+    {
+        engine->addStrategy("dps assist");
+        engine->addStrategy("tank asssist");
+        engine->addStrategy("dps aoe");
+        engine->addStrategy("tank asssist");
+        engine->addStrategy("grind");
+
+        cout << engine->ListStrategies();
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: grind");
     }
 };
 
