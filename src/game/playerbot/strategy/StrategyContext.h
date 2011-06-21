@@ -5,6 +5,7 @@
 #include "ChatCommandHandlerStrategy.h"
 #include "WorldPacketHandlerStrategy.h"
 #include "DeadStrategy.h"
+#include "QuestStrategies.h"
 
 namespace ai
 {
@@ -74,5 +75,17 @@ namespace ai
         static Strategy* tank_assist(PlayerbotAI* ai) { return new TankAssistStrategy(ai); }
         static Strategy* tank_aoe(PlayerbotAI* ai) { return new TankAoeStrategy(ai); }
         static Strategy* grind(PlayerbotAI* ai) { return new GrindingStrategy(ai); }
+    };
+
+    class QuestStrategyContext : public NamedObjectContext<Strategy>
+    {
+    public:
+        QuestStrategyContext() : NamedObjectContext<Strategy>(false, true)
+        {
+            creators["quest"] = &QuestStrategyContext::quest;
+        }
+
+    private:
+        static Strategy* quest(PlayerbotAI* ai) { return new DefaultQuestStrategy(ai); }
     };
 };

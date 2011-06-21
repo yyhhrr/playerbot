@@ -266,6 +266,7 @@
     <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase2.cpp" />
     <ClCompile Include="..\..\src\tests\QualifiedValueTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\QuestStrategyTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\RacialsTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsWarriorTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\TankWarriorTestCase.cpp" />

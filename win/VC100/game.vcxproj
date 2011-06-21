@@ -581,6 +581,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\PullStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\QuestStrategies.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Queue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\RacialsStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.cpp" />
@@ -927,6 +928,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\PullStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\QuestStrategies.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Queue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\RacialsStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.h" />
