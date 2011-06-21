@@ -23,17 +23,27 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["tank"] = &warrior::StrategyFactoryInternal::tank;
-                creators["dps"] = &warrior::StrategyFactoryInternal::dps;
                 creators["nc"] = &warrior::StrategyFactoryInternal::nc;
                 creators["pull"] = &warrior::StrategyFactoryInternal::pull;
             }
 
         private:
-            static Strategy* tank(PlayerbotAI* ai) { return new TankWarriorStrategy(ai); }
-            static Strategy* dps(PlayerbotAI* ai) { return new DpsWarriorStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new GenericWarriorNonCombatStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
+        };
+
+        class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["tank"] = &warrior::CombatStrategyFactoryInternal::tank;
+                creators["dps"] = &warrior::CombatStrategyFactoryInternal::dps;
+            }
+
+        private:
+            static Strategy* tank(PlayerbotAI* ai) { return new TankWarriorStrategy(ai); }
+            static Strategy* dps(PlayerbotAI* ai) { return new DpsWarriorStrategy(ai); }
         };
     };
 };
@@ -164,6 +174,7 @@ namespace ai
 WarriorAiObjectContext::WarriorAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::warrior::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::warrior::CombatStrategyFactoryInternal());
     actionContexts.Add(new ai::warrior::AiObjectContextInternal());
-    triggerContexts.Add(new ai::warrior::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::warrior::TriggerFactoryInternal());
 }

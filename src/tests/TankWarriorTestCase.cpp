@@ -16,6 +16,7 @@ class TankWarriorTestCase : public EngineTestBase
     CPPUNIT_TEST( healing );
 	CPPUNIT_TEST( snare );
     CPPUNIT_TEST( interruptSpells );
+    CPPUNIT_TEST( incompatibles );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -31,10 +32,10 @@ public:
     }
 
 protected:
-    void interruptSpells() 
+    void interruptSpells()
     {
 		tickWithTargetIsCastingNonMeleeSpell();
-        
+
         tick(); // rend
 
         assertActions(">T:shield bash>S:defensive stance");
@@ -46,8 +47,8 @@ protected:
         tickWithLowHealth(50); // shield wall
         tickWithLowHealth(50); // shield block
 
-		tickWithLowHealth(4); 
-		tickWithLowHealth(4); 
+		tickWithLowHealth(4);
+		tickWithLowHealth(4);
 
 		assertActions(">S:defensive stance>T:shield wall>S:shield block>S:last stand>T:intimidating shout");
     }
@@ -61,8 +62,8 @@ protected:
 
         tickInSpellRange(); // defensive stance
         tickInSpellRange(); // reach melee
-        
-		
+
+
         tickInMeleeRange(); // bloodrage
         tick(); // melee
         tick(); // battle shout
@@ -90,9 +91,9 @@ protected:
         tick(); // melee
 
 		tickWithNoAggro();
-        
+
         tick(); // rend
-        
+
         tick();
 
 		assertActions(">S:defensive stance>T:melee>T:taunt>T:devastate>T:revenge");
@@ -102,7 +103,7 @@ protected:
     {
         set<float>("distance", "current target", 15.0f);
         set<uint8>("rage", "self target", 11);
-        
+
         tick(); // defensive stance
         tick(); // reach melee
         set<float>("distance", "current target", 0.0f);
@@ -126,19 +127,19 @@ protected:
         spellAvailable("disarm");
         addTargetAura("disarm");
 
-        tick(); 
+        tick();
         spellAvailable("disarm");
         addTargetAura("disarm");
         spellAvailable("devastate");
 
-        tick(); 
+        tick();
         spellAvailable("sunder armor");
         addTargetAura("sunder armor");
 
-		tick(); 
+		tick();
 
         spellAvailable("heroic strike");
-        tick(); 
+        tick();
         set<uint8>("rage", "self target", 20);
 
         addAura("sword and board");
@@ -162,10 +163,17 @@ protected:
 		tick();
 		tick();
 		tickWithTargetIsMoving();
-		
+
 		assertActions(">S:defensive stance>T:melee>T:concussion blow");
 	}
-    
+
+
+    void incompatibles()
+    {
+        engine->addStrategies("tank", "dps", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: dps");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TankWarriorTestCase );
