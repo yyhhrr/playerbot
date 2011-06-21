@@ -31,6 +31,7 @@ namespace ai
             creators["tell cannot equip"] = &WorldPacketActionContext::tell_cannot_equip;
             creators["talk to quest giver"] = &WorldPacketActionContext::turn_in_quest;
             creators["accept quest"] = &WorldPacketActionContext::accept_quest;
+            creators["accept all quests"] = &WorldPacketActionContext::accept_all_quests;
             creators["accept quest share"] = &WorldPacketActionContext::accept_quest_share;
             creators["loot roll"] = &WorldPacketActionContext::loot_roll;
             creators["revive from corpse"] = &WorldPacketActionContext::revive_from_corpse;
@@ -60,6 +61,7 @@ namespace ai
         static Action* tell_cannot_equip(PlayerbotAI* ai) { return new InventoryChangeFailureAction(ai); }
         static Action* turn_in_quest(PlayerbotAI* ai) { return new TalkToQuestGiverAction(ai); }
         static Action* accept_quest(PlayerbotAI* ai) { return new AcceptQuestAction(ai); }
+        static Action* accept_all_quests(PlayerbotAI* ai) { return new AcceptAllQuestsAction(ai); }
         static Action* accept_quest_share(PlayerbotAI* ai) { return new AcceptQuestShareAction(ai); }
         static Action* loot_roll(PlayerbotAI* ai) { return new LootRollAction(ai); }
     };

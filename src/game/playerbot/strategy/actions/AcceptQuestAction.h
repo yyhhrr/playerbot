@@ -5,13 +5,18 @@
 
 namespace ai
 {
-    class AcceptQuestAction : public QuestAction {
+    class AcceptAllQuestsAction : public QuestAction {
     public:
-        AcceptQuestAction(PlayerbotAI* ai) : QuestAction(ai, "accept quest") {}
-        virtual bool Execute(Event event);
+        AcceptAllQuestsAction(PlayerbotAI* ai, string name = "accept all quests") : QuestAction(ai, name) {}
 
     protected:
         virtual void ProcessQuest(Quest const* quest, WorldObject* questGiver);
+    };
+
+    class AcceptQuestAction : public AcceptAllQuestsAction {
+    public:
+        AcceptQuestAction(PlayerbotAI* ai) : AcceptAllQuestsAction(ai, "accept quest") {}
+        virtual bool Execute(Event event);
     };
 
     class AcceptQuestShareAction : public Action {

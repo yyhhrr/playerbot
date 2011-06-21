@@ -24,4 +24,14 @@ namespace ai
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual string getName() { return "quest"; }
     };
+
+    class AcceptAllQuestsStrategy : public QuestStrategy
+    {
+    public:
+        AcceptAllQuestsStrategy(PlayerbotAI* ai);
+
+    public:
+        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
+        virtual string getName() { return "accept all quests"; }
+    };
 }

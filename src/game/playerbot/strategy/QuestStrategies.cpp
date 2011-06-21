@@ -41,3 +41,28 @@ void DefaultQuestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 DefaultQuestStrategy::DefaultQuestStrategy(PlayerbotAI* ai) : QuestStrategy(ai)
 {
 }
+
+
+
+void AcceptAllQuestsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    QuestStrategy::InitTriggers(triggers);
+
+    triggers.push_back(new TriggerNode(
+        "use game object",
+        NextAction::array(0,
+            new NextAction("accept all quests", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "gossip hello",
+        NextAction::array(0,
+            new NextAction("accept all quests", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "complete quest",
+        NextAction::array(0, new NextAction("accept all quests", relevance), NULL)));
+}
+
+AcceptAllQuestsStrategy::AcceptAllQuestsStrategy(PlayerbotAI* ai) : QuestStrategy(ai)
+{
+}

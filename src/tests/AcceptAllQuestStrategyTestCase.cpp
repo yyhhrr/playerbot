@@ -8,21 +8,20 @@
 using namespace ai;
 
 
-class QuestStrategyTestCase : public MockedAiObjectContextTestCase
+class AcceptAllQuestStrategyTestCase : public MockedAiObjectContextTestCase
 {
-  CPPUNIT_TEST_SUITE( QuestStrategyTestCase );
+  CPPUNIT_TEST_SUITE( AcceptAllQuestStrategyTestCase );
       CPPUNIT_TEST( turn_in_quest );
       CPPUNIT_TEST( accept_quest );
       CPPUNIT_TEST( quest_share );
       CPPUNIT_TEST( useGameObject );
-      CPPUNIT_TEST( incompatibles );
   CPPUNIT_TEST_SUITE_END();
 
 public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "quest", NULL);
+		setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "accept all quests", NULL);
     }
 
 protected:
@@ -31,7 +30,7 @@ protected:
         trigger("use game object");
         tick();
 
-        assertActions(">S:talk to quest giver");
+        assertActions(">S:accept all quests");
     }
 
     void turn_in_quest()
@@ -42,7 +41,7 @@ protected:
         trigger("gossip hello");
         tick();
 
-        assertActions(">S:talk to quest giver>S:talk to quest giver");
+        assertActions(">S:accept all quests>S:accept all quests");
     }
 
     void accept_quest()
@@ -61,13 +60,6 @@ protected:
         assertActions(">S:accept quest share");
     }
 
-    void incompatibles()
-    {
-        engine->addStrategies("quest", "accept all quests", NULL);
-
-        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: accept all quests");
-    }
-
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION( QuestStrategyTestCase );
+CPPUNIT_TEST_SUITE_REGISTRATION( AcceptAllQuestStrategyTestCase );

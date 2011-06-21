@@ -2,8 +2,12 @@
 #include "../../playerbot.h"
 #include "AcceptQuestAction.h"
 
-
 using namespace ai;
+
+void AcceptAllQuestsAction::ProcessQuest(Quest const* quest, WorldObject* questGiver)
+{
+    AcceptQuest(quest, questGiver->GetObjectGuid());
+}
 
 bool AcceptQuestAction::Execute(Event event)
 {
@@ -39,18 +43,13 @@ bool AcceptQuestAction::Execute(Event event)
     Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
     if (!qInfo)
         return false;
-    
-    return AcceptQuest(qInfo, guid);
-}
 
-void AcceptQuestAction::ProcessQuest(Quest const* quest, WorldObject* questGiver)
-{
-    AcceptQuest(quest, questGiver->GetObjectGuid());
+    return AcceptQuest(qInfo, guid);
 }
 
 bool AcceptQuestShareAction::Execute(Event event)
 {
-    
+
     Player *bot = ai->GetBot();
 
     WorldPacket& p = event.getPacket();

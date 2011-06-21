@@ -163,6 +163,9 @@
     <ClCompile Include="..\..\src\tests\QuestStrategyTestCase.cpp">
       <Filter>Generic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\AcceptAllQuestStrategyTestCase.cpp">
+      <Filter>Generic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\EngineTestBase.h">
