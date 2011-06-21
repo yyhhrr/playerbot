@@ -15,6 +15,7 @@ class FrostMageTestCase : public EngineTestBase
   CPPUNIT_TEST( interruptSpells );
   CPPUNIT_TEST( cc );
   CPPUNIT_TEST( aoe );
+  CPPUNIT_TEST( incompatibles );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -29,7 +30,7 @@ protected:
 	{
         tick();
         spellAvailable("frostbolt");
-        
+
 		tickInMeleeRange();
 		tickInMeleeRange();
 
@@ -42,23 +43,23 @@ protected:
 		assertActions(">T:frostbolt>T:frost nova>S:flee>T:frostbolt>T:shoot>S:ice block");
 	}
 
-    void dispel() 
+    void dispel()
     {
-        tick(); 
+        tick();
 
 		tickWithAuraToDispel(DISPEL_CURSE);
 
 		spellAvailable("remove curse");
 		tickWithPartyAuraToDispel(DISPEL_CURSE);
 
-        tick(); 
-		
+        tick();
+
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
 		assertActions(">T:frostbolt>S:remove curse>P:remove curse on party>T:shoot>T:spellsteal");
     }
 
-    void boost() 
+    void boost()
     {
         tick(); // frostbolt
 
@@ -72,7 +73,7 @@ protected:
 		assertActions(">T:frostbolt>S:icy veins>T:frostbolt>T:shoot");
     }
 
-    void interruptSpells() 
+    void interruptSpells()
     {
 		tickWithTargetIsCastingNonMeleeSpell();
 
@@ -81,14 +82,14 @@ protected:
         assertActions(">T:counterspell>T:frostbolt");
     }
 
-    void cc() 
+    void cc()
     {
         tickWithCcTarget("polymorph");
 
         assertActions(">Cc:polymorph");
     }
 
-   	void aoe() 
+   	void aoe()
 	{
 		tick();
 		tickWithAttackerCount(4);
@@ -96,6 +97,13 @@ protected:
 
 		assertActions(">T:frostbolt>T:blizzard>T:shoot");
 	}
+
+   	void incompatibles()
+   	{
+        engine->addStrategies("frost", "fire", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: fire");
+   	}
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( FrostMageTestCase );

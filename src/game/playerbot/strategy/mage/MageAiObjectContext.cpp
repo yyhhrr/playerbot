@@ -23,17 +23,27 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["frost"] = &mage::StrategyFactoryInternal::frost;
-                creators["fire"] = &mage::StrategyFactoryInternal::fire;
                 creators["nc"] = &mage::StrategyFactoryInternal::nc;
                 creators["pull"] = &mage::StrategyFactoryInternal::pull;
             }
 
         private:
-            static Strategy* frost(PlayerbotAI* ai) { return new FrostMageStrategy(ai); }
-            static Strategy* fire(PlayerbotAI* ai) { return new FireMageStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new GenericMageNonCombatStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
+        };
+
+        class MageStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            MageStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["frost"] = &mage::MageStrategyFactoryInternal::frost;
+                creators["fire"] = &mage::MageStrategyFactoryInternal::fire;
+            }
+
+        private:
+            static Strategy* frost(PlayerbotAI* ai) { return new FrostMageStrategy(ai); }
+            static Strategy* fire(PlayerbotAI* ai) { return new FireMageStrategy(ai); }
         };
     };
 };
@@ -62,7 +72,7 @@ namespace ai
                 creators["counterspell"] = &TriggerFactoryInternal::counterspell;
                 creators["polymorph"] = &TriggerFactoryInternal::polymorph;
                 creators["spellsteal"] = &TriggerFactoryInternal::spellsteal;
-                
+
             }
 
         private:
@@ -152,6 +162,7 @@ namespace ai
 MageAiObjectContext::MageAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::mage::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::mage::MageStrategyFactoryInternal());
     actionContexts.Add(new ai::mage::AiObjectContextInternal());
-    triggerContexts.Add(new ai::mage::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::mage::TriggerFactoryInternal());
 }
