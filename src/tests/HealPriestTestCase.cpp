@@ -17,6 +17,7 @@ class HealPriestTestCase : public EngineTestBase
     CPPUNIT_TEST( fade );
     CPPUNIT_TEST( enemyTooClose );
 	CPPUNIT_TEST( racials );
+	CPPUNIT_TEST( incompatibles );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -112,7 +113,7 @@ protected:
     {
         engine->removeStrategy("heal");
         engine->addStrategy("nc");
-        
+
 		removeAura("power word: fortitude");
         removeAura("divine spirit");
         removeAura("inner fire");
@@ -136,8 +137,8 @@ protected:
 
     void fade()
     {
-        tick(); 
-        
+        tick();
+
 		tickWithMyAttackerCount(2);
 
 		tickWithSpellAvailable("shoot");
@@ -147,7 +148,7 @@ protected:
 
     void enemyTooClose()
     {
-        tick(); 
+        tick();
 
 		tickInMeleeRange();
 		tickInMeleeRange();
@@ -158,7 +159,7 @@ protected:
 		assertActions(">T:shoot>S:fade>S:flee>T:shoot");
     }
 
-    void dispel() 
+    void dispel()
     {
         tick(); // shoot
 
@@ -182,6 +183,13 @@ protected:
 		assertActions(">T:shoot>S:dispel magic>P:dispel magic on party>S:abolish disease>P:abolish disease on party>S:cure disease>P:cure disease on party>T:shoot");
     }
 
+
+    void incompatibles()
+    {
+        engine->addStrategies("heal", "dps", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: dps");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( HealPriestTestCase );

@@ -22,17 +22,27 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["heal"] = &priest::StrategyFactoryInternal::heal;
-                creators["dps"] = &priest::StrategyFactoryInternal::dps;
                 creators["nc"] = &priest::StrategyFactoryInternal::nc;
                 creators["pull"] = &priest::StrategyFactoryInternal::pull;
             }
 
         private:
-            static Strategy* heal(PlayerbotAI* ai) { return new HealPriestStrategy(ai); }
-            static Strategy* dps(PlayerbotAI* ai) { return new DpsPriestStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new HealPriestNonCombatStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
+        };
+
+        class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["heal"] = &priest::CombatStrategyFactoryInternal::heal;
+                creators["dps"] = &priest::CombatStrategyFactoryInternal::dps;
+            }
+
+        private:
+            static Strategy* heal(PlayerbotAI* ai) { return new HealPriestStrategy(ai); }
+            static Strategy* dps(PlayerbotAI* ai) { return new DpsPriestStrategy(ai); }
         };
     };
 };
@@ -171,6 +181,7 @@ namespace ai
 PriestAiObjectContext::PriestAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::priest::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::priest::CombatStrategyFactoryInternal());
     actionContexts.Add(new ai::priest::AiObjectContextInternal());
-    triggerContexts.Add(new ai::priest::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::priest::TriggerFactoryInternal());
 }
