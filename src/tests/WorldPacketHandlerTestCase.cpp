@@ -71,7 +71,7 @@ protected:
         tick();
         tick();
 
-        assertActions(">S:turn in quest>S:add loot>S:use meeting stone");
+        assertActions(">S:talk to quest giver>S:add loot>S:use meeting stone");
     }
     
     void turn_in_quest()
@@ -84,7 +84,7 @@ protected:
         tick();
         tick();
 
-        assertActions(">S:turn in quest>S:turn in quest>S:trainer>S:gossip hello");
+        assertActions(">S:talk to quest giver>S:talk to quest giver>S:trainer>S:gossip hello");
     }
 
     void accept_quest()

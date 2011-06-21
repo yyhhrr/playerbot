@@ -4,7 +4,7 @@
 #include "AcceptInvitationAction.h"
 #include "PassLeadershipToMasterAction.h"
 #include "TellMasterAction.h"
-#include "TurnInQuestAction.h"
+#include "TalkToQuestGiverAction.h"
 #include "AcceptQuestAction.h"
 #include "LootRollAction.h"
 #include "ReviveFromCorpseAction.h"
@@ -29,7 +29,7 @@ namespace ai
             creators["tell not enough money"] = &WorldPacketActionContext::tell_not_enough_money;
             creators["tell not enough reputation"] = &WorldPacketActionContext::tell_not_enough_reputation;
             creators["tell cannot equip"] = &WorldPacketActionContext::tell_cannot_equip;
-            creators["turn in quest"] = &WorldPacketActionContext::turn_in_quest;
+            creators["talk to quest giver"] = &WorldPacketActionContext::turn_in_quest;
             creators["accept quest"] = &WorldPacketActionContext::accept_quest;
             creators["accept quest share"] = &WorldPacketActionContext::accept_quest_share;
             creators["loot roll"] = &WorldPacketActionContext::loot_roll;
@@ -58,7 +58,7 @@ namespace ai
         static Action* tell_not_enough_money(PlayerbotAI* ai) { return new TellMasterAction(ai, "Not enough money"); }
         static Action* tell_not_enough_reputation(PlayerbotAI* ai) { return new TellMasterAction(ai, "Not enough reputation"); }
         static Action* tell_cannot_equip(PlayerbotAI* ai) { return new InventoryChangeFailureAction(ai); }
-        static Action* turn_in_quest(PlayerbotAI* ai) { return new TurnInQuestAction(ai); }
+        static Action* turn_in_quest(PlayerbotAI* ai) { return new TalkToQuestGiverAction(ai); }
         static Action* accept_quest(PlayerbotAI* ai) { return new AcceptQuestAction(ai); }
         static Action* accept_quest_share(PlayerbotAI* ai) { return new AcceptQuestShareAction(ai); }
         static Action* loot_roll(PlayerbotAI* ai) { return new LootRollAction(ai); }

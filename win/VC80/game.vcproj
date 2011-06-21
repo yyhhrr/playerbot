@@ -2880,6 +2880,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\QuestAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\ReachTargetActions.h"
 						>
 					</File>
@@ -2952,6 +2960,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\TaxiAction.cpp"
 						>
 					</File>
@@ -3017,14 +3033,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\TrainerAction.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\actions\TurnInQuestAction.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\actions\TurnInQuestAction.h"
 						>
 					</File>
 					<File

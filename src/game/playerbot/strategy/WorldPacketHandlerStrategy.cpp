@@ -31,20 +31,20 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "use game object", 
         NextAction::array(0, 
-            new NextAction("turn in quest", relevance), 
+            new NextAction("talk to quest giver", relevance), 
             new NextAction("add loot", relevance), 
             new NextAction("use meeting stone", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "gossip hello", 
         NextAction::array(0, 
-            new NextAction("turn in quest", relevance), 
+            new NextAction("talk to quest giver", relevance), 
             new NextAction("trainer", relevance), 
             new NextAction("gossip hello", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "complete quest", 
-        NextAction::array(0, new NextAction("turn in quest", relevance), NULL)));
+        NextAction::array(0, new NextAction("talk to quest giver", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
         "quest share", 
