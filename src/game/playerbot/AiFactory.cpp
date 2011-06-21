@@ -71,7 +71,7 @@ Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade,
 			engine->addStrategies("heal", "dps assist", NULL);
             break;
         case CLASS_PALADIN:
-			engine->addStrategies("tank", "tank assist", "bhealth", "barmor", NULL);
+			engine->addStrategies("tank", "tank assist", "barmor", NULL);
             break;
         case CLASS_DRUID:
 			engine->addStrategies("bear", "tank assist", NULL);
@@ -127,7 +127,7 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
     Engine* deadEngine = NULL;
     deadEngine = new Engine(facade, AiObjectContext);
-   
+
     deadEngine->addStrategies("dead", "stay", "chat", "world packet", NULL);
     return deadEngine;
 }

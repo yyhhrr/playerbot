@@ -22,29 +22,59 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["tank"] = &paladin::StrategyFactoryInternal::tank;
-                creators["dps"] = &paladin::StrategyFactoryInternal::dps;
                 creators["nc"] = &paladin::StrategyFactoryInternal::nc;
-                creators["bhealth"] = &paladin::StrategyFactoryInternal::bhealth;
-                creators["bmana"] = &paladin::StrategyFactoryInternal::bmana;
-                creators["bdps"] = &paladin::StrategyFactoryInternal::bdps;
-                creators["barmor"] = &paladin::StrategyFactoryInternal::barmor;
-                creators["rshadow"] = &paladin::StrategyFactoryInternal::rshadow;
-                creators["rfrost"] = &paladin::StrategyFactoryInternal::rfrost;
-                creators["rfire"] = &paladin::StrategyFactoryInternal::rfire;
+            }
+
+        private:
+            static Strategy* nc(PlayerbotAI* ai) { return new GenericPaladinNonCombatStrategy(ai); }
+        };
+
+        class ResistanceStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            ResistanceStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["rshadow"] = &paladin::ResistanceStrategyFactoryInternal::rshadow;
+                creators["rfrost"] = &paladin::ResistanceStrategyFactoryInternal::rfrost;
+                creators["rfire"] = &paladin::ResistanceStrategyFactoryInternal::rfire;
+            }
+
+        private:
+            static Strategy* rshadow(PlayerbotAI* ai) { return new PaladinShadowResistanceStrategy(ai); }
+            static Strategy* rfrost(PlayerbotAI* ai) { return new PaladinFrostResistanceStrategy(ai); }
+            static Strategy* rfire(PlayerbotAI* ai) { return new PaladinFireResistanceStrategy(ai); }
+        };
+
+        class BuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            BuffStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["bhealth"] = &paladin::BuffStrategyFactoryInternal::bhealth;
+                creators["bmana"] = &paladin::BuffStrategyFactoryInternal::bmana;
+                creators["bdps"] = &paladin::BuffStrategyFactoryInternal::bdps;
+                creators["barmor"] = &paladin::BuffStrategyFactoryInternal::barmor;
+            }
+
+        private:
+            static Strategy* bhealth(PlayerbotAI* ai) { return new PaladinBuffHealthStrategy(ai); }
+            static Strategy* bmana(PlayerbotAI* ai) { return new PaladinBuffManaStrategy(ai); }
+            static Strategy* bdps(PlayerbotAI* ai) { return new PaladinBuffDpsStrategy(ai); }
+            static Strategy* barmor(PlayerbotAI* ai) { return new PaladinBuffArmorStrategy(ai); }
+        };
+
+        class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["tank"] = &paladin::CombatStrategyFactoryInternal::tank;
+                creators["dps"] = &paladin::CombatStrategyFactoryInternal::dps;
             }
 
         private:
             static Strategy* tank(PlayerbotAI* ai) { return new TankPaladinStrategy(ai); }
             static Strategy* dps(PlayerbotAI* ai) { return new DpsPaladinStrategy(ai); }
-            static Strategy* nc(PlayerbotAI* ai) { return new GenericPaladinNonCombatStrategy(ai); }
-            static Strategy* bhealth(PlayerbotAI* ai) { return new PaladinBuffHealthStrategy(ai); }
-            static Strategy* bmana(PlayerbotAI* ai) { return new PaladinBuffManaStrategy(ai); }
-            static Strategy* bdps(PlayerbotAI* ai) { return new PaladinBuffDpsStrategy(ai); }
-            static Strategy* barmor(PlayerbotAI* ai) { return new PaladinBuffArmorStrategy(ai); }
-            static Strategy* rshadow(PlayerbotAI* ai) { return new PaladinShadowResistanceStrategy(ai); }
-            static Strategy* rfrost(PlayerbotAI* ai) { return new PaladinFrostResistanceStrategy(ai); }
-            static Strategy* rfire(PlayerbotAI* ai) { return new PaladinFireResistanceStrategy(ai); }
         };
     };
 };
@@ -227,6 +257,9 @@ namespace ai
 PaladinAiObjectContext::PaladinAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::paladin::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::paladin::CombatStrategyFactoryInternal());
+    strategyContexts.Add(new ai::paladin::BuffStrategyFactoryInternal());
+    strategyContexts.Add(new ai::paladin::ResistanceStrategyFactoryInternal());
     actionContexts.Add(new ai::paladin::AiObjectContextInternal());
-    triggerContexts.Add(new ai::paladin::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::paladin::TriggerFactoryInternal());
 }

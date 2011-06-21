@@ -20,6 +20,9 @@ class TankPaladinTestCase : public EngineTestBase
 		CPPUNIT_TEST( cureDisease );
 		CPPUNIT_TEST( interruptSpells );
 		CPPUNIT_TEST( resistances );
+		CPPUNIT_TEST( combatIncompatibles );
+		CPPUNIT_TEST( buffIncompatibles );
+		CPPUNIT_TEST( resistanceIncompatibles );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -27,7 +30,6 @@ public:
 	{
 		EngineTestBase::setUp();
 		setupEngine(new PaladinAiObjectContext(ai), "tank", NULL);
-		engine->addStrategy("bhealth");
 		engine->addStrategy("barmor");
 
         addAura("devotion aura");
@@ -39,16 +41,16 @@ public:
 
         set<float>("distance", "current target", 0.0f);
     }
- 
+
 protected:
     void bmana()
     {
 		engine->removeStrategy("bhealth");
 		engine->addStrategy("bmana");
-	
+
         removeAura("seal of justice");
         tick();
-        
+
 		assertActions(">S:seal of wisdom");
 	}
 
@@ -59,18 +61,18 @@ protected:
         removeAura("blessing of sanctuary");
         removeAura("seal of justice");
         removeAura("holy shield");
-        
+
         tick();
         addAura("devotion aura");
-        
+
         tick();
         tick();
         addAura("seal of light");
 
         tick();
-        tick(); 
+        tick();
         addAura("blessing of kings");
-                
+
         tick();
         addAura("holy shield");
 
@@ -83,11 +85,11 @@ protected:
     void healing()
     {
 		tickWithLowHealth(50);
-        
+
 		tickWithLowHealth(30);
 		tickWithLowHealth(30);
 
-        tick(); 
+        tick();
 
 		tickWithLowHealth(19);
 
@@ -96,7 +98,7 @@ protected:
 
 		assertActions(">S:flash of light>S:divine shield>S:holy light>S:divine protection>S:lay on hands>P:lay on hands on party");
     }
-  
+
     void paladinMustHoldAggro()
     {
 		tickWithAttackerCount(2);
@@ -114,9 +116,9 @@ protected:
     void combatVsMelee()
     {
 		tickOutOfMeleeRange();
-        
-        tick(); 
-        tick(); 
+
+        tick();
+        tick();
 
 		tickWithTargetLowHealth(19);
 
@@ -126,14 +128,14 @@ protected:
     void stopEnemyMove()
     {
 		tickWithTargetIsMoving();
-        
-		tick(); 
-		tick(); 
+
+		tick();
+		tick();
 
         assertActions(">T:hammer of justice>T:melee>T:judgement of light");
     }
 
-	void interruptSpells() 
+	void interruptSpells()
 	{
 		tickWithTargetIsCastingNonMeleeSpell();
 
@@ -161,11 +163,11 @@ protected:
 
 		spellAvailable("cleanse");
 		tickWithPartyAuraToDispel(DISPEL_MAGIC);
-		
+
 		assertActions(">S:cleanse>P:cleanse magic on party");
 	}
 
-    void cureKind(DispelType type) 
+    void cureKind(DispelType type)
     {
         spellAvailable("cleanse");
         tickWithAuraToDispel(type);
@@ -184,15 +186,42 @@ protected:
 	{
 		engine->addStrategy("rshadow");
 		tick();
-	
+
 		engine->addStrategy("rfrost");
 		tick();
-	
+
 		engine->addStrategy("rfire");
 		tick();
 
 		assertActions(">S:shadow resistance aura>S:frost resistance aura>S:fire resistance aura");
 	}
+
+    void combatIncompatibles()
+    {
+        engine->removeStrategy("barmor");
+        engine->removeStrategy("tank");
+        engine->addStrategies("dps", "tank", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: tank");
+    }
+
+    void buffIncompatibles()
+    {
+        engine->removeStrategy("barmor");
+        engine->removeStrategy("tank");
+        engine->addStrategies("bhealth", "bmana", "bdps", "barmor", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: barmor");
+    }
+
+    void resistanceIncompatibles()
+    {
+        engine->removeStrategy("barmor");
+        engine->removeStrategy("tank");
+        engine->addStrategies("rshadow", "rfrost", "rfire", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: rfire");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TankPaladinTestCase );
