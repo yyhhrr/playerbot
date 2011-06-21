@@ -1925,6 +1925,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\QuestStrategies.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\QuestStrategies.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\Queue.cpp"
 					>
 				</File>
@@ -2909,6 +2917,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\RepairAllAction.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ResetAiAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ResetAiAction.h"
 						>
 					</File>
 					<File

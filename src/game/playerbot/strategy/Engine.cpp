@@ -320,6 +320,11 @@ void Engine::ProcessTriggers()
             MultiplyAndPush(node->getHandlers(), 0.0f, false, event);
         }
     }
+    for (std::list<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
+    {
+        Trigger* trigger = (*i)->getTrigger();
+        if (trigger) trigger->Reset();
+    }
 }
 
 void Engine::PushDefaultActions()

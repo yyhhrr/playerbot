@@ -19,8 +19,12 @@ namespace ai
             if (!triggered)
                 return Event();
 
-            triggered = false;
             return Event(getName(), packet);
+        }
+
+        virtual void Reset()
+        {
+            triggered = false;
         }
 
     private:

@@ -19,11 +19,15 @@ namespace ai
             if (!triggered)
                 return Event();
 
-            triggered = false;
             return Event(getName(), param);
         }
 
-    private:
+        virtual void Reset()
+        {
+            triggered = false;
+        }
+
+   private:
         string param;
         bool triggered;
     };
