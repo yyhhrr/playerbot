@@ -23,7 +23,7 @@ public:
         creators["tank assist"] = &ActionNodeFactoryInternal::tank_assist;
         creators["dps assist"] = &ActionNodeFactoryInternal::dps_assist;
         creators["loot"] = &ActionNodeFactoryInternal::loot;
-        creators["loot all"] = &ActionNodeFactoryInternal::loot_all;
+        creators["add all loot"] = &ActionNodeFactoryInternal::add_all_loot;
         creators["shoot"] = &ActionNodeFactoryInternal::shoot;
         creators["follow line"] = &ActionNodeFactoryInternal::follow_line;
         creators["follow"] = &ActionNodeFactoryInternal::follow_master;
@@ -124,9 +124,9 @@ private:
             /*A*/ NULL, 
             /*C*/ NULL);
     }
-    static ActionNode* loot_all(PlayerbotAI* ai)
+    static ActionNode* add_all_loot(PlayerbotAI* ai)
     {
-        return new ActionNode ("loot all",  
+        return new ActionNode ("add all loot",  
             /*P*/ NULL,
             /*A*/ NULL, 
             /*C*/ NULL);

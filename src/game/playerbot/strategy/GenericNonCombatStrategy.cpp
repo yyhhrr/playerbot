@@ -23,7 +23,7 @@ void LootNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "loot available", 
-        NextAction::array(0, new NextAction("loot", 2.0f), NULL)));
+        NextAction::array(0, new NextAction("loot", 6.0f), NULL)));
 }
 
 
@@ -57,14 +57,14 @@ void DpsAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 NextAction** GrindingStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("loot all", 1.0f), NULL);
+    return NextAction::array(0, new NextAction("add all loot", 5.0f), NULL);
 }
 
 void GrindingStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "no target", 
-        NextAction::array(0, new NextAction("attack anything", 1.0f), NULL)));
+        NextAction::array(0, new NextAction("attack anything", 5.0f), NULL)));
 }
 
 NextAction** StayNonCombatStrategy::getDefaultActions()
@@ -121,5 +121,5 @@ void FollowMasterRandomStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "target in sight", 
-        NextAction::array(0, new NextAction("stay combat",5.0f), NULL)));
+        NextAction::array(0, new NextAction("stay combat",3.0f), NULL)));
 }

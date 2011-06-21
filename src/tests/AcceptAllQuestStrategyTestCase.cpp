@@ -29,19 +29,22 @@ protected:
     {
         trigger("use game object");
         tick();
+        tick();
 
-        assertActions(">S:accept all quests");
+        assertActions(">S:talk to quest giver>S:accept all quests");
     }
 
     void turn_in_quest()
     {
         trigger("complete quest");
         tick();
+        tick();
 
         trigger("gossip hello");
         tick();
+        tick();
 
-        assertActions(">S:accept all quests>S:accept all quests");
+        assertActions(">S:talk to quest giver>S:accept all quests>S:talk to quest giver>S:accept all quests");
     }
 
     void accept_quest()
