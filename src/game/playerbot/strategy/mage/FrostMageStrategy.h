@@ -15,6 +15,5 @@ namespace ai
         virtual string getName() { return "frost"; }
         virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-fire"; }
     };
 }

@@ -13,7 +13,6 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual string GetIncompatibleStrategies() { return "-rnature"; }
 	};
 
 	class HunterNatureResistanceStrategy : public GenericNonCombatStrategy
@@ -24,6 +23,5 @@ namespace ai
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual string GetIncompatibleStrategies() { return "-bdps"; }
 	};
 }

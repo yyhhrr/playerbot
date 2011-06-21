@@ -244,8 +244,6 @@ void Engine::addStrategy(string name)
         for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
             removeStrategy(*i);
 
-        ai->ChangeStrategy(strategy->GetIncompatibleStrategies(), this);
-
         strategies.push_back(strategy);
     }
     Init();

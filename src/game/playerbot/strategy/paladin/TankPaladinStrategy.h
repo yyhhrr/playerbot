@@ -8,7 +8,7 @@ namespace ai
     {
     public:
         TankPaladinStrategy(PlayerbotAI* ai) : GenericPaladinStrategy(ai) {}
-    
+
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
@@ -16,6 +16,5 @@ namespace ai
         virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
-		virtual string GetIncompatibleStrategies() { return "-dps"; }
     };
 }

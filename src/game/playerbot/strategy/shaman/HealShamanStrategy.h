@@ -14,7 +14,6 @@ namespace ai
         virtual NextAction** getDefaultActions();
         virtual string getName() { return "heal"; }
         virtual ActionNode* GetAction(string name);
-		virtual string GetIncompatibleStrategies() { return "-dps"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_HEAL; }
     };
 }

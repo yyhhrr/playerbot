@@ -19,7 +19,6 @@ namespace ai
         virtual string getName() { return "follow master"; }
         virtual NextAction** getDefaultActions();
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-be near"; }
 
     };
 
@@ -30,7 +29,6 @@ namespace ai
         FollowMasterRandomStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "be near"; }
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow line,-follow master"; }
 
     };
 
@@ -40,7 +38,6 @@ namespace ai
 		FollowLineNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual string getName() { return "follow line"; }
 		virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-stay,-go away,-follow master"; }
 	};
 
     class GoAwayNonCombatStrategy : public GenericNonCombatStrategy
@@ -49,7 +46,6 @@ namespace ai
         GoAwayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "goaway"; }
         virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-stay,-follow line,-be near,-follow master"; }
     };
 
     class StayNonCombatStrategy : public GenericNonCombatStrategy
@@ -58,7 +54,6 @@ namespace ai
         StayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "stay"; }
         virtual NextAction** getDefaultActions();
-		virtual string GetIncompatibleStrategies() { return "-go away,-follow line,-be near,-follow master"; }
     };
 
     class DpsAssistStrategy : public GenericNonCombatStrategy
@@ -67,7 +62,6 @@ namespace ai
         DpsAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "dps assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
-		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps aoe,-tank aoe,-grind"; }
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -79,7 +73,6 @@ namespace ai
 		DpsAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual string getName() { return "dps aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
-		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-tank aoe,-grind"; }
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -91,7 +84,6 @@ namespace ai
         TankAssistStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "tank assist"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
-		virtual string GetIncompatibleStrategies() { return "-dps assist,-dps aoe,-tank aoe,-grind"; }
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -103,7 +95,6 @@ namespace ai
 		TankAoeStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
 		virtual string getName() { return "tank aoe"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_TANK; }
-		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-grind"; }
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
@@ -115,7 +106,6 @@ namespace ai
         GrindingStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "grind"; }
 		virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
-		virtual string GetIncompatibleStrategies() { return "-tank assist,-dps assist,-dps aoe,-tank aoe"; }
 		NextAction** getDefaultActions();
 
     public:
