@@ -13,14 +13,15 @@
 
 using namespace ai;
 
-AiObjectContext::AiObjectContext(PlayerbotAI* ai) : PlayerbotAIAware(ai) 
+AiObjectContext::AiObjectContext(PlayerbotAI* ai) : PlayerbotAIAware(ai)
 {
     strategyContexts.Add(new StrategyContext());
-    
+    strategyContexts.Add(new MovementStrategyContext());
+
     actionContexts.Add(new ActionContext());
     actionContexts.Add(new ChatActionContext());
     actionContexts.Add(new WorldPacketActionContext());
-    
+
     triggerContexts.Add(new TriggerContext());
     triggerContexts.Add(new ChatTriggerContext());
     triggerContexts.Add(new WorldPacketTriggerContext());

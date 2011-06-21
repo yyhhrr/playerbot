@@ -19,23 +19,24 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( loot );
       CPPUNIT_TEST( goaway );
       CPPUNIT_TEST( passive );
+      CPPUNIT_TEST( movementStrategies );
   CPPUNIT_TEST_SUITE_END();
 
 public:
 	void setUp()
 	{
 		EngineTestBase::setUp();
-		setupEngine(new AiObjectContext(ai), "nc", NULL);
+		setupEngine(new AiObjectContext(ai), NULL);
 	}
 
 protected:
-    void goaway() 
+    void goaway()
     {
         engine->addStrategy("goaway");
 		tickWithAttackerCount(0);
         assertActions(">S:goaway");
     }
-    
+
     void followMaster()
     {
         engine->addStrategy("follow master");
@@ -92,7 +93,7 @@ protected:
 
 		assertActions(">S:stay>Tank:tank assist");
 	}
-	
+
     void loot()
     {
 		engine->addStrategy("stay");
@@ -127,6 +128,17 @@ protected:
         assertActions(">S:stay>S:stay");
     }
 
+    void movementStrategies()
+    {
+        engine->addStrategy("follow master");
+        engine->addStrategy("follow line");
+        engine->addStrategy("be near");
+        engine->addStrategy("goaway");
+        engine->addStrategy("stay");
+
+        cout << engine->ListStrategies();
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: stay");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( NonCombatEngineTestCase );
