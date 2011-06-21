@@ -55,14 +55,14 @@ ActionExecutionListeners::~ActionExecutionListeners()
 Engine::~Engine(void)
 {
     Reset();
-    
+
     strategies.clear();
 }
 
 void Engine::Reset()
 {
     ActionNode* action = NULL;
-    do 
+    do
     {
         action = queue.Pop();
     } while (action);
@@ -91,7 +91,7 @@ void Engine::Init()
 }
 
 
-bool Engine::DoNextAction(Unit* unit, int depth) 
+bool Engine::DoNextAction(Unit* unit, int depth)
 {
     bool actionExecuted = false;
     ActionBasket* basket = NULL;
@@ -116,7 +116,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
 
             if (action && action->isUseful()) {
                 if (action->isPossible()) {
-                    if ((!skipPrerequisites || lastRelevance-relevance > 0.02) && 
+                    if ((!skipPrerequisites || lastRelevance-relevance > 0.02) &&
                             MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01, false, event)) {
                         PushAgain(actionNode, relevance, event);
                         continue;
@@ -208,7 +208,7 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
 
                 delete nextAction;
             }
-            else 
+            else
                 break;
         }
         delete actions;
@@ -238,18 +238,16 @@ void Engine::addStrategy(string name)
     removeStrategy(name);
 
     Strategy* strategy = aiObjectContext->GetStrategy(name);
-    if (strategy)
-	{
-        strategies.push_back(strategy);
+    if (!strategy)
+        return;
 
-		PlayerbotAI* manager = ai;
-		if (manager)
-		{
-			string list = strategy->GetIncompatibleStrategies();
-			manager->ChangeStrategy(list, this);
-		}
-	}
+    strategies.push_back(strategy);
 
+    set<string> siblings = aiObjectContext->GetSiblingStrategy(name);
+    for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
+        removeStrategy(*i);
+
+    ai->ChangeStrategy(strategy->GetIncompatibleStrategies(), this);
     Init();
 }
 
@@ -261,7 +259,7 @@ void Engine::addStrategies(string first, ...)
 	va_start(vl, first);
 
 	const char* cur;
-	do 
+	do
 	{
 		cur = va_arg(vl, const char*);
 		if (cur)
@@ -290,7 +288,7 @@ bool Engine::removeStrategy(string name)
 
 void Engine::toggleStrategy(string name)
 {
-    if (!removeStrategy(name)) 
+    if (!removeStrategy(name))
         addStrategy(name);
 }
 
@@ -320,7 +318,7 @@ void Engine::ProcessTriggers()
     }
 }
 
-void Engine::PushDefaultActions() 
+void Engine::PushDefaultActions()
 {
     for (std::list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
@@ -345,7 +343,7 @@ string Engine::ListStrategies()
     return s.substr(0, s.length() - 2);
 }
 
-void Engine::PushAgain(ActionNode* actionNode, float relevance, Event event) 
+void Engine::PushAgain(ActionNode* actionNode, float relevance, Event event)
 {
     NextAction** nextAction = new NextAction*[2];
     nextAction[0] = new NextAction(actionNode->getName(), relevance);
@@ -365,7 +363,7 @@ bool Engine::ContainsStrategy(StrategyType type)
 	return false;
 }
 
-Action* Engine::InitializeAction(ActionNode* actionNode) 
+Action* Engine::InitializeAction(ActionNode* actionNode)
 {
     Action* action = actionNode->getAction();
     if (!action)
@@ -376,12 +374,12 @@ Action* Engine::InitializeAction(ActionNode* actionNode)
     return action;
 }
 
-bool Engine::ListenAndExecute(Action* action, Event event) 
+bool Engine::ListenAndExecute(Action* action, Event event)
 {
     bool actionExecuted = true;
 
     actionExecutionListeners.Before(action, event);
-    
+
     if (actionExecutionListeners.AllowExecution(action, event))
         actionExecuted = action->Execute(event);
     else

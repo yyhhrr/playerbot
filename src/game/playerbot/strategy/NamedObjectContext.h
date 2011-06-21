@@ -56,8 +56,10 @@ namespace ai
     template <class T> class NamedObjectContext : public NamedObjectContextBase<T>
     {
     public:
-        NamedObjectContext() : NamedObjectContextBase<T>(), shared(false) {}
+        NamedObjectContext() : NamedObjectContextBase<T>(), shared(false), supportsSiblings(false) {}
         NamedObjectContext(bool shared) : NamedObjectContextBase<T>(), shared(shared) {}
+        NamedObjectContext(bool shared, bool supportsSiblings) :
+            NamedObjectContextBase<T>(), shared(shared), supportsSiblings(supportsSiblings) {}
 
         T* create(string name, PlayerbotAI* ai)
         {
@@ -89,10 +91,12 @@ namespace ai
         }
 
         bool IsShared() { return shared; }
+        bool IsSupportsSiblings() { return supportsSiblings; }
 
     protected:
         map<string, T*> created;
         bool shared;
+        bool supportsSiblings;
     };
 
     template <class T> class NamedObjectContextList
@@ -136,6 +140,9 @@ namespace ai
         {
             for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
+                if (!(*i)->IsSupportsSiblings())
+                    continue;
+
                 set<string> supported = (*i)->supports();
                 set<string>::iterator found = supported.find(name);
                 if (found == supported.end())

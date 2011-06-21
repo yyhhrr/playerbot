@@ -170,7 +170,7 @@ public:
 class TestStrategyContext : public NamedObjectContext<Strategy>
 {
 public:
-    TestStrategyContext()
+    TestStrategyContext() : NamedObjectContext(false, true)
     {
         creators["TestStrategy"] = &TestStrategyContext::Test;
         creators["AnotherTestStrategy"] = &TestStrategyContext::AnotherTest;
@@ -286,7 +286,7 @@ protected:
         engine.Init();
 
         std::string s = engine.ListStrategies();
-        CPPUNIT_ASSERT(s == "Strategies: AnotherTestStrategy, TestStrategy");
+        CPPUNIT_ASSERT(s == "Strategies: TestStrategy");
     }
 
     void eventMustPassToAction()
