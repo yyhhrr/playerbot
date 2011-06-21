@@ -507,6 +507,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryItemUsageAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RememberTaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RepairAllAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ReviveFromCorpseAction.cpp" />
@@ -515,6 +516,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\SetHomeAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\StatsAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\StayActions.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellItemCountAction.cpp" />
@@ -523,7 +525,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TradeAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TradeStatusAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TrainerAction.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TurnInQuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UnequipAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseItemAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObject.cpp" />
@@ -840,6 +841,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryItemUsageAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QuestAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ReachTargetActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ReleaseSpiritAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\RememberTaxiAction.h" />
@@ -850,6 +852,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\SetHomeAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\StatsAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\StayActions.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellItemCountAction.h" />
@@ -859,7 +862,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TradeAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TradeStatusAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TrainerAction.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TurnInQuestAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\UnequipAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\UseItemAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.h" />

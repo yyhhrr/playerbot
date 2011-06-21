@@ -84,7 +84,7 @@ public:
     {
         return IsActive() ? Event(getName(), "test") : Event();
     }
-	virtual bool IsActive() 
+	virtual bool IsActive()
 	{
 		return ++count==3;
 	}
@@ -121,38 +121,38 @@ public:
     virtual void InitTriggers(std::list<TriggerNode*> &triggers)
     {
         triggers.push_back(new TriggerNode(
-            "TestTrigger", 
+            "TestTrigger",
             NextAction::array(0, new NextAction("TriggeredAction", 10.0f), NULL)));
     }
 
     virtual ActionNode* GetAction(string  name)
     {
-        if (name == "TriggeredAction") 
+        if (name == "TriggeredAction")
         {
-            return new ActionNode ("TriggeredAction",  
+            return new ActionNode ("TriggeredAction",
                 /*P*/ NULL,
-                /*A*/ NULL, 
+                /*A*/ NULL,
                 /*C*/ NULL);
         }
-        else if (name == "RepeatingAction") 
+        else if (name == "RepeatingAction")
         {
-            return new ActionNode ("RepeatingAction",  
+            return new ActionNode ("RepeatingAction",
                 /*P*/ NULL,
-                /*A*/ NextAction::array(0, new NextAction("AlternativeAction", 1.0f), NULL), 
+                /*A*/ NextAction::array(0, new NextAction("AlternativeAction", 1.0f), NULL),
                 /*C*/ NextAction::array(0, new NextAction("RepeatingAction", 1.0f), NULL));
         }
-        else if (name == "AlternativeAction") 
+        else if (name == "AlternativeAction")
         {
-            return new ActionNode ("AlternativeAction",  
+            return new ActionNode ("AlternativeAction",
                 /*P*/ NextAction::array(0, new NextAction("PrerequisiteAction", 1.0f), NULL),
-                /*A*/ NULL, 
+                /*A*/ NULL,
                 /*C*/ NULL);
         }
-        else if (name == "PrerequisiteAction") 
+        else if (name == "PrerequisiteAction")
         {
-            return new ActionNode ("PrerequisiteAction",  
+            return new ActionNode ("PrerequisiteAction",
                 /*P*/ NULL,
-                /*A*/ NULL, 
+                /*A*/ NULL,
                 /*C*/ NULL);
         }
         else return NULL;
@@ -163,7 +163,7 @@ class AnotherTestStrategy : public Strategy
 {
 public:
     AnotherTestStrategy(PlayerbotAI* const ai) : Strategy(ai) {}
-    
+
     virtual string  getName() { return "AnotherTestStrategy"; }
 };
 
@@ -215,7 +215,7 @@ private:
 class TestAiObjectContext : public AiObjectContext
 {
 public:
-    TestAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai) 
+    TestAiObjectContext(PlayerbotAI* const ai) : AiObjectContext(ai)
     {
         strategyContexts.Add(new TestStrategyContext());
         triggerContexts.Add(new TestTriggerContext());
@@ -230,6 +230,7 @@ class EngineTestCase : public CPPUNIT_NS::TestFixture
       CPPUNIT_TEST( addRemoveStrategies );
       CPPUNIT_TEST( listStrategies );
       CPPUNIT_TEST( eventMustPassToAction );
+      CPPUNIT_TEST( siblings );
   CPPUNIT_TEST_SUITE_END();
 
 protected:
@@ -268,7 +269,7 @@ protected:
         engine.addStrategy("AnotherTestStrategy");
         engine.removeStrategy("AnotherTestStrategy");
         engine.Init();
-        
+
         engine.addStrategy("TestStrategy");
         engine.Init();
 
@@ -299,6 +300,17 @@ protected:
             engine.DoNextAction(NULL);
 
         CPPUNIT_ASSERT(TriggeredAction::param == "test");
+    }
+
+    void siblings()
+    {
+        MockPlayerbotAIBase mock;
+        TestAiObjectContext * context = new TestAiObjectContext(&mock);
+
+        set<string> siblings = context->GetSiblingStrategy("TestStrategy");
+
+        CPPUNIT_ASSERT(siblings.size() == 1);
+        CPPUNIT_ASSERT(*siblings.begin() == "AnotherTestStrategy");
     }
 };
 

@@ -16,27 +16,28 @@ namespace ai
 
     public:
         virtual Strategy* GetStrategy(string name) { return strategyContexts.GetObject(name, ai); }
+        set<string> GetSiblingStrategy(string name) { return strategyContexts.GetSiblings(name); }
         virtual Trigger* GetTrigger(string name) { return triggerContexts.GetObject(name, ai); }
         virtual Action* GetAction(string name) { return actionContexts.GetObject(name, ai); }
         virtual UntypedValue* GetUntypedValue(string name) { return valueContexts.GetObject(name, ai); }
-        
+
         template<class T>
         Value<T>* GetValue(string name)
         {
-            return dynamic_cast<Value<T>*>(GetUntypedValue(name)); 
+            return dynamic_cast<Value<T>*>(GetUntypedValue(name));
         }
 
         template<class T>
         Value<T>* GetValue(string name, string param)
         {
-            return GetValue<T>((string(name) + "::" + param)); 
+            return GetValue<T>((string(name) + "::" + param));
         }
 
         template<class T>
         Value<T>* GetValue(string name, uint32 param)
         {
             char buffer[64]; itoa(param, buffer, 10);
-            return GetValue<T>(name, buffer); 
+            return GetValue<T>(name, buffer);
         }
 
     public:

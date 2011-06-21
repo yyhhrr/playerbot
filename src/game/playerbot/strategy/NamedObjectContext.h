@@ -39,6 +39,14 @@ namespace ai
             return object;
         }
 
+        set<string> supports()
+        {
+            set<string> keys;
+            for (map<string, ActionCreator>::iterator it = creators.begin(); it != creators.end(); it++)
+                keys.insert(it->first);
+            return keys;
+        }
+
     protected:
         typedef T* (*ActionCreator) (PlayerbotAI* ai);
         map<string, ActionCreator> creators;
@@ -54,7 +62,7 @@ namespace ai
         T* create(string name, PlayerbotAI* ai)
         {
             T* result = created[name];
-            if (result) 
+            if (result)
                 return result;
 
             return created[name] = NamedObjectContextBase<T>::create(name, ai);
@@ -67,7 +75,7 @@ namespace ai
                 if (i->second)
                     delete i->second;
             }
-            
+
             created.clear();
         }
 
@@ -122,6 +130,22 @@ namespace ai
                 if (!(*i)->IsShared())
                     (*i)->Update();
             }
+        }
+
+        set<string> GetSiblings(string name)
+        {
+            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            {
+                set<string> supported = (*i)->supports();
+                set<string>::iterator found = supported.find(name);
+                if (found == supported.end())
+                    continue;
+
+                supported.erase(found);
+                return supported;
+            }
+
+            return set<string>();
         }
 
     private:
