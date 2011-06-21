@@ -22,22 +22,29 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["bear"] = &druid::StrategyFactoryInternal::bear;
-                creators["tank"] = &druid::StrategyFactoryInternal::bear;
-
-                creators["cat"] = &druid::StrategyFactoryInternal::cat;
-
-                creators["caster"] = &druid::StrategyFactoryInternal::caster;
-                creators["dps"] = &druid::StrategyFactoryInternal::caster;
-
                 creators["nc"] = &druid::StrategyFactoryInternal::nc;
+            }
+
+        private:
+            static Strategy* nc(PlayerbotAI* ai) { return new GenericDruidNonCombatStrategy(ai); }
+        };
+
+        class DruidStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            DruidStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["bear"] = &druid::DruidStrategyFactoryInternal::bear;
+                creators["tank"] = &druid::DruidStrategyFactoryInternal::bear;
+                creators["cat"] = &druid::DruidStrategyFactoryInternal::cat;
+                creators["caster"] = &druid::DruidStrategyFactoryInternal::caster;
+                creators["dps"] = &druid::DruidStrategyFactoryInternal::caster;
             }
 
         private:
             static Strategy* bear(PlayerbotAI* ai) { return new BearTankDruidStrategy(ai); }
             static Strategy* cat(PlayerbotAI* ai) { return new CatDpsDruidStrategy(ai); }
             static Strategy* caster(PlayerbotAI* ai) { return new CasterDruidStrategy(ai); }
-            static Strategy* nc(PlayerbotAI* ai) { return new GenericDruidNonCombatStrategy(ai); }
         };
     };
 };
@@ -209,6 +216,7 @@ namespace ai
 DruidAiObjectContext::DruidAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::druid::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::druid::DruidStrategyFactoryInternal());
     actionContexts.Add(new ai::druid::AiObjectContextInternal());
-    triggerContexts.Add(new ai::druid::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::druid::TriggerFactoryInternal());
 }

@@ -238,16 +238,16 @@ void Engine::addStrategy(string name)
     removeStrategy(name);
 
     Strategy* strategy = aiObjectContext->GetStrategy(name);
-    if (!strategy)
-        return;
+    if (strategy)
+    {
+        set<string> siblings = aiObjectContext->GetSiblingStrategy(name);
+        for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
+            removeStrategy(*i);
 
-    strategies.push_back(strategy);
+        ai->ChangeStrategy(strategy->GetIncompatibleStrategies(), this);
 
-    set<string> siblings = aiObjectContext->GetSiblingStrategy(name);
-    for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
-        removeStrategy(*i);
-
-    ai->ChangeStrategy(strategy->GetIncompatibleStrategies(), this);
+        strategies.push_back(strategy);
+    }
     Init();
 }
 

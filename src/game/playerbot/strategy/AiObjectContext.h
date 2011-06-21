@@ -16,7 +16,7 @@ namespace ai
 
     public:
         virtual Strategy* GetStrategy(string name) { return strategyContexts.GetObject(name, ai); }
-        set<string> GetSiblingStrategy(string name) { return strategyContexts.GetSiblings(name); }
+        virtual set<string> GetSiblingStrategy(string name) { return strategyContexts.GetSiblings(name); }
         virtual Trigger* GetTrigger(string name) { return triggerContexts.GetObject(name, ai); }
         virtual Action* GetAction(string name) { return actionContexts.GetObject(name, ai); }
         virtual UntypedValue* GetUntypedValue(string name) { return valueContexts.GetObject(name, ai); }

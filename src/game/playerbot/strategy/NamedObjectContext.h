@@ -27,6 +27,9 @@ namespace ai
                 name = name.substr(0, found);
             }
 
+            if (creators.find(name) == creators.end())
+                return NULL;
+
             ActionCreator creator = creators[name];
             if (!creator)
                 return NULL;
@@ -56,18 +59,15 @@ namespace ai
     template <class T> class NamedObjectContext : public NamedObjectContextBase<T>
     {
     public:
-        NamedObjectContext() : NamedObjectContextBase<T>(), shared(false), supportsSiblings(false) {}
-        NamedObjectContext(bool shared) : NamedObjectContextBase<T>(), shared(shared) {}
-        NamedObjectContext(bool shared, bool supportsSiblings) :
+        NamedObjectContext(bool shared = false, bool supportsSiblings = false) :
             NamedObjectContextBase<T>(), shared(shared), supportsSiblings(supportsSiblings) {}
 
         T* create(string name, PlayerbotAI* ai)
         {
-            T* result = created[name];
-            if (result)
-                return result;
+            if (created.find(name) == created.end())
+                return created[name] = NamedObjectContextBase<T>::create(name, ai);
 
-            return created[name] = NamedObjectContextBase<T>::create(name, ai);
+            return created[name];
         }
 
         virtual ~NamedObjectContext()

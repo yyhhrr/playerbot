@@ -14,7 +14,7 @@ namespace ai
     public:
         MockStatsValue(PlayerbotAI* const ai) : ManualSetValue<uint8>(ai, 0) {}
     };
-    
+
     class MockFloatValue : public ManualSetValue<float>, public Qualified
     {
     public:
@@ -44,7 +44,7 @@ namespace ai
     {
     public:
         MockPartyMemberWithoutAuraValue(PlayerbotAI* const ai) : CalculatedValue<Unit*>(ai) {}
-        
+
         virtual Unit* Calculate()
         {
             string  spell = qualifier;
@@ -81,7 +81,7 @@ namespace ai
     class MockValueContext : public NamedObjectContext<UntypedValue>
     {
     public:
-        MockValueContext() : NamedObjectContext<UntypedValue>() 
+        MockValueContext() : NamedObjectContext<UntypedValue>()
         {
             creators["party member without aura"] = &MockValueContext::party_member_without_aura;
             creators["party member to heal"] = &MockValueContext::party_member_to_heal;
@@ -97,7 +97,7 @@ namespace ai
             creators["current cc target"] = &MockValueContext::mock;
             creators["pet target"] = &MockValueContext::mock;
             creators["grind target"] = &MockValueContext::mock;
-        
+
             creators["health"] = &MockValueContext::stats;
             creators["rage"] = &MockValueContext::stats;
             creators["energy"] = &MockValueContext::stats;
@@ -105,7 +105,7 @@ namespace ai
             creators["combo"] = &MockValueContext::stats;
             creators["dead"] = &MockValueContext::logical;
             creators["has mana"] = &MockValueContext::logical;
-        
+
             creators["attacker count"] = &MockValueContext::stats;
             creators["my attacker count"] = &MockValueContext::stats;
             creators["has aggro"] = &MockValueContext::logical;
@@ -115,7 +115,7 @@ namespace ai
             creators["distance"] = &MockValueContext::floating;
             creators["moving"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
-            creators["item count"] = &MockValueContext::stats;        
+            creators["item count"] = &MockValueContext::stats;
             creators["inventory item"] = &MockValueContext::item;
             creators["spell cast useful"] = &MockValueContext::always_true;
         }
@@ -135,8 +135,8 @@ namespace ai
     class AiObjectContextWrapper : public AiObjectContext
     {
     public:
-        AiObjectContextWrapper(PlayerbotAI* const ai, AiObjectContext *realContext) : 
-          AiObjectContext(ai), realContext(realContext) 
+        AiObjectContextWrapper(PlayerbotAI* const ai, AiObjectContext *realContext) :
+          AiObjectContext(ai), realContext(realContext)
           {
               GetValue<Unit*>("self target")->Set(MockedTargets::GetSelf());
               GetValue<Unit*>("master target")->Set(MockedTargets::GetMaster());
@@ -152,32 +152,32 @@ namespace ai
               GetValue<uint8>("health", "pet target")->Set(100);
               GetValue<uint8>("health", "party member to heal")->Set(100);
               GetValue<uint8>("health", "party member to resurrect")->Set(100);
-          
+
               GetValue<uint8>("mana", "self target")->Set(100);
               GetValue<uint8>("mana", "current target")->Set(100);
               GetValue<uint8>("mana", "pet target")->Set(100);
               GetValue<uint8>("mana", "party member to heal")->Set(100);
               GetValue<uint8>("mana", "party member to resurrect")->Set(100);
-          
+
               GetValue<bool>("has mana", "self target")->Set(true);
               GetValue<bool>("has mana", "current target")->Set(true);
               GetValue<bool>("has mana", "pet target")->Set(true);
               GetValue<bool>("has mana", "party member to heal")->Set(true);
               GetValue<bool>("has mana", "party member to resurrect")->Set(true);
-          
+
               GetValue<uint8>("attacker count")->Set(1);
               GetValue<uint8>("my attacker count")->Set(1);
               GetValue<uint8>("balance")->Set(100);
               GetValue<float>("distance", "current target")->Set(15.0f);
-              
+
               GetValue<bool>("has aggro", "current target")->Set(true);
-          
+
               GetValue<Item*>("inventory item", "drink")->Set((Item*)(void*)0x01);
               GetValue<Item*>("inventory item", "food")->Set((Item*)(void*)0x01);
           }
 
     public:
-        virtual UntypedValue* GetUntypedValue(string  name) 
+        virtual UntypedValue* GetUntypedValue(string  name)
         {
             UntypedValue* value = mockValueContext.create(name, ai);
             UntypedValue* real = realContext->GetUntypedValue(name);
@@ -186,12 +186,13 @@ namespace ai
                 std::cout << "\n===\n";
                 cout << "Value " << name << " not found in context";
                 std::cout << "\n===\n";
-                
+
                 CPPUNIT_ASSERT(false);
             }
             return value ? value : real;
         }
         virtual Strategy* GetStrategy(string  name) { return realContext->GetStrategy(name); }
+        virtual set<string> GetSiblingStrategy(string name) { return realContext->GetSiblingStrategy(name); }
         virtual Trigger* GetTrigger(string  name) { return realContext->GetTrigger(name); }
         virtual Action* GetAction(string  name) { return realContext->GetAction(name); }
         virtual void Update()

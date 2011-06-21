@@ -7,19 +7,20 @@ using namespace ai;
 class BearTankDruidTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( BearTankDruidTestCase );
-    CPPUNIT_TEST( druidMustDoMauls );
-    CPPUNIT_TEST( combatVsMelee );
-    CPPUNIT_TEST( druidMustHoldAggro );
-    CPPUNIT_TEST( druidMustDemoralizeAttackers );
-    CPPUNIT_TEST( bearFormIfDireNotAvailable );
-    CPPUNIT_TEST( healHimself );
-    CPPUNIT_TEST( intensiveHealing );
-    CPPUNIT_TEST( healOthers );
-    CPPUNIT_TEST( curePoison );
-    CPPUNIT_TEST( interruptSpells );
-    CPPUNIT_TEST( buff );
-    CPPUNIT_TEST( cc );
-	CPPUNIT_TEST( aoe );
+        CPPUNIT_TEST( druidMustDoMauls );
+        CPPUNIT_TEST( combatVsMelee );
+        CPPUNIT_TEST( druidMustHoldAggro );
+        CPPUNIT_TEST( druidMustDemoralizeAttackers );
+        CPPUNIT_TEST( bearFormIfDireNotAvailable );
+        CPPUNIT_TEST( healHimself );
+        CPPUNIT_TEST( intensiveHealing );
+        CPPUNIT_TEST( healOthers );
+        CPPUNIT_TEST( curePoison );
+        CPPUNIT_TEST( interruptSpells );
+        CPPUNIT_TEST( buff );
+        CPPUNIT_TEST( cc );
+        CPPUNIT_TEST( aoe );
+        CPPUNIT_TEST( incompatibles );
     CPPUNIT_TEST_SUITE_END();
 
 
@@ -43,7 +44,7 @@ protected:
 
     void druidMustDemoralizeAttackers()
     {
-        tick(); 
+        tick();
 
 		spellAvailable("dire bear form"); // aura not yet applied
 
@@ -52,8 +53,8 @@ protected:
 		tickWithAttackerCount(3);
 
 		tickInMeleeRange();
-        
-		tick(); 
+
+		tick();
 
 		assertActions(">S:dire bear form>S:dire bear form>T:reach melee>T:swipe (bear)>T:demoralizing roar");
     }
@@ -80,9 +81,9 @@ protected:
 
 		tickWithRage(21);
 		tickWithRage(21);
-        
+
 		tickWithSpellAvailable("maul");
-    
+
 		assertActions(">S:dire bear form>T:melee>T:mangle (bear)>T:maul>T:melee");
     }
 
@@ -95,7 +96,7 @@ protected:
 
 		tickOutOfMeleeRange();
 		tick();
-		
+
 		tickOutOfMeleeRange();
         tick();
 
@@ -104,7 +105,7 @@ protected:
 		tickWithRage(61);
 
         tickWithRage(61);
-        
+
         assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:melee>T:reach melee>T:melee>T:mangle (bear)>T:maul>T:swipe (bear)");
     }
 
@@ -121,11 +122,11 @@ protected:
         tick();
 		addAura("bear form");
         tick();
-                
+
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
-        
+
         assertActions(">S:dire bear form>T:melee>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
     }
 
@@ -149,7 +150,7 @@ protected:
 
 		assertActions(">S:dire bear form>S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
     }
-    void curePoison() 
+    void curePoison()
     {
         tick();
         addAura("dire bear form");
@@ -159,7 +160,7 @@ protected:
 
 		spellAvailable("abolish poison");
 		tickWithPartyAuraToDispel(DISPEL_POISON);
-		
+
 		tickWithAuraToDispel(DISPEL_POISON);
 
 		spellAvailable("cure poison");
@@ -167,22 +168,22 @@ protected:
 
 		assertActions(">S:dire bear form>S:caster form>S:abolish poison>P:abolish poison on party>S:cure poison>P:cure poison on party");
     }
-    void interruptSpells() 
+    void interruptSpells()
     {
         tick();
         addAura("dire bear form");
-        
+
 		tickInMeleeRange();
 
 		tickWithTargetIsCastingNonMeleeSpell();
 
         assertActions(">S:dire bear form>T:melee>T:bash");
     }
-	void buff() 
+	void buff()
 	{
         removeAura("thorns");
         tick();
-        
+
         removeTargetAura("faerie fire (feral)");
         tickInMeleeRange();
         tick();
@@ -208,6 +209,12 @@ protected:
 		assertActions(">T:melee>T:swipe (bear)");
     }
 
+    void incompatibles()
+    {
+        engine->addStrategies("bear", "cat", "caster", "dps", "tank", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: bear");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( BearTankDruidTestCase );
