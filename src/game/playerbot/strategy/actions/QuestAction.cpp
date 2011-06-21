@@ -56,3 +56,44 @@ bool QuestAction::ProcessQuests(WorldObject* questGiver)
 
     return true;
 }
+
+bool QuestAction::AcceptQuest(Quest const* quest, uint64 questGiver) 
+{
+    std::ostringstream out;
+
+    uint32 questId = quest->GetQuestId();
+
+    if (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE)
+        out << "Already completed";
+    else if (! bot->CanTakeQuest(quest, false))
+    {                    	
+        if (! bot->SatisfyQuestStatus(quest, false))
+            out << "Already on";
+        else
+            out << "Can't take";
+    }
+    else if (! bot->SatisfyQuestLog(false))
+        out << "Quest log is full";
+    else if (! bot->CanAddQuest(quest, false))
+        out << "Bags are full";
+
+    else
+    {
+        WorldPacket p(CMSG_QUESTGIVER_ACCEPT_QUEST);
+        uint32 unk1 = 0;
+        p << questGiver << questId << unk1;
+        p.rpos(0);
+        bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
+
+        if (bot->GetQuestStatus(questId) != QUEST_STATUS_NONE && bot->GetQuestStatus(questId) != QUEST_STATUS_AVAILABLE)
+        {
+            out << "Accepted " << chat->formatQuest(quest);
+            ai->TellMaster(out);
+            return true;
+        }
+    }
+    
+    out << " " << chat->formatQuest(quest);
+    ai->TellMaster(out);
+    return false;
+}

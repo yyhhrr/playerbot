@@ -16,14 +16,14 @@ void TalkToQuestGiverAction::ProcessQuest(Quest const* quest, WorldObject* quest
         TurnInQuest(quest, questGiver, out);
         break;
     case QUEST_STATUS_INCOMPLETE:
-        out << "|cffff0000incompleted|r";
+        out << "|cffff0000Incompleted|r";
         break;
     case QUEST_STATUS_AVAILABLE:
     case QUEST_STATUS_NONE:
-        out << "|cff00ff00available|r";
+        out << "|cff00ff00Available|r";
         break;
     case QUEST_STATUS_FAILED:
-        out << "|cffff0000failed|r";
+        out << "|cffff0000Failed|r";
         break;
     }
 
@@ -52,11 +52,11 @@ void TalkToQuestGiverAction::RewardNoItem(Quest const* quest, WorldObject* quest
     if (bot->CanRewardQuest(quest, false))
     {
         bot->RewardQuest(quest, 0, questGiver, false);
-        out << "completed";
+        out << "Completed";
     }
     else
     {
-        out << "|cffff0000unable to turn in|r";
+        out << "|cffff0000Unable to turn in|r";
     }
 }
 
@@ -68,20 +68,24 @@ void TalkToQuestGiverAction::RewardSingleItem(Quest const* quest, WorldObject* q
     {
         bot->RewardQuest(quest, index, questGiver, true);
 
-        out << "completed, reward: " << chat->formatItem(item);
+        out << "Rewarded " << chat->formatItem(item);
     }
     else
     {
-        out << "|cffff0000unable to turn in:|r, reward: " << chat->formatItem(item);
+        out << "|cffff0000Unable to turn in:|r, reward: " << chat->formatItem(item);
     }
 }
 
 void TalkToQuestGiverAction::AskToSelectReward(Quest const* quest, ostringstream& out) 
 {
-    out << "choose reward: ";
+    ostringstream msg;
+    msg << "Choose reward: ";
     for (uint8 i=0; i < quest->GetRewChoiceItemsCount(); ++i)
     {
         ItemPrototype const* item = sObjectMgr.GetItemPrototype(quest->RewChoiceItemId[i]);
-        out << chat->formatItem(item);
+        msg << chat->formatItem(item);
     }
+    ai->TellMaster(msg);
+
+    out << "Reward pending";
 }

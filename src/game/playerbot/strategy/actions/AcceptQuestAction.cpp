@@ -29,40 +29,23 @@ bool AcceptQuestAction::Execute(Event event)
         p.rpos(0);
         p >> guid >> quest;
     }
+    else if (text == "*")
+    {
+        return QuestAction::Execute(event);
+    }
     else
         return false;
 
     Quest const* qInfo = sObjectMgr.GetQuestTemplate(quest);
-    if (qInfo)
-    {
-        if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
-            ai->TellMaster("I already completed that quest.");
-        else if (! bot->CanTakeQuest(qInfo, false))
-        {                    	
-            if (! bot->SatisfyQuestStatus(qInfo, false))
-                ai->TellMaster("I already have that quest.");
-            else
-                ai->TellMaster("I can't take that quest.");
-        }
-        else if (! bot->SatisfyQuestLog(false))
-            ai->TellMaster("My quest log is full.");
-        else if (! bot->CanAddQuest(qInfo, false))
-            ai->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+    if (!qInfo)
+        return false;
+    
+    return AcceptQuest(qInfo, guid);
+}
 
-        else
-        {
-            WorldPacket p(CMSG_QUESTGIVER_ACCEPT_QUEST);
-            uint32 unk1 = 0;
-            p << guid << quest << unk1;
-            p.rpos(0);
-            bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-
-            if (bot->GetQuestStatus(quest) != QUEST_STATUS_NONE && bot->GetQuestStatus(quest) != QUEST_STATUS_AVAILABLE)
-                ai->TellMaster("Got the quest.");
-        }
-    }
-
-    return false;
+void AcceptQuestAction::ProcessQuest(Quest const* quest, WorldObject* questGiver)
+{
+    AcceptQuest(quest, questGiver->GetObjectGuid());
 }
 
 bool AcceptQuestShareAction::Execute(Event event)
