@@ -15,6 +15,7 @@ class DpsHunterEngineTestCase : public EngineTestBase
   CPPUNIT_TEST( cc );
   CPPUNIT_TEST( aoe );
   CPPUNIT_TEST( buff );
+  CPPUNIT_TEST( incompatibles );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -31,7 +32,7 @@ protected:
  	void combatVsMelee()
 	{
         removeAura("aspect of the hawk");
-        
+
 		tick();
         addAura("aspect of the hawk");
 
@@ -39,19 +40,19 @@ protected:
         tick();
 		tick();
 		addTargetAura("serpent sting");
-		
+
 		tick();
 		tick();
 
 		tickInMeleeRange();
 		tickInSpellRange();
-        
+
 		// resetSpells
 		tickWithSpellUnavailable("aimed shot");
 
         tick();
 		tickWithSpellAvailable("auto shot");
-                
+
 		assertActions(">S:aspect of the hawk>T:hunter's mark>T:black arrow>T:serpent sting>T:explosive shot>T:auto shot>S:flee>T:concussive shot>T:wyvern sting>T:arcane shot>T:auto shot");
 
 	}
@@ -59,12 +60,12 @@ protected:
     void lowMana()
     {
         spellUnavailable("serpent sting");
-        spellUnavailable("concussive shot"); 
+        spellUnavailable("concussive shot");
         removeAura("aspect of the hawk");
 
 		tickWithLowMana(30);
 		tickWithLowMana(30);
-        
+
 		tick();
 
 		assertActions(">S:aspect of the viper>T:viper sting>S:aspect of the hawk");
@@ -74,12 +75,12 @@ protected:
     void summonPet()
     {
         tickWithNoPet();
-        
+
 		tickWithPetDead();
 		tickWithPetLowHealth(30);
 
 		assertActions(">S:call pet>T:hunter's mark>Pet:mend pet");
-	}    
+	}
 
 
     void boost()
@@ -94,14 +95,14 @@ protected:
     }
 
 
-    void cc() 
+    void cc()
     {
         tickWithCcTarget("freezing trap");
 
         assertActions(">Cc:freezing trap");
     }
 
-    void aoe() 
+    void aoe()
     {
 		addTargetAura("hunter's mark");
 		addTargetAura("black arrow");
@@ -124,6 +125,14 @@ protected:
 		assertActions(">S:aspect of the wild");
 
 	}
+
+    void incompatibles()
+    {
+        engine->removeStrategy("dps");
+        engine->addStrategies("bdps", "bspeed", "rnature", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: rnature");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( DpsHunterEngineTestCase );

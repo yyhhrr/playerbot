@@ -24,14 +24,24 @@ namespace ai
             {
                 creators["dps"] = &hunter::StrategyFactoryInternal::dps;
                 creators["nc"] = &hunter::StrategyFactoryInternal::nc;
-                creators["bspeed"] = &hunter::StrategyFactoryInternal::bspeed;
-                creators["bdps"] = &hunter::StrategyFactoryInternal::bdps;
-                creators["rnature"] = &hunter::StrategyFactoryInternal::rnature;
             }
 
         private:
             static Strategy* dps(PlayerbotAI* ai) { return new DpsHunterStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new GenericHunterNonCombatStrategy(ai); }
+        };
+
+        class BuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            BuffStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["bspeed"] = &hunter::BuffStrategyFactoryInternal::bspeed;
+                creators["bdps"] = &hunter::BuffStrategyFactoryInternal::bdps;
+                creators["rnature"] = &hunter::BuffStrategyFactoryInternal::rnature;
+            }
+
+        private:
             static Strategy* bspeed(PlayerbotAI* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
             static Strategy* bdps(PlayerbotAI* ai) { return new HunterBuffDpsStrategy(ai); }
             static Strategy* rnature(PlayerbotAI* ai) { return new HunterNatureResistanceStrategy(ai); }
@@ -154,6 +164,7 @@ namespace ai
 HunterAiObjectContext::HunterAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::hunter::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::hunter::BuffStrategyFactoryInternal());
     actionContexts.Add(new ai::hunter::AiObjectContextInternal());
-    triggerContexts.Add(new ai::hunter::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::hunter::TriggerFactoryInternal());
 }
