@@ -23,16 +23,26 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["heal"] = &shaman::StrategyFactoryInternal::heal;
-                creators["melee"] = &shaman::StrategyFactoryInternal::dps;
-                creators["dps"] = &shaman::StrategyFactoryInternal::dps;
                 creators["nc"] = &shaman::StrategyFactoryInternal::nc;
+            }
+
+        private:
+            static Strategy* nc(PlayerbotAI* ai) { return new ShamanNonCombatStrategy(ai); }
+        };
+
+        class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["heal"] = &shaman::CombatStrategyFactoryInternal::heal;
+                creators["melee"] = &shaman::CombatStrategyFactoryInternal::dps;
+                creators["dps"] = &shaman::CombatStrategyFactoryInternal::dps;
             }
 
         private:
             static Strategy* heal(PlayerbotAI* ai) { return new HealShamanStrategy(ai); }
             static Strategy* dps(PlayerbotAI* ai) { return new MeleeShamanStrategy(ai); }
-            static Strategy* nc(PlayerbotAI* ai) { return new ShamanNonCombatStrategy(ai); }
         };
     };
 };
@@ -154,6 +164,7 @@ namespace ai
 ShamanAiObjectContext::ShamanAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::shaman::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::shaman::CombatStrategyFactoryInternal());
     actionContexts.Add(new ai::shaman::AiObjectContextInternal());
-    triggerContexts.Add(new ai::shaman::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::shaman::TriggerFactoryInternal());
 }
