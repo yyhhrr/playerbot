@@ -29,8 +29,10 @@ uint32 PlayerbotChatHandler::extractQuestId(string str)
 
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL),
-    combatEngine(NULL), nonCombatEngine(NULL), currentEngine(NULL), deadEngine(NULL), chatHelper(this)
+    currentEngine(NULL), chatHelper(this)
 {
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+        engines[i] = NULL;
 }
 
 PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) :
@@ -42,11 +44,10 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     aiObjectContext = AiFactory::createAiObjectContext(bot, this);
     aiObjectContext->AddShared(sharedValues);
 
-    combatEngine = AiFactory::createCombatEngine(bot, this, aiObjectContext);
-    nonCombatEngine = AiFactory::createNonCombatEngine(bot, this, aiObjectContext);
-    deadEngine = AiFactory::createDeadEngine(bot, this, aiObjectContext);
-
-    currentEngine = nonCombatEngine;
+    engines[BOT_STATE_COMBAT] = AiFactory::createCombatEngine(bot, this, aiObjectContext);
+    engines[BOT_STATE_NON_COMBAT] = AiFactory::createNonCombatEngine(bot, this, aiObjectContext);
+    engines[BOT_STATE_DEAD] = AiFactory::createDeadEngine(bot, this, aiObjectContext);
+    currentEngine = engines[BOT_STATE_NON_COMBAT];
 
     masterPacketHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
     masterPacketHandlers[CMSG_AREATRIGGER] = "area trigger";
@@ -75,14 +76,11 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
 
 PlayerbotAI::~PlayerbotAI()
 {
-    if (combatEngine)
-        delete combatEngine;
-
-    if (nonCombatEngine)
-        delete nonCombatEngine;
-
-    if (deadEngine)
-        delete deadEngine;
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+    {
+        if (engines[i])
+            delete engines[i];
+    }
 
     if (aiObjectContext)
         delete aiObjectContext;
@@ -160,9 +158,11 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
     }
     else if (text == "reset")
     {
-        combatEngine->Init();
-        nonCombatEngine->Init();
-        currentEngine = nonCombatEngine;
+        for (int i = 0 ; i < BOT_STATE_MAX; i++)
+            engines[i]->Init();
+
+        currentEngine = engines[BOT_STATE_NON_COMBAT];
+
         nextAICheckTime = 0;
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
 
@@ -340,25 +340,27 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
 {
     if (!bot->isAlive())
     {
-        ChangeEngine(deadEngine);
+        ChangeEngine(BOT_STATE_DEAD);
         return;
     }
 
     Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
     if (target && target->isAlive() && target->IsHostileTo(bot))
     {
-        ChangeEngine(combatEngine);
+        ChangeEngine(BOT_STATE_COMBAT);
     }
     else
     {
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
-        ChangeEngine(nonCombatEngine);
+        ChangeEngine(BOT_STATE_NON_COMBAT);
     }
 }
 
-void PlayerbotAI::ChangeEngine(Engine* engine)
+void PlayerbotAI::ChangeEngine(BotState type)
 {
+    Engine* engine = engines[type];
+
     if (currentEngine != engine)
     {
         currentEngine = engine;
@@ -408,8 +410,9 @@ void PlayerbotAI::ReInitCurrentEngine()
     SetNextCheckDelay(0);
 }
 
-void PlayerbotAI::ChangeStrategy( string names, Engine* e )
+void PlayerbotAI::ChangeStrategy(string names, BotState type)
 {
+    Engine* e = engines[type];
     if (!e)
         return;
 
@@ -437,31 +440,36 @@ void PlayerbotAI::ChangeStrategy( string names, Engine* e )
 
 void PlayerbotAI::DoSpecificAction(string name)
 {
-    if (!combatEngine->ExecuteAction(name) && !nonCombatEngine->ExecuteAction(name))
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
     {
-        ostringstream out;
-        out << "I cannot do ";
-        out << name;
-        TellMaster(out.str());
-        return;
+        if (engines[i]->ExecuteAction(name))
+            return;
     }
+
+    ostringstream out;
+    out << "I cannot do ";
+    out << name;
+    TellMaster(out.str());
 }
 
 bool PlayerbotAI::ContainsStrategy(StrategyType type)
 {
-    return combatEngine->ContainsStrategy(type) || nonCombatEngine->ContainsStrategy(type);
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+    {
+        if (engines[i]->ContainsStrategy(type))
+            return true;
+    }
+    return false;
 }
 
 void PlayerbotAI::ResetStrategies()
 {
-    combatEngine->removeAllStrategies();
-    AiFactory::AddDefaultCombatStrategies(bot, combatEngine);
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+        engines[i]->removeAllStrategies();
 
-    nonCombatEngine->removeAllStrategies();
-    AiFactory::AddDefaultNonCombatStrategies(bot, nonCombatEngine);
-
-    deadEngine->removeAllStrategies();
-    AiFactory::AddDefaultDeadStrategies(deadEngine);
+    AiFactory::AddDefaultCombatStrategies(bot, engines[BOT_STATE_COMBAT]);
+    AiFactory::AddDefaultNonCombatStrategies(bot, engines[BOT_STATE_NON_COMBAT]);
+    AiFactory::AddDefaultDeadStrategies(engines[BOT_STATE_DEAD]);
 }
 
 bool PlayerbotAI::IsTank(Player* player)

@@ -23,7 +23,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
         p1 << triggerId;
         p1.rpos(0);
         bot->GetSession()->HandleAreaTriggerOpcode(p1);
-        
+
         return true;
     }
 
@@ -33,16 +33,16 @@ bool ReachAreaTriggerAction::Execute(Event event)
         return true;
     }
 
-    ai->ChangeNonCombatStrategy("-follow,+stay");
+    ai->ChangeStrategy("-follow,+stay", BOT_STATE_NON_COMBAT);
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
     bot->SendHeartBeat(false);
     ai->SetNextCheckDelay(3);
     ai->TellMaster("I will teleport in 3 seconds");
-    
+
     context->GetValue<LastMovement&>("last movement")->Get().lastAreaTrigger = triggerId;
-    
+
     return true;
 }
 
@@ -51,7 +51,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
 bool AreaTriggerAction::Execute(Event event)
 {
     LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
-    
+
     uint32 triggerId = movement.lastAreaTrigger;
     movement.lastAreaTrigger = 0;
 
@@ -63,12 +63,12 @@ bool AreaTriggerAction::Execute(Event event)
     if (!at)
         return true;
 
-    ai->ChangeNonCombatStrategy("-follow,+stay");
+    ai->ChangeStrategy("-follow,+stay", BOT_STATE_NON_COMBAT);
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
     bot->SendHeartBeat(false);
-    
+
     WorldPacket p(CMSG_AREATRIGGER);
     p << triggerId;
     p.rpos(0);

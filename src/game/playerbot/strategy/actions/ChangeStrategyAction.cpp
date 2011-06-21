@@ -7,13 +7,13 @@ using namespace ai;
 bool ChangeCombatStrategyAction::Execute(Event event)
 {
     string text = event.getParam();
-    ai->ChangeCombatStrategy(text.empty() ? getName() : text);
+    ai->ChangeStrategy(text.empty() ? getName() : text, BOT_STATE_COMBAT);
     return true;
 }
 
 bool ChangeNonCombatStrategyAction::Execute(Event event)
 {
     string text = event.getParam();
-    ai->ChangeNonCombatStrategy(text);
+    ai->ChangeStrategy(text, BOT_STATE_NON_COMBAT);
     return true;
 }

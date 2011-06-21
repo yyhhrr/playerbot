@@ -46,6 +46,15 @@ namespace ai
 	};
 };
 
+enum BotState
+{
+    BOT_STATE_COMBAT = 0,
+    BOT_STATE_NON_COMBAT = 1,
+    BOT_STATE_DEAD = 2
+};
+
+#define BOT_STATE_MAX 3
+
 class PlayerbotAI : public PlayerbotAIBase
 {
 public:
@@ -62,12 +71,10 @@ public:
     void HandleMasterIncomingPacket(const WorldPacket& packet);
 	void HandleTeleportAck();
     void ChangeActiveEngineIfNecessary();
-    void ChangeEngine(Engine* engine);
+    void ChangeEngine(BotState type);
     void DoNextAction();
     void DoSpecificAction(string name);
-    void ChangeStrategy( string name, Engine* e );
-    void ChangeCombatStrategy(string name) { ChangeStrategy(name, combatEngine); }
-    void ChangeNonCombatStrategy(string name) { ChangeStrategy(name, nonCombatEngine); }
+    void ChangeStrategy(string name, BotState type);
     bool ContainsStrategy(StrategyType type);
     void ResetStrategies();
     void ReInitCurrentEngine();
@@ -108,9 +115,7 @@ protected:
     AiObjectContext* aiObjectContext;
     ChatHelper chatHelper;
     Engine* currentEngine;
-    Engine* combatEngine;
-    Engine* nonCombatEngine;
-    Engine* deadEngine;
+    Engine* engines[BOT_STATE_MAX];
     map<uint16, string> botPacketHandlers;
     map<uint16, string> masterPacketHandlers;
     stack<string> chatCommands;
