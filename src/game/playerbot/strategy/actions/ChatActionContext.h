@@ -30,6 +30,7 @@
 #include "TrainerAction.h"
 #include "ChangeChatAction.h"
 #include "SetHomeAction.h"
+#include "ResetAiAction.h"
 
 namespace ai
 {
@@ -70,6 +71,7 @@ namespace ai
             creators["attack my target"] = &ChatActionContext::attack_my_target;
             creators["chat"] = &ChatActionContext::chat;
             creators["home"] = &ChatActionContext::home;
+            creators["reset ai"] = &ChatActionContext::reset_ai;
         }
 
     private:
@@ -107,6 +109,7 @@ namespace ai
         static Action* los(PlayerbotAI* ai) { return new TellLosAction(ai); }
         static Action* ll(PlayerbotAI* ai) { return new LootStrategyAction(ai); }
         static Action* add_all_loot(PlayerbotAI* ai) { return new AddAllLootAction(ai); }
+        static Action* reset_ai(PlayerbotAI* ai) { return new ResetAiAction(ai); }
     };
 
 

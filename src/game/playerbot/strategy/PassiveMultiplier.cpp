@@ -5,7 +5,7 @@
 using namespace ai;
 
 float PassiveMultiplier::GetValue(Action* action) {
-    if (!action) 
+    if (!action)
 		return 1.0f;
 
     string name = action->getName();
@@ -13,6 +13,7 @@ float PassiveMultiplier::GetValue(Action* action) {
     if (name == "follow" ||
         name == "co" ||
         name == "nc" ||
+        name == "reset ai" ||
         name == "stay")
         return 1.0f;
 

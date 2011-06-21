@@ -9,7 +9,7 @@
 
 namespace ai
 {
-    class ActionExecutionListener 
+    class ActionExecutionListener
     {
     public:
         virtual void Before(Action* action, Event event) = 0;
@@ -62,6 +62,7 @@ namespace ai
         void addStrategy(string name);
 		void addStrategies(string first, ...);
         bool removeStrategy(string name);
+        void removeAllStrategies();
         void toggleStrategy(string name);
         std::string ListStrategies();
 		bool ContainsStrategy(StrategyType type);

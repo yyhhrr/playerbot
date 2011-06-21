@@ -9,62 +9,62 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     PassTroughStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "rep", 
+        "rep",
         NextAction::array(0, new NextAction("reputation", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "q", 
-        NextAction::array(0, 
-            new NextAction("query quest", relevance), 
-            new NextAction("query quest item", relevance), 
+        "q",
+        NextAction::array(0,
+            new NextAction("query quest", relevance),
+            new NextAction("query quest item", relevance),
             new NextAction("query item usage", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "add all loot", 
+        "add all loot",
         NextAction::array(0, new NextAction("add all loot", relevance), new NextAction("loot", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "u", 
+        "u",
         NextAction::array(0, new NextAction("use", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "c", 
+        "c",
         NextAction::array(0, new NextAction("item count", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "e", 
+        "e",
         NextAction::array(0, new NextAction("equip", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "ue", 
+        "ue",
         NextAction::array(0, new NextAction("unequip", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "t", 
+        "t",
         NextAction::array(0, new NextAction("trade", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "nt", 
+        "nt",
         NextAction::array(0, new NextAction("trade", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "s", 
+        "s",
         NextAction::array(0, new NextAction("sell", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "b", 
+        "b",
         NextAction::array(0, new NextAction("buy", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "r", 
+        "r",
         NextAction::array(0, new NextAction("reward", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "attack", 
+        "attack",
         NextAction::array(0, new NextAction("attack my target", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "accept", 
+        "accept",
         NextAction::array(0, new NextAction("accept quest", relevance), NULL)));
 }
 
@@ -91,4 +91,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("trainer");
     supported.push_back("chat");
     supported.push_back("home");
+    supported.push_back("reset ai");
 }

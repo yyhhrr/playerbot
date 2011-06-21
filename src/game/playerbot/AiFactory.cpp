@@ -49,85 +49,93 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
     return NULL;
 }
 
-Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
-	Engine* engine = NULL;
-
-    engine = new Engine(facade, AiObjectContext);
-	switch (player->getClass())
-    {
+void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
+{
+    switch (player->getClass()){
         case CLASS_PRIEST:
-			engine->addStrategies("heal", "dps assist", NULL);
+            engine->addStrategies("heal", "dps assist", NULL);
             break;
         case CLASS_MAGE:
-			engine->addStrategies("frost", "dps assist", NULL);
+            engine->addStrategies("frost", "dps assist", NULL);
             break;
         case CLASS_WARLOCK:
-			engine->addStrategies("dps", "dps assist", NULL);
+            engine->addStrategies("dps", "dps assist", NULL);
             break;
         case CLASS_WARRIOR:
-			engine->addStrategies("tank", "tank assist", NULL);
+            engine->addStrategies("tank", "tank assist", NULL);
             break;
         case CLASS_SHAMAN:
-			engine->addStrategies("heal", "dps assist", NULL);
+            engine->addStrategies("heal", "dps assist", NULL);
             break;
         case CLASS_PALADIN:
-			engine->addStrategies("tank", "tank assist", "barmor", NULL);
+            engine->addStrategies("tank", "tank assist", "barmor", NULL);
             break;
         case CLASS_DRUID:
-			engine->addStrategies("bear", "tank assist", NULL);
+            engine->addStrategies("bear", "tank assist", NULL);
             break;
         case CLASS_HUNTER:
-			engine->addStrategies("dps", "dps assist", "bdps", NULL);
+            engine->addStrategies("dps", "dps assist", "bdps", NULL);
             break;
-		case CLASS_ROGUE:
-			engine->addStrategies("dps", "dps assist", NULL);
-			break;
+        case CLASS_ROGUE:
+            engine->addStrategies("dps", "dps assist", NULL);
+            break;
     }
     engine->addStrategy("racials");
+}
+
+Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
+	Engine* engine = new Engine(facade, AiObjectContext);
+    AddDefaultCombatStrategies(player, engine);
 	return engine;
 }
 
-Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
-	Engine* nonCombatEngine = NULL;
-    nonCombatEngine = new Engine(facade, AiObjectContext);
-	switch (player->getClass())
-    {
+void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
+{
+    switch (player->getClass()){
         case CLASS_PRIEST:
-			nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_MAGE:
-			nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_WARLOCK:
-			nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_WARRIOR:
-			nonCombatEngine->addStrategy("tank assist");
+            nonCombatEngine->addStrategy("tank assist");
             break;
         case CLASS_SHAMAN:
-			nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_PALADIN:
-			nonCombatEngine->addStrategy("tank assist");
+            nonCombatEngine->addStrategy("tank assist");
             break;
         case CLASS_DRUID:
-			nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_HUNTER:
-			nonCombatEngine->addStrategies("dps assist", "bspeed", NULL);
+            nonCombatEngine->addStrategies("dps assist", "bspeed", NULL);
             break;
-		case CLASS_ROGUE:
-			nonCombatEngine->addStrategy("dps assist");
-			break;
+        case CLASS_ROGUE:
+            nonCombatEngine->addStrategy("dps assist");
+            break;
     }
     nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", "quest", NULL);
+}
+
+Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
+	Engine* nonCombatEngine = new Engine(facade, AiObjectContext);
+    AddDefaultNonCombatStrategies(player, nonCombatEngine);
 	return nonCombatEngine;
 }
 
-Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
-    Engine* deadEngine = NULL;
-    deadEngine = new Engine(facade, AiObjectContext);
-
+void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
+{
     deadEngine->addStrategies("dead", "stay", "chat", "world packet", NULL);
+}
+
+Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
+    Engine* deadEngine = new Engine(facade, AiObjectContext);
+    AddDefaultDeadStrategies(deadEngine);
     return deadEngine;
 }

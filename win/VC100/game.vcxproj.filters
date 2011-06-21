@@ -1019,6 +1019,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\QuestStrategies.cpp">
       <Filter>playerbot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.cpp">
+      <Filter>playerbot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2131,6 +2134,9 @@
       <Filter>playerbot\strategy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\QuestStrategies.h">
+      <Filter>playerbot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.h">
       <Filter>playerbot\strategy</Filter>
     </ClInclude>
   </ItemGroup>

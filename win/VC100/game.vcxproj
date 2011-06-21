@@ -510,6 +510,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RememberTaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RepairAllAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ReviveFromCorpseAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RewardAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\SellAction.cpp" />
@@ -847,6 +848,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ReleaseSpiritAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\RememberTaxiAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\RepairAllAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ReviveFromCorpseAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\RewardAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\SellAction.h" />

@@ -44,6 +44,7 @@ namespace ai
             creators["chat"] = &ChatTriggerContext::chat;
             creators["accept"] = &ChatTriggerContext::accept;
             creators["home"] = &ChatTriggerContext::home;
+            creators["reset ai"] = &ChatTriggerContext::reset_ai;
         }
 
     private:
@@ -63,7 +64,7 @@ namespace ai
         static Trigger* reward(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "r"); }
         static Trigger* trade(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "t"); }
         static Trigger* nontrade(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "nt"); }
-        
+
         static Trigger* item_count(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "c"); }
         static Trigger* use(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "use"); }
         static Trigger* repair(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "repair"); }
@@ -80,5 +81,6 @@ namespace ai
         static Trigger* los(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "los"); }
         static Trigger* loot_all(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "add all loot"); }
         static Trigger* release(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "release"); }
+        static Trigger* reset_ai(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "reset ai"); }
     };
 };

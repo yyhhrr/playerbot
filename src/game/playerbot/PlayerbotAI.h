@@ -23,7 +23,7 @@ public:
     uint32 extractQuestId(string str);
 };
 
-namespace ai 
+namespace ai
 {
 	class MinValueCalculator {
 	public:
@@ -69,6 +69,7 @@ public:
     void ChangeCombatStrategy(string name) { ChangeStrategy(name, combatEngine); }
     void ChangeNonCombatStrategy(string name) { ChangeStrategy(name, nonCombatEngine); }
     bool ContainsStrategy(StrategyType type);
+    void ResetStrategies();
     void ReInitCurrentEngine();
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);

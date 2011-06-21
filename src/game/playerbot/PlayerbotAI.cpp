@@ -452,6 +452,18 @@ bool PlayerbotAI::ContainsStrategy(StrategyType type)
     return combatEngine->ContainsStrategy(type) || nonCombatEngine->ContainsStrategy(type);
 }
 
+void PlayerbotAI::ResetStrategies()
+{
+    combatEngine->removeAllStrategies();
+    AiFactory::AddDefaultCombatStrategies(bot, combatEngine);
+
+    nonCombatEngine->removeAllStrategies();
+    AiFactory::AddDefaultNonCombatStrategies(bot, nonCombatEngine);
+
+    deadEngine->removeAllStrategies();
+    AiFactory::AddDefaultDeadStrategies(deadEngine);
+}
+
 bool PlayerbotAI::IsTank(Player* player)
 {
     PlayerbotAI* botAi = player->GetPlayerbotAI();

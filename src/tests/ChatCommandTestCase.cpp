@@ -41,6 +41,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( chat );
       CPPUNIT_TEST( accept );
       CPPUNIT_TEST( home );
+      CPPUNIT_TEST( reset_ai );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -128,7 +129,7 @@ protected:
     {
         assertCommand("release");
     }
-    
+
     void teleport()
     {
         assertCommand("teleport");
@@ -204,7 +205,7 @@ protected:
 
         assertActions(">S:unequip");
     }
-    
+
     void talents()
     {
         assertParametrizedCommand("talents", "1");
@@ -249,6 +250,11 @@ protected:
     void home()
     {
         assertCommand("home");
+    }
+
+    void reset_ai()
+    {
+        assertCommand("reset ai");
     }
 };
 

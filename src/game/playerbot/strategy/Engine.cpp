@@ -284,6 +284,12 @@ bool Engine::removeStrategy(string name)
     return false;
 }
 
+void Engine::removeAllStrategies()
+{
+    strategies.clear();
+    Init();
+}
+
 void Engine::toggleStrategy(string name)
 {
     if (!removeStrategy(name))
