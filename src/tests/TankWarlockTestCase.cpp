@@ -11,6 +11,7 @@ class TankWarlockTestCase : public EngineTestBase
   CPPUNIT_TEST_SUITE( TankWarlockTestCase );
       CPPUNIT_TEST( summonPet );
       CPPUNIT_TEST( cc );
+      CPPUNIT_TEST( incompatibles );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -35,6 +36,13 @@ protected:
         tickWithCcTarget("banish");
 
         assertActions(">Cc:banish");
+    }
+
+    void incompatibles()
+    {
+        engine->addStrategies("tank", "dps", NULL);
+
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: dps");
     }
 };
 

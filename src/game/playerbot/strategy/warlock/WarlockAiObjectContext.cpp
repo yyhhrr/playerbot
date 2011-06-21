@@ -23,17 +23,27 @@ namespace ai
         public:
             StrategyFactoryInternal()
             {
-                creators["dps"] = &warlock::StrategyFactoryInternal::dps;
-                creators["tank"] = &warlock::StrategyFactoryInternal::tank;
                 creators["nc"] = &warlock::StrategyFactoryInternal::nc;
                 creators["pull"] = &warlock::StrategyFactoryInternal::pull;
             }
 
         private:
-            static Strategy* tank(PlayerbotAI* ai) { return new TankWarlockStrategy(ai); }
-            static Strategy* dps(PlayerbotAI* ai) { return new DpsWarlockStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new GenericWarlockNonCombatStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
+        };
+
+        class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["dps"] = &warlock::CombatStrategyFactoryInternal::dps;
+                creators["tank"] = &warlock::CombatStrategyFactoryInternal::tank;
+            }
+
+        private:
+            static Strategy* tank(PlayerbotAI* ai) { return new TankWarlockStrategy(ai); }
+            static Strategy* dps(PlayerbotAI* ai) { return new DpsWarlockStrategy(ai); }
         };
     };
 };
@@ -133,6 +143,7 @@ namespace ai
 WarlockAiObjectContext::WarlockAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::warlock::StrategyFactoryInternal());
+    strategyContexts.Add(new ai::warlock::CombatStrategyFactoryInternal());
     actionContexts.Add(new ai::warlock::AiObjectContextInternal());
-    triggerContexts.Add(new ai::warlock::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::warlock::TriggerFactoryInternal());
 }
