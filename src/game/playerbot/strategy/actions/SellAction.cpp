@@ -66,7 +66,6 @@ void SellAction::Sell(FindItemVisitor* visitor)
 
 void SellAction::Sell(Item* item)
 {
-    
     ObjectGuid vendorguid = master->GetSelectionGuid();
     if (!vendorguid)
     {
@@ -80,4 +79,7 @@ void SellAction::Sell(Item* item)
     WorldPacket p;
     p << vendorguid << itemguid << count;
     bot->GetSession()->HandleSellItemOpcode(p);
+
+    ostringstream out; out << chat->formatItem(item->GetProto()) << " sold";
+    ai->TellMaster(out);
 }
