@@ -34,7 +34,7 @@ namespace ai
         virtual bool Calculate()
         {
             LootObject loot = AI_VALUE(LootObject, "loot target");
-            return !loot.IsEmpty() && AI_VALUE2(float, "distance", "loot target") <= INTERACTION_DISTANCE;
+            return !loot.IsEmpty() && loot.GetWorldObject(bot) && AI_VALUE2(float, "distance", "loot target") <= INTERACTION_DISTANCE;
         }
     };
 }
