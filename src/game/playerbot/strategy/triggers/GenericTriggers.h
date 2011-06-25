@@ -257,10 +257,6 @@ namespace ai
         virtual bool IsActive();
     };
 
-    BEGIN_TRIGGER(LootAvailableTrigger, Trigger)
-    END_TRIGGER()
-
-
 	class BoostTrigger : public BuffTrigger
 	{
 	public:

@@ -2,6 +2,7 @@
 
 #include "HealthTriggers.h"
 #include "GenericTriggers.h"
+#include "LootTriggers.h"
 
 namespace ai
 {
@@ -63,9 +64,13 @@ namespace ai
             creators["panic"] = &TriggerContext::panic;
             creators["behind target"] = &TriggerContext::behind_target;
             creators["far from master"] = &TriggerContext::far_from_master;
+            creators["far from loot target"] = &TriggerContext::far_from_loot_target;
+            creators["can loot"] = &TriggerContext::can_loot;
         }
 
     private:
+        static Trigger* can_loot(PlayerbotAI* ai) { return new CanLootTrigger(ai); }
+        static Trigger* far_from_loot_target(PlayerbotAI* ai) { return new FarFromCurrentLootTrigger(ai); }
         static Trigger* far_from_master(PlayerbotAI* ai) { return new FarFromMasterTrigger(ai); }
         static Trigger* behind_target(PlayerbotAI* ai) { return new IsBehindTargetTrigger(ai); }
         static Trigger* panic(PlayerbotAI* ai) { return new PanicTrigger(ai); }

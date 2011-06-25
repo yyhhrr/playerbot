@@ -25,6 +25,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( taxi );
       CPPUNIT_TEST( cannot_equip );
       CPPUNIT_TEST( trade_status );
+      CPPUNIT_TEST( loot );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -146,6 +147,13 @@ protected:
         trigger("trade status");
         tick();
         assertActions(">S:accept trade");
+    }
+
+    void loot()
+    {
+        trigger("loot response");
+        tick();
+        assertActions(">S:store loot");
     }
 };
 

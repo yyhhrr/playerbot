@@ -56,6 +56,13 @@ namespace ai
     {
     public:
         MoveRandomAction(PlayerbotAI* ai) : MovementAction(ai, "move random") {}
+        virtual bool Execute(Event event); 
+    };
+
+    class MoveToLootAction : public MovementAction 
+    {
+    public:
+        MoveToLootAction(PlayerbotAI* ai) : MovementAction(ai, "move to loot") {}
         virtual bool Execute(Event event);
     };
 }

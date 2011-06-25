@@ -86,11 +86,6 @@ bool SpellCanBeCastTrigger::IsActive()
 	return target && ai->CanCastSpell(spell, target);
 }
 
-bool LootAvailableTrigger::IsActive()
-{
-    return AI_VALUE(bool, "has available loot");
-}
-
 bool RandomTrigger::IsActive()
 {
     int vl  = rand() % probability;

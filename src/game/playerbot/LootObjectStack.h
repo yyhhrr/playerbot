@@ -16,22 +16,27 @@ namespace ai
     class LootObject
     {
     public:
-        LootObject() {}
+        LootObject() : worldObject(NULL), loot(NULL) {}
         LootObject(Player* bot, ObjectGuid guid);
         LootObject(const LootObject& other);
 
     public:
         bool IsEmpty() { return !worldObject || !loot || (time_t() - time) > 60; }
+        bool IsLootPossible(Player* bot);
         WorldObject* worldObject;
         Loot* loot;
         ObjectGuid guid;
         time_t time;
+
+        uint32 skillId;
+        uint32 reqSkillValue;
+        uint32 reqItem;
     };
 
     class LootObjectStack
     {
     public:
-        LootObjectStack(Player* bot);
+        LootObjectStack(Player* bot) : bot(bot) {}
 
     public:
         void Add(ObjectGuid guid);
@@ -42,6 +47,7 @@ namespace ai
 
     private:
         vector<LootObject> OrderByDistance(float maxDistance = 0);
+        bool IsLootPossible(LootObject loot);
 
     private:
         Player* bot;

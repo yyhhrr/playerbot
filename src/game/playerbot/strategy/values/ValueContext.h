@@ -74,7 +74,9 @@ namespace ai
             creators["my attacker count"] = &ValueContext::my_attacker_count;
             creators["has aggro"] = &ValueContext::has_aggro;
             creators["mounted"] = &ValueContext::mounted;
-
+        
+            creators["can loot"] = &ValueContext::can_loot;
+            creators["loot target"] = &ValueContext::loot_target;
             creators["available loot"] = &ValueContext::available_loot;
             creators["has available loot"] = &ValueContext::has_available_loot;
             creators["always loot list"] = &ValueContext::always_loot_list;
@@ -107,7 +109,9 @@ namespace ai
         static UntypedValue* distance(PlayerbotAI* ai) { return new DistanceValue(ai); }
         static UntypedValue* last_movement(PlayerbotAI* ai) { return new LastMovementValue(ai); }
 
+        static UntypedValue* can_loot(PlayerbotAI* ai) { return new CanLootValue(ai); }
         static UntypedValue* available_loot(PlayerbotAI* ai) { return new AvailableLootValue(ai); }
+        static UntypedValue* loot_target(PlayerbotAI* ai) { return new LootTargetValue(ai); }
         static UntypedValue* has_available_loot(PlayerbotAI* ai) { return new HasAvailableLootValue(ai); }
         static UntypedValue* always_loot_list(PlayerbotAI* ai) { return new AlwaysLootListValue(ai); }
         static UntypedValue* loot_strategy(PlayerbotAI* ai) { return new LootStrategyValue(ai); }

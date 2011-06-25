@@ -1885,6 +1885,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp"
 					>
 				</File>
@@ -3481,6 +3489,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\triggers\HealthTriggers.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\triggers\LootTriggers.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\triggers\LootTriggers.h"
 						>
 					</File>
 					<File

@@ -15,6 +15,7 @@
 #include "RememberTaxiAction.h"
 #include "TradeStatusAction.h"
 #include "InventoryChangeFailureAction.h"
+#include "LootAction.h"
 
 namespace ai
 {
@@ -42,9 +43,11 @@ namespace ai
             creators["check mount state"] = &WorldPacketActionContext::check_mount_state;
             creators["remember taxi"] = &WorldPacketActionContext::remember_taxi;
             creators["accept trade"] = &WorldPacketActionContext::accept_trade;
+            creators["store loot"] = &WorldPacketActionContext::store_loot;
         }
 
     private:
+        static Action* store_loot(PlayerbotAI* ai) { return new StoreLootAction(ai); }
         static Action* accept_trade(PlayerbotAI* ai) { return new TradeStatusAction(ai); }
         static Action* remember_taxi(PlayerbotAI* ai) { return new RememberTaxiAction(ai); }
         static Action* check_mount_state(PlayerbotAI* ai) { return new CheckMountStateAction(ai); }

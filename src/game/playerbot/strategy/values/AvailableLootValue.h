@@ -19,4 +19,22 @@ namespace ai
                 delete value;
         }
     };
+
+    class LootTargetValue : public ManualSetValue<LootObject>
+    {
+    public:
+        LootTargetValue(PlayerbotAI* ai) : ManualSetValue<LootObject>(ai, LootObject()) {}
+    };
+
+    class CanLootValue : public CalculatedValue<bool>
+    {
+    public:
+        CanLootValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
+
+        virtual bool Calculate()
+        {
+            LootObject loot = AI_VALUE(LootObject, "loot target");
+            return !loot.IsEmpty() && AI_VALUE2(float, "distance", "loot target") <= INTERACTION_DISTANCE;
+        }
+    };
 }

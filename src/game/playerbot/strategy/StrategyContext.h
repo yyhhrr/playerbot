@@ -6,6 +6,7 @@
 #include "WorldPacketHandlerStrategy.h"
 #include "DeadStrategy.h"
 #include "QuestStrategies.h"
+#include "LootNonCombatStrategy.h"
 
 namespace ai
 {

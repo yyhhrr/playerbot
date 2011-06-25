@@ -27,9 +27,11 @@ namespace ai
             creators["check mount state"] = &WorldPacketTriggerContext::check_mount_state;
             creators["activate taxi"] = &WorldPacketTriggerContext::taxi;
             creators["trade status"] = &WorldPacketTriggerContext::trade_status;
+            creators["loot response"] = &WorldPacketTriggerContext::loot_response;
         }
 
     private:
+        static Trigger* loot_response(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "loot response"); }
         static Trigger* trade_status(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "trade status"); }
         static Trigger* cannot_equip(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "cannot equip"); }
         static Trigger* check_mount_state(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "check mount state"); }

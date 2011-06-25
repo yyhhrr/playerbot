@@ -101,9 +101,18 @@ protected:
 		engine->addStrategy("loot");
 
 		tickWithLootAvailable();
-		tick();
 
-        assertActions(">S:loot>S:stay");
+        set<float>("distance", "loot target", 15.0f);
+        tick();
+        
+        set<float>("distance", "loot target", 0.0f);
+        set<bool>("can loot", true);
+        tick();
+        
+        set<bool>("can loot", false);
+        tick();
+
+        assertActions(">S:loot>S:move to loot>S:open loot>S:stay");
     }
 
     void eatDrink()

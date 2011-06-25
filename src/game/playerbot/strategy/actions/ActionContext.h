@@ -50,9 +50,13 @@ namespace ai
             creators["attack anything"] = &ActionContext::attack_anything;
             creators["emote"] = &ActionContext::emote;
             creators["move random"] = &ActionContext::move_random;
+            creators["move to loot"] = &ActionContext::move_to_loot;
+            creators["open loot"] = &ActionContext::open_loot;
         }
 
     private:
+        static Action* open_loot(PlayerbotAI* ai) { return new OpenLootAction(ai); }
+        static Action* move_to_loot(PlayerbotAI* ai) { return new MoveToLootAction(ai); }
         static Action* move_random(PlayerbotAI* ai) { return new MoveRandomAction(ai); }
         static Action* shoot(PlayerbotAI* ai) { return new CastShootAction(ai); }
         static Action* melee(PlayerbotAI* ai) { return new MeleeAction(ai); }

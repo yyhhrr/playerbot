@@ -118,6 +118,7 @@ namespace ai
             creators["item count"] = &MockValueContext::stats;
             creators["inventory item"] = &MockValueContext::item;
             creators["spell cast useful"] = &MockValueContext::always_true;
+            creators["can loot"] = &MockValueContext::logical;
         }
 
     private:
@@ -169,8 +170,10 @@ namespace ai
               GetValue<uint8>("my attacker count")->Set(1);
               GetValue<uint8>("balance")->Set(100);
               GetValue<float>("distance", "current target")->Set(15.0f);
+              GetValue<float>("distance", "loot target")->Set(0.0f);
 
               GetValue<bool>("has aggro", "current target")->Set(true);
+              GetValue<bool>("can loot")->Set(false);
 
               GetValue<Item*>("inventory item", "drink")->Set((Item*)(void*)0x01);
               GetValue<Item*>("inventory item", "food")->Set((Item*)(void*)0x01);

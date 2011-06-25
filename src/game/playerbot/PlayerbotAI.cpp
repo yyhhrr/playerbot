@@ -11,6 +11,7 @@
 #include "strategy/values/LastMovementValue.h"
 #include "strategy/actions/LogLevelAction.h"
 #include "strategy/values/LastSpellCastValue.h"
+#include "LootObjectStack.h"
 
 using namespace ai;
 using namespace std;
@@ -71,6 +72,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botPacketHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
     botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
     botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
+    botPacketHandlers[SMSG_LOOT_RESPONSE] = "loot response";
 
 }
 
@@ -742,10 +744,36 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     bot->SetSelectionGuid(target->GetObjectGuid());
 
     Spell *spell = new Spell(bot, pSpellInfo, false);
+    
     SpellCastTargets targets;
     targets.setUnitTarget(target);
-    spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellId)->Get();
-    targets.setItemTarget(spell->m_CastItem);
+    
+    if (pSpellInfo->Targets & TARGET_FLAG_ITEM)
+    {
+        spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellId)->Get();
+        targets.setItemTarget(spell->m_CastItem);
+    }
+    
+    uint32 target_type = TARGET_FLAG_UNIT;
+    if (pSpellInfo->Effect[0] == SPELL_EFFECT_OPEN_LOCK)
+        target_type = TARGET_FLAG_OBJECT;
+
+    if (pSpellInfo->Effect[0] == SPELL_EFFECT_OPEN_LOCK ||
+        pSpellInfo->Effect[0] == SPELL_EFFECT_SKINNING)
+    {
+        LootObject loot = *aiObjectContext->GetValue<LootObject>("loot target");
+        if (!loot.IsLootPossible(bot))
+            return false;
+                
+        if (target_type == TARGET_FLAG_OBJECT)
+        {
+            WorldPacket* const packetgouse = new WorldPacket(CMSG_GAMEOBJ_REPORT_USE, 8);
+            *packetgouse << loot.guid;
+            bot->GetSession()->QueuePacket(packetgouse);  // queue the packet to get around race condition
+            targets.setGOTarget(GetGameObject(loot.guid));
+        }
+    }
+
     spell->prepare(&targets, false);
 
     bot->SetSelectionGuid(oldSel);

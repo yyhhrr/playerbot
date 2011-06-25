@@ -8,7 +8,7 @@ using namespace std;
 #define MAX_LOOT_OBJECT_COUNT 10
 
 LootObject::LootObject(Player* bot, ObjectGuid guid)
-	: guid(guid)
+	: guid(guid), skillId(SKILL_NONE), reqSkillValue(0), reqItem(NULL)
 {
     worldObject = NULL;
     loot = NULL;
@@ -19,17 +19,50 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     Creature *creature = ai->GetCreature(guid);
     if (creature && creature->getDeathState() == CORPSE)
     {
+        if (!creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE) && !creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
+            return;
+
         loot = &creature->loot;
         worldObject = creature;
+        if (creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
+        {
+            skillId = creature->GetCreatureInfo()->GetRequiredLootSkill();
+            uint32 targetLevel = creature->getLevel();
+            reqSkillValue = targetLevel < 10 ? 0 : targetLevel < 20 ? (targetLevel - 10) * 10 : targetLevel * 5;
+        }
         return;
     }
 
-    GameObject* gameObject = ai->GetGameObject(guid);
-    if (gameObject)
+    GameObject* go = ai->GetGameObject(guid);
+    if (go && go->isSpawned())
     {
-        loot = &gameObject->loot;
-        worldObject = gameObject;
-        return;
+        loot = &go->loot;
+        worldObject = go;
+
+        uint32 lockId = go->GetGOInfo()->GetLockId();        
+        LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
+        if (!lockInfo)
+            return;
+        
+        for (int i = 0; i < 8; ++i)
+        {
+            switch (lockInfo->Type[i])
+            {
+            case LOCK_KEY_ITEM:
+                if (lockInfo->Index[i] > 0)
+                    reqItem = lockInfo->Index[i];
+                break;
+            case LOCK_KEY_SKILL:
+                if (SkillByLockType(LockType(lockInfo->Index[i])) > 0)
+                {
+                    skillId = SkillByLockType(LockType(lockInfo->Index[i]));
+                    reqSkillValue = lockInfo->Skill[i];
+                }
+                break;
+            default:
+                break;
+            }
+        }
     }
 }
 
@@ -39,12 +72,45 @@ LootObject::LootObject(const LootObject& other)
     loot = other.loot;
     guid = other.guid;
     time = other.time;
+    skillId = other.skillId;
+    reqSkillValue = other.reqSkillValue;
+    reqItem = other.reqItem;
 }
 
-LootObjectStack::LootObjectStack(Player* bot)
+bool LootObject::IsLootPossible(Player* bot)
 {
-    this->bot = bot;
+    if (IsEmpty())
+        return false;
+
+    PlayerbotAI* ai = bot->GetPlayerbotAI();
+
+    if (reqItem && !bot->HasItemCount(reqItem, 1))
+        return false;
+
+    if (skillId == SKILL_NONE)
+        return true;
+
+    if (!bot->HasSkill(skillId))
+        return false;
+
+    if (!reqSkillValue)
+        return true;
+
+    uint32 skillValue = uint32(bot->GetPureSkillValue(skillId));
+    if (reqSkillValue > skillValue)
+        return false;
+
+    if (skillId == SKILL_MINING && !bot->HasItemTotemCategory(TC_MINING_PICK))
+        return false;
+
+    if (skillId == SKILL_SKINNING && !bot->HasItemTotemCategory(TC_SKINNING_KNIFE))
+        return false;
+
+    return true;
 }
+
+
+
 
 void LootObjectStack::Add(ObjectGuid guid)
 {
@@ -86,7 +152,7 @@ vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
     {
         ObjectGuid guid = *i;
         LootObject lootObject(bot, guid);
-        if (lootObject.IsEmpty())
+        if (!lootObject.IsLootPossible(bot))
             continue;
 
         float distance = bot->GetDistance(lootObject.worldObject);
@@ -99,3 +165,4 @@ vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
         result.push_back(i->second);
     return result;
 }
+

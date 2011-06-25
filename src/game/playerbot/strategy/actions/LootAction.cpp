@@ -8,230 +8,128 @@ using namespace ai;
 
 bool LootAction::Execute(Event event)
 {
-    ObjectGuid masterSelection = master->GetSelectionGuid();
-    if (masterSelection) 
-        AI_VALUE(LootObjectStack*, "available loot")->Add(masterSelection);
-
-    DoLoot();
-
-    return true;
-}
-
-
-
-void LootAction::ReleaseLoot()
-{
-    ObjectGuid lguid = bot->GetLootGuid();
-    if( !lguid.IsEmpty()  && bot->GetSession() )
-        bot->GetSession()->DoLootRelease( lguid );
-}
-
-void LootAction::DeactivateLootGameObject(LootObject &loot)
-{
-    GameObject* go = bot->GetPlayerbotAI()->GetGameObject(loot.guid);
-    if(go)
-    {
-        go->SetLootState(GO_JUST_DEACTIVATED);
-        go->Update(0, 0);
-    }
-}
-
-
-void LootAction::DoLoot()
-{
     if (!AI_VALUE(bool, "has available loot"))
     {
         ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: nothing more available");
-        return;
+        return false;
     }
 
     LootObject &lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(BOT_SIGHT_DISTANCE);
-    DoLoot(lootObject);
-}
-
-void LootAction::DoLoot(LootObject &lootObject)
-{
-    if (!lootObject.worldObject || !lootObject.guid)
-    {
-        AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
-        return;
-    }
-
-    bot->GetMotionMaster()->Clear();
-
-    float distance = bot->GetDistance(lootObject.worldObject);
-    if (distance > INTERACTION_DISTANCE)
-    {
-        MoveNear(lootObject.worldObject, 1.0f);
-        return;
-    }
-
-    bool isLooted = StoreLootItems(lootObject, LOOT_CORPSE);
-
-    if (isLooted)
-        StoreLootItems(lootObject, LOOT_SKINNING);
-    else
-        ai->TellMaster(LOG_LVL_DEBUG, "Not yet looted");
-
+    context->GetValue<LootObject>("loot target")->Set(lootObject);
     AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
-}
-
-bool LootAction::StoreLootItems(LootObject &lootObject, LootType lootType) 
-{
-    bot->SendLoot(lootObject.guid, lootType);
-
-    WorldPacket p;
-    bot->GetSession()->HandleLootMoneyOpcode(p);
-
-    uint32 lootNum = lootObject.loot->GetMaxSlotInLootFor(bot);
-    for( uint32 l=0; l<lootNum; l++ )
-        StoreLootItem(lootObject, l, lootType);
-
-    bool isLooted = lootObject.loot->isLooted();
-
-    if (isLooted)
-        DeactivateLootGameObject(lootObject);
-
-    ReleaseLoot();
-
-    return isLooted;
-}
-
-Item* LootAction::StoreItem( LootItem * item, QuestItem * qitem, Loot* loot, uint32 lootIndex, QuestItem * ffaitem, QuestItem * conditem )
-{
-    ItemPosCountVec dest;
-    if( bot->CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, item->itemid, item->count ) != EQUIP_ERR_OK )
-    {
-        ai->TellMaster("Insufficient bag space");
-        return NULL;
-    }
-
-    Item * newitem = bot->StoreNewItem( dest, item->itemid, true, item->randomPropertyId);
-    if (!newitem)
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "Insufficient bag space");
-        return NULL;
-    }
-
-    bot->SendNewItem( newitem, uint32(item->count), false, false, true );
-    bot->GetAchievementMgr().UpdateAchievementCriteria( ACHIEVEMENT_CRITERIA_TYPE_LOOT_ITEM, item->itemid, item->count );
-
-    // TODO: query item after looting
-    //ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
-    //bot->GetPlayerbotAI()->Getai()->GetInventoryManager()->QueryItemUsage(proto);
-    //bot->GetPlayerbotAI()->Getai()->GetQuestManager()->QueryQuestItem(item->itemid);
-
-    NotifyLootItemRemoved(item, qitem, loot, lootIndex, ffaitem, conditem);
-
-    return newitem;
-}
-
-void LootAction::NotifyLootItemRemoved(LootItem * item, QuestItem * qitem, Loot* loot, uint32 lootIndex, QuestItem * ffaitem, QuestItem * conditem )
-{
-    if (qitem)
-    {
-        qitem->is_looted = true;
-        if( item->freeforall || loot->GetPlayerQuestItems().size() == 1 )
-            bot->SendNotifyLootItemRemoved( lootIndex );
-        else
-            loot->NotifyQuestItemRemoved( qitem->index );
-    }
-    else if (ffaitem)
-    {
-        ffaitem->is_looted=true;
-        bot->SendNotifyLootItemRemoved( lootIndex );
-    }
-    else
-    {
-        if(conditem)
-            conditem->is_looted=true;
-        loot->NotifyItemRemoved( lootIndex );
-    }
-
-    if (!item->freeforall)
-        item->is_looted = true;
-
-    --loot->unlootedCount;
-}
-
-void LootAction::StoreLootItem(LootObject &lootObject, uint32 lootIndex, LootType lootType)
-{
-    Loot* loot = lootObject.loot;
-    QuestItem *qitem=0, *ffaitem=0, *conditem=0;
-    LootItem *item = loot->LootItemInSlot( lootIndex, bot, &qitem, &ffaitem, &conditem );
-
-    if (!item || !item->AllowedForPlayer(bot))
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not allowed");
-        return;
-    }
-
-    GameObject* go = ai->GetGameObject(lootObject.guid);
-    if (go)
-    {
-        if (!go->isSpawned())
-        {
-            ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: not spawn");
-            return;
-        }
-
-        if (!CheckSkill(go->GetGOInfo()->GetLockId()))
-        {
-            ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: insufficient skill");
-            return;
-        }
-    }
-
-    Creature* creature = ai->GetCreature(lootObject.guid);
-    if (lootType == LOOT_SKINNING && creature && !CheckLevelBasedSkill(creature->GetCreatureInfo()->GetRequiredLootSkill(), creature->getLevel()))
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "Cannot loot: requires skinning");
-        return;
-    }
-
-    if (!IsLootAllowed(item))
-        return;
-
-    StoreItem(item, qitem, loot, lootIndex, ffaitem, conditem);
-}
-
-
-bool LootAction::CheckSkill(uint32 lockId)
-{
-    LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
-    if(!lockInfo) 
-        return true;
-
-    uint32 skillId = 0;
-    uint32 reqSkillValue = 0;
-    for(int i = 0; i < 8; ++i)
-    {
-        skillId = SkillByLockType(LockType(lockInfo->Index[i]));
-        if(skillId > 0)
-        {
-            reqSkillValue = lockInfo->Skill[i];
-            break;
-        }
-    }
-
-    if (skillId == SKILL_NONE)
-        return true;
-
-    if (!bot->HasSkill(skillId) || bot->GetSkillValue(skillId) < reqSkillValue)
-        return false;
-
-    bot->UpdateGatherSkill(skillId, bot->GetSkillValue(skillId), reqSkillValue);
     return true;
 }
 
-bool LootAction::CheckLevelBasedSkill(uint32 skill, int32 level)
+enum ProfessionSpells
 {
-    int32 skillValue = bot->GetSkillValue(skill);
-    int32 ReqValue = (skillValue < 100 ? (level-10) * 10 : level * 5);
-    return ReqValue <= skillValue;
+    ALCHEMY                      = 2259,
+    BLACKSMITHING                = 2018,
+    COOKING                      = 2550,
+    ENCHANTING                   = 7411,
+    ENGINEERING                  = 4036,
+    FIRST_AID                    = 3273,
+    FISHING                      = 7620,
+    HERB_GATHERING               = 2366,
+    INSCRIPTION                  = 45357,
+    JEWELCRAFTING                = 25229,
+    MINING                       = 2575,
+    SKINNING                     = 8613,
+    TAILORING                    = 3908
+};
+
+bool OpenLootAction::Execute(Event event)
+{
+    LootObject lootObject = AI_VALUE(LootObject, "loot target");
+    bool result = DoLoot(lootObject);
+    
+    context->GetValue<LootObject>("loot target")->Set(LootObject());
+    return result;
 }
 
-bool LootAction::IsLootAllowedBySkill(ItemPrototype const * proto) 
+bool OpenLootAction::DoLoot(LootObject& lootObject)
+{
+    if (!lootObject.worldObject || !lootObject.guid)
+        return false;
+
+    Creature* creature = ai->GetCreature(lootObject.guid);
+    if (creature && creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE))
+    {
+        WorldPacket* const packet = new WorldPacket(CMSG_LOOT, 8);
+        *packet << lootObject.guid;
+        bot->GetSession()->QueuePacket(packet);
+        return true;
+    }
+
+    switch (lootObject.skillId)
+    {
+    case SKILL_MINING:
+        return ai->CastSpell(MINING, bot);
+    case SKILL_HERBALISM:
+        return ai->CastSpell(HERB_GATHERING, bot);
+    case SKILL_SKINNING:
+        return ai->CastSpell(SKINNING, creature);
+    case SKILL_NONE:
+        return ai->CastSpell(3365, bot); //Spell 3365 = Opening?
+    }
+
+    return false;
+}
+
+bool StoreLootAction::Execute(Event event)
+{
+    WorldPacket p(event.getPacket()); // (8+1+4+1+1+4+4+4+4+4+1)
+    ObjectGuid guid;
+    uint8 loot_type;
+    uint32 gold;
+    uint8 items;
+
+    p.rpos(0);
+    p >> guid;      // 8 corpse guid
+    p >> loot_type; // 1 loot type
+    p >> gold;      // 4 money on corpse
+    p >> items;     // 1 number of items on corpse
+
+    if (gold > 0)
+    {
+        WorldPacket* const packet = new WorldPacket(CMSG_LOOT_MONEY, 0);
+        bot->GetSession()->QueuePacket(packet);
+    }
+  
+    for (uint8 i = 0; i < items; ++i)
+    {
+        uint32 itemid;
+        uint32 itemcount;
+        uint8 lootslot_type;
+        uint8 itemindex;
+        bool grab = false;
+
+        p >> itemindex;
+        p >> itemid;
+        p >> itemcount;
+        p.read_skip<uint32>();  // display id
+        p.read_skip<uint32>();  // randomSuffix
+        p.read_skip<uint32>();  // randomPropertyId
+        p >> lootslot_type;     // 0 = can get, 1 = look only, 2 = master get
+
+        if (lootslot_type != 0 && loot_type != LOOT_SKINNING)
+            continue;
+
+        if (!IsLootAllowed(itemid))
+            continue;
+
+        WorldPacket* const packet = new WorldPacket(CMSG_AUTOSTORE_LOOT_ITEM, 1);
+        *packet << itemindex;
+        bot->GetSession()->QueuePacket(packet);
+    }
+
+    // release loot
+    WorldPacket* const packet = new WorldPacket(CMSG_LOOT_RELEASE, 8);
+    *packet << guid;
+    bot->GetSession()->QueuePacket(packet);
+    return true;
+}
+
+bool StoreLootAction::IsLootAllowedBySkill(ItemPrototype const * proto) 
 {
     switch (proto->Class)
     {
@@ -300,7 +198,7 @@ bool LootAction::IsLootAllowedBySkill(ItemPrototype const * proto)
 }
 
 
-bool LootAction::IsLootAllowed(LootItem * item) 
+bool StoreLootAction::IsLootAllowed(uint32 itemid) 
 {
     LootStrategy lootStrategy = AI_VALUE(LootStrategy, "loot strategy");
 
@@ -308,18 +206,24 @@ bool LootAction::IsLootAllowed(LootItem * item)
         return true;
 
     set<uint32>& lootItems = AI_VALUE(set<uint32>&, "always loot list");
-    if (lootItems.find(item->itemid) != lootItems.end())
+    if (lootItems.find(itemid) != lootItems.end())
         return true;
 
-    ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid);
+    ItemPrototype const *proto = sItemStorage.LookupEntry<ItemPrototype>(itemid);
     if (!proto)
     {
         ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: invalid item");
         return false;
     }
 
-    if (item->needs_quest || 
-        proto->StartQuest || 
+    uint32 max = proto->MaxCount;
+    if (max > 0 && bot->HasItemCount(itemid, max, true))
+    {
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: cannot have more than have");
+        return false;
+    }
+
+    if (proto->StartQuest || 
         proto->Bonding == BIND_QUEST_ITEM || 
         proto->Bonding == BIND_QUEST_ITEM1 || 
         proto->Class == ITEM_CLASS_QUEST)
@@ -355,9 +259,5 @@ bool LootAction::IsLootAllowed(LootItem * item)
         return false;
     }
 
-    if (item->freeforall || item->is_underthreshold)
-        return true;
-
-    ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not under threshold");
-    return false;
+    return true;
 }

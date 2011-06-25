@@ -37,9 +37,25 @@ public:
         creators["attack anything"] = &ActionNodeFactoryInternal::attack_anything;
         creators["emote"] = &ActionNodeFactoryInternal::emote;
         creators["move random"] = &ActionNodeFactoryInternal::move_random;
+        creators["move to loot"] = &ActionNodeFactoryInternal::move_to_loot;
+        creators["open loot"] = &ActionNodeFactoryInternal::open_loot;
     }
 
 private:
+    static ActionNode* move_to_loot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("move to loot",  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
+    static ActionNode* open_loot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("open loot",  
+            /*P*/ NULL,
+            /*A*/ NULL, 
+            /*C*/ NULL);
+    }
     static ActionNode* flee(PlayerbotAI* ai)
     {
         return new ActionNode ("flee",  
