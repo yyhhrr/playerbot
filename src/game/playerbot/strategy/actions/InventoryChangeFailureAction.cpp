@@ -26,7 +26,7 @@ bool InventoryChangeFailureAction::Execute(Event event)
         ai->TellMaster("That item is locked.");
         break;
     case EQUIP_ERR_ALREADY_LOOTED:
-        ai->TellMaster("That is already looted.");
+        ai->TellMaster(LOG_LVL_DEBUG, "That is already looted.");
         break;
     case EQUIP_ERR_INVENTORY_FULL:
         ai->TellMaster("My inventory is full.");
