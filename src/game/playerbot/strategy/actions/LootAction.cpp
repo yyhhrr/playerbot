@@ -48,7 +48,7 @@ bool OpenLootAction::Execute(Event event)
 
 bool OpenLootAction::DoLoot(LootObject& lootObject)
 {
-    if (!lootObject.worldObject || !lootObject.guid)
+    if (lootObject.IsEmpty())
         return false;
 
     Creature* creature = ai->GetCreature(lootObject.guid);

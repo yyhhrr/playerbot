@@ -19,7 +19,7 @@ namespace ai
                 if (loot.IsEmpty())
                     return 0.0f;
                 
-                return ai->GetBot()->GetDistance(loot.worldObject);
+                return ai->GetBot()->GetDistance(loot.GetWorldObject(bot));
             }
             Unit* target = AI_VALUE(Unit*, qualifier);
             if (!target)

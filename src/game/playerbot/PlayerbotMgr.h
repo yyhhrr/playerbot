@@ -31,6 +31,7 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
 
         void LogoutAllBots();
         void OnBotLogin(Player * const bot);
+        void SaveToDB();
 
     public:
         // config variables

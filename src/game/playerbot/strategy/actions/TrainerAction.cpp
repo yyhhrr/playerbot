@@ -20,8 +20,7 @@ void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream
 
 void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds& spells) 
 {
-    ostringstream msg;
-    msg << "The spells I can learn and their cost:\r";
+    TellHeader(creature);
 
     TrainerSpellData const* cSpells = creature->GetTrainerSpells();
     TrainerSpellData const* tSpells = creature->GetTrainerTemplateSpells();
@@ -57,17 +56,16 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds
         uint32 cost = uint32(floor(tSpell->spellCost *  fDiscountMod));
         totalCost += cost;
 
-        msg << chat->formatSpell(pSpellInfo) << chat->formatMoney(cost);
+        ostringstream out; 
+        out << chat->formatSpell(pSpellInfo) << chat->formatMoney(cost);
 
         if (action && (spells.empty() || spells.find(tSpell->spell) != spells.end() || spells.find(tSpell->learnedSpell) != spells.end()))
-            (this->*action)(cost, tSpell, msg);
+            (this->*action)(cost, tSpell, out);
 
-        msg << "\r";
+        ai->TellMaster(out);
     }
 
-    msg << "Total cost: " << chat->formatMoney(totalCost);
-
-    ai->TellMaster(msg);
+    TellFooter(totalCost);
 }
 
 
@@ -102,4 +100,19 @@ bool TrainerAction::Execute(Event event)
         List(creature, NULL, spells);
 
     return true;
+}
+
+void TrainerAction::TellHeader(Creature* creature) 
+{
+    ostringstream out; out << "--- can learn from " << creature->GetName() << " ---";
+    ai->TellMaster(out);
+}
+
+void TrainerAction::TellFooter(uint32 totalCost)
+{
+    if (totalCost)
+    {
+        ostringstream out; out << "Total cost: " << chat->formatMoney(totalCost);
+        ai->TellMaster(out);
+    }
 }

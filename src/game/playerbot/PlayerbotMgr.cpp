@@ -249,3 +249,12 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     }
     return res;
 }
+
+void PlayerbotMgr::SaveToDB()
+{
+    for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
+    {
+        Player* const bot = it->second;
+        bot->SaveToDB();
+    }
+}

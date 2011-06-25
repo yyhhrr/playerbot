@@ -257,6 +257,6 @@ bool MoveToLootAction::Execute(Event event)
     if (loot.IsEmpty())
         return false;
     
-    MoveNear(loot.worldObject);
+    MoveNear(loot.GetWorldObject(bot));
     return true;
 }

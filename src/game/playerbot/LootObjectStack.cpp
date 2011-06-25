@@ -10,8 +10,6 @@ using namespace std;
 LootObject::LootObject(Player* bot, ObjectGuid guid)
 	: guid(guid), skillId(SKILL_NONE), reqSkillValue(0), reqItem(NULL)
 {
-    worldObject = NULL;
-    loot = NULL;
     time = time_t();
 
 	PlayerbotAI* ai = bot->GetPlayerbotAI();
@@ -22,8 +20,6 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
         if (!creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE) && !creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
             return;
 
-        loot = &creature->loot;
-        worldObject = creature;
         if (creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
         {
             skillId = creature->GetCreatureInfo()->GetRequiredLootSkill();
@@ -36,9 +32,6 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     GameObject* go = ai->GetGameObject(guid);
     if (go && go->isSpawned())
     {
-        loot = &go->loot;
-        worldObject = go;
-
         uint32 lockId = go->GetGOInfo()->GetLockId();        
         LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
         if (!lockInfo)
@@ -66,10 +59,23 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     }
 }
 
+WorldObject* LootObject::GetWorldObject(Player* bot)
+{
+    PlayerbotAI* ai = bot->GetPlayerbotAI();
+
+    Creature *creature = ai->GetCreature(guid);
+    if (creature && creature->getDeathState() == CORPSE)
+        return creature;
+
+    GameObject* go = ai->GetGameObject(guid);
+    if (go && go->isSpawned())
+        return go;
+
+    return NULL;
+}
+
 LootObject::LootObject(const LootObject& other)
 {
-    worldObject = other.worldObject;
-    loot = other.loot;
     guid = other.guid;
     time = other.time;
     skillId = other.skillId;
@@ -79,7 +85,7 @@ LootObject::LootObject(const LootObject& other)
 
 bool LootObject::IsLootPossible(Player* bot)
 {
-    if (IsEmpty())
+    if (IsEmpty() || !GetWorldObject(bot))
         return false;
 
     PlayerbotAI* ai = bot->GetPlayerbotAI();
@@ -155,7 +161,7 @@ vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
         if (!lootObject.IsLootPossible(bot))
             continue;
 
-        float distance = bot->GetDistance(lootObject.worldObject);
+        float distance = bot->GetDistance(lootObject.GetWorldObject(bot));
         if (!maxDistance || distance <= maxDistance)
             sortedMap[distance] = lootObject;
     }
