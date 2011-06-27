@@ -31,6 +31,7 @@
 #include "ChangeChatAction.h"
 #include "SetHomeAction.h"
 #include "ResetAiAction.h"
+#include "DestroyItemAction.h"
 
 namespace ai
 {
@@ -71,10 +72,12 @@ namespace ai
             creators["attack my target"] = &ChatActionContext::attack_my_target;
             creators["chat"] = &ChatActionContext::chat;
             creators["home"] = &ChatActionContext::home;
+            creators["destroy"] = &ChatActionContext::destroy;
             creators["reset ai"] = &ChatActionContext::reset_ai;
         }
 
     private:
+        static Action* destroy(PlayerbotAI* ai) { return new DestroyItemAction(ai); }
         static Action* home(PlayerbotAI* ai) { return new SetHomeAction(ai); }
         static Action* chat(PlayerbotAI* ai) { return new ChangeChatAction(ai); }
         static Action* attack_my_target(PlayerbotAI* ai) { return new AttackMyTargetAction(ai); }

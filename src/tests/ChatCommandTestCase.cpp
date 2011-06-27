@@ -41,6 +41,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( chat );
       CPPUNIT_TEST( accept );
       CPPUNIT_TEST( home );
+      CPPUNIT_TEST( destroy );
       CPPUNIT_TEST( reset_ai );
   CPPUNIT_TEST_SUITE_END();
 
@@ -255,6 +256,11 @@ protected:
     void reset_ai()
     {
         assertCommand("reset ai");
+    }
+
+    void destroy()
+    {
+        assertCommand("destroy");
     }
 };
 

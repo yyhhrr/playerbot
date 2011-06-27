@@ -29,11 +29,14 @@ void UnequipAction::UnequipItem(Item& item)
 {
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
-    uint8 dstBag = NULL_BAG; 
-    
+    uint8 dstBag = NULL_BAG;
+
 
     WorldPacket* const packet = new WorldPacket(CMSG_AUTOSTORE_BAG_ITEM, 3);
     *packet << bagIndex << slot << dstBag;
     bot->GetSession()->QueuePacket(packet);
+
+    ostringstream out; out << chat->formatItem(item.GetProto()) << " unequipped";
+    ai->TellMaster(out);
 }
 
