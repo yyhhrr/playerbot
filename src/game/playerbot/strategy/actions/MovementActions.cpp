@@ -22,9 +22,9 @@ void MovementAction::MoveNear(WorldObject* target, float distance)
         return;
 
     float angle = GetFollowAngle();
-    MoveTo(target->GetMapId(), 
-        target->GetPositionX() + cos(angle) * distance, 
-        target->GetPositionY()+ sin(angle) * distance, 
+    MoveTo(target->GetMapId(),
+        target->GetPositionX() + cos(angle) * distance,
+        target->GetPositionY()+ sin(angle) * distance,
         target->GetPositionZ());
 }
 
@@ -53,7 +53,7 @@ void MovementAction::MoveTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return;
 
-    if (distance < SPELL_DISTANCE) 
+    if (distance < SPELL_DISTANCE)
     {
         Follow(target, distance);
         return;
@@ -78,7 +78,7 @@ void MovementAction::MoveTo(Unit* target, float distance)
     bot->UpdateGroundPositionZ(dx, dy, tz);
     MoveTo(target->GetMapId(), dx, dy, tz);
 }
-    
+
 float MovementAction::GetFollowAngle()
 {
     Group* group = bot->GetGroup();
@@ -98,7 +98,7 @@ float MovementAction::GetFollowAngle()
     return 0;
 }
 
-bool MovementAction::IsMovingAllowed(Unit* target) 
+bool MovementAction::IsMovingAllowed(Unit* target)
 {
     if (!target)
         return false;
@@ -126,7 +126,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
     return IsMovingAllowed();
 }
 
-bool MovementAction::IsMovingAllowed() 
+bool MovementAction::IsMovingAllowed()
 {
     if (bot->isFrozen() || bot->IsPolymorphed() || !bot->CanFreeMove() || bot->isDead())
         return false;
@@ -160,11 +160,11 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN)) + 1;
-    
+    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN)) + BOT_REACT_DELAY;
+
     if (delay < GLOBAL_COOLDOWN)
         delay = GLOBAL_COOLDOWN;
-    
+
     if (delay > 8)
         delay = 8;
 
@@ -183,7 +183,7 @@ bool MovementAction::Flee(Unit *target)
     FleeManager manager(bot, &attackers, SPELL_DISTANCE, GetFollowAngle());
 
     float rx, ry, rz;
-    if (!manager.CalculateDestination(&rx, &ry, &rz)) 
+    if (!manager.CalculateDestination(&rx, &ry, &rz))
         return false;
 
     MoveTo(0, rx, ry, rz);
@@ -192,12 +192,12 @@ bool MovementAction::Flee(Unit *target)
 
 bool FleeAction::Execute(Event event)
 {
-    return Flee(AI_VALUE(Unit*, "current target")); 
+    return Flee(AI_VALUE(Unit*, "current target"));
 }
 
 bool GoAwayAction::Execute(Event event)
 {
-    return Flee(AI_VALUE(Unit*, "master target")); 
+    return Flee(AI_VALUE(Unit*, "master target"));
 }
 
 bool MoveRandomAction::Execute(Event event)
@@ -245,7 +245,7 @@ bool MoveRandomAction::Execute(Event event)
 
     if (!target)
         return false;
-    
+
     float distance = (rand() % 15) / 10.0f;
     MoveNear(target);
     return true;
@@ -256,7 +256,7 @@ bool MoveToLootAction::Execute(Event event)
     LootObject loot = AI_VALUE(LootObject, "loot target");
     if (loot.IsEmpty())
         return false;
-    
+
     MoveNear(loot.GetWorldObject(bot));
     return true;
 }
