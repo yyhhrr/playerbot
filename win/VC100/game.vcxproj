@@ -553,6 +553,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterBuffStrategies.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.cpp" />
@@ -604,6 +605,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\CureTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\GenericTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\HealthTriggers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\LootTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Value.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\AttackerCountValues.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\AttackersValue.cpp" />
@@ -899,6 +901,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ItemVisitors.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.h" />
@@ -958,6 +961,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\CureTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\GenericTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\HealthTriggers.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\LootTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\RangeTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\TriggerContext.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\WithinAreaTrigger.h" />

@@ -6,7 +6,6 @@ using namespace ai;
 
 Unit* GrindTargetValue::Calculate()
 {
-    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
@@ -22,15 +21,13 @@ Unit* GrindTargetValue::Calculate()
 }
 
 
-Unit* GrindTargetValue::FindTargetForGrinding(int assistCount) 
+Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
 {
-    
-    
     Group* group = bot->GetGroup();
     if (!group)
         return NULL;
 
-    
+
     list<Unit*> targets = *context->GetValue<list<Unit*>>("possible targets");
 
     if(targets.empty())
@@ -48,14 +45,14 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
         if (GetTargetingPlayerCount(unit) > assistCount)
             continue;
 
+        if (master->GetDistance(unit) >= BOT_GRIND_DISTANCE)
+            continue;
+
         Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
         for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
         {
             Player *member = sObjectMgr.GetPlayer(itr->guid);
             if( !member || !member->isAlive())
-                continue;
-
-            if (master->GetDistance(unit) >= BOT_GRIND_DISTANCE)
                 continue;
 
             float d = member->GetDistance(unit);
@@ -71,9 +68,8 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
 }
 
 
-int GrindTargetValue::GetTargetingPlayerCount( Unit* unit ) 
+int GrindTargetValue::GetTargetingPlayerCount( Unit* unit )
 {
-    
     Group* group = bot->GetGroup();
     if (!group)
         return 0;
@@ -87,7 +83,7 @@ int GrindTargetValue::GetTargetingPlayerCount( Unit* unit )
             continue;
 
         PlayerbotAI* ai = member->GetPlayerbotAI();
-        if ((ai && context->GetValue<Unit*>("current target")->Get() == unit) ||
+        if ((ai && *ai->GetAiObjectContext()->GetValue<Unit*>("current target") == unit) ||
             (!ai && member->GetSelectionGuid() == unit->GetObjectGuid()))
             count++;
     }

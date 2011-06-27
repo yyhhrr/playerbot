@@ -1022,6 +1022,12 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.cpp">
       <Filter>playerbot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\LootTriggers.cpp">
+      <Filter>playerbot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp">
+      <Filter>playerbot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2137,6 +2143,12 @@
       <Filter>playerbot\strategy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.h">
+      <Filter>playerbot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\LootTriggers.h">
+      <Filter>playerbot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h">
       <Filter>playerbot\strategy</Filter>
     </ClInclude>
   </ItemGroup>
