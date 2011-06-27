@@ -160,7 +160,7 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN)) + BOT_REACT_DELAY;
+    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN));
 
     if (delay < GLOBAL_COOLDOWN)
         delay = GLOBAL_COOLDOWN;

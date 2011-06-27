@@ -248,7 +248,7 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
     if (castTimeSpent < globalCooldown)
         SetNextCheckDelay(globalCooldown - castTimeSpent);
     else
-        SetNextCheckDelay(BOT_REACT_DELAY);
+        SetNextCheckDelay(0);
 
     lastSpell.Reset();
 }
@@ -280,18 +280,6 @@ void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
     p.rpos(0);
     masterPackets.push(p);
 }
-
-void PlayerbotAI::UpdateNextCheckDelay()
-{
-    int delay = 1;
-
-    Group* group = bot->GetGroup();
-    if (group)
-        delay += group->GetMembersCount() / 10;
-
-    SetNextCheckDelay(delay);
-}
-
 
 void PlayerbotAI::ChangeActiveEngineIfNecessary()
 {
@@ -364,7 +352,6 @@ void PlayerbotAI::ReInitCurrentEngine()
 {
     InterruptSpell();
     currentEngine->Init();
-    SetNextCheckDelay(0);
 }
 
 void PlayerbotAI::ChangeStrategy(string names, BotState type)
@@ -753,6 +740,9 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
 void PlayerbotAI::InterruptSpell()
 {
+    if (bot->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
+        return;
+
     LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
     WorldPacket* const packet = new WorldPacket(CMSG_CANCEL_CAST, 5);
     *packet << lastSpell.id;

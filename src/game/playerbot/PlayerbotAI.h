@@ -64,8 +64,6 @@ public:
 
 public:
 	virtual void UpdateAI(uint32 elapsed);
-
-    void UpdateNextCheckDelay();
     void HandleCommand(const string& text, Player& fromPlayer);
 	void HandleBotOutgoingPacket(const WorldPacket& packet);
     void HandleMasterIncomingPacket(const WorldPacket& packet);
