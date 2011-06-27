@@ -68,7 +68,7 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
         return ai->CastSpell(HERB_GATHERING, bot);
     case SKILL_SKINNING:
         return ai->CastSpell(SKINNING, creature);
-    case SKILL_NONE:
+    default:
         return ai->CastSpell(3365, bot); //Spell 3365 = Opening?
     }
 

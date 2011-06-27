@@ -22,11 +22,6 @@ bool AddAllLootAction::Execute(Event event)
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
     {
         GameObject* go = *i;
-        uint32 type = go->GetGOInfo()->type;
-
-        if (type != GAMEOBJECT_TYPE_CHEST && type != GAMEOBJECT_TYPE_GOOBER)
-            continue;
-
         AI_VALUE(LootObjectStack*, "available loot")->Add(go->GetObjectGuid());
     }
 
