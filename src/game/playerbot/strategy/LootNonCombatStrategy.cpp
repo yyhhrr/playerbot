@@ -23,7 +23,7 @@ void GatherStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "no possible targets",
-        NextAction::array(0, new NextAction("add gathering loot", 5.0f), NULL)));
+        NextAction::array(0, new NextAction("add gathering loot", 2.0f), NULL)));
 }
 
 

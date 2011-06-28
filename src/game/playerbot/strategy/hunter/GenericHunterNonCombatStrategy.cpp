@@ -11,7 +11,7 @@ void HunterBuffSpeedNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &tri
     
     triggers.push_back(new TriggerNode(
         "aspect of the pack", 
-        NextAction::array(0, new NextAction("aspect of the pack", 1.0f), NULL)));
+        NextAction::array(0, new NextAction("aspect of the pack", 10.0f), NULL)));
 }
 
 void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

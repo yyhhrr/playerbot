@@ -16,7 +16,7 @@ namespace ai
         virtual bool Execute(Event event);
 
     protected:
-        virtual void AddLoot(ObjectGuid guid);
+        virtual bool AddLoot(ObjectGuid guid);
     };
 
     class AddGatheringLootAction : public AddAllLootAction {
@@ -24,7 +24,7 @@ namespace ai
         AddGatheringLootAction(PlayerbotAI* ai) : AddAllLootAction(ai, "add gathering loot") {}
 
     protected:
-        virtual void AddLoot(ObjectGuid guid);
+        virtual bool AddLoot(ObjectGuid guid);
     };
 
 }

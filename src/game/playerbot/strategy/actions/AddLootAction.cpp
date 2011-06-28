@@ -18,34 +18,38 @@ bool AddLootAction::Execute(Event event)
 
 bool AddAllLootAction::Execute(Event event)
 {
+    bool added = false;
+
     list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
     for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        AddLoot((*i)->GetObjectGuid());
+        added |= AddLoot((*i)->GetObjectGuid());
 
     list<Unit*> corpses = *context->GetValue<list<Unit*>>("nearest corpses");
     for (list<Unit*>::iterator i = corpses.begin(); i != corpses.end(); i++)
-        AddLoot((*i)->GetObjectGuid());
+        added |= AddLoot((*i)->GetObjectGuid());
 
+    return added;
+}
+
+bool AddAllLootAction::AddLoot(ObjectGuid guid)
+{
+    AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
     return true;
 }
 
-void AddAllLootAction::AddLoot(ObjectGuid guid)
-{
-    AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
-}
-
-void AddGatheringLootAction::AddLoot(ObjectGuid guid)
+bool AddGatheringLootAction::AddLoot(ObjectGuid guid)
 {
     LootObject loot(bot, guid);
 
     if (loot.IsEmpty() || !loot.GetWorldObject(bot))
-        return;
+        return false;
 
     if (loot.skillId == SKILL_NONE)
-        return;
+        return false;
 
     if (!loot.IsLootPossible(bot))
-        return;
+        return false;
 
-    AddGatheringLootAction::AddLoot(guid);
+    AddAllLootAction::AddLoot(guid);
+    return true;
 }

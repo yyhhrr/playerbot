@@ -120,7 +120,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
             nonCombatEngine->addStrategy("dps assist");
             break;
     }
-    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", "quest", "loot", NULL);
+    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", "quest", "loot", "gather", NULL);
 }
 
 Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
