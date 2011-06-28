@@ -36,6 +36,7 @@ namespace ai
             creators["dps assist"] = &ActionContext::dps_assist;
             creators["loot"] = &ActionContext::loot;
             creators["add loot"] = &ActionContext::add_loot;
+            creators["add gathering loot"] = &ActionContext::add_gathering_loot;
             creators["add all loot"] = &ActionContext::add_all_loot;
             creators["shoot"] = &ActionContext::shoot;
             creators["follow line"] = &ActionContext::follow_line;
@@ -78,6 +79,7 @@ namespace ai
         static Action* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomAction(ai); }
         static Action* follow_master(PlayerbotAI* ai) { return new FollowMasterAction(ai); }
         static Action* follow_line(PlayerbotAI* ai) { return new FollowLineAction(ai); }
+        static Action* add_gathering_loot(PlayerbotAI* ai) { return new AddGatheringLootAction(ai); }
         static Action* add_loot(PlayerbotAI* ai) { return new AddLootAction(ai); }
         static Action* add_all_loot(PlayerbotAI* ai) { return new AddAllLootAction(ai); }
         static Action* loot(PlayerbotAI* ai) { return new LootAction(ai); }

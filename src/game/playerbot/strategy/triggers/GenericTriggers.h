@@ -409,6 +409,16 @@ namespace ai
 	public:
 		virtual bool IsActive();
 	};
+
+
+    class NoPossibleTargetsTrigger : public Trigger
+    {
+    public:
+        NoPossibleTargetsTrigger(PlayerbotAI* ai) : Trigger(ai, "no possible targets") {}
+
+    public:
+        virtual bool IsActive();
+    };
 }
 
 #include "RangeTriggers.h"

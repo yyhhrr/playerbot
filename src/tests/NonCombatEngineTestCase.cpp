@@ -17,6 +17,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( dpsAssist );
       CPPUNIT_TEST( tankAssist );
       CPPUNIT_TEST( loot );
+      CPPUNIT_TEST( gather );
       CPPUNIT_TEST( goaway );
       CPPUNIT_TEST( passive );
       CPPUNIT_TEST( movementStrategies );
@@ -104,15 +105,32 @@ protected:
 
         set<float>("distance", "loot target", 15.0f);
         tick();
-        
+
         set<float>("distance", "loot target", 0.0f);
         set<bool>("can loot", true);
         tick();
-        
+
         set<bool>("can loot", false);
         tick();
 
         assertActions(">S:loot>S:move to loot>S:open loot>S:stay");
+    }
+
+    void gather()
+    {
+		engine->addStrategy("stay");
+		engine->addStrategy("gather");
+		engine->addStrategy("loot");
+
+		set<list<Unit*>>("possible targets", list<Unit*>());
+		tick();
+
+        tickWithLootAvailable();
+
+        set<bool>("can loot", true);
+        tick();
+
+        assertActions(">S:add gathering loot>S:loot>S:open loot");
     }
 
     void eatDrink()

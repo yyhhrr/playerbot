@@ -78,6 +78,12 @@ namespace ai
         }
     };
 
+    class MockUnitListValue : public ManualSetValue<list<Unit*>>
+    {
+    public:
+        MockUnitListValue(PlayerbotAI* const ai) : ManualSetValue<list<Unit*>>(ai, list<Unit*>()) {}
+    };
+
     class MockValueContext : public NamedObjectContext<UntypedValue>
     {
     public:
@@ -119,6 +125,8 @@ namespace ai
             creators["inventory item"] = &MockValueContext::item;
             creators["spell cast useful"] = &MockValueContext::always_true;
             creators["can loot"] = &MockValueContext::logical;
+
+            creators["possible targets"] = &MockValueContext::units;
         }
 
     private:
@@ -131,6 +139,7 @@ namespace ai
         static UntypedValue* party_member_without_aura(PlayerbotAI* ai) { return new MockPartyMemberWithoutAuraValue(ai); }
         static UntypedValue* party_member_to_heal(PlayerbotAI* ai) { return new MockPartyMemberToHeal(ai); }
         static UntypedValue* party_member_to_dispel(PlayerbotAI* ai) { return new MockPartyMemberToDispel(ai); }
+        static UntypedValue* units(PlayerbotAI* ai) { return new MockUnitListValue(ai); }
     };
 
     class AiObjectContextWrapper : public AiObjectContext

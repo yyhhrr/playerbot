@@ -8,16 +8,23 @@ namespace ai
     public:
         AddLootAction(PlayerbotAI* ai) : Action(ai, "add loot") {}
         virtual bool Execute(Event event);
-
-   
     };
 
     class AddAllLootAction : public Action {
     public:
-        AddAllLootAction(PlayerbotAI* ai) : Action(ai, "add all loot") {}
+        AddAllLootAction(PlayerbotAI* ai, string name = "add all loot") : Action(ai, name) {}
         virtual bool Execute(Event event);
 
+    protected:
+        virtual void AddLoot(ObjectGuid guid);
+    };
 
+    class AddGatheringLootAction : public AddAllLootAction {
+    public:
+        AddGatheringLootAction(PlayerbotAI* ai) : AddAllLootAction(ai, "add gathering loot") {}
+
+    protected:
+        virtual void AddLoot(ObjectGuid guid);
     };
 
 }

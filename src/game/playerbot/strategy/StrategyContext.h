@@ -17,6 +17,7 @@ namespace ai
         {
             creators["racials"] = &StrategyContext::racials;
             creators["loot"] = &StrategyContext::loot;
+            creators["gather"] = &StrategyContext::gather;
             creators["emote"] = &StrategyContext::emote;
             creators["passive"] = &StrategyContext::passive;
             creators["low mana"] = &StrategyContext::low_mana;
@@ -30,6 +31,7 @@ namespace ai
         static Strategy* dead(PlayerbotAI* ai) { return new DeadStrategy(ai); }
         static Strategy* racials(PlayerbotAI* ai) { return new RacialsStrategy(ai); }
         static Strategy* loot(PlayerbotAI* ai) { return new LootNonCombatStrategy(ai); }
+        static Strategy* gather(PlayerbotAI* ai) { return new GatherStrategy(ai); }
         static Strategy* emote(PlayerbotAI* ai) { return new RandomEmoteStrategy(ai); }
         static Strategy* passive(PlayerbotAI* ai) { return new PassiveStrategy(ai); }
         static Strategy* low_mana(PlayerbotAI* ai) { return new LowManaStrategy(ai); }
