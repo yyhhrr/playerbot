@@ -419,6 +419,15 @@ namespace ai
     public:
         virtual bool IsActive();
     };
+
+    class IsSwimmingTrigger : public Trigger
+    {
+    public:
+        IsSwimmingTrigger(PlayerbotAI* ai) : Trigger(ai, "swimming") {}
+
+    public:
+        virtual bool IsActive();
+    };
 }
 
 #include "RangeTriggers.h"

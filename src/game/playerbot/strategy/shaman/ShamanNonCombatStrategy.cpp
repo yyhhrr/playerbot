@@ -12,6 +12,10 @@ void ShamanNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"party member dead",
 		NextAction::array(0, new NextAction("ancestral spirit", 23.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		"swimming",
+		NextAction::array(0, new NextAction("water breathing", 11.0f), NULL)));
 }
 
 void ShamanNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
@@ -60,8 +64,19 @@ ActionNode* ShamanNonCombatStrategy::GetAction(string name)
 			/*A*/ NULL,
 			/*C*/ NULL);
 	}
+	else if (name == "water breathing")
+	{
+		return new ActionNode ("water breathing",
+			/*P*/ NULL,
+			/*A*/ NextAction::array(0, new NextAction("water walking"), NULL),
+			/*C*/ NULL);
+	}
+    else if (name == "water walking")
+    {
+        return new ActionNode ("water walking",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
     else return CombatStrategy::GetAction(name);
 }
-
-
-

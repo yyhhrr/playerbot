@@ -67,9 +67,11 @@ namespace ai
             creators["far from master"] = &TriggerContext::far_from_master;
             creators["far from loot target"] = &TriggerContext::far_from_loot_target;
             creators["can loot"] = &TriggerContext::can_loot;
+            creators["swimming"] = &TriggerContext::swimming;
         }
 
     private:
+        static Trigger* swimming(PlayerbotAI* ai) { return new IsSwimmingTrigger(ai); }
         static Trigger* no_possible_targets(PlayerbotAI* ai) { return new NoPossibleTargetsTrigger(ai); }
         static Trigger* can_loot(PlayerbotAI* ai) { return new CanLootTrigger(ai); }
         static Trigger* far_from_loot_target(PlayerbotAI* ai) { return new FarFromCurrentLootTrigger(ai); }

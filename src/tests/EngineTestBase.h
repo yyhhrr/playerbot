@@ -75,6 +75,7 @@ protected:
 	void itemAvailable(string  item, int amount);
 	void tickWithDeadPartyMember();
     void tickWithCcTarget(string   spell);
+    void tickWhileSwimming();
 
 protected:
     MockPlayerbotAIBase *ai;

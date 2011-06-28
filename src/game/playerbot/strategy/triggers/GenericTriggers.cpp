@@ -160,3 +160,8 @@ bool NoPossibleTargetsTrigger::IsActive()
     list<Unit*> targets = AI_VALUE(list<Unit*>, "possible targets");
     return !targets.size();
 }
+
+bool IsSwimmingTrigger::IsActive()
+{
+    return AI_VALUE2(bool, "swimming", "self target");
+}

@@ -74,7 +74,7 @@ namespace ai
             creators["my attacker count"] = &ValueContext::my_attacker_count;
             creators["has aggro"] = &ValueContext::has_aggro;
             creators["mounted"] = &ValueContext::mounted;
-        
+
             creators["can loot"] = &ValueContext::can_loot;
             creators["loot target"] = &ValueContext::loot_target;
             creators["available loot"] = &ValueContext::available_loot;
@@ -84,11 +84,12 @@ namespace ai
             creators["last movement"] = &ValueContext::last_movement;
             creators["distance"] = &ValueContext::distance;
             creators["moving"] = &ValueContext::moving;
+            creators["swimming"] = &ValueContext::swimming;
             creators["behind"] = &ValueContext::behind;
-            
+
             creators["item count"] = &ValueContext::item_count;
             creators["inventory item"] = &ValueContext::inventory_item;
-        
+
             creators["spell id"] = &ValueContext::spell_id;
             creators["item for spell"] = &ValueContext::item_for_spell;
             creators["spell cast useful"] = &ValueContext::spell_cast_useful;
@@ -106,6 +107,7 @@ namespace ai
         static UntypedValue* item_count(PlayerbotAI* ai) { return new ItemCountValue(ai); }
         static UntypedValue* behind(PlayerbotAI* ai) { return new IsBehindValue(ai); }
         static UntypedValue* moving(PlayerbotAI* ai) { return new IsMovingValue(ai); }
+        static UntypedValue* swimming(PlayerbotAI* ai) { return new IsSwimmingValue(ai); }
         static UntypedValue* distance(PlayerbotAI* ai) { return new DistanceValue(ai); }
         static UntypedValue* last_movement(PlayerbotAI* ai) { return new LastMovementValue(ai); }
 

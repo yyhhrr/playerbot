@@ -8,7 +8,7 @@ namespace ai
 	public:
         IsMovingValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
 
-        virtual bool Calculate() 
+        virtual bool Calculate()
         {
             Unit* target = AI_VALUE(Unit*, qualifier);
 
@@ -21,6 +21,22 @@ namespace ai
                 return false;
             }
             return true;
+        }
+    };
+
+    class IsSwimmingValue : public CalculatedValue<bool>, public Qualified
+	{
+	public:
+        IsSwimmingValue(PlayerbotAI* ai) : CalculatedValue<bool>(ai) {}
+
+        virtual bool Calculate()
+        {
+            Unit* target = AI_VALUE(Unit*, qualifier);
+
+            if (!target)
+                return false;
+
+            return target->IsUnderWater() || target->IsInWater();
         }
     };
 }

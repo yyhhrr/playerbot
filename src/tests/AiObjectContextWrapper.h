@@ -120,6 +120,7 @@ namespace ai
             creators["has available loot"] = &MockValueContext::logical;
             creators["distance"] = &MockValueContext::floating;
             creators["moving"] = &MockValueContext::logical;
+            creators["swimming"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
             creators["item count"] = &MockValueContext::stats;
             creators["inventory item"] = &MockValueContext::item;

@@ -168,4 +168,15 @@ namespace ai
 	public:
 		CastLavaLashAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "lava lash") {}
 	};
+
+    class CastWaterBreathingAction : public CastBuffSpellAction {
+    public:
+        CastWaterBreathingAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "water breathing") {}
+    };
+
+    class CastWaterWalkingAction : public CastBuffSpellAction {
+    public:
+        CastWaterWalkingAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "water walking") {}
+    };
+
 }

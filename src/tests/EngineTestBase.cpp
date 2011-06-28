@@ -13,11 +13,11 @@ public:
     virtual void Before(Action* action, Event event) {}
     virtual bool AllowExecution(Action* action, Event event) { return false; }
     virtual bool OverrideResult(bool executed, Event event) { return true; }
-    virtual void After(Action* action, Event event) 
+    virtual void After(Action* action, Event event)
     {
         string name = action->getName();
 
-        ai->buffer.append(">");        
+        ai->buffer.append(">");
         MockedTargets::Append(ai->buffer, action->GetTarget());
         ai->buffer.append(":");
         ai->buffer.append(name);
@@ -49,7 +49,7 @@ public:
             name = "cleanse";
         if (name.find("purify") != string ::npos)
             name = "purify";
-        ai->spellCooldowns.push_back(name); 
+        ai->spellCooldowns.push_back(name);
     }
 
     void remove(string & name, string pattern)
@@ -73,14 +73,14 @@ void EngineTestBase::tearDown()
 {
     if (engine)
         delete engine;
-    if (ai) 
+    if (ai)
         delete ai;
 }
 
 void EngineTestBase::va_generic(void (EngineTestBase::*callback)(const char*), va_list vl)
 {
 	const char* cur;
-	do 
+	do
 	{
 		cur = va_arg(vl, const char*);
 		if (cur)
@@ -99,12 +99,12 @@ void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
     ai->SetContext(context);
     engine = new Engine(ai, context);
     engine->AddActionExecutionListener(new TestActionExecutionListener(ai));
-    
+
 	va_list vl;
 	va_start(vl, aiObjectContext);
 
 	va_generic(&EngineTestBase::setupEngineCallback, vl);
-    
+
 	engine->testMode = true;
 	engine->Init();
 }
@@ -114,12 +114,12 @@ void EngineTestBase::setupEngineCallback(const char* name)
 	engine->addStrategy(name);
 }
 
-void EngineTestBase::tick() 
+void EngineTestBase::tick()
 {
 	engine->DoNextAction(NULL);
 }
 
-void EngineTestBase::assertActions(string  expected) 
+void EngineTestBase::assertActions(string  expected)
 {
 	bool pass = ai->buffer == expected;
 	if (!pass)
@@ -136,9 +136,9 @@ void EngineTestBase::tickWithNoTarget()
 {
     context->GetValue<Unit*>("current target")->Set(NULL);
     set<uint8>("my attacker count", 0);
-    
+
 	tick();
-    
+
     set<uint8>("my attacker count", 1);
     context->GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
 }
@@ -154,7 +154,7 @@ void EngineTestBase::tickWithSpellUnavailable(string  spell)
 	tick();
 }
 
-void EngineTestBase::tickWithSpellAvailable(string  spell) 
+void EngineTestBase::tickWithSpellAvailable(string  spell)
 {
 	spellAvailable(spell);
 	tick();
@@ -186,14 +186,14 @@ void EngineTestBase::removeAura(string  spell)
 void EngineTestBase::tickOutOfSpellRange()
 {
     set<float>("distance", "current target", 49.0f);
-    tick(); 
+    tick();
     set<float>("distance", "current target", 15.0f);
 }
 
 void EngineTestBase::tickOutOfMeleeRange()
 {
     set<float>("distance", "current target", 15.0f);
-    tick(); 
+    tick();
     set<float>("distance", "current target", 0.0f);
 }
 
@@ -295,7 +295,7 @@ void EngineTestBase::tickWithComboPoints(int amount)
     set<uint8>("combo", "self target", 0);
 }
 
-void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell() 
+void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell()
 {
     ai->targetIsCastingNonMeleeSpell = true;
     tick();
@@ -402,7 +402,7 @@ void EngineTestBase::itemAvailable(string  item, int amount)
     set<uint8>("item count", item, 2);
 }
 
-void EngineTestBase::tickWithDeadPartyMember() 
+void EngineTestBase::tickWithDeadPartyMember()
 {
     context->GetValue<Unit*>("party member to resurrect")->Set(MockedTargets::GetPartyMember());
 	tick();
@@ -417,10 +417,17 @@ void EngineTestBase::tickBehindTarget()
 }
 
 void EngineTestBase::tickWithCcTarget(string  spell)
-{   
+{
     set<uint8>("attacker count", 3);
     context->GetValue<Unit*>("cc target", spell)->Set(MockedTargets::GetCc());
     tick();
     set<uint8>("attacker count", 1);
     context->GetValue<Unit*>("cc target", spell)->Set(NULL);
+}
+
+void EngineTestBase::tickWhileSwimming()
+{
+    set<bool>("swimming", "self target", true);
+    tick();
+    set<bool>("swimming", "self target", false);
 }

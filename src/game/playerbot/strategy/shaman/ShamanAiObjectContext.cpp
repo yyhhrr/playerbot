@@ -124,9 +124,13 @@ namespace ai
                 creators["stormstrike"] = &AiObjectContextInternal::stormstrike;
                 creators["lava lash"] = &AiObjectContextInternal::lava_lash;
                 creators["ancestral spirit"] = &AiObjectContextInternal::ancestral_spirit;
+                creators["water walking"] = &AiObjectContextInternal::water_walking;
+                creators["water breathing"] = &AiObjectContextInternal::water_breathing;
             }
 
         private:
+            static Action* water_walking(PlayerbotAI* ai) { return new CastWaterWalkingAction(ai); }
+            static Action* water_breathing(PlayerbotAI* ai) { return new CastWaterBreathingAction(ai); }
             static Action* water_shield(PlayerbotAI* ai) { return new CastWaterShieldAction(ai); }
             static Action* lightning_shield(PlayerbotAI* ai) { return new CastLightningShieldAction(ai); }
             static Action* strength_of_earth_totem(PlayerbotAI* ai) { return new CastStrengthOfEarthTotemAction(ai); }
