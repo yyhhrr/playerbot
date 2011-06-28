@@ -43,22 +43,62 @@ namespace ai
     public:
         WindShearInterruptSpellTrigger(PlayerbotAI* ai) : InterruptSpellTrigger(ai, "wind shear") {}
     };
-    
-    class WaterShieldTrigger : public BuffTrigger 
+
+    class WaterShieldTrigger : public BuffTrigger
     {
     public:
         WaterShieldTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "water shield") {}
     };
 
-    class LightningShieldTrigger : public BuffTrigger 
+    class LightningShieldTrigger : public BuffTrigger
     {
     public:
         LightningShieldTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "lightning shield") {}
     };
 
-    class PurgeTrigger : public TargetAuraDispelTrigger 
+    class PurgeTrigger : public TargetAuraDispelTrigger
     {
     public:
         PurgeTrigger(PlayerbotAI* ai) : TargetAuraDispelTrigger(ai, "purge", DISPEL_MAGIC) {}
+    };
+
+    class WaterWalkingTrigger : public BuffTrigger {
+    public:
+        WaterWalkingTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "water walking") {}
+
+        virtual bool IsActive()
+        {
+            return BuffTrigger::IsActive() && AI_VALUE2(bool, "swimming", "self target");
+        }
+    };
+
+    class WaterBreathingTrigger : public BuffTrigger {
+    public:
+        WaterBreathingTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "water breathing") {}
+
+        virtual bool IsActive()
+        {
+            return BuffTrigger::IsActive() && AI_VALUE2(bool, "swimming", "self target");
+        }
+    };
+
+    class WaterWalkingOnPartyTrigger : public BuffOnPartyTrigger {
+    public:
+        WaterWalkingOnPartyTrigger(PlayerbotAI* ai) : BuffOnPartyTrigger(ai, "water walking on party") {}
+
+        virtual bool IsActive()
+        {
+            return BuffOnPartyTrigger::IsActive() && AI_VALUE2(bool, "swimming", "self target");
+        }
+    };
+
+    class WaterBreathingOnPartyTrigger : public BuffOnPartyTrigger {
+    public:
+        WaterBreathingOnPartyTrigger(PlayerbotAI* ai) : BuffOnPartyTrigger(ai, "water breathing on party") {}
+
+        virtual bool IsActive()
+        {
+            return BuffOnPartyTrigger::IsActive() && AI_VALUE2(bool, "swimming", "self target");
+        }
     };
 }

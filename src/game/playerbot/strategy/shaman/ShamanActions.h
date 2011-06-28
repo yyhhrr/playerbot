@@ -179,4 +179,14 @@ namespace ai
         CastWaterWalkingAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "water walking") {}
     };
 
+    class CastWaterBreathingOnPartyAction : public BuffOnPartyAction {
+    public:
+        CastWaterBreathingOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "water breathing") {}
+    };
+
+    class CastWaterWalkingOnPartyAction : public BuffOnPartyAction {
+    public:
+        CastWaterWalkingOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "water walking") {}
+    };
+
 }

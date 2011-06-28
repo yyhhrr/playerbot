@@ -31,9 +31,20 @@ protected:
 	void swimming()
 	{
 	    tickWhileSwimming();
-	    tickWhileSwimming();
+	    addAura("water breathing");
 
-		assertActions(">S:water breathing>S:water walking");
+	    tickWhileSwimming();
+        addAura("water walking");
+
+        spellAvailable("water breathing");
+        tickWhileSwimming();
+        addPartyAura("water breathing");
+
+        spellAvailable("water walking");
+        tickWhileSwimming();
+        addPartyAura("water walking");
+
+		assertActions(">S:water breathing>S:water walking>P:water breathing on party>P:water walking on party");
 	}
 };
 

@@ -67,10 +67,18 @@ namespace ai
                 creators["shaman weapon"] = &TriggerFactoryInternal::shaman_weapon;
                 creators["water shield"] = &TriggerFactoryInternal::water_shield;
                 creators["lightning shield"] = &TriggerFactoryInternal::lightning_shield;
+                creators["water breathing"] = &TriggerFactoryInternal::water_breathing;
+                creators["water walking"] = &TriggerFactoryInternal::water_walking;
+                creators["water breathing on party"] = &TriggerFactoryInternal::water_breathing_on_party;
+                creators["water walking on party"] = &TriggerFactoryInternal::water_walking_on_party;
 
             }
 
         private:
+            static Trigger* water_breathing(PlayerbotAI* ai) { return new WaterBreathingTrigger(ai); }
+            static Trigger* water_walking(PlayerbotAI* ai) { return new WaterWalkingTrigger(ai); }
+            static Trigger* water_breathing_on_party(PlayerbotAI* ai) { return new WaterBreathingOnPartyTrigger(ai); }
+            static Trigger* water_walking_on_party(PlayerbotAI* ai) { return new WaterWalkingOnPartyTrigger(ai); }
             static Trigger* windfury_totem(PlayerbotAI* ai) { return new WindfuryTotemTrigger(ai); }
             static Trigger* mana_spring_totem(PlayerbotAI* ai) { return new ManaSpringTotemTrigger(ai); }
             static Trigger* flametongue_totem(PlayerbotAI* ai) { return new FlametongueTotemTrigger(ai); }
@@ -126,11 +134,15 @@ namespace ai
                 creators["ancestral spirit"] = &AiObjectContextInternal::ancestral_spirit;
                 creators["water walking"] = &AiObjectContextInternal::water_walking;
                 creators["water breathing"] = &AiObjectContextInternal::water_breathing;
+                creators["water walking on party"] = &AiObjectContextInternal::water_walking_on_party;
+                creators["water breathing on party"] = &AiObjectContextInternal::water_breathing_on_party;
             }
 
         private:
             static Action* water_walking(PlayerbotAI* ai) { return new CastWaterWalkingAction(ai); }
             static Action* water_breathing(PlayerbotAI* ai) { return new CastWaterBreathingAction(ai); }
+            static Action* water_walking_on_party(PlayerbotAI* ai) { return new CastWaterWalkingOnPartyAction(ai); }
+            static Action* water_breathing_on_party(PlayerbotAI* ai) { return new CastWaterBreathingOnPartyAction(ai); }
             static Action* water_shield(PlayerbotAI* ai) { return new CastWaterShieldAction(ai); }
             static Action* lightning_shield(PlayerbotAI* ai) { return new CastLightningShieldAction(ai); }
             static Action* strength_of_earth_totem(PlayerbotAI* ai) { return new CastStrengthOfEarthTotemAction(ai); }
