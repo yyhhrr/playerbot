@@ -174,7 +174,10 @@ ActionNode* Engine::CreateActionNode(string name)
         if (node)
             return node;
     }
-    return NULL;
+    return new ActionNode (name,
+        /*P*/ NULL,
+        /*A*/ NULL,
+        /*C*/ NULL);
 }
 
 bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool skipPrerequisites, Event event)
