@@ -101,13 +101,6 @@ ActionNode* CatDpsDruidStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("claw"), NULL),
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 15.0f), NULL));
     }
-    else if (name == "swipe (cat)")
-    {
-        return new ActionNode ("swipe (cat)",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
     else if (name == "rake")
     {
         return new ActionNode ("rake",
@@ -128,13 +121,6 @@ ActionNode* CatDpsDruidStrategy::GetAction(string name)
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("mangle (cat)", 10.0f), NULL));
-    }
-    else if (name == "cower")
-    {
-        return new ActionNode ("cower",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
     }
     else return FeralDruidStrategy::GetAction(name);
 }

@@ -59,13 +59,6 @@ ActionNode* DpsRogueStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("sinister strike"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "sinister strike")
-    {
-        return new ActionNode ("sinister strike",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
 	else if (name == "kidney shot")
 	{
 		return new ActionNode ("kidney shot",
@@ -85,41 +78,6 @@ ActionNode* DpsRogueStrategy::GetAction(string name)
 		return new ActionNode ("slice and dice",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("eviscerate"), NULL),
-			/*C*/ NULL);
-	}
-	else if (name == "eviscerate")
-	{
-		return new ActionNode ("eviscerate",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "vanish")
-	{
-		return new ActionNode ("vanish",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "evasion")
-	{
-		return new ActionNode ("evasion",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "kick")
-	{
-		return new ActionNode ("kick",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "feint")
-	{
-		return new ActionNode ("feint",
-			/*P*/ NULL,
-			/*A*/ NULL,
 			/*C*/ NULL);
 	}
     else if (name == "backstab")

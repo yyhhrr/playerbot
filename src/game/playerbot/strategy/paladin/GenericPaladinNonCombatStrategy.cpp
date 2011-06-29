@@ -10,7 +10,7 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
     GenericNonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "blessing of kings on party", 
+        "blessing of kings on party",
         NextAction::array(0, new NextAction("blessing of kings on party", 20.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
@@ -24,27 +24,5 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
 ActionNode* GenericPaladinNonCombatStrategy::GetAction(string name)
 {
-    if (name == "blessing of kings on party") 
-    {
-        return new ActionNode ("blessing of kings on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else if (name == "redemption") 
-	{
-		return new ActionNode ("redemption",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "crusader aura") 
-	{
-		return new ActionNode ("crusader aura",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	
-    else return GenericNonCombatStrategy::GetAction(name);
+    return GenericNonCombatStrategy::GetAction(name);
 }

@@ -61,84 +61,7 @@ ActionNode* GenericShamanStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "water shield")
-    {
-        return new ActionNode ("water shield",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "reach spell")
-	{
-		return new ActionNode ("reach spell",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "flee")
-	{
-		return new ActionNode ("flee",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "strength of earth totem")
-    {
-        return new ActionNode ("strength of earth totem",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "flametongue totem")
-    {
-        return new ActionNode ("flametongue totem",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "windfury totem")
-    {
-        return new ActionNode ("windfury totem",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "mana spring totem")
-    {
-        return new ActionNode ("mana spring totem",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "mana tide totem")
-	{
-		return new ActionNode ("mana tide totem",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "healing stream totem")
-	{
-		return new ActionNode ("healing stream totem",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "wind shear")
-    {
-        return new ActionNode ("wind shear",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "rockbiter weapon")
-    {
-        return new ActionNode ("rockbiter weapon",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "flametongue weapon")
+    if (name == "flametongue weapon")
     {
         return new ActionNode ("flametongue weapon",
             /*P*/ NULL,
@@ -159,20 +82,6 @@ ActionNode* GenericShamanStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("rockbiter weapon"), NULL),
             /*C*/ NULL);
     }
-	else if (name == "purge")
-	{
-		return new ActionNode ("purge",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "healing wave")
-	{
-		return new ActionNode ("healing wave",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
 	else if (name == "lesser healing wave")
 	{
 		return new ActionNode ("lesser healing wave",
@@ -180,32 +89,11 @@ ActionNode* GenericShamanStrategy::GetAction(string name)
 			/*A*/ NextAction::array(0, new NextAction("healing wave"), NULL),
 			/*C*/ NULL);
 	}
-	else if (name == "healing wave on party")
-	{
-		return new ActionNode ("healing wave on party",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
 	else if (name == "lesser healing wave on party")
 	{
 		return new ActionNode ("lesser healing wave on party",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("healing wave on party"), NULL),
-			/*C*/ NULL);
-	}
-	else if (name == "earth shield")
-	{
-		return new ActionNode ("earth shield",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "earth shield on party")
-	{
-		return new ActionNode ("earth shield on party",
-			/*P*/ NULL,
-			/*A*/ NULL,
 			/*C*/ NULL);
 	}
 	else if (name == "chain heal")

@@ -51,27 +51,6 @@ ActionNode* CasterDruidStrategy::GetAction(string name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (name == "reach spell")
-	{
-		return new ActionNode ("reach spell",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "flee")
-	{
-		return new ActionNode ("flee",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "moonkin form")
-    {
-        return new ActionNode ("moonkin form",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
 	else if (name == "hibernate")
 	{
 		return new ActionNode ("hibernate",

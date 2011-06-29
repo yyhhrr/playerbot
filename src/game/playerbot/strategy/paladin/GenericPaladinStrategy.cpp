@@ -83,32 +83,11 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "devotion aura")
-    {
-        return new ActionNode ("devotion aura",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "consecration")
-    {
-        return new ActionNode ("consecration",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
 	else if (name == "cleanse")
     {
         return new ActionNode ("cleanse",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("purify"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "purify")
-    {
-        return new ActionNode ("purify",
-            /*P*/ NULL,
-            /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (name == "cleanse poison on party")
@@ -125,27 +104,6 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
 			/*A*/ NextAction::array(0, new NextAction("purify disease on party"), NULL),
 			/*C*/ NULL);
 	}
-	else if (name == "cleanse magic on party")
-	{
-		return new ActionNode ("cleanse magic on party",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "purify poison on party")
-    {
-        return new ActionNode ("purify poison on party",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "purify disease on party")
-	{
-		return new ActionNode ("purify disease on party",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
     else if (name == "seal of wisdom")
     {
         return new ActionNode ("seal of wisdom",
@@ -160,39 +118,11 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("seal of righteousness"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "seal of righteousness")
-    {
-        return new ActionNode ("seal of righteousness",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
     else if (name == "hand of reckoning")
     {
         return new ActionNode ("hand of reckoning",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("judgement of justice"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "avenger's shield")
-    {
-        return new ActionNode ("avenger's shield",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "exorcism")
-    {
-        return new ActionNode ("exorcism",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "judgement of light")
-    {
-        return new ActionNode ("judgement of light",
-            /*P*/ NULL,
-            /*A*/ NULL,
             /*C*/ NULL);
     }
     else if (name == "judgement of wisdom")
@@ -209,27 +139,6 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("divine protection"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "divine protection")
-    {
-        return new ActionNode ("divine protection",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "divine protection on party")
-    {
-        return new ActionNode ("divine protection on party",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "hammer of justice")
-    {
-        return new ActionNode ("hammer of justice",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
     else if (name == "flash of light")
     {
         return new ActionNode ("flash of light",
@@ -244,62 +153,6 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("holy light on party"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "holy light")
-    {
-        return new ActionNode ("holy light",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "holy light on party")
-    {
-        return new ActionNode ("holy light on party",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "lay on hands")
-	{
-		return new ActionNode ("lay on hands",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "lay on hands on party")
-	{
-		return new ActionNode ("lay on hands on party",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "judgement of justice")
-	{
-		return new ActionNode ("judgement of justice",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "hammer of wrath")
-	{
-		return new ActionNode ("hammer of wrath",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "holy shield")
-    {
-        return new ActionNode ("holy shield",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "hammer of the righteous")
-    {
-        return new ActionNode ("hammer of the righteous",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
     else if (name == "holy wrath")
     {
         return new ActionNode ("holy wrath",
@@ -307,40 +160,5 @@ ActionNode* GenericPaladinStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("consecration"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "blessing of kings")
-    {
-        return new ActionNode ("blessing of kings",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "retribution aura")
-	{
-		return new ActionNode ("retribution aura",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "shadow resistance aura")
-	{
-		return new ActionNode ("shadow resistance aura",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "frost resistance aura")
-	{
-		return new ActionNode ("frost resistance aura",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "fire resistance aura")
-	{
-		return new ActionNode ("fire resistance aura",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
 	else return CombatStrategy::GetAction(name);
 }

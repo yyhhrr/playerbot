@@ -13,17 +13,17 @@ NextAction** DpsPriestStrategy::getDefaultActions()
 void DpsPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     HealPriestStrategy::InitTriggers(triggers);
-    
+
     triggers.push_back(new TriggerNode(
-        "devouring plague", 
+        "devouring plague",
         NextAction::array(0, new NextAction("devouring plague", 12.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "shadow word: pain", 
+        "shadow word: pain",
         NextAction::array(0, new NextAction("shadow word: pain", 11.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "no attackers", 
+        "no attackers",
         NextAction::array(0, new NextAction("mind flay", 20.0f), NULL)));
 }
 
@@ -38,46 +38,32 @@ ActionNode* DpsPriestStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "shadow word: pain") 
+    if (name == "shadow word: pain")
     {
-        return new ActionNode ("shadow word: pain",  
+        return new ActionNode ("shadow word: pain",
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "devouring plague") 
+    else if (name == "devouring plague")
     {
-        return new ActionNode ("devouring plague",  
+        return new ActionNode ("devouring plague",
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "mind flay") 
+    else if (name == "mind flay")
     {
-        return new ActionNode ("mind flay",  
+        return new ActionNode ("mind flay",
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "holy fire") 
+    else if (name == "mind blast")
     {
-        return new ActionNode ("holy fire",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "smite") 
-    {
-        return new ActionNode ("smite",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "mind blast") 
-    {
-        return new ActionNode ("mind blast",  
+        return new ActionNode ("mind blast",
             /*P*/ NextAction::array(0, new NextAction("shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NextAction::array(0, new NextAction("shoot"), NULL));
     }
     else return HealPriestStrategy::GetAction(name);

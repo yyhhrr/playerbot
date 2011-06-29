@@ -10,23 +10,23 @@ void GenericMageNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigger
     GenericMageStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "arcane intellect", 
+        "arcane intellect",
         NextAction::array(0, new NextAction("arcane intellect", 21.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "arcane intellect on party", 
+        "arcane intellect on party",
         NextAction::array(0, new NextAction("arcane intellect on party", 20.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"no drink", 
+		"no drink",
 		NextAction::array(0, new NextAction("conjure water", 16.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"no food", 
+		"no food",
 		NextAction::array(0, new NextAction("conjure food", 15.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "mage armor", 
+        "mage armor",
         NextAction::array(0, new NextAction("mage armor", 19.0f), NULL)));
 }
 
@@ -37,53 +37,18 @@ ActionNode* GenericMageNonCombatStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "arcane intellect") 
+    if (name == "mage armor")
     {
-        return new ActionNode ("arcane intellect",  
+        return new ActionNode ("mage armor",
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NextAction::array(0, new NextAction("ice armor"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "arcane intellect on party") 
+    else if (name == "ice armor")
     {
-        return new ActionNode ("arcane intellect on party",  
+        return new ActionNode ("ice armor",
             /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else if (name == "conjure water") 
-	{
-		return new ActionNode ("conjure water",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "conjure food") 
-	{
-		return new ActionNode ("conjure food",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "mage armor") 
-    {
-        return new ActionNode ("mage armor",  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("ice armor"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (name == "ice armor") 
-    {
-        return new ActionNode ("ice armor",  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("frost armor"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (name == "frost armor") 
-    {
-        return new ActionNode ("frost armor",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NextAction::array(0, new NextAction("frost armor"), NULL),
             /*C*/ NULL);
     }
 

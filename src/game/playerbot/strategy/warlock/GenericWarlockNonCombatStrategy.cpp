@@ -10,23 +10,23 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
     GenericNonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "demon armor", 
+        "demon armor",
         NextAction::array(0, new NextAction("demon armor", 21.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"no healthstone", 
+		"no healthstone",
 		NextAction::array(0, new NextAction("create healthstone", 15.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"no firestone", 
+		"no firestone",
 		NextAction::array(0, new NextAction("create firestone", 14.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"no spellstone", 
+		"no spellstone",
 		NextAction::array(0, new NextAction("create spellstone", 13.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "spellstone", 
+        "spellstone",
         NextAction::array(0, new NextAction("spellstone", 13.0f), NULL)));
 }
 
@@ -37,48 +37,12 @@ ActionNode* GenericWarlockNonCombatStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "demon armor") 
+    if (name == "demon armor")
     {
-        return new ActionNode ("demon armor",  
+        return new ActionNode ("demon armor",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("demon skin"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("demon skin"), NULL),
             /*C*/ NULL);
     }
-	else if (name == "demon skin") 
-	{
-		return new ActionNode ("demon skin",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "create healthstone") 
-	{
-		return new ActionNode ("create healthstone",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "create firestone") 
-	{
-		return new ActionNode ("create firestone",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "create spellstone") 
-	{
-		return new ActionNode ("create spellstone",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "spellstone") 
-    {
-        return new ActionNode ("spellstone",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-
-    return GenericNonCombatStrategy::GetAction(name);
+    else return GenericNonCombatStrategy::GetAction(name);
 }

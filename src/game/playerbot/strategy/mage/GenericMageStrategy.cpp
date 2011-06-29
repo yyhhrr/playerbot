@@ -48,27 +48,6 @@ ActionNode* GenericMageStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "fireball")
-    {
-        return new ActionNode ("fireball",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "pyroblast")
-    {
-        return new ActionNode ("pyroblast",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "flamestrike")
-    {
-        return new ActionNode ("flamestrike",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
     else if (name == "fire blast")
     {
         return new ActionNode ("fire blast",
@@ -83,47 +62,12 @@ ActionNode* GenericMageStrategy::GetAction(string name)
             /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-	else if (name == "reach spell")
-	{
-		return new ActionNode ("reach spell",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-	else if (name == "flee")
-	{
-		return new ActionNode ("flee",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
     else if (name == "frost nova")
     {
         return new ActionNode ("frost nova",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
             /*C*/ NextAction::array(0, new NextAction("flee"), NULL));
-    }
-    else if (name == "counterspell")
-    {
-        return new ActionNode ("counterspell",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "remove curse")
-    {
-        return new ActionNode ("remove curse",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "remove curse on party")
-    {
-        return new ActionNode ("remove curse on party",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
     }
     else if (name == "icy veins" || name == "boost")
     {
@@ -139,26 +83,5 @@ ActionNode* GenericMageStrategy::GetAction(string name)
             /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (name == "ice block")
-	{
-		return new ActionNode ("ice block",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
-    else if (name == "polymorph")
-    {
-        return new ActionNode ("polymorph",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-	else if (name == "spellsteal")
-	{
-		return new ActionNode ("spellsteal",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
     else return CombatStrategy::GetAction(name);
 }

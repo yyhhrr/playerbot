@@ -42,8 +42,8 @@ void GenericPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("abolish disease on party", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "enemy too close", 
-        NextAction::array(0, new NextAction("fade", 50.0f), new NextAction("flee", 50.0f), NULL)));    
+        "enemy too close",
+        NextAction::array(0, new NextAction("fade", 50.0f), new NextAction("flee", 50.0f), NULL)));
 
 }
 
@@ -58,214 +58,130 @@ ActionNode* GenericPriestStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "inner fire") 
+    if (name == "inner fire")
     {
-        return new ActionNode ("inner fire",  
+        return new ActionNode ("inner fire",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-	else if (name == "reach spell") 
-	{
-		return new ActionNode ("reach spell",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "flee") 
-	{
-		return new ActionNode ("flee",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "shadowform") 
+    else if (name == "holy nova")
     {
-        return new ActionNode ("shadowform",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "remove shadowform") 
-    {
-        return new ActionNode ("remove shadowform",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "holy nova") 
-    {
-        return new ActionNode ("holy nova",  
+        return new ActionNode ("holy nova",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "power word: fortitude") 
+    else if (name == "power word: fortitude")
     {
-        return new ActionNode ("power word: fortitude",  
+        return new ActionNode ("power word: fortitude",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "power word: fortitude on party") 
+    else if (name == "power word: fortitude on party")
     {
-        return new ActionNode ("power word: fortitude on party",  
+        return new ActionNode ("power word: fortitude on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "divine spirit") 
+    else if (name == "divine spirit")
     {
-        return new ActionNode ("divine spirit",  
+        return new ActionNode ("divine spirit",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "divine spirit on party") 
+    else if (name == "divine spirit on party")
     {
-        return new ActionNode ("divine spirit on party",  
+        return new ActionNode ("divine spirit on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    if (name == "power word: shield") 
+    if (name == "power word: shield")
     {
-        return new ActionNode ("power word: shield",  
+        return new ActionNode ("power word: shield",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("renew", 50.0f), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("renew", 50.0f), NULL),
             /*C*/ NULL);
     }
-    else if (name == "power word: shield on party") 
+    else if (name == "power word: shield on party")
     {
-        return new ActionNode ("power word: shield on party",  
+        return new ActionNode ("power word: shield on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("renew on party", 50.0f), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("renew on party", 50.0f), NULL),
             /*C*/ NULL);
     }
-    else if (name == "renew") 
+    else if (name == "renew")
     {
-        return new ActionNode ("renew",  
+        return new ActionNode ("renew",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "renew on party") 
+    else if (name == "renew on party")
     {
-        return new ActionNode ("renew on party",  
+        return new ActionNode ("renew on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "greater heal") 
+    else if (name == "greater heal")
     {
-        return new ActionNode ("greater heal",  
+        return new ActionNode ("greater heal",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("heal"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("heal"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "greater heal on party") 
+    else if (name == "greater heal on party")
     {
-        return new ActionNode ("greater heal on party",  
+        return new ActionNode ("greater heal on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("heal on party"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("heal on party"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "heal") 
+    else if (name == "heal")
     {
-        return new ActionNode ("heal",  
+        return new ActionNode ("heal",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("lesser heal"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("lesser heal"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "heal on party") 
+    else if (name == "heal on party")
     {
-        return new ActionNode ("heal on party",  
+        return new ActionNode ("heal on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("lesser heal on party"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("lesser heal on party"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "lesser heal") 
+    else if (name == "lesser heal")
     {
-        return new ActionNode ("lesser heal",  
+        return new ActionNode ("lesser heal",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "lesser heal on party") 
+    else if (name == "lesser heal on party")
     {
-        return new ActionNode ("lesser heal on party",  
+        return new ActionNode ("lesser heal on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "flash heal") 
+    else if (name == "flash heal")
     {
-        return new ActionNode ("flash heal",  
+        return new ActionNode ("flash heal",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "flash heal on party") 
+    else if (name == "flash heal on party")
     {
-        return new ActionNode ("flash heal on party",  
+        return new ActionNode ("flash heal on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "dispel magic") 
-    {
-        return new ActionNode ("dispel magic",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "dispel magic on party") 
-    {
-        return new ActionNode ("dispel magic on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "dispel magic on target") 
-    {
-        return new ActionNode ("dispel magic on target",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "cure disease") 
-    {
-        return new ActionNode ("cure disease",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "cure disease on party") 
-    {
-        return new ActionNode ("cure disease on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "abolish disease") 
-    {
-        return new ActionNode ("abolish disease",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "abolish disease on party") 
-    {
-        return new ActionNode ("abolish disease on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "fade") 
-    {
-        return new ActionNode ("fade",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     else return CombatStrategy::GetAction(name);

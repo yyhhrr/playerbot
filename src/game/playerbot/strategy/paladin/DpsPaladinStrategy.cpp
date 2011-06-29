@@ -15,19 +15,19 @@ void DpsPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericPaladinStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "judgement of wisdom", 
+        "judgement of wisdom",
         NextAction::array(0, new NextAction("judgement of wisdom", 1.2f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "blessing", 
+        "blessing",
         NextAction::array(0, new NextAction("blessing of might", 21.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"medium aoe", 
+		"medium aoe",
 		NextAction::array(0, new NextAction("divine storm", 27.0f), new NextAction("consecration", 27.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
-		"art of war", 
+		"art of war",
 		NextAction::array(0, new NextAction("exorcism", 27.0f), NULL)));
 }
 
@@ -38,30 +38,23 @@ void DpsPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 
 ActionNode* DpsPaladinStrategy::GetAction(string name)
 {
-    if (name == "seal of command") 
+    if (name == "seal of command")
     {
-        return new ActionNode ("seal of command",  
+        return new ActionNode ("seal of command",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("seal of wisdom"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("seal of wisdom"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "blessing of might") 
+    else if (name == "blessing of might")
     {
-        return new ActionNode ("blessing of might",  
+        return new ActionNode ("blessing of might",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL),
             /*C*/ NULL);
     }
-	else if (name == "divine storm") 
+	else if (name == "crusader strike")
 	{
-		return new ActionNode ("divine storm",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "crusader strike") 
-	{
-		return new ActionNode ("crusader strike",  
+		return new ActionNode ("crusader strike",
 			/*P*/ NULL,
 			/*A*/ NextAction::array(0, new NextAction("melee"), NULL),
 			/*C*/ NULL);

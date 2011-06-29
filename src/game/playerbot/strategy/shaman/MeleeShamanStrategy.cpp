@@ -43,13 +43,6 @@ ActionNode* MeleeShamanStrategy::GetAction(string name)
 			/*A*/ NextAction::array(0, new NextAction("melee"), NULL),
 			/*C*/ NULL);
 	}
-	else if (name == "lightning shield")
-	{
-		return new ActionNode ("lightning shield",
-			/*P*/ NULL,
-			/*A*/ NULL,
-			/*C*/ NULL);
-	}
 
     return GenericShamanStrategy::GetAction(name);
 }

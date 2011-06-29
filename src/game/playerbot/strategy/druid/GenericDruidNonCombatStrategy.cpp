@@ -8,11 +8,11 @@ using namespace ai;
 void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericNonCombatStrategy::InitTriggers(triggers);
-        
+
     triggers.push_back(new TriggerNode(
         "mark of the wild",
         NextAction::array(0, new NextAction("mark of the wild", 1.0f), NULL)));
-    
+
     triggers.push_back(new TriggerNode(
         "mark of the wild on party",
         NextAction::array(0, new NextAction("mark of the wild on party", 1.0f), NULL)));
@@ -25,33 +25,19 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 
 ActionNode* GenericDruidNonCombatStrategy::GetAction(string name)
 {
-    if (name == "mark of the wild") 
+    if (name == "mark of the wild")
     {
-        return new ActionNode ("mark of the wild",  
+        return new ActionNode ("mark of the wild",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "mark of the wild on party") 
+    else if (name == "mark of the wild on party")
     {
-        return new ActionNode ("mark of the wild on party",  
+        return new ActionNode ("mark of the wild on party",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "caster form") 
-    {
-        return new ActionNode ("caster form",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else if (name == "revive") 
-	{
-		return new ActionNode ("revive",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
     else return GenericNonCombatStrategy::GetAction(name);
 }

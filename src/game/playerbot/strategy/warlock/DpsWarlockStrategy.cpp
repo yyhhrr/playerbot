@@ -15,7 +15,7 @@ NextAction** DpsWarlockStrategy::getDefaultActions()
 void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericWarlockStrategy::InitTriggers(triggers);
-    
+
     triggers.push_back(new TriggerNode(
         "no pet",
         NextAction::array(0, new NextAction("summon imp", 50.0f), NULL)));
@@ -28,15 +28,7 @@ void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 ActionNode* DpsWarlockStrategy::GetAction(string name)
 {
-    if (name == "summon imp") 
-    {
-        return new ActionNode ("summon imp",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else 
-        return GenericWarlockStrategy::GetAction(name);
+    return GenericWarlockStrategy::GetAction(name);
 }
 
 

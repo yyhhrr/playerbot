@@ -4,6 +4,7 @@
 #include "NamedObjectContext.h"
 
 using namespace ai;
+using namespace std;
 
 
 class ActionNodeFactoryInternal : public NamedObjectContextBase<ActionNode>
@@ -11,12 +12,12 @@ class ActionNodeFactoryInternal : public NamedObjectContextBase<ActionNode>
 public:
     ActionNodeFactoryInternal()
     {
-        creators["melee"] = &ActionNodeFactoryInternal::melee;
-        creators["healthstone"] = &ActionNodeFactoryInternal::healthstone;
-        creators["healing potion"] = &ActionNodeFactoryInternal::healing_potion;
-        creators["be near"] = &ActionNodeFactoryInternal::follow_master_random;
-        creators["attack anything"] = &ActionNodeFactoryInternal::attack_anything;
-        creators["move random"] = &ActionNodeFactoryInternal::move_random;
+        creators["melee"] = &melee;
+        creators["healthstone"] = &healthstone;
+        creators["healing potion"] = &healing_potion;
+        creators["be near"] = &follow_master_random;
+        creators["attack anything"] = &attack_anything;
+        creators["move random"] = &move_random;
     }
 
 private:
@@ -71,7 +72,7 @@ ActionNode* Strategy::GetAction(string name)
     return ActionNodeFactoryInternal.create(name, ai);
 }
 
-void CombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+void CombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "panic",
@@ -79,14 +80,14 @@ void CombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 }
 
-void MeleeCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+void MeleeCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "enemy out of melee",
         NextAction::array(0, new NextAction("reach melee", 10.0f), NULL)));
 }
 
-void RangedCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+void RangedCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "enemy out of spell",

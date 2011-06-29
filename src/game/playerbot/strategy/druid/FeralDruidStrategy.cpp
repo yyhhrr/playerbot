@@ -15,63 +15,48 @@ void FeralDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 ActionNode* FeralDruidStrategy::GetAction(string name)
 {
-    if (name == "survival instincts") 
+    if (name == "survival instincts")
     {
-        return new ActionNode ("survival instincts",  
+        return new ActionNode ("survival instincts",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("rejuvenation"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("rejuvenation"), NULL),
             /*C*/ NULL);
     }
-    else if (name == "thorns") 
+    else if (name == "thorns")
     {
-        return new ActionNode ("thorns",  
+        return new ActionNode ("thorns",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "cure poison") 
+    else if (name == "cure poison")
     {
-        return new ActionNode ("cure poison",  
+        return new ActionNode ("cure poison",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "cure poison on party") 
+    else if (name == "cure poison on party")
     {
-        return new ActionNode ("cure poison on party",  
+        return new ActionNode ("cure poison on party",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "abolish poison") 
+    else if (name == "abolish poison")
     {
-        return new ActionNode ("abolish poison",  
+        return new ActionNode ("abolish poison",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "abolish poison on party") 
+    else if (name == "abolish poison on party")
     {
-        return new ActionNode ("abolish poison on party",  
+        return new ActionNode ("abolish poison on party",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NULL);
     }
-    else if (name == "berserk") 
-    {
-        return new ActionNode ("berserk",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "tiger's fury") 
-    {
-        return new ActionNode ("tiger's fury",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    
 	else return GenericDruidStrategy::GetAction(name);
 }
 

@@ -13,7 +13,7 @@ NextAction** GenericWarlockStrategy::getDefaultActions()
 void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     CombatStrategy::InitTriggers(triggers);
-    
+
     triggers.push_back(new TriggerNode(
         "corruption",
         NextAction::array(0, new NextAction("corruption", 12.0f), NULL)));
@@ -38,81 +38,11 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 ActionNode* GenericWarlockStrategy::GetAction(string name)
 {
-    if (name == "immolate") 
+    if (name == "summon voidwalker")
     {
-        return new ActionNode ("immolate",  
+        return new ActionNode ("summon voidwalker",
             /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else if (name == "reach spell") 
-	{
-		return new ActionNode ("reach spell",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-	else if (name == "flee") 
-	{
-		return new ActionNode ("flee",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "corruption") 
-    {
-        return new ActionNode ("corruption",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "summon voidwalker") 
-    {
-        return new ActionNode ("summon voidwalker",  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (name == "curse of agony") 
-    {
-        return new ActionNode ("curse of agony",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "shadow bolt") 
-    {
-        return new ActionNode ("shadow bolt",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "drain soul") 
-    {
-        return new ActionNode ("drain soul",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "drain mana") 
-    {
-        return new ActionNode ("drain mana",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "drain life") 
-    {
-        return new ActionNode ("drain life",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "banish") 
-    {
-        return new ActionNode ("banish",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL),
             /*C*/ NULL);
     }
     else return CombatStrategy::GetAction(name);

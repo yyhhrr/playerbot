@@ -12,12 +12,5 @@ void GenericWarriorNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
 ActionNode* GenericWarriorNonCombatStrategy::GetAction(string name)
 {
-    if (name == "defensive stance") 
-    {
-        return new ActionNode ("defensive stance",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else return GenericNonCombatStrategy::GetAction(name);
+    return GenericNonCombatStrategy::GetAction(name);
 }

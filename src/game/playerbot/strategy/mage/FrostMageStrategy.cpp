@@ -34,25 +34,18 @@ ActionNode* FrostMageStrategy::GetAction(string name)
     if (node)
         return node;
 
-    if (name == "frostbolt") 
+    if (name == "frostbolt")
     {
-        return new ActionNode ("frostbolt",  
+        return new ActionNode ("frostbolt",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL), 
+            /*A*/ NextAction::array(0, new NextAction("shoot"), NULL),
             /*C*/ NULL);
     }
-	else if (name == "blizzard") 
-	{
-		return new ActionNode ("blizzard",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "frost nova") 
+    else if (name == "frost nova")
     {
-        return new ActionNode ("frost nova",  
+        return new ActionNode ("frost nova",
             /*P*/ NULL,
-            /*A*/ NULL, 
+            /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("flee"), new NextAction("frostbolt"), NULL));
     }
 
