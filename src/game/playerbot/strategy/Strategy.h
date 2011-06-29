@@ -2,6 +2,7 @@
 #include "Action.h"
 #include "Multiplier.h"
 #include "Trigger.h"
+#include "NamedObjectContext.h"
 
 namespace ai
 {
@@ -18,7 +19,7 @@ namespace ai
     class Strategy : public PlayerbotAIAware
     {
     public:
-        Strategy(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
+        Strategy(PlayerbotAI* ai);
         virtual ~Strategy() {}
 
     public:
@@ -29,6 +30,9 @@ namespace ai
 		virtual StrategyType GetType() { return STRATEGY_TYPE_GENERIC; }
         virtual ActionNode* GetAction(string name);
         void Update() {}
+
+    protected:
+        NamedObjectFactoryList<ActionNode> actionNodeFactories;
     };
 
     class CombatStrategy : public Strategy

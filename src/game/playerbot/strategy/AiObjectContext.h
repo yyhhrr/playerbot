@@ -2,9 +2,9 @@
 
 #include "../PlayerbotAIAware.h"
 #include "Action.h"
-#include "Strategy.h"
 #include "Value.h"
 #include "NamedObjectContext.h"
+#include "Strategy.h"
 
 namespace ai
 {

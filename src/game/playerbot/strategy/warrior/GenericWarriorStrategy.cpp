@@ -5,11 +5,6 @@
 
 using namespace ai;
 
-AiObjectContext* GenericWarriorStrategy::createAiObjectContext()
-{
-    return new WarriorAiObjectContext(ai);
-}
-
 void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	CombatStrategy::InitTriggers(triggers);

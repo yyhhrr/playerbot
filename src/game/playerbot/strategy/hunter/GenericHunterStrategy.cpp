@@ -5,11 +5,6 @@
 
 using namespace ai;
 
-AiObjectContext* GenericHunterStrategy::createAiObjectContext()
-{
-    return new HunterAiObjectContext(ai);
-}
-
 void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     CombatStrategy::InitTriggers(triggers);

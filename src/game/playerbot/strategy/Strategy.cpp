@@ -7,7 +7,7 @@ using namespace ai;
 using namespace std;
 
 
-class ActionNodeFactoryInternal : public NamedObjectContextBase<ActionNode>
+class ActionNodeFactoryInternal : public NamedObjectFactory<ActionNode>
 {
 public:
     ActionNodeFactoryInternal()
@@ -65,11 +65,14 @@ private:
     }
 };
 
-static ActionNodeFactoryInternal ActionNodeFactoryInternal;
+Strategy::Strategy(PlayerbotAI* ai) : PlayerbotAIAware(ai)
+{
+    actionNodeFactories.Add(new ActionNodeFactoryInternal());
+}
 
 ActionNode* Strategy::GetAction(string name)
 {
-    return ActionNodeFactoryInternal.create(name, ai);
+    return actionNodeFactories.GetObject(name, ai);
 }
 
 void CombatStrategy::InitTriggers(list<TriggerNode*> &triggers)

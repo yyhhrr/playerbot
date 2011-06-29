@@ -14,7 +14,7 @@ namespace ai
         string qualifier;
     };
 
-    template <class T> class NamedObjectContextBase
+    template <class T> class NamedObjectFactory
     {
     public:
         T* create(string name, PlayerbotAI* ai)
@@ -56,16 +56,16 @@ namespace ai
     };
 
 
-    template <class T> class NamedObjectContext : public NamedObjectContextBase<T>
+    template <class T> class NamedObjectContext : public NamedObjectFactory<T>
     {
     public:
         NamedObjectContext(bool shared = false, bool supportsSiblings = false) :
-            NamedObjectContextBase<T>(), shared(shared), supportsSiblings(supportsSiblings) {}
+            NamedObjectFactory<T>(), shared(shared), supportsSiblings(supportsSiblings) {}
 
         T* create(string name, PlayerbotAI* ai)
         {
             if (created.find(name) == created.end())
-                return created[name] = NamedObjectContextBase<T>::create(name, ai);
+                return created[name] = NamedObjectFactory<T>::create(name, ai);
 
             return created[name];
         }
@@ -157,5 +157,33 @@ namespace ai
 
     private:
         list<NamedObjectContext<T>*> contexts;
+    };
+
+    template <class T> class NamedObjectFactoryList
+    {
+    public:
+        virtual ~NamedObjectFactoryList()
+        {
+            for (list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
+                delete *i;
+        }
+
+        void Add(NamedObjectFactory<T>* context)
+        {
+            factories.push_back(context);
+        }
+
+        T* GetObject(string name, PlayerbotAI* ai)
+        {
+            for (list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
+            {
+                T* object = (*i)->create(name, ai);
+                if (object) return object;
+            }
+            return NULL;
+        }
+
+    private:
+        list<NamedObjectFactory<T>*> factories;
     };
 };

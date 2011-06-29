@@ -1,5 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
+#include "../Strategy.h"
 #include "MageActions.h"
 #include "MageAiObjectContext.h"
 #include "FrostMageStrategy.h"

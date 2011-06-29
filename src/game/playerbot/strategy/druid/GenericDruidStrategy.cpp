@@ -5,9 +5,139 @@
 
 using namespace ai;
 
-AiObjectContext* GenericDruidStrategy::createAiObjectContext() 
+class GenericDruidStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
-    return new DruidAiObjectContext(ai); 
+public:
+    GenericDruidStrategyActionNodeFactory()
+    {
+        creators["melee"] = &melee;
+        creators["caster form"] = &caster_form;
+        creators["gift of the naaru"] = &gift_of_the_naaru;
+        creators["regrowth"] = &regrowth;
+        creators["rejuvenation"] = &rejuvenation;
+        creators["healing touch"] = &healing_touch;
+        creators["regrowth on party"] = &regrowth_on_party;
+        creators["rejuvenation on party"] = &rejuvenation_on_party;
+        creators["healing touch on party"] = &healing_touch_on_party;
+        creators["cure poison"] = &cure_poison;
+        creators["cure poison on party"] = &cure_poison_on_party;
+        creators["abolish poison"] = &abolish_poison;
+        creators["abolish poison on party"] = &abolish_poison_on_party;
+        creators["rebirth"] = &rebirth;
+        creators["entangling roots on cc"] = &entangling_roots_on_cc;
+    }
+
+private:
+    static ActionNode* melee(PlayerbotAI* ai)
+    {
+        return new ActionNode ("melee",
+            /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* caster_form(PlayerbotAI* ai)
+    {
+        return new ActionNode ("caster form",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* gift_of_the_naaru(PlayerbotAI* ai)
+    {
+        return new ActionNode ("gift of the naaru",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("regrowth"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* regrowth(PlayerbotAI* ai)
+    {
+        return new ActionNode ("regrowth",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
+    }
+    static ActionNode* rejuvenation(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rejuvenation",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* healing_touch(PlayerbotAI* ai)
+    {
+        return new ActionNode ("healing touch",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* regrowth_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("regrowth on party",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
+    }
+    static ActionNode* rejuvenation_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rejuvenation on party",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* healing_touch_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("healing touch on party",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* cure_poison(PlayerbotAI* ai)
+    {
+        return new ActionNode ("cure poison",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* cure_poison_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("cure poison on party",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* abolish_poison(PlayerbotAI* ai)
+    {
+        return new ActionNode ("abolish poison",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* abolish_poison_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("abolish poison on party",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* rebirth(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rebirth",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* entangling_roots_on_cc(PlayerbotAI* ai)
+    {
+        return new ActionNode ("entangling roots on cc",
+            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+};
+
+GenericDruidStrategy::GenericDruidStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericDruidStrategyActionNodeFactory());
 }
 
 void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -45,115 +175,4 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "entangling roots",
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
-}
-
-ActionNode* GenericDruidStrategy::GetAction(string name)
-{
-    if (name == "melee") 
-    {
-        return new ActionNode ("melee",  
-            /*P*/ NextAction::array(0, new NextAction("reach melee"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "caster form") 
-    {
-        return new ActionNode ("caster form",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "gift of the naaru") 
-    {
-        return new ActionNode ("gift of the naaru",  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("regrowth"), NULL), 
-            /*C*/ NULL);
-    }
-    else if (name == "regrowth") 
-    {
-        return new ActionNode ("regrowth",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
-    }
-    else if (name == "rejuvenation") 
-    {
-        return new ActionNode ("rejuvenation",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "healing touch") 
-    {
-        return new ActionNode ("healing touch",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "regrowth on party") 
-    {
-        return new ActionNode ("regrowth on party",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
-    }
-    else if (name == "rejuvenation on party") 
-    {
-        return new ActionNode ("rejuvenation on party",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "healing touch on party") 
-    {
-        return new ActionNode ("healing touch on party",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "cure poison") 
-    {
-        return new ActionNode ("cure poison",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "cure poison on party") 
-    {
-        return new ActionNode ("cure poison on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "abolish poison") 
-    {
-        return new ActionNode ("abolish poison",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-    else if (name == "abolish poison on party") 
-    {
-        return new ActionNode ("abolish poison on party",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else if (name == "rebirth") 
-	{
-		return new ActionNode ("rebirth",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "entangling roots on cc") 
-    {
-        return new ActionNode ("entangling roots on cc",  
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-
-    else return Strategy::GetAction(name);
 }
