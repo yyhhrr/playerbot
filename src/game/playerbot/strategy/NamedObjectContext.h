@@ -170,7 +170,7 @@ namespace ai
 
         void Add(NamedObjectFactory<T>* context)
         {
-            factories.push_back(context);
+            factories.push_front(context);
         }
 
         T* GetObject(string name, PlayerbotAI* ai)

@@ -7,11 +7,10 @@ namespace ai
     class GenericDruidNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
-        GenericDruidNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        GenericDruidNonCombatStrategy(PlayerbotAI* ai);
         virtual string getName() { return "nc"; }
-    
+
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(string name);
     };
 }
