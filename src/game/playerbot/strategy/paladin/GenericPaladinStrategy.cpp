@@ -4,6 +4,116 @@
 
 using namespace ai;
 
+class GenericPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    GenericPaladinStrategyActionNodeFactory()
+    {
+        creators["seal of light"] = &seal_of_light;
+        creators["cleanse"] = &cleanse;
+        creators["cleanse poison on party"] = &cleanse_poison_on_party;
+        creators["cleanse disease on party"] = &cleanse_disease_on_party;
+        creators["seal of wisdom"] = &seal_of_wisdom;
+        creators["seal of justice"] = &seal_of_justice;
+        creators["hand of reckoning"] = &hand_of_reckoning;
+        creators["judgement of wisdom"] = &judgement_of_wisdom;
+        creators["divine shield"] = &divine_shield;
+        creators["flash of light"] = &flash_of_light;
+        creators["flash of light on party"] = &flash_of_light_on_party;
+        creators["holy wrath"] = &holy_wrath;
+    }
+private:
+    static ActionNode* seal_of_light(PlayerbotAI* ai)
+    {
+        return new ActionNode ("seal of light",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* cleanse(PlayerbotAI* ai)
+    {
+        return new ActionNode ("cleanse",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("purify"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* cleanse_poison_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("cleanse poison on party",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("purify poison on party"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* cleanse_disease_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("cleanse disease on party",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("purify disease on party"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* seal_of_wisdom(PlayerbotAI* ai)
+    {
+        return new ActionNode ("seal of wisdom",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* seal_of_justice(PlayerbotAI* ai)
+    {
+        return new ActionNode ("seal of justice",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("seal of righteousness"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* hand_of_reckoning(PlayerbotAI* ai)
+    {
+        return new ActionNode ("hand of reckoning",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("judgement of justice"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* judgement_of_wisdom(PlayerbotAI* ai)
+    {
+        return new ActionNode ("judgement of wisdom",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("judgement of light"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* divine_shield(PlayerbotAI* ai)
+    {
+        return new ActionNode ("divine shield",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("divine protection"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* flash_of_light(PlayerbotAI* ai)
+    {
+        return new ActionNode ("flash of light",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("holy light"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* flash_of_light_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("flash of light on party",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("holy light on party"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* holy_wrath(PlayerbotAI* ai)
+    {
+        return new ActionNode ("holy wrath",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("consecration"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+GenericPaladinStrategy::GenericPaladinStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericPaladinStrategyActionNodeFactory());
+}
+
 void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	CombatStrategy::InitTriggers(triggers);
@@ -71,94 +181,4 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"cleanse party member cure magic",
 		NextAction::array(0, new NextAction("cleanse magic on party", 40.0f), NULL)));
-}
-
-
-ActionNode* GenericPaladinStrategy::GetAction(string name)
-{
-    if (name == "seal of light")
-    {
-        return new ActionNode ("seal of light",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
-            /*C*/ NULL);
-    }
-	else if (name == "cleanse")
-    {
-        return new ActionNode ("cleanse",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("purify"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "cleanse poison on party")
-    {
-        return new ActionNode ("cleanse poison on party",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("purify poison on party"), NULL),
-            /*C*/ NULL);
-    }
-	else if (name == "cleanse disease on party")
-	{
-		return new ActionNode ("cleanse disease on party",
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("purify disease on party"), NULL),
-			/*C*/ NULL);
-	}
-    else if (name == "seal of wisdom")
-    {
-        return new ActionNode ("seal of wisdom",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "seal of justice")
-    {
-        return new ActionNode ("seal of justice",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("seal of righteousness"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "hand of reckoning")
-    {
-        return new ActionNode ("hand of reckoning",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("judgement of justice"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "judgement of wisdom")
-    {
-        return new ActionNode ("judgement of wisdom",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("judgement of light"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "divine shield")
-    {
-        return new ActionNode ("divine shield",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("divine protection"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "flash of light")
-    {
-        return new ActionNode ("flash of light",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("holy light"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "flash of light on party")
-    {
-        return new ActionNode ("flash of light on party",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("holy light on party"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "holy wrath")
-    {
-        return new ActionNode ("holy wrath",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("consecration"), NULL),
-            /*C*/ NULL);
-    }
-	else return CombatStrategy::GetAction(name);
 }

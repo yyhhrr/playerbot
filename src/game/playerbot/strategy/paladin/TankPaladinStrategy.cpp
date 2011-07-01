@@ -5,6 +5,28 @@
 
 using namespace ai;
 
+class TankPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    TankPaladinStrategyActionNodeFactory()
+    {
+        creators["blessing of sanctuary"] = &blessing_of_sanctuary;
+    }
+private:
+    static ActionNode* blessing_of_sanctuary(PlayerbotAI* ai)
+    {
+        return new ActionNode ("blessing of sanctuary",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+TankPaladinStrategy::TankPaladinStrategy(PlayerbotAI* ai) : GenericPaladinStrategy(ai)
+{
+    actionNodeFactories.Add(new TankPaladinStrategyActionNodeFactory());
+}
+
 NextAction** TankPaladinStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
@@ -41,21 +63,4 @@ void TankPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "blessing",
         NextAction::array(0, new NextAction("blessing of sanctuary", 21.0f), NULL)));
-}
-
-void TankPaladinStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
-{
-
-}
-
-ActionNode* TankPaladinStrategy::GetAction(string name)
-{
-    if (name == "blessing of sanctuary")
-    {
-        return new ActionNode ("blessing of sanctuary",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("blessing of kings"), NULL),
-            /*C*/ NULL);
-    }
-    else return GenericPaladinStrategy::GetAction(name);
 }

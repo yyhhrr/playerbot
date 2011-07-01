@@ -7,13 +7,11 @@ namespace ai
     class DpsPaladinStrategy : public GenericPaladinStrategy
     {
     public:
-        DpsPaladinStrategy(PlayerbotAI* ai) : GenericPaladinStrategy(ai) {}
+        DpsPaladinStrategy(PlayerbotAI* ai);
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
         virtual string getName() { return "dps"; }
-        virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
     };
 }
