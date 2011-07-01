@@ -9,10 +9,9 @@ namespace ai
     public:
         DpsWarlockStrategy(PlayerbotAI* ai) : GenericWarlockStrategy(ai) {}
         virtual string getName() { return "dps"; }
-    
+
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(string name);
         virtual NextAction** getDefaultActions();
     };
 }

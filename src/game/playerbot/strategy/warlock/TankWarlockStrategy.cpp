@@ -5,6 +5,28 @@
 
 using namespace ai;
 
+class GenericWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    GenericWarlockStrategyActionNodeFactory()
+    {
+        creators["summon voidwalker"] = &summon_voidwalker;
+    }
+private:
+    static ActionNode* summon_voidwalker(PlayerbotAI* ai)
+    {
+        return new ActionNode ("summon voidwalker",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+TankWarlockStrategy::TankWarlockStrategy(PlayerbotAI* ai) : GenericWarlockStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericWarlockStrategyActionNodeFactory());
+}
+
 NextAction** TankWarlockStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("shoot", 10.0f), NULL);
@@ -13,25 +35,9 @@ NextAction** TankWarlockStrategy::getDefaultActions()
 void TankWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericWarlockStrategy::InitTriggers(triggers);
-    
+
     triggers.push_back(new TriggerNode(
         "no pet",
         NextAction::array(0, new NextAction("summon voidwalker", 50.0f), NULL)));
 
 }
-
-
-ActionNode* TankWarlockStrategy::GetAction(string name)
-{
-    if (name == "summon voidwalker") 
-    {
-        return new ActionNode ("summon voidwalker",  
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL), 
-            /*C*/ NULL);
-    }
-    else 
-        return GenericWarlockStrategy::GetAction(name);
-}
-
-

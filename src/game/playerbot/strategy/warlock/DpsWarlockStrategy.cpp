@@ -24,11 +24,3 @@ void DpsWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		"shadow trance",
 		NextAction::array(0, new NextAction("shadow bolt", 20.0f), NULL)));
 }
-
-
-ActionNode* DpsWarlockStrategy::GetAction(string name)
-{
-    return GenericWarlockStrategy::GetAction(name);
-}
-
-
