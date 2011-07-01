@@ -7,14 +7,12 @@ namespace ai
     class DpsPriestStrategy : public HealPriestStrategy
     {
     public:
-        DpsPriestStrategy(PlayerbotAI* ai) : HealPriestStrategy(ai) {}
+        DpsPriestStrategy(PlayerbotAI* ai);
 
     public:
         virtual NextAction** getDefaultActions();
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual void InitMultipliers(std::list<Multiplier*> &multipliers);
         virtual string getName() { return "dps"; }
-        virtual ActionNode* GetAction(string name);
 
     };
 }
