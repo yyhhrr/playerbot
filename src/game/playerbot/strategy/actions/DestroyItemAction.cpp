@@ -22,8 +22,7 @@ void DestroyItemAction::DestroyItem(FindItemVisitor* visitor)
     IterateItems(visitor);
     Item *item = visitor->GetResult();
     if (item) {
-        uint32 count = 1;
-        bot->DestroyItemCount(item, count, true);
+        bot->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
         ostringstream out; out << chat->formatItem(item->GetProto()) << " destroyed";
         ai->TellMaster(out);
     }

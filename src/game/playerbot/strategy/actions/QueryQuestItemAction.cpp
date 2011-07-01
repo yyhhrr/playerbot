@@ -29,6 +29,10 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId)
         if( !questTemplate )
             continue;
 
+        QuestStatus status = bot->GetQuestStatus(questTemplate->GetQuestId());
+        if (status != QUEST_STATUS_INCOMPLETE && status != QUEST_STATUS_COMPLETE)
+            continue;
+
         QuestStatusData *questStatus = &i->second;
         QueryQuestItem(itemId, questTemplate, questStatus);
     }    
