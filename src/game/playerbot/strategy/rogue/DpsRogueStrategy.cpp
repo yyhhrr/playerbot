@@ -5,6 +5,59 @@
 
 using namespace ai;
 
+class DpsRogueStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    DpsRogueStrategyActionNodeFactory()
+    {
+        creators["mutilate"] = &mutilate;
+        creators["kidney shot"] = &kidney_shot;
+        creators["rupture"] = &rupture;
+        creators["slice and dice"] = &slice_and_dice;
+        creators["backstab"] = &backstab;
+    }
+private:
+    static ActionNode* mutilate(PlayerbotAI* ai)
+    {
+        return new ActionNode ("mutilate",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("sinister strike"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* kidney_shot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("kidney shot",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("rupture"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* rupture(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rupture",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("slice and dice"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* slice_and_dice(PlayerbotAI* ai)
+    {
+        return new ActionNode ("slice and dice",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("eviscerate"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* backstab(PlayerbotAI* ai)
+    {
+        return new ActionNode ("backstab",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("mutilate"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+{
+    actionNodeFactories.Add(new DpsRogueStrategyActionNodeFactory());
+}
 
 NextAction** DpsRogueStrategy::getDefaultActions()
 {
@@ -42,50 +95,4 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "behind target",
         NextAction::array(0, new NextAction("backstab", 21.0f), NULL)));
-}
-
-void DpsRogueStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
-{
-
-}
-
-
-ActionNode* DpsRogueStrategy::GetAction(string name)
-{
-    if (name == "mutilate")
-    {
-        return new ActionNode ("mutilate",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("sinister strike"), NULL),
-            /*C*/ NULL);
-    }
-	else if (name == "kidney shot")
-	{
-		return new ActionNode ("kidney shot",
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("rupture"), NULL),
-			/*C*/ NULL);
-	}
-	else if (name == "rupture")
-	{
-		return new ActionNode ("rupture",
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("slice and dice"), NULL),
-			/*C*/ NULL);
-	}
-	else if (name == "slice and dice")
-	{
-		return new ActionNode ("slice and dice",
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("eviscerate"), NULL),
-			/*C*/ NULL);
-	}
-    else if (name == "backstab")
-    {
-        return new ActionNode ("backstab",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("mutilate"), NULL),
-            /*C*/ NULL);
-    }
-	else return CombatStrategy::GetAction(name);
 }
