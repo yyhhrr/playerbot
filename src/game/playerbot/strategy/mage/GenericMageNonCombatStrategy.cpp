@@ -5,6 +5,36 @@
 
 using namespace ai;
 
+class GenericMageNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    GenericMageNonCombatStrategyActionNodeFactory()
+    {
+        creators["mage armor"] = &mage_armor;
+        creators["ice armor"] = &ice_armor;
+    }
+private:
+    static ActionNode* mage_armor(PlayerbotAI* ai)
+    {
+        return new ActionNode ("mage armor",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("ice armor"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* ice_armor(PlayerbotAI* ai)
+    {
+        return new ActionNode ("ice armor",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("frost armor"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+GenericMageNonCombatStrategy::GenericMageNonCombatStrategy(PlayerbotAI* ai) : GenericMageStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericMageNonCombatStrategyActionNodeFactory());
+}
+
 void GenericMageNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericMageStrategy::InitTriggers(triggers);
@@ -28,29 +58,4 @@ void GenericMageNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigger
     triggers.push_back(new TriggerNode(
         "mage armor",
         NextAction::array(0, new NextAction("mage armor", 19.0f), NULL)));
-}
-
-
-ActionNode* GenericMageNonCombatStrategy::GetAction(string name)
-{
-    ActionNode* node = GenericMageStrategy::GetAction(name);
-    if (node)
-        return node;
-
-    if (name == "mage armor")
-    {
-        return new ActionNode ("mage armor",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("ice armor"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "ice armor")
-    {
-        return new ActionNode ("ice armor",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("frost armor"), NULL),
-            /*C*/ NULL);
-    }
-
-    return GenericMageStrategy::GetAction(name);
 }
