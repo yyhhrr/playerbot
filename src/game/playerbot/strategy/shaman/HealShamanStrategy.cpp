@@ -5,6 +5,29 @@
 
 using namespace ai;
 
+class HealShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    HealShamanStrategyActionNodeFactory()
+    {
+        creators["earthliving weapon"] = &earthliving_weapon;
+    }
+private:
+    static ActionNode* earthliving_weapon(PlayerbotAI* ai)
+    {
+        return new ActionNode ("earthliving weapon",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL),
+            /*C*/ NULL);
+    }
+
+};
+
+HealShamanStrategy::HealShamanStrategy(PlayerbotAI* ai) : GenericShamanStrategy(ai)
+{
+    actionNodeFactories.Add(new HealShamanStrategyActionNodeFactory());
+}
+
 NextAction** HealShamanStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
@@ -22,21 +45,3 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "water shield",
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
 }
-
-ActionNode* HealShamanStrategy::GetAction(string name)
-{
-    ActionNode* node = GenericShamanStrategy::GetAction(name);
-    if (node)
-        return node;
-
-	if (name == "earthliving weapon")
-	{
-		return new ActionNode ("earthliving weapon",
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL),
-			/*C*/ NULL);
-	}
-
-    return GenericShamanStrategy::GetAction(name);
-}
-
