@@ -6,6 +6,45 @@
 
 using namespace ai;
 
+class DpsHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    DpsHunterStrategyActionNodeFactory()
+    {
+        creators["aimed shot"] = &aimed_shot;
+        creators["explosive shot"] = &explosive_shot;
+        creators["concussive shot"] = &concussive_shot;
+    }
+private:
+    static ActionNode* aimed_shot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("aimed shot",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("arcane shot", 10.0f), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* explosive_shot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("explosive shot",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("aimed shot"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* concussive_shot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("concussive shot",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NextAction::array(0, new NextAction("wyvern sting", 11.0f), NULL));
+    }
+
+};
+
+DpsHunterStrategy::DpsHunterStrategy(PlayerbotAI* ai) : GenericHunterStrategy(ai)
+{
+    actionNodeFactories.Add(new DpsHunterStrategyActionNodeFactory());
+}
+
 NextAction** DpsHunterStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("explosive shot", 11.0f), new NextAction("auto shot", 10.0f), NULL);
@@ -59,39 +98,3 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		"high aoe",
 		NextAction::array(0, new NextAction("volley", 20.0f), NULL)));
 }
-
-void DpsHunterStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
-{
-    GenericHunterStrategy::InitMultipliers(multipliers);
-}
-
-ActionNode* DpsHunterStrategy::GetAction(string name)
-{
-    ActionNode* node = GenericHunterStrategy::GetAction(name);
-    if (node)
-        return node;
-
-    if (name == "aimed shot")
-    {
-        return new ActionNode ("aimed shot",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("arcane shot", 10.0f), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "explosive shot")
-    {
-        return new ActionNode ("explosive shot",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("aimed shot"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "concussive shot")
-    {
-        return new ActionNode ("concussive shot",
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NextAction::array(0, new NextAction("wyvern sting", 11.0f), NULL));
-    }
-    else return GenericHunterStrategy::GetAction(name);
-}
-

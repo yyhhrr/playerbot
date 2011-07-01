@@ -7,12 +7,11 @@ namespace ai
     class GenericHunterNonCombatStrategy : public GenericNonCombatStrategy
     {
     public:
-        GenericHunterNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        GenericHunterNonCombatStrategy(PlayerbotAI* ai);
         virtual string getName() { return "nc"; }
-    
+
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(string name);
     };
 
     class HunterBuffSpeedNonCombatStrategy : public GenericNonCombatStrategy
@@ -20,7 +19,7 @@ namespace ai
     public:
         HunterBuffSpeedNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "bspeed"; }
-    
+
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };

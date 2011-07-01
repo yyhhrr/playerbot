@@ -9,12 +9,11 @@ namespace ai
     class GenericHunterStrategy : public CombatStrategy
     {
     public:
-        GenericHunterStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
+        GenericHunterStrategy(PlayerbotAI* ai);
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual string getName() { return "hunter"; }
-        virtual ActionNode* GetAction(string name);
     };
 }
 

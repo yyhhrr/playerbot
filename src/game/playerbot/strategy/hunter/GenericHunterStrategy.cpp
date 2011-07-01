@@ -5,6 +5,37 @@
 
 using namespace ai;
 
+class GenericHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    GenericHunterStrategyActionNodeFactory()
+    {
+        creators["rapid fire"] = &rapid_fire;
+        creators["boost"] = &rapid_fire;
+        creators["aspect of the pack"] = &aspect_of_the_pack;
+    }
+private:
+    static ActionNode* rapid_fire(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rapid fire",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("readyness"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* aspect_of_the_pack(PlayerbotAI* ai)
+    {
+        return new ActionNode ("aspect of the pack",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("aspect of the cheetah"), NULL),
+            /*C*/ NULL);
+    }
+};
+
+GenericHunterStrategy::GenericHunterStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericHunterStrategyActionNodeFactory());
+}
+
 void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     CombatStrategy::InitTriggers(triggers);
@@ -24,23 +55,4 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "rapid fire",
         NextAction::array(0, new NextAction("rapid fire", 55.0f), NULL)));
-}
-
-ActionNode* GenericHunterStrategy::GetAction(string name)
-{
-    if (name == "rapid fire" || name == "boost")
-    {
-        return new ActionNode ("rapid fire",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("readyness"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "aspect of the pack")
-    {
-        return new ActionNode ("aspect of the pack",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("aspect of the cheetah"), NULL),
-            /*C*/ NULL);
-    }
-    else return CombatStrategy::GetAction(name);
 }
