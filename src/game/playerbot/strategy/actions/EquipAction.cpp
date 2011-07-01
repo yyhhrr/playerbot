@@ -29,11 +29,18 @@ void EquipAction::EquipItem(Item& item)
 {
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
+    uint32 itemId = item.GetProto()->ItemId;
 
-
-    WorldPacket* const packet = new WorldPacket(CMSG_AUTOEQUIP_ITEM, 2);
-    *packet << bagIndex << slot;
-    bot->GetSession()->QueuePacket(packet);
+    if (bot->CanUseAmmo(itemId))
+    {
+        bot->SetAmmo(itemId);
+    }
+    else
+    {
+        WorldPacket* const packet = new WorldPacket(CMSG_AUTOEQUIP_ITEM, 2);
+        *packet << bagIndex << slot;
+        bot->GetSession()->QueuePacket(packet);
+    }
 
     ostringstream out; out << chat->formatItem(item.GetProto()) << " equipped";
     ai->TellMaster(out);
