@@ -5,6 +5,60 @@
 
 using namespace ai;
 
+class TankWarriorStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    TankWarriorStrategyActionNodeFactory()
+    {
+        creators["melee"] = &melee;
+        creators["shield wall"] = &shield_wall;
+        creators["rend"] = &rend;
+        creators["revenge"] = &revenge;
+        creators["devastate"] = &devastate;
+    }
+private:
+    static ActionNode* melee(PlayerbotAI* ai)
+    {
+        return new ActionNode ("melee",
+            /*P*/ NextAction::array(0, new NextAction("defensive stance"), new NextAction("reach melee"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* shield_wall(PlayerbotAI* ai)
+    {
+        return new ActionNode ("shield wall",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("shield block"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* rend(PlayerbotAI* ai)
+    {
+        return new ActionNode ("rend",
+            /*P*/ NextAction::array(0, new NextAction("defensive stance"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* revenge(PlayerbotAI* ai)
+    {
+        return new ActionNode ("revenge",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("slam"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* devastate(PlayerbotAI* ai)
+    {
+        return new ActionNode ("devastate",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL),
+            /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
+    }
+};
+
+TankWarriorStrategy::TankWarriorStrategy(PlayerbotAI* ai) : GenericWarriorStrategy(ai)
+{
+    actionNodeFactories.Add(new TankWarriorStrategyActionNodeFactory());
+}
+
 NextAction** TankWarriorStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
@@ -49,49 +103,4 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "sword and board",
         NextAction::array(0, new NextAction("shield slam", 40.0f), NULL)));
-}
-
-void TankWarriorStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
-{
-
-}
-
-ActionNode* TankWarriorStrategy::GetAction(string name)
-{
-    if (name == "melee")
-    {
-        return new ActionNode ("melee",
-            /*P*/ NextAction::array(0, new NextAction("defensive stance"), new NextAction("reach melee"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "shield wall")
-    {
-        return new ActionNode ("shield wall",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("shield block"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "rend")
-    {
-        return new ActionNode ("rend",
-            /*P*/ NextAction::array(0, new NextAction("defensive stance"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else if (name == "revenge")
-    {
-        return new ActionNode ("revenge",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("slam"), NULL),
-            /*C*/ NULL);
-    }
-    else if (name == "devastate")
-    {
-        return new ActionNode ("devastate",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL),
-            /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
-    }
-    else return GenericWarriorStrategy::GetAction(name);
 }

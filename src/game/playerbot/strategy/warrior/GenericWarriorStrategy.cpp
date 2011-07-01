@@ -5,6 +5,28 @@
 
 using namespace ai;
 
+class GenericWarriorStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    GenericWarriorStrategyActionNodeFactory()
+    {
+        creators["hamstring"] = &hamstring;
+    }
+private:
+    static ActionNode* hamstring(PlayerbotAI* ai)
+    {
+        return new ActionNode ("hamstring",
+            /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
+};
+
+GenericWarriorStrategy::GenericWarriorStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+{
+    actionNodeFactories.Add(new GenericWarriorStrategyActionNodeFactory());
+}
+
 void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	CombatStrategy::InitTriggers(triggers);
@@ -44,17 +66,4 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"critical health",
 		NextAction::array(0, new NextAction("intimidating shout", 90.0f), NULL)));
-}
-
-
-ActionNode* GenericWarriorStrategy::GetAction(string name)
-{
-    if (name == "hamstring")
-    {
-        return new ActionNode ("hamstring",
-            /*P*/ NextAction::array(0, new NextAction("battle stance"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else return CombatStrategy::GetAction(name);
 }
