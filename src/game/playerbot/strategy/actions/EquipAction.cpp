@@ -31,14 +31,14 @@ void EquipAction::EquipItem(Item& item)
     uint8 slot = item.GetSlot();
     uint32 itemId = item.GetProto()->ItemId;
 
-    if (bot->CanUseAmmo(itemId))
+    if (item.GetProto()->InventoryType == INVTYPE_AMMO)
     {
         bot->SetAmmo(itemId);
     }
     else
     {
         WorldPacket* const packet = new WorldPacket(CMSG_AUTOEQUIP_ITEM, 2);
-        *packet << bagIndex << slot;
+            *packet << bagIndex << slot;
         bot->GetSession()->QueuePacket(packet);
     }
 
