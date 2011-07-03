@@ -109,7 +109,8 @@ void AuctionHouseBot::addNewAuctions(Player *AHBplayer, AHBConfig *config)
     uint32 orangeItems = 0;
     uint32 yellowItems = 0;
 
-    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionHouse->GetAuctionsBegin();itr != auctionHouse->GetAuctionsEnd();++itr)
+    AuctionHouseObject::AuctionEntryMap* auctionEntryMap = auctionHouse->GetAuctions();
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
     {
         AuctionEntry *Aentry = itr->second;
         Item *item = sAuctionMgr.GetAItem(Aentry->itemGuidLow);
@@ -433,7 +434,8 @@ void AuctionHouseBot::addNewAuctionBuyerBotBid(Player *AHBplayer, AHBConfig *con
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
     vector<uint32> possibleBids;
 
-    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionHouse->GetAuctionsBegin();itr != auctionHouse->GetAuctionsEnd();++itr)
+    AuctionHouseObject::AuctionEntryMap* auctions = auctionHouse->GetAuctions();
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions->begin();itr != auctions->end();++itr)
     {
         // Check if the auction is ours
         // if it is, we skip this iteration.
@@ -1105,10 +1107,11 @@ void AuctionHouseBot::Commands(uint32 command, uint32 ahMapID, uint32 col, char*
 
             AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
 
+            AuctionHouseObject::AuctionEntryMap* auctions = auctionHouse->GetAuctions();
             AuctionHouseObject::AuctionEntryMap::iterator itr;
-            itr = auctionHouse->GetAuctionsBegin();
+            itr = auctions->begin();
 
-            while (itr != auctionHouse->GetAuctionsEnd())
+            while (itr != auctions->end())
             {
                 if (itr->second->owner == AHBplayerGUID)
                     itr->second->expireTime = sWorld.GetGameTime();
