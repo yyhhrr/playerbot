@@ -46,9 +46,11 @@ namespace ai
             creators["home"] = &ChatTriggerContext::home;
             creators["reset ai"] = &ChatTriggerContext::reset_ai;
             creators["destroy"] = &ChatTriggerContext::destroy;
+            creators["graveyard"] = &ChatTriggerContext::graveyard;
         }
 
     private:
+        static Trigger* graveyard(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "graveyard"); }
         static Trigger* destroy(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "destroy"); }
         static Trigger* home(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "home"); }
         static Trigger* accept(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "accept"); }

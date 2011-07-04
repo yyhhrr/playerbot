@@ -495,6 +495,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GenericActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GenericSpellActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GossipHelloAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GraveyardActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\InventoryAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\InventoryChangeFailureAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ListQuestsActions.cpp" />
@@ -832,6 +833,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GenericActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GenericSpellActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GossipHelloAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GraveyardActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\InventoryAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\InventoryChangeFailureAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\LeaveGroupAction.h" />
