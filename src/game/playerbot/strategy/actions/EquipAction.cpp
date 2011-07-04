@@ -9,12 +9,72 @@ using namespace ai;
 bool EquipAction::Execute(Event event)
 {
     string text = event.getParam();
+    if (text == "?")
+    {
+        TellEquipmentSets();
+        return true;
+    }
+
+    if (UseEquipmentSet(text))
+        return true;
+
     ItemIds ids = chat->parseItems(text);
 
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
         EquipItem(&FindItemByIdVisitor(*i));
 
     return true;
+}
+
+bool EquipAction::UseEquipmentSet(string& name)
+{
+    EquipmentSets &sets = bot->GetEquipmentSets();
+    for (EquipmentSets::iterator i = sets.begin(); i != sets.end(); i++)
+    {
+        if (i->second.state == EQUIPMENT_SET_DELETED || i->second.Name != name)
+            continue;
+
+        UseEquipmentSet(i->second);
+
+        ostringstream out; out << name << " set equipped";
+        ai->TellMaster(out);
+        return true;
+    }
+    return false;
+}
+
+bool EquipAction::UseEquipmentSet(EquipmentSet& set)
+{
+    WorldPacket* p = new WorldPacket(CMSG_USE_EQUIPMENT_SET);
+    uint8 srcbag = 0;
+    for(uint8 slot = 0; slot < EQUIPMENT_SLOT_END; ++slot)
+    {
+        ObjectGuid guid;
+        uint32 itemId = set.Items[slot];
+        if(itemId == 1)
+            guid = ObjectGuid(uint64(1));
+        else
+        {
+            Item* item = bot->GetItemByEntry(itemId);
+            if (item)
+                guid = item->GetObjectGuid();
+        }
+        *p << guid.WriteAsPacked();
+        *p << srcbag << slot;
+    }
+    bot->GetSession()->QueuePacket(p);
+    return true;
+}
+
+void EquipAction::TellEquipmentSets()
+{
+    ai->TellMaster("=== Equipment sets ===");
+    EquipmentSets &sets = bot->GetEquipmentSets();
+    for (EquipmentSets::iterator i = sets.begin(); i != sets.end(); i++)
+    {
+        if (i->second.state != EQUIPMENT_SET_DELETED)
+            ai->TellMaster(i->second.Name);
+    }
 }
 
 void EquipAction::EquipItem(FindItemVisitor* visitor)
