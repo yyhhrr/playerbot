@@ -51,15 +51,10 @@ bool EquipAction::UseEquipmentSet(EquipmentSet& set)
     {
         ObjectGuid guid;
         uint32 itemId = set.Items[slot];
-        if(itemId == 1)
-            guid = ObjectGuid(uint64(1));
+        if (set.IgnoreMask & (1 << slot))
+            *p << ObjectGuid(uint64(1)).WriteAsPacked();
         else
-        {
-            Item* item = bot->GetItemByEntry(itemId);
-            if (item)
-                guid = item->GetObjectGuid();
-        }
-        *p << guid.WriteAsPacked();
+            *p << ObjectGuid(HIGHGUID_ITEM, itemId).WriteAsPacked();
         *p << srcbag << slot;
     }
     bot->GetSession()->QueuePacket(p);
