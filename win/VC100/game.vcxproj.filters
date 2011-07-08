@@ -261,9 +261,6 @@
     <ClCompile Include="..\..\src\game\ConfusedMovementGenerator.cpp">
       <Filter>Motion generators</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\DestinationHolder.cpp">
-      <Filter>Motion generators</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\FleeingMovementGenerator.cpp">
       <Filter>Motion generators</Filter>
     </ClCompile>
@@ -1198,12 +1195,6 @@
     <ClInclude Include="..\..\src\game\ConfusedMovementGenerator.h">
       <Filter>Motion generators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\DestinationHolder.h">
-      <Filter>Motion generators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\DestinationHolderImp.h">
-      <Filter>Motion generators</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\FleeingMovementGenerator.h">
       <Filter>Motion generators</Filter>
     </ClInclude>
@@ -1226,9 +1217,6 @@
       <Filter>Motion generators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\TargetedMovementGenerator.h">
-      <Filter>Motion generators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\Traveller.h">
       <Filter>Motion generators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\WaypointMovementGenerator.h">

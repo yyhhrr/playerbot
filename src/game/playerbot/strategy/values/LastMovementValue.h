@@ -47,7 +47,7 @@ namespace ai
             if (lastMoveToX != 0.0f || lastMoveToY != 0.0f || lastMoveToZ != 0.0f)
             {
                 bot->m_movementInfo.ChangePosition(lastMoveToX, lastMoveToY, lastMoveToZ, lastMoveToOri);
-                bot->SendHeartBeat(false);
+                bot->SendHeartBeat();
 
                 lastMoveToX = lastMoveToY = lastMoveToZ = lastMoveToOri = 0.0f;
             }

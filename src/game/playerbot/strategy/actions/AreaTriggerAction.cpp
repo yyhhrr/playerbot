@@ -37,7 +37,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
-    bot->SendHeartBeat(false);
+    bot->SendHeartBeat();
     ai->SetNextCheckDelay(3);
     ai->TellMaster("I will teleport in 3 seconds");
 
@@ -67,7 +67,7 @@ bool AreaTriggerAction::Execute(Event event)
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
-    bot->SendHeartBeat(false);
+    bot->SendHeartBeat();
 
     WorldPacket p(CMSG_AREATRIGGER);
     p << triggerId;

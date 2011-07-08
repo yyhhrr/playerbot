@@ -13631,7 +13631,7 @@ bool Player::CanSeeStartQuest(Quest const *pQuest) const
         SatisfyQuestMonth(pQuest, false) &&
         pQuest->IsActive())
     {
-        return getLevel() + sWorld.getConfig(CONFIG_UINT32_QUEST_HIGH_LEVEL_HIDE_DIFF) >= pQuest->GetMinLevel();
+        return int32(getLevel()) + sWorld.getConfig(CONFIG_INT32_QUEST_HIGH_LEVEL_HIDE_DIFF) >= int32(pQuest->GetMinLevel());
     }
 
     return false;
@@ -20101,9 +20101,6 @@ void Player::UpdateVisibilityOf(WorldObject const* viewPoint, WorldObject* targe
             // send data at target visibility change (adding to client)
             if(target!=this && target->isType(TYPEMASK_UNIT))
                 SendAurasForTarget((Unit*)target);
-
-            if(target->GetTypeId()==TYPEID_UNIT && ((Creature*)target)->isAlive())
-                ((Creature*)target)->SendMonsterMoveWithSpeedToCurrentDestination(this);
         }
     }
 }
