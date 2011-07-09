@@ -49,6 +49,13 @@ void UseItemAction::UseGameObject(ObjectGuid guid)
 
 void UseItemAction::UseItem(Item& item)
 {
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+    bot->clearUnitState( UNIT_STAT_CHASE );
+    bot->clearUnitState( UNIT_STAT_FOLLOW );
+    
+    if (!bot->IsStandState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
     
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
