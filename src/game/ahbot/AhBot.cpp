@@ -62,6 +62,8 @@ void AhBot::Update()
 
     nextAICheckTime = time(0) + 5;
 
+    sLog.outString("AhBot is now checking auctions");
+
     for (int i = 0; i < MAX_AUCTIONS; i++)
     {
         InAuctionItemsBag inAuctionItems(auctionIds[i]);
@@ -95,6 +97,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
     AuctionHouseObject::AuctionEntryMap* auctionEntryMap = auctionHouse->GetAuctions();
+
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
     {
         AuctionEntry *entry = itr->second;
@@ -130,19 +133,14 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
                 entry->bidder, entry->bid, entry->Id);
 
             sLog.outDetail("AhBot placed bid %d for %s in auction %d", entry->bid, item->GetProto()->Name1, auction);
-            return;
         }
-    
-        entry->bid = entry->buyout;
+        else
+        {
+            entry->bid = entry->buyout;
+            entry->AuctionBidWinning(player);
 
-        sAuctionMgr.SendAuctionSuccessfulMail(entry);
-        sAuctionMgr.SendAuctionWonMail(entry);
-
-        sAuctionMgr.RemoveAItem(entry->itemGuidLow);
-        auctionHouse->RemoveAuction(entry->Id);
-        entry->DeleteFromDB();
-
-        sLog.outDetail("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auction, entry->buyout);
+            sLog.outDetail("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auction, entry->buyout);
+        }
    }
 }
 
@@ -271,6 +269,9 @@ void AhBot::Expire(int auction)
 
 void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
 {
+    if (entry->bidder == player->GetGUIDLow())
+        return;
+
     ItemPrototype const* proto = sObjectMgr.GetItemPrototype(entry->itemTemplate);
     if (!proto)
         return;

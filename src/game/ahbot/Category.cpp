@@ -9,9 +9,15 @@ int32 Category::GetMaxAllowedAuctionCount()
     return sConfig.GetIntDefault(out.str().c_str(), 15);
 }
 
+double Category::GetStaticItemPriceMultiplier(ItemPrototype const* proto)
+{
+    ostringstream out; out << "AhBot.PriceMultiplier." << GetName();
+    return sConfig.GetFloatDefault(out.str().c_str(), 1.0f);
+}
+
 uint32 Category::GetPrice(ItemPrototype const* proto)
 {
-    double price = GetDefaultPrice(proto) * (GetCategoryPriceMultiplier() + GetItemPriceMultiplier(proto));
+    double price = GetStaticItemPriceMultiplier(proto) * GetDefaultPrice(proto) * (GetCategoryPriceMultiplier() + GetItemPriceMultiplier(proto));
     return (uint32)price;
 }
 
@@ -67,10 +73,11 @@ double Category::GetItemPriceMultiplier(ItemPrototype const* proto)
 uint32 Category::GetDefaultPrice(ItemPrototype const* proto)
 {
     uint32 price = proto->BuyPrice;
-    if (!price) price = proto->SellPrice;
+    if (!price) price = proto->SellPrice * 4;
+    if (!price) price = sConfig.GetIntDefault("AhBot.DefaultMinPrice", 20) * proto->ItemLevel;
 
-    if (price)
-        return price * (1 + proto->Quality);
+    if (proto->Quality == ITEM_QUALITY_POOR)
+        return price;
 
-    return sConfig.GetIntDefault("AhBot.DefaultMinPrice", 20) * proto->ItemLevel * (1 + proto->Quality);
+    return (uint32)(price * sqrt((double)proto->Quality) * sConfig.GetFloatDefault("AhBot.PriceQualityMultiplier", 1.0f));
 }
