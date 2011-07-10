@@ -20,7 +20,28 @@ uint32 AhBot::auctionIds[MAX_AUCTIONS] = {2, 6, 7};
 
 void AhBot::Init()
 {
+    uint32 account = sConfig.GetIntDefault("AhBot.Account", 0);
+    uint32 guid = sConfig.GetIntDefault("AhBot.GUID", 0);
+    if (!account || !guid)
+        return;
+
+    session = new WorldSession(account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
+    player = new Player(session);
+    player->MinimalLoadFromDB(NULL, guid);
+
+    ObjectAccessor::Instance().AddObject(player);
+
     availableItems.Init();
+}
+
+AhBot::~AhBot()
+{
+    if (player)
+    {
+        ObjectAccessor::Instance().RemoveObject(player);
+        delete player;
+        delete session;
+    }
 }
 
 ObjectGuid AhBot::GetAHBplayerGUID()
@@ -31,6 +52,9 @@ ObjectGuid AhBot::GetAHBplayerGUID()
 
 void AhBot::Update()
 {
+    if (!player)
+        return;
+
     time_t now = time(0);
 
     if (now < nextAICheckTime)
@@ -38,25 +62,11 @@ void AhBot::Update()
 
     nextAICheckTime = time(0) + 5;
 
-    uint32 account = sConfig.GetIntDefault("AhBot.Account", 0);
-    uint32 guid = sConfig.GetIntDefault("AhBot.GUID", 0);
-    if (!account || !guid)
-        return;
-
-    WorldSession _session(account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
-    Player _player(&_session);
-
-    player = &_player;   
-    player->MinimalLoadFromDB(NULL, guid);
-    ObjectAccessor::Instance().AddObject(player);
-
     for (int i = 0; i < MAX_AUCTIONS; i++)
     {
         InAuctionItemsBag inAuctionItems(auctionIds[i]);
         Update(i, &inAuctionItems);
     }
-
-    ObjectAccessor::Instance().RemoveObject(player);
 }
 
 extern Category* Categories[MAX_AHBOT_CATEGORIES];
@@ -67,6 +77,8 @@ void AhBot::Update(int auction, ItemBag* inAuctionItems)
 
     for (int i = 0; i < sizeof(Categories) / sizeof(Category*); i++)
         Update(auction, Categories[i], inAuctionItems);
+
+    CleanupHistory();
 }
 
 void AhBot::Update(int auction, Category* category, ItemBag* inAuctionItems)
@@ -215,16 +227,16 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
 
 void AhBot::HandleCommand(string command)
 {
-    if (command == "ahexpire")
+    if (command == "expire")
     {
         for (int i = 0; i < MAX_AUCTIONS; i++)
             Expire(i);
     }
     else if (command == "update")
         Update();
-    else if (command == "help")
+    else
     {
-        sLog.outString("ahbot ahexpire - expire all AhBot's auctions");
+        sLog.outString("ahbot expire - expire AhBot's auctions");
         sLog.outString("ahbot update - update AhBot's auctions");
     }
 }
@@ -255,4 +267,32 @@ void AhBot::Expire(int auction)
     }
 
     sLog.outDetail("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
+}
+
+void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
+{
+    ItemPrototype const* proto = sObjectMgr.GetItemPrototype(entry->itemTemplate);
+    if (!proto)
+        return;
+
+    string category = "";
+    for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
+    {
+        if (Categories[i]->Contains(proto))
+        {
+            category = Categories[i]->GetName();
+            break;
+        }
+    }
+
+    uint32 now = time(0);
+    CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won) VALUES ('%u', '%u', '%u', '%u', '%s', '%u')", 
+        now, entry->itemTemplate, entry->bid ? entry->bid : entry->startbid, entry->buyout, category.c_str(), won);
+}
+
+
+void AhBot::CleanupHistory()
+{
+    uint32 when = time(0) - 3600 * 24 * sConfig.GetIntDefault("AhBot.History.Days", 30);
+    CharacterDatabase.PExecute("DELETE FROM ahbot_history WHERE buytime < '%u'", when);
 }

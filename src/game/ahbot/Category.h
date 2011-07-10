@@ -17,11 +17,7 @@ namespace ahbot
         virtual bool Contains(ItemPrototype const* proto) = 0;
         virtual string GetName() = 0;
 
-        virtual int32 GetMaxAllowedAuctionCount() 
-        {
-            ostringstream out; out << "AhBot.MaxAllowedAuctionCount." << GetName();
-            return sConfig.GetIntDefault(out.str().c_str(), 15);
-        }
+        virtual int32 GetMaxAllowedAuctionCount();
 
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
@@ -30,19 +26,19 @@ namespace ahbot
 
         virtual int32 GetStackCount(ItemPrototype const* proto)
         {
+            if (proto->Quality > ITEM_QUALITY_UNCOMMON)
+                return 1;
+
             return urand(1, proto->GetMaxStackSize());
         }
 
-        virtual uint32 GetPrice(ItemPrototype const* proto)
-        {
-            uint32 price = proto->BuyPrice;
-            if (!price) price = proto->SellPrice;
-            
-            if (price)
-                return price * (1 + proto->Quality);
+        virtual uint32 GetPrice(ItemPrototype const* proto);
 
-            return sConfig.GetIntDefault("AhBot.DefaultMinPrice", 20) * proto->ItemLevel * (1 + proto->Quality);
-        }
+    protected:
+        virtual uint32 GetDefaultPrice(ItemPrototype const* proto);
+        virtual double GetCategoryPriceMultiplier();
+        virtual double GetItemPriceMultiplier(ItemPrototype const* proto);
+        double GetMultiplier(double count, double firstBuyTime, double lastBuyTime);
     };
 
     class Consumable : public Category

@@ -774,7 +774,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "quit",           SEC_CONSOLE,        true,  &ChatHandler::HandleQuitCommand,                "", NULL },
         // Playerbot mod
         { "bot",            SEC_PLAYER,         false, &ChatHandler::HandlePlayerbotCommand,           "", NULL },
-        { "ahbot",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleAhBotCommand,               "", NULL },
+        { "ahbot",          SEC_GAMEMASTER,     true, &ChatHandler::HandleAhBotCommand,               "", NULL },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };

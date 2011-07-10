@@ -118,12 +118,11 @@ void InAuctionItemsBag::Load()
     AuctionHouseObject::AuctionEntryMap* auctionEntryMap = auctionHouse->GetAuctions();
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
     {
-        AuctionEntry *Aentry = itr->second;
-        Item *item = sAuctionMgr.GetAItem(Aentry->itemGuidLow);
-        if (!item)
+        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itr->second->itemTemplate);
+        if (!proto)
             continue;
         
-        Add(item->GetProto());
+        Add(proto);
     }
 }
 
