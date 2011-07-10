@@ -17,9 +17,48 @@ double Category::GetStaticItemPriceMultiplier(ItemPrototype const* proto)
 
 uint32 Category::GetPrice(ItemPrototype const* proto)
 {
-    double price = GetStaticItemPriceMultiplier(proto) * GetDefaultPrice(proto) * (GetCategoryPriceMultiplier() + GetItemPriceMultiplier(proto));
+    double price = GetStaticItemPriceMultiplier(proto) * 
+        GetRarityPriceMultiplier(proto) *
+        GetDefaultPrice(proto) * 
+        (GetCategoryPriceMultiplier() + GetItemPriceMultiplier(proto));
     return (uint32)price;
 }
+
+double Category::GetRarityPriceMultiplier(ItemPrototype const* proto)
+{
+    double result = 1.0;
+
+    uint32 i = proto->ItemId;
+    QueryResult* results = WorldDatabase.PQuery(
+        "select max(ChanceOrQuestChance) from ( "
+        "select ChanceOrQuestChance from gameobject_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from spell_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from disenchant_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from fishing_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from item_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from milling_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from pickpocketing_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from prospecting_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from reference_loot_template where item = '%u' "
+        "union select ChanceOrQuestChance from skinning_loot_template where item = '%u' "
+        "union select 0 "
+        ") a",
+        i,i,i,i,i,i,i,i,i,i);
+
+    if (results)
+    {
+        Field* fields = results->Fetch();
+        float chance = fields[0].GetFloat();
+
+        if (chance && chance <= 90.0)
+            result = sqrt((100.0 - chance) / 10.0);
+
+        delete results;
+    }
+
+    return result;
+}
+
 
 double Category::GetCategoryPriceMultiplier()
 {
