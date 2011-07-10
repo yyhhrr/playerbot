@@ -62,7 +62,7 @@
 #include "GMTicketMgr.h"
 #include "Util.h"
 #include "CharacterDatabaseCleaner.h"
-#include "AuctionHouseBot.h"
+#include "ahbot/AhBot.h"
 
 INSTANTIATE_SINGLETON_1( World );
 
@@ -1362,8 +1362,8 @@ void World::SetInitialWorldSettings()
     uint32 nextGameEvent = sGameEventMgr.Initialize();
     m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
 
-    sLog.outString("Initialize AuctionHouseBot...");
-    auctionbot.Initialize();
+    sLog.outString("Initializing AuctionHouseBot...");
+    auctionbot.Init();
 
     // Delete all characters which have been deleted X days before
     Player::DeleteOldCharacters();

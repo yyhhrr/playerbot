@@ -29,10 +29,10 @@
 #include "Log.h"
 #include "ObjectGuid.h"
 #include "ObjectMgr.h"
-#include "AuctionHouseBot.h"
 #include "Item.h"
 #include "Player.h"
 #include "World.h"
+#include "ahbot/AhBot.h"
 
 /**
  * Creates a new MailSender object.

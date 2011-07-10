@@ -1702,7 +1702,7 @@
 				>
 			</File>
 		</Filter>
-				<Filter
+		<Filter
 			Name="Movement"
 			>
 			<File
@@ -3582,11 +3582,23 @@
 			Name="ahbot"
 			>
 			<File
-				RelativePath="..\..\src\game\AuctionHouseBot.cpp"
+				RelativePath="..\..\src\game\ahbot\AhBot.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\AuctionHouseBot.h"
+				RelativePath="..\..\src\game\ahbot\AhBot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\Category.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\ItemBag.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\ItemBag.h"
 				>
 			</File>
 		</Filter>
