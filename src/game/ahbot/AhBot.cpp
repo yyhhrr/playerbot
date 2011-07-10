@@ -60,7 +60,7 @@ void AhBot::Update()
     if (now < nextAICheckTime)
         return;
 
-    nextAICheckTime = time(0) + 5;
+    nextAICheckTime = time(0) + sConfig.GetIntDefault("AhBot.UpdateIntervalInSeconds", 60);
 
     sLog.outString("AhBot is now checking auctions");
 
