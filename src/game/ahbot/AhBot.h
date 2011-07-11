@@ -20,6 +20,7 @@ namespace ahbot
         ObjectGuid GetAHBplayerGUID();
         void Init();
         void Update();
+        void ForceUpdate();
         void HandleCommand(string command);
         void Won(AuctionEntry* entry) { AddToHistory(entry, 1); }
         void Expired(AuctionEntry* entry) { /* do nothing */ }

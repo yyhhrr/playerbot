@@ -17,6 +17,7 @@ bool ChatHandler::HandleAhBotCommand(char* args)
 INSTANTIATE_SINGLETON_1( ahbot::AhBot );
 
 uint32 AhBot::auctionIds[MAX_AUCTIONS] = {2, 6, 7};
+extern Category* Categories[MAX_AHBOT_CATEGORIES];
 
 void AhBot::Init()
 {
@@ -49,7 +50,6 @@ ObjectGuid AhBot::GetAHBplayerGUID()
     return ObjectGuid((uint64)sConfig.GetIntDefault("AhBot.GUID", 0));
 }
 
-
 void AhBot::Update()
 {
     if (!player)
@@ -62,6 +62,11 @@ void AhBot::Update()
 
     nextAICheckTime = time(0) + sConfig.GetIntDefault("AhBot.UpdateIntervalInSeconds", 60);
 
+    ForceUpdate();
+}
+
+void AhBot::ForceUpdate()
+{
     sLog.outString("AhBot is now checking auctions");
 
     for (int i = 0; i < MAX_AUCTIONS; i++)
@@ -70,8 +75,6 @@ void AhBot::Update()
         Update(i, &inAuctionItems);
     }
 }
-
-extern Category* Categories[MAX_AHBOT_CATEGORIES];
 
 void AhBot::Update(int auction, ItemBag* inAuctionItems)
 {
@@ -108,7 +111,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         if (!item)
             continue;
 
-        uint32 price = category->GetPrice(item->GetProto());
+        uint32 price = category->GetPrice(item->GetProto(), auctionIds[auction]);
         if (!price || !item->GetCount())
             continue;
         uint32 bidPrice = item->GetCount() * price;
@@ -184,7 +187,7 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     
     item->AddToUpdateQueueOf(player);
 
-    uint32 price = category->GetPrice(proto);
+    uint32 price = category->GetPrice(proto, auctionIds[auction]);
     uint32 stackCount = category->GetStackCount(proto);
     if (!price || !stackCount)
         return;
@@ -229,13 +232,43 @@ void AhBot::HandleCommand(string command)
     {
         for (int i = 0; i < MAX_AUCTIONS; i++)
             Expire(i);
+
+        return;
     }
-    else if (command == "update")
-        Update();
-    else
+    
+    if (command == "update")
     {
-        sLog.outString("ahbot expire - expire AhBot's auctions");
-        sLog.outString("ahbot update - update AhBot's auctions");
+        ForceUpdate();
+        return;
+    }
+    
+    uint32 itemId = atoi(command.c_str());
+    if (!itemId)
+    {
+        sLog.outString("ahbot expire - expire all auctions");
+        sLog.outString("ahbot update - update all auctions");
+        sLog.outString("ahbot <itemId> - show item price");
+        return;
+    }
+    
+    ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
+    if (!proto)
+        return;
+
+    for (int i=0; i<MAX_AHBOT_CATEGORIES; i++)
+    {
+        Category* category = Categories[i];
+        if (category->Contains(proto))
+        {
+            for (int auction = 0; auction < MAX_AUCTIONS; auction++)
+            {
+                ostringstream out; 
+                out << proto->Name1 << " (" << category->GetName() << ") - auction house " << auctionIds[auction] << " - sell: " 
+                    << category->GetPrice(proto, auctionIds[auction]) << ", buy: " << category->GetBuyPrice(proto, auctionIds[auction]);
+                sLog.outString(out.str().c_str());
+            }
+            break;
+        }
     }
 }
 
@@ -287,8 +320,10 @@ void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
     }
 
     uint32 now = time(0);
-    CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won) VALUES ('%u', '%u', '%u', '%u', '%s', '%u')", 
-        now, entry->itemTemplate, entry->bid ? entry->bid : entry->startbid, entry->buyout, category.c_str(), won);
+    CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
+        "VALUES ('%u', '%u', '%u', '%u', '%s', '%u', '%u')", 
+        now, entry->itemTemplate, entry->bid ? entry->bid : entry->startbid, entry->buyout, 
+        category.c_str(), won, entry->auctionHouseEntry->houseId);
 }
 
 

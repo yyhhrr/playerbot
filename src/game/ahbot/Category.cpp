@@ -15,12 +15,23 @@ double Category::GetStaticItemPriceMultiplier(ItemPrototype const* proto)
     return sConfig.GetFloatDefault(out.str().c_str(), 1.0f);
 }
 
-uint32 Category::GetPrice(ItemPrototype const* proto)
+uint32 Category::GetPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
+    uint32 now = time(0);
     double price = GetStaticItemPriceMultiplier(proto) * 
         GetRarityPriceMultiplier(proto) *
         GetDefaultPrice(proto) * 
-        (GetCategoryPriceMultiplier() + GetItemPriceMultiplier(proto));
+        (GetCategoryPriceMultiplier(now, auctionHouse) + GetItemPriceMultiplier(proto, now, auctionHouse));
+    return (uint32)price;
+}
+
+uint32 Category::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
+{
+    uint32 untilTime = time(0) - 3600 * 36;
+    double price = GetStaticItemPriceMultiplier(proto) * 
+        GetRarityPriceMultiplier(proto) *
+        GetDefaultPrice(proto) * 
+        (GetCategoryPriceMultiplier(untilTime, auctionHouse) + GetItemPriceMultiplier(proto, untilTime, auctionHouse));
     return (uint32)price;
 }
 
@@ -60,13 +71,13 @@ double Category::GetRarityPriceMultiplier(ItemPrototype const* proto)
 }
 
 
-double Category::GetCategoryPriceMultiplier()
+double Category::GetCategoryPriceMultiplier(uint32 untilTime, uint32 auctionHouse)
 {
     double result = 1.0;
 
     QueryResult* results = CharacterDatabase.PQuery(
-        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE category = '%s' AND won = '1'", 
-        GetName().c_str());
+        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE category = '%s' AND won = '1' AND buytime <= '%u' AND auction_house = '%u'", 
+        GetName().c_str(), untilTime, auctionHouse);
     if (results)
     {
         Field* fields = results->Fetch();
@@ -88,13 +99,13 @@ double Category::GetMultiplier(double count, double firstBuyTime, double lastBuy
     return (1.0 + k1 + k2) * sConfig.GetFloatDefault("AhBot.PriceMultiplier", 1.0f);
 }
 
-double Category::GetItemPriceMultiplier(ItemPrototype const* proto)
+double Category::GetItemPriceMultiplier(ItemPrototype const* proto, uint32 untilTime, uint32 auctionHouse)
 {
     double result = 1.0;
 
     QueryResult* results = CharacterDatabase.PQuery(
-        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE won = '1' AND item = '%u'", 
-        proto->ItemId);
+        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE won = '1' AND item = '%u' AND buytime <= '%u' AND auction_house = '%u'", 
+        proto->ItemId, untilTime, auctionHouse);
     if (results)
     {
         Field* fields = results->Fetch();

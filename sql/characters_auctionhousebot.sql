@@ -8,8 +8,10 @@ CREATE TABLE `ahbot_history` (
   `buyout` bigint(20) NOT NULL,
   `won` bigint(20) NOT NULL,
   `category` varchar(45) DEFAULT NULL,
+  `auction_house` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `won` (`won`),
-  KEY `category` (`category`)
-) ENGINE=InnoDB AUTO_INCREMENT=1569 DEFAULT CHARSET=utf8;
+  KEY `category` (`category`),
+  KEY `auction_house` (`auction_house`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 

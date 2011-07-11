@@ -32,12 +32,13 @@ namespace ahbot
             return urand(1, proto->GetMaxStackSize());
         }
 
-        virtual uint32 GetPrice(ItemPrototype const* proto);
+        virtual uint32 GetPrice(ItemPrototype const* proto, uint32 auctionHouse);
+        virtual uint32 GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse);
 
     protected:
         virtual uint32 GetDefaultPrice(ItemPrototype const* proto);
-        virtual double GetCategoryPriceMultiplier();
-        virtual double GetItemPriceMultiplier(ItemPrototype const* proto);
+        virtual double GetCategoryPriceMultiplier(uint32 untilTime, uint32 auctionHouse);
+        virtual double GetItemPriceMultiplier(ItemPrototype const* proto, uint32 untilTime, uint32 auctionHouse);
         virtual double GetStaticItemPriceMultiplier(ItemPrototype const* proto);
         virtual double GetRarityPriceMultiplier(ItemPrototype const* proto);
 
