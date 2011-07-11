@@ -373,6 +373,20 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
         delete results;
     }
 
+    results = CharacterDatabase.PQuery(
+        "SELECT max(buytime) FROM ahbot_history WHERE auction_house = '%u' AND won = '2'", 
+        auctionHouse);
+    if (results)
+    {
+        Field* fields = results->Fetch();
+        uint32 lastBuyTime = fields[0].GetUInt32();
+        uint32 now = time(0);
+        if (lastBuyTime && now > lastBuyTime)
+        result += (now - lastBuyTime) / 3600 / 24 * sConfig.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
+
+        delete results;
+    }
+
     AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionHouse);
     if(!ahEntry)
         return result;
