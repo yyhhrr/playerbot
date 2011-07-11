@@ -101,9 +101,17 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
     AuctionHouseObject::AuctionEntryMap* auctionEntryMap = auctionHouse->GetAuctions();
 
+    int64 availableMoney = GetAvailableMoney(auctionIds[auction]);
+
+    vector<AuctionEntry*> entries;
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
+        entries.push_back(itr->second);
+    
+    Shuffle(entries);
+
+    for (vector<AuctionEntry*>::iterator itr = entries.begin(); itr != entries.end(); ++itr)
     {
-        AuctionEntry *entry = itr->second;
+        AuctionEntry *entry = *itr;
         if (entry->owner == player->GetGUIDLow() || entry->bidder == player->GetGUIDLow())
             continue;
 
@@ -123,12 +131,16 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
 
         if (curPrice > buyoutPrice)
             continue;
+        
+        if (availableMoney < curPrice)
+            continue;
 
         if (entry->bidder && entry->bidder != player->GetGUIDLow())
             player->GetSession()->SendAuctionOutbiddedMail(entry);
         
         entry->bidder = player->GetGUIDLow();
-        entry->bid = urand(curPrice + 1, buyoutPrice);
+        entry->bid = curPrice + urand(1, 1 + bidPrice / 10);
+        availableMoney -= curPrice;
 
         if (100 * (buyoutPrice - entry->bid) / price > 25)
         {
@@ -264,7 +276,8 @@ void AhBot::HandleCommand(string command)
             {
                 ostringstream out; 
                 out << proto->Name1 << " (" << category->GetName() << ") - auction house " << auctionIds[auction] << " - sell: " 
-                    << category->GetPrice(proto, auctionIds[auction]) << ", buy: " << category->GetBuyPrice(proto, auctionIds[auction]);
+                    << category->GetPrice(proto, auctionIds[auction]) << ", buy: " << category->GetBuyPrice(proto, auctionIds[auction])
+                    << ", money available: " << GetAvailableMoney(auctionIds[auction]);
                 sLog.outString(out.str().c_str());
             }
             break;
@@ -300,9 +313,9 @@ void AhBot::Expire(int auction)
     sLog.outDetail("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
 }
 
-void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
+void AhBot::AddToHistory(AuctionEntry* entry)
 {
-    if (entry->bidder == player->GetGUIDLow())
+    if (entry->bidder != player->GetGUIDLow() && entry->owner != player->GetGUIDLow())
         return;
 
     ItemPrototype const* proto = sObjectMgr.GetItemPrototype(entry->itemTemplate);
@@ -319,6 +332,10 @@ void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
         }
     }
 
+    uint32 won = AHBOT_WON_PLAYER;
+    if (entry->bidder == player->GetGUIDLow())
+        won = AHBOT_WON_SELF;
+
     uint32 now = time(0);
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
         "VALUES ('%u', '%u', '%u', '%u', '%s', '%u', '%u')", 
@@ -331,4 +348,45 @@ void AhBot::CleanupHistory()
 {
     uint32 when = time(0) - 3600 * 24 * sConfig.GetIntDefault("AhBot.History.Days", 30);
     CharacterDatabase.PExecute("DELETE FROM ahbot_history WHERE buytime < '%u'", when);
+}
+
+uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
+{
+    int64 result = sConfig.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
+    
+    map<uint32, uint32> data;
+    data[AHBOT_WON_PLAYER] = 0;
+    data[AHBOT_WON_SELF] = 0;
+
+    QueryResult* results = CharacterDatabase.PQuery(
+        "SELECT won, SUM(bid) FROM ahbot_history WHERE auction_house = '%u' GROUP BY won HAVING won > 0 ORDER BY won", 
+        auctionHouse);
+    if (results)
+    {
+        do
+        {
+            Field* fields = results->Fetch();
+            data[fields[0].GetUInt32()] = fields[1].GetUInt32();
+
+        } while (results->NextRow());
+
+        delete results;
+    }
+
+    AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionHouse);
+    if(!ahEntry)
+        return result;
+
+    AuctionHouseObject::AuctionEntryMap* auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
+    {
+        AuctionEntry *entry = itr->second;
+        if (entry->bidder != player->GetGUIDLow())
+            continue;
+
+        result -= entry->bid;
+    }
+    
+    result += (data[AHBOT_WON_PLAYER] - data[AHBOT_WON_SELF]);
+    return result < 0 ? 0 : (uint32)result;
 }

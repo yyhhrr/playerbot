@@ -5,6 +5,9 @@
 #include "..\playerbot\PlayerbotAIBase.h"
 
 #define MAX_AUCTIONS 3
+#define AHBOT_WON_EXPIRE 0
+#define AHBOT_WON_PLAYER 1
+#define AHBOT_WON_SELF 2
 
 namespace ahbot
 {
@@ -22,7 +25,7 @@ namespace ahbot
         void Update();
         void ForceUpdate();
         void HandleCommand(string command);
-        void Won(AuctionEntry* entry) { AddToHistory(entry, 1); }
+        void Won(AuctionEntry* entry) { AddToHistory(entry); }
         void Expired(AuctionEntry* entry) { /* do nothing */ }
 
     private:
@@ -32,8 +35,9 @@ namespace ahbot
         void AddAuctions(int auction, Category* category, ItemBag* inAuctionItems);
         void AddAuction(int auction, Category* category, ItemPrototype const* proto);
         void Expire(int auction);
-        void AddToHistory(AuctionEntry* entry, uint32 won);
+        void AddToHistory(AuctionEntry* entry);
         void CleanupHistory();
+        uint32 GetAvailableMoney(uint32 auctionHouse);
 
     private:
         AvailableItemsBag availableItems;

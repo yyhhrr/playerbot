@@ -4,6 +4,21 @@ namespace ahbot
 {
     using namespace std;
 
+    template<class T>
+    void Shuffle(vector<T>& items) 
+    {
+        uint32 count = items.size();
+        for (uint32 i = 0; i < count * 5; i++)
+        {
+            int i1 = urand(0, count - 1);
+            int i2 = urand(0, count - 1);
+
+            T item = items[i1];
+            items[i1] = items[i2];
+            items[i2] = item;
+        }
+    }
+
     class ItemBag 
     {
     public:
@@ -17,7 +32,6 @@ namespace ahbot
         bool Add(ItemPrototype const* proto);
 
     protected:
-        void Shuffle(vector<uint32>& items);
         virtual void Load() = 0;
         virtual string GetName() = 0;
 

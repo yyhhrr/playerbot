@@ -52,20 +52,6 @@ void ItemBag::Init(bool silent)
     }
 }
 
-void ItemBag::Shuffle(vector<uint32>& items) 
-{
-    uint32 count = items.size();
-    for (uint32 i = 0; i < count * 5; i++)
-    {
-        int i1 = urand(0, count - 1);
-        int i2 = urand(0, count - 1);
-        
-        uint32 item = items[i1];
-        items[i1] = items[i2];
-        items[i2] = item;
-    }
-}
-
 int32 ItemBag::GetCount(Category* category, uint32 item)
 {
     uint32 count = 0;
