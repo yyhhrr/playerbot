@@ -67,6 +67,9 @@ namespace ahbot
 
         virtual int32 GetStackCount(ItemPrototype const* proto)
         {
+            if (proto->Quality > ITEM_QUALITY_UNCOMMON)
+                return 1;
+
             uint32 maxStackSize = proto->GetMaxStackSize();
             if (maxStackSize == 1)
                 return 1;

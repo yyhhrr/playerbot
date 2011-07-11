@@ -123,7 +123,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         if (!price || !item->GetCount())
             continue;
         uint32 bidPrice = item->GetCount() * price;
-        uint32 buyoutPrice = item->GetCount() * urand(price, price * 2);
+        uint32 buyoutPrice = item->GetCount() * urand(price, 4 * price / 3);
         
         uint32 curPrice = entry->bid;
         if (!curPrice) curPrice = entry->startbid;
@@ -142,19 +142,19 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         entry->bid = curPrice + urand(1, 1 + bidPrice / 10);
         availableMoney -= curPrice;
 
-        if (100 * (buyoutPrice - entry->bid) / price > 25)
+        if (entry->buyout && (entry->bid >= entry->buyout || 100 * (entry->buyout - entry->bid) / price < 25))
+        {
+            entry->bid = entry->buyout;
+            entry->AuctionBidWinning(NULL);
+
+            sLog.outDetail("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auction, entry->buyout);
+        }
+        else
         {
             CharacterDatabase.PExecute("UPDATE auction SET buyguid = '%u',lastbid = '%u' WHERE id = '%u'", 
                 entry->bidder, entry->bid, entry->Id);
 
             sLog.outDetail("AhBot placed bid %d for %s in auction %d", entry->bid, item->GetProto()->Name1, auction);
-        }
-        else
-        {
-            entry->bid = entry->buyout;
-            entry->AuctionBidWinning(player);
-
-            sLog.outDetail("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auction, entry->buyout);
         }
    }
 }
@@ -167,7 +167,7 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
     if (inAuctionItems->GetCount(category) >= maxAllowedAuctionCount)
         return;
 
-    maxAllowedAuctionCount = urand(maxAllowedAuctionCount, maxAllowedAuctionCount * 2);
+    maxAllowedAuctionCount = urand(1 + maxAllowedAuctionCount / 2, maxAllowedAuctionCount);
 
     vector<uint32>& available = availableItems.Get(category);
     for (vector<uint32>::iterator i = available.begin(); i != available.end(); i++) 
@@ -205,7 +205,7 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
         return;
 
     uint32 bidPrice = stackCount * price;
-    uint32 buyoutPrice = stackCount * urand(price, price * 2);
+    uint32 buyoutPrice = stackCount * urand(price, 4 * price / 3);
     item->SetCount(stackCount);
 
     AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionIds[auction]);
