@@ -63,10 +63,11 @@ protected:
 
     void aoe()
     {
+        tickInMeleeRange();
         tickWithAttackerCount(3);
         tickWithAttackerCount(3);
 
-        assertActions(">S:magma totem>T:fire nova");
+        assertActions(">S:searing totem>S:magma totem>T:fire nova");
     }
 };
 

@@ -147,9 +147,9 @@ namespace ai
         virtual string GetTargetName() { return "self target"; }
     };
 
-    class CastMagmaTotemAction : public CastSpellAction {
+    class CastMagmaTotemAction : public CastMeleeSpellAction {
     public:
-        CastMagmaTotemAction(PlayerbotAI* ai) : CastSpellAction(ai, "magma totem") {}
+        CastMagmaTotemAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "magma totem") {}
         virtual string GetTargetName() { return "self target"; }
     };
 
