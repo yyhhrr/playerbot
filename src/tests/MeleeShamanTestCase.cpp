@@ -12,6 +12,7 @@ class MeleeShamanTestCase : public EngineTestBase
     CPPUNIT_TEST( combat );
 	CPPUNIT_TEST( buff );
 	CPPUNIT_TEST( incompatibles );
+    CPPUNIT_TEST( aoe );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -29,16 +30,18 @@ protected:
     {
 		tick();
 		tickInMeleeRange();
+        tick();
 		tick();
 		tick();
 		tick();
 
-		assertActions(">T:reach melee>T:melee>T:stormstrike>T:lava lash>T:melee");
+        assertActions(">T:reach melee>S:searing totem>T:melee>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()
     {
         removeAura("lightning shield");
+        tickInMeleeRange();
 
         tick();
         addAura("lightning shield");
@@ -48,7 +51,7 @@ protected:
         tick();
         addAura("windfury weapon");
 
-        assertActions(">S:lightning shield>S:windfury weapon>S:rockbiter weapon");
+        assertActions(">S:lightning shield>S:searing totem>S:windfury weapon>S:rockbiter weapon");
     }
 
     void incompatibles()
@@ -56,6 +59,14 @@ protected:
         engine->addStrategies("melee", "dps", "heal", NULL);
 
         CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: heal");
+    }
+
+    void aoe()
+    {
+        tickWithAttackerCount(3);
+        tickWithAttackerCount(3);
+
+        assertActions(">S:magma totem>T:fire nova");
     }
 };
 

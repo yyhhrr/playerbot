@@ -36,6 +36,7 @@
 #include "SpellCastUsefulValue.h"
 #include "LastSpellCastValue.h"
 #include "ChatValue.h"
+#include "HasTotemValue.h"
 
 namespace ai
 {
@@ -95,6 +96,7 @@ namespace ai
             creators["spell cast useful"] = &ValueContext::spell_cast_useful;
             creators["last spell cast"] = &ValueContext::last_spell_cast;
             creators["chat"] = &ValueContext::chat;
+            creators["has totem"] = &ValueContext::has_totem;
         }
 
     private:
@@ -148,5 +150,6 @@ namespace ai
         static UntypedValue* current_cc_target(PlayerbotAI* ai) { return new CurrentCcTargetValue(ai); }
         static UntypedValue* pet_target(PlayerbotAI* ai) { return new PetTargetValue(ai); }
         static UntypedValue* grind_target(PlayerbotAI* ai) { return new GrindTargetValue(ai); }
+        static UntypedValue* has_totem(PlayerbotAI* ai) { return new HasTotemValue(ai); }
     };
 };

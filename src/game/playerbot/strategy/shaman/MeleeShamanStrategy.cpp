@@ -12,6 +12,7 @@ public:
     {
         creators["stormstrike"] = &stormstrike;
         creators["lava lash"] = &lava_lash;
+        creators["magma totem"] = &magma_totem;
     }
 private:
     static ActionNode* stormstrike(PlayerbotAI* ai)
@@ -27,6 +28,13 @@ private:
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NULL);
+    }
+    static ActionNode* magma_totem(PlayerbotAI* ai)
+    {
+        return new ActionNode ("magma totem",
+            /*P*/ NULL,
+            /*A*/ NULL,
+            /*C*/ NextAction::array(0, new NextAction("fire nova"), NULL));
     }
 };
 
@@ -51,4 +59,16 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"lightning shield",
 		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "magma totem",
+        NextAction::array(0, new NextAction("magma totem", 26.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "searing totem",
+        NextAction::array(0, new NextAction("searing totem", 22.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "medium aoe",
+        NextAction::array(0, new NextAction("fire nova", 25.0f), NULL)));
 }

@@ -3228,6 +3228,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\values\HasTotemValue.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\values\IsBehindValue.h"
 						>
 					</File>

@@ -128,6 +128,7 @@ namespace ai
             creators["can loot"] = &MockValueContext::logical;
 
             creators["possible targets"] = &MockValueContext::units;
+            creators["has totem"] = &MockValueContext::logical;
         }
 
     private:

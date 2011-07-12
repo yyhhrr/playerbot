@@ -62,6 +62,8 @@ namespace ai
                 creators["mana spring totem"] = &TriggerFactoryInternal::mana_spring_totem;
                 creators["flametongue totem"] = &TriggerFactoryInternal::flametongue_totem;
                 creators["strength of earth totem"] = &TriggerFactoryInternal::strength_of_earth_totem;
+                creators["magma totem"] = &TriggerFactoryInternal::magma_totem;
+                creators["searing totem"] = &TriggerFactoryInternal::searing_totem;
                 creators["wind shear"] = &TriggerFactoryInternal::wind_shear;
                 creators["purge"] = &TriggerFactoryInternal::purge;
                 creators["shaman weapon"] = &TriggerFactoryInternal::shaman_weapon;
@@ -83,6 +85,8 @@ namespace ai
             static Trigger* mana_spring_totem(PlayerbotAI* ai) { return new ManaSpringTotemTrigger(ai); }
             static Trigger* flametongue_totem(PlayerbotAI* ai) { return new FlametongueTotemTrigger(ai); }
             static Trigger* strength_of_earth_totem(PlayerbotAI* ai) { return new StrengthOfEarthTotemTrigger(ai); }
+            static Trigger* magma_totem(PlayerbotAI* ai) { return new MagmaTotemTrigger(ai); }
+            static Trigger* searing_totem(PlayerbotAI* ai) { return new SearingTotemTrigger(ai); }
             static Trigger* wind_shear(PlayerbotAI* ai) { return new WindShearInterruptSpellTrigger(ai); }
             static Trigger* purge(PlayerbotAI* ai) { return new PurgeTrigger(ai); }
             static Trigger* shaman_weapon(PlayerbotAI* ai) { return new ShamanWeaponTrigger(ai); }
@@ -108,6 +112,8 @@ namespace ai
                 creators["lightning shield"] = &AiObjectContextInternal::lightning_shield;
                 creators["strength of earth totem"] = &AiObjectContextInternal::strength_of_earth_totem;
                 creators["flametongue totem"] = &AiObjectContextInternal::flametongue_totem;
+                creators["searing totem"] = &AiObjectContextInternal::searing_totem;
+                creators["magma totem"] = &AiObjectContextInternal::magma_totem;
                 creators["windfury totem"] = &AiObjectContextInternal::windfury_totem;
                 creators["mana spring totem"] = &AiObjectContextInternal::mana_spring_totem;
                 creators["mana tide totem"] = &AiObjectContextInternal::mana_tide_totem;
@@ -131,6 +137,7 @@ namespace ai
                 creators["riptide on party"] = &AiObjectContextInternal::riptide_on_party;
                 creators["stormstrike"] = &AiObjectContextInternal::stormstrike;
                 creators["lava lash"] = &AiObjectContextInternal::lava_lash;
+                creators["fire nova"] = &AiObjectContextInternal::fire_nova;
                 creators["ancestral spirit"] = &AiObjectContextInternal::ancestral_spirit;
                 creators["water walking"] = &AiObjectContextInternal::water_walking;
                 creators["water breathing"] = &AiObjectContextInternal::water_breathing;
@@ -147,6 +154,9 @@ namespace ai
             static Action* lightning_shield(PlayerbotAI* ai) { return new CastLightningShieldAction(ai); }
             static Action* strength_of_earth_totem(PlayerbotAI* ai) { return new CastStrengthOfEarthTotemAction(ai); }
             static Action* flametongue_totem(PlayerbotAI* ai) { return new CastFlametongueTotemAction(ai); }
+            static Action* magma_totem(PlayerbotAI* ai) { return new CastMagmaTotemAction(ai); }
+            static Action* searing_totem(PlayerbotAI* ai) { return new CastSearingTotemAction(ai); }
+            static Action* fire_nova(PlayerbotAI* ai) { return new CastFireNovaAction(ai); }
             static Action* windfury_totem(PlayerbotAI* ai) { return new CastWindfuryTotemAction(ai); }
             static Action* mana_spring_totem(PlayerbotAI* ai) { return new CastManaSpringTotemAction(ai); }
             static Action* mana_tide_totem(PlayerbotAI* ai) { return new CastManaTideTotemAction(ai); }

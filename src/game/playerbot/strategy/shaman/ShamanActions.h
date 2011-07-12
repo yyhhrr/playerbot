@@ -141,6 +141,23 @@ namespace ai
         CastWindfuryTotemAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "windfury totem") {}
     };
 
+    class CastSearingTotemAction : public CastMeleeSpellAction {
+    public:
+        CastSearingTotemAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "searing totem") {}
+        virtual string GetTargetName() { return "self target"; }
+    };
+
+    class CastMagmaTotemAction : public CastSpellAction {
+    public:
+        CastMagmaTotemAction(PlayerbotAI* ai) : CastSpellAction(ai, "magma totem") {}
+        virtual string GetTargetName() { return "self target"; }
+    };
+
+    class CastFireNovaAction : public CastSpellAction {
+    public:
+        CastFireNovaAction(PlayerbotAI* ai) : CastSpellAction(ai, "fire nova") {}
+    };
+
     class CastWindShearAction : public CastSpellAction {
     public:
         CastWindShearAction(PlayerbotAI* ai) : CastSpellAction(ai, "wind shear") {}

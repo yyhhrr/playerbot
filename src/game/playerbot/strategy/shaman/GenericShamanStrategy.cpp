@@ -104,10 +104,6 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("mana spring totem", 16.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "flametongue totem",
-        NextAction::array(0, new NextAction("flametongue totem", 17.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "strength of earth totem",
         NextAction::array(0, new NextAction("strength of earth totem", 19.0f), NULL)));
 

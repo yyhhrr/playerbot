@@ -9,13 +9,17 @@ namespace ai
         virtual bool IsActive();
     };
 
-    class TotemTrigger : public BuffTrigger {
+    class TotemTrigger : public Trigger {
     public:
-        TotemTrigger(PlayerbotAI* ai, string spell) : BuffTrigger(ai, spell) {}
+        TotemTrigger(PlayerbotAI* ai, string spell, int attackerCount = 3) : Trigger(ai, spell), attackerCount(attackerCount) {}
+
         virtual bool IsActive()
 		{
-            return BuffTrigger::IsActive() && AI_VALUE(uint8, "attacker count") > 2;
+            return AI_VALUE(uint8, "attacker count") >= attackerCount && !AI_VALUE2(bool, "has totem", name);
         }
+
+    protected:
+        int attackerCount;
     };
 
     class WindfuryTotemTrigger : public TotemTrigger {
@@ -36,6 +40,16 @@ namespace ai
     class StrengthOfEarthTotemTrigger : public TotemTrigger {
     public:
         StrengthOfEarthTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "strength of earth totem") {}
+    };
+
+    class MagmaTotemTrigger : public TotemTrigger {
+    public:
+        MagmaTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "magma totem") {}
+    };
+
+    class SearingTotemTrigger : public TotemTrigger {
+    public:
+        SearingTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "searing totem", 1) {}
     };
 
     class WindShearInterruptSpellTrigger : public InterruptSpellTrigger
