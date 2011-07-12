@@ -710,13 +710,21 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         if (target_type == TARGET_FLAG_OBJECT)
         {
             GameObject* go = GetGameObject(loot.guid);
-            if (!go || !go->isSpawned())
-                return false;
+            if (go && go->isSpawned())
+            {
+                WorldPacket* const packetgouse = new WorldPacket(CMSG_GAMEOBJ_REPORT_USE, 8);
+                *packetgouse << loot.guid;
+                bot->GetSession()->QueuePacket(packetgouse);  // queue the packet to get around race condition
+                targets.setGOTarget(go);
+            }
+            else
+            {
+                Creature* creature = GetCreature(loot.guid);
+                if (!creature)
+                    return false;
 
-            WorldPacket* const packetgouse = new WorldPacket(CMSG_GAMEOBJ_REPORT_USE, 8);
-            *packetgouse << loot.guid;
-            bot->GetSession()->QueuePacket(packetgouse);  // queue the packet to get around race condition
-            targets.setGOTarget(go);
+                targets.setUnitTarget(creature);
+            }
         }
     }
 

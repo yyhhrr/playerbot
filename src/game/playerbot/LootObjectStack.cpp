@@ -96,6 +96,9 @@ bool LootObject::IsLootPossible(Player* bot)
     if (skillId == SKILL_NONE)
         return true;
 
+    if (skillId == SKILL_FISHING)
+        return false;
+
     if (!bot->HasSkill(skillId))
         return false;
 

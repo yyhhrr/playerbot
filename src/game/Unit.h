@@ -2007,6 +2007,7 @@ class MANGOS_DLL_SPEC Unit : public WorldObject
         uint32 m_lastManaUseTimer;
 
         VehicleInfo* m_vehicleInfo;
+        void DisableSpline();
     private:
         void CleanupDeletedAuras();
         void UpdateSplineMovement(uint32 t_diff);

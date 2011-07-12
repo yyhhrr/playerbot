@@ -99,12 +99,12 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         return;
 
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
-    AuctionHouseObject::AuctionEntryMap* auctionEntryMap = auctionHouse->GetAuctions();
+    AuctionHouseObject::AuctionEntryMap const& auctionEntryMap = auctionHouse->GetAuctions();
 
     int64 availableMoney = GetAvailableMoney(auctionIds[auction]);
 
     vector<AuctionEntry*> entries;
-    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap.begin(); itr != auctionEntryMap.end(); ++itr)
         entries.push_back(itr->second);
     
     Shuffle(entries);
@@ -296,13 +296,12 @@ void AhBot::Expire(int auction)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
 
-    AuctionHouseObject::AuctionEntryMap* auctions = auctionHouse->GetAuctions();
-    AuctionHouseObject::AuctionEntryMap::iterator itr;
-    itr = auctions->begin();
+    AuctionHouseObject::AuctionEntryMap const& auctions = auctionHouse->GetAuctions();
+    AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions.begin();
 
     uint32 guid = sConfig.GetIntDefault("AhBot.GUID", 0);
 
-    while (itr != auctions->end())
+    while (itr != auctions.end())
     {
         if (itr->second->owner == guid)
             itr->second->expireTime = sWorld.GetGameTime();
@@ -391,8 +390,8 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
     if(!ahEntry)
         return result;
 
-    AuctionHouseObject::AuctionEntryMap* auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
-    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
+    AuctionHouseObject::AuctionEntryMap const& auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap.begin(); itr != auctionEntryMap.end(); ++itr)
     {
         AuctionEntry *entry = itr->second;
         if (entry->bidder != player->GetGUIDLow())

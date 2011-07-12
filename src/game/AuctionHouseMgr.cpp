@@ -105,7 +105,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction)
         }
         else
         {
-            bidder_accId = bidder_guid ? sObjectMgr.GetPlayerAccountIdByGUID(bidder_guid) : 0;
+            bidder_accId = sObjectMgr.GetPlayerAccountIdByGUID(bidder_guid);
             bidder_security = bidder_accId ? sAccountMgr.GetSecurity(bidder_accId) : SEC_PLAYER;
 
             if (bidder_security > SEC_PLAYER)               // not do redundant DB requests
@@ -123,13 +123,13 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction)
             else if (ownerGuid && !sObjectMgr.GetPlayerNameByGUID(ownerGuid, owner_name))
                 owner_name = sObjectMgr.GetMangosStringForDBCLocale(LANG_UNKNOWN);
 
-            uint32 owner_accid = ownerGuid ? sObjectMgr.GetPlayerAccountIdByGUID(ownerGuid) : 0;
+            uint32 owner_accid = sObjectMgr.GetPlayerAccountIdByGUID(ownerGuid);
 
             sLog.outCommand(bidder_accId,"GM %s (Account: %u) won item in auction (Entry: %u Count: %u) and pay money: %u. Original owner %s (Account: %u)",
                 bidder_name.c_str(), bidder_accId, auction->itemTemplate, auction->itemCount, auction->bid, owner_name.c_str(), owner_accid);
         }
     }
-    else if (!bidder && bidder_guid)
+    else if (!bidder)
         bidder_accId = sObjectMgr.GetPlayerAccountIdByGUID(bidder_guid);
 
     if (auction_owner)
@@ -184,7 +184,7 @@ void AuctionHouseMgr::SendAuctionSuccessfulMail(AuctionEntry * auction)
     Player *owner = sObjectMgr.GetPlayer(owner_guid);
 
     uint32 owner_accId = 0;
-    if (!owner && owner_guid)
+    if (!owner)
         owner_accId = sObjectMgr.GetPlayerAccountIdByGUID(owner_guid);
 
     // owner exist
@@ -806,12 +806,12 @@ bool AuctionSorter::operator()(const AuctionEntry *auc1, const AuctionEntry *auc
     return false;                                           // "equal" by all sorts
 }
 
-void WorldSession::BuildListAuctionItems(std::list<AuctionEntry*> &auctions, WorldPacket& data, std::wstring const& wsearchedname, uint32 listfrom, uint32 levelmin,
+void WorldSession::BuildListAuctionItems(std::vector<AuctionEntry*> const& auctions, WorldPacket& data, std::wstring const& wsearchedname, uint32 listfrom, uint32 levelmin,
     uint32 levelmax, uint32 usable, uint32 inventoryType, uint32 itemClass, uint32 itemSubClass, uint32 quality, uint32& count, uint32& totalcount, bool isFull)
 {
     int loc_idx = _player->GetSession()->GetSessionDbLocaleIndex();
 
-    for (std::list<AuctionEntry*>::const_iterator itr = auctions.begin(); itr != auctions.end();++itr)
+    for (std::vector<AuctionEntry*>::const_iterator itr = auctions.begin(); itr != auctions.end(); ++itr)
     {
         AuctionEntry *Aentry = *itr;
         if (Aentry->moneyDeliveryTime)

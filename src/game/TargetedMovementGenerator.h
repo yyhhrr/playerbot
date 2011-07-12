@@ -21,6 +21,7 @@
 
 #include "MovementGenerator.h"
 #include "FollowerReference.h"
+#include "Unit.h"
 
 class MANGOS_DLL_SPEC TargetedMovementGeneratorBase
 {
