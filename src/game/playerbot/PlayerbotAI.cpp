@@ -720,10 +720,8 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
             else
             {
                 Creature* creature = GetCreature(loot.guid);
-                if (!creature)
-                    return false;
-
-                targets.setUnitTarget(creature);
+                if (creature)
+                    targets.setUnitTarget(creature);
             }
         }
     }
