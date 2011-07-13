@@ -21,7 +21,8 @@ uint32 Category::GetPrice(ItemPrototype const* proto, uint32 auctionHouse)
     double price = GetStaticItemPriceMultiplier(proto) * 
         GetRarityPriceMultiplier(proto) *
         GetDefaultPrice(proto) * 
-        (GetCategoryPriceMultiplier(now, auctionHouse) + GetItemPriceMultiplier(proto, now, auctionHouse));
+        (GetCategoryPriceMultiplier(now, auctionHouse) + GetItemPriceMultiplier(proto, now, auctionHouse)) * 
+        sConfig.GetFloatDefault("AhBot.PriceMultiplier.Sell", 1.0f);
     return (uint32)price;
 }
 
@@ -31,7 +32,8 @@ uint32 Category::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
     double price = GetStaticItemPriceMultiplier(proto) * 
         GetRarityPriceMultiplier(proto) *
         GetDefaultPrice(proto) * 
-        (GetCategoryPriceMultiplier(untilTime, auctionHouse) + GetItemPriceMultiplier(proto, untilTime, auctionHouse));
+        (GetCategoryPriceMultiplier(untilTime, auctionHouse) + GetItemPriceMultiplier(proto, untilTime, auctionHouse)) *
+        sConfig.GetFloatDefault("AhBot.PriceMultiplier.Buy", 0.25f);
     return (uint32)price;
 }
 
