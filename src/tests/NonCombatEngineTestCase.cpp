@@ -22,6 +22,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( passive );
       CPPUNIT_TEST( movementStrategies );
       CPPUNIT_TEST( assistStrategies );
+      CPPUNIT_TEST( out_of_react );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -178,6 +179,14 @@ protected:
 
         cout << engine->ListStrategies();
         CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: grind");
+    }
+
+    void out_of_react()
+    {
+        engine->addStrategy("follow master");
+        set<float>("distance", "master target", BOT_REACT_DISTANCE / 2 + 10);
+        tick();
+        assertActions(">S:tell out of react range");
     }
 };
 

@@ -18,14 +18,15 @@ namespace ai
         string text;
     };
 
-    class OutOfReactRangeAction : public TellMasterAction {
+    class OutOfReactRangeAction : public MovementAction {
     public:
-        OutOfReactRangeAction(PlayerbotAI* ai) : TellMasterAction(ai, "Wait for me!") {}
+        OutOfReactRangeAction(PlayerbotAI* ai) : MovementAction(ai, "tell out of react range") {}
 
         virtual bool Execute(Event event)
         {
-            ai->SetNextCheckDelay(8);
-            return TellMasterAction::Execute(event);
+            ai->TellMaster("Wait for me!");
+            Follow(AI_VALUE(Unit*, "master target"));
+            return true;
         }
    };
 }

@@ -59,10 +59,6 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "loot response",
         NextAction::array(0, new NextAction("store loot", relevance), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "out of react range",
-        NextAction::array(0, new NextAction("tell out of react range", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTroughStrategy(ai)

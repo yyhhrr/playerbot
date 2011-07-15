@@ -26,7 +26,6 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( cannot_equip );
       CPPUNIT_TEST( trade_status );
       CPPUNIT_TEST( loot );
-      CPPUNIT_TEST( out_of_react );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -155,13 +154,6 @@ protected:
         trigger("loot response");
         tick();
         assertActions(">S:store loot");
-    }
-
-    void out_of_react()
-    {
-        trigger("out of react range");
-        tick();
-        assertActions(">S:tell out of react range");
     }
 };
 
