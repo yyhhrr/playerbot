@@ -44,10 +44,12 @@ namespace ai
             creators["remember taxi"] = &WorldPacketActionContext::remember_taxi;
             creators["accept trade"] = &WorldPacketActionContext::accept_trade;
             creators["store loot"] = &WorldPacketActionContext::store_loot;
+            creators["tell out of react range"] = &WorldPacketActionContext::tell_out_of_react_range;
         }
 
     private:
         static Action* store_loot(PlayerbotAI* ai) { return new StoreLootAction(ai); }
+        static Action* tell_out_of_react_range(PlayerbotAI* ai) { return new OutOfReactRangeAction(ai); }
         static Action* accept_trade(PlayerbotAI* ai) { return new TradeStatusAction(ai); }
         static Action* remember_taxi(PlayerbotAI* ai) { return new RememberTaxiAction(ai); }
         static Action* check_mount_state(PlayerbotAI* ai) { return new CheckMountStateAction(ai); }

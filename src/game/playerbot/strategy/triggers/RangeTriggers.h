@@ -43,11 +43,20 @@ namespace ai
 
     class FarFromMasterTrigger : public Trigger {
     public:
-        FarFromMasterTrigger(PlayerbotAI* ai) : Trigger(ai, "far from master") {}
+        FarFromMasterTrigger(PlayerbotAI* ai, string name = "far from master", float distance = 12.0f) : Trigger(ai, name), distance(distance) {}
 
         virtual bool IsActive() 
         {
-            return AI_VALUE2(float, "distance", "master target") > 12.0f;
+            return AI_VALUE2(float, "distance", "master target") > distance;
         }
+
+    private:
+        float distance;
+    };
+
+    class OutOfReactRangeTrigger : public FarFromMasterTrigger 
+    {
+    public:
+        OutOfReactRangeTrigger(PlayerbotAI* ai) : FarFromMasterTrigger(ai, "out of react range", BOT_REACT_DISTANCE / 2) {}
     };
 }

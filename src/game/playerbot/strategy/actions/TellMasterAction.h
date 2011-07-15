@@ -18,4 +18,14 @@ namespace ai
         string text;
     };
 
+    class OutOfReactRangeAction : public TellMasterAction {
+    public:
+        OutOfReactRangeAction(PlayerbotAI* ai) : TellMasterAction(ai, "Wait for me!") {}
+
+        virtual bool Execute(Event event)
+        {
+            ai->SetNextCheckDelay(8);
+            return TellMasterAction::Execute(event);
+        }
+   };
 }
