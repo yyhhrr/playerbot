@@ -7,13 +7,12 @@ using namespace ai;
 
 bool GossipHelloAction::Execute(Event event)
 {
-    
-    
     WorldPacket &p = event.getPacket();
 
     ObjectGuid guid;
-    p.rpos(0);                //reset packet pointer
+    p.rpos(0);
     p >> guid;
+    p.rpos(0);
 
     Creature *pCreature = bot->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_NONE);
     if (!pCreature)
@@ -26,55 +25,31 @@ bool GossipHelloAction::Execute(Event event)
     if (pMenuItemBounds.first == pMenuItemBounds.second)
         return false;
 
-    ostringstream out; out << "--- " << pCreature->GetName() << " ---";
-    ai->TellMaster(LOG_LVL_DEBUG, out.str());
-    for (GossipMenuItemsMap::const_iterator itr = pMenuItemBounds.first; itr != pMenuItemBounds.second; ++itr)
+    bot->GetSession()->HandleGossipHelloOpcode(p);
+
+    GossipMenu& menu = bot->PlayerTalkClass->GetGossipMenu();
+    int i = 0, loops = 0;
+    set<uint32> alreadyTalked;
+    while (i < menu.MenuItemCount() && loops++ < 100)
     {
-        uint32 npcflags = pCreature->GetUInt32Value(UNIT_NPC_FLAGS);
-        if (!(itr->second.npc_option_npcflag & npcflags))
-            continue;
-
-        ai->TellMaster(LOG_LVL_DEBUG, itr->second.option_text);
-
-        switch (itr->second.option_id)
+        GossipMenuItem const& item = menu.GetItem(i);
+        ai->TellMaster(item.m_gMessage);
+        ai->TellMaster(item.m_gBoxMessage);
+        
+        if (item.m_gOptionId < 1000 && item.m_gOptionId != GOSSIP_OPTION_GOSSIP)
         {
-        case GOSSIP_OPTION_TAXIVENDOR:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_TAXIVENDOR");
-                bot->GetSession()->SendLearnNewTaxiNode(pCreature);
-                break;
-            }
-        case GOSSIP_OPTION_QUESTGIVER:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_QUESTGIVER");
-                break;
-            }
-        case GOSSIP_OPTION_VENDOR:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_VENDOR");
-                break;
-            }
-        case GOSSIP_OPTION_STABLEPET:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_STABLEPET");
-                break;
-            }
-        case GOSSIP_OPTION_AUCTIONEER:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_AUCTIONEER");
-                break;
-            }
-        case GOSSIP_OPTION_BANKER:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_BANKER");
-                break;
-            }
-        case GOSSIP_OPTION_INNKEEPER:
-            {
-                // bot->GetPlayerbotAI()->ai->TellMaster("PlayerbotMgr:GOSSIP_OPTION_INNKEEPER");
-                break;
-            }
+            i++;
+            continue;
         }
+
+        WorldPacket p1;
+        std::string code;
+        p1 << guid << menu.GetMenuId() << i << code;
+        bot->GetSession()->HandleGossipSelectOptionOpcode(p1);
+        
+        i = 0;
     }
+
+    bot->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     return true;
 }
