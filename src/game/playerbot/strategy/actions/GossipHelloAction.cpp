@@ -27,6 +27,9 @@ bool GossipHelloAction::Execute(Event event)
 
     bot->GetSession()->HandleGossipHelloOpcode(p);
 
+    ostringstream out; out << "--- " << pCreature->GetName() << " ---";
+    ai->TellMaster(out.str());
+
     GossipMenu& menu = bot->PlayerTalkClass->GetGossipMenu();
     int i = 0, loops = 0;
     set<uint32> alreadyTalked;
@@ -34,7 +37,6 @@ bool GossipHelloAction::Execute(Event event)
     {
         GossipMenuItem const& item = menu.GetItem(i);
         ai->TellMaster(item.m_gMessage);
-        ai->TellMaster(item.m_gBoxMessage);
         
         if (item.m_gOptionId < 1000 && item.m_gOptionId != GOSSIP_OPTION_GOSSIP)
         {
