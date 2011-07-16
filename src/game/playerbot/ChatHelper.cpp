@@ -224,3 +224,12 @@ list<ObjectGuid> ChatHelper::parseGameobjects(string& text)
 
     return gos;
 }
+
+string ChatHelper::formatQuestObjective(string name, int available, int required)
+{
+    ostringstream out;
+    out << "|cFFFFFFFF" << name << (available >= required ? "|c0000FF00: " : "|c00FF0000: ") 
+        << available << "/" << required << "|r";
+    
+    return out.str();
+}

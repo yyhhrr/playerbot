@@ -15,19 +15,31 @@ bool RewardAction::Execute(Event event)
         return false;
 
     uint32 itemId = *itemIds.begin();
-    bool wasRewarded = false;
-    const ObjectGuid &questRewarder = master->GetSelectionGuid();
-    uint64 questRewarderGUID = master->GetSelectionGuid().GetRawValue();
-    bot->SetSelectionGuid(questRewarder);
-    Object* pNpc = ai->GetGameObject(questRewarder);
-    if (!pNpc)
-        pNpc = ObjectAccessor::GetUnit(*bot, questRewarder);
 
-    if (!pNpc)
-        return false;
+    list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
+    for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end(); i++)
+    {
+        Unit* npc = *i;
+        if (Reward(itemId, npc))
+            return true;
+    }
 
+    list<GameObject*> gos = AI_VALUE(list<GameObject*>, "nearest game objects");
+    for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+    {
+        GameObject* go = *i;
+        if (Reward(itemId, go))
+            return true;
+    }
+
+    ai->TellMaster("Cannot talk to quest giver");
+    return false;
+}
+
+bool RewardAction::Reward(uint32 itemId, Object* questGiver) 
+{
     QuestMenu& questMenu = bot->PlayerTalkClass->GetQuestMenu();
-    for (uint32 iI = 0; !wasRewarded && iI < questMenu.MenuItemCount(); ++iI)
+    for (uint32 iI = 0; iI < questMenu.MenuItemCount(); ++iI)
     {
         QuestMenuItem const& qItem = questMenu.GetItem(iI);
 
@@ -41,23 +53,23 @@ bool RewardAction::Execute(Event event)
             pQuest->GetRewChoiceItemsCount() > 1 &&
             bot->CanRewardQuest(pQuest, false))
         {
-            for (uint8 rewardIdx=0; !wasRewarded && rewardIdx < pQuest->GetRewChoiceItemsCount(); ++rewardIdx)
+            for (uint8 rewardIdx=0; rewardIdx < pQuest->GetRewChoiceItemsCount(); ++rewardIdx)
             {
                 ItemPrototype const * const pRewardItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[rewardIdx]);
                 if (itemId == pRewardItem->ItemId)
                 {
-                    bot->RewardQuest(pQuest, rewardIdx, pNpc, false);
+                    bot->RewardQuest(pQuest, rewardIdx, questGiver, false);
 
                     string questTitle  = pQuest->GetTitle();
                     string itemName = pRewardItem->Name1;
 
                     ostringstream out; out << chat->formatItem(pRewardItem) << " rewarded";
                     ai->TellMaster(out);
-                    wasRewarded = true;
+                    return true;
                 }
             }
         }
     }
 
-    return true;
+    return false;
 }

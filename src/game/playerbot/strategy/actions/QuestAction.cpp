@@ -97,3 +97,29 @@ bool QuestAction::AcceptQuest(Quest const* quest, uint64 questGiver)
     ai->TellMaster(out);
     return false;
 }
+
+bool QuestObjectiveCompletedAction::Execute(Event event)
+{
+    WorldPacket p(event.getPacket());
+    p.rpos(0);
+
+    uint32 entry, questId, available, required;
+    ObjectGuid guid;
+    p >> questId >> entry >> available >> required >> guid;
+
+    if (entry & 0x80000000)
+    {
+        entry &= 0x7FFFFFFF;
+        GameObjectInfo const* info = sObjectMgr.GetGameObjectInfo(entry);
+        if (info)
+            ai->TellMaster(chat->formatQuestObjective(info->name, available, required));
+    }
+    else
+    {
+        CreatureInfo const* info = sObjectMgr.GetCreatureTemplate(entry);
+        if (info)
+            ai->TellMaster(chat->formatQuestObjective(info->Name, available, required));
+    }
+
+    return true;
+}

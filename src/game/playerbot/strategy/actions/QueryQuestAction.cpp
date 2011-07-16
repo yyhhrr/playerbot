@@ -7,10 +7,7 @@ using namespace ai;
 
 void QueryQuestAction::TellObjective(string name, int available, int required) 
 {
-    ostringstream out;
-    out << "|cFFFFFFFF" << name << (available >= required ? "|c0000FF00: " : "|c00FF0000: ") 
-        << available << "/" << required << "|r";
-    ai->TellMaster(out);
+    ai->TellMaster(chat->formatQuestObjective(name, available, required));
 }
 
 

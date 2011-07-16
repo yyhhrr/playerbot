@@ -16,6 +16,7 @@
 #include "TradeStatusAction.h"
 #include "InventoryChangeFailureAction.h"
 #include "LootAction.h"
+#include "QuestAction.h"
 
 namespace ai
 {
@@ -45,9 +46,11 @@ namespace ai
             creators["accept trade"] = &WorldPacketActionContext::accept_trade;
             creators["store loot"] = &WorldPacketActionContext::store_loot;
             creators["tell out of react range"] = &WorldPacketActionContext::tell_out_of_react_range;
+            creators["quest objective completed"] = &WorldPacketActionContext::quest_objective_completed;
         }
 
     private:
+        static Action* quest_objective_completed(PlayerbotAI* ai) { return new QuestObjectiveCompletedAction(ai); }
         static Action* store_loot(PlayerbotAI* ai) { return new StoreLootAction(ai); }
         static Action* tell_out_of_react_range(PlayerbotAI* ai) { return new OutOfReactRangeAction(ai); }
         static Action* accept_trade(PlayerbotAI* ai) { return new TradeStatusAction(ai); }
