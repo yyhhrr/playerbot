@@ -108,7 +108,7 @@ string ChatHelper::formatItem(ItemPrototype const * proto, int count)
     sprintf(color, "%x", ItemQualityColors[proto->Quality]);
 
     ostringstream out;
-    out << " |c" << color << "|Hitem:" << proto->ItemId
+    out << "|c" << color << "|Hitem:" << proto->ItemId
         << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
         << "]|h|r";
     

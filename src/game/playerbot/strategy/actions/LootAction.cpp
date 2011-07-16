@@ -62,10 +62,6 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
 
     switch (lootObject.skillId)
     {
-    case SKILL_MINING:
-        return ai->CastSpell(MINING, bot);
-    case SKILL_HERBALISM:
-        return ai->CastSpell(HERB_GATHERING, bot);
     case SKILL_SKINNING:
         return ai->CastSpell(SKINNING, creature);
     default:
