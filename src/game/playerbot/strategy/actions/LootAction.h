@@ -21,6 +21,9 @@ namespace ai
 
     private:
         bool DoLoot(LootObject& lootObject);
+        uint32 GetOpeningSpell(LootObject& lootObject);
+        uint32 GetOpeningSpell(LootObject& lootObject, GameObject* go);
+        bool CanOpenLock(LootObject& lootObject, const SpellEntry* pSpellInfo, GameObject* go);
     };
 
     class StoreLootAction : public MovementAction 

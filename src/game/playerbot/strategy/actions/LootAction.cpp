@@ -69,7 +69,97 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
     case SKILL_SKINNING:
         return ai->CastSpell(SKINNING, creature);
     default:
-        return ai->CastSpell(3365, bot); //Spell 3365 = Opening?
+        uint32 spellId = GetOpeningSpell(lootObject);
+        if (!spellId)
+            return false;
+
+        return ai->CastSpell(spellId, bot);
+    }
+
+    return false;
+}
+
+uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject)
+{
+    GameObject* go = ai->GetGameObject(lootObject.guid);
+    if (go && go->isSpawned())
+        return GetOpeningSpell(lootObject, go);
+
+    return 0;
+}
+
+uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
+{
+    for (PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr) 
+    {
+        uint32 spellId = itr->first;
+
+        if (itr->second.state == PLAYERSPELL_REMOVED || itr->second.disabled || IsPassiveSpell(spellId))
+            continue;
+
+        const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
+        if (!pSpellInfo)
+            continue;
+
+        if (CanOpenLock(lootObject, pSpellInfo, go))
+            return spellId;
+    }
+
+    for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); spellId++)
+    {
+        const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
+        if (!pSpellInfo)
+            continue;
+
+        if (CanOpenLock(lootObject, pSpellInfo, go))
+            return spellId;
+    }
+
+    return 3365; //Spell 3365 = Opening?
+}
+
+bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpellInfo, GameObject* go) 
+{
+    for (int effIndex = 0; effIndex < MAX_EFFECT_INDEX; effIndex++)
+    {
+        if (pSpellInfo->Effect[effIndex] != SPELL_EFFECT_OPEN_LOCK && pSpellInfo->Effect[effIndex] != SPELL_EFFECT_SKINNING)
+            return false;
+
+        uint32 lockId = go->GetGOInfo()->GetLockId();
+        if (!lockId)
+            return false;
+
+        LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
+        if (!lockInfo)
+            return false;
+
+        bool reqKey = false;                                    // some locks not have reqs
+
+        for(int j = 0; j < 8; ++j)
+        {
+            switch(lockInfo->Type[j])
+            {
+            /*
+            case LOCK_KEY_ITEM:
+                return true;
+            */
+            case LOCK_KEY_SKILL:
+                {
+                    if(uint32(pSpellInfo->EffectMiscValue[effIndex]) != lockInfo->Index[j])
+                        continue;
+
+                    uint32 skillId = SkillByLockType(LockType(lockInfo->Index[j]));
+                    if (skillId == SKILL_NONE)
+                        return true;
+
+                    uint32 reqSkillValue = lockInfo->Skill[j];
+                    uint32 skillValue = bot->GetSkillValue(skillId);
+
+                    if (skillValue >= reqSkillValue || !reqSkillValue)
+                        return true;
+                }
+            }
+        }
     }
 
     return false;

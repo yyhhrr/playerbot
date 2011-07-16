@@ -35,6 +35,9 @@ PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(
     m_confDebugWhisper = sConfig.GetBoolDefault( "PlayerbotAI.DebugWhisper", false );
     m_confFollowDistance[0] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 0.5f );
     m_confFollowDistance[1] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 1.0f );
+
+    for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); spellId++)
+        sSpellStore.LookupEntry(spellId);
 }
 
 PlayerbotMgr::~PlayerbotMgr() 
