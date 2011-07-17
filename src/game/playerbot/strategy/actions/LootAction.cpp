@@ -64,6 +64,10 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
     {
     case SKILL_SKINNING:
         return ai->CastSpell(SKINNING, creature);
+    case SKILL_MINING:
+        return ai->CastSpell(MINING, bot);
+    case SKILL_HERBALISM:
+        return ai->CastSpell(HERB_GATHERING, bot);
     default:
         uint32 spellId = GetOpeningSpell(lootObject);
         if (!spellId)
