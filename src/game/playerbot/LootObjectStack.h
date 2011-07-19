@@ -35,7 +35,7 @@ namespace ai
     {
     public:
         LootTarget(ObjectGuid guid);
-        LootTarget(LootTarget& other);
+        LootTarget(LootTarget const& other);
 
     public:
         LootTarget& operator=(LootTarget const& other);

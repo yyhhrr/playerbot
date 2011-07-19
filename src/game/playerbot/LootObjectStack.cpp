@@ -11,7 +11,7 @@ LootTarget::LootTarget(ObjectGuid guid) : guid(guid), asOfTime(time(0))
 {
 }
 
-LootTarget::LootTarget(LootTarget& other)
+LootTarget::LootTarget(LootTarget const& other)
 {
     guid = other.guid;
     asOfTime = other.asOfTime;
@@ -172,7 +172,9 @@ void LootObjectStack::Add(ObjectGuid guid)
 
 void LootObjectStack::Remove(ObjectGuid guid)
 {
-    availableLoot.erase(availableLoot.find(guid));
+    LootTargetList::iterator i = availableLoot.find(guid);
+    if (i != availableLoot.end())
+        availableLoot.erase(i);
 }
 
 void LootObjectStack::Clear()

@@ -716,6 +716,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\LootObjectStackTestCase.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\MockedAiObjectContextTestCase.h"
 				>
 			</File>
