@@ -45,22 +45,24 @@ void LootTargetList::shrink(time_t fromTime)
 }
 
 LootObject::LootObject(Player* bot, ObjectGuid guid)
-	: guid(guid), skillId(SKILL_NONE), reqSkillValue(0), reqItem(NULL)
+	: guid(), skillId(SKILL_NONE), reqSkillValue(0), reqItem(NULL)
 {
 	PlayerbotAI* ai = bot->GetPlayerbotAI();
 
     Creature *creature = ai->GetCreature(guid);
     if (creature && creature->getDeathState() == CORPSE)
     {
-        if (!creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE) && !creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
-            return;
+        if (creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE))
+            this->guid = guid;
 
         if (creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
         {
+            this->guid = guid;
             skillId = creature->GetCreatureInfo()->GetRequiredLootSkill();
             uint32 targetLevel = creature->getLevel();
             reqSkillValue = targetLevel < 10 ? 0 : targetLevel < 20 ? (targetLevel - 10) * 10 : targetLevel * 5;
         }
+
         return;
     }
 
@@ -68,6 +70,8 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     if (go && go->isSpawned())
     {
         uint32 lockId = go->GetGOInfo()->GetLockId();
+        this->guid = guid;
+
         LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
         if (!lockInfo)
             return;
