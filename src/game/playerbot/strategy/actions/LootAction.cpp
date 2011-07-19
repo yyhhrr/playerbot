@@ -16,7 +16,6 @@ bool LootAction::Execute(Event event)
 
     LootObject &lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(BOT_SIGHT_DISTANCE);
     context->GetValue<LootObject>("loot target")->Set(lootObject);
-    AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
     return true;
 }
 
@@ -41,7 +40,7 @@ bool OpenLootAction::Execute(Event event)
 {
     LootObject lootObject = AI_VALUE(LootObject, "loot target");
     bool result = DoLoot(lootObject);
-    
+
     context->GetValue<LootObject>("loot target")->Set(LootObject());
     return result;
 }
@@ -90,7 +89,7 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject)
 
 uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
 {
-    for (PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr) 
+    for (PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
     {
         uint32 spellId = itr->first;
 
@@ -118,7 +117,7 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
     return 3365; //Spell 3365 = Opening?
 }
 
-bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpellInfo, GameObject* go) 
+bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpellInfo, GameObject* go)
 {
     for (int effIndex = 0; effIndex < MAX_EFFECT_INDEX; effIndex++)
     {
@@ -184,7 +183,7 @@ bool StoreLootAction::Execute(Event event)
         WorldPacket* const packet = new WorldPacket(CMSG_LOOT_MONEY, 0);
         bot->GetSession()->QueuePacket(packet);
     }
-  
+
     for (uint8 i = 0; i < items; ++i)
     {
         uint32 itemid;
@@ -212,6 +211,8 @@ bool StoreLootAction::Execute(Event event)
         bot->GetSession()->QueuePacket(packet);
     }
 
+    AI_VALUE(LootObjectStack*, "available loot")->Remove(guid);
+
     // release loot
     WorldPacket* const packet = new WorldPacket(CMSG_LOOT_RELEASE, 8);
     *packet << guid;
@@ -219,7 +220,7 @@ bool StoreLootAction::Execute(Event event)
     return true;
 }
 
-bool StoreLootAction::IsLootAllowedBySkill(ItemPrototype const * proto) 
+bool StoreLootAction::IsLootAllowedBySkill(ItemPrototype const * proto)
 {
     switch (proto->Class)
     {
@@ -288,7 +289,7 @@ bool StoreLootAction::IsLootAllowedBySkill(ItemPrototype const * proto)
 }
 
 
-bool StoreLootAction::IsLootAllowed(uint32 itemid) 
+bool StoreLootAction::IsLootAllowed(uint32 itemid)
 {
     LootStrategy lootStrategy = AI_VALUE(LootStrategy, "loot strategy");
 
@@ -313,9 +314,9 @@ bool StoreLootAction::IsLootAllowed(uint32 itemid)
         return false;
     }
 
-    if (proto->StartQuest || 
-        proto->Bonding == BIND_QUEST_ITEM || 
-        proto->Bonding == BIND_QUEST_ITEM1 || 
+    if (proto->StartQuest ||
+        proto->Bonding == BIND_QUEST_ITEM ||
+        proto->Bonding == BIND_QUEST_ITEM1 ||
         proto->Class == ITEM_CLASS_QUEST)
         return true;
 

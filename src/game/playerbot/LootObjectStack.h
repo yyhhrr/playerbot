@@ -2,9 +2,9 @@
 
 using namespace std;
 
-namespace ai 
+namespace ai
 {
-    enum LootStrategy 
+    enum LootStrategy
     {
         LOOTSTRATEGY_QUEST = 1,
         LOOTSTRATEGY_SKILL = 2,
@@ -21,15 +21,35 @@ namespace ai
         LootObject(const LootObject& other);
 
     public:
-        bool IsEmpty() { return !guid || (time_t() - time) > 30; }
+        bool IsEmpty() { return !guid; }
         bool IsLootPossible(Player* bot);
         WorldObject* GetWorldObject(Player* bot);
         ObjectGuid guid;
-        time_t time;
 
         uint32 skillId;
         uint32 reqSkillValue;
         uint32 reqItem;
+    };
+
+    class LootTarget
+    {
+    public:
+        LootTarget(ObjectGuid guid);
+        LootTarget(LootTarget& other);
+
+    public:
+        LootTarget& operator=(LootTarget const& other);
+        bool operator< (const LootTarget& other) const;
+
+    public:
+        ObjectGuid guid;
+        time_t asOfTime;
+    };
+
+    class LootTargetList : public set<LootTarget>
+    {
+    public:
+        void shrink(time_t fromTime);
     };
 
     class LootObjectStack
@@ -49,7 +69,8 @@ namespace ai
 
     private:
         Player* bot;
-        set<ObjectGuid> availableLoot;
+        LootTargetList availableLoot;
+        LootTargetList alreadyLooted;
     };
 
 };

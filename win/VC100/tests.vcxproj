@@ -258,6 +258,7 @@
     <ClCompile Include="..\..\src\tests\HunterNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\FireMageTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\FrostMageTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\LootObjectStackTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\MageNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\EngineTestBase.cpp" />
     <ClCompile Include="..\..\src\tests\EngineTestCase.cpp" />
