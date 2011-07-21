@@ -30,7 +30,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId)
             continue;
 
         QuestStatus status = bot->GetQuestStatus(questTemplate->GetQuestId());
-        if (status != QUEST_STATUS_INCOMPLETE && status != QUEST_STATUS_COMPLETE)
+        if (status != QUEST_STATUS_INCOMPLETE)
             continue;
 
         QuestStatusData *questStatus = &i->second;
@@ -52,12 +52,7 @@ void QueryQuestItemAction::QueryQuestItem(uint32 itemId, const Quest *questTempl
         if (!required)
             continue;
 
-        ostringstream out;
-        out << "Quest ";
-        out << available;
-        out << "/";
-        out << required;
-        ai->TellMaster(out.str());
+        ai->TellMaster(chat->formatQuestObjective(chat->formatQuest(questTemplate), available, required));
     }
 }
 
