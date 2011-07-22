@@ -7,15 +7,12 @@ namespace ai
     class EmoteAction : public Action
     {
     public:
-        EmoteAction(PlayerbotAI* ai, uint32 type) : Action(ai, "emote"), type(type) {}
-
-        virtual bool Execute(Event event) 
-        {
-            ai->GetBot()->HandleEmoteCommand(type ? type : rand() % 450);
-            return true;
-        }
+        EmoteAction(PlayerbotAI* ai) : Action(ai, "emote") {}
+        virtual bool Execute(Event event);
 
     private:
-        uint32 type;
+        void InitEmotes();
+        static map<string, uint32> emotes;
+
     };
 }

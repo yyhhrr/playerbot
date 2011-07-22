@@ -497,6 +497,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\CheckMountStateAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\DestroyItemAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\DropQuestAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\EmoteAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\EquipAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\FollowActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GenericActions.cpp" />

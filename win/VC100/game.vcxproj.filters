@@ -1047,6 +1047,9 @@
     <ClCompile Include="..\..\src\game\ahbot\ItemBag.cpp">
       <Filter>AhBot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\EmoteAction.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">

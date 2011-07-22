@@ -12,7 +12,9 @@ namespace ai
     public:
         virtual bool Calculate()
         {
-            return !AI_VALUE(bool, "can loot") && AI_VALUE(LootObjectStack*, "available loot")->CanLoot(BOT_SIGHT_DISTANCE);
+            return !AI_VALUE(bool, "can loot") &&
+                    AI_VALUE(LootObjectStack*, "available loot")->CanLoot(BOT_SIGHT_DISTANCE) &&
+                    !bot->IsMounted();
         }
     };
 }

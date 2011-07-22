@@ -69,7 +69,7 @@ namespace ai
         static Action* arcane_torrent(PlayerbotAI* ai) { return new CastArcaneTorrentAction(ai); }
         static Action* end_pull(PlayerbotAI* ai) { return new ChangeCombatStrategyAction(ai, "-pull"); }
 
-        static Action* emote(PlayerbotAI* ai) { return new EmoteAction(ai, 0); }
+        static Action* emote(PlayerbotAI* ai) { return new EmoteAction(ai); }
         static Action* attack_anything(PlayerbotAI* ai) { return new AttackAnythingAction(ai); }
         static Action* stay_combat(PlayerbotAI* ai) { return new StayCombatAction(ai); }
         static Action* stay_line(PlayerbotAI* ai) { return new StayLineAction(ai); }
