@@ -361,6 +361,7 @@
     <ClCompile Include="..\..\src\game\ahbot\Category.cpp" />
     <ClCompile Include="..\..\src\game\ahbot\ConsumableCategory.cpp" />
     <ClCompile Include="..\..\src\game\ahbot\ItemBag.cpp" />
+    <ClCompile Include="..\..\src\game\ahbot\TradeCategory.cpp" />
     <ClCompile Include="..\..\src\game\ArenaTeam.cpp" />
     <ClCompile Include="..\..\src\game\ArenaTeamHandler.cpp" />
     <ClCompile Include="..\..\src\game\AuctionHouseBot\AuctionHouseBot.cpp" />
@@ -716,6 +717,7 @@
     <ClInclude Include="..\..\src\game\ahbot\Category.h" />
     <ClInclude Include="..\..\src\game\ahbot\ConsumableCategory.h" />
     <ClInclude Include="..\..\src\game\ahbot\ItemBag.h" />
+    <ClInclude Include="..\..\src\game\ahbot\TradeCategory.h" />
     <ClInclude Include="..\..\src\game\ArenaTeam.h" />
     <ClInclude Include="..\..\src\game\AuctionHouseBot\AuctionHouseBot.h" />
     <ClInclude Include="..\..\src\game\AuctionHouseMgr.h" />

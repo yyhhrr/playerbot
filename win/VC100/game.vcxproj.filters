@@ -1053,6 +1053,9 @@
     <ClCompile Include="..\..\src\game\ahbot\ConsumableCategory.cpp">
       <Filter>AhBot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\ahbot\TradeCategory.cpp">
+      <Filter>AhBot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2196,6 +2199,9 @@
       <Filter>AhBot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\ahbot\ConsumableCategory.h">
+      <Filter>AhBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ahbot\TradeCategory.h">
       <Filter>AhBot</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "Category.h"
 #include "ItemBag.h"
 #include "ConsumableCategory.h"
+#include "TradeCategory.h"
 
 using namespace ahbot;
 
@@ -9,12 +10,19 @@ Equip Equip::instance;
 Recipe Recipe::instance;
 Reagent Reagent::instance;
 Enchant Enchant::instance;
-Trade Trade::instance;
 ahbot::Quest ahbot::Quest::instance;
 Alchemy Alchemy::instance;
 Enchants Enchants::instance;
 Food Food::instance;
 OtherConsumable OtherConsumable::instance;
+Cloth Cloth::instance;
+Leather Leather::instance;
+Herb Herb::instance;
+Meat Meat::instance;
+Metal Metal::instance;
+Disenchants Disenchants::instance;
+Engineering Engineering::instance;
+OtherTrade OtherTrade::instance;
 
 Category* Categories[MAX_AHBOT_CATEGORIES] =
 {
@@ -23,12 +31,19 @@ Category* Categories[MAX_AHBOT_CATEGORIES] =
     &Recipe::instance,
     &Reagent::instance,
     &Enchant::instance,
-    &Trade::instance,
     &ahbot::Quest::instance,
     &Alchemy::instance,
     &Enchants::instance,
     &Food::instance,
-    &OtherConsumable::instance
+    &OtherConsumable::instance,
+    &Cloth::instance,
+    &Leather::instance,
+    &Herb::instance,
+    &Meat::instance,
+    &Metal::instance,
+    &Disenchants::instance,
+    &Engineering::instance,
+    &OtherTrade::instance
 };
 
 ItemBag::ItemBag()
