@@ -341,12 +341,6 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
-
-    if (aiObjectContext->GetValue<bool>("moving", "self target")->Get())
-        return;
-
-    LastMovement& movement = aiObjectContext->GetValue<LastMovement&>("last movement")->Get();
-    //movement.Update(bot);
 }
 
 void PlayerbotAI::ReInitCurrentEngine()

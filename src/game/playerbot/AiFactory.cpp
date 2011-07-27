@@ -108,7 +108,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
             nonCombatEngine->addStrategy("dps assist");
             break;
         case CLASS_PALADIN:
-            nonCombatEngine->addStrategy("tank assist");
+            nonCombatEngine->addStrategies("tank assist", "bmana", NULL);
             break;
         case CLASS_DRUID:
             nonCombatEngine->addStrategy("dps assist");
