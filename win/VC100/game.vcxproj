@@ -485,6 +485,7 @@
     <ClCompile Include="..\..\src\game\playerbot\LootObjectStack.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAI.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIBase.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIConfig.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotMgr.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Action.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\ActionBasket.cpp" />
@@ -828,6 +829,7 @@
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAI.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIAware.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIBase.h" />
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIConfig.h" />
     <ClInclude Include="..\..\src\game\playerbot\playerbotDefs.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Action.h" />

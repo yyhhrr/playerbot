@@ -2,18 +2,19 @@
 #include "../../playerbot.h"
 #include "../../AttackerMapProvider.h"
 #include "AttackerCountValues.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
 uint8 MyAttackerCountValue::Calculate()
 {
-    
+
     return bot->getAttackers().size();
 }
 
 bool HasAggroValue::Calculate()
 {
-    
+
     Unit* target = GetTarget();
     if (!target)
         return true;
@@ -36,10 +37,10 @@ bool HasAggroValue::Calculate()
 
 uint8 AttackerCountValue::Calculate()
 {
-    
+
 
     int count = 0;
-    float range = BOT_SIGHT_DISTANCE;
+    float range = sPlayerbotAIConfig.sightDistance;
 
     AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
     for (AttackerMapIterator i = attackers.begin(); i != attackers.end(); i++)
@@ -58,8 +59,8 @@ uint8 AttackerCountValue::Calculate()
 
 uint8 BalancePercentValue::Calculate()
 {
-    
-    
+
+
 
     float playerLevel = 0,
         attackerLevel = 0;
@@ -81,7 +82,7 @@ uint8 BalancePercentValue::Calculate()
     AttackerMap v = context->GetValue<AttackerMap>("attackers")->Get();
 
     for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
-    {  
+    {
         Creature* creature = ai->GetCreature(i->first);
         if (!creature || !creature->isAlive())
             continue;

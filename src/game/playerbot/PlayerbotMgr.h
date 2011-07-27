@@ -33,12 +33,6 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
         void OnBotLogin(Player * const bot);
         void SaveToDB();
 
-    public:
-        // config variables
-		bool m_confDisableBots;
-        bool m_confDebugWhisper;
-        float m_confFollowDistance[2];
-
     private:
         Player* const m_master;
         PlayerBotMap m_playerBots;

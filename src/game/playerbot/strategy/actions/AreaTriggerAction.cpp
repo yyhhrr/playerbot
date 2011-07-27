@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "AreaTriggerAction.h"
+#include "../../PlayerbotAIConfig.h"
 
 
 using namespace ai;
@@ -27,7 +28,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
         return true;
     }
 
-    if (bot->GetMapId() != atEntry->mapid || bot->GetDistance(atEntry->x, atEntry->y, atEntry->z) > BOT_SIGHT_DISTANCE)
+    if (bot->GetMapId() != atEntry->mapid || bot->GetDistance(atEntry->x, atEntry->y, atEntry->z) > sPlayerbotAIConfig.sightDistance)
     {
         ai->TellMaster("I will not follow you - too far away");
         return true;

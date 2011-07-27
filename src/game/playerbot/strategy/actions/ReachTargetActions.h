@@ -2,21 +2,22 @@
 
 #include "../Action.h"
 #include "MovementActions.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
     class ReachTargetAction : public MovementAction {
     public:
-        ReachTargetAction(PlayerbotAI* ai, string name, float distance) : MovementAction(ai, name) 
+        ReachTargetAction(PlayerbotAI* ai, string name, float distance) : MovementAction(ai, name)
 		{
             this->distance = distance;
         }
-        virtual bool Execute(Event event) 
+        virtual bool Execute(Event event)
 		{
 			MoveTo(AI_VALUE(Unit*, "current target"), distance);
             return true;
         }
-        virtual bool isUseful() 
+        virtual bool isUseful()
 		{
             return AI_VALUE2(float, "distance", "current target") > distance;
         }
@@ -28,11 +29,11 @@ namespace ai
 
     class CastReachTargetSpellAction : public CastSpellAction {
     public:
-        CastReachTargetSpellAction(PlayerbotAI* ai, string spell, float distance) : CastSpellAction(ai, spell) 
+        CastReachTargetSpellAction(PlayerbotAI* ai, string spell, float distance) : CastSpellAction(ai, spell)
 		{
             this->distance = distance;
         }
-		virtual bool isUseful() 
+		virtual bool isUseful()
 		{
 			return AI_VALUE2(float, "distance", "current target") > distance;
 		}
@@ -41,15 +42,15 @@ namespace ai
         float distance;
     };
 
-    class ReachMeleeAction : public ReachTargetAction 
+    class ReachMeleeAction : public ReachTargetAction
 	{
     public:
         ReachMeleeAction(PlayerbotAI* ai) : ReachTargetAction(ai, "reach melee", 1.5f) {}
     };
 
-    class ReachSpellAction : public ReachTargetAction 
+    class ReachSpellAction : public ReachTargetAction
 	{
     public:
-        ReachSpellAction(PlayerbotAI* ai, float distance = SPELL_DISTANCE) : ReachTargetAction(ai, "reach spell", distance) {}
+        ReachSpellAction(PlayerbotAI* ai, float distance = sPlayerbotAIConfig.spellDistance) : ReachTargetAction(ai, "reach spell", distance) {}
     };
 }

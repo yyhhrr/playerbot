@@ -64,6 +64,7 @@
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "CharacterDatabaseCleaner.h"
 #include "ahbot/AhBot.h"
+#include "playerbot/PlayerbotAIConfig.h"
 
 INSTANTIATE_SINGLETON_1( World );
 
@@ -1374,6 +1375,7 @@ void World::SetInitialWorldSettings()
 
     sLog.outString("Initialize AuctionHouseBot...");
     sAuctionBot.Initialize();
+    sPlayerbotAIConfig.Initialize();
 
     sLog.outString( "WORLD: World initialized" );
 

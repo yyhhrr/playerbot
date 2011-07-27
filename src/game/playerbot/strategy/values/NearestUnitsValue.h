@@ -1,18 +1,19 @@
 #pragma once
 #include "../Value.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
     class NearestUnitsValue : public CalculatedValue<list<Unit*>>
 	{
 	public:
-        NearestUnitsValue(PlayerbotAI* ai, float range = BOT_SIGHT_DISTANCE) : 
+        NearestUnitsValue(PlayerbotAI* ai, float range = sPlayerbotAIConfig.sightDistance) :
             CalculatedValue<list<Unit*>>(ai), range(range) {}
-    
+
     protected:
-        void RemoveNotInLOS( list<Unit *> &targets ) 
+        void RemoveNotInLOS( list<Unit *> &targets )
         {
-            
+
 
             for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
             {
@@ -26,7 +27,7 @@ namespace ai
                     ++tIter;
             }
         }
-    
+
     protected:
         float range;
 	};
