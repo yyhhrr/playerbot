@@ -6,8 +6,8 @@ using namespace ai;
 
 bool ReviveFromCorpseAction::Execute(Event event)
 {
-    
-    
+
+
     Corpse* corpse = bot->GetCorpse();
     if (!corpse)
         return false;
@@ -20,7 +20,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         os << (reclaimTime - time(0));
         os << " secs";
         ai->TellMaster(os.str());
-        ai->SetNextCheckDelay(reclaimTime - time(0));
+        ai->SetNextCheckDelay(1000 * (reclaimTime - time(0)));
     }
     else
     {

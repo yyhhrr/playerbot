@@ -7,6 +7,7 @@
 #include "../../AttackerMapProvider.h"
 #include "../../FleeManager.h"
 #include "../../LootObjectStack.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -53,7 +54,7 @@ void MovementAction::MoveTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return;
 
-    if (distance < SPELL_DISTANCE)
+    if (distance < sPlayerbotAIConfig.spellDistance)
     {
         Follow(target, distance);
         return;
@@ -106,7 +107,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
     if (bot->GetMapId() != target->GetMapId())
         return false;
 
-    if (bot->GetDistance(target) > BOT_REACT_DISTANCE)
+    if (bot->GetDistance(target) > sPlayerbotAIConfig.reactDistance)
     {
         ai->TellMaster(LOG_LVL_DEBUG, "I am too far away");
         return false;
@@ -117,7 +118,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
 bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
-    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > BOT_REACT_DISTANCE || !bot->IsWithinLOS(x, y, z))
+    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
     {
         ai->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
         return false;
@@ -160,13 +161,13 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN));
+    float delay = 1000.0f * ceil(distance / bot->GetSpeed(MOVE_RUN));
 
-    if (delay < GLOBAL_COOLDOWN)
-        delay = GLOBAL_COOLDOWN;
+    if (delay < sPlayerbotAIConfig.globalCoolDown)
+        delay = sPlayerbotAIConfig.globalCoolDown;
 
-    if (delay > 8)
-        delay = 8;
+    if (delay > 8000)
+        delay = 8000;
 
     bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }
@@ -180,7 +181,7 @@ bool MovementAction::Flee(Unit *target)
         return true;
 
     AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
-    FleeManager manager(bot, &attackers, SPELL_DISTANCE, GetFollowAngle());
+    FleeManager manager(bot, &attackers, sPlayerbotAIConfig.spellDistance, GetFollowAngle());
 
     float rx, ry, rz;
     if (!manager.CalculateDestination(&rx, &ry, &rz))

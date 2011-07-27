@@ -3,6 +3,7 @@
 #include "LootAction.h"
 
 #include "../../LootObjectStack.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -14,7 +15,7 @@ bool LootAction::Execute(Event event)
         return false;
     }
 
-    LootObject &lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(BOT_SIGHT_DISTANCE);
+    LootObject &lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(sPlayerbotAIConfig.sightDistance);
     context->GetValue<LootObject>("loot target")->Set(lootObject);
     return true;
 }

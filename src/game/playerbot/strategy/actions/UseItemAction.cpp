@@ -13,13 +13,12 @@ bool UseItemAction::Execute(Event event)
     Item* item = AI_VALUE2(Item*, "inventory item", name);
     if (item)
     {
-        UseItem(*item);
         if (name == "food" || name == "drink")
         {
-            ai->SetNextCheckDelay(30);
+            ai->SetNextCheckDelay(30000);
             ai->TellMaster("I will eat/drink for 30 sec");
         }
-
+        UseItem(*item);
         return true;
     }
 
@@ -53,17 +52,17 @@ void UseItemAction::UseItem(Item& item)
     mm.Clear();
     bot->clearUnitState( UNIT_STAT_CHASE );
     bot->clearUnitState( UNIT_STAT_FOLLOW );
-    
+
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
-    
+
     uint8 bagIndex = item.GetBagSlot();
     uint8 slot = item.GetSlot();
     uint8 cast_count = 1;
     uint32 spellid = 0;
     uint64 item_guid = item.GetObjectGuid().GetRawValue();
     uint32 glyphIndex = 0;
-    uint8 unk_flags = 0; 
+    uint8 unk_flags = 0;
 
     WorldPacket* const packet = new WorldPacket(CMSG_USE_ITEM, 1 + 1 + 1 + 4 + 8 + 4 + 1 + 8 + 1);
     *packet << bagIndex << slot << cast_count << spellid << item_guid
@@ -101,7 +100,7 @@ void UseItemAction::UseItem(Item& item)
         Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
         if (!itemForSpell)
             continue;
-        
+
         if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
             continue;
 
@@ -122,7 +121,7 @@ void UseItemAction::UseItem(Item& item)
     bot->GetSession()->QueuePacket(packet);
 }
 
-bool UseItemAction::isPossible() 
+bool UseItemAction::isPossible()
 {
     return getName() == "use" || AI_VALUE2(uint8, "item count", getName()) > 0;
 }

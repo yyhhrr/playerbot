@@ -1050,6 +1050,15 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\EmoteAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\ahbot\ConsumableCategory.cpp">
+      <Filter>AhBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\ahbot\TradeCategory.cpp">
+      <Filter>AhBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIConfig.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2191,6 +2200,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\ahbot\ItemBag.h">
       <Filter>AhBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ahbot\ConsumableCategory.h">
+      <Filter>AhBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ahbot\TradeCategory.h">
+      <Filter>AhBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIConfig.h">
+      <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

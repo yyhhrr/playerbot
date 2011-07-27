@@ -184,7 +184,7 @@ protected:
     void out_of_react()
     {
         engine->addStrategy("follow master");
-        set<float>("distance", "master target", BOT_REACT_DISTANCE / 2 + 10);
+        set<float>("distance", "master target", 100.0f / 2 + 10);
         tick();
         assertActions(">S:tell out of react range");
     }

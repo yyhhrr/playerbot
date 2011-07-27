@@ -7,7 +7,7 @@ using namespace ai;
 
 bool LowManaTrigger::IsActive()
 {
-    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < LOW_HEALTH_PERCENT;
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < 40;
 }
 
 
@@ -88,7 +88,7 @@ bool SpellCanBeCastTrigger::IsActive()
 
 bool RandomTrigger::IsActive()
 {
-    int vl  = rand() % probability;
+    int vl  = rand() % (probability * 10);
     return vl == 0;
 }
 

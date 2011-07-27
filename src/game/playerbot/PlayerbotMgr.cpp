@@ -2,6 +2,7 @@
 #include "../pchdef.h"
 #include "playerbot.h"
 #include "strategy/values/SharedValueContext.h"
+#include "PlayerbotAIConfig.h"
 
 
 class LoginQueryHolder;
@@ -14,12 +15,12 @@ public:
     virtual ~SharedPlayerbotAI() { }
 
 public:
-    SharedValueContext* GetSharedValues() 
+    SharedValueContext* GetSharedValues()
     {
-        return &sharedValues; 
+        return &sharedValues;
     }
 
-    virtual void UpdateAI(uint32 elapsed)
+    virtual void UpdateAIInternal(uint32 elapsed)
     {
         sharedValues.Update();
     }
@@ -30,17 +31,11 @@ private:
 
 PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(master) , sharedAi(NULL)
 {
-    // load config variables
-	m_confDisableBots = sConfig.GetBoolDefault( "PlayerbotAI.DisableBots", false );
-    m_confDebugWhisper = sConfig.GetBoolDefault( "PlayerbotAI.DebugWhisper", false );
-    m_confFollowDistance[0] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 0.5f );
-    m_confFollowDistance[1] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 1.0f );
-
     for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); spellId++)
         sSpellStore.LookupEntry(spellId);
 }
 
-PlayerbotMgr::~PlayerbotMgr() 
+PlayerbotMgr::~PlayerbotMgr()
 {
     LogoutAllBots();
     if (sharedAi)
@@ -50,15 +45,12 @@ PlayerbotMgr::~PlayerbotMgr()
     }
 }
 
-void PlayerbotMgr::UpdateAI(const uint32 p_time) 
+void PlayerbotMgr::UpdateAIInternal(uint32 elapsed)
 {
-    if (!CanUpdateAI())
-        return;
+    if (sharedAi)
+        sharedAi->UpdateAI(elapsed);
 
-    if (sharedAi) 
-        sharedAi->UpdateAI(p_time);
-
-    SetNextCheckDelay(GLOBAL_COOLDOWN);
+    SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
 }
 
 void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -126,7 +118,7 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     m_playerBots[bot->GetObjectGuid().GetRawValue()] = bot;
 
     ObjectGuid masterGuid = m_master->GetObjectGuid();
-    if (m_master->GetGroup() && 
+    if (m_master->GetGroup() &&
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
 
@@ -135,23 +127,23 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
 
 bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 {
-    if (guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
+    if (!sPlayerbotAIConfig.enabled || guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
         return false;
 
     PlayerbotMgr* mgr = session->GetPlayer()->GetPlayerbotMgr();
 
     if (cmdStr == "add" || cmdStr == "login")
     {
-        if (mgr->GetPlayerBot(guid.GetRawValue())) 
+        if (mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
-        
+
         mgr->AddPlayerBot(guid.GetRawValue(), session);
     }
     else if (cmdStr == "remove" || cmdStr == "logout")
     {
         if (! mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
-        
+
         mgr->LogoutPlayerBot(guid.GetRawValue());
     }
 
@@ -215,10 +207,10 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 
         bool res = true;
         Group::MemberSlotList slots = group->GetMemberSlots();
-        for (Group::member_citerator i = slots.begin(); i != slots.end(); i++) 
+        for (Group::member_citerator i = slots.begin(); i != slots.end(); i++)
         {
 			ObjectGuid member = i->guid;
-			
+
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 

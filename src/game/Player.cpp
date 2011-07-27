@@ -1467,9 +1467,9 @@ void Player::Update( uint32 update_diff, uint32 p_time )
 
 	    // Playerbot mod
     if (m_playerbotAI)
-        m_playerbotAI->UpdateAI(p_time);
+        m_playerbotAI->UpdateAI(update_diff);
     else if (m_playerbotMgr)
-        m_playerbotMgr->UpdateAI(p_time);
+        m_playerbotMgr->UpdateAI(update_diff);
 }
 
 void Player::SetDeathState(DeathState s)
@@ -18660,7 +18660,7 @@ void Player::AddSpellMod(Aura* aura, bool apply)
         else
             _mask2= uint32(1) << (eff - 64);
 
-        if (aura->GetSpellProto()->IsFitToFamilyMask(_mask, _mask2))
+        if (aura->GetAuraSpellClassMask().IsFitToFamilyMask(_mask, _mask2))
         {
             int32 val = 0;
             for (AuraList::const_iterator itr = m_spellMods[mod->m_miscvalue].begin(); itr != m_spellMods[mod->m_miscvalue].end(); ++itr)

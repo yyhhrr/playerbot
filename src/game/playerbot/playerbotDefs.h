@@ -1,11 +1,2 @@
 #pragma once
 
-#define LOW_HEALTH_PERCENT 40
-
-#define GLOBAL_COOLDOWN 1
-#define BOT_REACT_DELAY 1
-
-#define BOT_SIGHT_DISTANCE 35.0f
-#define SPELL_DISTANCE 25.0f
-#define BOT_REACT_DISTANCE 100.0f
-#define BOT_GRIND_DISTANCE 50.0f

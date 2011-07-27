@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "AreaTriggerAction.h"
+#include "../../PlayerbotAIConfig.h"
 
 
 using namespace ai;
@@ -27,7 +28,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
         return true;
     }
 
-    if (bot->GetMapId() != atEntry->mapid || bot->GetDistance(atEntry->x, atEntry->y, atEntry->z) > BOT_SIGHT_DISTANCE)
+    if (bot->GetMapId() != atEntry->mapid || bot->GetDistance(atEntry->x, atEntry->y, atEntry->z) > sPlayerbotAIConfig.sightDistance)
     {
         ai->TellMaster("I will not follow you - too far away");
         return true;
@@ -38,7 +39,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
     bot->SendHeartBeat();
-    ai->SetNextCheckDelay(3);
+    ai->SetNextCheckDelay(3000);
     ai->TellMaster("I will teleport in 3 seconds");
 
     context->GetValue<LastMovement&>("last movement")->Get().lastAreaTrigger = triggerId;

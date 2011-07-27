@@ -1,6 +1,7 @@
 #pragma once
 #include "../Value.h"
 #include "../LootObjectStack.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
@@ -13,7 +14,7 @@ namespace ai
         virtual bool Calculate()
         {
             return !AI_VALUE(bool, "can loot") &&
-                    AI_VALUE(LootObjectStack*, "available loot")->CanLoot(BOT_SIGHT_DISTANCE) &&
+                    AI_VALUE(LootObjectStack*, "available loot")->CanLoot(sPlayerbotAIConfig.sightDistance) &&
                     !bot->IsMounted();
         }
     };

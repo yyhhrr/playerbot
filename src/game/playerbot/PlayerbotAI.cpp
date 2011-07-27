@@ -12,6 +12,7 @@
 #include "strategy/actions/LogLevelAction.h"
 #include "strategy/values/LastSpellCastValue.h"
 #include "LootObjectStack.h"
+#include "PlayerbotAIConfig.h"
 
 using namespace ai;
 using namespace std;
@@ -73,8 +74,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
     botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
     botPacketHandlers[SMSG_LOOT_RESPONSE] = "loot response";
-    
-    botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";    
+
+    botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";
 }
 
 PlayerbotAI::~PlayerbotAI()
@@ -89,9 +90,9 @@ PlayerbotAI::~PlayerbotAI()
         delete aiObjectContext;
 }
 
-void PlayerbotAI::UpdateAI(uint32 elapsed)
+void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
 {
-	if (!CanUpdateAI() || bot->IsBeingTeleported())
+	if (bot->IsBeingTeleported())
 		return;
 
     ChangeActiveEngineIfNecessary();
@@ -116,7 +117,6 @@ void PlayerbotAI::UpdateAI(uint32 elapsed)
     }
 
 	DoNextAction();
-	YieldThread();
 }
 
 void PlayerbotAI::HandleTeleportAck()
@@ -166,7 +166,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 
         currentEngine = engines[BOT_STATE_NON_COMBAT];
 
-        nextAICheckTime = 0;
+        nextAICheckDelay = 0;
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
 
@@ -243,7 +243,7 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
     if (lastSpell.id != spellid)
         return;
 
-    int castTimeSpent = time(0) - lastSpell.time;
+    int castTimeSpent = 1000 * (time(0) - lastSpell.time);
 
     int32 globalCooldown = CalculateGlobalCooldown(lastSpell.id);
     if (castTimeSpent < globalCooldown)
@@ -270,9 +270,9 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
         return 0;
 
     if (spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQ_WAND)
-        return GLOBAL_COOLDOWN;
+        return sPlayerbotAIConfig.globalCoolDown;
 
-    return GLOBAL_COOLDOWN;
+    return sPlayerbotAIConfig.globalCoolDown;
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -485,9 +485,9 @@ Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
 
     list<Unit *> targets;
 
-    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
     MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
-    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+    Cell::VisitAllObjects(bot, searcher, sPlayerbotAIConfig.sightDistance);
 
     for(list<Unit *>::iterator i = targets.begin(); i != targets.end(); i++)
     {
@@ -509,9 +509,9 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 
     list<GameObject*> targets;
 
-    MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
     MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectByGuidInRangeCheck> searcher(targets, u_check);
-    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+    Cell::VisitAllObjects(bot, searcher, sPlayerbotAIConfig.sightDistance);
 
     for(list<GameObject*>::iterator i = targets.begin(); i != targets.end(); i++)
     {
@@ -668,9 +668,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!target)
         target = bot;
 
-    if (!bot->isInFrontInMap(target, 10))
-        bot->SetInFront(target);
-
     aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get().Set(spellId, target->GetObjectGuid(), time(0));
     aiObjectContext->GetValue<LastMovement&>("last movement")->Get().Set(NULL);
 
@@ -681,6 +678,8 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
+
+    bot->SetFacingTo(bot->GetAngle(target));
 
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
     ObjectGuid oldSel = bot->GetSelectionGuid();
@@ -733,9 +732,13 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     float castTime = GetSpellCastTime(pSpellInfo);
     if (IsChanneledSpell(pSpellInfo))
-        castTime += GetSpellDuration(pSpellInfo);
+    {
+        int32 duration = GetSpellDuration(pSpellInfo);
+        if (duration > 0)
+            castTime += duration;
+    }
 
-    castTime = ceil(castTime / 1000.0);
+    castTime = ceil(castTime);
 
     uint32 globalCooldown = CalculateGlobalCooldown(spellId);
     if (castTime < globalCooldown)

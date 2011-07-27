@@ -1,5 +1,7 @@
 #include "Category.h"
 #include "ItemBag.h"
+#include "ConsumableCategory.h"
+#include "TradeCategory.h"
 
 using namespace ahbot;
 
@@ -8,20 +10,40 @@ Equip Equip::instance;
 Recipe Recipe::instance;
 Reagent Reagent::instance;
 Enchant Enchant::instance;
-Trade Trade::instance;
 ahbot::Quest ahbot::Quest::instance;
-Consumable Consumable::instance;
+Alchemy Alchemy::instance;
+Enchants Enchants::instance;
+Food Food::instance;
+OtherConsumable OtherConsumable::instance;
+Cloth Cloth::instance;
+Leather Leather::instance;
+Herb Herb::instance;
+Meat Meat::instance;
+Metal Metal::instance;
+Disenchants Disenchants::instance;
+Engineering Engineering::instance;
+OtherTrade OtherTrade::instance;
 
-Category* Categories[MAX_AHBOT_CATEGORIES] = 
+Category* Categories[MAX_AHBOT_CATEGORIES] =
 {
     &Other::instance,
     &Equip::instance,
     &Recipe::instance,
     &Reagent::instance,
     &Enchant::instance,
-    &Trade::instance,
     &ahbot::Quest::instance,
-    &Consumable::instance
+    &Alchemy::instance,
+    &Enchants::instance,
+    &Food::instance,
+    &OtherConsumable::instance,
+    &Cloth::instance,
+    &Leather::instance,
+    &Herb::instance,
+    &Meat::instance,
+    &Metal::instance,
+    &Disenchants::instance,
+    &Engineering::instance,
+    &OtherTrade::instance
 };
 
 ItemBag::ItemBag()
@@ -32,7 +54,7 @@ ItemBag::ItemBag()
     }
 }
 
-void ItemBag::Init(bool silent) 
+void ItemBag::Init(bool silent)
 {
     if (silent)
     {
@@ -42,7 +64,7 @@ void ItemBag::Init(bool silent)
 
     sLog.outString("Loading/Scanning %s...", GetName().c_str());
 
-    Load(); 
+    Load();
 
     for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
     {
@@ -116,7 +138,7 @@ void InAuctionItemsBag::Load()
     AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionId);
     if(!ahEntry)
         return;
-    
+
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
     AuctionHouseObject::AuctionEntryMap const& auctionEntryMap = auctionHouse->GetAuctions();
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap.begin(); itr != auctionEntryMap.end(); ++itr)
@@ -124,7 +146,7 @@ void InAuctionItemsBag::Load()
         ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itr->second->itemTemplate);
         if (!proto)
             continue;
-        
+
         Add(proto);
     }
 }

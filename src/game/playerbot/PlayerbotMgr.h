@@ -18,7 +18,7 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
         PlayerbotMgr(Player* const master);
         virtual ~PlayerbotMgr();
 
-        void UpdateAI(uint32 elapsed);
+        virtual void UpdateAIInternal(uint32 elapsed);
         void HandleMasterIncomingPacket(const WorldPacket& packet);
         void HandleMasterOutgoingPacket(const WorldPacket& packet);
 
@@ -33,15 +33,9 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
         void OnBotLogin(Player * const bot);
         void SaveToDB();
 
-    public:
-        // config variables
-		bool m_confDisableBots;
-        bool m_confDebugWhisper;
-        float m_confFollowDistance[2];
-
     private:
         Player* const m_master;
-        PlayerBotMap m_playerBots;     
+        PlayerBotMap m_playerBots;
         PlayerbotAIBase *sharedAi;
 };
 

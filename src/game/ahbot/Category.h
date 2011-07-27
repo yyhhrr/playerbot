@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define MAX_AHBOT_CATEGORIES 8
+#define MAX_AHBOT_CATEGORIES 18
 
 
 namespace ahbot
@@ -59,7 +59,7 @@ namespace ahbot
         }
 
         virtual string GetName() { return "consumable"; }
-    
+
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
             return 10;
@@ -93,7 +93,7 @@ namespace ahbot
             return proto->Class == ITEM_CLASS_QUEST;
         }
         virtual string GetName() { return "quest"; }
-        
+
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
             return 5;
@@ -112,7 +112,7 @@ namespace ahbot
             return proto->Class == ITEM_CLASS_TRADE_GOODS;
         }
         virtual string GetName() { return "trade"; }
-        
+
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
             return 5;
@@ -124,7 +124,7 @@ namespace ahbot
             if (maxStack < 2)
                 return maxStack;
 
-            switch (proto->Quality) 
+            switch (proto->Quality)
             {
             case ITEM_QUALITY_NORMAL:
                 return maxStack;
@@ -145,12 +145,12 @@ namespace ahbot
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
-            return proto->Class == ITEM_CLASS_PERMANENT || 
-                proto->Class == ITEM_CLASS_GEM || 
+            return proto->Class == ITEM_CLASS_PERMANENT ||
+                proto->Class == ITEM_CLASS_GEM ||
                 proto->Class == ITEM_CLASS_GLYPH;
         }
         virtual string GetName() { return "enchant"; }
-        
+
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
             return 5;
@@ -209,8 +209,8 @@ namespace ahbot
         virtual bool Contains(ItemPrototype const* proto)
         {
             return proto->Class == ITEM_CLASS_WEAPON ||
-                proto->Class == ITEM_CLASS_ARMOR || 
-                proto->Class == ITEM_CLASS_QUIVER || 
+                proto->Class == ITEM_CLASS_ARMOR ||
+                proto->Class == ITEM_CLASS_QUIVER ||
                 proto->Class == ITEM_CLASS_CONTAINER;
         }
         virtual string GetName() { return "equip"; }
@@ -236,11 +236,11 @@ namespace ahbot
         {
             return proto->Quality > ITEM_QUALITY_POOR && (
                 proto->Class == ITEM_CLASS_MISC ||
-                proto->Class == ITEM_CLASS_GENERIC || 
+                proto->Class == ITEM_CLASS_GENERIC ||
                 proto->Class == ITEM_CLASS_MONEY);
         }
         virtual string GetName() { return "other"; }
-        
+
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
         {
             return 1;
