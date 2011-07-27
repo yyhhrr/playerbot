@@ -59,7 +59,8 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
     bot->Attack(target, true);
-    bot->SetFacingTo(bot->GetAngle(target));
+    if (!bot->isInFront(target, ATTACK_DISTANCE))
+        bot->SetFacingTo(bot->GetAngle(target));
 
     Pet* pet = bot->GetPet();
     if (pet)

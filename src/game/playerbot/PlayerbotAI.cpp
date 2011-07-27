@@ -346,7 +346,7 @@ void PlayerbotAI::DoNextAction()
         return;
 
     LastMovement& movement = aiObjectContext->GetValue<LastMovement&>("last movement")->Get();
-    movement.Update(bot);
+    //movement.Update(bot);
 }
 
 void PlayerbotAI::ReInitCurrentEngine()
@@ -679,7 +679,8 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
-    bot->SetFacingTo(bot->GetAngle(target));
+    if (!bot->isInFront(target, sPlayerbotAIConfig.spellDistance))
+        bot->SetFacingTo(bot->GetAngle(target));
 
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
     ObjectGuid oldSel = bot->GetSelectionGuid();

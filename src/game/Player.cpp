@@ -61,9 +61,6 @@
 #include "AchievementMgr.h"
 #include "Mail.h"
 
-// Playerbot mod:
-#include "playerbot/playerbot.h"
-
 #include <cmath>
 
 #define ZONE_UPDATE_INTERVAL (1*IN_MILLISECONDS)
@@ -381,10 +378,6 @@ Player::Player (WorldSession *session): Unit(), m_mover(this), m_camera(this), m
 {
     m_transport = 0;
 
-    // Playerbot mod:
-    m_playerbotAI = 0;
-    m_playerbotMgr = 0;
-
     m_speakTime = 0;
     m_speakCount = 0;
 
@@ -601,16 +594,6 @@ Player::~Player ()
 
     delete m_declinedname;
     delete m_runes;
-
-    // Playerbot mod
-    if (m_playerbotAI) {
-        delete m_playerbotAI;
-        m_playerbotAI = 0;
-    }
-    if (m_playerbotMgr) {
-        delete m_playerbotMgr;
-        m_playerbotMgr = 0;
-    }
 }
 
 void Player::CleanupsBeforeDelete()
@@ -1464,12 +1447,6 @@ void Player::Update( uint32 update_diff, uint32 p_time )
 
     if (IsHasDelayedTeleport())
         TeleportTo(m_teleport_dest, m_teleport_options);
-
-	    // Playerbot mod
-    if (m_playerbotAI)
-        m_playerbotAI->UpdateAI(update_diff);
-    else if (m_playerbotMgr)
-        m_playerbotMgr->UpdateAI(update_diff);
 }
 
 void Player::SetDeathState(DeathState s)
@@ -15254,46 +15231,6 @@ void Player::SendQuestUpdateAddCreatureOrGo( Quest const* pQuest, ObjectGuid gui
 /***                   LOAD SYSTEM                     ***/
 /*********************************************************/
 
-bool Player::MinimalLoadFromDB( QueryResult *result, uint32 guid )
-{
-    bool delete_result = true;
-    if (!result)
-    {
-        //                                        0     1           2           3           4    5          6          7
-        result = CharacterDatabase.PQuery("SELECT name, position_x, position_y, position_z, map, totaltime, leveltime, at_login FROM characters WHERE guid = '%u'",guid);
-        if (!result)
-            return false;
-    }
-    else
-        delete_result = false;
-
-    Field *fields = result->Fetch();
-
-    // overwrite possible wrong/corrupted guid
-    Object::_Create( guid, 0, HIGHGUID_PLAYER );
-
-    m_name = fields[0].GetCppString();
-
-    Relocate(fields[1].GetFloat(),fields[2].GetFloat(),fields[3].GetFloat());
-    SetLocationMapId(fields[4].GetUInt32());
-
-    m_Played_time[PLAYED_TIME_TOTAL] = fields[5].GetUInt32();
-    m_Played_time[PLAYED_TIME_LEVEL] = fields[6].GetUInt32();
-
-    m_atLoginFlags = fields[7].GetUInt32();
-
-    if (delete_result)
-        delete result;
-
-    for (int i = 0; i < PLAYER_SLOTS_COUNT; ++i)
-        m_items[i] = NULL;
-
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))
-        m_deathState = DEAD;
-
-    return true;
-}
-
 void Player::_LoadDeclinedNames(QueryResult* result)
 {
     if(!result)
@@ -17463,10 +17400,6 @@ void Player::SaveToDB()
     // save pet (hunter pet level and experience and all type pets health/mana).
     if (Pet* pet = GetPet())
         pet->SavePetToDB(PET_SAVE_AS_CURRENT);
-
-    // playerbot mod
-    if (m_playerbotMgr) m_playerbotMgr->SaveToDB();
-    // end
 }
 
 // fast save function for item/money cheating preventing - save only inventory and money state
@@ -18660,7 +18593,7 @@ void Player::AddSpellMod(Aura* aura, bool apply)
         else
             _mask2= uint32(1) << (eff - 64);
 
-        if (aura->GetAuraSpellClassMask().IsFitToFamilyMask(_mask, _mask2))
+        if (aura->GetSpellProto()->IsFitToFamilyMask(_mask, _mask2))
         {
             int32 val = 0;
             for (AuraList::const_iterator itr = m_spellMods[mod->m_miscvalue].begin(); itr != m_spellMods[mod->m_miscvalue].end(); ++itr)

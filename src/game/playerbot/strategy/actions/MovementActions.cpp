@@ -19,6 +19,9 @@ void MovementAction::MoveNear(uint32 mapId, float x, float y, float z, float dis
 
 void MovementAction::MoveNear(WorldObject* target, float distance)
 {
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+
     if (!target)
         return;
 
@@ -31,13 +34,14 @@ void MovementAction::MoveNear(WorldObject* target, float distance)
 
 void MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
 {
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+
     if (!IsMovingAllowed(mapId, x, y, z))
         return;
 
     bot->UpdateGroundPositionZ(x, y, z);
 
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
     mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
 
@@ -51,14 +55,11 @@ void MovementAction::MoveTo(WorldObject* target)
 
 void MovementAction::MoveTo(Unit* target, float distance)
 {
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+
     if (!IsMovingAllowed(target))
         return;
-
-    if (distance < sPlayerbotAIConfig.spellDistance)
-    {
-        Follow(target, distance);
-        return;
-    }
 
     float bx = bot->GetPositionX();
     float by = bot->GetPositionY();
@@ -107,9 +108,15 @@ bool MovementAction::IsMovingAllowed(Unit* target)
     if (bot->GetMapId() != target->GetMapId())
         return false;
 
-    if (bot->GetDistance(target) > sPlayerbotAIConfig.reactDistance)
+    float distance = bot->GetDistance(target);
+
+    if (distance < ATTACK_DISTANCE)
+        return false;
+
+    if (distance > sPlayerbotAIConfig.reactDistance)
     {
         ai->TellMaster(LOG_LVL_DEBUG, "I am too far away");
+        ai->SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
         return false;
     }
 
@@ -143,14 +150,15 @@ void MovementAction::Follow(Unit* target, float distance)
 
 void MovementAction::Follow(Unit* target, float distance, float angle)
 {
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+
     if (!IsMovingAllowed(target))
         return;
 
     if (target->IsFriendlyTo(bot) && bot->IsMounted())
         distance += angle;
 
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
     mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
