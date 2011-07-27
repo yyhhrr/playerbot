@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "CcTargetValue.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -29,7 +30,7 @@ protected:
         if (tankCount || dpsCount || !ai->CanCastSpell(spell, creature))
             return;
 
-        float minDistance = BOT_REACT_DISTANCE;
+        float minDistance = sPlayerbotAIConfig.reactDistance;
         Group* group = bot->GetGroup();
         if (group)
         {

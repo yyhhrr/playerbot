@@ -1,5 +1,6 @@
 #pragma once
 #include "../Trigger.h"
+#include "../../PlayerbotAIConfig.h"
 
 #define BUFF_TRIGGER(clazz, spell, action) \
     class clazz : public BuffTrigger \
@@ -134,7 +135,7 @@ namespace ai
     class AttackerCountTrigger : public Trigger
     {
     public:
-        AttackerCountTrigger(PlayerbotAI* ai, int amount, float distance = BOT_SIGHT_DISTANCE) : Trigger(ai)
+        AttackerCountTrigger(PlayerbotAI* ai, int amount, float distance = sPlayerbotAIConfig.sightDistance) : Trigger(ai)
         {
             this->amount = amount;
             this->distance = distance;

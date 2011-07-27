@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "GrindTargetValue.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -39,13 +40,13 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
     {
         Unit* unit = *tIter;
 
-        if (abs(bot->GetPositionZ() - unit->GetPositionZ()) > SPELL_DISTANCE)
+        if (abs(bot->GetPositionZ() - unit->GetPositionZ()) > sPlayerbotAIConfig.spellDistance)
             continue;
 
         if (GetTargetingPlayerCount(unit) > assistCount)
             continue;
 
-        if (master->GetDistance(unit) >= BOT_GRIND_DISTANCE)
+        if (master->GetDistance(unit) >= sPlayerbotAIConfig.grindDistance)
             continue;
 
         Group::MemberSlotList const& groupSlot = group->GetMemberSlots();

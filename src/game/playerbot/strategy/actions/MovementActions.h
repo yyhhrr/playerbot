@@ -1,12 +1,13 @@
 #pragma once
 
 #include "../Action.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
     class MovementAction : public Action {
     public:
-        MovementAction(PlayerbotAI* ai, string name) : Action(ai, name) 
+        MovementAction(PlayerbotAI* ai, string name) : Action(ai, name)
         {
             bot = ai->GetBot();
         }
@@ -30,10 +31,10 @@ namespace ai
         Player* bot;
     };
 
-    class FleeAction : public MovementAction 
+    class FleeAction : public MovementAction
     {
     public:
-        FleeAction(PlayerbotAI* ai, float distance = SPELL_DISTANCE) : MovementAction(ai, "flee") 
+        FleeAction(PlayerbotAI* ai, float distance = sPlayerbotAIConfig.spellDistance) : MovementAction(ai, "flee")
         {
 			this->distance = distance;
 		}
@@ -45,21 +46,21 @@ namespace ai
     };
 
 
-    class GoAwayAction : public MovementAction 
+    class GoAwayAction : public MovementAction
     {
     public:
         GoAwayAction(PlayerbotAI* ai) : MovementAction(ai, "goaway") {}
         virtual bool Execute(Event event);
     };
 
-    class MoveRandomAction : public MovementAction 
+    class MoveRandomAction : public MovementAction
     {
     public:
         MoveRandomAction(PlayerbotAI* ai) : MovementAction(ai, "move random") {}
-        virtual bool Execute(Event event); 
+        virtual bool Execute(Event event);
     };
 
-    class MoveToLootAction : public MovementAction 
+    class MoveToLootAction : public MovementAction
     {
     public:
         MoveToLootAction(PlayerbotAI* ai) : MovementAction(ai, "move to loot") {}

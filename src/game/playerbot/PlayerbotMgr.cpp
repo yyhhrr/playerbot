@@ -2,6 +2,7 @@
 #include "../pchdef.h"
 #include "playerbot.h"
 #include "strategy/values/SharedValueContext.h"
+#include "PlayerbotAIConfig.h"
 
 
 class LoginQueryHolder;
@@ -30,12 +31,6 @@ private:
 
 PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(master) , sharedAi(NULL)
 {
-    // load config variables
-	m_confDisableBots = sConfig.GetBoolDefault( "PlayerbotAI.DisableBots", false );
-    m_confDebugWhisper = sConfig.GetBoolDefault( "PlayerbotAI.DebugWhisper", false );
-    m_confFollowDistance[0] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 0.5f );
-    m_confFollowDistance[1] = sConfig.GetFloatDefault( "PlayerbotAI.FollowDistanceMin", 1.0f );
-
     for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); spellId++)
         sSpellStore.LookupEntry(spellId);
 }
@@ -55,7 +50,7 @@ void PlayerbotMgr::UpdateAIInternal(uint32 elapsed)
     if (sharedAi)
         sharedAi->UpdateAI(elapsed);
 
-    SetNextCheckDelay(GLOBAL_COOLDOWN);
+    SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
 }
 
 void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -132,7 +127,7 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
 
 bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 {
-    if (guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
+    if (!sPlayerbotAIConfig.enabled || guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
         return false;
 
     PlayerbotMgr* mgr = session->GetPlayer()->GetPlayerbotMgr();

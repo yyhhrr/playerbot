@@ -1,0 +1,50 @@
+##########################################
+# MANGOS Ai Playerbot Configuration file #
+##########################################
+
+[AiPlayerbotConf]
+ConfVersion=2010102201
+
+###################################################################################################################
+# AI PLAYERBOT SETTINGS
+#
+#    AiPlayerbot.enabled
+#        General enable or disable Ai Playerbot
+#    Default 0 (Disabled)
+#
+#    AiPlayerbot.GlobalCooldown
+#        Delay in milliseconds after short bot actions, i.e. casting an instant spell. Increasing greayly improves performance
+#        but makes bots lazy
+#    Default 1000 (1 sec)
+#
+#    AiPlayerbot.ReactDelay
+#        Delay in milliseconds after very short bot actions, i.e. response in chat. Increasing greayly improves performance
+#        but makes bots lazy
+#    Default 100 (0.1 sec)
+#
+#    AiPlayerbot.SightDistance
+#        Distance to game objects, targets, etc. bot can interact to
+#    Default 35
+#
+#    AiPlayerbot.SpellDistance
+#        Distance to target bot needs to maintain before casting a ranged spell
+#    Default 35
+#
+#    AiPlayerbot.ReactDistance
+#        Maximim distance from master bot can react (does not affect chat)
+#    Default 35
+#
+#    AiPlayerbot.GrindDistance
+#        Distance to game objects, targets, etc. bot can interact to while grinding
+#    Default 35
+#
+###################################################################################################################
+
+AiPlayerbot.enabled=1
+AiPlayerbot.GlobalCooldown=1000
+AiPlayerbot.ReactDelay=100
+
+AiPlayerbot.SightDistance=35
+AiPlayerbot.SpellDistance=25
+AiPlayerbot.ReactDistance=100
+AiPlayerbot.GrindDistance=50

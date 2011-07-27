@@ -1,17 +1,18 @@
 #pragma once
 #include "../Value.h"
 #include "NearestUnitsValue.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
     class NearestCorpsesValue : public NearestUnitsValue
 	{
 	public:
-        NearestCorpsesValue(PlayerbotAI* ai, float range = BOT_SIGHT_DISTANCE) : 
+        NearestCorpsesValue(PlayerbotAI* ai, float range = sPlayerbotAIConfig.sightDistance) :
           NearestUnitsValue(ai) {}
-    
+
     protected:
         virtual list<Unit*> Calculate();
-    
+
 	};
 }

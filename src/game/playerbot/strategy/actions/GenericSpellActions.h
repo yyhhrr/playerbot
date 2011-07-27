@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Action.h"
+#include "../../PlayerbotAIConfig.h"
 
 #define BEGIN_SPELL_ACTION(clazz, name) \
 class clazz : public CastSpellAction \
@@ -39,7 +40,7 @@ class clazz : public CastMeleeSpellAction \
 class clazz : public BuffOnPartyAction \
         { \
         public: \
-        clazz(PlayerbotAI* ai) : BuffOnPartyAction(ai, name) {} 
+        clazz(PlayerbotAI* ai) : BuffOnPartyAction(ai, name) {}
 
 namespace ai
 {
@@ -47,7 +48,7 @@ namespace ai
     {
     public:
         CastSpellAction(PlayerbotAI* ai, string spell) : Action(ai, spell),
-			range(SPELL_DISTANCE)
+			range(sPlayerbotAIConfig.spellDistance)
         {
             this->spell = spell;
         }
@@ -57,9 +58,9 @@ namespace ai
         virtual bool isPossible();
 		virtual bool isUseful();
 
-		virtual NextAction** getPrerequisites() 
+		virtual NextAction** getPrerequisites()
 		{
-			if (range > SPELL_DISTANCE)
+			if (range > sPlayerbotAIConfig.spellDistance)
 				return NULL;
 			else if (range > ATTACK_DISTANCE)
 				return NextAction::merge( NextAction::array(0, new NextAction("reach spell"), NULL), Action::getPrerequisites());
@@ -101,23 +102,23 @@ namespace ai
 	class CastBuffSpellAction : public CastAuraSpellAction
 	{
 	public:
-		CastBuffSpellAction(PlayerbotAI* ai, string spell) : CastAuraSpellAction(ai, spell) 
+		CastBuffSpellAction(PlayerbotAI* ai, string spell) : CastAuraSpellAction(ai, spell)
 		{
-			range = BOT_REACT_DISTANCE;
+			range = sPlayerbotAIConfig.spellDistance;
 		}
-		
+
         virtual string GetTargetName() { return "self target"; }
 	};
 
     //---------------------------------------------------------------------------------------------------------------------
-    
+
     class CastHealingSpellAction : public CastAuraSpellAction
     {
     public:
-        CastHealingSpellAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell) 
+        CastHealingSpellAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : CastAuraSpellAction(ai, spell)
 		{
             this->estAmount = estAmount;
-			range = BOT_REACT_DISTANCE;
+			range = sPlayerbotAIConfig.spellDistance;
         }
 		virtual string GetTargetName() { return "self target"; }
         virtual bool isUseful();
@@ -129,9 +130,9 @@ namespace ai
 	class CastCureSpellAction : public CastSpellAction
 	{
 	public:
-		CastCureSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) 
+		CastCureSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell)
 		{
-			range = BOT_REACT_DISTANCE;
+			range = sPlayerbotAIConfig.spellDistance;
 		}
 
 		virtual string GetTargetName() { return "self target"; }
@@ -139,7 +140,7 @@ namespace ai
 
 	class PartyMemberActionNameSupport {
 	public:
-		PartyMemberActionNameSupport(string spell) 
+		PartyMemberActionNameSupport(string spell)
 		{
 			name = string(spell) + " on party";
 		}
@@ -153,7 +154,7 @@ namespace ai
     class HealPartyMemberAction : public CastHealingSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        HealPartyMemberAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : 
+        HealPartyMemberAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) :
 			CastHealingSpellAction(ai, spell, estAmount), PartyMemberActionNameSupport(spell) {}
 
 		virtual string GetTargetName() { return "party member to heal"; }
@@ -172,7 +173,7 @@ namespace ai
     class CurePartyMemberAction : public CastSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        CurePartyMemberAction(PlayerbotAI* ai, string spell, uint32 dispelType) : 
+        CurePartyMemberAction(PlayerbotAI* ai, string spell, uint32 dispelType) :
 			CastSpellAction(ai, spell), PartyMemberActionNameSupport(spell)
         {
             this->dispelType = dispelType;
@@ -190,9 +191,9 @@ namespace ai
     class BuffOnPartyAction : public CastBuffSpellAction, public PartyMemberActionNameSupport
     {
     public:
-        BuffOnPartyAction(PlayerbotAI* ai, string spell) : 
+        BuffOnPartyAction(PlayerbotAI* ai, string spell) :
 			CastBuffSpellAction(ai, spell), PartyMemberActionNameSupport(spell) {}
-    public: 
+    public:
 		virtual Value<Unit*>* GetTargetValue();
 		virtual string getName() { return PartyMemberActionNameSupport::getName(); }
     };
@@ -222,5 +223,5 @@ namespace ai
     public:
         CastArcaneTorrentAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "arcane torrent") {}
     };
-    
+
 }

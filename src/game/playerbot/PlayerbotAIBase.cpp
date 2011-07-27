@@ -1,5 +1,6 @@
 #include "../pchdef.h"
 #include "playerbot.h"
+#include "PlayerbotAIConfig.h"
 
 using namespace ai;
 using namespace std;
@@ -39,6 +40,6 @@ bool PlayerbotAIBase::CanUpdateAI()
 
 void PlayerbotAIBase::YieldThread()
 {
-    if (nextAICheckDelay < BOT_REACT_DELAY)
-        nextAICheckDelay = BOT_REACT_DELAY;
+    if (nextAICheckDelay < sPlayerbotAIConfig.reactDelay)
+        nextAICheckDelay = sPlayerbotAIConfig.reactDelay;
 }

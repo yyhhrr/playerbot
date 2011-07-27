@@ -12,6 +12,7 @@
 #include "strategy/actions/LogLevelAction.h"
 #include "strategy/values/LastSpellCastValue.h"
 #include "LootObjectStack.h"
+#include "PlayerbotAIConfig.h"
 
 using namespace ai;
 using namespace std;
@@ -269,9 +270,9 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
         return 0;
 
     if (spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQ_WAND)
-        return GLOBAL_COOLDOWN;
+        return sPlayerbotAIConfig.globalCoolDown;
 
-    return GLOBAL_COOLDOWN;
+    return sPlayerbotAIConfig.globalCoolDown;
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
@@ -484,9 +485,9 @@ Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
 
     list<Unit *> targets;
 
-    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
     MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
-    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+    Cell::VisitAllObjects(bot, searcher, sPlayerbotAIConfig.sightDistance);
 
     for(list<Unit *>::iterator i = targets.begin(); i != targets.end(); i++)
     {
@@ -508,9 +509,9 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 
     list<GameObject*> targets;
 
-    MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, BOT_SIGHT_DISTANCE);
+    MaNGOS::GameObjectByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
     MaNGOS::GameObjectListSearcher<MaNGOS::GameObjectByGuidInRangeCheck> searcher(targets, u_check);
-    Cell::VisitAllObjects(bot, searcher, BOT_SIGHT_DISTANCE);
+    Cell::VisitAllObjects(bot, searcher, sPlayerbotAIConfig.sightDistance);
 
     for(list<GameObject*>::iterator i = targets.begin(); i != targets.end(); i++)
     {
