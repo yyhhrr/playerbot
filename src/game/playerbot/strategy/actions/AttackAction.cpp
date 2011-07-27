@@ -11,7 +11,7 @@ bool AttackAction::Execute(Event event)
 {
     Unit* target = GetTarget();
 
-    if (!target) 
+    if (!target)
         return false;
 
     return Attack(target);
@@ -19,7 +19,7 @@ bool AttackAction::Execute(Event event)
 
 bool AttackMyTargetAction::Execute(Event event)
 {
-    
+
     ObjectGuid guid = master->GetSelectionGuid();
     if (!guid)
         return false;
@@ -59,7 +59,7 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
     bot->Attack(target, true);
-    bot->SetInFront(target);
+    bot->SetFacingTo(bot->GetAngle(target));
 
     Pet* pet = bot->GetPet();
     if (pet)
@@ -69,7 +69,7 @@ bool AttackAction::Attack(Unit* target)
             creatureAI->AttackStart(target);
     }
 
-    
+
     context->GetValue<Unit*>("current target")->Set(target);
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 

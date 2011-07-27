@@ -73,8 +73,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
     botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
     botPacketHandlers[SMSG_LOOT_RESPONSE] = "loot response";
-    
-    botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";    
+
+    botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";
 }
 
 PlayerbotAI::~PlayerbotAI()
@@ -668,9 +668,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!target)
         target = bot;
 
-    if (!bot->isInFrontInMap(target, 10))
-        bot->SetInFront(target);
-
     aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get().Set(spellId, target->GetObjectGuid(), time(0));
     aiObjectContext->GetValue<LastMovement&>("last movement")->Get().Set(NULL);
 
@@ -681,6 +678,8 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
+
+    bot->SetFacingTo(bot->GetAngle(target));
 
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
     ObjectGuid oldSel = bot->GetSelectionGuid();
