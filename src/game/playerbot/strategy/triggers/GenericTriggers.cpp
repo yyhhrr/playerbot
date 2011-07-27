@@ -88,7 +88,7 @@ bool SpellCanBeCastTrigger::IsActive()
 
 bool RandomTrigger::IsActive()
 {
-    int vl  = rand() % probability;
+    int vl  = rand() % (probability * 10);
     return vl == 0;
 }
 

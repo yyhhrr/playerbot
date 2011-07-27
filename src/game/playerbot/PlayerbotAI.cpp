@@ -89,9 +89,9 @@ PlayerbotAI::~PlayerbotAI()
         delete aiObjectContext;
 }
 
-void PlayerbotAI::UpdateAI(uint32 elapsed)
+void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
 {
-	if (!CanUpdateAI() || bot->IsBeingTeleported())
+	if (bot->IsBeingTeleported())
 		return;
 
     ChangeActiveEngineIfNecessary();
@@ -116,7 +116,6 @@ void PlayerbotAI::UpdateAI(uint32 elapsed)
     }
 
 	DoNextAction();
-	YieldThread();
 }
 
 void PlayerbotAI::HandleTeleportAck()
@@ -166,7 +165,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 
         currentEngine = engines[BOT_STATE_NON_COMBAT];
 
-        nextAICheckTime = 0;
+        nextAICheckDelay = 0;
         aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
         aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
 
@@ -243,7 +242,7 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
     if (lastSpell.id != spellid)
         return;
 
-    int castTimeSpent = time(0) - lastSpell.time;
+    int castTimeSpent = 1000 * (time(0) - lastSpell.time);
 
     int32 globalCooldown = CalculateGlobalCooldown(lastSpell.id);
     if (castTimeSpent < globalCooldown)
@@ -732,9 +731,13 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     float castTime = GetSpellCastTime(pSpellInfo);
     if (IsChanneledSpell(pSpellInfo))
-        castTime += GetSpellDuration(pSpellInfo);
+    {
+        int32 duration = GetSpellDuration(pSpellInfo);
+        if (duration > 0)
+            castTime += duration;
+    }
 
-    castTime = ceil(castTime / 1000.0);
+    castTime = ceil(castTime);
 
     uint32 globalCooldown = CalculateGlobalCooldown(spellId);
     if (castTime < globalCooldown)

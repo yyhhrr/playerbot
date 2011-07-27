@@ -160,13 +160,13 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = ceil(distance / bot->GetSpeed(MOVE_RUN));
+    float delay = 1000.0f * ceil(distance / bot->GetSpeed(MOVE_RUN));
 
     if (delay < GLOBAL_COOLDOWN)
         delay = GLOBAL_COOLDOWN;
 
-    if (delay > 8)
-        delay = 8;
+    if (delay > 8000)
+        delay = 8000;
 
     bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }

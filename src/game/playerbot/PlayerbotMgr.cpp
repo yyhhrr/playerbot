@@ -14,12 +14,12 @@ public:
     virtual ~SharedPlayerbotAI() { }
 
 public:
-    SharedValueContext* GetSharedValues() 
+    SharedValueContext* GetSharedValues()
     {
-        return &sharedValues; 
+        return &sharedValues;
     }
 
-    virtual void UpdateAI(uint32 elapsed)
+    virtual void UpdateAIInternal(uint32 elapsed)
     {
         sharedValues.Update();
     }
@@ -40,7 +40,7 @@ PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotAIBase(),  m_master(
         sSpellStore.LookupEntry(spellId);
 }
 
-PlayerbotMgr::~PlayerbotMgr() 
+PlayerbotMgr::~PlayerbotMgr()
 {
     LogoutAllBots();
     if (sharedAi)
@@ -50,13 +50,10 @@ PlayerbotMgr::~PlayerbotMgr()
     }
 }
 
-void PlayerbotMgr::UpdateAI(const uint32 p_time) 
+void PlayerbotMgr::UpdateAIInternal(uint32 elapsed)
 {
-    if (!CanUpdateAI())
-        return;
-
-    if (sharedAi) 
-        sharedAi->UpdateAI(p_time);
+    if (sharedAi)
+        sharedAi->UpdateAI(elapsed);
 
     SetNextCheckDelay(GLOBAL_COOLDOWN);
 }
@@ -126,7 +123,7 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     m_playerBots[bot->GetObjectGuid().GetRawValue()] = bot;
 
     ObjectGuid masterGuid = m_master->GetObjectGuid();
-    if (m_master->GetGroup() && 
+    if (m_master->GetGroup() &&
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
 
@@ -142,16 +139,16 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 
     if (cmdStr == "add" || cmdStr == "login")
     {
-        if (mgr->GetPlayerBot(guid.GetRawValue())) 
+        if (mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
-        
+
         mgr->AddPlayerBot(guid.GetRawValue(), session);
     }
     else if (cmdStr == "remove" || cmdStr == "logout")
     {
         if (! mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
-        
+
         mgr->LogoutPlayerBot(guid.GetRawValue());
     }
 
@@ -215,10 +212,10 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 
         bool res = true;
         Group::MemberSlotList slots = group->GetMemberSlots();
-        for (Group::member_citerator i = slots.begin(); i != slots.end(); i++) 
+        for (Group::member_citerator i = slots.begin(); i != slots.end(); i++)
         {
 			ObjectGuid member = i->guid;
-			
+
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 

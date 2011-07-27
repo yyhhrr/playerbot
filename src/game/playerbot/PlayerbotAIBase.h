@@ -5,7 +5,7 @@ class PlayerbotMgr;
 class ChatHandler;
 
 using namespace std;
-	
+
 class PlayerbotAIBase
 {
 public:
@@ -16,8 +16,9 @@ public:
 	void SetNextCheckDelay(const uint32 delay);
     void IncreaseNextCheckDelay(uint32 delay);
 	void YieldThread();
-    virtual void UpdateAI(uint32 elapsed) = NULL;
+    virtual void UpdateAI(uint32 elapsed);
+    virtual void UpdateAIInternal(uint32 elapsed) = 0;
 
 protected:
-	time_t nextAICheckTime;
+	uint32 nextAICheckDelay;
 };

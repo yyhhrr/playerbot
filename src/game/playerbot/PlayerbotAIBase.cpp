@@ -4,38 +4,41 @@
 using namespace ai;
 using namespace std;
 
-PlayerbotAIBase::PlayerbotAIBase()
+PlayerbotAIBase::PlayerbotAIBase() : nextAICheckDelay(0)
 {
-    nextAICheckTime = 0;
 }
 
-
-void PlayerbotAIBase::SetNextCheckDelay(const uint32 delay) 
+void PlayerbotAIBase::UpdateAI(uint32 elapsed)
 {
-    nextAICheckTime = time(0) + delay;
+    if (nextAICheckDelay > elapsed)
+        nextAICheckDelay -= elapsed;
+    else
+        nextAICheckDelay = 0;
+
+    if (!CanUpdateAI())
+        return;
+
+    UpdateAIInternal(elapsed);
+    YieldThread();
+}
+
+void PlayerbotAIBase::SetNextCheckDelay(const uint32 delay)
+{
+    nextAICheckDelay = delay;
 }
 
 void PlayerbotAIBase::IncreaseNextCheckDelay(uint32 delay)
 {
-    nextAICheckTime += delay;
+    nextAICheckDelay += delay;
 }
 
-bool PlayerbotAIBase::CanUpdateAI() 
+bool PlayerbotAIBase::CanUpdateAI()
 {
-    time_t now = time(0);
-
-    if (now < nextAICheckTime)
-        return false;
-
-    return true;
+    return nextAICheckDelay <= 100;
 }
 
 void PlayerbotAIBase::YieldThread()
 {
-    if (CanUpdateAI())
-    {
-        time_t yieldDelay = time(0) + BOT_REACT_DELAY;
-        if(nextAICheckTime < yieldDelay)
-            nextAICheckTime = yieldDelay;
-    }
+    if (nextAICheckDelay < BOT_REACT_DELAY)
+        nextAICheckDelay = BOT_REACT_DELAY;
 }
