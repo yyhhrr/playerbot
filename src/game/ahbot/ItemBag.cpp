@@ -1,5 +1,6 @@
 #include "Category.h"
 #include "ItemBag.h"
+#include "ConsumableCategory.h"
 
 using namespace ahbot;
 
@@ -10,9 +11,12 @@ Reagent Reagent::instance;
 Enchant Enchant::instance;
 Trade Trade::instance;
 ahbot::Quest ahbot::Quest::instance;
-Consumable Consumable::instance;
+Alchemy Alchemy::instance;
+Enchants Enchants::instance;
+Food Food::instance;
+OtherConsumable OtherConsumable::instance;
 
-Category* Categories[MAX_AHBOT_CATEGORIES] = 
+Category* Categories[MAX_AHBOT_CATEGORIES] =
 {
     &Other::instance,
     &Equip::instance,
@@ -21,7 +25,10 @@ Category* Categories[MAX_AHBOT_CATEGORIES] =
     &Enchant::instance,
     &Trade::instance,
     &ahbot::Quest::instance,
-    &Consumable::instance
+    &Alchemy::instance,
+    &Enchants::instance,
+    &Food::instance,
+    &OtherConsumable::instance
 };
 
 ItemBag::ItemBag()
@@ -32,7 +39,7 @@ ItemBag::ItemBag()
     }
 }
 
-void ItemBag::Init(bool silent) 
+void ItemBag::Init(bool silent)
 {
     if (silent)
     {
@@ -42,7 +49,7 @@ void ItemBag::Init(bool silent)
 
     sLog.outString("Loading/Scanning %s...", GetName().c_str());
 
-    Load(); 
+    Load();
 
     for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
     {
@@ -116,7 +123,7 @@ void InAuctionItemsBag::Load()
     AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionId);
     if(!ahEntry)
         return;
-    
+
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
     AuctionHouseObject::AuctionEntryMap const& auctionEntryMap = auctionHouse->GetAuctions();
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap.begin(); itr != auctionEntryMap.end(); ++itr)
@@ -124,7 +131,7 @@ void InAuctionItemsBag::Load()
         ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itr->second->itemTemplate);
         if (!proto)
             continue;
-        
+
         Add(proto);
     }
 }
