@@ -1838,6 +1838,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\playerbot\PlayerbotAIConfig.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\PlayerbotAIConfig.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\playerbot\playerbotDefs.h"
 				>
 			</File>
@@ -2796,6 +2804,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\EmoteAction.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\EmoteAction.h"
 						>
 					</File>
@@ -3610,11 +3622,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\ahbot\ConsumableCategory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\ConsumableCategory.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\ahbot\ItemBag.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\game\ahbot\ItemBag.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\TradeCategory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\ahbot\TradeCategory.h"
 				>
 			</File>
 		</Filter>
