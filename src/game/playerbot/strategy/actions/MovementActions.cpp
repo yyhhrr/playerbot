@@ -110,7 +110,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     float distance = bot->GetDistance(target);
 
-    if (distance < ATTACK_DISTANCE && distance > ATTACK_DISTANCE / 2)
+    if (distance < ATTACK_DISTANCE && distance > CONTACT_DISTANCE)
         return false;
 
     if (distance > sPlayerbotAIConfig.reactDistance)
