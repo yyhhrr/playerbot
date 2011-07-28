@@ -23,6 +23,7 @@ void DestroyItemAction::DestroyItem(FindItemVisitor* visitor)
     Item *item = visitor->GetResult();
     if (item) {
         bot->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
+        bot->SaveInventoryAndGoldToDB();
         ostringstream out; out << chat->formatItem(item->GetProto()) << " destroyed";
         ai->TellMaster(out);
     }
