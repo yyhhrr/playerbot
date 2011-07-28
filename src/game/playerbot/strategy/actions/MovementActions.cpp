@@ -125,7 +125,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
 bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
-    if (bot->GetMapId() != mapId || bot->GetDistance(x, y, z) > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
+    if (bot->GetDistance(x, y, z) > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
     {
         ai->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
         return false;
@@ -136,7 +136,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 
 bool MovementAction::IsMovingAllowed()
 {
-    if (bot->isFrozen() || bot->IsPolymorphed() || !bot->CanFreeMove() || bot->isDead())
+    if (bot->isFrozen() || bot->IsPolymorphed() || bot->isDead())
         return false;
 
     MotionMaster &mm = *bot->GetMotionMaster();
