@@ -1059,6 +1059,12 @@
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIConfig.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\ahbot\AhBotConfig.cpp">
+      <Filter>AhBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\ahbot\PricingStrategy.cpp">
+      <Filter>AhBot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2209,6 +2215,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIConfig.h">
       <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ahbot\AhBotConfig.h">
+      <Filter>AhBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\ahbot\PricingStrategy.h">
+      <Filter>AhBot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

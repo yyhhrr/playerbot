@@ -5,6 +5,7 @@
 #include "Policies/SingletonImp.h"
 #include "Config/Config.h"
 #include "../Chat.h"
+#include "AhBotConfig.h"
 
 using namespace ahbot;
 
@@ -61,14 +62,14 @@ extern Category* Categories[MAX_AHBOT_CATEGORIES];
 
 void AhBot::Init()
 {
-    uint32 account = sConfig.GetIntDefault("AhBot.Account", 0);
-    uint32 guid = sConfig.GetIntDefault("AhBot.GUID", 0);
-    if (!account || !guid)
+    sAhBotConfig.Initialize();
+
+    if (!sAhBotConfig.enabled)
         return;
 
-    session = new WorldSession(account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
+    session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
     player = new Player(session);
-    player->MinimalLoadFromDB(NULL, guid);
+    player->MinimalLoadFromDB(NULL, GetAHBplayerGUID());
 
     ObjectAccessor::Instance().AddObject(player);
 
@@ -87,26 +88,26 @@ AhBot::~AhBot()
 
 ObjectGuid AhBot::GetAHBplayerGUID()
 {
-    return ObjectGuid((uint64)sConfig.GetIntDefault("AhBot.GUID", 0));
+    return ObjectGuid(sAhBotConfig.guid);
 }
 
 void AhBot::Update()
 {
-    if (!player)
-        return;
-
     time_t now = time(0);
 
     if (now < nextAICheckTime)
         return;
 
-    nextAICheckTime = time(0) + sConfig.GetIntDefault("AhBot.UpdateIntervalInSeconds", 60);
+    nextAICheckTime = time(0) + sAhBotConfig.updateInterval;
 
     ForceUpdate();
 }
 
 void AhBot::ForceUpdate()
 {
+    if (!player)
+        return;
+
     sLog.outString("AhBot is now checking auctions");
 
     for (int i = 0; i < MAX_AUCTIONS; i++)
@@ -159,7 +160,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         if (!item)
             continue;
 
-        uint32 price = category->GetPrice(item->GetProto(), auctionIds[auction]);
+        uint32 price = category->GetPricingStrategy()->GetSellPrice(item->GetProto(), auctionIds[auction]);
         if (!price || !item->GetCount())
             continue;
         uint32 bidPrice = item->GetCount() * price;
@@ -239,7 +240,7 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
 
     item->AddToUpdateQueueOf(player);
 
-    uint32 price = category->GetPrice(proto, auctionIds[auction]);
+    uint32 price = category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction]);
     uint32 stackCount = category->GetStackCount(proto);
     if (!price || !stackCount)
         return;
@@ -280,6 +281,9 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
 
 void AhBot::HandleCommand(string command)
 {
+    if (!player)
+        return;
+
     if (command == "expire")
     {
         for (int i = 0; i < MAX_AUCTIONS; i++)
@@ -316,7 +320,8 @@ void AhBot::HandleCommand(string command)
             {
                 ostringstream out;
                 out << proto->Name1 << " (" << category->GetName() << ") - auction house " << auctionIds[auction] << " - sell: "
-                    << category->GetPrice(proto, auctionIds[auction]) << ", buy: " << category->GetBuyPrice(proto, auctionIds[auction])
+                    << category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction])
+					<< ", buy: " << category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction])
                     << ", money available: " << GetAvailableMoney(auctionIds[auction]);
                 sLog.outString(out.str().c_str());
             }
@@ -339,11 +344,9 @@ void AhBot::Expire(int auction)
     AuctionHouseObject::AuctionEntryMap const& auctions = auctionHouse->GetAuctions();
     AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions.begin();
 
-    uint32 guid = sConfig.GetIntDefault("AhBot.GUID", 0);
-
     while (itr != auctions.end())
     {
-        if (itr->second->owner == guid)
+        if (itr->second->owner == sAhBotConfig.guid)
             itr->second->expireTime = sWorld.GetGameTime();
 
         ++itr;
@@ -354,6 +357,9 @@ void AhBot::Expire(int auction)
 
 void AhBot::AddToHistory(AuctionEntry* entry)
 {
+    if (!player)
+        return;
+
     if (entry->bidder != player->GetGUIDLow() && entry->owner != player->GetGUIDLow())
         return;
 
@@ -385,13 +391,13 @@ void AhBot::AddToHistory(AuctionEntry* entry)
 
 void AhBot::CleanupHistory()
 {
-    uint32 when = time(0) - 3600 * 24 * sConfig.GetIntDefault("AhBot.History.Days", 30);
+    uint32 when = time(0) - 3600 * 24 * sAhBotConfig.historyDays;
     CharacterDatabase.PExecute("DELETE FROM ahbot_history WHERE buytime < '%u'", when);
 }
 
 uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
 {
-    int64 result = sConfig.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
+    int64 result = sAhBotConfig.alwaysAvailableMoney;
 
     map<uint32, uint32> data;
     data[AHBOT_WON_PLAYER] = 0;
@@ -421,7 +427,7 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
         uint32 lastBuyTime = fields[0].GetUInt32();
         uint32 now = time(0);
         if (lastBuyTime && now > lastBuyTime)
-        result += (now - lastBuyTime) / 3600 / 24 * sConfig.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
+        result += (now - lastBuyTime) / 3600 / 24 * sAhBotConfig.alwaysAvailableMoney;
 
         delete results;
     }

@@ -1,0 +1,56 @@
+################################################
+# MANGOS Auction House Bot Configuration file  #
+################################################
+
+[AhbotConf]
+ConfVersion=2010102201
+
+###################################################################################################################
+# AUCTION HOUSE BOT SETTINGS
+#
+###################################################################################################################
+
+# Disable original AuctionHouseBot
+AuctionHouseBot.Seller.Enabled = 0
+
+# Replace with the new AhBot
+AhBot.Enabled = 1
+
+AhBot.Account = 6
+AhBot.GUID = 2
+AhBot.UpdateIntervalInSeconds = 60
+
+AhBot.MaxAuctionCount.consumable = 18
+AhBot.MaxAuctionCount.quest = 7
+AhBot.MaxAuctionCount.trade = 38
+AhBot.MaxAuctionCount.enchant = 9
+AhBot.MaxAuctionCount.reagent = 1
+AhBot.MaxAuctionCount.recipe = 6
+AhBot.MaxAuctionCount.equip = 5
+AhBot.MaxAuctionCount.other = 4
+
+AhBot.PriceMultiplier = 1.0
+AhBot.DefaultMinPrice = 20
+AhBot.PriceQualityMultiplier = 1.0
+AhBot.AlwaysAvailableMoney = 20000
+
+AhBot.PriceMultiplier.Sell.consumable = 1.0
+AhBot.PriceMultiplier.Sell.quest = 0.5
+AhBot.PriceMultiplier.Sell.trade = 2.0
+AhBot.PriceMultiplier.Sell.enchant = 3.0
+AhBot.PriceMultiplier.Sell.reagent = 1.0
+AhBot.PriceMultiplier.Sell.recipe = 4.0
+AhBot.PriceMultiplier.Sell.equip = 1.0
+AhBot.PriceMultiplier.Sell.other = 1.0
+
+AhBot.PriceMultiplier.Buy.consumable = 1.0
+AhBot.PriceMultiplier.Buy.quest = 0.5
+AhBot.PriceMultiplier.Buy.trade = 2.0
+AhBot.PriceMultiplier.Buy.enchant = 3.0
+AhBot.PriceMultiplier.Buy.reagent = 1.0
+AhBot.PriceMultiplier.Buy.recipe = 4.0
+AhBot.PriceMultiplier.Buy.equip = 0.1
+AhBot.PriceMultiplier.Buy.other = 0.1
+
+AhBot.PricingStrategy.equip = buyOnlyRare
+AhBot.PricingStrategy.other = buyOnlyRare

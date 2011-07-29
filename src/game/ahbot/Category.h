@@ -1,5 +1,6 @@
 #pragma once;
 #include "Config\Config.h"
+#include "PricingStrategy.h"
 
 using namespace std;
 
@@ -11,39 +12,21 @@ namespace ahbot
     class Category
     {
     public:
-        Category() {}
+        Category() : pricingStrategy(NULL) {}
+        virtual ~Category() { if (pricingStrategy) delete pricingStrategy; }
 
     public:
         virtual bool Contains(ItemPrototype const* proto) = 0;
         virtual string GetName() = 0;
 
         virtual int32 GetMaxAllowedAuctionCount();
+        virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto);
+        virtual int32 GetStackCount(ItemPrototype const* proto);
 
-        virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
-        {
-            return 1;
-        }
-
-        virtual int32 GetStackCount(ItemPrototype const* proto)
-        {
-            if (proto->Quality > ITEM_QUALITY_UNCOMMON)
-                return 1;
-
-            return urand(1, proto->GetMaxStackSize());
-        }
-
-        virtual uint32 GetPrice(ItemPrototype const* proto, uint32 auctionHouse);
-        virtual uint32 GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse);
-
-    protected:
-        virtual uint32 GetDefaultPrice(ItemPrototype const* proto);
-        virtual double GetCategoryPriceMultiplier(uint32 untilTime, uint32 auctionHouse);
-        virtual double GetItemPriceMultiplier(ItemPrototype const* proto, uint32 untilTime, uint32 auctionHouse);
-        virtual double GetStaticItemPriceMultiplier(ItemPrototype const* proto);
-        virtual double GetRarityPriceMultiplier(ItemPrototype const* proto);
+        virtual PricingStrategy* GetPricingStrategy();
 
     private:
-        double GetMultiplier(double count, double firstBuyTime, double lastBuyTime);
+        PricingStrategy *pricingStrategy;
     };
 
     class Consumable : public Category
