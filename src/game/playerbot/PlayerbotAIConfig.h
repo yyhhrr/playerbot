@@ -16,7 +16,7 @@ public:
 
     bool enabled;
     uint32 globalCoolDown, reactDelay;
-    float sightDistance, spellDistance, reactDistance, grindDistance;
+    float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance;
 
 private:
     Config config;

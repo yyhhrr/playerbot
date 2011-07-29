@@ -24,19 +24,23 @@ ConfVersion=2010102201
 #
 #    AiPlayerbot.SightDistance
 #        Distance to game objects, targets, etc. bot can interact to
-#    Default 35
+#    Default 40
 #
 #    AiPlayerbot.SpellDistance
 #        Distance to target bot needs to maintain before casting a ranged spell
-#    Default 35
+#    Default 25
 #
 #    AiPlayerbot.ReactDistance
 #        Maximim distance from master bot can react (does not affect chat)
-#    Default 35
+#    Default 100
 #
 #    AiPlayerbot.GrindDistance
 #        Distance to game objects, targets, etc. bot can interact to while grinding
-#    Default 35
+#    Default 50
+#
+#    AiPlayerbot.LootDistance
+#        Distance to game objects, targets, etc. bot can loot
+#    Default 20
 #
 ###################################################################################################################
 
@@ -48,3 +52,4 @@ AiPlayerbot.SightDistance=35
 AiPlayerbot.SpellDistance=25
 AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
+AiPlayerbot.LootDistance=40
