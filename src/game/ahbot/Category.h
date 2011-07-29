@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#define MAX_AHBOT_CATEGORIES 18
+#define MAX_AHBOT_CATEGORIES 19
 
 
 namespace ahbot

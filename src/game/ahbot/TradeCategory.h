@@ -38,6 +38,22 @@ namespace ahbot
         virtual string GetName() { return "Leather"; }
     };
 
+    class Elemental : public Trade
+    {
+    public:
+        Elemental() : Trade() {}
+        static Elemental instance;
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return Trade::Contains(proto) &&
+                proto->SubClass == ITEM_SUBCLASS_ELEMENTAL;
+        }
+
+        virtual string GetName() { return "Elemental"; }
+    };
+
     class Herb : public Trade
     {
     public:

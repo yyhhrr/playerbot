@@ -23,6 +23,7 @@ Metal Metal::instance;
 Disenchants Disenchants::instance;
 Engineering Engineering::instance;
 OtherTrade OtherTrade::instance;
+Elemental Elemental::instance;
 
 Category* Categories[MAX_AHBOT_CATEGORIES] =
 {
@@ -33,6 +34,7 @@ Category* Categories[MAX_AHBOT_CATEGORIES] =
     &Enchant::instance,
     &ahbot::Quest::instance,
     &Alchemy::instance,
+    &Elemental::instance,
     &Enchants::instance,
     &Food::instance,
     &OtherConsumable::instance,
