@@ -164,19 +164,7 @@ inline bool IsPeriodicRegenerateEffect(SpellEntry const *spellInfo, SpellEffectI
     }
 }
 
-inline bool IsModifierAura(SpellEntry const *spellInfo, SpellEffectIndex effecIdx)
-{
-    // modifier auras that can proc on cast end
-    switch (AuraType(spellInfo->EffectApplyAuraName[effecIdx]))
-    {
-        case SPELL_AURA_ADD_FLAT_MODIFIER:
-        case SPELL_AURA_ADD_PCT_MODIFIER:
-        case SPELL_AURA_MOD_DAMAGE_PERCENT_DONE:
-            return true;
-        default:
-            return false;
-    }
-}
+bool IsCastEndProcModifierAura(SpellEntry const *spellInfo, SpellEffectIndex effecIdx, SpellEntry const *procSpell);
 
 inline bool IsSpellHaveAura(SpellEntry const *spellInfo, AuraType aura)
 {
