@@ -26,6 +26,7 @@ public:
             proto->SubClass != ITEM_SUBCLASS_FLASK &&
             proto->SubClass != ITEM_SUBCLASS_SCROLL && 
             proto->SubClass != ITEM_SUBCLASS_FOOD &&
+            proto->SubClass != ITEM_SUBCLASS_CONSUMABLE_OTHER &&
             proto->SubClass != ITEM_SUBCLASS_ITEM_ENHANCEMENT)
             return true;
 
@@ -41,12 +42,14 @@ public:
             Item* itemForSpell = *bot->GetPlayerbotAI()->GetAiObjectContext()->GetValue<Item*>("item for spell", spellId);
             if (itemForSpell && itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
                 return true;
+        
+            if (items.find(proto->SubClass) == items.end())
+                items[proto->SubClass] = list<Item*>();
+
+            items[proto->SubClass].push_back(item);
+            break;
         }
 
-        if (items.find(proto->SubClass) == items.end())
-            items[proto->SubClass] = list<Item*>();
-
-        items[proto->SubClass].push_back(item);
         return true;
     }
 
@@ -73,6 +76,9 @@ void BuffAction::TellHeader(uint32 subClass)
     case ITEM_SUBCLASS_FOOD:
         ai->TellMaster("--- Food ---");
         return;
+    case ITEM_SUBCLASS_GENERIC:
+        ai->TellMaster("--- Other ---");
+        return;
     case ITEM_SUBCLASS_ITEM_ENHANCEMENT:
         ai->TellMaster("--- Enchant ---");
         return;
@@ -90,13 +96,15 @@ bool BuffAction::Execute(Event event)
     uint32 oldSubClass = -1;
     for (map<uint32, list<Item*>>::iterator i = visitor.items.begin(); i != visitor.items.end(); ++i)
     {
+        list<Item*> items = i->second;
+
         uint32 subClass = i->first;
         if (oldSubClass != subClass)
         {
-            TellHeader(subClass);
+            if (!items.empty())
+                TellHeader(subClass);
             oldSubClass = subClass;
         }
-        list<Item*> items = i->second;
         for (list<Item*>::iterator j = items.begin(); j != items.end(); ++j)
         {
             Item* item = *j;
