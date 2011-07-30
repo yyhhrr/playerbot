@@ -80,7 +80,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategies("dps", "dps assist", NULL);
             break;
     }
-    engine->addStrategy("racials");
+    engine->addStrategies("racials", "chat", "world packet", NULL);
 }
 
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
