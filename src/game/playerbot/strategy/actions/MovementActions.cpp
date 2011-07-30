@@ -263,7 +263,7 @@ bool MoveRandomAction::Execute(Event event)
 bool MoveToLootAction::Execute(Event event)
 {
     LootObject loot = AI_VALUE(LootObject, "loot target");
-    if (loot.IsEmpty())
+    if (!loot.IsLootPossible(bot))
         return false;
 
     return MoveNear(loot.GetWorldObject(bot));

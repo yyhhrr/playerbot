@@ -107,6 +107,39 @@ namespace ai
         }
     };
 
+    class FindItemsToTradeByClassVisitor : public IterateItemsVisitor
+    {
+    public:
+        FindItemsToTradeByClassVisitor(uint32 itemClass, uint32 itemSubClass, int count) 
+            : IterateItemsVisitor(), count(count), itemClass(itemClass), itemSubClass(itemSubClass) {}
+
+        virtual bool Visit(Item* item)
+        {
+            if (item->IsSoulBound())
+                return true;
+
+            if (item->GetProto()->Class != itemClass || item->GetProto()->SubClass != itemSubClass)
+                return true;
+
+            if (result.size() >= (size_t)count)
+                return false;
+
+            result.push_back(item);
+            return true;
+        }
+
+        list<Item*> GetResult() 
+        {
+            return result;
+        }
+
+    private:
+        uint32 itemClass;
+        uint32 itemSubClass;
+        int count;
+        list<Item*> result;
+    };
+
     class QueryItemCountVisitor : public IterateItemsVisitor 
     {
     public:

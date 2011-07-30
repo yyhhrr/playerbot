@@ -10,7 +10,7 @@ bool TellItemCountAction::Execute(Event event)
     
     string text = event.getParam();
 
-    uint32 quality = InventoryItemValue::TextToItemQuality(text);
+    uint32 quality = chat->parseItemQuality(text);
     if (quality == MAX_ITEM_QUALITY)
     {
         uint8 count = AI_VALUE2(uint8, "item count", text);

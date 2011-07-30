@@ -6,8 +6,6 @@
 
 using namespace ai;
 
-map<string, uint32> TradeAction::slots;
-
 bool TradeAction::Execute(Event event)
 {
     string text = event.getParam();
@@ -21,48 +19,40 @@ bool TradeAction::Execute(Event event)
 
     int8 slot = -1;
 
-    uint32 quality = InventoryItemValue::TextToItemQuality(text);
-
+    list<Item*> found;
+    size_t pos = text.find(" ");
+    int count = pos!=string::npos ? atoi(text.substr(pos + 1).c_str()) : TRADE_SLOT_TRADED_COUNT;
+    if (count < 1) count = 1;
+    else if (count > TRADE_SLOT_TRADED_COUNT) count = TRADE_SLOT_TRADED_COUNT;
+    
+    uint32 quality = chat->parseItemQuality(text);
     if (quality != MAX_ITEM_QUALITY)
     {
-        size_t pos = text.find(" ");
-        int count = pos!=string::npos ? atoi(text.substr(pos + 1).c_str()) : TRADE_SLOT_TRADED_COUNT;
-        if (count < 1) count = 1;
-        else if (count > TRADE_SLOT_TRADED_COUNT) count = TRADE_SLOT_TRADED_COUNT;
         FindItemsToTradeByQualityVisitor visitor(quality, count);
         IterateItems(&visitor);
-        list<Item*> found = visitor.GetResult();
+        found = visitor.GetResult();
+    }
+    
+    uint32 itemClass = MAX_ITEM_CLASS, itemSubClass = 0;
+    if (chat->parseItemClass(text, &itemClass, &itemSubClass))
+    {
+        FindItemsToTradeByClassVisitor visitor(itemClass, itemSubClass, count);
+        IterateItems(&visitor);
+        found = visitor.GetResult();
+    }
+
+    if (!found.empty())
+    {
         for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
             TradeItem(**i, slot);
+
         return true;
     }
 
-    if (slots.empty())
+    uint32 fromSlot = chat->parseSlot(text);
+    if (fromSlot != EQUIPMENT_SLOT_END)
     {
-        slots["head"] = EQUIPMENT_SLOT_HEAD;
-        slots["neck"] = EQUIPMENT_SLOT_NECK;
-        slots["shoulder"] = EQUIPMENT_SLOT_SHOULDERS;
-        slots["shirt"] = EQUIPMENT_SLOT_BODY;
-        slots["chest"] = EQUIPMENT_SLOT_CHEST;
-        slots["waist"] = EQUIPMENT_SLOT_WAIST;
-        slots["legs"] = EQUIPMENT_SLOT_LEGS;
-        slots["feet"] = EQUIPMENT_SLOT_FEET;
-        slots["wrist"] = EQUIPMENT_SLOT_WRISTS;
-        slots["hands"] = EQUIPMENT_SLOT_HANDS;
-        slots["finger 1"] = EQUIPMENT_SLOT_FINGER1;
-        slots["finger 2"] = EQUIPMENT_SLOT_FINGER2;
-        slots["trinket 1"] = EQUIPMENT_SLOT_TRINKET1;
-        slots["trinket 2"] = EQUIPMENT_SLOT_TRINKET2;
-        slots["back"] = EQUIPMENT_SLOT_BACK;
-        slots["main hand"] = EQUIPMENT_SLOT_MAINHAND;
-        slots["off hand"] = EQUIPMENT_SLOT_OFFHAND;
-        slots["ranged"] = EQUIPMENT_SLOT_RANGED;
-        slots["tabard"] = EQUIPMENT_SLOT_TABARD;
-    }
-
-    if (slots.find(text) != slots.end())
-    {
-        Item* item = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, slots[text]);
+        Item* item = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, fromSlot);
         if (item)
         {
             TradeItem(*item, slot);
@@ -87,8 +77,6 @@ bool TradeAction::TradeItem(FindItemVisitor *visitor, int8 slot)
 
 bool TradeAction::TradeItem(const Item& item, int8 slot)
 {
-
-
     if (!bot->GetTrader() || item.IsInTrade())
         return false;
 

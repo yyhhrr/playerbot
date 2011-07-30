@@ -23,8 +23,6 @@ namespace ai
 
         virtual Item* Calculate();
 
-        static uint32 TextToItemQuality(string text);
-
         virtual bool Execute(Event event) { return false; }
 
     protected:

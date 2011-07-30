@@ -10,7 +10,7 @@ namespace ai
     class ChatHelper : public PlayerbotAIAware
     {
     public:
-        ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai) {}
+        ChatHelper(PlayerbotAI* ai);
 
     public:
         static string formatMoney(uint32 copper);
@@ -26,5 +26,15 @@ namespace ai
 
         static ChatMsg parseChat(string& text);
         static string formatChat(ChatMsg chat);
+
+        static uint32 parseItemQuality(string text);
+        static bool parseItemClass(string text, uint32 *itemClass, uint32 *itemSubClass);
+        static uint32 parseSlot(string text);
+
+    private:
+        static map<string, uint32> consumableSubClasses;
+        static map<string, uint32> tradeSubClasses;
+        static map<string, uint32> itemQualities;
+        static map<string, uint32> slots;
     };
 };
