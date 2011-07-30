@@ -43,7 +43,6 @@ void StayActionBase::StayLine(vector<Player*> line, float diff, float cx, float 
             float radius = range * index;
 
             MoveTo(bot->GetMapId(), x + cos(angle) * radius, y + sin(angle) * radius, cz);
-            bot->SetOrientation(orientation);
             return;
         }
 
@@ -70,8 +69,7 @@ bool StayCircleAction::Execute(Event event)
     float z = master->GetPositionZ();
     float angle = GetFollowAngle();
 
-    MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);
-    return true;
+    return MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);
 }
 
 bool StayLineAction::Execute(Event event)

@@ -25,8 +25,7 @@ namespace ai
         virtual bool Execute(Event event)
         {
             ai->TellMaster("Wait for me!");
-            Follow(AI_VALUE(Unit*, "master target"));
-            return true;
+            return Follow(AI_VALUE(Unit*, "master target"));
         }
    };
 }

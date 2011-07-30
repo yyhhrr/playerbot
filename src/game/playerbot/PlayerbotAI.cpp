@@ -673,9 +673,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
-    if (!bot->isInFront(target, sPlayerbotAIConfig.spellDistance))
-        bot->SetFacingTo(bot->GetAngle(target));
-
     const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
     ObjectGuid oldSel = bot->GetSelectionGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
@@ -684,16 +681,13 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     SpellCastTargets targets;
     targets.setUnitTarget(target);
+    WorldObject* faceTo = target;
 
     if (pSpellInfo->Targets & TARGET_FLAG_ITEM)
     {
         spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellId)->Get();
         targets.setItemTarget(spell->m_CastItem);
     }
-
-    uint32 target_type = TARGET_FLAG_UNIT;
-    if (pSpellInfo->Effect[0] == SPELL_EFFECT_OPEN_LOCK)
-        target_type = TARGET_FLAG_OBJECT;
 
     if (pSpellInfo->Effect[0] == SPELL_EFFECT_OPEN_LOCK ||
         pSpellInfo->Effect[0] == SPELL_EFFECT_SKINNING)
@@ -702,24 +696,29 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         if (!loot.IsLootPossible(bot))
             return false;
 
-        if (target_type == TARGET_FLAG_OBJECT)
+        GameObject* go = GetGameObject(loot.guid);
+        if (go && go->isSpawned())
         {
-            GameObject* go = GetGameObject(loot.guid);
-            if (go && go->isSpawned())
+            WorldPacket* const packetgouse = new WorldPacket(CMSG_GAMEOBJ_REPORT_USE, 8);
+            *packetgouse << loot.guid;
+            bot->GetSession()->QueuePacket(packetgouse);  // queue the packet to get around race condition
+            targets.setGOTarget(go);
+            faceTo = go;
+        }
+        else
+        {
+            Creature* creature = GetCreature(loot.guid);
+            if (creature)
             {
-                WorldPacket* const packetgouse = new WorldPacket(CMSG_GAMEOBJ_REPORT_USE, 8);
-                *packetgouse << loot.guid;
-                bot->GetSession()->QueuePacket(packetgouse);  // queue the packet to get around race condition
-                targets.setGOTarget(go);
-            }
-            else
-            {
-                Creature* creature = GetCreature(loot.guid);
-                if (creature)
-                    targets.setUnitTarget(creature);
+                targets.setUnitTarget(creature);
+                faceTo = creature;
             }
         }
     }
+
+
+    if (!bot->isInFront(faceTo, sPlayerbotAIConfig.spellDistance))
+        bot->SetFacingTo(bot->GetAngle(faceTo));
 
     spell->prepare(&targets, false);
 

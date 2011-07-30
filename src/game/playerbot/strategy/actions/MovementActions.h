@@ -13,14 +13,14 @@ namespace ai
         }
 
     protected:
-        void MoveNear(uint32 mapId, float x, float y, float z, float distance = 2.0f);
-        void MoveTo(uint32 mapId, float x, float y, float z);
-        void MoveTo(Unit* target, float distance = 0.0f);
-        void MoveNear(WorldObject* target, float distance = 2.0f);
-        void MoveTo(WorldObject* target);
+        bool MoveNear(uint32 mapId, float x, float y, float z, float distance = 2.0f);
+        bool MoveTo(uint32 mapId, float x, float y, float z);
+        bool MoveTo(Unit* target, float distance = 0.0f);
+        bool MoveNear(WorldObject* target, float distance = 2.0f);
+        bool MoveTo(WorldObject* target);
         float GetFollowAngle();
-        void Follow(Unit* target, float distance = 2.0f);
-        void Follow(Unit* target, float distance, float angle);
+        bool Follow(Unit* target, float distance = 2.0f);
+        bool Follow(Unit* target, float distance, float angle);
         void WaitForReach(float distance);
         bool IsMovingAllowed(Unit* target);
         bool IsMovingAllowed(uint32 mapId, float x, float y, float z);

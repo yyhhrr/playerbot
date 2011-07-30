@@ -6,14 +6,12 @@ using namespace ai;
 
 bool FollowLineAction::Execute(Event event)
 {
-	Follow(AI_VALUE(Unit*, "line target"), 2.0f, 0.0f);
-    return true;
+	return Follow(AI_VALUE(Unit*, "line target"), 2.0f, 0.0f);
 }
 
 bool FollowMasterAction::Execute(Event event)
 {
-	Follow(AI_VALUE(Unit*, "master target"));
-    return true;
+	return Follow(AI_VALUE(Unit*, "master target"));
 }
 
 bool FollowMasterRandomAction::Execute(Event event)
@@ -24,6 +22,5 @@ bool FollowMasterRandomAction::Execute(Event event)
     float y = master->GetPositionY() + sin(angle) * range;
     float z = master->GetPositionZ();
 
-    MoveTo(master->GetMapId(), x, y, z);
-    return true;
+    return MoveTo(master->GetMapId(), x, y, z);
 }

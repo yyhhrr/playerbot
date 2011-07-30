@@ -11,34 +11,34 @@
 
 using namespace ai;
 
-void MovementAction::MoveNear(uint32 mapId, float x, float y, float z, float distance)
+bool MovementAction::MoveNear(uint32 mapId, float x, float y, float z, float distance)
 {
     float angle = GetFollowAngle();
-    MoveTo(mapId, x + cos(angle) * distance, y + sin(angle) * distance, z);
+    return MoveTo(mapId, x + cos(angle) * distance, y + sin(angle) * distance, z);
 }
 
-void MovementAction::MoveNear(WorldObject* target, float distance)
+bool MovementAction::MoveNear(WorldObject* target, float distance)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
 
     if (!target)
-        return;
+        return false;
 
     float angle = GetFollowAngle();
-    MoveTo(target->GetMapId(),
+    return MoveTo(target->GetMapId(),
         target->GetPositionX() + cos(angle) * distance,
         target->GetPositionY()+ sin(angle) * distance,
         target->GetPositionZ());
 }
 
-void MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
+bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
 
     if (!IsMovingAllowed(mapId, x, y, z))
-        return;
+        return false;
 
     bot->UpdateGroundPositionZ(x, y, z);
 
@@ -46,20 +46,21 @@ void MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     WaitForReach(bot->GetDistance(x, y, z));
 
     AI_VALUE(LastMovement&, "last movement").Set(x, y, z, bot->GetOrientation());
+    return true;
 }
 
-void MovementAction::MoveTo(WorldObject* target)
+bool MovementAction::MoveTo(WorldObject* target)
 {
-    MoveTo(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
+    return MoveTo(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
 }
 
-void MovementAction::MoveTo(Unit* target, float distance)
+bool MovementAction::MoveTo(Unit* target, float distance)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
 
     if (!IsMovingAllowed(target))
-        return;
+        return false;
 
     float bx = bot->GetPositionX();
     float by = bot->GetPositionY();
@@ -78,7 +79,7 @@ void MovementAction::MoveTo(Unit* target, float distance)
     float dy = sin(angle) * destinationDistance + by;
 
     bot->UpdateGroundPositionZ(dx, dy, tz);
-    MoveTo(target->GetMapId(), dx, dy, tz);
+    return MoveTo(target->GetMapId(), dx, dy, tz);
 }
 
 float MovementAction::GetFollowAngle()
@@ -143,18 +144,18 @@ bool MovementAction::IsMovingAllowed()
     return mm->GetMovementGeneratorType() != FLIGHT_MOTION_TYPE;
 }
 
-void MovementAction::Follow(Unit* target, float distance)
+bool MovementAction::Follow(Unit* target, float distance)
 {
-    Follow(target, distance, GetFollowAngle());
+    return Follow(target, distance, GetFollowAngle());
 }
 
-void MovementAction::Follow(Unit* target, float distance, float angle)
+bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
 
     if (!IsMovingAllowed(target))
-        return;
+        return false;
 
     if (target->IsFriendlyTo(bot) && bot->IsMounted())
         distance += angle;
@@ -165,6 +166,7 @@ void MovementAction::Follow(Unit* target, float distance, float angle)
     WaitForReach(distanceToRun);
 
     AI_VALUE(LastMovement&, "last movement").Set(target);
+    return true;
 }
 
 void MovementAction::WaitForReach(float distance)
@@ -195,8 +197,7 @@ bool MovementAction::Flee(Unit *target)
     if (!manager.CalculateDestination(&rx, &ry, &rz))
         return false;
 
-    MoveTo(0, rx, ry, rz);
-    return true;
+    return MoveTo(0, rx, ry, rz);
 }
 
 bool FleeAction::Execute(Event event)
@@ -256,8 +257,7 @@ bool MoveRandomAction::Execute(Event event)
         return false;
 
     float distance = (rand() % 15) / 10.0f;
-    MoveNear(target);
-    return true;
+    return MoveNear(target);
 }
 
 bool MoveToLootAction::Execute(Event event)
@@ -266,6 +266,5 @@ bool MoveToLootAction::Execute(Event event)
     if (loot.IsEmpty())
         return false;
 
-    MoveNear(loot.GetWorldObject(bot));
-    return true;
+    return MoveNear(loot.GetWorldObject(bot));
 }
