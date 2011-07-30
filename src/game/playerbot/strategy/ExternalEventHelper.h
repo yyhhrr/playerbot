@@ -29,6 +29,9 @@ namespace ai
                     return true;
             }
 
+            if (!ChatHelper::parseable(command))
+                return false;
+
             HandleCommand("q", command);
             HandleCommand("c", command);
             HandleCommand("t", command);

@@ -100,7 +100,13 @@ void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
     ExternalEventHelper helper(aiObjectContext);
     while (!chatCommands.empty())
     {
-        helper.ParseChatCommand(chatCommands.top());
+        string command = chatCommands.top();
+        if (!helper.ParseChatCommand(command))
+        {
+            ostringstream out; out << "Unknown command " << command;
+            TellMaster(out);
+            helper.ParseChatCommand("help");
+        }
         chatCommands.pop();
     }
 

@@ -49,9 +49,11 @@ namespace ai
             creators["graveyard"] = &ChatTriggerContext::graveyard;
             creators["emote"] = &ChatTriggerContext::emote;
             creators["buff"] = &ChatTriggerContext::buff;
+            creators["help"] = &ChatTriggerContext::help;
         }
 
     private:
+        static Trigger* help(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "help"); }
         static Trigger* buff(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "buff"); }
         static Trigger* emote(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "emote"); }
         static Trigger* graveyard(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "graveyard"); }

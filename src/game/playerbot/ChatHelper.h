@@ -31,10 +31,13 @@ namespace ai
         static bool parseItemClass(string text, uint32 *itemClass, uint32 *itemSubClass);
         static uint32 parseSlot(string text);
 
+        static bool parseable(string text);
+
     private:
         static map<string, uint32> consumableSubClasses;
         static map<string, uint32> tradeSubClasses;
         static map<string, uint32> itemQualities;
         static map<string, uint32> slots;
+        static map<string, ChatMsg> chats;
     };
 };

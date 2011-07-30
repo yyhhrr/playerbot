@@ -96,4 +96,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("reset ai");
     supported.push_back("emote");
     supported.push_back("buff");
+    supported.push_back("help");
 }

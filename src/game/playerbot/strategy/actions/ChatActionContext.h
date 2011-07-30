@@ -34,6 +34,8 @@
 #include "DestroyItemAction.h"
 #include "GraveyardActions.h"
 #include "BuffAction.h"
+#include "AttackAction.h"
+#include "HelpAction.h"
 
 namespace ai
 {
@@ -78,9 +80,11 @@ namespace ai
             creators["reset ai"] = &ChatActionContext::reset_ai;
             creators["graveyard"] = &ChatActionContext::graveyard;
             creators["buff"] = &ChatActionContext::buff;
+            creators["help"] = &ChatActionContext::help;
         }
 
     private:
+        static Action* help(PlayerbotAI* ai) { return new HelpAction(ai); }
         static Action* buff(PlayerbotAI* ai) { return new BuffAction(ai); }
         static Action* destroy(PlayerbotAI* ai) { return new DestroyItemAction(ai); }
         static Action* graveyard(PlayerbotAI* ai) { return new RepopAtGraveyardAction(ai); }

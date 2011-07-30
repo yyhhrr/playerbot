@@ -9,7 +9,7 @@ map<string, uint32> ChatHelper::consumableSubClasses;
 map<string, uint32> ChatHelper::tradeSubClasses;
 map<string, uint32> ChatHelper::itemQualities;
 map<string, uint32> ChatHelper::slots;
-
+map<string, ChatMsg> ChatHelper::chats;
 
 ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai) 
 {
@@ -65,6 +65,15 @@ ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
     slots["off hand"] = EQUIPMENT_SLOT_OFFHAND;
     slots["ranged"] = EQUIPMENT_SLOT_RANGED;
     slots["tabard"] = EQUIPMENT_SLOT_TABARD;
+
+    chats["party"] = CHAT_MSG_PARTY;
+    chats["p"] = CHAT_MSG_PARTY;
+    chats["guild"] = CHAT_MSG_GUILD;
+    chats["g"] = CHAT_MSG_GUILD;
+    chats["raid"] = CHAT_MSG_RAID;
+    chats["r"] = CHAT_MSG_RAID;
+    chats["whisper"] = CHAT_MSG_WHISPER;
+    chats["w"] = CHAT_MSG_WHISPER;
 }
 
 string ChatHelper::formatMoney(uint32 copper)
@@ -182,14 +191,8 @@ string ChatHelper::formatItem(ItemPrototype const * proto, int count)
 
 ChatMsg ChatHelper::parseChat(string& text)
 {
-    if (text == "party" || text == "p")
-        return CHAT_MSG_PARTY;
-    if (text == "guild" || text == "g")
-        return CHAT_MSG_GUILD;
-    if (text == "raid" || text == "r")
-        return CHAT_MSG_RAID;
-    if (text == "whisper" || text == "w")
-        return CHAT_MSG_WHISPER;
+    if (chats.find(text) != chats.end())
+        return chats[text];
     
     return CHAT_MSG_SYSTEM;
 }
@@ -330,4 +333,24 @@ uint32 ChatHelper::parseSlot(string text)
         return slots[text];
 
     return EQUIPMENT_SLOT_END;
+}
+
+bool ChatHelper::parseable(string text)
+{
+    if (text.find("|H") != string.npos)
+        return true;
+
+    if (consumableSubClasses.find(text) != consumableSubClasses.end())
+        return true;
+    
+    if (tradeSubClasses.find(text) != tradeSubClasses.end())
+        return true;
+
+    if (itemQualities.find(text) != itemQualities.end())
+        return true;
+
+    if (chats.find(text) != chats.end())
+        return true;
+
+    return parseMoney(text) > 0;
 }
