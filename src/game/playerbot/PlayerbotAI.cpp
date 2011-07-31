@@ -242,7 +242,8 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             
             uint32 delaytime;
             p >> delaytime;
-            IncreaseNextCheckDelay(delaytime);
+            if (delaytime < sPlayerbotAIConfig.globalCoolDown)
+                IncreaseNextCheckDelay(delaytime);
             return;
         }
     default:
@@ -258,15 +259,19 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
     if (lastSpell.id != spellid)
         return;
 
-    int castTimeSpent = 1000 * (time(0) - lastSpell.time);
+    lastSpell.Reset();
+
+    time_t now = time(0);
+    if (now <= lastSpell.time)
+        return;
+    
+    uint32 castTimeSpent = 1000 * (now - lastSpell.time);
 
     int32 globalCooldown = CalculateGlobalCooldown(lastSpell.id);
     if (castTimeSpent < globalCooldown)
         SetNextCheckDelay(globalCooldown - castTimeSpent);
     else
         SetNextCheckDelay(0);
-
-    lastSpell.Reset();
 }
 
 int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
