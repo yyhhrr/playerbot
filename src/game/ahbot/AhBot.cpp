@@ -315,15 +315,24 @@ void AhBot::HandleCommand(string command)
         Category* category = CategoryList::instance[i];
         if (category->Contains(proto))
         {
+            ostringstream out;
+            out << proto->Name1 << " (" << category->GetDisplayName() << ")"
+                << "\n";
             for (int auction = 0; auction < MAX_AUCTIONS; auction++)
             {
-                ostringstream out;
-                out << proto->Name1 << " (" << category->GetDisplayName() << ") - auction house " << auctionIds[auction] << " - sell: "
-                    << category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction])
-					<< ", buy: " << category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction])
-                    << ", money available: " << GetAvailableMoney(auctionIds[auction]);
-                sLog.outString(out.str().c_str());
+                out << "--- auction house " << auctionIds[auction] <<  "(money: "
+                    << GetAvailableMoney(auctionIds[auction])
+                    << ") ---\n";
+
+                out << "sell: " << category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction])
+                    << " ("  << category->GetPricingStrategy()->ExplainSellPrice(proto, auctionIds[auction]) << ")"
+                    << "\n";
+
+                out << "buy: " << category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction])
+                    << " ("  << category->GetPricingStrategy()->ExplainBuyPrice(proto, auctionIds[auction]) << ")"
+                    << "\n";
             }
+            sLog.outString(out.str().c_str());
             break;
         }
     }

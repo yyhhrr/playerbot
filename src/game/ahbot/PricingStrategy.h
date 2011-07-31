@@ -15,6 +15,8 @@ namespace ahbot
     public:
         virtual uint32 GetSellPrice(ItemPrototype const* proto, uint32 auctionHouse);
         virtual uint32 GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse);
+        string ExplainSellPrice(ItemPrototype const* proto, uint32 auctionHouse);
+        string ExplainBuyPrice(ItemPrototype const* proto, uint32 auctionHouse);
 
     protected:
         virtual uint32 GetDefaultPrice(ItemPrototype const* proto);
