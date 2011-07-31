@@ -116,7 +116,7 @@ uint32 PricingStrategy::GetDefaultPrice(ItemPrototype const* proto)
 {
     uint32 buyPrice = proto->BuyPrice;
     uint32 sellPrice = proto->SellPrice * 4;
-    uint32 defaultPrice = sAhBotConfig.defaultMinPrice * proto->ItemLevel;
+    uint32 defaultPrice = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
     uint32 price = max(max(buyPrice, sellPrice), defaultPrice);
 
     if (proto->Quality == ITEM_QUALITY_POOR)

@@ -10,7 +10,6 @@ namespace ahbot
     {
     public:
         Cloth() : Trade() {}
-        static Cloth instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -26,7 +25,6 @@ namespace ahbot
     {
     public:
         Leather() : Trade() {}
-        static Leather instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -42,7 +40,6 @@ namespace ahbot
     {
     public:
         Elemental() : Trade() {}
-        static Elemental instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -58,7 +55,6 @@ namespace ahbot
     {
     public:
         Herb() : Trade() {}
-        static Herb instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -74,7 +70,6 @@ namespace ahbot
     {
     public:
         Meat() : Trade() {}
-        static Meat instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -90,7 +85,6 @@ namespace ahbot
     {
     public:
         Metal() : Trade() {}
-        static Metal instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -106,7 +100,6 @@ namespace ahbot
     {
     public:
         Disenchants() : Trade() {}
-        static Disenchants instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -118,11 +111,25 @@ namespace ahbot
         virtual string GetName() { return "Disenchants"; }
     };
 
+    class Jems : public Trade
+    {
+    public:
+        Jems() : Trade() {}
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return proto->Class == ITEM_CLASS_GEM &&
+                proto->SubClass == ITEM_SUBCLASS_GEM_SIMPLE;
+        }
+
+        virtual string GetName() { return "Jems"; }
+    };
+
     class Engineering : public Trade
     {
     public:
         Engineering() : Trade() {}
-        static Engineering instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -141,7 +148,6 @@ namespace ahbot
     {
     public:
         OtherTrade() : Trade() {}
-        static OtherTrade instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -152,6 +158,7 @@ namespace ahbot
                     proto->SubClass != ITEM_SUBCLASS_MATERIAL &&
                     proto->SubClass != ITEM_SUBCLASS_EXPLOSIVES &&
                     proto->SubClass != ITEM_SUBCLASS_ENCHANTING &&
+                    proto->SubClass != ITEM_SUBCLASS_JEWELCRAFTING &&
                     proto->SubClass != ITEM_SUBCLASS_METAL_STONE &&
                     proto->SubClass != ITEM_SUBCLASS_MEAT &&
                     proto->SubClass != ITEM_SUBCLASS_HERB &&

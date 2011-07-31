@@ -38,7 +38,7 @@ public:
 
     int32 GetMaxAllowedAuctionCount(string category)
     {
-        return (int32)GetCategoryParameter(maxAuctionCount, "MaxAuctionCount", category, 15.0f);
+        return (int32)GetCategoryParameter(maxAuctionCount, "MaxAuctionCount", category, 0);
     }
 
     std::string GetStringDefault(const char* name, const char* def)

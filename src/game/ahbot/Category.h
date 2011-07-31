@@ -4,9 +4,6 @@
 
 using namespace std;
 
-#define MAX_AHBOT_CATEGORIES 19
-
-
 namespace ahbot
 {
     class Category
@@ -18,6 +15,7 @@ namespace ahbot
     public:
         virtual bool Contains(ItemPrototype const* proto) = 0;
         virtual string GetName() = 0;
+        virtual string GetDisplayName() { return GetName(); }
 
         virtual int32 GetMaxAllowedAuctionCount();
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto);
@@ -33,7 +31,6 @@ namespace ahbot
     {
     public:
         Consumable() : Category() {}
-        static Consumable instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -68,7 +65,6 @@ namespace ahbot
     {
     public:
         Quest() : Category() {}
-        static Quest instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -87,7 +83,6 @@ namespace ahbot
     {
     public:
         Trade() : Category() {}
-        static Trade instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -123,13 +118,11 @@ namespace ahbot
     {
     public:
         Enchant() : Category() {}
-        static Enchant instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
             return proto->Class == ITEM_CLASS_PERMANENT ||
-                proto->Class == ITEM_CLASS_GEM ||
                 proto->Class == ITEM_CLASS_GLYPH;
         }
         virtual string GetName() { return "enchant"; }
@@ -149,7 +142,6 @@ namespace ahbot
     {
     public:
         Reagent() : Category() {}
-        static Reagent instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -163,7 +155,6 @@ namespace ahbot
     {
     public:
         Recipe() : Category() {}
-        static Recipe instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -186,15 +177,12 @@ namespace ahbot
     {
     public:
         Equip() : Category() {}
-        static Equip instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
             return proto->Class == ITEM_CLASS_WEAPON ||
-                proto->Class == ITEM_CLASS_ARMOR ||
-                proto->Class == ITEM_CLASS_QUIVER ||
-                proto->Class == ITEM_CLASS_CONTAINER;
+                proto->Class == ITEM_CLASS_ARMOR;
         }
         virtual string GetName() { return "equip"; }
         virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
@@ -212,7 +200,6 @@ namespace ahbot
     {
     public:
         Other() : Category() {}
-        static Other instance;
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
@@ -233,5 +220,70 @@ namespace ahbot
         {
             return 1;
         }
+    };
+
+    class Quiver : public Category
+    {
+    public:
+        Quiver() : Category() {}
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return proto->Class == ITEM_CLASS_QUIVER;
+        }
+
+        virtual string GetName() { return "quiver"; }
+
+        virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+
+        virtual int32 GetStackCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+    };
+
+    class Container : public Category
+    {
+    public:
+        Container() : Category() {}
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return proto->Class == ITEM_CLASS_CONTAINER;
+        }
+
+        virtual string GetName() { return "container"; }
+
+        virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+
+        virtual int32 GetStackCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+    };
+
+    class QualityCategoryWrapper : public Category
+    {
+    public:
+        QualityCategoryWrapper(Category* category, uint32 quality);
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto);
+        virtual int32 GetMaxAllowedAuctionCount();
+        virtual string GetName() { return category->GetName(); }
+        virtual string GetDisplayName() { return combinedName; }
+
+    private:
+        uint32 quality;
+        Category* category;
+        string combinedName;
     };
 };

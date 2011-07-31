@@ -1,8 +1,26 @@
 #pragma once;
+#include "Category.h"
 
 namespace ahbot
 {
     using namespace std;
+
+    class CategoryList
+    {
+    public:
+        CategoryList();
+        virtual ~CategoryList();
+
+        Category* operator[](int index) { return categories[index]; }
+        int32 size() { return categories.size(); }
+        static CategoryList instance;
+
+    private:
+        void Add(Category* category);
+
+    private:
+        vector<Category*> categories;
+    };
 
     template<class T>
     void Shuffle(vector<T>& items) 

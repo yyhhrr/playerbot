@@ -58,7 +58,6 @@ bool ChatHandler::HandleAhBotCommand(char* args)
 INSTANTIATE_SINGLETON_1( ahbot::AhBot );
 
 uint32 AhBot::auctionIds[MAX_AUCTIONS] = {2, 6, 7};
-extern Category* Categories[MAX_AHBOT_CATEGORIES];
 
 void AhBot::Init()
 {
@@ -121,8 +120,8 @@ void AhBot::Update(int auction, ItemBag* inAuctionItems)
 {
     inAuctionItems->Init(true);
 
-    for (int i = 0; i < sizeof(Categories) / sizeof(Category*); i++)
-        Update(auction, Categories[i], inAuctionItems);
+    for (int i = 0; i < CategoryList::instance.size(); i++)
+        Update(auction, CategoryList::instance[i], inAuctionItems);
 
     CleanupHistory();
 }
@@ -311,15 +310,15 @@ void AhBot::HandleCommand(string command)
     if (!proto)
         return;
 
-    for (int i=0; i<MAX_AHBOT_CATEGORIES; i++)
+    for (int i=0; i<CategoryList::instance.size(); i++)
     {
-        Category* category = Categories[i];
+        Category* category = CategoryList::instance[i];
         if (category->Contains(proto))
         {
             for (int auction = 0; auction < MAX_AUCTIONS; auction++)
             {
                 ostringstream out;
-                out << proto->Name1 << " (" << category->GetName() << ") - auction house " << auctionIds[auction] << " - sell: "
+                out << proto->Name1 << " (" << category->GetDisplayName() << ") - auction house " << auctionIds[auction] << " - sell: "
                     << category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction])
 					<< ", buy: " << category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction])
                     << ", money available: " << GetAvailableMoney(auctionIds[auction]);
@@ -368,11 +367,11 @@ void AhBot::AddToHistory(AuctionEntry* entry)
         return;
 
     string category = "";
-    for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
+    for (int i = 0; i < CategoryList::instance.size(); i++)
     {
-        if (Categories[i]->Contains(proto))
+        if (CategoryList::instance[i]->Contains(proto))
         {
-            category = Categories[i]->GetName();
+            category = CategoryList::instance[i]->GetName();
             break;
         }
     }

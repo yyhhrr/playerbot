@@ -5,54 +5,55 @@
 
 using namespace ahbot;
 
-Other Other::instance;
-Equip Equip::instance;
-Recipe Recipe::instance;
-Reagent Reagent::instance;
-Enchant Enchant::instance;
-ahbot::Quest ahbot::Quest::instance;
-Alchemy Alchemy::instance;
-Enchants Enchants::instance;
-Food Food::instance;
-OtherConsumable OtherConsumable::instance;
-Cloth Cloth::instance;
-Leather Leather::instance;
-Herb Herb::instance;
-Meat Meat::instance;
-Metal Metal::instance;
-Disenchants Disenchants::instance;
-Engineering Engineering::instance;
-OtherTrade OtherTrade::instance;
-Elemental Elemental::instance;
+CategoryList CategoryList::instance;
 
-Category* Categories[MAX_AHBOT_CATEGORIES] =
+CategoryList::CategoryList()
 {
-    &Other::instance,
-    &Equip::instance,
-    &Recipe::instance,
-    &Reagent::instance,
-    &Enchant::instance,
-    &ahbot::Quest::instance,
-    &Alchemy::instance,
-    &Elemental::instance,
-    &Enchants::instance,
-    &Food::instance,
-    &OtherConsumable::instance,
-    &Cloth::instance,
-    &Leather::instance,
-    &Herb::instance,
-    &Meat::instance,
-    &Metal::instance,
-    &Disenchants::instance,
-    &Engineering::instance,
-    &OtherTrade::instance
-};
+    Add(new Equip());
+    Add(new ahbot::Quest());
+    Add(new Quiver());
+    
+    Add(new Recipe());
+    Add(new Container());
+
+    Add(new Reagent());
+    Add(new Enchant());
+    Add(new Alchemy());
+    Add(new Scroll());
+    Add(new Food());
+
+    Add(new Cloth());
+    Add(new Leather());
+    Add(new Herb());
+    Add(new Metal());
+    Add(new Disenchants());
+    Add(new Meat());
+    Add(new Engineering());
+    Add(new Jems());
+    Add(new Elemental());
+    
+    Add(new OtherConsumable());
+    Add(new OtherTrade());
+    Add(new Other());
+}
+
+void CategoryList::Add(Category* category)
+{
+    for (uint32 quality = ITEM_QUALITY_NORMAL; quality <= ITEM_QUALITY_EPIC; ++quality)
+        categories.push_back(new QualityCategoryWrapper(category, quality));
+}
+
+CategoryList::~CategoryList()
+{
+    for (vector<Category*>::const_iterator i = categories.begin(); i != categories.end(); ++i)
+        delete *i;
+}
 
 ItemBag::ItemBag()
 {
-    for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
+    for (int i = 0; i < CategoryList::instance.size(); i++)
     {
-        content[Categories[i]] = vector<uint32>();
+        content[CategoryList::instance[i]] = vector<uint32>();
     }
 }
 
@@ -68,11 +69,11 @@ void ItemBag::Init(bool silent)
 
     Load();
 
-    for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
+    for (int i = 0; i < CategoryList::instance.size(); i++)
     {
-        Category* category = Categories[i];
+        Category* category = CategoryList::instance[i];
         Shuffle(content[category]);
-        sLog.outString("loaded %d %s items", content[category].size(), category->GetName().c_str());
+        sLog.outString("loaded %d %s items", content[category].size(), category->GetDisplayName().c_str());
     }
 }
 
@@ -97,11 +98,11 @@ bool ItemBag::Add(ItemPrototype const* proto)
         proto->Bonding == BIND_QUEST_ITEM)
         return false;
 
-    for (int i = 0; i < MAX_AHBOT_CATEGORIES; i++)
+    for (int i = 0; i < CategoryList::instance.size(); i++)
     {
-        if (Categories[i]->Contains(proto))
+        if (CategoryList::instance[i]->Contains(proto))
         {
-            content[Categories[i]].push_back(proto->ItemId);
+            content[CategoryList::instance[i]].push_back(proto->ItemId);
             return true;
         }
     }

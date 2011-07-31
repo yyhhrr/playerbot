@@ -32,3 +32,39 @@ PricingStrategy* Category::GetPricingStrategy()
     string name = sAhBotConfig.GetStringDefault(out.str().c_str(), "default");
     return pricingStrategy = PricingStrategyFactory::Create(name, this);
 }
+
+QualityCategoryWrapper::QualityCategoryWrapper(Category* category, uint32 quality) : Category(), quality(quality), category(category) 
+{
+    ostringstream out; out << category->GetName() << ".";
+    switch (quality)
+    {
+    case ITEM_QUALITY_POOR:
+        out << "gray";
+        break;
+    case ITEM_QUALITY_NORMAL:
+        out << "white";
+        break;
+    case ITEM_QUALITY_UNCOMMON:
+        out << "green";
+        break;
+    case ITEM_QUALITY_RARE:
+        out << "blue";
+        break;
+    default:
+        out << "epic";
+        break;
+    }
+
+    combinedName = out.str(); 
+}
+
+bool QualityCategoryWrapper::Contains(ItemPrototype const* proto)
+{
+    return proto->Quality == quality && category->Contains(proto);
+}
+
+int32 QualityCategoryWrapper::GetMaxAllowedAuctionCount()
+{
+    int32 count = sAhBotConfig.GetMaxAllowedAuctionCount(combinedName);
+    return count > 0 ? count : category->GetMaxAllowedAuctionCount(); 
+}
