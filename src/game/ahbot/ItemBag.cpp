@@ -2,6 +2,7 @@
 #include "ItemBag.h"
 #include "ConsumableCategory.h"
 #include "TradeCategory.h"
+#include "AhBotConfig.h"
 
 using namespace ahbot;
 
@@ -96,6 +97,9 @@ bool ItemBag::Add(ItemPrototype const* proto)
     if (!proto ||
         proto->Bonding == BIND_WHEN_PICKED_UP ||
         proto->Bonding == BIND_QUEST_ITEM)
+        return false;
+
+    if (proto->ItemLevel > sAhBotConfig.maxItemLevel)
         return false;
 
     for (int i = 0; i < CategoryList::instance.size(); i++)

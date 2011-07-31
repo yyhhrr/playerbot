@@ -20,6 +20,7 @@ public:
     uint32 alwaysAvailableMoney;
     float priceMultiplier, priceQualityMultiplier;
     uint32 defaultMinPrice;
+    uint32 maxItemLevel;
 
     float GetSellPriceMultiplier(string category)
     {

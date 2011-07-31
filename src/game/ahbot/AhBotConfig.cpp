@@ -34,6 +34,7 @@ bool AhBotConfig::Initialize()
     alwaysAvailableMoney = config.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
     priceMultiplier = config.GetFloatDefault("AhBot.PriceMultiplier", 1.0f);
     defaultMinPrice = config.GetIntDefault("AhBot.DefaultMinPrice", 20);
+    maxItemLevel = config.GetIntDefault("AhBot.MaxItemLevel", 300);
     priceQualityMultiplier = config.GetFloatDefault("AhBot.PriceQualityMultiplier", 1.0f);
 
     sLog.outString("AhBot configuration loaded");
