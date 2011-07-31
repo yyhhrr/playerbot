@@ -217,9 +217,12 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
     case SMSG_SPELL_FAILURE:
         {
             WorldPacket p(packet);
-            uint64 casterGuid = extractGuid(p);
+            p.rpos(0);
+            ObjectGuid casterGuid;
+            p >> casterGuid.ReadAsPacked();
             if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
+            
             uint8 castCount;
             uint32 spellId;
             p >> castCount;
@@ -230,10 +233,16 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
     case SMSG_SPELL_DELAYED:
         {
             WorldPacket p(packet);
-            uint64 casterGuid = extractGuid(p);
-            if (casterGuid != bot->GetObjectGuid().GetRawValue())
+            p.rpos(0);
+            ObjectGuid casterGuid;
+            p >> casterGuid.ReadAsPacked();
+            
+            if (casterGuid != bot->GetObjectGuid())
                 return;
-            IncreaseNextCheckDelay(1);
+            
+            uint32 delaytime;
+            p >> delaytime;
+            IncreaseNextCheckDelay(delaytime);
             return;
         }
     default:
@@ -270,7 +279,6 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
     if (!spellInfo ||
         spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 ||
         spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2 ||
-        spellInfo->Attributes & SPELL_ATTR_OUTDOORS_ONLY ||
         spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE ||
         !spellInfo->StartRecoveryCategory)
         return 0;
@@ -730,7 +738,7 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     bot->SetSelectionGuid(oldSel);
 
-    float castTime = GetSpellCastTime(pSpellInfo);
+    float castTime = GetSpellCastTime(pSpellInfo) + sPlayerbotAIConfig.reactDelay;
     if (IsChanneledSpell(pSpellInfo))
     {
         int32 duration = GetSpellDuration(pSpellInfo);
