@@ -44,7 +44,10 @@ uint8 AttackerCountValue::Calculate()
     for (list<Unit*>::iterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* unit = *i;
-        float distance = unit->GetDistance(bot);
+        if (!unit || !unit->isAlive())
+            continue;
+
+        float distance = bot->GetDistance(unit);
         if (distance <= range)
             count++;
     }
