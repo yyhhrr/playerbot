@@ -11,6 +11,18 @@ map<string, uint32> ChatHelper::itemQualities;
 map<string, uint32> ChatHelper::slots;
 map<string, ChatMsg> ChatHelper::chats;
 
+template<class T>
+static bool substrContainsInMap(string searchTerm, map<string, T> searchIn)
+{
+    for (map<string, T>::iterator i = searchIn.begin(); i != searchIn.end(); ++i)
+    {
+        if (searchTerm.find(i->first) != string::npos)
+            return true;
+    }
+
+    return false;
+}
+
 ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
 {
     itemQualities["poor"] = ITEM_QUALITY_POOR;
@@ -310,6 +322,13 @@ uint32 ChatHelper::parseItemQuality(string text)
 
 bool ChatHelper::parseItemClass(string text, uint32 *itemClass, uint32 *itemSubClass)
 {
+    if (text == "questitem")
+    {
+        *itemClass = ITEM_CLASS_QUEST;
+        *itemSubClass = ITEM_SUBCLASS_QUEST;
+        return true;
+    }
+
     if (consumableSubClasses.find(text) != consumableSubClasses.end())
     {
         *itemClass = ITEM_CLASS_CONSUMABLE;
@@ -337,23 +356,12 @@ uint32 ChatHelper::parseSlot(string text)
 
 bool ChatHelper::parseable(string text)
 {
-    if (text.find("|H") != string::npos)
-        return true;
-
-    if (consumableSubClasses.find(text) != consumableSubClasses.end())
-        return true;
-
-    if (tradeSubClasses.find(text) != tradeSubClasses.end())
-        return true;
-
-    if (itemQualities.find(text) != itemQualities.end())
-        return true;
-
-    if (slots.find(text) != slots.end())
-        return true;
-
-    if (chats.find(text) != chats.end())
-        return true;
-
-    return parseMoney(text) > 0;
+    return text.find("|H") != string::npos ||
+            text == "questitem" ||
+            substrContainsInMap<uint32>(text, consumableSubClasses) ||
+            substrContainsInMap<uint32>(text, tradeSubClasses) ||
+            substrContainsInMap<uint32>(text, itemQualities) ||
+            substrContainsInMap<uint32>(text, slots) ||
+            substrContainsInMap<ChatMsg>(text, chats) ||
+            parseMoney(text) > 0;
 }
