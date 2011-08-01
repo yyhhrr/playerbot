@@ -150,7 +150,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "low health",
-        NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("healing touch", 70.0f), NULL)));
+        NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("healing touch", 69.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"party member medium health",

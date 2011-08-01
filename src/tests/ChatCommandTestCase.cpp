@@ -47,6 +47,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( emote );
       CPPUNIT_TEST( buff );
       CPPUNIT_TEST( help );
+      CPPUNIT_TEST( gb );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -282,9 +283,15 @@ protected:
         assertCommand("buff");
         assertParametrizedCommand("buff", "?");
     }
+
     void help()
     {
         assertCommand("help");
+    }
+
+    void gb()
+    {
+        assertParametrizedCommand("gb", "link");
     }
 
 };

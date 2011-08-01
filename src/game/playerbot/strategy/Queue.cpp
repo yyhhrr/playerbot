@@ -15,7 +15,8 @@ void Queue::Push(ActionBasket *action)
             ActionBasket* basket = *iter;
             if (action->getAction()->getName() == basket->getAction()->getName())
             {
-                basket->setRelevance(action->getRelevance());
+				if (basket->getRelevance() < action->getRelevance())
+					basket->setRelevance(action->getRelevance());
                 delete action;
                 return;
             }
@@ -74,7 +75,7 @@ ActionBasket* Queue::Peek()
     return selection;
 }
 
-int Queue::Size() 
+int Queue::Size()
 {
-	return actions.size(); 
+	return actions.size();
 }

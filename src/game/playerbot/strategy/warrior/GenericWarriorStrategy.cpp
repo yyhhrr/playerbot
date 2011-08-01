@@ -32,10 +32,6 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "enemy out of melee",
-        NextAction::array(0, new NextAction("melee", 50.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "battle shout",
         NextAction::array(0, new NextAction("battle shout", 80.0f), NULL)));
 

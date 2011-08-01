@@ -79,7 +79,7 @@ protected:
 		tickWithPetDead();
 		tickWithPetLowHealth(30);
 
-		assertActions(">S:call pet>T:hunter's mark>Pet:mend pet");
+		assertActions(">S:call pet>S:revive pet>Pet:mend pet");
 	}
 
 

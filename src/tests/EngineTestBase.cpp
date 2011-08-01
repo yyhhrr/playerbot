@@ -42,6 +42,12 @@ public:
         {
             ai->auras[MockedTargets::GetSelf()].remove("shadowform");
         }
+        if (name == "reach melee" ||
+                name == "feral charge - bear" || name == "feral charge - cat" ||
+                name == "charge")
+        {
+            ai->GetAiObjectContext()->GetValue<float>("distance", "current target")->Set(0);
+        }
 
         remove(name, " on party");
         remove(name, " on cc");
@@ -49,6 +55,7 @@ public:
             name = "cleanse";
         if (name.find("purify") != string ::npos)
             name = "purify";
+
         ai->spellCooldowns.push_back(name);
     }
 
@@ -194,6 +201,11 @@ void EngineTestBase::tickOutOfMeleeRange()
 {
     set<float>("distance", "current target", 15.0f);
     tick();
+    set<float>("distance", "current target", 0.0f);
+}
+
+void EngineTestBase::setInMeleeRange()
+{
     set<float>("distance", "current target", 0.0f);
 }
 

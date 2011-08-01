@@ -68,7 +68,7 @@ protected:
         tick(); // melee
         tick(); // battle shout
 
-		assertActions(">S:battle shout>S:defensive stance>T:reach melee>T:melee>S:bloodrage>T:rend");
+		assertActions(">S:battle shout>S:bloodrage>S:defensive stance>T:melee>T:rend>T:disarm");
 
     }
 
@@ -145,7 +145,7 @@ protected:
         addAura("sword and board");
         tickWithSpellAvailable("shield slam");
 
-		assertActions(">S:defensive stance>T:reach melee>T:melee>S:bloodrage>T:rend>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:heroic strike>T:disarm>T:melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
+		assertActions(">S:bloodrage>S:defensive stance>T:melee>T:rend>T:disarm>T:devastate>T:revenge>T:sunder armor>T:shield slam>T:heroic strike>T:melee>T:melee>T:devastate>T:slam>T:heroic strike>T:shield slam");
     }
 
     void revengeIfDodge()

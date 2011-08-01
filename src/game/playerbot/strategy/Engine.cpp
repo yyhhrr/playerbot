@@ -116,9 +116,9 @@ bool Engine::DoNextAction(Unit* unit, int depth)
 
             if (action && action->isUseful()) {
                 if (action->isPossible()) {
-                    if ((!skipPrerequisites || lastRelevance-relevance > 0.02) &&
-                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.01, false, event)) {
-                        PushAgain(actionNode, relevance, event);
+                    if ((!skipPrerequisites || lastRelevance-relevance > 0.04) &&
+                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.02, false, event)) {
+                        PushAgain(actionNode, relevance + 0.01, event);
                         continue;
                     }
 
@@ -133,12 +133,12 @@ bool Engine::DoNextAction(Unit* unit, int depth)
                         break;
                     }
                     else {
-                        MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
+                        MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
                         sLog.outDetail("NOT EXECUTED:%s", actionNode->getName().c_str());
                     }
                 }
                 else {
-                    MultiplyAndPush(actionNode->getAlternatives(), relevance, false, event);
+                    MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
                     sLog.outDetail("IMPOSSIBLE:%s", actionNode->getName().c_str());
                 }
             }

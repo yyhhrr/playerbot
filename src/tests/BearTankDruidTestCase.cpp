@@ -46,7 +46,8 @@ protected:
     {
         tick();
 
-		spellAvailable("dire bear form"); // aura not yet applied
+		spellAvailable("dire bear form");
+		removeAura("dire bear form");
 
 		tickWithAttackerCount(3);
 		addAura("dire bear form");
@@ -90,15 +91,15 @@ protected:
     void combatVsMelee()
     {
         removeTargetAura("faerie fire (feral)");
-        tick();
+
         tick();
         addAura("dire bear form");
 
-		tickOutOfMeleeRange();
-		tick();
+        tick();
+        tickInMeleeRange();
 
 		tickOutOfMeleeRange();
-        tick();
+		tick();
 
 		tickWithRage(41);
 
@@ -106,7 +107,7 @@ protected:
 
         tickWithRage(61);
 
-        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:melee>T:reach melee>T:melee>T:mangle (bear)>T:maul>T:swipe (bear)");
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:mangle (bear)>T:maul>T:swipe (bear)");
     }
 
     void healHimself()
@@ -186,6 +187,8 @@ protected:
 
         removeTargetAura("faerie fire (feral)");
         tickInMeleeRange();
+		addAura("dire bear form");
+
         tick();
 
         assertActions(">S:thorns>S:dire bear form>T:faerie fire (feral)");

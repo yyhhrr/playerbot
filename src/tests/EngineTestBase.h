@@ -76,6 +76,7 @@ protected:
 	void tickWithDeadPartyMember();
     void tickWithCcTarget(string   spell);
     void tickWhileSwimming();
+    void setInMeleeRange();
 
 protected:
     MockPlayerbotAIBase *ai;

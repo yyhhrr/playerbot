@@ -58,8 +58,8 @@ protected:
 
 		tickWithNoAggro();
 		tickWithNoAggro();
-        
-        tick(); 
+
+        tick();
 
 		assertActions(">S:battle stance>T:mocking blow>T:charge>T:melee");
     }
@@ -75,8 +75,8 @@ protected:
 
 		tickInMeleeRange();
 
-        tick(); 
-        
+        tick();
+
 		spellAvailable("rend");
         addTargetAura("rend");
 
@@ -85,7 +85,7 @@ protected:
 
         tick(); // bloodrage
 
-		assertActions(">S:battle stance>T:charge>T:melee>T:reach melee>T:melee>T:rend>T:bloodthirst>T:heroic strike>S:bloodrage");
+		assertActions(">S:battle stance>T:charge>T:melee>T:reach melee>T:rend>T:melee>T:bloodthirst>T:heroic strike>S:bloodrage");
     }
 
     void boost()
@@ -119,7 +119,7 @@ protected:
 
 		tickWithTargetIsMoving();
 		tickWithTargetIsMoving();
-        
+
         tickWithSpellAvailable("defensive stance"); // melee
 
 		assertActions(">S:battle stance>T:hamstring>T:charge>T:melee");
@@ -128,14 +128,14 @@ protected:
 
 	void victoryRush()
 	{
-		tickInMeleeRange(); 
+		tickInMeleeRange();
 		addAura("victory rush");
-		
+
 		tick();
 
 		assertActions(">S:battle stance>T:victory rush");
 	}
-	
+
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( DpsWarriorTestCase );

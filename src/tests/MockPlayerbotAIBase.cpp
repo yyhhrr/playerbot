@@ -39,21 +39,22 @@ bool MockPlayerbotAIBase::IsSpellCastUseful(string name, Unit* target)
 bool MockPlayerbotAIBase::CastSpell(string name, Unit* target)
 {
     buffer.append(">");
-    if (target == MockedTargets::GetPartyMember()) 
-        buffer.append("P:"); 
-    if (target == MockedTargets::GetCurrentTarget()) 
-        buffer.append("T:"); 
-    if (target == MockedTargets::GetSelf()) 
-        buffer.append("S:"); 
-    if (target == MockedTargets::GetPet()) 
-        buffer.append("Pet:"); 
-    if (target == MockedTargets::GetCc()) 
-        buffer.append("Cc:"); 
-    buffer.append(name); 
+    if (target == MockedTargets::GetPartyMember())
+        buffer.append("P:");
+    if (target == MockedTargets::GetCurrentTarget())
+        buffer.append("T:");
+    if (target == MockedTargets::GetSelf())
+        buffer.append("S:");
+    if (target == MockedTargets::GetPet())
+        buffer.append("Pet:");
+    if (target == MockedTargets::GetCc())
+        buffer.append("Cc:");
+    buffer.append(name);
 
-    spellCooldowns.push_back(name); 
+    spellCooldowns.push_back(name);
+    auras[target].push_back(name);
 
-    return true; 
+    return true;
 }
 
 bool MockPlayerbotAIBase::HasAura(string spellName, Unit* player)

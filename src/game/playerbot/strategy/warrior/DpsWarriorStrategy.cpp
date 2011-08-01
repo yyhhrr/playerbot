@@ -97,10 +97,6 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("bloodthirst", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "enemy out of melee",
-        NextAction::array(0, new NextAction("melee", 50.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "lose aggro",
         NextAction::array(0, new NextAction("mocking blow", 30.0f), NULL)));
 

@@ -1,5 +1,5 @@
 #include "pch.h"
-
+#include "../game/playerbot/PlayerbotAIConfig.h"
 
 DatabaseType WorldDatabase;                                 ///< Accessor to the world database
 DatabaseType CharacterDatabase;                             ///< Accessor to the character database
@@ -74,16 +74,26 @@ void CliRunnable::run()
 
 int main()
 {
+  sPlayerbotAIConfig.Initialize();
+  sPlayerbotAIConfig.enabled = true;
+  sPlayerbotAIConfig.globalCoolDown = 1000;
+  sPlayerbotAIConfig.reactDelay = 100;
+  sPlayerbotAIConfig.sightDistance = 40.0f;
+  sPlayerbotAIConfig.spellDistance = 25.0f;
+  sPlayerbotAIConfig.reactDistance = 100.0f;
+  sPlayerbotAIConfig.grindDistance = 50.0f;
+  sPlayerbotAIConfig.lootDistance = 20.0f;
+
   // Create the event manager and test controller
   CPPUNIT_NS::TestResult controller;
 
   // Add a listener that colllects test result
   CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );        
+  controller.addListener( &result );
 
   // Add a listener that print dots as test run.
   CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );      
+  controller.addListener( &progress );
 
   // Add the top suite to the test runner
   CPPUNIT_NS::TestRunner runner;
@@ -92,7 +102,7 @@ int main()
 
   // Print test in a compiler compatible format.
   CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
-  outputter.write(); 
+  outputter.write();
 
   return result.wasSuccessful() ? 0 : 1;
 }
