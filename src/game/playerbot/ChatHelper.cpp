@@ -337,7 +337,7 @@ uint32 ChatHelper::parseSlot(string text)
 
 bool ChatHelper::parseable(string text)
 {
-    if (text.find("|H") != string.npos)
+    if (text.find("|H") != string::npos)
         return true;
 
     if (consumableSubClasses.find(text) != consumableSubClasses.end())
