@@ -5,10 +5,10 @@ using namespace std;
 
 class Player;
 
-namespace ai 
+namespace ai
 {
     class Engine;
-    
+
 	class RangePair {
 	public:
 		RangePair() {
@@ -56,9 +56,8 @@ namespace ai
 	class FleeManager
 	{
 	public:
-		FleeManager(Player* bot, AttackerMap *attackers, float maxAllowedDistance, float followAngle) {
+		FleeManager(Player* bot, float maxAllowedDistance, float followAngle) {
 			this->bot = bot;
-			this->attackers = attackers;
 			this->maxAllowedDistance = maxAllowedDistance;
 			this->followAngle = followAngle;
 		}
@@ -77,7 +76,6 @@ namespace ai
 
 	private:
 		Player* bot;
-		AttackerMap *attackers;
 		float maxAllowedDistance;
 		float followAngle;
 	};

@@ -190,8 +190,7 @@ bool MovementAction::Flee(Unit *target)
     if (!IsMovingAllowed())
         return true;
 
-    AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
-    FleeManager manager(bot, &attackers, sPlayerbotAIConfig.spellDistance, GetFollowAngle());
+    FleeManager manager(bot, sPlayerbotAIConfig.spellDistance, GetFollowAngle());
 
     float rx, ry, rz;
     if (!manager.CalculateDestination(&rx, &ry, &rz))

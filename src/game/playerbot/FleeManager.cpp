@@ -5,13 +5,13 @@
 using namespace ai;
 using namespace std;
 
-void FleeManager::calculateDistanceToPlayers(FleePoint *point) 
+void FleeManager::calculateDistanceToPlayers(FleePoint *point)
 {
 	Group* group = bot->GetGroup();
 	if (!group)
 		return;
 
-	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
+	for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next())
     {
 		Player* player = gref->getSource();
 		if(player == bot)
@@ -35,30 +35,28 @@ void FleeManager::calculateDistanceToPlayers(FleePoint *point)
 	}
 }
 
-void FleeManager::calculateDistanceToCreatures(FleePoint *point) 
+void FleeManager::calculateDistanceToCreatures(FleePoint *point)
 {
 	RangePair &distance = point->toCreatures;
 
-	for (AttackerMapIterator i = attackers->begin(); i!=attackers->end(); i++) 
-    {  
-		Unit* unit = sObjectAccessor.GetUnit(*bot, i->first);
-		if (!unit)
-			continue;
-
+	list<Unit*> units = *bot->GetPlayerbotAI()->GetAiObjectContext()->GetValue<list<Unit*>>("possible targets");
+	for (list<Unit*>::iterator i = units.begin(); i != units.end(); ++i)
+    {
+		Unit* unit = *i;
 		float d = unit->GetDistance(point->x, point->y, point->z);
 		distance.probe(d);
 	}
 }
 
-void FleeManager::calculatePossibleDestinations(list<FleePoint*> &points) 
+void FleeManager::calculatePossibleDestinations(list<FleePoint*> &points)
 {
 	float botPosX = bot->GetPositionX();
 	float botPosY = bot->GetPositionY();
 	float botPosZ = bot->GetPositionZ();
 
-	for (float radius = maxAllowedDistance; radius>=20.0f; radius -= 10.0f) 
+	for (float radius = maxAllowedDistance; radius>=20.0f; radius -= 10.0f)
     {
-		for (float angle = -M_PI + followAngle; angle < M_PI + followAngle; angle += M_PI / 8) 
+		for (float angle = -M_PI + followAngle; angle < M_PI + followAngle; angle += M_PI / 8)
         {
 			float x = botPosX + cos(angle) * radius;
 			float y = botPosY + sin(angle) * radius;
@@ -74,9 +72,9 @@ void FleeManager::calculatePossibleDestinations(list<FleePoint*> &points)
 	}
 }
 
-void FleeManager::cleanup(list<FleePoint*> &points) 
+void FleeManager::cleanup(list<FleePoint*> &points)
 {
-	for (list<FleePoint*>::iterator i = points.begin(); i != points.end(); i++) 
+	for (list<FleePoint*>::iterator i = points.begin(); i != points.end(); i++)
     {
 		FleePoint* point = *i;
 		delete point;
@@ -84,24 +82,24 @@ void FleeManager::cleanup(list<FleePoint*> &points)
 	points.clear();
 }
 
-bool FleePoint::isReasonable() 
+bool FleePoint::isReasonable()
 {
 	return toAllPlayers.max <= 30.0f && toCreatures.min >= 15.0f;
 }
 
-bool FleePoint::isBetterThan(FleePoint* other) 
+bool FleePoint::isBetterThan(FleePoint* other)
 {
     bool isFartherFromCreatures = (toCreatures.min - other->toCreatures.min) >= 1.0f;
     bool isNearerToMeleePlayers = (toMeleePlayers.max - other->toMeleePlayers.max) <= 1.0f;
     bool isFartherFromRangedPlayers = (toRangedPlayers.min - other->toRangedPlayers.min) >= 1.0f;
-	
+
     return isFartherFromCreatures && (isNearerToMeleePlayers || isFartherFromRangedPlayers);
 }
 
-FleePoint* FleeManager::selectOptimalDestination(list<FleePoint*> &points) 
+FleePoint* FleeManager::selectOptimalDestination(list<FleePoint*> &points)
 {
 	FleePoint* selected = NULL;
-	for (list<FleePoint*>::iterator i = points.begin(); i != points.end(); i++) 
+	for (list<FleePoint*>::iterator i = points.begin(); i != points.end(); i++)
     {
 		FleePoint* point = *i;
 		if (point->isReasonable() && (!selected || point->isBetterThan(selected)))
@@ -110,7 +108,7 @@ FleePoint* FleeManager::selectOptimalDestination(list<FleePoint*> &points)
 	return selected;
 }
 
-bool FleeManager::CalculateDestination(float* rx, float* ry, float* rz) 
+bool FleeManager::CalculateDestination(float* rx, float* ry, float* rz)
 {
 	list<FleePoint*> points;
 	calculatePossibleDestinations(points);
@@ -121,11 +119,11 @@ bool FleeManager::CalculateDestination(float* rx, float* ry, float* rz)
         cleanup(points);
         return false;
     }
-    
+
 	*rx = point->x;
 	*ry = point->y;
 	*rz = bot->GetPositionZ();
-    
+
     cleanup(points);
 	return true;
 }
