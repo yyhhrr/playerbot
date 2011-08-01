@@ -16,7 +16,8 @@ static bool substrContainsInMap(string searchTerm, map<string, T> searchIn)
 {
     for (map<string, T>::iterator i = searchIn.begin(); i != searchIn.end(); ++i)
     {
-        if (searchTerm.find(i->first) != string::npos)
+		string term = i->first;
+		if (term.size() > 1 && searchTerm.find(term) != string::npos)
             return true;
     }
 
