@@ -19,60 +19,14 @@ bool TradeAction::Execute(Event event)
 
     int8 slot = -1;
 
-    list<Item*> found;
-    size_t pos = text.find(" ");
-    int count = pos!=string::npos ? atoi(text.substr(pos + 1).c_str()) : TRADE_SLOT_TRADED_COUNT;
-    if (count < 1) count = 1;
-    else if (count > TRADE_SLOT_TRADED_COUNT) count = TRADE_SLOT_TRADED_COUNT;
-    
-    uint32 quality = chat->parseItemQuality(text);
-    if (quality != MAX_ITEM_QUALITY)
-    {
-        FindItemsToTradeByQualityVisitor visitor(quality, count);
-        IterateItems(&visitor);
-        found = visitor.GetResult();
-    }
-    
-    uint32 itemClass = MAX_ITEM_CLASS, itemSubClass = 0;
-    if (chat->parseItemClass(text, &itemClass, &itemSubClass))
-    {
-        FindItemsToTradeByClassVisitor visitor(itemClass, itemSubClass, count);
-        IterateItems(&visitor);
-        found = visitor.GetResult();
-    }
+    list<Item*> found = parseItems(text);
+    if (found.empty())
+        return false;
 
-    if (!found.empty())
-    {
-        for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
-            TradeItem(**i, slot);
-
-        return true;
-    }
-
-    uint32 fromSlot = chat->parseSlot(text);
-    if (fromSlot != EQUIPMENT_SLOT_END)
-    {
-        Item* item = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, fromSlot);
-        if (item)
-        {
-            TradeItem(*item, slot);
-            return true;
-        }
-    }
-
-    ItemIds ids = chat->parseItems(text);
-    for (ItemIds::iterator i = ids.begin(); i != ids.end(); i++)
-        TradeItem(&FindItemByIdVisitor(*i), slot);
+    for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
+        TradeItem(**i, slot);
 
     return true;
-}
-
-bool TradeAction::TradeItem(FindItemVisitor *visitor, int8 slot)
-{
-    IterateItems(visitor, ITERATE_ALL_ITEMS);
-    Item* item = visitor->GetResult();
-    if (item) return TradeItem(*item, slot);
-    return false;
 }
 
 bool TradeAction::TradeItem(const Item& item, int8 slot)

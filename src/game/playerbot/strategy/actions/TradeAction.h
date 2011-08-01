@@ -11,7 +11,6 @@ namespace ai
         virtual bool Execute(Event event);
 
     private:
-        bool TradeItem(FindItemVisitor *visitor, int8 slot);
         bool TradeItem(const Item& item, int8 slot);
 
         static map<string, uint32> slots;

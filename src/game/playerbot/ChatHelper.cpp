@@ -11,7 +11,7 @@ map<string, uint32> ChatHelper::itemQualities;
 map<string, uint32> ChatHelper::slots;
 map<string, ChatMsg> ChatHelper::chats;
 
-ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai) 
+ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
 {
     itemQualities["poor"] = ITEM_QUALITY_POOR;
     itemQualities["gray"] = ITEM_QUALITY_POOR;
@@ -182,7 +182,7 @@ string ChatHelper::formatItem(ItemPrototype const * proto, int count)
     out << "|c" << color << "|Hitem:" << proto->ItemId
         << ":0:0:0:0:0:0:0" << "|h[" << proto->Name1
         << "]|h|r";
-    
+
     if (count > 1)
         out << "x" << count;
 
@@ -193,7 +193,7 @@ ChatMsg ChatHelper::parseChat(string& text)
 {
     if (chats.find(text) != chats.end())
         return chats[text];
-    
+
     return CHAT_MSG_SYSTEM;
 }
 
@@ -246,7 +246,7 @@ SpellIds ChatHelper::parseSpells(string& text)
         if (spellId)
             spells.insert(spellId);
     }
-    
+
     return spells;
 }
 
@@ -293,14 +293,14 @@ list<ObjectGuid> ChatHelper::parseGameobjects(string& text)
 string ChatHelper::formatQuestObjective(string name, int available, int required)
 {
     ostringstream out;
-    out << "|cFFFFFFFF" << name << (available >= required ? "|c0000FF00: " : "|c00FF0000: ") 
+    out << "|cFFFFFFFF" << name << (available >= required ? "|c0000FF00: " : "|c00FF0000: ")
         << available << "/" << required << "|r";
-    
+
     return out.str();
 }
 
 
-uint32 ChatHelper::parseItemQuality(string text) 
+uint32 ChatHelper::parseItemQuality(string text)
 {
     if (itemQualities.find(text) == itemQualities.end())
         return MAX_ITEM_QUALITY;
@@ -342,11 +342,14 @@ bool ChatHelper::parseable(string text)
 
     if (consumableSubClasses.find(text) != consumableSubClasses.end())
         return true;
-    
+
     if (tradeSubClasses.find(text) != tradeSubClasses.end())
         return true;
 
     if (itemQualities.find(text) != itemQualities.end())
+        return true;
+
+    if (slots.find(text) != slots.end())
         return true;
 
     if (chats.find(text) != chats.end())

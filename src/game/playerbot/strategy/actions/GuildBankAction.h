@@ -12,7 +12,7 @@ namespace ai
 
     private:
         bool Execute(string text, GameObject* bank);
-        bool Execute(uint32 itemId, bool toChar, GameObject* bank);
+        bool MoveFromCharToBank(Item* item, GameObject* bank);
     };
 
 }

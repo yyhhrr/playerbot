@@ -29,25 +29,24 @@ bool GuildBankAction::Execute(Event event)
 
 bool GuildBankAction::Execute(string text, GameObject* bank)
 {
-    bool toChar = text.substr(0, 1) == "-";
     bool result = true;
 
-    ItemIds ids = chat->parseItems(text);
-    for (ItemIds::iterator i = ids.begin(); i != ids.end(); i++)
+    list<Item*> found = parseItems(text);
+    if (found.empty())
+        return false;
+
+    for (list<Item*>::iterator i = found.begin(); i != found.end(); i++)
     {
-        uint32 itemId = *i;
-        result &= Execute(itemId, toChar, bank);
+        Item* item = *i;
+        if (item)
+            result &= MoveFromCharToBank(item, bank);
     }
 
     return result;
 }
 
-bool GuildBankAction::Execute(uint32 itemId, bool toChar, GameObject* bank)
+bool GuildBankAction::MoveFromCharToBank(Item* item, GameObject* bank)
 {
-    Item* item = bot->GetItemByEntry(itemId);
-    if (!item)
-        return false;
-
     uint32 playerSlot = item->GetSlot();
     uint32 playerBag = item->GetBagSlot();
 
