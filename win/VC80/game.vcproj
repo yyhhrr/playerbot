@@ -1778,14 +1778,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\playerbot\AttackerMapProvider.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\playerbot\AttackerMapProvider.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\game\playerbot\ChatHelper.cpp"
 				>
 			</File>
@@ -2865,6 +2857,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\GraveyardActions.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\GuildBankAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\GuildBankAction.h"
 						>
 					</File>
 					<File
