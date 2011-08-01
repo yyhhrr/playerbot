@@ -495,9 +495,6 @@
     <ClCompile Include="..\..\src\game\playerbot\AiFactory.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\AttackerMapProvider.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\ChatHelper.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1506,9 +1503,6 @@
     <ClInclude Include="..\..\src\game\movement\spline.impl.h" />
     <ClInclude Include="..\..\src\game\movement\typedefs.h" />
     <ClInclude Include="..\..\src\game\playerbot\AiFactory.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\AttackerMapProvider.h">
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\ChatHelper.h">

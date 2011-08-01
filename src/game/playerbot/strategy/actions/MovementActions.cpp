@@ -4,7 +4,6 @@
 #include "MovementActions.h"
 #include "../../../MotionMaster.h"
 #include "../../../MovementGenerator.h"
-#include "../../AttackerMapProvider.h"
 #include "../../FleeManager.h"
 #include "../../LootObjectStack.h"
 #include "../../PlayerbotAIConfig.h"

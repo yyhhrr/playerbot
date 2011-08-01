@@ -480,7 +480,6 @@
     <ClCompile Include="..\..\src\game\PetitionsHandler.cpp" />
     <ClCompile Include="..\..\src\game\Player.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\AiFactory.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\AttackerMapProvider.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\ChatHelper.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\FleeManager.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\Helpers.cpp" />
@@ -827,7 +826,6 @@
     <ClInclude Include="..\..\src\game\PetAI.h" />
     <ClInclude Include="..\..\src\game\Player.h" />
     <ClInclude Include="..\..\src\game\playerbot\AiFactory.h" />
-    <ClInclude Include="..\..\src\game\playerbot\AttackerMapProvider.h" />
     <ClInclude Include="..\..\src\game\playerbot\ChatHelper.h" />
     <ClInclude Include="..\..\src\game\playerbot\FleeManager.h" />
     <ClInclude Include="..\..\src\game\playerbot\LazyCalculatedValue.h" />

@@ -1,28 +1,21 @@
 #pragma once
 #include "../Value.h"
 #include "TargetValue.h"
-#include "../../AttackerMapProvider.h"
+#include "NearestUnitsValue.h"
 
 namespace ai
 {
-   
-    class AttackersValue : public CalculatedValue<AttackerMap>
+
+    class AttackersValue : public NearestUnitsValue
 	{
 	public:
-        AttackersValue(PlayerbotAI* ai) : CalculatedValue<AttackerMap>(ai), attackerMapProvider(NULL) 
-        {
-        }
-        virtual ~AttackersValue() 
-        {
-            if (attackerMapProvider) 
-                delete attackerMapProvider;
-        }
+        AttackersValue(PlayerbotAI* ai) : NearestUnitsValue(ai) {}
+        list<Unit*> Calculate();
 
-    public:
-        AttackerMap Calculate();
-
-    private:
-        AttackerMapProvider* attackerMapProvider;
-
+	private:
+        void AddAttackersOf(Group* group, set<Unit*>& targets);
+        void AddAttackersOf(Player* player, set<Unit*>& targets);
+		void RemoveNonThreating(set<Unit*>& targets);
+		bool hasRealThreat(Unit* attacker);
     };
 }

@@ -1,6 +1,5 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "../../AttackerMapProvider.h"
 #include "AttackerCountValues.h"
 #include "../../PlayerbotAIConfig.h"
 
@@ -8,7 +7,6 @@ using namespace ai;
 
 uint8 MyAttackerCountValue::Calculate()
 {
-
     return bot->getAttackers().size();
 }
 
@@ -42,13 +40,10 @@ uint8 AttackerCountValue::Calculate()
     int count = 0;
     float range = sPlayerbotAIConfig.sightDistance;
 
-    AttackerMap attackers = context->GetValue<AttackerMap>("attackers")->Get();
-    for (AttackerMapIterator i = attackers.begin(); i != attackers.end(); i++)
+    list<Unit*> attackers = context->GetValue<list<Unit*>>("attackers")->Get();
+    for (list<Unit*>::iterator i = attackers.begin(); i != attackers.end(); i++)
     {
-        Unit* unit = sObjectAccessor.GetUnit(*bot, i->first);
-        if (!unit)
-            continue;
-
+        Unit* unit = *i;
         float distance = unit->GetDistance(bot);
         if (distance <= range)
             count++;
@@ -79,11 +74,11 @@ uint8 BalancePercentValue::Calculate()
         }
     }
 
-    AttackerMap v = context->GetValue<AttackerMap>("attackers")->Get();
+    list<Unit*> v = context->GetValue<list<Unit*>>("attackers")->Get();
 
-    for (AttackerMapIterator i = v.begin(); i!=v.end(); i++)
+    for (list<Unit*>::iterator i = v.begin(); i!=v.end(); i++)
     {
-        Creature* creature = ai->GetCreature(i->first);
+        Creature* creature = ai->GetCreature((*i)->GetObjectGuid());
         if (!creature || !creature->isAlive())
             continue;
 
