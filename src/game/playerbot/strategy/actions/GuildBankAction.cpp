@@ -53,5 +53,7 @@ bool GuildBankAction::MoveFromCharToBank(Item* item, GameObject* bank)
     Guild* guild = sGuildMgr.GetGuildById(bot->GetGuildId());
     guild->MoveFromCharToBank(bot, playerBag, playerSlot, 0, INVENTORY_SLOT_BAG_0, 0);
 
+    ostringstream out; out << chat->formatItem(item->GetProto()) << " put to guild bank";
+    ai->TellMaster(out);
     return true;
 }
