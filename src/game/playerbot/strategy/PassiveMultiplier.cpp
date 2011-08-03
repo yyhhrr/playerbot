@@ -14,7 +14,8 @@ float PassiveMultiplier::GetValue(Action* action) {
         name == "co" ||
         name == "nc" ||
         name == "reset ai" ||
-        name == "stay")
+        name == "stay" ||
+        name.find("chat shortcut") != string::npos)
         return 1.0f;
 
     return 0;
