@@ -1071,6 +1071,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GuildBankAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2232,6 +2235,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GuildBankAction.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

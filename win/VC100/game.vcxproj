@@ -499,6 +499,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeChatAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeTalentsAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\CheckMountStateAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\DestroyItemAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\DropQuestAction.cpp" />
@@ -852,6 +853,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChangeTalentsAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChatActionContext.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\CheckMountStateAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChooseTargetActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\DestroyItemAction.h" />

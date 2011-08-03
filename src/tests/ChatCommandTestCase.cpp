@@ -48,6 +48,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( buff );
       CPPUNIT_TEST( help );
       CPPUNIT_TEST( gb );
+      CPPUNIT_TEST( follow );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -287,6 +288,13 @@ protected:
     void help()
     {
         assertCommand("help");
+    }
+
+    void follow()
+    {
+        trigger("follow");
+        tick();
+        assertActions(">S:follow chat shortcut");
     }
 
     void gb()

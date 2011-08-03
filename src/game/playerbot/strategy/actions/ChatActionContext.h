@@ -37,6 +37,7 @@
 #include "AttackAction.h"
 #include "HelpAction.h"
 #include "GuildBankAction.h"
+#include "ChatShortcutActions.h"
 
 namespace ai
 {
@@ -83,9 +84,11 @@ namespace ai
             creators["buff"] = &ChatActionContext::buff;
             creators["help"] = &ChatActionContext::help;
             creators["gb"] = &ChatActionContext::gb;
+            creators["follow chat shortcut"] = &ChatActionContext::follow_chat_shortcut;
         }
 
     private:
+        static Action* follow_chat_shortcut(PlayerbotAI* ai) { return new FollowChatShortcutAction(ai); }
         static Action* gb(PlayerbotAI* ai) { return new GuildBankAction(ai); }
         static Action* help(PlayerbotAI* ai) { return new HelpAction(ai); }
         static Action* buff(PlayerbotAI* ai) { return new BuffAction(ai); }
