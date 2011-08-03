@@ -74,6 +74,7 @@ namespace ai
                 creators["cure poison"] = &TriggerFactoryInternal::cure_poison;
                 creators["party member cure poison"] = &TriggerFactoryInternal::party_member_cure_poison;
                 creators["entangling roots"] = &TriggerFactoryInternal::entangling_roots;
+                creators["bear form"] = &TriggerFactoryInternal::bear_form;
             }
 
         private:
@@ -91,6 +92,7 @@ namespace ai
             static Trigger* cure_poison(PlayerbotAI* ai) { return new CurePoisonTrigger(ai); }
             static Trigger* party_member_cure_poison(PlayerbotAI* ai) { return new PartyMemberCurePoisonTrigger(ai); }
             static Trigger* entangling_roots(PlayerbotAI* ai) { return new EntanglingRootsTrigger(ai); }
+            static Trigger* bear_form(PlayerbotAI* ai) { return new BearFormTrigger(ai); }
         };
     };
 };
@@ -157,6 +159,7 @@ namespace ai
                 creators["rebirth"] = &AiObjectContextInternal::rebirth;
                 creators["revive"] = &AiObjectContextInternal::revive;
                 creators["barskin"] = &AiObjectContextInternal::barskin;
+                creators["lacerate"] = &AiObjectContextInternal::lacerate;
             }
 
         private:
@@ -211,6 +214,7 @@ namespace ai
             static Action* rebirth(PlayerbotAI* ai) { return new CastRebirthAction(ai); }
             static Action* revive(PlayerbotAI* ai) { return new CastReviveAction(ai); }
             static Action* barskin(PlayerbotAI* ai) { return new CastBarskinAction(ai); }
+            static Action* lacerate(PlayerbotAI* ai) { return new CastLacerateAction(ai); }
         };
     };
 };

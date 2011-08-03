@@ -70,18 +70,22 @@ namespace ai {
     public:
         EntanglingRootsTrigger(PlayerbotAI* ai) : HasCcTargetTrigger(ai, "entangling roots") {}
     };
-    
-    class CurePoisonTrigger : public NeedCureTrigger 
+
+    class CurePoisonTrigger : public NeedCureTrigger
     {
     public:
         CurePoisonTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "cure poison", DISPEL_POISON) {}
     };
 
-    class PartyMemberCurePoisonTrigger : public PartyMemberNeedCureTrigger 
+    class PartyMemberCurePoisonTrigger : public PartyMemberNeedCureTrigger
     {
     public:
         PartyMemberCurePoisonTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cure poison", DISPEL_POISON) {}
     };
 
-    
+    class BearFormTrigger : public BuffTrigger {
+    public:
+        BearFormTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "bear form") {}
+        virtual bool IsActive() { return !ai->HasAnyAuraOf(bot, "bear form", "dire bear form", NULL); }
+    };
 }

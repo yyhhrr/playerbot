@@ -69,8 +69,9 @@ protected:
 
         tick();
         tick();
+        tick();
 
-		assertActions(">S:dire bear form>T:growl>T:feral charge - bear>T:melee");
+		assertActions(">S:dire bear form>T:growl>T:feral charge - bear>T:melee>T:lacerate");
     }
 
     void druidMustDoMauls()
@@ -79,13 +80,14 @@ protected:
         addAura("dire bear form");
 
 		tickInMeleeRange();
+		tick();
 
 		tickWithRage(21);
 		tickWithRage(21);
 
 		tickWithSpellAvailable("maul");
 
-		assertActions(">S:dire bear form>T:melee>T:mangle (bear)>T:maul>T:melee");
+		assertActions(">S:dire bear form>T:melee>T:lacerate>T:mangle (bear)>T:maul>T:melee");
     }
 
     void combatVsMelee()
@@ -100,6 +102,7 @@ protected:
 
 		tickOutOfMeleeRange();
 		tick();
+		tick();
 
 		tickWithRage(41);
 
@@ -107,7 +110,7 @@ protected:
 
         tickWithRage(61);
 
-        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:mangle (bear)>T:maul>T:swipe (bear)");
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:lacerate>T:mangle (bear)>T:maul>T:swipe (bear)");
     }
 
     void healHimself()
@@ -116,6 +119,7 @@ protected:
         addAura("dire bear form");
 
 		tickInMeleeRange();
+		tick();
 
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
@@ -129,7 +133,7 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
 
-        assertActions(">S:dire bear form>T:melee>S:barskin>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
+        assertActions(">S:dire bear form>T:melee>T:lacerate>S:barskin>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
     }
 
     void intensiveHealing()
@@ -176,10 +180,11 @@ protected:
         addAura("dire bear form");
 
 		tickInMeleeRange();
+		tick();
 
 		tickWithTargetIsCastingNonMeleeSpell();
 
-        assertActions(">S:dire bear form>T:melee>T:bash");
+        assertActions(">S:dire bear form>T:melee>T:lacerate>T:bash");
     }
 	void buff()
 	{
@@ -208,9 +213,10 @@ protected:
     {
         addAura("dire bear form");
 		tickInMeleeRange();
+		tick();
 		tickWithAttackerCount(3);
 
-		assertActions(">T:melee>T:swipe (bear)");
+		assertActions(">T:melee>T:lacerate>T:swipe (bear)");
     }
 
     void incompatibles()
