@@ -117,8 +117,9 @@ protected:
     void aoe()
     {
         tickWithAttackerCount(4);
+        tickWithAttackerCount(4);
 
-		assertActions(">T:starfall");
+		assertActions(">T:starfall>T:hurricane");
     }
 };
 
