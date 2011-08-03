@@ -40,7 +40,7 @@ protected:
 
         tickWithComboPoints(5);
         tickWithComboPoints(5);
-        
+
 		assertActions(">T:rake>T:mangle (cat)>T:ferocious bite>T:rip");
     }
 
@@ -48,6 +48,7 @@ protected:
 	{
 		tickInMeleeRange();
 
+		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 
@@ -59,9 +60,9 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
 
-        assertActions(">T:rake>S:caster form>S:regrowth>S:cat form>T:mangle (cat)>S:caster form>S:rejuvenation>S:healing touch");
+        assertActions(">T:rake>S:barskin>S:caster form>S:regrowth>S:cat form>T:mangle (cat)>S:caster form>S:rejuvenation>S:healing touch");
 	}
-	
+
     void intensiveHealing()
     {
 		tickWithLowHealth(1);
@@ -95,7 +96,7 @@ protected:
 		assertActions(">S:cower>T:reach melee");
     }
 
-    void buff() 
+    void buff()
     {
         removeAura("cat form");
         removeAura("thorns");

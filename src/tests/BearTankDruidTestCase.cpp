@@ -119,6 +119,7 @@ protected:
 
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
+		tickWithLowHealth(59);
 
         tick();
 		addAura("bear form");
@@ -128,7 +129,7 @@ protected:
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
 
-        assertActions(">S:dire bear form>T:melee>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
+        assertActions(">S:dire bear form>T:melee>S:barskin>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
     }
 
     void intensiveHealing()

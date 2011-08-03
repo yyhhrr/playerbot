@@ -50,7 +50,7 @@ protected:
 		tickInSpellRange();
 
         tickWithBalancePercent(49);
-        
+
 		assertActions(">S:moonkin form>T:faerie fire>T:insect swarm>T:moonfire>T:starfire>T:wrath>T:starfire>S:nature's grasp");
     }
 
@@ -60,8 +60,9 @@ protected:
 
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
-                
-		tick(); 
+		tickWithLowHealth(59);
+
+		tick();
 		addAura("moonkin form");
 
 		tick();
@@ -69,8 +70,8 @@ protected:
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
         tickWithLowHealth(39);
-        
-        assertActions(">T:faerie fire>S:caster form>S:regrowth>S:moonkin form>T:insect swarm>S:caster form>S:rejuvenation>S:healing touch");
+
+        assertActions(">T:faerie fire>S:barskin>S:caster form>S:regrowth>S:moonkin form>T:insect swarm>S:caster form>S:rejuvenation>S:healing touch");
     }
 
 	void healOthers()
@@ -83,7 +84,7 @@ protected:
         assertActions(">S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
     }
 
-	void curePoison() 
+	void curePoison()
 	{
 		tickWithAuraToDispel(DISPEL_POISON);
 

@@ -156,6 +156,7 @@ namespace ai
                 creators["healing touch on party"] = &AiObjectContextInternal::healing_touch_on_party;
                 creators["rebirth"] = &AiObjectContextInternal::rebirth;
                 creators["revive"] = &AiObjectContextInternal::revive;
+                creators["barskin"] = &AiObjectContextInternal::barskin;
             }
 
         private:
@@ -209,6 +210,7 @@ namespace ai
             static Action* healing_touch_on_party(PlayerbotAI* ai) { return new CastHealingTouchOnPartyAction(ai); }
             static Action* rebirth(PlayerbotAI* ai) { return new CastRebirthAction(ai); }
             static Action* revive(PlayerbotAI* ai) { return new CastReviveAction(ai); }
+            static Action* barskin(PlayerbotAI* ai) { return new CastBarskinAction(ai); }
         };
     };
 };
