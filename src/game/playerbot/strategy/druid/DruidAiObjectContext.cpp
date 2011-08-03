@@ -75,6 +75,7 @@ namespace ai
                 creators["party member cure poison"] = &TriggerFactoryInternal::party_member_cure_poison;
                 creators["entangling roots"] = &TriggerFactoryInternal::entangling_roots;
                 creators["bear form"] = &TriggerFactoryInternal::bear_form;
+                creators["cat form"] = &TriggerFactoryInternal::cat_form;
             }
 
         private:
@@ -93,6 +94,7 @@ namespace ai
             static Trigger* party_member_cure_poison(PlayerbotAI* ai) { return new PartyMemberCurePoisonTrigger(ai); }
             static Trigger* entangling_roots(PlayerbotAI* ai) { return new EntanglingRootsTrigger(ai); }
             static Trigger* bear_form(PlayerbotAI* ai) { return new BearFormTrigger(ai); }
+            static Trigger* cat_form(PlayerbotAI* ai) { return new CatFormTrigger(ai); }
         };
     };
 };
