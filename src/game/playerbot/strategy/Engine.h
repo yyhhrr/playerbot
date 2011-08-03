@@ -62,6 +62,7 @@ namespace ai
         void addStrategy(string name);
 		void addStrategies(string first, ...);
         bool removeStrategy(string name);
+        bool HasStrategy(string name);
         void removeAllStrategies();
         void toggleStrategy(string name);
         std::string ListStrategies();
@@ -101,7 +102,7 @@ namespace ai
 	    Player* master;
 	    Player* bot;
         AiObjectContext* aiObjectContext;
-        std::list<Strategy*> strategies;
+        std::map<string, Strategy*> strategies;
         float lastRelevance;
 
     public:

@@ -49,6 +49,8 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( help );
       CPPUNIT_TEST( gb );
       CPPUNIT_TEST( follow );
+      CPPUNIT_TEST( flee );
+      CPPUNIT_TEST( stay );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -297,6 +299,19 @@ protected:
         assertActions(">S:follow chat shortcut");
     }
 
+    void stay()
+    {
+        trigger("stay");
+        tick();
+        assertActions(">S:stay chat shortcut");
+    }
+
+    void flee()
+    {
+        trigger("flee");
+        tick();
+        assertActions(">S:flee chat shortcut");
+    }
     void gb()
     {
         assertParametrizedCommand("gb", "link");

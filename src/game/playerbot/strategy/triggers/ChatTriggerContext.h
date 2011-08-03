@@ -52,9 +52,13 @@ namespace ai
             creators["help"] = &ChatTriggerContext::help;
             creators["gb"] = &ChatTriggerContext::gb;
             creators["follow"] = &ChatTriggerContext::follow;
+            creators["stay"] = &ChatTriggerContext::stay;
+            creators["flee"] = &ChatTriggerContext::flee;
         }
 
     private:
+        static Trigger* flee(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "flee"); }
+        static Trigger* stay(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "stay"); }
         static Trigger* follow(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "follow"); }
         static Trigger* gb(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "gb"); }
         static Trigger* help(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "help"); }

@@ -81,9 +81,9 @@ void Engine::Init()
 {
     Reset();
 
-    for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
+    for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
-        Strategy* strategy = *i;
+        Strategy* strategy = i->second;
         strategy->InitMultipliers(multipliers);
         strategy->InitTriggers(triggers);
         MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
@@ -167,9 +167,9 @@ bool Engine::DoNextAction(Unit* unit, int depth)
 
 ActionNode* Engine::CreateActionNode(string name)
 {
-    for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
+    for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
-        Strategy* strategy = *i;
+        Strategy* strategy = i->second;
         ActionNode* node = strategy->GetAction(name);
         if (node)
             return node;
@@ -247,7 +247,7 @@ void Engine::addStrategy(string name)
         for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
             removeStrategy(*i);
 
-        strategies.push_back(strategy);
+        strategies[strategy->getName()] = strategy;
     }
     Init();
 }
@@ -273,18 +273,13 @@ void Engine::addStrategies(string first, ...)
 
 bool Engine::removeStrategy(string name)
 {
-    for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
-    {
-        Strategy* strategy = *i;
-        if (name == strategy->getName())
-        {
-            strategies.remove(strategy);
-            Init();
-            return true;
-        }
-    }
+    map<string, Strategy*>::iterator i = strategies.find(name);
+    if (i == strategies.end())
+        return false;
 
-    return false;
+    strategies.erase(i);
+    Init();
+    return true;
 }
 
 void Engine::removeAllStrategies()
@@ -297,6 +292,11 @@ void Engine::toggleStrategy(string name)
 {
     if (!removeStrategy(name))
         addStrategy(name);
+}
+
+bool Engine::HasStrategy(string name)
+{
+    return strategies.find(name) != strategies.end();
 }
 
 void Engine::ProcessTriggers()
@@ -332,9 +332,9 @@ void Engine::ProcessTriggers()
 
 void Engine::PushDefaultActions()
 {
-    for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
+    for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
-        Strategy* strategy = *i;
+        Strategy* strategy = i->second;
         MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
     }
 }
@@ -346,10 +346,9 @@ string Engine::ListStrategies()
     if (strategies.empty())
         return s;
 
-    for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
+    for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
-        Strategy* strategy = *i;
-        s.append(strategy->getName());
+        s.append(i->first);
         s.append(", ");
     }
     return s.substr(0, s.length() - 2);
@@ -366,9 +365,9 @@ void Engine::PushAgain(ActionNode* actionNode, float relevance, Event event)
 
 bool Engine::ContainsStrategy(StrategyType type)
 {
-	for (list<Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
+	for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
 	{
-		Strategy* strategy = *i;
+		Strategy* strategy = i->second;
 		if (strategy->GetType() & type)
 			return true;
 	}

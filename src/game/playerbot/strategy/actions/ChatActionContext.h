@@ -85,9 +85,13 @@ namespace ai
             creators["help"] = &ChatActionContext::help;
             creators["gb"] = &ChatActionContext::gb;
             creators["follow chat shortcut"] = &ChatActionContext::follow_chat_shortcut;
+            creators["stay chat shortcut"] = &ChatActionContext::stay_chat_shortcut;
+            creators["flee chat shortcut"] = &ChatActionContext::flee_chat_shortcut;
         }
 
     private:
+        static Action* flee_chat_shortcut(PlayerbotAI* ai) { return new FleeChatShortcutAction(ai); }
+        static Action* stay_chat_shortcut(PlayerbotAI* ai) { return new StayChatShortcutAction(ai); }
         static Action* follow_chat_shortcut(PlayerbotAI* ai) { return new FollowChatShortcutAction(ai); }
         static Action* gb(PlayerbotAI* ai) { return new GuildBankAction(ai); }
         static Action* help(PlayerbotAI* ai) { return new HelpAction(ai); }

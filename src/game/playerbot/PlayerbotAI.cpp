@@ -222,7 +222,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             p >> casterGuid.ReadAsPacked();
             if (casterGuid != bot->GetObjectGuid().GetRawValue())
                 return;
-            
+
             uint8 castCount;
             uint32 spellId;
             p >> castCount;
@@ -236,10 +236,10 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             p.rpos(0);
             ObjectGuid casterGuid;
             p >> casterGuid.ReadAsPacked();
-            
+
             if (casterGuid != bot->GetObjectGuid())
                 return;
-            
+
             uint32 delaytime;
             p >> delaytime;
             if (delaytime < sPlayerbotAIConfig.globalCoolDown)
@@ -264,7 +264,7 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
     time_t now = time(0);
     if (now <= lastSpell.time)
         return;
-    
+
     uint32 castTimeSpent = 1000 * (now - lastSpell.time);
 
     int32 globalCooldown = CalculateGlobalCooldown(lastSpell.id);
@@ -418,6 +418,11 @@ bool PlayerbotAI::ContainsStrategy(StrategyType type)
             return true;
     }
     return false;
+}
+
+bool PlayerbotAI::HasStrategy(string name, BotState type)
+{
+    return engines[type]->HasStrategy(name);
 }
 
 void PlayerbotAI::ResetStrategies()

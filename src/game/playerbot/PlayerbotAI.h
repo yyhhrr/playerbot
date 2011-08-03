@@ -74,6 +74,7 @@ public:
     void DoSpecificAction(string name);
     void ChangeStrategy(string name, BotState type);
     bool ContainsStrategy(StrategyType type);
+    bool HasStrategy(string name, BotState type);
     void ResetStrategies();
     void ReInitCurrentEngine();
     bool IsTank(Player* player);
