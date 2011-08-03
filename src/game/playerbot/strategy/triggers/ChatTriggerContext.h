@@ -54,10 +54,12 @@ namespace ai
             creators["follow"] = &ChatTriggerContext::follow;
             creators["stay"] = &ChatTriggerContext::stay;
             creators["flee"] = &ChatTriggerContext::flee;
+            creators["grind"] = &ChatTriggerContext::grind;
         }
 
     private:
         static Trigger* flee(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "flee"); }
+        static Trigger* grind(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "grind"); }
         static Trigger* stay(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "stay"); }
         static Trigger* follow(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "follow"); }
         static Trigger* gb(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "gb"); }

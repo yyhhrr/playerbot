@@ -27,3 +27,10 @@ bool FleeChatShortcutAction::Execute(Event event)
     ai->TellMaster("Will flee with you");
     return true;
 }
+
+bool GrindChatShortcutAction::Execute(Event event)
+{
+    ai->ChangeStrategy("+grind,-passive", BOT_STATE_NON_COMBAT);
+    ai->TellMaster("Will start grinding");
+    return true;
+}
