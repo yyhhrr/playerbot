@@ -18,6 +18,7 @@ public:
         creators["be near"] = &follow_master_random;
         creators["attack anything"] = &attack_anything;
         creators["move random"] = &move_random;
+        creators["move to loot"] = &move_to_loot;
     }
 
 private:
@@ -61,6 +62,13 @@ private:
         return new ActionNode ("move random",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("stay line"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* move_to_loot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("move to loot",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("follow master"), NULL),
             /*C*/ NULL);
     }
 };
