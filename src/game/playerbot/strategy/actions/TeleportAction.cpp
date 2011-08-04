@@ -7,12 +7,15 @@ using namespace ai;
 
 bool TeleportAction::Execute(Event event)
 {
-    
 
-    list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
-    for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+
+    list<ObjectGuid> gos = *context->GetValue<list<ObjectGuid>>("nearest game objects");
+    for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end(); i++)
     {
-        GameObject* go = *i;
+        GameObject* go = ai->GetGameObject(*i);
+        if (!go)
+            continue;
+
         GameObjectInfo const *goInfo = go->GetGOInfo();
         if (goInfo->type != GAMEOBJECT_TYPE_SPELLCASTER)
             continue;

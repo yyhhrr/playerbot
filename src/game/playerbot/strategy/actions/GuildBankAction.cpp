@@ -13,11 +13,11 @@ bool GuildBankAction::Execute(Event event)
     if (text.empty())
         return false;
 
-    list<GameObject*> gos = AI_VALUE(list<GameObject*>, "nearest game objects");
-    for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+    list<ObjectGuid> gos = AI_VALUE(list<ObjectGuid>, "nearest game objects");
+    for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end(); i++)
     {
-        GameObject* go = *i;
-        if (!bot->GetGameObjectIfCanInteractWith(go->GetObjectGuid(), GAMEOBJECT_TYPE_GUILD_BANK))
+        GameObject* go = ai->GetGameObject(*i);
+        if (!go || !bot->GetGameObjectIfCanInteractWith(go->GetObjectGuid(), GAMEOBJECT_TYPE_GUILD_BANK))
             continue;
 
         return Execute(text, go);

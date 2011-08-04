@@ -233,18 +233,21 @@ bool MoveRandomAction::Execute(Event event)
 
     if (!target)
     {
-        list<GameObject*> gos = AI_VALUE(list<GameObject*>, "nearest game objects");
+        list<ObjectGuid> gos = AI_VALUE(list<ObjectGuid>, "nearest game objects");
         if (!gos.empty())
         {
             size_t pos = rand() % gos.size();
-            for (list<GameObject*>::iterator i = gos.begin(); i != gos.end() && pos; i++)
+            for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end() && pos; i++)
             {
-                target = *i;
+                target = ai->GetGameObject(*i);
                 pos--;
+                if (!target)
+                    continue;
+
                 if (!pos)
                 {
                     AI_VALUE(LootObjectStack*, "available loot")->Add(target->GetObjectGuid());
-                    ostringstream out; out << "I will check " << chat->formatGameobject(*i);
+                    ostringstream out; out << "I will check " << chat->formatGameobject((GameObject*)target);
                     ai->TellMaster(out);
                 }
             }

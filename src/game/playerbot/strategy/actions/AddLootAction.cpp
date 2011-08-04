@@ -20,9 +20,9 @@ bool AddAllLootAction::Execute(Event event)
 {
     bool added = false;
 
-    list<GameObject*> gos = *context->GetValue<list<GameObject*>>("nearest game objects");
-    for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
-        added |= AddLoot((*i)->GetObjectGuid());
+    list<ObjectGuid> gos = *context->GetValue<list<ObjectGuid>>("nearest game objects");
+    for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end(); i++)
+        added |= AddLoot(*i);
 
     list<Unit*> corpses = *context->GetValue<list<Unit*>>("nearest corpses");
     for (list<Unit*>::iterator i = corpses.begin(); i != corpses.end(); i++)

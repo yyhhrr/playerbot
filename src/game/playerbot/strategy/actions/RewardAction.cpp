@@ -11,7 +11,7 @@ bool RewardAction::Execute(Event event)
     string link = event.getParam();
 
     ItemIds itemIds = chat->parseItems(link);
-    if (itemIds.empty()) 
+    if (itemIds.empty())
         return false;
 
     uint32 itemId = *itemIds.begin();
@@ -24,11 +24,11 @@ bool RewardAction::Execute(Event event)
             return true;
     }
 
-    list<GameObject*> gos = AI_VALUE(list<GameObject*>, "nearest game objects");
-    for (list<GameObject*>::iterator i = gos.begin(); i != gos.end(); i++)
+    list<ObjectGuid> gos = AI_VALUE(list<ObjectGuid>, "nearest game objects");
+    for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end(); i++)
     {
-        GameObject* go = *i;
-        if (Reward(itemId, go))
+        GameObject* go = ai->GetGameObject(*i);
+        if (go && Reward(itemId, go))
             return true;
     }
 
@@ -36,7 +36,7 @@ bool RewardAction::Execute(Event event)
     return false;
 }
 
-bool RewardAction::Reward(uint32 itemId, Object* questGiver) 
+bool RewardAction::Reward(uint32 itemId, Object* questGiver)
 {
     QuestMenu& questMenu = bot->PlayerTalkClass->GetQuestMenu();
     for (uint32 iI = 0; iI < questMenu.MenuItemCount(); ++iI)
@@ -48,8 +48,8 @@ bool RewardAction::Reward(uint32 itemId, Object* questGiver)
         QuestStatus status = bot->GetQuestStatus(questID);
 
         // if quest is complete, turn it in
-        if (status == QUEST_STATUS_COMPLETE && 
-            ! bot->GetQuestRewardStatus(questID) && 
+        if (status == QUEST_STATUS_COMPLETE &&
+            ! bot->GetQuestRewardStatus(questID) &&
             pQuest->GetRewChoiceItemsCount() > 1 &&
             bot->CanRewardQuest(pQuest, false))
         {

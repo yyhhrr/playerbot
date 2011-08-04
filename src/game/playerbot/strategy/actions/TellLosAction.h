@@ -11,7 +11,7 @@ namespace ai
 
     private:
         void ListUnits(string title, list<Unit*> units);
-        void ListGameObjects(string title, list<GameObject*> gos);
+        void ListGameObjects(string title, list<ObjectGuid> gos);
     };
 
 }

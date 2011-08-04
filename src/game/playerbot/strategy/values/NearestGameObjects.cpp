@@ -27,27 +27,21 @@ private:
     float i_range;
 };
 
-list<GameObject*> NearestGameObjects::Calculate()
+list<ObjectGuid> NearestGameObjects::Calculate()
 {
-    
-
-    list<GameObject *> targets;
+    list<GameObject*> targets;
 
     AnyGameObjectInObjectRangeCheck u_check(bot, range);
     GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(targets, u_check);
     Cell::VisitAllObjects((const WorldObject*)bot, searcher, range);
 
-    for(list<GameObject *>::iterator tIter = targets.begin(); tIter != targets.end();)
+    list<ObjectGuid> result;
+    for(list<GameObject*>::iterator tIter = targets.begin(); tIter != targets.end(); ++tIter)
     {
-        if(!bot->IsWithinLOSInMap(*tIter))
-        {
-            list<GameObject *>::iterator tIter2 = tIter;
-            ++tIter;
-            targets.erase(tIter2);
-        }
-        else
-            ++tIter;
+		GameObject* go = *tIter;
+        if(bot->IsWithinLOSInMap(go))
+			result.push_back(go->GetObjectGuid());
     }
 
-    return targets;
+    return result;
 }
