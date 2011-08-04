@@ -13,10 +13,13 @@ namespace ai
     public:
         bool Calculate()
         {
-            list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
-            for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
+            list<ObjectGuid> units = *context->GetValue<list<ObjectGuid>>("nearest npcs");
+            for (list<ObjectGuid>::iterator i = units.begin(); i != units.end(); i++)
             {
-                Unit* unit = *i;
+                Unit* unit = ai->GetUnit(*i);
+                if (!unit)
+                    continue;
+
                 Creature* creature = dynamic_cast<Creature*>(unit);
                 if (!creature || !creature->IsTotem())
                     continue;

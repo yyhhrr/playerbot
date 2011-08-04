@@ -7,10 +7,10 @@ using namespace ai;
 
 bool SetHomeAction::Execute(Event event)
 {
-    list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
-    for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end(); i++)
+    list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
+    for (list<ObjectGuid>::iterator i = npcs.begin(); i != npcs.end(); i++)
     {
-        Creature *unit = bot->GetNPCIfCanInteractWith((*i)->GetObjectGuid(), UNIT_NPC_FLAG_INNKEEPER);
+        Creature *unit = bot->GetNPCIfCanInteractWith(*i, UNIT_NPC_FLAG_INNKEEPER);
         if (!unit)
             continue;
 

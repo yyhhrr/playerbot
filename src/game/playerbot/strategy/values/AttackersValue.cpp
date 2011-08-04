@@ -9,7 +9,7 @@
 using namespace ai;
 using namespace MaNGOS;
 
-list<Unit*> AttackersValue::Calculate()
+list<ObjectGuid> AttackersValue::Calculate()
 {
     set<Unit*> targets;
 
@@ -20,9 +20,10 @@ list<Unit*> AttackersValue::Calculate()
         AddAttackersOf(group, targets);
 
     RemoveNonThreating(targets);
-    list<Unit*> result;
+
+    list<ObjectGuid> result;
 	for (set<Unit*>::iterator i = targets.begin(); i != targets.end(); i++)
-		result.push_back(*i);
+		result.push_back((*i)->GetObjectGuid());
 	return result;
 }
 
@@ -42,9 +43,9 @@ void AttackersValue::AddAttackersOf(Group* group, set<Unit*>& targets)
 void AttackersValue::AddAttackersOf(Player* player, set<Unit*>& targets)
 {
 	list<Unit*> units;
-    MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(player, player, range);
+	MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck u_check(player, player, sPlayerbotAIConfig.sightDistance);
     MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(units, u_check);
-    Cell::VisitAllObjects(player, searcher, range);
+    Cell::VisitAllObjects(player, searcher, sPlayerbotAIConfig.sightDistance);
 	for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
 		targets.insert(*i);
 }

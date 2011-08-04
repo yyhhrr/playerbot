@@ -16,11 +16,11 @@ bool RewardAction::Execute(Event event)
 
     uint32 itemId = *itemIds.begin();
 
-    list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
-    for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end(); i++)
+    list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
+    for (list<ObjectGuid>::iterator i = npcs.begin(); i != npcs.end(); i++)
     {
-        Unit* npc = *i;
-        if (Reward(itemId, npc))
+        Unit* npc = ai->GetUnit(*i);
+        if (npc && Reward(itemId, npc))
             return true;
     }
 

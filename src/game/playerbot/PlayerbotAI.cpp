@@ -493,6 +493,28 @@ namespace MaNGOS
 
 };
 
+
+Unit* PlayerbotAI::GetUnit(ObjectGuid guid)
+{
+    if (!guid)
+        return NULL;
+
+    if (bot->GetMapId() != GetMaster()->GetMapId())
+        return NULL;
+
+    list<Unit*> targets;
+
+    MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
+    MaNGOS::UnitListSearcher<MaNGOS::UnitByGuidInRangeCheck> searcher(targets, u_check);
+    Cell::VisitAllObjects(bot, searcher, sPlayerbotAIConfig.sightDistance);
+
+    if (targets.empty())
+        return NULL;
+
+    return *targets.begin();
+}
+
+
 Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
 {
     if (!guid)

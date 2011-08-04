@@ -7,12 +7,10 @@ using namespace ai;
 
 bool TaxiAction::Execute(Event event)
 {
-    
-    
-    list<Unit*> units = *context->GetValue<list<Unit*>>("nearest npcs");
-    for (list<Unit*>::iterator i = units.begin(); i != units.end(); i++)
+    list<ObjectGuid> units = *context->GetValue<list<ObjectGuid>>("nearest npcs");
+    for (list<ObjectGuid>::iterator i = units.begin(); i != units.end(); i++)
     {
-        Creature *npc = bot->GetNPCIfCanInteractWith((*i)->GetObjectGuid(), UNIT_NPC_FLAG_FLIGHTMASTER);
+        Creature *npc = bot->GetNPCIfCanInteractWith(*i, UNIT_NPC_FLAG_FLIGHTMASTER);
         if (!npc)
             continue;
 

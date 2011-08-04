@@ -78,10 +78,10 @@ namespace ai
         }
     };
 
-    class MockUnitListValue : public ManualSetValue<list<Unit*>>
+    class MockUnitListValue : public ManualSetValue<list<ObjectGuid>>
     {
     public:
-        MockUnitListValue(PlayerbotAI* const ai) : ManualSetValue<list<Unit*>>(ai, list<Unit*>()) {}
+        MockUnitListValue(PlayerbotAI* const ai) : ManualSetValue<list<ObjectGuid>>(ai, list<ObjectGuid>()) {}
     };
 
     class MockValueContext : public NamedObjectContext<UntypedValue>

@@ -214,17 +214,18 @@ bool MoveRandomAction::Execute(Event event)
 
     if (rand() % 2)
     {
-        list<Unit*> npcs = AI_VALUE(list<Unit*>, "nearest npcs");
+        list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
         if (!npcs.empty())
         {
             size_t pos = rand() % npcs.size();
-            for (list<Unit*>::iterator i = npcs.begin(); i != npcs.end() && pos; i++)
+            for (list<ObjectGuid>::iterator i = npcs.begin(); i != npcs.end() && pos; i++)
             {
-                target = *i;
+                target = ai->GetUnit(*i);
                 pos--;
-                if (!pos)
+
+                if (target && !pos)
                 {
-                    ostringstream out; out << "I will check " << (*i)->GetName();
+                    ostringstream out; out << "I will check " << target->GetName();
                     ai->TellMaster(out);
                 }
             }
@@ -241,10 +242,8 @@ bool MoveRandomAction::Execute(Event event)
             {
                 target = ai->GetGameObject(*i);
                 pos--;
-                if (!target)
-                    continue;
 
-                if (!pos)
+                if (target && !pos)
                 {
                     AI_VALUE(LootObjectStack*, "available loot")->Add(target->GetObjectGuid());
                     ostringstream out; out << "I will check " << chat->formatGameobject((GameObject*)target);

@@ -123,7 +123,7 @@ protected:
 		engine->addStrategy("gather");
 		engine->addStrategy("loot");
 
-		set<list<Unit*>>("possible targets", list<Unit*>());
+		set<list<ObjectGuid>>("possible targets", list<ObjectGuid>());
 		tick();
 
         tickWithLootAvailable();

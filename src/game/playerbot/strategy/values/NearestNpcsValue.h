@@ -12,7 +12,7 @@ namespace ai
           NearestUnitsValue(ai) {}
 
     protected:
-        virtual list<Unit*> Calculate();
-
+        void FindUnits(list<Unit*> &targets);
+        bool AcceptUnit(Unit* unit);
 	};
 }

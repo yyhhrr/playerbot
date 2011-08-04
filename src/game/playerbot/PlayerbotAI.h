@@ -79,6 +79,7 @@ public:
     void ReInitCurrentEngine();
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);
+    Unit* GetUnit(ObjectGuid guid);
     GameObject* GetGameObject(ObjectGuid guid);
     void TellMaster(ostringstream &stream) { TellMaster(stream.str()); }
     void TellMaster(string text);

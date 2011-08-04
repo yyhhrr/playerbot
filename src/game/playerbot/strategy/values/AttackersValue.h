@@ -5,12 +5,11 @@
 
 namespace ai
 {
-
-    class AttackersValue : public NearestUnitsValue
+    class AttackersValue : public CalculatedValue<list<ObjectGuid>>
 	{
 	public:
-        AttackersValue(PlayerbotAI* ai) : NearestUnitsValue(ai) {}
-        list<Unit*> Calculate();
+        AttackersValue(PlayerbotAI* ai) : CalculatedValue<list<ObjectGuid>>(ai) {}
+        list<ObjectGuid> Calculate();
 
 	private:
         void AddAttackersOf(Group* group, set<Unit*>& targets);

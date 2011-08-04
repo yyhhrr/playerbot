@@ -29,16 +29,18 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
         return NULL;
 
 
-    list<Unit*> targets = *context->GetValue<list<Unit*>>("possible targets");
+    list<ObjectGuid> targets = *context->GetValue<list<ObjectGuid>>("possible targets");
 
     if(targets.empty())
         return NULL;
 
     float distance = 0;
     Unit* result = NULL;
-    for(list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
+    for(list<ObjectGuid>::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
     {
-        Unit* unit = *tIter;
+        Unit* unit = ai->GetUnit(*tIter);
+        if (!unit)
+            continue;
 
         if (abs(bot->GetPositionZ() - unit->GetPositionZ()) > sPlayerbotAIConfig.spellDistance)
             continue;

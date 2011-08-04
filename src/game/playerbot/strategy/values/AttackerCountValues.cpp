@@ -12,7 +12,6 @@ uint8 MyAttackerCountValue::Calculate()
 
 bool HasAggroValue::Calculate()
 {
-
     Unit* target = GetTarget();
     if (!target)
         return true;
@@ -35,15 +34,13 @@ bool HasAggroValue::Calculate()
 
 uint8 AttackerCountValue::Calculate()
 {
-
-
     int count = 0;
     float range = sPlayerbotAIConfig.sightDistance;
 
-    list<Unit*> attackers = context->GetValue<list<Unit*>>("attackers")->Get();
-    for (list<Unit*>::iterator i = attackers.begin(); i != attackers.end(); i++)
+    list<ObjectGuid> attackers = context->GetValue<list<ObjectGuid>>("attackers")->Get();
+    for (list<ObjectGuid>::iterator i = attackers.begin(); i != attackers.end(); i++)
     {
-        Unit* unit = *i;
+        Unit* unit = ai->GetUnit(*i);
         if (!unit || !unit->isAlive())
             continue;
 
@@ -57,9 +54,6 @@ uint8 AttackerCountValue::Calculate()
 
 uint8 BalancePercentValue::Calculate()
 {
-
-
-
     float playerLevel = 0,
         attackerLevel = 0;
 
@@ -77,11 +71,11 @@ uint8 BalancePercentValue::Calculate()
         }
     }
 
-    list<Unit*> v = context->GetValue<list<Unit*>>("attackers")->Get();
+    list<ObjectGuid> v = context->GetValue<list<ObjectGuid>>("attackers")->Get();
 
-    for (list<Unit*>::iterator i = v.begin(); i!=v.end(); i++)
+    for (list<ObjectGuid>::iterator i = v.begin(); i!=v.end(); i++)
     {
-        Creature* creature = ai->GetCreature((*i)->GetObjectGuid());
+        Creature* creature = ai->GetCreature((*i));
         if (!creature || !creature->isAlive())
             continue;
 

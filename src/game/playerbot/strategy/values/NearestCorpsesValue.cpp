@@ -23,16 +23,14 @@ private:
     float i_range;
 };
 
-list<Unit*> NearestCorpsesValue::Calculate()
+void NearestCorpsesValue::FindUnits(list<Unit*> &targets)
 {
-    
-
-    list<Unit *> targets;
-
     AnyDeadUnitInObjectRangeCheck u_check(bot,  range);
     UnitListSearcher<AnyDeadUnitInObjectRangeCheck> searcher(targets, u_check);
     Cell::VisitAllObjects(bot, searcher, range);
+}
 
-    RemoveNotInLOS(targets);
-    return targets;
+bool NearestCorpsesValue::AcceptUnit(Unit* unit)
+{
+    return true;
 }

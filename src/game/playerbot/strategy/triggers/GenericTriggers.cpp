@@ -157,7 +157,7 @@ bool NoMovementTrigger::IsActive()
 
 bool NoPossibleTargetsTrigger::IsActive()
 {
-    list<Unit*> targets = AI_VALUE(list<Unit*>, "possible targets");
+    list<ObjectGuid> targets = AI_VALUE(list<ObjectGuid>, "possible targets");
     return !targets.size();
 }
 
