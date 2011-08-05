@@ -41,7 +41,7 @@ uint8 AttackerCountValue::Calculate()
     for (list<ObjectGuid>::iterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* unit = ai->GetUnit(*i);
-        if (!unit || !unit->isAlive())
+        if (!unit || !unit->isAlive() || bot->GetMapId() != unit->GetMapId())
             continue;
 
         float distance = bot->GetDistance(unit);

@@ -24,11 +24,17 @@ bool MovementAction::MoveNear(WorldObject* target, float distance)
     if (!target)
         return false;
 
-    float angle = GetFollowAngle();
-    return MoveTo(target->GetMapId(),
-        target->GetPositionX() + cos(angle) * distance,
-        target->GetPositionY()+ sin(angle) * distance,
-        target->GetPositionZ());
+    float followAngle = GetFollowAngle();
+    for (float angle = followAngle - M_PI; angle <= followAngle + M_PI; angle += M_PI / 4)
+    {
+        bool moved = MoveTo(target->GetMapId(),
+            target->GetPositionX() + cos(angle) * distance,
+            target->GetPositionY()+ sin(angle) * distance,
+            target->GetPositionZ());
+        if (moved)
+            return true;
+    }
+    return false;
 }
 
 bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
