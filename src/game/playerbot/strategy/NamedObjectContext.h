@@ -155,6 +155,20 @@ namespace ai
             return set<string>();
         }
 
+        set<string> supports()
+        {
+            set<string> result;
+
+            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            {
+                set<string> supported = (*i)->supports();
+
+                for (set<string>::iterator j = supported.begin(); j != supported.end(); j++)
+                    result.insert(*j);
+            }
+            return result;
+        }
+
     private:
         list<NamedObjectContext<T>*> contexts;
     };

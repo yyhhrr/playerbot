@@ -11,7 +11,12 @@ namespace ai
         virtual bool Execute(Event event);
 
     private:
-        NamedObjectContext<Action>* ctx;
+        void TellChatCommands();
+        void TellStrategies();
+        string CombineSupported(set<string> commands);
+
+    private:
+        NamedObjectContext<Action>* chatContext;
     };
 
 }

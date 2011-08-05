@@ -40,6 +40,11 @@ namespace ai
             return GetValue<T>(name, buffer);
         }
 
+        set<string> GetSupportedStrategies()
+        {
+            return strategyContexts.supports();
+        }
+
     public:
         virtual void Update();
         virtual void AddShared(NamedObjectContext<UntypedValue>* sharedValues)
