@@ -2776,6 +2776,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\ChatShortcutActions.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\CheckMountStateAction.cpp"
 						>
 					</File>
@@ -3076,6 +3084,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.cpp"
 						>
 					</File>
@@ -3289,6 +3305,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\game\playerbot\strategy\values\LastSpellCastValue.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\values\LeastHpTargetValue.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\game\playerbot\strategy\values\LeastHpTargetValue.h"
 						>
 					</File>
 					<File
