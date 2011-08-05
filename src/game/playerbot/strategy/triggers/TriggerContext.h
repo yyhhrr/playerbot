@@ -15,6 +15,7 @@ namespace ai
         {
             creators["timer"] = &TriggerContext::Timer;
             creators["random"] = &TriggerContext::Random;
+            creators["seldom"] = &TriggerContext::seldom;
 
             creators["target critical health"] = &TriggerContext::TargetCriticalHealth;
             creators["critical health"] = &TriggerContext::CriticalHealth;
@@ -105,6 +106,7 @@ namespace ai
         static Trigger* TargetInSight(PlayerbotAI* ai) { return new TargetInSightTrigger(ai); }
         static Trigger* not_least_hp_target_active(PlayerbotAI* ai) { return new NotLeastHpTargetActiveTrigger(ai); }
         static Trigger* Random(PlayerbotAI* ai) { return new RandomTrigger(ai); }
+        static Trigger* seldom(PlayerbotAI* ai) { return new SeldomTrigger(ai); }
         static Trigger* EnemyOutOfMelee(PlayerbotAI* ai) { return new EnemyOutOfMeleeTrigger(ai); }
         static Trigger* EnemyOutOfSpell(PlayerbotAI* ai) { return new EnemyOutOfSpellRangeTrigger(ai); }
         static Trigger* EnemyTooClose(PlayerbotAI* ai) { return new EnemyTooCloseTrigger(ai); }

@@ -10,6 +10,7 @@
 #include "FollowActions.h"
 #include "ChangeStrategyAction.h"
 #include "ChooseTargetActions.h"
+#include "SuggestWhatToDoAction.h"
 
 namespace ai
 {
@@ -52,6 +53,7 @@ namespace ai
             creators["attack anything"] = &ActionContext::attack_anything;
             creators["attack least hp target"] = &ActionContext::attack_least_hp_target;
             creators["emote"] = &ActionContext::emote;
+            creators["suggest what to do"] = &ActionContext::suggest_what_to_do;
             creators["move random"] = &ActionContext::move_random;
             creators["move to loot"] = &ActionContext::move_to_loot;
             creators["open loot"] = &ActionContext::open_loot;
@@ -72,6 +74,7 @@ namespace ai
         static Action* end_pull(PlayerbotAI* ai) { return new ChangeCombatStrategyAction(ai, "-pull"); }
 
         static Action* emote(PlayerbotAI* ai) { return new EmoteAction(ai); }
+        static Action* suggest_what_to_do(PlayerbotAI* ai) { return new SuggestWhatToDoAction(ai); }
         static Action* attack_anything(PlayerbotAI* ai) { return new AttackAnythingAction(ai); }
         static Action* attack_least_hp_target(PlayerbotAI* ai) { return new AttackLeastHpTargetAction(ai); }
         static Action* stay_combat(PlayerbotAI* ai) { return new StayCombatAction(ai); }

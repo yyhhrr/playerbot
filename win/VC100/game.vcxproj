@@ -535,6 +535,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\SetHomeAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\StatsAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\StayActions.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.cpp" />
@@ -895,6 +896,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\SetHomeAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\StatsAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\StayActions.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.h" />

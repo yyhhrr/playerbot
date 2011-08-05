@@ -25,8 +25,9 @@ protected:
     void emote()
     {
         tickWithTrigger("random");
+        tickWithTrigger("seldom");
 
-        assertActions(">S:emote");
+        assertActions(">S:emote>S:suggest what to do");
     }
 
     void followMasterRandom()

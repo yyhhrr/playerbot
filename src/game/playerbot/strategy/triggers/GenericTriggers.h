@@ -287,6 +287,13 @@ namespace ai
         int probability;
     };
 
+    class SeldomTrigger : public RandomTrigger
+    {
+    public:
+        SeldomTrigger(PlayerbotAI* ai) : RandomTrigger(ai, 9000) {}
+        virtual string getName() { return "seldom"; }
+    };
+
     class AndTrigger : public Trigger
     {
     public:
