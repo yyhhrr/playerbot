@@ -20,7 +20,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         os << (reclaimTime - time(0));
         os << " secs";
         ai->TellMaster(os.str());
-        ai->SetNextCheckDelay(1000 * (reclaimTime - time(0)));
+        ai->SetNextCheckDelay(5000);
     }
     else
     {
