@@ -63,6 +63,7 @@ public:
 	virtual ~PlayerbotAI();
 
 public:
+	virtual void UpdateAI(uint32 elapsed);
 	virtual void UpdateAIInternal(uint32 elapsed);
     void HandleCommand(const string& text, Player& fromPlayer);
 	void HandleBotOutgoingPacket(const WorldPacket& packet);

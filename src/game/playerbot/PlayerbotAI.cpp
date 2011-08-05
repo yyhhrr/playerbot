@@ -90,13 +90,18 @@ PlayerbotAI::~PlayerbotAI()
         delete aiObjectContext;
 }
 
-void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
+void PlayerbotAI::UpdateAI(uint32 elapsed)
 {
-	if (bot->IsBeingTeleported())
-		return;
+    if (bot->IsBeingTeleported())
+        return;
 
     ChangeActiveEngineIfNecessary();
 
+    PlayerbotAIBase::UpdateAI(elapsed);
+}
+
+void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
+{
     ExternalEventHelper helper(aiObjectContext);
     while (!chatCommands.empty())
     {
