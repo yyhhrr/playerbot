@@ -9,13 +9,13 @@ using namespace ai;
 void UseFoodStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     Strategy::InitTriggers(triggers);
-    
+
     triggers.push_back(new TriggerNode(
-        "low health", 
+        "low health",
         NextAction::array(0, new NextAction("food", 9.0f), NULL)));
-    
+
     triggers.push_back(new TriggerNode(
-        "low mana", 
+        "low mana",
         NextAction::array(0, new NextAction("drink", 9.0f), NULL)));
 }
 
@@ -23,29 +23,36 @@ void UseFoodStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 void TankAssistStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        "no attackers", 
+        "no attackers",
         NextAction::array(0, new NextAction("tank assist", 50.0f), NULL)));
 }
 
 void TankAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		"tank aoe", 
+		"tank aoe",
 		NextAction::array(0, new NextAction("tank assist", 50.0f), NULL)));
 }
 
 void DpsAssistStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        "no attackers", 
+        "no attackers",
         NextAction::array(0, new NextAction("dps assist", 50.0f), NULL)));
 }
 
 void DpsAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
-		"timer", 
+		"timer",
 		NextAction::array(0, new NextAction("dps assist", 50.0f), NULL)));
+}
+
+void AttackWeakStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+	triggers.push_back(new TriggerNode(
+		"not least hp target active",
+		NextAction::array(0, new NextAction("attack least hp target", 60.0f), NULL)));
 }
 
 NextAction** GrindingStrategy::getDefaultActions()
@@ -56,7 +63,7 @@ NextAction** GrindingStrategy::getDefaultActions()
 void GrindingStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        "no target", 
+        "no target",
         NextAction::array(0, new NextAction("attack anything", 5.0f), NULL)));
 }
 
@@ -91,7 +98,7 @@ NextAction** GoAwayNonCombatStrategy::getDefaultActions()
 void RandomEmoteStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        "random", 
+        "random",
         NextAction::array(0, new NextAction("emote", 1.0f), NULL)));
 }
 
@@ -108,14 +115,14 @@ void LowManaStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 void FollowMasterRandomStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
-        "far from master", 
+        "far from master",
         NextAction::array(0, new NextAction("be near", 1.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "random", 
+        "random",
         NextAction::array(0, new NextAction("move random", 2.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "target in sight", 
+        "target in sight",
         NextAction::array(0, new NextAction("stay combat",3.0f), NULL)));
 }

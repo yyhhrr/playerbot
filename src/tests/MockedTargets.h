@@ -4,7 +4,7 @@ using namespace std;
 
 namespace ai
 {
-    class MockedTargets 
+    class MockedTargets
     {
 	public:
 		static Unit* GetPartyMember() { return (Unit*)1; }
@@ -16,6 +16,7 @@ namespace ai
         static Player* GetTargetForTank() { return (Player*)4; }
         static Player* GetCc() { return (Player*)12; }
 		static Player* GetLineTarget() { return (Player*)14; }
+		static Unit* GetLeastHpTarget() { return (Unit*)15; }
 
         static void Append(string &buffer, Unit* unit)
         {
@@ -37,6 +38,8 @@ namespace ai
                 buffer.append("Cc");
             if (unit == GetLineTarget())
                 buffer.append("Line");
+            if (unit == GetLeastHpTarget())
+                buffer.append("LeastHp");
         }
    };
 

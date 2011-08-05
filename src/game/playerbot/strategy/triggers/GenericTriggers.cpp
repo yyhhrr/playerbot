@@ -161,6 +161,13 @@ bool NoPossibleTargetsTrigger::IsActive()
     return !targets.size();
 }
 
+bool NotLeastHpTargetActiveTrigger::IsActive()
+{
+    Unit* leastHp = AI_VALUE(Unit*, "least hp target");
+    Unit* target = AI_VALUE(Unit*, "current target");
+    return leastHp && target != leastHp;
+}
+
 bool IsSwimmingTrigger::IsActive()
 {
     return AI_VALUE2(bool, "swimming", "self target");

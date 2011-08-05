@@ -9,6 +9,7 @@
 #include "StayActions.h"
 #include "FollowActions.h"
 #include "ChangeStrategyAction.h"
+#include "ChooseTargetActions.h"
 
 namespace ai
 {
@@ -49,6 +50,7 @@ namespace ai
             creators["stay line"] = &ActionContext::stay_line;
             creators["stay combat"] = &ActionContext::stay_combat;
             creators["attack anything"] = &ActionContext::attack_anything;
+            creators["attack least hp target"] = &ActionContext::attack_least_hp_target;
             creators["emote"] = &ActionContext::emote;
             creators["move random"] = &ActionContext::move_random;
             creators["move to loot"] = &ActionContext::move_to_loot;
@@ -71,6 +73,7 @@ namespace ai
 
         static Action* emote(PlayerbotAI* ai) { return new EmoteAction(ai); }
         static Action* attack_anything(PlayerbotAI* ai) { return new AttackAnythingAction(ai); }
+        static Action* attack_least_hp_target(PlayerbotAI* ai) { return new AttackLeastHpTargetAction(ai); }
         static Action* stay_combat(PlayerbotAI* ai) { return new StayCombatAction(ai); }
         static Action* stay_line(PlayerbotAI* ai) { return new StayLineAction(ai); }
         static Action* stay_circle(PlayerbotAI* ai) { return new StayCircleAction(ai); }

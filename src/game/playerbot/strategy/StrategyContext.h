@@ -69,6 +69,7 @@ namespace ai
             creators["dps aoe"] = &AssistStrategyContext::dps_aoe;
             creators["tank assist"] = &AssistStrategyContext::tank_assist;
             creators["tank aoe"] = &AssistStrategyContext::tank_aoe;
+            creators["attack weak"] = &AssistStrategyContext::attack_weak;
             creators["grind"] = &AssistStrategyContext::grind;
         }
 
@@ -77,6 +78,7 @@ namespace ai
         static Strategy* dps_aoe(PlayerbotAI* ai) { return new DpsAoeStrategy(ai); }
         static Strategy* tank_assist(PlayerbotAI* ai) { return new TankAssistStrategy(ai); }
         static Strategy* tank_aoe(PlayerbotAI* ai) { return new TankAoeStrategy(ai); }
+        static Strategy* attack_weak(PlayerbotAI* ai) { return new AttackWeakStrategy(ai); }
         static Strategy* grind(PlayerbotAI* ai) { return new GrindingStrategy(ai); }
     };
 

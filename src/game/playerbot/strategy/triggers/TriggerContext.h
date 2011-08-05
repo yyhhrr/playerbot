@@ -3,6 +3,7 @@
 #include "HealthTriggers.h"
 #include "GenericTriggers.h"
 #include "LootTriggers.h"
+#include "../triggers/GenericTriggers.h"
 
 namespace ai
 {
@@ -37,6 +38,7 @@ namespace ai
             creators["no attackers"] = &TriggerContext::NoAttackers;
             creators["no target"] = &TriggerContext::NoTarget;
             creators["target in sight"] = &TriggerContext::TargetInSight;
+            creators["not least hp target active"] = &TriggerContext::not_least_hp_target_active;
 
             creators["tank aoe"] = &TriggerContext::TankAoe;
             creators["lose aggro"] = &TriggerContext::LoseAggro;
@@ -101,6 +103,7 @@ namespace ai
         static Trigger* Timer(PlayerbotAI* ai) { return new TimerTrigger(ai); }
         static Trigger* NoTarget(PlayerbotAI* ai) { return new NoTargetTrigger(ai); }
         static Trigger* TargetInSight(PlayerbotAI* ai) { return new TargetInSightTrigger(ai); }
+        static Trigger* not_least_hp_target_active(PlayerbotAI* ai) { return new NotLeastHpTargetActiveTrigger(ai); }
         static Trigger* Random(PlayerbotAI* ai) { return new RandomTrigger(ai); }
         static Trigger* EnemyOutOfMelee(PlayerbotAI* ai) { return new EnemyOutOfMeleeTrigger(ai); }
         static Trigger* EnemyOutOfSpell(PlayerbotAI* ai) { return new EnemyOutOfSpellRangeTrigger(ai); }

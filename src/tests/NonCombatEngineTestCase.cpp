@@ -16,6 +16,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( eatDrink );
       CPPUNIT_TEST( dpsAssist );
       CPPUNIT_TEST( tankAssist );
+      CPPUNIT_TEST( attackWeak );
       CPPUNIT_TEST( loot );
       CPPUNIT_TEST( gather );
       CPPUNIT_TEST( goaway );
@@ -95,6 +96,22 @@ protected:
 		tickWithNoTarget();
 
 		assertActions(">S:stay>Tank:tank assist");
+	}
+
+	void attackWeak()
+	{
+		engine->addStrategy("stay");
+		engine->addStrategy("attack weak");
+
+		set<Unit*>("current target", MockedTargets::GetLeastHpTarget());
+		tick();
+
+		tickWithNoTarget();
+
+		set<Unit*>("current target", MockedTargets::GetCurrentTarget()); // means any other
+		tick();
+
+		assertActions(">S:stay>LeastHp:attack least hp target>LeastHp:attack least hp target");
 	}
 
     void loot()

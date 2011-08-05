@@ -421,6 +421,15 @@ namespace ai
         virtual bool IsActive();
     };
 
+    class NotLeastHpTargetActiveTrigger : public Trigger
+    {
+    public:
+        NotLeastHpTargetActiveTrigger(PlayerbotAI* ai) : Trigger(ai, "not least hp target active") {}
+
+    public:
+        virtual bool IsActive();
+    };
+
     class IsSwimmingTrigger : public Trigger
     {
     public:
