@@ -29,7 +29,8 @@ bool SuggestWhatToDoAction::Execute(Event event)
 
 void SuggestWhatToDoAction::instance()
 {
-    ai->TellMaster("I think it is time to do an instance");
+    if (bot->getLevel() > 15)
+        ai->TellMaster("I would like to do an instance");
 }
 
 vector<uint32> SuggestWhatToDoAction::GetIncompletedQuests()
@@ -69,12 +70,14 @@ void SuggestWhatToDoAction::newQuest()
 
 void SuggestWhatToDoAction::grindMaterials()
 {
-    ai->TellMaster("I think we could grind some materials for our group tradeskill");
+    if (bot->getLevel() > 5)
+        ai->TellMaster("I think we could grind some materials for our group tradeskill");
 }
 
 void SuggestWhatToDoAction::grindReputation()
 {
-    ai->TellMaster("I think we should do something to improve our reputation with several factions");
+    if (bot->getLevel() > 50)
+        ai->TellMaster("I think we should do something to improve our reputation with several factions");
 }
 
 void SuggestWhatToDoAction::nothing()
@@ -89,5 +92,6 @@ void SuggestWhatToDoAction::relax()
 
 void SuggestWhatToDoAction::achievement()
 {
-    ai->TellMaster("I would like to do some achievement");
+    if (bot->getLevel() > 15)
+        ai->TellMaster("I would like to do some achievement");
 }
