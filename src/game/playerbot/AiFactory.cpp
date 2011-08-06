@@ -53,31 +53,31 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 {
     switch (player->getClass()){
         case CLASS_PRIEST:
-            engine->addStrategies("heal", "dps assist", NULL);
+            engine->addStrategies("heal", "attack weak", NULL);
             break;
         case CLASS_MAGE:
-            engine->addStrategies("frost", "dps assist", NULL);
+            engine->addStrategies("frost", "attack weak", NULL);
             break;
         case CLASS_WARLOCK:
-            engine->addStrategies("dps", "dps assist", NULL);
+            engine->addStrategies("dps", "attack weak", NULL);
             break;
         case CLASS_WARRIOR:
-            engine->addStrategies("tank", "tank assist", NULL);
+            engine->addStrategies("tank", "attack weak", NULL);
             break;
         case CLASS_SHAMAN:
-            engine->addStrategies("heal", "dps assist", NULL);
+            engine->addStrategies("heal", "attack weak", NULL);
             break;
         case CLASS_PALADIN:
-            engine->addStrategies("tank", "tank assist", "barmor", NULL);
+            engine->addStrategies("tank", "attack weak", "barmor", NULL);
             break;
         case CLASS_DRUID:
-            engine->addStrategies("bear", "tank assist", NULL);
+            engine->addStrategies("bear", "attack weak", NULL);
             break;
         case CLASS_HUNTER:
-            engine->addStrategies("dps", "dps assist", "bdps", NULL);
+            engine->addStrategies("dps", "attack weak", "bdps", NULL);
             break;
         case CLASS_ROGUE:
-            engine->addStrategies("dps", "dps assist", NULL);
+            engine->addStrategies("dps", "attack weak", NULL);
             break;
     }
     engine->addStrategies("racials", "chat", "world packet", NULL);
@@ -93,31 +93,31 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
 {
     switch (player->getClass()){
         case CLASS_PRIEST:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_MAGE:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_WARLOCK:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_WARRIOR:
-            nonCombatEngine->addStrategy("tank assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_SHAMAN:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_PALADIN:
-            nonCombatEngine->addStrategies("tank assist", "bmana", NULL);
+            nonCombatEngine->addStrategies("attack weak", "bmana", NULL);
             break;
         case CLASS_DRUID:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
         case CLASS_HUNTER:
-            nonCombatEngine->addStrategies("dps assist", "bspeed", NULL);
+            nonCombatEngine->addStrategies("attack weak", "bspeed", NULL);
             break;
         case CLASS_ROGUE:
-            nonCombatEngine->addStrategy("dps assist");
+            nonCombatEngine->addStrategy("attack weak");
             break;
     }
     nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", "quest", "loot", "gather", NULL);
