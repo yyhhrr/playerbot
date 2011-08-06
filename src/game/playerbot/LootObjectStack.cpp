@@ -159,15 +159,19 @@ bool LootObject::IsLootPossible(Player* bot)
 
 
 
-void LootObjectStack::Add(ObjectGuid guid)
+bool LootObjectStack::Add(ObjectGuid guid)
 {
-    availableLoot.insert(guid);
+    if (!availableLoot.insert(guid).second)
+        return false;
+
     if (availableLoot.size() < MAX_LOOT_OBJECT_COUNT)
-        return;
+        return true;
 
     vector<LootObject> ordered = OrderByDistance();
     for (size_t i = MAX_LOOT_OBJECT_COUNT; i < ordered.size(); i++)
         Remove(ordered[i].guid);
+
+    return true;
 }
 
 void LootObjectStack::Remove(ObjectGuid guid)

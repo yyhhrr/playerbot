@@ -12,8 +12,7 @@ bool AddLootAction::Execute(Event event)
     if (!guid)
         return false;
 
-    AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
-    return true;
+    return AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
 }
 
 bool AddAllLootAction::Execute(Event event)

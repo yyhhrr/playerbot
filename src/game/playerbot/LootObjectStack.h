@@ -58,7 +58,7 @@ namespace ai
         LootObjectStack(Player* bot) : bot(bot) {}
 
     public:
-        void Add(ObjectGuid guid);
+        bool Add(ObjectGuid guid);
         void Remove(ObjectGuid guid);
         void Clear();
         bool CanLoot(float maxDistance);
