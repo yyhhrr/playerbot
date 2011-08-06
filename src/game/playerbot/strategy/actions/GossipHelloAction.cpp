@@ -7,12 +7,21 @@ using namespace ai;
 
 bool GossipHelloAction::Execute(Event event)
 {
-    WorldPacket &p = event.getPacket();
-
     ObjectGuid guid;
-    p.rpos(0);
-    p >> guid;
-    p.rpos(0);
+
+    WorldPacket &p = event.getPacket();
+    if (p.empty())
+    {
+        guid = master->GetSelectionGuid();
+    }
+    else
+    {
+        p.rpos(0);
+        p >> guid;
+    }
+
+    if (!guid)
+        return false;
 
     Creature *pCreature = bot->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_NONE);
     if (!pCreature)
@@ -25,7 +34,9 @@ bool GossipHelloAction::Execute(Event event)
     if (pMenuItemBounds.first == pMenuItemBounds.second)
         return false;
 
-    bot->GetSession()->HandleGossipHelloOpcode(p);
+    WorldPacket p1;
+    p1 << guid;
+    bot->GetSession()->HandleGossipHelloOpcode(p1);
 
     ostringstream out; out << "--- " << pCreature->GetName() << " ---";
     ai->TellMaster(out.str());

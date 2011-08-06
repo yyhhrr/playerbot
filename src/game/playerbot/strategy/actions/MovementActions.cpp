@@ -18,9 +18,6 @@ bool MovementAction::MoveNear(uint32 mapId, float x, float y, float z, float dis
 
 bool MovementAction::MoveNear(WorldObject* target, float distance)
 {
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-
     if (!target)
         return false;
 
@@ -39,13 +36,13 @@ bool MovementAction::MoveNear(WorldObject* target, float distance)
 
 bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
 {
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
     bot->UpdateGroundPositionZ(x, y, z);
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
 
     mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
@@ -61,9 +58,6 @@ bool MovementAction::MoveTo(WorldObject* target)
 
 bool MovementAction::MoveTo(Unit* target, float distance)
 {
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-
     if (!IsMovingAllowed(target))
         return false;
 
@@ -156,15 +150,14 @@ bool MovementAction::Follow(Unit* target, float distance)
 
 bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-
     if (!IsMovingAllowed(target))
         return false;
 
     if (target->IsFriendlyTo(bot) && bot->IsMounted())
         distance += angle;
 
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
     mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
@@ -181,8 +174,8 @@ void MovementAction::WaitForReach(float distance)
     if (delay < sPlayerbotAIConfig.globalCoolDown)
         delay = sPlayerbotAIConfig.globalCoolDown;
 
-    if (delay > 8000)
-        delay = 8000;
+    if (delay > 5000)
+        delay = 5000;
 
     bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
 }
@@ -193,7 +186,7 @@ bool MovementAction::Flee(Unit *target)
         return false;
 
     if (!IsMovingAllowed())
-        return true;
+        return false;
 
     FleeManager manager(bot, sPlayerbotAIConfig.spellDistance, GetFollowAngle());
 
