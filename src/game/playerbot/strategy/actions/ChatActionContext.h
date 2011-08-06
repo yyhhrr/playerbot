@@ -38,6 +38,7 @@
 #include "HelpAction.h"
 #include "GuildBankAction.h"
 #include "ChatShortcutActions.h"
+#include "GossipHelloAction.h"
 
 namespace ai
 {
@@ -88,6 +89,7 @@ namespace ai
             creators["stay chat shortcut"] = &ChatActionContext::stay_chat_shortcut;
             creators["flee chat shortcut"] = &ChatActionContext::flee_chat_shortcut;
             creators["grind chat shortcut"] = &ChatActionContext::grind_chat_shortcut;
+            creators["gossip hello"] = &ChatActionContext::gossip_hello;
         }
 
     private:
@@ -135,6 +137,7 @@ namespace ai
         static Action* ll(PlayerbotAI* ai) { return new LootStrategyAction(ai); }
         static Action* add_all_loot(PlayerbotAI* ai) { return new AddAllLootAction(ai); }
         static Action* reset_ai(PlayerbotAI* ai) { return new ResetAiAction(ai); }
+        static Action* gossip_hello(PlayerbotAI* ai) { return new GossipHelloAction(ai); }
     };
 
 

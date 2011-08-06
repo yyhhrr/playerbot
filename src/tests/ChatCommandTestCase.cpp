@@ -52,6 +52,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( flee );
       CPPUNIT_TEST( stay );
       CPPUNIT_TEST( grind );
+      CPPUNIT_TEST( talk );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -326,6 +327,12 @@ protected:
         assertParametrizedCommand("gb", "link");
     }
 
+    void talk()
+    {
+        trigger("talk");
+        tick();
+        assertActions(">S:gossip hello");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( ChatCommandTestCase );

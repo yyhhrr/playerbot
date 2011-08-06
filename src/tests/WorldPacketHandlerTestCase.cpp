@@ -77,9 +77,8 @@ protected:
     {
         trigger("gossip hello");
         tick();
-        tick();
 
-        assertActions(">S:trainer>S:gossip hello");
+        assertActions(">S:trainer");
     }
 
     void roll()

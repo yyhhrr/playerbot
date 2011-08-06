@@ -82,6 +82,10 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "grind",
         NextAction::array(0, new NextAction("grind chat shortcut", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "talk",
+        NextAction::array(0, new NextAction("gossip hello", relevance), NULL)));
 }
 
 

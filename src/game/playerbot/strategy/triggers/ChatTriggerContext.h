@@ -55,9 +55,11 @@ namespace ai
             creators["stay"] = &ChatTriggerContext::stay;
             creators["flee"] = &ChatTriggerContext::flee;
             creators["grind"] = &ChatTriggerContext::grind;
+            creators["talk"] = &ChatTriggerContext::talk;
         }
 
     private:
+        static Trigger* talk(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "talk"); }
         static Trigger* flee(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "flee"); }
         static Trigger* grind(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "grind"); }
         static Trigger* stay(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "stay"); }

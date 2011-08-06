@@ -1,6 +1,5 @@
 #pragma once;
 
-#include "GossipHelloAction.h"
 #include "AcceptInvitationAction.h"
 #include "PassLeadershipToMasterAction.h"
 #include "TellMasterAction.h"
@@ -25,7 +24,6 @@ namespace ai
     public:
         WorldPacketActionContext()
         {
-            creators["gossip hello"] = &WorldPacketActionContext::gossip_hello;
             creators["accept invitation"] = &WorldPacketActionContext::accept_invitation;
             creators["pass leadership to master"] = &WorldPacketActionContext::pass_leadership_to_master;
             creators["tell not enough money"] = &WorldPacketActionContext::tell_not_enough_money;
@@ -61,7 +59,6 @@ namespace ai
         static Action* use_meeting_stone(PlayerbotAI* ai) { return new UseMeetingStoneAction(ai); }
         static Action* accept_resurrect(PlayerbotAI* ai) { return new AcceptResurrectAction(ai); }
         static Action* revive_from_corpse(PlayerbotAI* ai) { return new ReviveFromCorpseAction(ai); }
-        static Action* gossip_hello(PlayerbotAI* ai) { return new GossipHelloAction(ai); }
         static Action* accept_invitation(PlayerbotAI* ai) { return new AcceptInvitationAction(ai); }
         static Action* pass_leadership_to_master(PlayerbotAI* ai) { return new PassLeadershipToMasterAction(ai); }
         static Action* tell_not_enough_money(PlayerbotAI* ai) { return new TellMasterAction(ai, "Not enough money"); }
