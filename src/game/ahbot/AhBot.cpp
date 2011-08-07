@@ -159,7 +159,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         if (!item)
             continue;
 
-        uint32 price = category->GetPricingStrategy()->GetSellPrice(item->GetProto(), auctionIds[auction]);
+        uint32 price = category->GetPricingStrategy()->GetBuyPrice(item->GetProto(), auctionIds[auction]);
         if (!price || !item->GetCount())
             continue;
         uint32 bidPrice = item->GetCount() * price;
