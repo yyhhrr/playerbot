@@ -33,7 +33,7 @@ void AttackersValue::AddAttackersOf(Group* group, set<Unit*>& targets)
     for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
     {
         Player *member = sObjectMgr.GetPlayer(itr->guid);
-        if (!member || !member->isAlive() || member == bot)
+        if (!member || !member->isAlive() || member == bot || member->GetMapId() != master->GetMapId())
             continue;
 
         AddAttackersOf(member, targets);
