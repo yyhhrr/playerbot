@@ -2988,14 +2988,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp"
 						>
 					</File>
