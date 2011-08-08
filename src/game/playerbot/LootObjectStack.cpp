@@ -184,38 +184,22 @@ void LootObjectStack::Remove(ObjectGuid guid)
 void LootObjectStack::Clear()
 {
     availableLoot.clear();
-    alreadyLooted.clear();
 }
 
 bool LootObjectStack::CanLoot(float maxDistance)
 {
     vector<LootObject> ordered = OrderByDistance(maxDistance);
-    for (vector<LootObject>::iterator i = ordered.begin(); i != ordered.end(); i++)
-    {
-        LootObject result = *i;
-        if (alreadyLooted.find(result.guid) == alreadyLooted.end())
-            return true;
-    }
-
-    return false;
+    return !ordered.empty();
 }
 
 LootObject LootObjectStack::GetLoot(float maxDistance)
 {
     vector<LootObject> ordered = OrderByDistance(maxDistance);
-    for (vector<LootObject>::iterator i = ordered.begin(); i != ordered.end(); i++)
-    {
-        LootObject result = *i;
-        if (alreadyLooted.insert(result.guid).second)
-            return result;
-    }
-
-    return LootObject();
+    return ordered.empty() ? LootObject() : *ordered.begin();
 }
 
 vector<LootObject> LootObjectStack::OrderByDistance(float maxDistance)
 {
-    alreadyLooted.shrink(time(0) - 10);
     availableLoot.shrink(time(0) - 30);
 
     map<float, LootObject> sortedMap;

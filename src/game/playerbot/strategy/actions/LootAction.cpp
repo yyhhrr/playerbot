@@ -41,6 +41,8 @@ bool OpenLootAction::Execute(Event event)
 {
     LootObject lootObject = AI_VALUE(LootObject, "loot target");
     bool result = DoLoot(lootObject);
+    if (!result)
+        AI_VALUE(LootObjectStack*, "available loot")->Remove(lootObject.guid);
 
     context->GetValue<LootObject>("loot target")->Set(LootObject());
     return result;

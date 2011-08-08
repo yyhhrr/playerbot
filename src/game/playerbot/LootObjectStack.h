@@ -70,7 +70,6 @@ namespace ai
     private:
         Player* bot;
         LootTargetList availableLoot;
-        LootTargetList alreadyLooted;
     };
 
 };
