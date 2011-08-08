@@ -84,10 +84,11 @@ protected:
 
 		tickWithRage(21);
 		tickWithRage(21);
+		tickWithRage(21);
 
 		tickWithSpellAvailable("maul");
 
-		assertActions(">S:dire bear form>T:melee>T:lacerate>T:mangle (bear)>T:maul>T:melee");
+		assertActions(">S:dire bear form>T:melee>T:lacerate>T:melee>T:mangle (bear)>T:melee>T:maul");
     }
 
     void combatVsMelee()
@@ -105,12 +106,11 @@ protected:
 		tick();
 
 		tickWithRage(41);
-
 		tickWithRage(61);
-
+        tickWithRage(61);
         tickWithRage(61);
 
-        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:lacerate>T:mangle (bear)>T:maul>T:swipe (bear)");
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:lacerate>T:melee>T:mangle (bear)>T:melee>T:maul");
     }
 
     void healHimself()
