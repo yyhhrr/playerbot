@@ -54,7 +54,8 @@ void AttackersValue::RemoveNonThreating(set<Unit*>& targets)
 {
     for(set<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
     {
-        if(!bot->IsWithinLOSInMap(*tIter) || !hasRealThreat(*tIter))
+        Unit* unit = *tIter;
+        if(!bot->IsWithinLOSInMap(unit) || bot->GetMapId() != unit->GetMapId() || !hasRealThreat(unit))
         {
             set<Unit *>::iterator tIter2 = tIter;
             ++tIter;
