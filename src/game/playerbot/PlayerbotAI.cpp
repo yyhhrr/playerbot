@@ -74,8 +74,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
     botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
     botPacketHandlers[SMSG_LOOT_RESPONSE] = "loot response";
-
     botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";
+    botPacketHandlers[SMSG_ITEM_PUSH_RESULT] = "item push result";
 }
 
 PlayerbotAI::~PlayerbotAI()

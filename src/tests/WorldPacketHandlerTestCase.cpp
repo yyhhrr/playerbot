@@ -26,6 +26,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( cannot_equip );
       CPPUNIT_TEST( trade_status );
       CPPUNIT_TEST( loot );
+      CPPUNIT_TEST( item_push_result );
       CPPUNIT_TEST( quest_objective_completed );
   CPPUNIT_TEST_SUITE_END();
 
@@ -163,7 +164,15 @@ protected:
 
         assertActions(">S:quest objective completed");
     }
-    
+
+    void item_push_result()
+    {
+        trigger("item push result");
+        tick();
+
+        assertActions(">S:query item usage");
+    }
+
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( WorldPacketHandlerTestCase );

@@ -16,7 +16,6 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "q",
         NextAction::array(0,
             new NextAction("query quest", relevance),
-            new NextAction("query quest item", relevance),
             new NextAction("query item usage", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(

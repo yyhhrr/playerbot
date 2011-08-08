@@ -8,7 +8,6 @@
 #include "TellLosAction.h"
 #include "DropQuestAction.h"
 #include "QueryQuestAction.h"
-#include "QueryQuestItemAction.h"
 #include "QueryItemUsageAction.h"
 #include "LootStrategyAction.h"
 #include "AddLootAction.h"
@@ -55,7 +54,6 @@ namespace ai
             creators["los"] = &ChatActionContext::los;
             creators["drop"] = &ChatActionContext::drop;
             creators["query quest"] = &ChatActionContext::query_quest;
-            creators["query quest item"] = &ChatActionContext::query_quest_item;
             creators["query item usage"] = &ChatActionContext::query_item_usage;
             creators["ll"] = &ChatActionContext::ll;
             creators["add all loot"] = &ChatActionContext::add_all_loot;
@@ -126,7 +124,6 @@ namespace ai
         static Action* release(PlayerbotAI* ai) { return new ReleaseSpiritAction(ai); }
         static Action* query_item_usage(PlayerbotAI* ai) { return new QueryItemUsageAction(ai); }
         static Action* query_quest(PlayerbotAI* ai) { return new QueryQuestAction(ai); }
-        static Action* query_quest_item(PlayerbotAI* ai) { return new QueryQuestItemAction(ai); }
         static Action* drop(PlayerbotAI* ai) { return new DropQuestAction(ai); }
         static Action* stats(PlayerbotAI* ai) { return new StatsAction(ai); }
         static Action* quests(PlayerbotAI* ai) { return new ListQuestsAction(ai); }

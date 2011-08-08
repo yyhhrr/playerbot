@@ -58,6 +58,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "loot response",
         NextAction::array(0, new NextAction("store loot", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "item push result",
+        NextAction::array(0, new NextAction("query item usage", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTroughStrategy(ai)

@@ -609,9 +609,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1659,9 +1656,6 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryQuestItemAction.h">
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QuestAction.h">

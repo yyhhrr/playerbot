@@ -113,9 +113,8 @@ protected:
         trigger("q");
         tick();
         tick();
-        tick();
 
-        assertActions(">S:query quest>S:query quest item>S:query item usage");
+        assertActions(">S:query quest>S:query item usage");
     }
 
     void ll()
