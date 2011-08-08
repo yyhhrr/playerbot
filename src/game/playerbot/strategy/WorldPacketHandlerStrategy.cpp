@@ -69,4 +69,5 @@ WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("loot roll");
     supported.push_back("check mount state");
     supported.push_back("quest objective completed");
+    supported.push_back("party command");
 }

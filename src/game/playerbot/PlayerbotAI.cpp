@@ -2,7 +2,6 @@
 #include "PlayerbotMgr.h"
 #include "playerbot.h"
 
-#include "strategy/ExternalEventHelper.h"
 #include "AiFactory.h"
 
 #include "../GridNotifiers.h"
@@ -29,6 +28,25 @@ uint32 PlayerbotChatHandler::extractQuestId(string str)
     return cId ? atol(cId) : 0;
 }
 
+void PacketHandlingHelper::AddHandler(uint16 opcode, string handler)
+{
+    handlers[opcode] = handler;
+}
+
+void PacketHandlingHelper::Handle(ExternalEventHelper &helper)
+{
+    while (!queue.empty())
+    {
+        helper.HandlePacket(handlers, queue.top());
+        queue.pop();
+    }
+}
+
+void PacketHandlingHelper::AddPacket(const WorldPacket& packet)
+{
+    queue.push(packet);
+}
+
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL),
     currentEngine(NULL), chatHelper(this)
@@ -51,31 +69,34 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     engines[BOT_STATE_DEAD] = AiFactory::createDeadEngine(bot, this, aiObjectContext);
     currentEngine = engines[BOT_STATE_NON_COMBAT];
 
-    masterPacketHandlers[CMSG_GAMEOBJ_REPORT_USE] = "use game object";
-    masterPacketHandlers[CMSG_AREATRIGGER] = "area trigger";
-    masterPacketHandlers[CMSG_GAMEOBJ_USE] = "use game object";
-    masterPacketHandlers[CMSG_LOOT_ROLL] = "loot roll";
+    masterIncomingPacketHandlers.AddHandler(CMSG_GAMEOBJ_REPORT_USE, "use game object");
+    masterIncomingPacketHandlers.AddHandler(CMSG_AREATRIGGER, "area trigger");
+    masterIncomingPacketHandlers.AddHandler(CMSG_GAMEOBJ_USE, "use game object");
+    masterIncomingPacketHandlers.AddHandler(CMSG_LOOT_ROLL, "loot roll");
 
-    masterPacketHandlers[CMSG_GOSSIP_HELLO] = "gossip hello";
-    masterPacketHandlers[CMSG_QUESTGIVER_HELLO] = "gossip hello";
-    masterPacketHandlers[CMSG_QUESTGIVER_COMPLETE_QUEST] = "complete quest";
-    masterPacketHandlers[CMSG_QUESTGIVER_ACCEPT_QUEST] = "accept quest";
+    masterIncomingPacketHandlers.AddHandler(CMSG_GOSSIP_HELLO, "gossip hello");
+    masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_HELLO, "gossip hello");
+    masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_COMPLETE_QUEST, "complete quest");
+    masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_ACCEPT_QUEST, "accept quest");
 
-    masterPacketHandlers[CMSG_ACTIVATETAXI] = "activate taxi";
-    masterPacketHandlers[CMSG_ACTIVATETAXIEXPRESS] = "activate taxi";
+    masterIncomingPacketHandlers.AddHandler(CMSG_ACTIVATETAXI, "activate taxi");
+    masterIncomingPacketHandlers.AddHandler(CMSG_ACTIVATETAXIEXPRESS, "activate taxi");
 
-    botPacketHandlers[SMSG_QUESTGIVER_QUEST_DETAILS] = "quest share";
-    botPacketHandlers[SMSG_GROUP_INVITE] = "group invite";
-    botPacketHandlers[BUY_ERR_NOT_ENOUGHT_MONEY] = "not enough money";
-    botPacketHandlers[BUY_ERR_REPUTATION_REQUIRE] = "not enough reputation";
-    botPacketHandlers[SMSG_GROUP_SET_LEADER] = "group set leader";
-    botPacketHandlers[SMSG_FORCE_RUN_SPEED_CHANGE] = "check mount state";
-    botPacketHandlers[SMSG_RESURRECT_REQUEST] = "resurrect request";
-    botPacketHandlers[SMSG_INVENTORY_CHANGE_FAILURE] = "cannot equip";
-    botPacketHandlers[SMSG_TRADE_STATUS] = "trade status";
-    botPacketHandlers[SMSG_LOOT_RESPONSE] = "loot response";
-    botPacketHandlers[SMSG_QUESTUPDATE_ADD_KILL] = "quest objective completed";
-    botPacketHandlers[SMSG_ITEM_PUSH_RESULT] = "item push result";
+    botOutgoingPacketHandlers.AddHandler(SMSG_QUESTGIVER_QUEST_DETAILS, "quest share");
+    botOutgoingPacketHandlers.AddHandler(SMSG_GROUP_INVITE, "group invite");
+    botOutgoingPacketHandlers.AddHandler(BUY_ERR_NOT_ENOUGHT_MONEY, "not enough money");
+    botOutgoingPacketHandlers.AddHandler(BUY_ERR_REPUTATION_REQUIRE, "not enough reputation");
+    botOutgoingPacketHandlers.AddHandler(SMSG_GROUP_SET_LEADER, "group set leader");
+    botOutgoingPacketHandlers.AddHandler(SMSG_FORCE_RUN_SPEED_CHANGE, "check mount state");
+    botOutgoingPacketHandlers.AddHandler(SMSG_RESURRECT_REQUEST, "resurrect request");
+    botOutgoingPacketHandlers.AddHandler(SMSG_INVENTORY_CHANGE_FAILURE, "cannot equip");
+    botOutgoingPacketHandlers.AddHandler(SMSG_TRADE_STATUS, "trade status");
+    botOutgoingPacketHandlers.AddHandler(SMSG_LOOT_RESPONSE, "loot response");
+    botOutgoingPacketHandlers.AddHandler(SMSG_QUESTUPDATE_ADD_KILL, "quest objective completed");
+    botOutgoingPacketHandlers.AddHandler(SMSG_ITEM_PUSH_RESULT, "item push result");
+
+    masterOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
+    botOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
 }
 
 PlayerbotAI::~PlayerbotAI()
@@ -115,17 +136,9 @@ void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
         chatCommands.pop();
     }
 
-    while (!botPackets.empty())
-    {
-        helper.HandlePacket(botPacketHandlers, botPackets.top());
-        botPackets.pop();
-    }
-
-    while (!masterPackets.empty())
-    {
-        helper.HandlePacket(masterPacketHandlers, masterPackets.top());
-        masterPackets.pop();
-    }
+    botOutgoingPacketHandlers.Handle(helper);
+    masterIncomingPacketHandlers.Handle(helper);
+    masterOutgoingPacketHandlers.Handle(helper);
 
 	DoNextAction();
 }
@@ -252,9 +265,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             return;
         }
     default:
-        WorldPacket p(packet);
-        p.rpos(0);
-        botPackets.push(p);
+        botOutgoingPacketHandlers.AddPacket(packet);
     }
 }
 
@@ -301,9 +312,12 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
 {
-    WorldPacket p(packet);
-    p.rpos(0);
-    masterPackets.push(p);
+    masterIncomingPacketHandlers.AddPacket(packet);
+}
+
+void PlayerbotAI::HandleMasterOutgoingPacket(const WorldPacket& packet)
+{
+    masterOutgoingPacketHandlers.AddPacket(packet);
 }
 
 void PlayerbotAI::ChangeActiveEngineIfNecessary()

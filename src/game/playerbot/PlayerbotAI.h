@@ -4,6 +4,7 @@
 #include "PlayerbotAIBase.h"
 #include "strategy/AiObjectContext.h"
 #include "strategy/Engine.h"
+#include "strategy/ExternalEventHelper.h"
 
 class Player;
 class PlayerbotMgr;
@@ -55,6 +56,18 @@ enum BotState
 
 #define BOT_STATE_MAX 3
 
+class PacketHandlingHelper
+{
+public:
+    void AddHandler(uint16 opcode, string handler);
+    void Handle(ExternalEventHelper &helper);
+    void AddPacket(const WorldPacket& packet);
+
+private:
+    map<uint16, string> handlers;
+    stack<WorldPacket> queue;
+};
+
 class PlayerbotAI : public PlayerbotAIBase
 {
 public:
@@ -68,6 +81,7 @@ public:
     void HandleCommand(const string& text, Player& fromPlayer);
 	void HandleBotOutgoingPacket(const WorldPacket& packet);
     void HandleMasterIncomingPacket(const WorldPacket& packet);
+    void HandleMasterOutgoingPacket(const WorldPacket& packet);
 	void HandleTeleportAck();
     void ChangeActiveEngineIfNecessary();
     void ChangeEngine(BotState type);
@@ -113,13 +127,12 @@ protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
     AiObjectContext* aiObjectContext;
-    ChatHelper chatHelper;
     Engine* currentEngine;
     Engine* engines[BOT_STATE_MAX];
-    map<uint16, string> botPacketHandlers;
-    map<uint16, string> masterPacketHandlers;
+    ChatHelper chatHelper;
     stack<string> chatCommands;
-    stack<WorldPacket> botPackets;
-    stack<WorldPacket> masterPackets;
+    PacketHandlingHelper botOutgoingPacketHandlers;
+    PacketHandlingHelper masterIncomingPacketHandlers;
+    PacketHandlingHelper masterOutgoingPacketHandlers;
 };
 

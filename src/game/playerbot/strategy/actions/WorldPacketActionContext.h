@@ -16,6 +16,7 @@
 #include "InventoryChangeFailureAction.h"
 #include "LootAction.h"
 #include "QuestAction.h"
+#include "LeaveGroupAction.h"
 
 namespace ai
 {
@@ -45,9 +46,11 @@ namespace ai
             creators["store loot"] = &WorldPacketActionContext::store_loot;
             creators["tell out of react range"] = &WorldPacketActionContext::tell_out_of_react_range;
             creators["quest objective completed"] = &WorldPacketActionContext::quest_objective_completed;
+            creators["party command"] = &WorldPacketActionContext::party_command;
         }
 
     private:
+        static Action* party_command(PlayerbotAI* ai) { return new PartyCommandAction(ai); }
         static Action* quest_objective_completed(PlayerbotAI* ai) { return new QuestObjectiveCompletedAction(ai); }
         static Action* store_loot(PlayerbotAI* ai) { return new StoreLootAction(ai); }
         static Action* tell_out_of_react_range(PlayerbotAI* ai) { return new OutOfReactRangeAction(ai); }

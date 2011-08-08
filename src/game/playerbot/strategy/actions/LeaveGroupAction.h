@@ -6,16 +6,40 @@ namespace ai
 {
     class LeaveGroupAction : public Action {
     public:
-        LeaveGroupAction(PlayerbotAI* ai) : Action(ai, "leave") {}
-        
+        LeaveGroupAction(PlayerbotAI* ai, string name = "leave") : Action(ai, name) {}
+
         virtual bool Execute(Event event)
         {
-            Group* group = bot->GetGroup();
-            if (!group) 
+            WorldPacket p;
+            string member = bot->GetName();
+            p << uint32(PARTY_OP_LEAVE) << member << uint32(0);
+            bot->GetSession()->HandleGroupDisbandOpcode(p);
+
+            return true;
+        }
+    };
+
+    class PartyCommandAction : public LeaveGroupAction {
+    public:
+        PartyCommandAction(PlayerbotAI* ai) : LeaveGroupAction(ai, "party command") {}
+
+        virtual bool Execute(Event event)
+        {
+            WorldPacket& p = event.getPacket();
+            p.rpos(0);
+            uint32 operation;
+            string member;
+            uint32 result;
+
+            p >> operation >> member >> result;
+
+            if (operation != PARTY_OP_LEAVE)
                 return false;
 
-            group->RemoveMember(bot->GetObjectGuid(), 0);
-            return true;
+            if (member == master->GetName())
+                return LeaveGroupAction::Execute(event);
+
+            return false;
         }
     };
 

@@ -28,6 +28,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( loot );
       CPPUNIT_TEST( item_push_result );
       CPPUNIT_TEST( quest_objective_completed );
+      CPPUNIT_TEST( party_command );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -171,6 +172,14 @@ protected:
         tick();
 
         assertActions(">S:query item usage");
+    }
+
+    void party_command()
+    {
+        trigger("party command");
+        tick();
+
+        assertActions(">S:party command");
     }
 
 };
