@@ -1,5 +1,5 @@
 #pragma once;
-#include "Config\Config.h"
+#include "Config/Config.h"
 
 using namespace std;
 
