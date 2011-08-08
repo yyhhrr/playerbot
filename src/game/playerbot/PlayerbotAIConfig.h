@@ -15,7 +15,7 @@ public:
     bool Initialize();
 
     bool enabled;
-    uint32 globalCoolDown, reactDelay;
+    uint32 globalCoolDown, reactDelay, teleportDelay;
     float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance;
 
 private:

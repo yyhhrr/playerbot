@@ -39,8 +39,9 @@ bool ReachAreaTriggerAction::Execute(Event event)
     mm.Clear();
     bot->TeleportTo(atEntry->mapid, atEntry->x, atEntry->y, atEntry->z, 0.0f, TELE_TO_NOT_LEAVE_TRANSPORT);
     bot->SendHeartBeat();
-    ai->SetNextCheckDelay(3000);
-    ai->TellMaster("I will teleport in 3 seconds");
+    ai->SetNextCheckDelay(sPlayerbotAIConfig.teleportDelay);
+    ostringstream out; out << "I will follow you in " << sPlayerbotAIConfig.teleportDelay / 1000 << " seconds";
+    ai->TellMaster(out);
 
     context->GetValue<LastMovement&>("last movement")->Get().lastAreaTrigger = triggerId;
 
