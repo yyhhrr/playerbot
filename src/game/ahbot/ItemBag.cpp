@@ -13,7 +13,7 @@ CategoryList::CategoryList()
     Add(new Equip());
     Add(new ahbot::Quest());
     Add(new Quiver());
-    
+
     Add(new Recipe());
     Add(new Container());
 
@@ -32,7 +32,7 @@ CategoryList::CategoryList()
     Add(new Engineering());
     Add(new Jems());
     Add(new Elemental());
-    
+
     Add(new OtherConsumable());
     Add(new OtherTrade());
     Add(new Other());
@@ -99,7 +99,7 @@ bool ItemBag::Add(ItemPrototype const* proto)
         proto->Bonding == BIND_QUEST_ITEM)
         return false;
 
-    if (proto->ItemLevel > sAhBotConfig.maxItemLevel)
+    if (proto->RequiredLevel > sAhBotConfig.maxItemLevel)
         return false;
 
     for (int i = 0; i < CategoryList::instance.size(); i++)
