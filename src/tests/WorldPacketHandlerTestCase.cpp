@@ -29,6 +29,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( item_push_result );
       CPPUNIT_TEST( quest_objective_completed );
       CPPUNIT_TEST( party_command );
+      CPPUNIT_TEST( taxi_done );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -180,6 +181,14 @@ protected:
         tick();
 
         assertActions(">S:party command");
+    }
+
+    void taxi_done()
+    {
+        trigger("taxi done");
+        tick();
+
+        assertActions(">S:taxi");
     }
 
 };

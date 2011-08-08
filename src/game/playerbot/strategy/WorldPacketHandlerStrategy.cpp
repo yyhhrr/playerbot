@@ -44,6 +44,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("remember taxi", relevance), new NextAction("taxi", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
+        "taxi done",
+        NextAction::array(0, new NextAction("taxi", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "trade status",
         NextAction::array(0, new NextAction("accept trade", relevance), NULL)));
 
