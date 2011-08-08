@@ -25,6 +25,11 @@ public:
         sharedValues.Update();
     }
 
+    void Clear()
+    {
+        sharedValues.Clear();
+    }
+
 private:
     SharedValueContext sharedValues;
 };
@@ -99,6 +104,10 @@ void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
     {
         bot->GetPlayerbotAI()->TellMaster("Goodbue!");
 
+        if (sharedAi)
+            delete sharedAi;
+        sharedAi = new SharedPlayerbotAI();
+
         WorldSession * botWorldSessionPtr = bot->GetSession();
         m_playerBots.erase(guid);    // deletes bot player ptr inside this WorldSession PlayerBotMap
         botWorldSessionPtr->LogoutPlayer(true); // this will delete the bot Player object and PlayerbotAI object
@@ -114,8 +123,9 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
-    if (!sharedAi)
-        sharedAi = new SharedPlayerbotAI();
+    if (sharedAi)
+        delete sharedAi;
+    sharedAi = new SharedPlayerbotAI();
 
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
     bot->SetPlayerbotAI(ai);

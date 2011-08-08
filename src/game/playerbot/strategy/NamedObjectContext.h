@@ -72,6 +72,11 @@ namespace ai
 
         virtual ~NamedObjectContext()
         {
+            Clear();
+        }
+
+        void Clear()
+        {
             for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
             {
                 if (i->second)
