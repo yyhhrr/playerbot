@@ -2,7 +2,7 @@
 
 #include "Category.h"
 #include "ItemBag.h"
-#include "..\playerbot\PlayerbotAIBase.h"
+#include "../playerbot/PlayerbotAIBase.h"
 
 #define MAX_AUCTIONS 3
 #define AHBOT_WON_EXPIRE 0
