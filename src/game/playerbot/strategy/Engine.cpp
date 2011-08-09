@@ -86,7 +86,8 @@ void Engine::Init()
         Strategy* strategy = i->second;
         strategy->InitMultipliers(multipliers);
         strategy->InitTriggers(triggers);
-        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
+        Event emptyEvent;
+        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, emptyEvent);
     }
 }
 
@@ -230,8 +231,9 @@ bool Engine::ExecuteAction(string name)
     Action* action = InitializeAction(actionNode);
     if (action && action->isPossible() && action->isUseful())
     {
-        result = ListenAndExecute(action, Event());
-        MultiplyAndPush(action->getContinuers(), 0.0f, false, Event());
+    	Event emptyEvent;
+        result = ListenAndExecute(action, emptyEvent);
+        MultiplyAndPush(action->getContinuers(), 0.0f, false, emptyEvent);
     }
 	return result;
 }
@@ -335,7 +337,8 @@ void Engine::PushDefaultActions()
     for (map<string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
     {
         Strategy* strategy = i->second;
-        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, Event());
+        Event emptyEvent;
+        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, emptyEvent);
     }
 }
 

@@ -1,6 +1,9 @@
 #pragma once;
 #include "Config/Config.h"
 #include "PricingStrategy.h"
+#include "../ItemPrototype.h"
+#include "../SharedDefines.h"
+#include "../../shared/Util.h"
 
 using namespace std;
 

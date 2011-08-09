@@ -36,8 +36,8 @@ namespace ai
         template<class T>
         Value<T>* GetValue(string name, uint32 param)
         {
-            char buffer[64]; itoa(param, buffer, 10);
-            return GetValue<T>(name, buffer);
+        	ostringstream out; out << param;
+            return GetValue<T>(name, out.str());
         }
 
         set<string> GetSupportedStrategies()

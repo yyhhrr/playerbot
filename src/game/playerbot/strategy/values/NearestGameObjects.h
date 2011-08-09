@@ -4,11 +4,11 @@
 
 namespace ai
 {
-    class NearestGameObjects : public CalculatedValue<list<ObjectGuid>>
+    class NearestGameObjects : public CalculatedValue<list<ObjectGuid> >
 	{
 	public:
         NearestGameObjects(PlayerbotAI* ai, float range = sPlayerbotAIConfig.sightDistance) :
-            CalculatedValue<list<ObjectGuid>>(ai), range(range) {}
+            CalculatedValue<list<ObjectGuid> >(ai), range(range) {}
 
     protected:
         virtual list<ObjectGuid> Calculate();

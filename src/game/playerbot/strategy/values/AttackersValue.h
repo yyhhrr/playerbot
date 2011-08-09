@@ -5,10 +5,10 @@
 
 namespace ai
 {
-    class AttackersValue : public CalculatedValue<list<ObjectGuid>>
+    class AttackersValue : public CalculatedValue<list<ObjectGuid> >
 	{
 	public:
-        AttackersValue(PlayerbotAI* ai) : CalculatedValue<list<ObjectGuid>>(ai) {}
+        AttackersValue(PlayerbotAI* ai) : CalculatedValue<list<ObjectGuid> >(ai) {}
         list<ObjectGuid> Calculate();
 
 	private:

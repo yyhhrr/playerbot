@@ -9,16 +9,28 @@ uint8 ItemCountValue::Calculate()
     Player* bot = InventoryAction::ai->GetBot();
 
     if (qualifier == "food")
-        return Find(FindFoodVisitor(bot, 11)) ? 1 : 0;
+    {
+    	FindFoodVisitor visitor(bot, 11);
+        return Find(visitor) ? 1 : 0;
+    }
 
     if (qualifier == "drink")
-        return Find(FindFoodVisitor(bot, 59)) ? 1 : 0;
+    {
+    	FindFoodVisitor visitor(bot, 59);
+        return Find(visitor) ? 1 : 0;
+    }
 
     if (qualifier == "mana potion")
-        return Find(FindFoodVisitor(bot, 438)) ? 1 : 0;
+    {
+    	FindFoodVisitor visitor(bot, 438);
+        return Find(visitor) ? 1 : 0;
+    }
 
     if (qualifier == "healing potion")
-        return Find(FindFoodVisitor(bot, 441)) ? 1 : 0;
+    {
+    	FindFoodVisitor visitor(bot, 441);
+        return Find(visitor) ? 1 : 0;
+    }
 
     string name = qualifier;
     ItemIds ids = InventoryAction::chat->parseItems(qualifier);
@@ -55,20 +67,35 @@ Item* InventoryItemValue::Calculate()
     Player* bot = InventoryAction::ai->GetBot();
 
     if (qualifier == "food")
-        return Find(FindFoodVisitor(bot, 11));
+    {
+    	FindFoodVisitor visitor(bot, 11);
+        return Find(visitor);
+    }
 
     if (qualifier == "drink")
-        return Find(FindFoodVisitor(bot, 59));
+    {
+    	FindFoodVisitor visitor(bot, 59);
+        return Find(visitor);
+    }
 
     if (qualifier == "mana potion")
-        return Find(FindFoodVisitor(bot, 438));
+    {
+    	FindFoodVisitor visitor(bot, 438);
+        return Find(visitor);
+    }
 
     if (qualifier == "healing potion")
-        return Find(FindFoodVisitor(bot, 441));
+    {
+    	FindFoodVisitor visitor(bot, 441);
+        return Find(visitor);
+    }
 
     ItemIds ids = InventoryAction::chat->parseItems(qualifier);
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
-        return Find(FindItemByIdVisitor(*i));
+    {
+    	FindItemByIdVisitor visitor(*i);
+        return Find(visitor);
+    }
 
     return NULL;
 }

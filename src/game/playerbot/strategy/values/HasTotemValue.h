@@ -13,7 +13,7 @@ namespace ai
     public:
         bool Calculate()
         {
-            list<ObjectGuid> units = *context->GetValue<list<ObjectGuid>>("nearest npcs");
+            list<ObjectGuid> units = *context->GetValue<list<ObjectGuid> >("nearest npcs");
             for (list<ObjectGuid>::iterator i = units.begin(); i != units.end(); i++)
             {
                 Unit* unit = ai->GetUnit(*i);

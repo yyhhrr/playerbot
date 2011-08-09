@@ -9,7 +9,7 @@ bool TeleportAction::Execute(Event event)
 {
 
 
-    list<ObjectGuid> gos = *context->GetValue<list<ObjectGuid>>("nearest game objects");
+    list<ObjectGuid> gos = *context->GetValue<list<ObjectGuid> >("nearest game objects");
     for (list<ObjectGuid>::iterator i = gos.begin(); i != gos.end(); i++)
     {
         GameObject* go = ai->GetGameObject(*i);

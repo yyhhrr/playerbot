@@ -15,7 +15,7 @@ bool LootAction::Execute(Event event)
         return false;
     }
 
-    LootObject &lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(sPlayerbotAIConfig.lootDistance);
+    LootObject const& lootObject = AI_VALUE(LootObjectStack*, "available loot")->GetLoot(sPlayerbotAIConfig.lootDistance);
     context->GetValue<LootObject>("loot target")->Set(lootObject);
     return true;
 }

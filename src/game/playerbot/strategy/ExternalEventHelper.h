@@ -49,7 +49,8 @@ namespace ai
             if (!trigger)
                 return;
 
-            trigger->ExternalEvent(WorldPacket(packet));
+            WorldPacket p(packet);
+            trigger->ExternalEvent(p);
         }
 
         bool HandleCommand(string name, string param)

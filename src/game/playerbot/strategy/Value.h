@@ -17,8 +17,8 @@ namespace ai
     class Value
     {
     public:
-        virtual T Get() = NULL;
-        virtual void Set(T value) = NULL;
+        virtual T Get() = 0;
+        virtual void Set(T value) = 0;
         operator T() { return Get(); }
     };
     
@@ -49,7 +49,7 @@ namespace ai
         }
 
     protected:
-        virtual T Calculate() = NULL;
+        virtual T Calculate() = 0;
 
     protected:
 		int checkInterval;

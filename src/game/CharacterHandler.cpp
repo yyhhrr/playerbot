@@ -40,7 +40,7 @@
 #include "Language.h"
 
 // Playerbot mod:
-#include "playerbot/Playerbot.h"
+#include "playerbot/playerbot.h"
 
 // config option SkipCinematics supported values
 enum CinematicsSkipMode

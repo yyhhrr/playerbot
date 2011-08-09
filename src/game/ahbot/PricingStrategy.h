@@ -1,5 +1,6 @@
 #pragma once;
 #include "Config/Config.h"
+#include "../ItemPrototype.h"
 
 using namespace std;
 

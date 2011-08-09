@@ -12,7 +12,7 @@ namespace ai
     protected:
         Unit* GetTarget()
         {
-            return context->GetValue<Unit*>(qualifier)->Get();
+            return AiObject::context->GetValue<Unit *>(qualifier)->Get();
         }
     };
 
@@ -67,7 +67,7 @@ namespace ai
     class ComboPointsValue : public QualifiedStatsValue<uint8>
     {
     public:
-        ComboPointsValue(PlayerbotAI* ai) : QualifiedStatsValue(ai) {}
+        ComboPointsValue(PlayerbotAI* ai) : QualifiedStatsValue<uint8>(ai) {}
 
         virtual uint8 Calculate();
     };

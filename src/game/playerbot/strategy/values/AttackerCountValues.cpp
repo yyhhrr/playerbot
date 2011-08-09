@@ -37,7 +37,7 @@ uint8 AttackerCountValue::Calculate()
     int count = 0;
     float range = sPlayerbotAIConfig.sightDistance;
 
-    list<ObjectGuid> attackers = context->GetValue<list<ObjectGuid>>("attackers")->Get();
+    list<ObjectGuid> attackers = context->GetValue<list<ObjectGuid> >("attackers")->Get();
     for (list<ObjectGuid>::iterator i = attackers.begin(); i != attackers.end(); i++)
     {
         Unit* unit = ai->GetUnit(*i);
@@ -71,7 +71,7 @@ uint8 BalancePercentValue::Calculate()
         }
     }
 
-    list<ObjectGuid> v = context->GetValue<list<ObjectGuid>>("attackers")->Get();
+    list<ObjectGuid> v = context->GetValue<list<ObjectGuid> >("attackers")->Get();
 
     for (list<ObjectGuid>::iterator i = v.begin(); i!=v.end(); i++)
     {

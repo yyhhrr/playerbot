@@ -22,5 +22,6 @@ private:
 
 Unit* PartyMemberWithoutAuraValue::Calculate()
 {
-    return FindPartyMember(PlayerWithoutAuraPredicate(ai, qualifier)); 
+	PlayerWithoutAuraPredicate predicate(ai, qualifier);
+    return FindPartyMember(predicate);
 }

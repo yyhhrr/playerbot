@@ -54,7 +54,7 @@ public:
     }
 
 public:
-    map<uint32, list<Item*>> items;
+    map<uint32, list<Item*> > items;
 
 private:
     Player* bot;
@@ -94,7 +94,7 @@ bool BuffAction::Execute(Event event)
     IterateItems(&visitor);
 
     uint32 oldSubClass = -1;
-    for (map<uint32, list<Item*>>::iterator i = visitor.items.begin(); i != visitor.items.end(); ++i)
+    for (map<uint32, list<Item*> >::iterator i = visitor.items.begin(); i != visitor.items.end(); ++i)
     {
         list<Item*> items = i->second;
 

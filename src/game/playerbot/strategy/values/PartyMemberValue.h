@@ -6,13 +6,13 @@ namespace ai
     class FindPlayerPredicate
     {
     public:
-        virtual bool Check(Unit*) = NULL;
+        virtual bool Check(Unit*) = 0;
     };
 
     class SpellEntryPredicate
     {
     public:
-        virtual bool Check(SpellEntry const*) = NULL;
+        virtual bool Check(SpellEntry const*) = 0;
     };
 
     class PartyMemberValue : public CalculatedValue<Unit*>

@@ -14,7 +14,7 @@ map<string, ChatMsg> ChatHelper::chats;
 template<class T>
 static bool substrContainsInMap(string searchTerm, map<string, T> searchIn)
 {
-    for (map<string, T>::iterator i = searchIn.begin(); i != searchIn.end(); ++i)
+    for (typename map<string, T>::iterator i = searchIn.begin(); i != searchIn.end(); ++i)
     {
 		string term = i->first;
 		if (term.size() > 1 && searchTerm.find(term) != string::npos)

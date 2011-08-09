@@ -54,7 +54,7 @@ namespace ahbot
         virtual string GetName() = 0;
 
     protected:
-        map<Category*,vector<uint32>> content;
+        map<Category*,vector<uint32> > content;
     };
 
     class AvailableItemsBag : public ItemBag

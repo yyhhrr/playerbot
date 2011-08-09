@@ -1,6 +1,6 @@
 #pragma once
 #include "../Value.h"
-#include "../LootObjectStack.h"
+#include "../../LootObjectStack.h"
 
 namespace ai
 {

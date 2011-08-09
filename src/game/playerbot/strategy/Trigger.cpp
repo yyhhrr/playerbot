@@ -7,7 +7,13 @@ using namespace ai;
 
 Event Trigger::Check()
 {
-    return IsActive() ? Event(getName()) : Event();
+	if (IsActive())
+	{
+		Event event(getName());
+		return event;
+	}
+	Event event;
+	return event;
 }
 
 Value<Unit*>* Trigger::GetTargetValue()

@@ -2,6 +2,8 @@
 
 namespace ai
 {
+    using namespace std;
+
     class Qualified
     {
     public:
@@ -16,6 +18,10 @@ namespace ai
 
     template <class T> class NamedObjectFactory
     {
+    protected:
+        typedef T* (*ActionCreator) (PlayerbotAI* ai);
+        map<string, ActionCreator> creators;
+
     public:
         T* create(string name, PlayerbotAI* ai)
         {
@@ -45,14 +51,10 @@ namespace ai
         set<string> supports()
         {
             set<string> keys;
-            for (map<string, ActionCreator>::iterator it = creators.begin(); it != creators.end(); it++)
+            for (typename map<string, ActionCreator>::iterator it = creators.begin(); it != creators.end(); it++)
                 keys.insert(it->first);
             return keys;
         }
-
-    protected:
-        typedef T* (*ActionCreator) (PlayerbotAI* ai);
-        map<string, ActionCreator> creators;
     };
 
 
@@ -77,7 +79,7 @@ namespace ai
 
         void Clear()
         {
-            for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
+            for (typename map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
             {
                 if (i->second)
                     delete i->second;
@@ -88,7 +90,7 @@ namespace ai
 
         void Update()
         {
-            for (map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
+            for (typename map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
             {
                 if (i->second)
                     i->second->Update();
@@ -109,7 +111,7 @@ namespace ai
     public:
         virtual ~NamedObjectContextList()
         {
-            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
                 NamedObjectContext<T>* context = *i;
                 if (!context->IsShared())
@@ -124,7 +126,7 @@ namespace ai
 
         T* GetObject(string name, PlayerbotAI* ai)
         {
-            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
                 T* object = (*i)->create(name, ai);
                 if (object) return object;
@@ -134,7 +136,7 @@ namespace ai
 
         void Update()
         {
-            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
                 if (!(*i)->IsShared())
                     (*i)->Update();
@@ -143,7 +145,7 @@ namespace ai
 
         set<string> GetSiblings(string name)
         {
-            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
                 if (!(*i)->IsSupportsSiblings())
                     continue;
@@ -164,7 +166,7 @@ namespace ai
         {
             set<string> result;
 
-            for (list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
             {
                 set<string> supported = (*i)->supports();
 
@@ -183,7 +185,7 @@ namespace ai
     public:
         virtual ~NamedObjectFactoryList()
         {
-            for (list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
+            for (typename list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
                 delete *i;
         }
 
@@ -194,7 +196,7 @@ namespace ai
 
         T* GetObject(string name, PlayerbotAI* ai)
         {
-            for (list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
+            for (typename list<NamedObjectFactory<T>*>::iterator i = factories.begin(); i != factories.end(); i++)
             {
                 T* object = (*i)->create(name, ai);
                 if (object) return object;

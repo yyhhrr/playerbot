@@ -1,6 +1,5 @@
 #pragma once
 #include "../Value.h"
-#include "../PlayerbotAIAware.h"
 
 namespace ai
 {

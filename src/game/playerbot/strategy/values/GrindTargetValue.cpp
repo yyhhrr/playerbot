@@ -29,7 +29,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
         return NULL;
 
 
-    list<ObjectGuid> targets = *context->GetValue<list<ObjectGuid>>("possible targets");
+    list<ObjectGuid> targets = *context->GetValue<list<ObjectGuid> >("possible targets");
 
     if(targets.empty())
         return NULL;
