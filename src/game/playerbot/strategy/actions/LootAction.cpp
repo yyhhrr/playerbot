@@ -26,7 +26,7 @@ enum ProfessionSpells
     BLACKSMITHING                = 2018,
     COOKING                      = 2550,
     ENCHANTING                   = 7411,
-    ENGINEERING                  = 4036,
+    ENGINEERING                  = 49383,
     FIRST_AID                    = 3273,
     FISHING                      = 7620,
     HERB_GATHERING               = 2366,
@@ -62,10 +62,30 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
         return true;
     }
 
+    if (creature)
+    {
+        SkillType skill = creature->GetCreatureInfo()->GetRequiredLootSkill();
+        int32 skillValue = bot->GetSkillValue(skill);
+        int32 TargetLevel = creature->getLevel();
+        int32 ReqValue = (skillValue < 100 ? (TargetLevel-10) * 10 : TargetLevel * 5);
+        if (!CanOpenLock(skill, ReqValue))
+            return false;
+
+        switch (skill)
+        {
+        case SKILL_ENGINEERING:
+            return ai->CastSpell(ENGINEERING, creature);
+        case SKILL_HERBALISM:
+            return ai->CastSpell(32605, creature);
+        case SKILL_MINING:
+            return ai->CastSpell(32606, creature);
+        default:
+            return ai->CastSpell(SKINNING, creature);
+        }
+    }
+
     switch (lootObject.skillId)
     {
-    case SKILL_SKINNING:
-        return ai->CastSpell(SKINNING, creature);
     case SKILL_MINING:
         return ai->CastSpell(MINING, bot);
     case SKILL_HERBALISM:
@@ -154,10 +174,7 @@ bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpel
                     if (skillId == SKILL_NONE)
                         return true;
 
-                    uint32 reqSkillValue = lockInfo->Skill[j];
-                    uint32 skillValue = bot->GetSkillValue(skillId);
-
-                    if (skillValue >= reqSkillValue || !reqSkillValue)
+                    if (CanOpenLock(skillId, lockInfo->Skill[j]))
                         return true;
                 }
             }
@@ -165,6 +182,12 @@ bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpel
     }
 
     return false;
+}
+
+bool OpenLootAction::CanOpenLock(uint32 skillId, uint32 reqSkillValue)
+{
+    uint32 skillValue = bot->GetSkillValue(skillId);
+    return skillValue >= reqSkillValue || !reqSkillValue;
 }
 
 bool StoreLootAction::Execute(Event event)
