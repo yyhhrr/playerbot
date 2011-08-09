@@ -496,6 +496,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\AttackAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BuffAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BuyAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeChatAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ChangeTalentsAction.cpp" />
@@ -850,6 +851,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AttackAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BuffAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BuyAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChangeChatAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChangeStrategyAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\ChangeTalentsAction.h" />

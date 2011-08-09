@@ -38,6 +38,7 @@
 #include "GuildBankAction.h"
 #include "ChatShortcutActions.h"
 #include "GossipHelloAction.h"
+#include "CastCustomSpellAction.h"
 
 namespace ai
 {
@@ -88,9 +89,11 @@ namespace ai
             creators["flee chat shortcut"] = &ChatActionContext::flee_chat_shortcut;
             creators["grind chat shortcut"] = &ChatActionContext::grind_chat_shortcut;
             creators["gossip hello"] = &ChatActionContext::gossip_hello;
+            creators["cast custom spell"] = &ChatActionContext::cast_custom_spell;
         }
 
     private:
+        static Action* cast_custom_spell(PlayerbotAI* ai) { return new CastCustomSpellAction(ai); }
         static Action* grind_chat_shortcut(PlayerbotAI* ai) { return new GrindChatShortcutAction(ai); }
         static Action* flee_chat_shortcut(PlayerbotAI* ai) { return new FleeChatShortcutAction(ai); }
         static Action* stay_chat_shortcut(PlayerbotAI* ai) { return new StayChatShortcutAction(ai); }

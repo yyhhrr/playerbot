@@ -104,9 +104,7 @@ void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
     {
         bot->GetPlayerbotAI()->TellMaster("Goodbue!");
 
-        if (sharedAi)
-            delete sharedAi;
-        sharedAi = new SharedPlayerbotAI();
+        ResetSharedAi();
 
         WorldSession * botWorldSessionPtr = bot->GetSession();
         m_playerBots.erase(guid);    // deletes bot player ptr inside this WorldSession PlayerBotMap
@@ -123,9 +121,7 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
-    if (sharedAi)
-        delete sharedAi;
-    sharedAi = new SharedPlayerbotAI();
+    ResetSharedAi();
 
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
     bot->SetPlayerbotAI(ai);
@@ -267,4 +263,12 @@ void PlayerbotMgr::SaveToDB()
         Player* const bot = it->second;
         bot->SaveToDB();
     }
+}
+
+void PlayerbotMgr::ResetSharedAi()
+{
+    if (sharedAi)
+        ((SharedPlayerbotAI*)sharedAi)->Clear();
+    else
+        sharedAi = new SharedPlayerbotAI();
 }

@@ -1077,6 +1077,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2244,6 +2247,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\SuggestWhatToDoAction.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
