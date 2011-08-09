@@ -3,6 +3,9 @@
 #include "Category.h"
 #include "ItemBag.h"
 #include "../playerbot/PlayerbotAIBase.h"
+#include "../AuctionHouseMgr.h"
+#include "../ObjectGuid.h"
+#include "../WorldSession.h"
 
 #define MAX_AUCTIONS 3
 #define AHBOT_WON_EXPIRE 0

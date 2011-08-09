@@ -6,6 +6,12 @@
 #include "Config/Config.h"
 #include "../Chat.h"
 #include "AhBotConfig.h"
+#include "../AuctionHouseMgr.h"
+#include "../WorldSession.h"
+#include "../../game/Player.h"
+#include "../ObjectAccessor.h"
+#include "../ObjectGuid.h"
+#include "../ObjectMgr.h"
 
 using namespace ahbot;
 

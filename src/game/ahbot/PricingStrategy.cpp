@@ -2,6 +2,7 @@
 #include "Category.h"
 #include "ItemBag.h"
 #include "AhBotConfig.h"
+#include "../../shared/Database/DatabaseEnv.h"
 
 using namespace ahbot;
 

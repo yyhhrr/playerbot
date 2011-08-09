@@ -3,6 +3,14 @@
 #include "ConsumableCategory.h"
 #include "TradeCategory.h"
 #include "AhBotConfig.h"
+#include "../DBCStructure.h"
+#include "../../shared/Log.h"
+#include "../../shared/Database/QueryResult.h"
+#include "../../shared/Database/DatabaseEnv.h"
+#include "../../shared/Database/SQLStorage.h"
+#include "../../shared/Database/DBCStore.h"
+#include "../AuctionHouseMgr.h"
+#include "../ObjectMgr.h"
 
 using namespace ahbot;
 
