@@ -91,7 +91,7 @@ namespace ai
             creators["behind"] = &ValueContext::behind;
 
             creators["item count"] = &ValueContext::item_count;
-            creators["inventory item"] = &ValueContext::inventory_item;
+            creators["inventory items"] = &ValueContext::inventory_item;
 
             creators["spell id"] = &ValueContext::spell_id;
             creators["item for spell"] = &ValueContext::item_for_spell;

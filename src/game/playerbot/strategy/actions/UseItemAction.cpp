@@ -10,28 +10,34 @@ bool UseItemAction::Execute(Event event)
     if (name.empty())
         name = getName();
 
-    Item* item = AI_VALUE2(Item*, "inventory item", name);
-    if (item)
-    {
-        if (name == "food" || name == "drink")
-        {
-            ai->SetNextCheckDelay(30000);
-            ai->TellMaster("I will eat/drink for 30 sec");
-        }
-        UseItem(*item);
-        return true;
-    }
-
+    list<Item*> items = AI_VALUE2(list<Item*>, "inventory items", name);
     list<ObjectGuid> gos = chat->parseGameobjects(name);
-    if (gos.empty())
+
+    if (gos.empty() && items.empty())
     {
         ai->TellMaster("Nothing to use");
         return false;
     }
 
-    for (list<ObjectGuid>::iterator i = gos.begin();i != gos.end(); i++)
-        UseGameObject(*i);
+    if (gos.size() > 1 || items.size() > 1)
+    {
+        ai->TellMaster("I can use only one item or game object a time");
+        return false;
+    }
 
+    if (!gos.empty() && items.empty())
+    {
+        UseGameObject(*gos.begin());
+        return true;
+    }
+
+    if (gos.empty() && !items.empty())
+    {
+        UseItem(*items.begin());
+        return true;
+    }
+
+    UseItem(*items.begin(), *gos.begin());
     return true;
 }
 
@@ -46,7 +52,7 @@ void UseItemAction::UseGameObject(ObjectGuid guid)
     ai->TellMaster(out);
 }
 
-void UseItemAction::UseItem(Item& item)
+void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
@@ -56,11 +62,17 @@ void UseItemAction::UseItem(Item& item)
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
-    uint8 bagIndex = item.GetBagSlot();
-    uint8 slot = item.GetSlot();
+    if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
+    {
+        ai->SetNextCheckDelay(30000);
+        ai->TellMaster("I will eat/drink for 30 secs");
+    }
+
+    uint8 bagIndex = item->GetBagSlot();
+    uint8 slot = item->GetSlot();
     uint8 cast_count = 1;
     uint32 spellid = 0;
-    uint64 item_guid = item.GetObjectGuid().GetRawValue();
+    uint64 item_guid = item->GetObjectGuid().GetRawValue();
     uint32 glyphIndex = 0;
     uint8 unk_flags = 0;
 
@@ -68,14 +80,43 @@ void UseItemAction::UseItem(Item& item)
     *packet << bagIndex << slot << cast_count << spellid << item_guid
         << glyphIndex << unk_flags;
 
-    ObjectGuid masterSelection = master->GetSelectionGuid();
-    if (masterSelection)
+    bool targetSelected = false;
+    ostringstream out; out << "Used " << chat->formatItem(item->GetProto());
+    if (goGuid)
     {
-        uint32 targetFlag = TARGET_FLAG_UNIT;
-        *packet << targetFlag << masterSelection.WriteAsPacked();
+        GameObject* go = ai->GetGameObject(goGuid);
+        if (go && go->isSpawned())
+        {
+            uint32 targetFlag = TARGET_FLAG_OBJECT;
+            *packet << targetFlag << goGuid.WriteAsPacked();
+            out << " on " << chat->formatGameobject(go);
+            targetSelected = true;
+        }
     }
 
-    if(uint32 questid = item.GetProto()->StartQuest)
+    if (!targetSelected)
+    {
+        ObjectGuid masterSelection = master->GetSelectionGuid();
+        if (masterSelection)
+        {
+            Unit* unit = ai->GetUnit(masterSelection);
+            if (unit)
+            {
+                uint32 targetFlag = TARGET_FLAG_UNIT;
+                *packet << targetFlag << masterSelection.WriteAsPacked();
+                out << " on " << unit->GetName();
+                targetSelected = true;
+            }
+        }
+    }
+    if (!targetSelected)
+    {
+        *packet << TARGET_FLAG_SELF;
+        out << " on self";
+    }
+    ai->TellMaster(out);
+
+    if(uint32 questid = item->GetProto()->StartQuest)
     {
         Quest const* qInfo = sObjectMgr.GetQuestTemplate(questid);
         if (qInfo)
@@ -93,7 +134,7 @@ void UseItemAction::UseItem(Item& item)
 
     for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
     {
-        uint32 spellId = item.GetProto()->Spells[i].SpellId;
+        uint32 spellId = item->GetProto()->Spells[i].SpellId;
         if (!spellId)
             continue;
 
@@ -117,7 +158,6 @@ void UseItemAction::UseItem(Item& item)
         return;
     }
 
-    *packet << TARGET_FLAG_SELF;
     bot->GetSession()->QueuePacket(packet);
 }
 

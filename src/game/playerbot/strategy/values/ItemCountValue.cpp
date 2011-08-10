@@ -62,40 +62,52 @@ Item* InventoryItemValue::Find(FindItemVisitor &visitor)
     return visitor.GetResult();
 }
 
-Item* InventoryItemValue::Calculate()
+list<Item*> InventoryItemValue::Calculate()
 {
+    list<Item*> result;
+
     Player* bot = InventoryAction::ai->GetBot();
 
     if (qualifier == "food")
     {
     	FindFoodVisitor visitor(bot, 11);
-        return Find(visitor);
+    	Item* item = Find(visitor);
+    	if (item)
+    	    result.push_back(item);
     }
 
     if (qualifier == "drink")
     {
     	FindFoodVisitor visitor(bot, 59);
-        return Find(visitor);
+        Item* item = Find(visitor);
+        if (item)
+            result.push_back(item);
     }
 
     if (qualifier == "mana potion")
     {
     	FindFoodVisitor visitor(bot, 438);
-        return Find(visitor);
+        Item* item = Find(visitor);
+        if (item)
+            result.push_back(item);
     }
 
     if (qualifier == "healing potion")
     {
     	FindFoodVisitor visitor(bot, 441);
-        return Find(visitor);
+        Item* item = Find(visitor);
+        if (item)
+            result.push_back(item);
     }
 
     ItemIds ids = InventoryAction::chat->parseItems(qualifier);
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
     {
     	FindItemByIdVisitor visitor(*i);
-        return Find(visitor);
+        Item* item = Find(visitor);
+        if (item)
+            result.push_back(item);
     }
 
-    return NULL;
+    return result;
 }

@@ -21,10 +21,10 @@ namespace ai
         MockFloatValue(PlayerbotAI* const ai) : ManualSetValue<float>(ai, 0) {}
     };
 
-    class MockItemValue : public ManualSetValue<Item*>, public Qualified
+    class MockItemValue : public ManualSetValue<list<Item*> >, public Qualified
     {
     public:
-        MockItemValue(PlayerbotAI* const ai) : ManualSetValue<Item*>(ai, NULL) {}
+        MockItemValue(PlayerbotAI* const ai) : ManualSetValue<list<Item*> >(ai, list<Item*>()) {}
     };
 
     class MockLogicalValue : public ManualSetValue<bool>, public Qualified
@@ -124,7 +124,7 @@ namespace ai
             creators["swimming"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
             creators["item count"] = &MockValueContext::stats;
-            creators["inventory item"] = &MockValueContext::item;
+            creators["inventory items"] = &MockValueContext::item;
             creators["spell cast useful"] = &MockValueContext::always_true;
             creators["can loot"] = &MockValueContext::logical;
 
@@ -188,8 +188,9 @@ namespace ai
               GetValue<bool>("has aggro", "current target")->Set(true);
               GetValue<bool>("can loot")->Set(false);
 
-              GetValue<Item*>("inventory item", "drink")->Set((Item*)(void*)0x01);
-              GetValue<Item*>("inventory item", "food")->Set((Item*)(void*)0x01);
+              list<Item*> items; items.push_back((Item*)(void*)0x01);
+              GetValue<list<Item*> >("inventory items", "drink")->Set(items);
+              GetValue<list<Item*> >("inventory items", "food")->Set(items);
           }
 
     public:

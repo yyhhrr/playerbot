@@ -16,12 +16,12 @@ namespace ai
         virtual bool Execute(Event event) { return false; }
 	};
 
-    class InventoryItemValue : public CalculatedValue<Item*>, public Qualified, InventoryAction
+    class InventoryItemValue : public CalculatedValue<list<Item*> >, public Qualified, InventoryAction
     {
     public:
-        InventoryItemValue(PlayerbotAI* ai) : CalculatedValue<Item*>(ai), InventoryAction(ai, "empty") {}
+        InventoryItemValue(PlayerbotAI* ai) : CalculatedValue<list<Item*> >(ai), InventoryAction(ai, "empty") {}
 
-        virtual Item* Calculate();
+        virtual list<Item*> Calculate();
 
         virtual bool Execute(Event event) { return false; }
 

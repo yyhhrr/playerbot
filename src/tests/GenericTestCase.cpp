@@ -24,21 +24,22 @@ protected:
     void healthstone()
     {
 		itemAvailable("healthstone", 1);
-        
+
 		lowHealth(1);
 		lowMana(1);
-        tick(); 
+        tick();
 
         assertActions(">S:healthstone");
     }
 	void flee()
 	{
-        set<Item*>("inventory item", "food", NULL);
-        set<Item*>("inventory item", "drink", NULL);
+	    list<Item*> items;
+        set<list<Item*> >("inventory items", "drink", items);
+	    set<list<Item*> >("inventory items", "food", items);
 
 		lowHealth(1);
 		lowMana(1);
-		tick(); 
+		tick();
 
 		assertActions(">S:flee");
 	}

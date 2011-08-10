@@ -10,10 +10,10 @@ namespace ai
 
     public:
         virtual bool Execute(Event event);
-        virtual bool isPossible();        
+        virtual bool isPossible();
 
     private:
-        void UseItem(Item& item);
+        void UseItem(Item* item, ObjectGuid go = ObjectGuid());
         void UseGameObject(ObjectGuid guid);
     };
 
@@ -30,7 +30,7 @@ namespace ai
         UseHealingPotion(PlayerbotAI* ai) : UseItemAction(ai, "healing potion") {}
     };
 
-    class UseManaPotion : public UseItemAction 
+    class UseManaPotion : public UseItemAction
     {
     public:
         UseManaPotion(PlayerbotAI* ai) : UseItemAction(ai, "mana potion") {}

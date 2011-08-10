@@ -397,16 +397,24 @@ void EngineTestBase::tickWithLootAvailable()
 
 void EngineTestBase::tickWithNoDrink()
 {
-    set<Item*>("inventory item", "drink", NULL);
+    list<Item*> items;
+    set<list<Item*> >("inventory items", "drink", items);
+
 	tick();
-    set<Item*>("inventory item", "drink", (Item*)(void*)0x01);
+
+	items.push_back((Item*)(void*)0x01);
+    set<list<Item*> >("inventory items", "drink", items);
 }
 
 void EngineTestBase::tickWithNoFood()
 {
-    set<Item*>("inventory item", "food", NULL);
+    list<Item*> items;
+    set<list<Item*> >("inventory items", "food", items);
+
 	tick();
-    set<Item*>("inventory item", "food", (Item*)(void*)0x01);
+
+	items.push_back((Item*)(void*)0x01);
+    set<list<Item*> >("inventory items", "food", items);
 }
 
 void EngineTestBase::itemAvailable(string  item, int amount)
