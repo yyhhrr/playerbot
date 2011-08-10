@@ -70,8 +70,6 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
     if (go && go->isSpawned())
     {
         uint32 lockId = go->GetGOInfo()->GetLockId();
-        this->guid = guid;
-
         LockEntry const *lockInfo = sLockStore.LookupEntry(lockId);
         if (!lockInfo)
             return;
@@ -82,7 +80,9 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
             {
             case LOCK_KEY_ITEM:
                 if (lockInfo->Index[i] > 0)
+                {
                     reqItem = lockInfo->Index[i];
+                }
                 break;
             case LOCK_KEY_SKILL:
                 if (SkillByLockType(LockType(lockInfo->Index[i])) > 0)
@@ -95,6 +95,7 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
                 break;
             }
         }
+        this->guid = guid;
     }
 }
 
