@@ -226,10 +226,10 @@ bool StoreLootAction::Execute(Event event)
         p.read_skip<uint32>();  // randomPropertyId
         p >> lootslot_type;     // 0 = can get, 1 = look only, 2 = master get
 
-        if (lootslot_type != 0 && loot_type != LOOT_SKINNING)
+        if (lootslot_type != LOOT_SLOT_NORMAL && lootslot_type != LOOT_SLOT_OWNER)
             continue;
 
-        if (!IsLootAllowed(itemid))
+        if (loot_type != LOOT_SKINNING && !IsLootAllowed(itemid))
             continue;
 
         WorldPacket* const packet = new WorldPacket(CMSG_AUTOSTORE_LOOT_ITEM, 1);
