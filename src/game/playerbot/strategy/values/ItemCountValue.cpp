@@ -100,14 +100,9 @@ list<Item*> InventoryItemValue::Calculate()
             result.push_back(item);
     }
 
-    ItemIds ids = InventoryAction::chat->parseItems(qualifier);
-    for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
-    {
-    	FindItemByIdVisitor visitor(*i);
-        Item* item = Find(visitor);
-        if (item)
-            result.push_back(item);
-    }
+    list<Item*> items = InventoryAction::parseItems(qualifier);
+    for (list<Item*>::iterator i = items.begin(); i != items.end(); i++)
+        result.push_back(*i);
 
     return result;
 }
