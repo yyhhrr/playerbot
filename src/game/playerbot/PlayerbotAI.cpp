@@ -380,13 +380,6 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
-
-    if (bot->IsUnderWater())
-    {
-        bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
-        bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_SWIM), true);
-        bot->SetSpeedRate(MOVE_SWIM, GetMaster()->GetSpeedRate(MOVE_SWIM), true);
-    }
 }
 
 void PlayerbotAI::ReInitCurrentEngine()
