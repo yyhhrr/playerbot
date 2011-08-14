@@ -47,6 +47,6 @@ bool TellCastFailedAction::Execute(Event event)
     default:
         out << "cannot cast";
     }
-    ai->TellMaster(out);
+    ai->TellMaster(LOG_LVL_DEBUG, out.str());
     return true;
 }

@@ -93,10 +93,10 @@ bool FleePoint::isReasonable()
 bool FleePoint::isBetterThan(FleePoint* other)
 {
     bool isFartherFromCreatures = (toCreatures.min - other->toCreatures.min) >= 1.0f;
-    bool isNearerToMeleePlayers = (toMeleePlayers.max - other->toMeleePlayers.max) <= 1.0f;
-    bool isFartherFromRangedPlayers = (toRangedPlayers.min - other->toRangedPlayers.min) >= 1.0f;
+    bool isNearerToRangedPlayers = (toRangedPlayers.max - other->toRangedPlayers.max) <= 1.0f;
+    bool isFartherFromMeleePlayers = (toMeleePlayers.min - other->toMeleePlayers.min) >= 1.0f;
 
-    return isFartherFromCreatures && (isNearerToMeleePlayers || isFartherFromRangedPlayers);
+    return isFartherFromCreatures && (isNearerToRangedPlayers || isFartherFromMeleePlayers);
 }
 
 FleePoint* FleeManager::selectOptimalDestination(list<FleePoint*> &points)

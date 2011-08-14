@@ -304,6 +304,8 @@ void PlayerbotAI::SpellInterrupted(uint32 spellid)
         SetNextCheckDelay(globalCooldown - castTimeSpent);
     else
         SetNextCheckDelay(0);
+
+    lastSpell.id = 0;
 }
 
 int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
@@ -820,7 +822,8 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     spell->prepare(&targets, false);
     bot->SetSelectionGuid(oldSel);
 
-    return true;
+    LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
+    return lastSpell.id == spellId;
 }
 
 void PlayerbotAI::InterruptSpell()
