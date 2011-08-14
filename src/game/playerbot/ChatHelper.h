@@ -16,7 +16,7 @@ namespace ai
         static string formatMoney(uint32 copper);
         static uint32 parseMoney(string& text);
         static ItemIds parseItems(string& text);
-        static SpellIds parseSpells(string& text);
+        uint32 parseSpell(string& text);
         static string formatQuest(Quest const* quest);
         static string formatItem(ItemPrototype const * proto, int count = 0);
         static string formatSpell(SpellEntry const *sInfo);

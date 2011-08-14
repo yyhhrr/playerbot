@@ -39,10 +39,10 @@ bool QueryItemUsageAction::Execute(Event event)
             return false;
 
         ostringstream out; out << chat->formatItem(item);
-        if (received)
-            out << " received";
         if (created)
             out << " created";
+        else if (received)
+            out << " received";
         ai->TellMaster(out);
 
         QueryItemUsage(item);

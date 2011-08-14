@@ -96,6 +96,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botOutgoingPacketHandlers.AddHandler(SMSG_QUESTUPDATE_ADD_KILL, "quest objective completed");
     botOutgoingPacketHandlers.AddHandler(SMSG_ITEM_PUSH_RESULT, "item push result");
     botOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
+    botOutgoingPacketHandlers.AddHandler(SMSG_CAST_FAILED, "cast failed");
 
     masterOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
 }
@@ -231,6 +232,20 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
             if (guid != bot->GetObjectGuid().GetRawValue())
                 return;
             bot->m_movementInfo.RemoveMovementFlag(MOVEFLAG_FLYING);
+            return;
+        }
+    case SMSG_CAST_FAILED:
+        {
+            WorldPacket p(packet);
+            p.rpos(0);
+            uint8 castCount, result;
+            uint32 spellId;
+            p >> castCount >> spellId >> result;
+            if (result != SPELL_CAST_OK)
+            {
+                SpellInterrupted(spellId);
+                botOutgoingPacketHandlers.AddPacket(packet);
+            }
             return;
         }
     case SMSG_SPELL_FAILURE:
@@ -786,10 +801,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!bot->isInFront(faceTo, sPlayerbotAIConfig.spellDistance))
         bot->SetFacingTo(bot->GetAngle(faceTo));
 
-    spell->prepare(&targets, false);
-
-    bot->SetSelectionGuid(oldSel);
-
     float castTime = GetSpellCastTime(pSpellInfo) + sPlayerbotAIConfig.reactDelay;
     if (IsChanneledSpell(pSpellInfo))
     {
@@ -805,6 +816,10 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         castTime = globalCooldown;
 
     SetNextCheckDelay(castTime);
+    
+    spell->prepare(&targets, false);
+    bot->SetSelectionGuid(oldSel);
+
     return true;
 }
 

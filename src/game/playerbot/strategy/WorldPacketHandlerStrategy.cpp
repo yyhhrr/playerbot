@@ -29,6 +29,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("tell cannot equip", relevance), NULL)));
 
     triggers.push_back(new TriggerNode(
+        "cast failed",
+        NextAction::array(0, new NextAction("tell cast failed", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "use game object",
         NextAction::array(0,
             new NextAction("add loot", relevance),

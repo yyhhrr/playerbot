@@ -30,6 +30,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( quest_objective_completed );
       CPPUNIT_TEST( party_command );
       CPPUNIT_TEST( taxi_done );
+      CPPUNIT_TEST( cast_failed );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -189,6 +190,14 @@ protected:
         tick();
 
         assertActions(">S:taxi");
+    }
+
+    void cast_failed()
+    {
+        trigger("cast failed");
+        tick();
+
+        assertActions(">S:tell cast failed");
     }
 
 };

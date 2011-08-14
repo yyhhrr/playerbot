@@ -228,39 +228,10 @@ string ChatHelper::formatChat(ChatMsg chat)
 }
 
 
-SpellIds ChatHelper::parseSpells(string& text)
+uint32 ChatHelper::parseSpell(string& text)
 {
-    SpellIds spells;
-
-    //   Link format
-    //   |cffffffff|Hspell:" << spellId << ":" << "|h[" << pSpellInfo->SpellName[loc] << "]|h|r";
-    //   cast |cff71d5ff|Hspell:686|h[Shadow Bolt]|h|r";
-    //   012345678901234567890123456
-    //        base = 16 >|  +7 >|
-
-    uint8 pos = 0;
-    while (true)
-    {
-        int i = text.find("Hspell:", pos);
-        if (i == -1)
-            break;
-
-        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - first pos %u i %u",pos,i);
-        pos = i + 7;     // start of window in text 16 + 7 = 23
-        int endPos = text.find('|', pos);
-        if (endPos == -1)
-            break;
-
-        // DEBUG_LOG("[PlayerbotAI]: extractSpellIdList - second endpos : %u pos : %u",endPos,pos);
-        std::string idC = text.substr(pos, endPos - pos);     // 26 - 23
-        uint32 spellId = atol(idC.c_str());
-        pos = endPos;     // end
-
-        if (spellId)
-            spells.insert(spellId);
-    }
-
-    return spells;
+    PlayerbotChatHandler handler(ai->GetMaster());
+    return handler.extractSpellId(text);
 }
 
 list<ObjectGuid> ChatHelper::parseGameobjects(string& text)

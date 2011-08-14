@@ -17,6 +17,7 @@
 #include "LootAction.h"
 #include "QuestAction.h"
 #include "LeaveGroupAction.h"
+#include "TellCastFailedAction.h"
 
 namespace ai
 {
@@ -47,9 +48,11 @@ namespace ai
             creators["tell out of react range"] = &WorldPacketActionContext::tell_out_of_react_range;
             creators["quest objective completed"] = &WorldPacketActionContext::quest_objective_completed;
             creators["party command"] = &WorldPacketActionContext::party_command;
+            creators["tell cast failed"] = &WorldPacketActionContext::tell_cast_failed;
         }
 
     private:
+        static Action* tell_cast_failed(PlayerbotAI* ai) { return new TellCastFailedAction(ai); }
         static Action* party_command(PlayerbotAI* ai) { return new PartyCommandAction(ai); }
         static Action* quest_objective_completed(PlayerbotAI* ai) { return new QuestObjectiveCompletedAction(ai); }
         static Action* store_loot(PlayerbotAI* ai) { return new StoreLootAction(ai); }

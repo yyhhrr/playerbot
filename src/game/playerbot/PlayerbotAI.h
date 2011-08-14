@@ -22,6 +22,11 @@ public:
     void sysmessage(string str) { SendSysMessage(str.c_str()); }
     bool dropQuest(string str) { return HandleQuestRemoveCommand((char*)str.c_str()); }
     uint32 extractQuestId(string str);
+    uint32 extractSpellId(string str) 
+    { 
+        char* source = (char*)str.c_str();
+        return ExtractSpellIdFromLink(&source); 
+    }
 };
 
 namespace ai

@@ -10,10 +10,10 @@ bool CastCustomSpellAction::Execute(Event event)
     Unit* target = targetGuid ? ai->GetUnit(targetGuid) : bot;
 
     string text = event.getParam();
-    SpellIds spells = chat->parseSpells(text);
+    uint32 spell = chat->parseSpell(text);
 
-    if (spells.empty())
-        return ai->CastSpell(text, target);
+    if (spell)
+        return ai->CastSpell(spell, target);
 
-    return ai->CastSpell(*spells.begin(), target);
+    return ai->CastSpell(text, target);
 }
