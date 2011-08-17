@@ -36,7 +36,3 @@ void ShamanNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multiplier
     CombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* ShamanNonCombatStrategy::GetAction(string name)
-{
-    return CombatStrategy::GetAction(name);
-}

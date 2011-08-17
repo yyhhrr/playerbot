@@ -4,6 +4,24 @@
 
 using namespace ai;
 
+
+class RacialsStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+{
+public:
+    RacialsStrategyActionNodeFactory()
+    {
+        creators["lifeblood"] = &lifeblood;
+    }
+private:
+    static ActionNode* lifeblood(PlayerbotAI* ai)
+    {
+        return new ActionNode ("lifeblood",  
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("gift of the naaru"), NULL), 
+            /*C*/ NULL);
+    }
+};
+
 void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
@@ -15,30 +33,7 @@ void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("arcane torrent", 55.0f), NULL)));
 }
 
-
-ActionNode* RacialsStrategy::GetAction(string name)
+RacialsStrategy::RacialsStrategy(PlayerbotAI* ai) : Strategy(ai)
 {
-	if (name == "lifeblood") 
-	{
-		return new ActionNode ("lifeblood",  
-			/*P*/ NULL,
-			/*A*/ NextAction::array(0, new NextAction("gift of the naaru"), NULL), 
-			/*C*/ NULL);
-	}
-	else if (name == "gift of the naaru") 
-	{
-		return new ActionNode ("gift of the naaru",  
-			/*P*/ NULL,
-			/*A*/ NULL, 
-			/*C*/ NULL);
-	}
-    else if (name == "arcane torrent") 
-    {
-        return new ActionNode ("arcane torrent",  
-            /*P*/ NULL,
-            /*A*/ NULL, 
-            /*C*/ NULL);
-    }
-	else return Strategy::GetAction(name);
+    actionNodeFactories.Add(new RacialsStrategyActionNodeFactory());
 }
-

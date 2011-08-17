@@ -22,14 +22,6 @@ namespace ai
             }
         }
 
-        virtual ActionNode* GetAction(string name)
-        {
-            return new ActionNode(name,  
-                /*P*/ NULL,
-                /*A*/ NULL, 
-                /*C*/ NULL);
-        }
-
     protected:
         list<string> supported;
         float relevance;

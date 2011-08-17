@@ -21,8 +21,3 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 		"crusader aura",
 		NextAction::array(0, new NextAction("crusader aura", 40.0f), NULL)));
 }
-
-ActionNode* GenericPaladinNonCombatStrategy::GetAction(string name)
-{
-    return GenericNonCombatStrategy::GetAction(name);
-}

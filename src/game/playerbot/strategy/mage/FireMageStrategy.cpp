@@ -28,12 +28,3 @@ void FireMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("flamestrike", 20.0f), NULL)));
 }
 
-void FireMageStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
-{
-    GenericMageStrategy::InitMultipliers(multipliers);
-}
-
-ActionNode* FireMageStrategy::GetAction(string name)
-{
-    return GenericMageStrategy::GetAction(name);
-}

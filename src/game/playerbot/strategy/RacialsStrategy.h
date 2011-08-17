@@ -7,12 +7,11 @@ namespace ai
     class RacialsStrategy : public Strategy
     {
     public:
-        RacialsStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+        RacialsStrategy(PlayerbotAI* ai);
         virtual string getName() { return "racials"; }
     
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual ActionNode* GetAction(string name);
     };
 
 }

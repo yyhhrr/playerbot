@@ -5,12 +5,3 @@
 
 using namespace ai;
 
-void GenericWarriorNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
-{
-    GenericNonCombatStrategy::InitTriggers(triggers);
-}
-
-ActionNode* GenericWarriorNonCombatStrategy::GetAction(string name)
-{
-    return GenericNonCombatStrategy::GetAction(name);
-}

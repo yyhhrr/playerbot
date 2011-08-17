@@ -41,13 +41,13 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 
     triggers.push_back(new TriggerNode(
         "mark of the wild",
-        NextAction::array(0, new NextAction("mark of the wild", 1.0f), NULL)));
+        NextAction::array(0, new NextAction("mark of the wild", 31.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "mark of the wild on party",
-        NextAction::array(0, new NextAction("mark of the wild on party", 1.0f), NULL)));
+        NextAction::array(0, new NextAction("mark of the wild on party", 31.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"party member dead",
-		NextAction::array(0, new NextAction("revive", 2.0f), NULL)));
+		NextAction::array(0, new NextAction("revive", 32.0f), NULL)));
 }

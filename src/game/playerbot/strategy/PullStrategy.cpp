@@ -50,14 +50,3 @@ void PullStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
     RangedCombatStrategy::InitMultipliers(multipliers);
 }
 
-ActionNode* PullStrategy::GetAction(string name)
-{
-    if (name == "end pull") 
-    {
-        return new ActionNode ("end pull",  
-            /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    else return RangedCombatStrategy::GetAction(name);
-}
