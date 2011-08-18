@@ -20,7 +20,9 @@ namespace ahbot
         string ExplainBuyPrice(ItemPrototype const* proto, uint32 auctionHouse);
 
     protected:
-        virtual uint32 GetDefaultPrice(ItemPrototype const* proto);
+        virtual uint32 GetDefaultBuyPrice(ItemPrototype const* proto);
+        virtual uint32 GetDefaultSellPrice(ItemPrototype const* proto);
+        virtual uint32 ApplyQualityMultiplier(ItemPrototype const* proto, uint32 price);
         virtual double GetCategoryPriceMultiplier(uint32 untilTime, uint32 auctionHouse);
         virtual double GetItemPriceMultiplier(ItemPrototype const* proto, uint32 untilTime, uint32 auctionHouse);
         virtual double GetRarityPriceMultiplier(ItemPrototype const* proto);

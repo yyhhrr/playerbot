@@ -14,7 +14,7 @@ uint32 PricingStrategy::GetSellPrice(ItemPrototype const* proto, uint32 auctionH
         GetCategoryPriceMultiplier(now, auctionHouse) *
         GetItemPriceMultiplier(proto, now, auctionHouse) *
         sAhBotConfig.GetSellPriceMultiplier(category->GetName()) * 
-        GetDefaultPrice(proto);
+        GetDefaultSellPrice(proto);
     return (uint32)price;
 }
 
@@ -26,7 +26,7 @@ uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHo
         GetCategoryPriceMultiplier(untilTime, auctionHouse) *
         GetItemPriceMultiplier(proto, untilTime, auctionHouse) *
         sAhBotConfig.GetBuyPriceMultiplier(category->GetName()) * 
-        GetDefaultPrice(proto);
+        GetDefaultBuyPrice(proto);
     return (uint32)price;
 }
 
@@ -38,7 +38,7 @@ string PricingStrategy::ExplainSellPrice(ItemPrototype const* proto, uint32 auct
         GetCategoryPriceMultiplier(untilTime, auctionHouse) << " * " << 
         GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " * " << 
         sAhBotConfig.GetSellPriceMultiplier(category->GetName()) << " * " << 
-        GetDefaultPrice(proto);
+        GetDefaultSellPrice(proto);
     return out.str();
 }
 
@@ -50,7 +50,7 @@ string PricingStrategy::ExplainBuyPrice(ItemPrototype const* proto, uint32 aucti
         GetCategoryPriceMultiplier(untilTime, auctionHouse) << " * " << 
         GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " * " << 
         sAhBotConfig.GetBuyPriceMultiplier(category->GetName()) << " * " << 
-        GetDefaultPrice(proto);
+        GetDefaultBuyPrice(proto);
     return out.str();
 }
 
@@ -139,20 +139,33 @@ double PricingStrategy::GetItemPriceMultiplier(ItemPrototype const* proto, uint3
     return result;
 }
 
-uint32 PricingStrategy::GetDefaultPrice(ItemPrototype const* proto)
+uint32 PricingStrategy::ApplyQualityMultiplier(ItemPrototype const* proto, uint32 price)
 {
-    uint32 buyPrice = proto->BuyPrice / 4;
-    uint32 sellPrice = proto->SellPrice;
-    uint32 defaultPrice = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
-    uint32 price = max(max(buyPrice, sellPrice), defaultPrice);
-
     if (proto->Quality == ITEM_QUALITY_POOR)
         return price;
 
     return (uint32)(price * sqrt((double)proto->Quality) * sAhBotConfig.priceQualityMultiplier);
 }
 
+uint32 PricingStrategy::GetDefaultBuyPrice(ItemPrototype const* proto)
+{
+    uint32 defaultPrice = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
+    uint32 buyPrice = proto->BuyPrice / 4;
+    if (!buyPrice)
+        buyPrice = defaultPrice;
 
+    uint32 sellPrice = proto->SellPrice;
+    if (!sellPrice)
+        sellPrice = defaultPrice;
+
+    uint32 price = (buyPrice + sellPrice + defaultPrice) / 3;
+    return ApplyQualityMultiplier(proto, price);
+}
+
+uint32 PricingStrategy::GetDefaultSellPrice(ItemPrototype const* proto)
+{
+    return GetDefaultBuyPrice(proto);
+}
 
 
 uint32 BuyOnlyRarePricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
