@@ -159,7 +159,7 @@ uint32 PricingStrategy::GetDefaultBuyPrice(ItemPrototype const* proto)
         sellPrice = defaultPrice;
 
     uint32 price = (buyPrice + sellPrice + defaultPrice) / 3;
-    return ApplyQualityMultiplier(proto, price);
+    return ApplyQualityMultiplier(proto, price) * sAhBotConfig.priceMultiplier;
 }
 
 uint32 PricingStrategy::GetDefaultSellPrice(ItemPrototype const* proto)
