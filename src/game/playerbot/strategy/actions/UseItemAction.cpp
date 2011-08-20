@@ -48,7 +48,7 @@ void UseItemAction::UseGameObject(ObjectGuid guid)
         return;
 
     go->Use(bot);
-    ostringstream out; out << "Used " << chat->formatGameobject(go);
+    ostringstream out; out << "Using " << chat->formatGameobject(go);
     ai->TellMaster(out);
 }
 
@@ -81,7 +81,7 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         << glyphIndex << unk_flags;
 
     bool targetSelected = false;
-    ostringstream out; out << "Used " << chat->formatItem(item->GetProto());
+    ostringstream out; out << "Using " << chat->formatItem(item->GetProto());
     if (goGuid)
     {
         GameObject* go = ai->GetGameObject(goGuid);
@@ -109,12 +109,6 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             }
         }
     }
-    if (!targetSelected)
-    {
-        *packet << TARGET_FLAG_SELF;
-        out << " on self";
-    }
-    ai->TellMaster(out);
 
     if(uint32 questid = item->GetProto()->StartQuest)
     {
@@ -138,6 +132,10 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         if (!spellId)
             continue;
 
+        const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+        if (!(pSpellInfo->Targets & TARGET_FLAG_ITEM))
+            continue;
+
         Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
         if (!itemForSpell)
             continue;
@@ -148,16 +146,26 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         if (bot->GetTrader())
         {
             *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
+            targetSelected = true;
+            out << " on traded item";
         }
         else
         {
             *packet << TARGET_FLAG_ITEM;
             *packet << itemForSpell->GetPackGUID();
+            targetSelected = true;
+            out << " on "<< chat->formatItem(itemForSpell->GetProto());
         }
-        bot->GetSession()->QueuePacket(packet);
-        return;
+        break;
+    }
+    
+    if (!targetSelected)
+    {
+        *packet << TARGET_FLAG_SELF;
+        out << " on self";
     }
 
+    ai->TellMaster(out);
     bot->GetSession()->QueuePacket(packet);
 }
 
