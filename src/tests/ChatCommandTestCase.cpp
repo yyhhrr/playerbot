@@ -232,6 +232,7 @@ protected:
     {
         assertParametrizedCommand("co", "?");
         assertParametrizedCommand("nc", "?");
+        assertParametrizedCommand("ds", "?");
     }
 
     void trainer()

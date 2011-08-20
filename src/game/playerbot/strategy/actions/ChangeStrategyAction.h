@@ -19,4 +19,12 @@ namespace ai
     public:
         virtual bool Execute(Event event);
     };
+
+    class ChangeDeadStrategyAction : public Action {
+    public:
+        ChangeDeadStrategyAction(PlayerbotAI* ai) : Action(ai, "ds") {}
+
+    public:
+        virtual bool Execute(Event event);
+    };
 }

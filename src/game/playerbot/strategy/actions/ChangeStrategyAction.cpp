@@ -17,3 +17,10 @@ bool ChangeNonCombatStrategyAction::Execute(Event event)
     ai->ChangeStrategy(text, BOT_STATE_NON_COMBAT);
     return true;
 }
+
+bool ChangeDeadStrategyAction::Execute(Event event)
+{
+    string text = event.getParam();
+    ai->ChangeStrategy(text, BOT_STATE_DEAD);
+    return true;
+}
