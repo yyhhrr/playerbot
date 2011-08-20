@@ -92,6 +92,11 @@ namespace ai
 		CastRevivePetAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "revive pet") {}
 	};
 
+    class CastTrueshotAuraAction : public CastBuffSpellAction {
+    public:
+        CastTrueshotAuraAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "trueshot aura") {}
+    };
+
 	class CastRapidFireAction : public CastBuffSpellAction {
 	public:
 		CastRapidFireAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "rapid fire") {}

@@ -29,10 +29,12 @@ protected:
 		engine->addStrategy("bspeed");
 
 		tick();
+        addAura("aspect of the pack");
+        tick();
 
 		tickWithAttackerCount(1);
         
-		assertActions(">S:aspect of the pack>S:aspect of the hawk");
+        assertActions(">S:aspect of the pack>S:trueshot aura>S:aspect of the hawk");
     }
 
     void summonPet()

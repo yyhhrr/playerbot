@@ -72,9 +72,11 @@ namespace ai
                 creators["rapid fire"] = &TriggerFactoryInternal::rapid_fire;
                 creators["aspect of the hawk"] = &TriggerFactoryInternal::aspect_of_the_hawk;
                 creators["aspect of the wild"] = &TriggerFactoryInternal::aspect_of_the_wild;
+                creators["trueshot aura"] = &TriggerFactoryInternal::trueshot_aura;
             }
 
         private:
+            static Trigger* trueshot_aura(PlayerbotAI* ai) { return new TrueshotAuraTrigger(ai); }
             static Trigger* aspect_of_the_viper(PlayerbotAI* ai) { return new HunterAspectOfTheViperTrigger(ai); }
             static Trigger* black_arrow(PlayerbotAI* ai) { return new BlackArrowTrigger(ai); }
             static Trigger* NoStings(PlayerbotAI* ai) { return new HunterNoStingsActiveTrigger(ai); }
@@ -129,9 +131,11 @@ namespace ai
                 creators["aspect of the viper"] = &AiObjectContextInternal::aspect_of_the_viper;
                 creators["aspect of the pack"] = &AiObjectContextInternal::aspect_of_the_pack;
                 creators["aspect of the cheetah"] = &AiObjectContextInternal::aspect_of_the_cheetah;
+                creators["trueshot aura"] = &AiObjectContextInternal::trueshot_aura;
             }
 
         private:
+            static Action* trueshot_aura(PlayerbotAI* ai) { return new CastTrueshotAuraAction(ai); }
             static Action* auto_shot(PlayerbotAI* ai) { return new CastAutoShotAction(ai); }
             static Action* aimed_shot(PlayerbotAI* ai) { return new CastAimedShotAction(ai); }
             static Action* explosive_shot(PlayerbotAI* ai) { return new CastExplosiveShotAction(ai); }

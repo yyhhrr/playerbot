@@ -81,4 +81,9 @@ namespace ai
         RapidFireTrigger(PlayerbotAI* ai) : BoostTrigger(ai, "rapid fire") {}
     };
     
+    class TrueshotAuraTrigger : public BuffTrigger
+    { 
+    public: 
+        TrueshotAuraTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "trueshot aura") {}
+    };
 }
