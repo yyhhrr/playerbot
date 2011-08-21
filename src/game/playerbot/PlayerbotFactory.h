@@ -20,6 +20,7 @@ private:
     void InitSkills();
     void SetRandomSkill(uint16 id);
     void InitSpells();
+    void InitTalents();
 
 private:
     Player* bot;

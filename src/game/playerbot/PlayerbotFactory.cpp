@@ -10,6 +10,11 @@ using namespace std;
 void PlayerbotFactory::Randomize()
 {
     bot->SetLevel(level);
+    bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
+    bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
+    bot->resetTalents(true, true);
+
+    InitTalents();
     InitSkills();
     InitSpells();
     InitEquipment();
@@ -203,5 +208,46 @@ void PlayerbotFactory::InitSpells()
             else
                 bot->learnSpell(tSpell->learnedSpell, false);
         }
+    }
+}
+
+void PlayerbotFactory::InitTalents()
+{
+    uint32 classMask = bot->getClassMask();
+    uint32 specNo = urand(0, 2);
+
+    for (uint32 i = 0; i < sTalentStore.GetNumRows() && bot->GetFreeTalentPoints(); ++i)
+    {
+        TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
+        if(!talentInfo)
+            continue;
+
+        TalentTabEntry const *talentTabInfo = sTalentTabStore.LookupEntry( talentInfo->TalentTab );
+        if(!talentTabInfo || talentTabInfo->tabpage != specNo)
+            continue;
+
+        if( (classMask & talentTabInfo->ClassMask) == 0 )
+            continue;
+
+        // search highest talent rank
+        uint32 spellid = 0;
+
+        for(int rank = urand(1, MAX_TALENT_RANK-1); rank >= 0; --rank)
+        {
+            if(talentInfo->RankID[rank]!=0)
+            {
+                spellid = talentInfo->RankID[rank];
+                break;
+            }
+        }
+
+        if(!spellid)                                        // ??? none spells in talent
+            continue;
+
+        SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellid);
+        if(!spellInfo || !SpellMgr::IsSpellValid(spellInfo, bot, false))
+            continue;
+
+        bot->learnSpellHighRank(spellid);
     }
 }
