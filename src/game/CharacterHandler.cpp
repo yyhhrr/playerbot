@@ -181,11 +181,17 @@ class CharacterHandler
             
             Player* master = masterSession->GetPlayer();
             PlayerbotMgr* mgr = master->GetPlayerbotMgr();
-            if (lqh->GetAccountId() == masterAccount ||
-                (sPlayerbotAIConfig.allowGuildBots && bot->GetGuildId() == master->GetGuildId()))
-            {
+
+            bool allowed = false;
+            if (lqh->GetAccountId() == masterAccount)
+                allowed = true;
+            else if (sPlayerbotAIConfig.allowGuildBots && bot->GetGuildId() == master->GetGuildId())
+                allowed = true;
+            else if (sPlayerbotAIConfig.IsInRandomAccountList(lqh->GetAccountId()))
+                allowed = true;
+
+            if (allowed)
                 mgr->OnBotLogin(bot);
-            }
             else
                 mgr->LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
         }

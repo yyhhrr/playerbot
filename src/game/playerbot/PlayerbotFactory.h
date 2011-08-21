@@ -11,6 +11,7 @@ class PlayerbotFactory
 public:
     PlayerbotFactory(Player* bot, uint32 level) : bot(bot), level(level) {}
 
+    static ObjectGuid GetRandomBot();
     void Randomize();
 
 private:

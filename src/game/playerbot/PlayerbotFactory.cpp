@@ -3,6 +3,8 @@
 #include "PlayerbotFactory.h"
 #include "../SQLStorages.h"
 #include "../ItemPrototype.h"
+#include "PlayerbotAIConfig.h"
+#include "../AccountMgr.h"
 
 using namespace ai;
 using namespace std;
@@ -250,4 +252,35 @@ void PlayerbotFactory::InitTalents()
 
         bot->learnSpellHighRank(spellid);
     }
+}
+
+ObjectGuid PlayerbotFactory::GetRandomBot()
+{
+    vector<ObjectGuid> guids;
+    for (list<uint32>::iterator i = sPlayerbotAIConfig.randomBotAccounts.begin(); i != sPlayerbotAIConfig.randomBotAccounts.end(); i++)
+    {
+        uint32 accountId = *i;
+        if (!sAccountMgr.GetCharactersCount(accountId))
+            continue;
+        
+        QueryResult *result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account = '%u'", accountId);
+        if (!result)
+            continue;
+
+        do
+        {
+            Field* fields = result->Fetch();
+            ObjectGuid guid = ObjectGuid(fields[0].GetUInt64());
+            if (!sObjectMgr.GetPlayer(guid))
+                guids.push_back(guid);
+        } while (result->NextRow());
+
+        delete result;
+    }
+
+    if (guids.empty())
+        return ObjectGuid();
+
+    int index = urand(0, guids.size() - 1);
+    return guids[index];
 }

@@ -162,7 +162,7 @@ void PlayerbotAI::HandleTeleportAck()
 
 void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 {
-    if (fromPlayer.GetGuildId() != bot->GetGuildId() || !bot->GetGuildId())
+    if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid())
         return;
 
     for (string::const_iterator i = text.begin(); i != text.end(); i++)

@@ -132,6 +132,14 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
+    uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
+    if (sPlayerbotAIConfig.IsInRandomAccountList(account) && bot->getLevel() != m_master->getLevel())
+    {
+        bot->RelocateToHomebind();
+        PlayerbotFactory factory(bot, m_master->getLevel());
+        factory.Randomize();
+    }
+
     ResetSharedAi();
 
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
@@ -223,8 +231,19 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         mgr = new PlayerbotMgr(player);
         player->SetPlayerbotMgr(mgr);
     }
+    
+    if (charnameStr == "?" && cmdStr == "add")
+    {
+        PSendSysMessage("Processing random bot...");
+        ObjectGuid guid = PlayerbotFactory::GetRandomBot();
+        if (guid)
+            mgr->AddPlayerBot(guid, m_session);
+        else
+            PSendSysMessage("No allowed random bots found");
 
-    if (charnameStr == "*")
+        PSendSysMessage("Command %s processed", cmdStr.c_str());
+    }
+    else if (charnameStr == "*")
     {
         Group* group = player->GetGroup();
         if (!group)

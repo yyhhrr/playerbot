@@ -1,6 +1,7 @@
 #include "../pchdef.h"
 #include "PlayerbotAIConfig.h"
 #include "Policies/SingletonImp.h"
+#include "playerbot.h"
 
 using namespace std;
 
@@ -33,7 +34,22 @@ bool PlayerbotAIConfig::Initialize()
     reactDistance = config.GetFloatDefault("AiPlayerbot.ReactDistance", 100.0f);
     grindDistance = config.GetFloatDefault("AiPlayerbot.GrindDistance", 50.0f);
     lootDistance = config.GetFloatDefault("AiPlayerbot.LootDistance", 20.0f);
+    string accountStr = config.GetStringDefault("AiPlayerbot.RandomBotAccounts", "");
+    vector<string> accounts = split(accountStr, ',');
+    for (vector<string>::iterator i = accounts.begin(); i != accounts.end(); i++)
+    {
+        uint32 id = atoi((*i).c_str());
+        if (!id)
+            continue;
+        randomBotAccounts.push_back(id);
+    }
 
     sLog.outString("AI Playerbot configuration loaded");
     return true;
+}
+
+
+bool PlayerbotAIConfig::IsInRandomAccountList(uint32 id)
+{
+    return find(randomBotAccounts.begin(), randomBotAccounts.end(), id) != randomBotAccounts.end();
 }
