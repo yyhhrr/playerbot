@@ -24,6 +24,7 @@ bool PlayerbotAIConfig::Initialize()
 	if (!enabled)
 		sLog.outString("AI Playerbot is Disabled in aiplayerbot.conf");
 
+    allowGuildBots = config.GetBoolDefault("AiPlayerbot.AllowGuildBots", true);
     globalCoolDown = (uint32) config.GetIntDefault("AiPlayerbot.GlobalCooldown", 1000);
     teleportDelay = config.GetIntDefault("AiPlayerbot.TeleportDelay", 10000);
     reactDelay = (uint32) config.GetIntDefault("AiPlayerbot.ReactDelay", 100);

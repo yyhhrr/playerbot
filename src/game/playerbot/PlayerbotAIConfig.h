@@ -15,6 +15,7 @@ public:
     bool Initialize();
 
     bool enabled;
+    bool allowGuildBots;
     uint32 globalCoolDown, reactDelay, teleportDelay;
     float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance;
 

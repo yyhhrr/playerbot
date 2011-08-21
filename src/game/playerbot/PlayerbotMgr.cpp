@@ -3,6 +3,7 @@
 #include "playerbot.h"
 #include "strategy/values/SharedValueContext.h"
 #include "PlayerbotAIConfig.h"
+#include "PlayerbotFactory.h"
 
 
 class LoginQueryHolder;
@@ -113,6 +114,16 @@ void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
     }
 }
 
+void PlayerbotMgr::RandomizePlayerBot(uint64 guid, uint32 level)
+{
+    Player* bot = GetPlayerBot(guid);
+    if (!bot)
+        return;
+
+    PlayerbotFactory factory(bot, level);
+    factory.Randomize();
+}
+
 Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 {
     PlayerBotMap::const_iterator it = m_playerBots.find(playerGuid);
@@ -157,6 +168,13 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 
         mgr->LogoutPlayerBot(guid.GetRawValue());
     }
+    else if (cmdStr == "init")
+    {
+        if (!mgr->GetPlayerBot(guid.GetRawValue()))
+            return false;
+
+        mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
+    }
 
     return true;
 }
@@ -179,7 +197,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 
     if (!*args)
     {
-        PSendSysMessage("usage: add PLAYERNAME  or  remove PLAYERNAME");
+        PSendSysMessage("usage: add/init/remove PLAYERNAME");
         SetSentErrorMessage(true);
         return false;
     }
@@ -188,7 +206,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     char *charname = strtok (NULL, " ");
     if (!cmd || !charname)
     {
-        PSendSysMessage("usage: add PLAYERNAME  or  remove PLAYERNAME");
+        PSendSysMessage("usage: add/init/remove PLAYERNAME");
         SetSentErrorMessage(true);
         return false;
     }
@@ -233,6 +251,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
                 res = false;
             }
         }
+        PSendSysMessage("Command %s processed", cmdStr.c_str());
         return res;
     }
 
@@ -253,6 +272,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
             SetSentErrorMessage(true);
         }
     }
+    PSendSysMessage("Command %s processed", cmdStr.c_str());
     return res;
 }
 

@@ -41,6 +41,7 @@
 
 // Playerbot mod:
 #include "playerbot/playerbot.h"
+#include "playerbot/PlayerbotAIConfig.h"
 
 // config option SkipCinematics supported values
 enum CinematicsSkipMode
@@ -175,14 +176,18 @@ class CharacterHandler
             botSession->m_Address = "bot";
             botSession->HandlePlayerLogin(lqh); // will delete lqh
             Player* bot = botSession->GetPlayer();
-            if (bot && bot->GetGuildId() == masterSession->GetPlayer()->GetGuildId())
+            if (!bot)
+                return;
+            
+            Player* master = masterSession->GetPlayer();
+            PlayerbotMgr* mgr = master->GetPlayerbotMgr();
+            if (lqh->GetAccountId() == masterAccount ||
+                (sPlayerbotAIConfig.allowGuildBots && bot->GetGuildId() == master->GetGuildId()))
             {
-                masterSession->GetPlayer()->GetPlayerbotMgr()->OnBotLogin(bot);
+                mgr->OnBotLogin(bot);
             }
             else
-            {
-                masterSession->GetPlayer()->GetPlayerbotMgr()->LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
-            }
+                mgr->LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
         }
 } chrHandler;
 

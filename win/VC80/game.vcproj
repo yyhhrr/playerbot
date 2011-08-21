@@ -1842,6 +1842,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\playerbot\PlayerbotFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\playerbot\PlayerbotFactory.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\playerbot\PlayerbotMgr.cpp"
 				>
 			</File>
