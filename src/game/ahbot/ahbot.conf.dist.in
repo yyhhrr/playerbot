@@ -12,17 +12,18 @@ ConfVersion=2010102201
 
 # Disable original AuctionHouseBot
 AuctionHouseBot.Seller.Enabled = 0
+AuctionHouseBot.Buyer.Enabled = 0
 
 # Replace with the new AhBot
 AhBot.Enabled = 1
 
 AhBot.Account = 6
 AhBot.GUID = 2
-AhBot.MaxItemLevel = 300
+AhBot.MaxItemLevel = 80
 
 
 
-AhBot.PriceMultiplier = 1.0
+AhBot.PriceMultiplier = 2.0
 AhBot.DefaultMinPrice = 20
 AhBot.PriceQualityMultiplier = 1.0
 AhBot.AlwaysAvailableMoney = 20000
@@ -54,7 +55,7 @@ AhBot.PricingStrategy.other = buyOnlyRare
 
 AhBot.MaxAuctionCount.quiver.white = 1
 AhBot.PriceMultiplier.Sell.quiver = 1.0
-AhBot.PriceMultiplier.Buy.quiver = 0.01
+AhBot.PriceMultiplier.Buy.quiver = 1.0
 AhBot.PricingStrategy.quiver = buyOnlyRare
 
 AhBot.MaxAuctionCount.container.white = 5
@@ -91,11 +92,11 @@ AhBot.PriceMultiplier.Buy.scroll = 1.0
 
 AhBot.MaxAuctionCount.Food.white = 12
 AhBot.PriceMultiplier.Sell.Food = 1.0
-AhBot.PriceMultiplier.Buy.Food = 0.5
+AhBot.PriceMultiplier.Buy.Food = 1.0
 
 AhBot.MaxAuctionCount.OtherConsumable.white = 3
 AhBot.PriceMultiplier.Sell.OtherConsumable = 1.0
-AhBot.PriceMultiplier.Buy.OtherConsumable = 0.25
+AhBot.PriceMultiplier.Buy.OtherConsumable = 1.0
 
 #
 # Recipe
@@ -164,4 +165,4 @@ AhBot.PriceMultiplier.Buy.Jems = 1.0
 
 AhBot.MaxAuctionCount.OtherTrade.white = 5
 AhBot.PriceMultiplier.Sell.OtherTrade = 2.0
-AhBot.PriceMultiplier.Buy.OtherTrade = 0.5
+AhBot.PriceMultiplier.Buy.OtherTrade = 1.0
