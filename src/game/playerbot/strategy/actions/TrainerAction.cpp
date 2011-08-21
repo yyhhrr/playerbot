@@ -36,7 +36,7 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds
         TrainerSpell const* tSpell = &itr->second;
 
         if (!tSpell)
-            break;
+            continue;
 
         if (!tSpell->learnedSpell && !bot->IsSpellFitByClassAndRace(tSpell->learnedSpell))
             continue;

@@ -174,5 +174,34 @@ void PlayerbotFactory::SetRandomSkill(uint16 id)
 
 void PlayerbotFactory::InitSpells()
 {
+    for (uint32 id = 0; id < sCreatureStorage.MaxEntry; ++id)
+    {
+        CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(id);
+        if (!co ||co->trainer_type != TRAINER_TYPE_CLASS || co->trainer_class != bot->getClass())
+            continue;
 
+        TrainerSpellData const* trainer_spells = sObjectMgr.GetNpcTrainerSpells(id);
+        if (!trainer_spells)
+            continue;
+
+        for (TrainerSpellMap::const_iterator itr =  trainer_spells->spellList.begin(); itr !=  trainer_spells->spellList.end(); ++itr)
+        {
+            TrainerSpell const* tSpell = &itr->second;
+
+            if (!tSpell)
+                continue;
+
+            if (!tSpell->learnedSpell && !bot->IsSpellFitByClassAndRace(tSpell->learnedSpell))
+                continue;
+
+            TrainerSpellState state = bot->GetTrainerSpellState(tSpell);
+            if (state != TRAINER_SPELL_GREEN)
+                continue;
+            
+            if (tSpell->IsCastable())
+                bot->CastSpell(bot, tSpell->spell, true);
+            else
+                bot->learnSpell(tSpell->learnedSpell, false);
+        }
+    }
 }
