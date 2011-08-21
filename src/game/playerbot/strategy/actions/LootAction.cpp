@@ -84,21 +84,17 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
         }
     }
 
-    switch (lootObject.skillId)
-    {
-    case SKILL_MINING:
+    if (lootObject.skillId == SKILL_MINING && bot->HasSkill(SKILL_MINING))
         return ai->CastSpell(MINING, bot);
-    case SKILL_HERBALISM:
+
+    if (lootObject.skillId == SKILL_HERBALISM && bot->HasSkill(SKILL_HERBALISM))
         return ai->CastSpell(HERB_GATHERING, bot);
-    default:
-        uint32 spellId = GetOpeningSpell(lootObject);
-        if (!spellId)
-            return false;
 
-        return ai->CastSpell(spellId, bot);
-    }
+    uint32 spellId = GetOpeningSpell(lootObject);
+    if (!spellId)
+        return false;
 
-    return false;
+    return ai->CastSpell(spellId, bot);
 }
 
 uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject)
@@ -119,6 +115,9 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
         if (itr->second.state == PLAYERSPELL_REMOVED || itr->second.disabled || IsPassiveSpell(spellId))
             continue;
 
+        if (spellId == MINING || spellId == HERB_GATHERING)
+            continue;
+
         const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
         if (!pSpellInfo)
             continue;
@@ -129,6 +128,9 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
 
     for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); spellId++)
     {
+        if (spellId == MINING || spellId == HERB_GATHERING)
+            continue;
+
         const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
         if (!pSpellInfo)
             continue;
