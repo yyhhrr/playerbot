@@ -54,6 +54,9 @@ vector<uint32> SuggestWhatToDoAction::GetIncompletedQuests()
 void SuggestWhatToDoAction::specificQuest()
 {
     vector<uint32> quests = GetIncompletedQuests();
+    if (quests.empty())
+        return;
+
     int index = rand() % quests.size();
 
     Quest const* quest = sObjectMgr.GetQuestTemplate(quests[index]);
