@@ -64,12 +64,13 @@ protected:
         tick(); 
         addAura("earthliving weapon");
 
-        tickWithAttackerCount(3);
-        tickWithAttackerCount(3);
-        tickWithAttackerCount(3);
-        tickWithAttackerCount(3);
+        engine->addStrategy("totems");
+        tick();
+        tick();
+        tick();
+        tick();
 
-        assertActions(">S:water shield>S:earthliving weapon>S:flametongue weapon>S:frostbrand weapon>S:rockbiter weapon>S:strength of earth totem>S:windfury totem>S:flametongue totem>S:mana spring totem");
+        assertActions(">S:water shield>S:earthliving weapon>S:flametongue weapon>S:frostbrand weapon>S:rockbiter weapon>S:mana spring totem>S:strength of earth totem>S:flametongue totem>S:windfury totem");
     }
 
     void interruptSpell() 

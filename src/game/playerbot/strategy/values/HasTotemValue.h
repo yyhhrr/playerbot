@@ -24,7 +24,7 @@ namespace ai
                 if (!creature || !creature->IsTotem())
                     continue;
 
-                if (!strstri(qualifier.c_str(), creature->GetName()))
+                if (strstri(creature->GetName(), qualifier.c_str()))
                     return true;
             }
 

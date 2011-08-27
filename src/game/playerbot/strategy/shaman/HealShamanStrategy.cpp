@@ -44,8 +44,4 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
         "water shield",
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "flametongue totem",
-        NextAction::array(0, new NextAction("flametongue totem", 17.0f), NULL)));
 }

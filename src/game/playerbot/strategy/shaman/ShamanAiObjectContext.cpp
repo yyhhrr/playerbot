@@ -7,6 +7,7 @@
 #include "MeleeShamanStrategy.h"
 #include "ShamanTriggers.h"
 #include "../NamedObjectContext.h"
+#include "TotemsShamanStrategy.h"
 
 using namespace ai;
 
@@ -24,10 +25,12 @@ namespace ai
             StrategyFactoryInternal()
             {
                 creators["nc"] = &shaman::StrategyFactoryInternal::nc;
+                creators["totems"] = &shaman::StrategyFactoryInternal::totems;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new ShamanNonCombatStrategy(ai); }
+            static Strategy* totems(PlayerbotAI* ai) { return new TotemsShamanStrategy(ai); }
         };
 
         class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>

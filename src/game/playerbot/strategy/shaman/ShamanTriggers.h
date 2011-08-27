@@ -11,7 +11,7 @@ namespace ai
 
     class TotemTrigger : public Trigger {
     public:
-        TotemTrigger(PlayerbotAI* ai, string spell, int attackerCount = 3) : Trigger(ai, spell), attackerCount(attackerCount) {}
+        TotemTrigger(PlayerbotAI* ai, string spell, int attackerCount = 0) : Trigger(ai, spell), attackerCount(attackerCount) {}
 
         virtual bool IsActive()
 		{
@@ -44,7 +44,7 @@ namespace ai
 
     class MagmaTotemTrigger : public TotemTrigger {
     public:
-        MagmaTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "magma totem") {}
+        MagmaTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "magma totem", 3) {}
     };
 
     class SearingTotemTrigger : public TotemTrigger {
