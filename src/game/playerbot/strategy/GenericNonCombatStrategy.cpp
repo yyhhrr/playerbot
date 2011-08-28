@@ -11,12 +11,12 @@ void UseFoodStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     Strategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "low health",
-        NextAction::array(0, new NextAction("food", 9.0f), NULL)));
+        "critical health",
+        NextAction::array(0, new NextAction("stay", 9.0f), new NextAction("food", 9.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "low mana",
-        NextAction::array(0, new NextAction("drink", 9.0f), NULL)));
+        NextAction::array(0, new NextAction("stay", 9.0f), new NextAction("drink", 9.0f), NULL)));
 }
 
 

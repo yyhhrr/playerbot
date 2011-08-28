@@ -38,11 +38,21 @@ protected:
         tick(); // shoot
 
         // heal if need
+        tickWithLowHealth(39); // shirld
+        tickWithLowHealth(39); // -shadowform
+        tickWithLowHealth(39); // greater heal
+
+        spellAvailable("power word: shield");
+        spellAvailable("greater heal");
+        addAura("shadowform");
         tickWithLowHealth(1); // shirld
         tickWithLowHealth(1); // -shadowform
         tickWithLowHealth(1); // greater heal
         
-        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:mind blast>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal");
+        tickWithLowHealth(1); 
+        tickWithLowHealth(1); 
+        
+        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:mind blast>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal>S:renew>S:greater heal");
     }
 };
 

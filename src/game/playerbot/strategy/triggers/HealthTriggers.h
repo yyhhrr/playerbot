@@ -31,7 +31,7 @@ namespace ai
 
     class LowHealthTrigger : public HealthInRangeTrigger {
     public:
-        LowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = 0) :
+        LowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = sPlayerbotAIConfig.criticalHealth) :
             HealthInRangeTrigger(ai, "low health", value, minValue) {}
 
 		virtual string GetTargetName() { return "self target"; }
@@ -53,7 +53,7 @@ namespace ai
     class PartyMemberLowHealthTrigger : public HealthInRangeTrigger
     {
     public:
-        PartyMemberLowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = 0) :
+        PartyMemberLowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = sPlayerbotAIConfig.criticalHealth) :
             HealthInRangeTrigger(ai, "party member low health", value, minValue) {}
 
         virtual string GetTargetName() { return "party member to heal"; }

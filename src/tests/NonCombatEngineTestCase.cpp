@@ -158,9 +158,11 @@ protected:
         set<uint8>("item count", "drink", 1);
 
 		tickWithLowHealth(1);
+        tickWithLowHealth(1);
 		tickWithLowMana(1);
+        tickWithLowMana(1);
 
-        assertActions(">S:food>S:drink");
+        assertActions(">S:stay>S:food>S:stay>S:drink");
     }
 
     void passive()

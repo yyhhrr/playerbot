@@ -28,7 +28,7 @@ private:
     {
         return new ActionNode ("lay on hands",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("divine shield"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("divine shield"), new NextAction("flash of light"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* seal_of_light(PlayerbotAI* ai)

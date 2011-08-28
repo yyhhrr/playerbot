@@ -94,8 +94,10 @@ protected:
 		spellAvailable("lay on hands");
 		tickWithPartyLowHealth(20);
         tickWithLowHealth(19);
+        spellAvailable("flash of light");
+        tickWithLowHealth(19);
 
-        assertActions(">S:flash of light>S:divine protection>S:holy light>S:lay on hands>P:lay on hands on party>S:divine shield");
+        assertActions(">S:flash of light>S:divine protection>S:holy light>S:lay on hands>P:lay on hands on party>S:divine shield>S:flash of light");
     }
 
     void paladinMustHoldAggro()

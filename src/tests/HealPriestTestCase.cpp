@@ -82,31 +82,40 @@ protected:
 
         addPartyAura("power word: fortitude");
 
-		tickWithLowHealth(1);
-
 		tickWithDeadPartyMember();
 
-		assertActions(">S:flash heal>P:resurrection");
+		assertActions(">P:resurrection");
     }
 
     void healOthers()
     {
         tick(); // shoot
 
-		tickWithPartyLowHealth(1);
-		tickWithPartyLowHealth(1);
-		tickWithPartyLowHealth(1);
-		tickWithPartyLowHealth(1);
-		tickWithPartyLowHealth(1);
+		tickWithPartyLowHealth(39);
+		tickWithPartyLowHealth(39);
+		tickWithPartyLowHealth(39);
+		tickWithPartyLowHealth(39);
+		tickWithPartyLowHealth(39);
+
+        spellAvailable("greater heal");
+        spellAvailable("renew");
+        spellAvailable("flash heal");
+        spellAvailable("lesser heal");
+        spellAvailable("power word: shield");
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
 
 		tickWithSpellAvailable("shoot");
 
+        spellAvailable("flash heal");
 		tickWithPartyLowHealth(59);
 
         tickWithSpellAvailable("shoot"); // shoot
 
 
-		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>T:shoot>P:flash heal on party>T:shoot");
+		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>P:power word: shield on party>P:flash heal on party>P:renew on party>P:greater heal on party>T:shoot>P:flash heal on party>T:shoot");
     }
 
     void buff()
