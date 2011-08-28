@@ -87,16 +87,15 @@ protected:
 		tickWithLowHealth(50);
 
 		tickWithLowHealth(30);
-		tickWithLowHealth(30);
-
-        tick();
+        tickWithLowHealth(30);
 
 		tickWithLowHealth(19);
 
 		spellAvailable("lay on hands");
 		tickWithPartyLowHealth(20);
+        tickWithLowHealth(19);
 
-		assertActions(">S:flash of light>S:divine shield>S:holy light>S:divine protection>S:lay on hands>P:lay on hands on party");
+        assertActions(">S:flash of light>S:divine protection>S:holy light>S:lay on hands>P:lay on hands on party>S:divine shield");
     }
 
     void paladinMustHoldAggro()

@@ -21,8 +21,16 @@ public:
         creators["flash of light"] = &flash_of_light;
         creators["flash of light on party"] = &flash_of_light_on_party;
         creators["holy wrath"] = &holy_wrath;
+        creators["lay on hands"] = &lay_on_hands;
     }
 private:
+    static ActionNode* lay_on_hands(PlayerbotAI* ai)
+    {
+        return new ActionNode ("lay on hands",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("divine shield"), NULL),
+            /*C*/ NULL);
+    }
     static ActionNode* seal_of_light(PlayerbotAI* ai)
     {
         return new ActionNode ("seal of light",
@@ -136,7 +144,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "low health",
-        NextAction::array(0, new NextAction("divine shield", 50.0f), new NextAction("holy light", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("divine protection", 51.0f), new NextAction("holy light", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "party member low health",

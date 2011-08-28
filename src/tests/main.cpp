@@ -83,6 +83,9 @@ int main()
   sPlayerbotAIConfig.reactDistance = 100.0f;
   sPlayerbotAIConfig.grindDistance = 50.0f;
   sPlayerbotAIConfig.lootDistance = 20.0f;
+  sPlayerbotAIConfig.criticalHealth = 25;
+  sPlayerbotAIConfig.lowHealth = 40;
+  sPlayerbotAIConfig.mediumHealth = 60;
 
   // Create the event manager and test controller
   CPPUNIT_NS::TestResult controller;

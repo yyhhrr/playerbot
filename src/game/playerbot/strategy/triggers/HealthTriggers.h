@@ -1,5 +1,6 @@
 #pragma once
 #include "../Trigger.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
@@ -30,7 +31,7 @@ namespace ai
 
     class LowHealthTrigger : public HealthInRangeTrigger {
     public:
-        LowHealthTrigger(PlayerbotAI* ai, float value = 40, float minValue = 0) :
+        LowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = 0) :
             HealthInRangeTrigger(ai, "low health", value, minValue) {}
 
 		virtual string GetTargetName() { return "self target"; }
@@ -39,19 +40,20 @@ namespace ai
     class CriticalHealthTrigger : public LowHealthTrigger
     {
     public:
-        CriticalHealthTrigger(PlayerbotAI* ai) : LowHealthTrigger(ai, 25) {}
+        CriticalHealthTrigger(PlayerbotAI* ai) : LowHealthTrigger(ai, sPlayerbotAIConfig.criticalHealth, 0) {}
     };
 
     class MediumHealthTrigger : public LowHealthTrigger
     {
     public:
-        MediumHealthTrigger(PlayerbotAI* ai) : LowHealthTrigger(ai, 60, 40) {}
+        MediumHealthTrigger(PlayerbotAI* ai) : 
+          LowHealthTrigger(ai, sPlayerbotAIConfig.mediumHealth, sPlayerbotAIConfig.lowHealth) {}
     };
 
     class PartyMemberLowHealthTrigger : public HealthInRangeTrigger
     {
     public:
-        PartyMemberLowHealthTrigger(PlayerbotAI* ai, float value = 40, float minValue = 0) :
+        PartyMemberLowHealthTrigger(PlayerbotAI* ai, float value = sPlayerbotAIConfig.lowHealth, float minValue = 0) :
             HealthInRangeTrigger(ai, "party member low health", value, minValue) {}
 
         virtual string GetTargetName() { return "party member to heal"; }
@@ -60,13 +62,15 @@ namespace ai
     class PartyMemberCriticalHealthTrigger : public PartyMemberLowHealthTrigger
     {
     public:
-        PartyMemberCriticalHealthTrigger(PlayerbotAI* ai) : PartyMemberLowHealthTrigger(ai, 25) {}
+        PartyMemberCriticalHealthTrigger(PlayerbotAI* ai) : 
+          PartyMemberLowHealthTrigger(ai, sPlayerbotAIConfig.criticalHealth, 0) {}
     };
 
     class PartyMemberMediumHealthTrigger : public PartyMemberLowHealthTrigger
     {
     public:
-        PartyMemberMediumHealthTrigger(PlayerbotAI* ai) : PartyMemberLowHealthTrigger(ai, 60, 40) {}
+        PartyMemberMediumHealthTrigger(PlayerbotAI* ai) : 
+          PartyMemberLowHealthTrigger(ai, sPlayerbotAIConfig.mediumHealth,sPlayerbotAIConfig.lowHealth) {}
     };
 
     class TargetLowHealthTrigger : public HealthInRangeTrigger {

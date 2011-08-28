@@ -20,6 +20,7 @@ public:
     uint32 globalCoolDown, reactDelay, teleportDelay;
     float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance;
     std::list<uint32> randomBotAccounts;
+    uint32 criticalHealth, lowHealth, mediumHealth;
 
 private:
     Config config;
