@@ -67,21 +67,47 @@ protected:
 
 		tick();
 
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
-        tickWithLowHealth(39);
 
-        assertActions(">T:faerie fire>S:barskin>S:caster form>S:regrowth>S:moonkin form>T:insect swarm>S:caster form>S:rejuvenation>S:healing touch");
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+
+        assertActions(">T:faerie fire>S:caster form>S:regrowth>S:healing touch>S:moonkin form>T:insect swarm>S:caster form>S:healing touch>S:rejuvenation>S:regrowth>S:healing touch");
     }
 
 	void healOthers()
     {
+        tick();
+        addAura("moonkin form");
+
         tickWithPartyLowHealth(59);
         tickWithPartyLowHealth(59);
+        tickWithPartyLowHealth(59);
+
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("dire bear form");
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
 
-        assertActions(">S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("moonkin form");
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+
+        assertActions(">T:faerie fire>S:caster form>P:regrowth on party>P:healing touch on party>S:caster form>P:healing touch on party>S:caster form>P:rejuvenation on party>P:regrowth on party");
     }
 
 	void curePoison()

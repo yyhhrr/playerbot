@@ -101,6 +101,10 @@ void CatDpsDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     FeralDruidStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
+        "party member medium health",
+        NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "enemy out of melee",
         NextAction::array(0, new NextAction("melee", 10.0f), NULL)));
 

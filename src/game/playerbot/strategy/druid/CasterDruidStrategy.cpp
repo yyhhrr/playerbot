@@ -108,6 +108,10 @@ void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericDruidStrategy::InitTriggers(triggers);
 
+    triggers.push_back(new TriggerNode(
+        "party member medium health",
+        NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
+
 	triggers.push_back(new TriggerNode(
 		"insect swarm",
 		NextAction::array(0, new NextAction("insect swarm", 15.0f), NULL)));

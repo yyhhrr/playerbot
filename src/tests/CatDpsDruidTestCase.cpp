@@ -56,11 +56,22 @@ protected:
 		addAura("cat form");
 		tick();
 
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
-        tickWithLowHealth(39);
 
-        assertActions(">T:rake>S:barskin>S:caster form>S:regrowth>S:cat form>T:mangle (cat)>S:caster form>S:rejuvenation>S:healing touch");
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+
+        assertActions(">T:rake>S:caster form>S:regrowth>S:healing touch>S:cat form>T:mangle (cat)>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:rejuvenation>S:regrowth>S:healing touch");
 	}
 
     void intensiveHealing()
@@ -70,14 +81,31 @@ protected:
 		assertActions(">S:survival instincts");
     }
 
-	void healOthers()
+    void healOthers()
     {
-		tickWithPartyLowHealth(59);
-		tickWithPartyLowHealth(59);
+        tickInMeleeRange();
+        addAura("cat form");
+
+        tickWithPartyLowHealth(59);
+        tickWithPartyLowHealth(59);
+        tickWithPartyLowHealth(59);
+
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("dire bear form");
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
 
-		assertActions(">S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("cat form");
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+
+        assertActions(">T:rake>S:caster form>P:regrowth on party>P:healing touch on party>S:caster form>P:healing touch on party>S:caster form>P:rejuvenation on party>P:regrowth on party");
     }
 
     void boost()

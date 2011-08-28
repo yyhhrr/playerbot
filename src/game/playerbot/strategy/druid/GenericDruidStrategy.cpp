@@ -53,7 +53,7 @@ private:
     {
         return new ActionNode ("regrowth",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("healing touch"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
     static ActionNode* rejuvenation(PlayerbotAI* ai)
@@ -74,7 +74,7 @@ private:
     {
         return new ActionNode ("regrowth on party",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("healing touch on party"), NULL),
             /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
     }
     static ActionNode* rejuvenation_on_party(PlayerbotAI* ai)
@@ -146,19 +146,23 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 	triggers.push_back(new TriggerNode(
 		"medium health",
-		NextAction::array(0, new NextAction("barskin", 50.0f), new NextAction("regrowth", 49.0f), NULL)));
+		NextAction::array(0, new NextAction("regrowth", 49.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "low health",
-        NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("healing touch", 69.0f), NULL)));
-
-	triggers.push_back(new TriggerNode(
-		"party member medium health",
-		NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("healing touch", 69.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "party member low health",
-        NextAction::array(0, new NextAction("rejuvenation on party", 70.0f), new NextAction("healing touch on party", 70.0f), NULL)));
+        NextAction::array(0, new NextAction("healing touch on party", 70.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "critical health",
+        NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("regrowth", 69.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member critical health",
+        NextAction::array(0, new NextAction("rejuvenation on party", 70.0f), new NextAction("regrowth on party", 69.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cure poison",

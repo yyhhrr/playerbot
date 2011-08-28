@@ -123,7 +123,6 @@ protected:
 
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
-		tickWithLowHealth(59);
 
         tick();
 		addAura("bear form");
@@ -131,9 +130,19 @@ protected:
 
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
-        tickWithLowHealth(39);
 
-        assertActions(">S:dire bear form>T:melee>T:lacerate>S:barskin>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:rejuvenation>S:healing touch");
+        addAura("bear form");
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+
+        assertActions(">S:dire bear form>T:melee>T:lacerate>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:caster form>S:rejuvenation>S:regrowth>S:healing touch");
     }
 
     void intensiveHealing()
@@ -148,13 +157,23 @@ protected:
     {
         tick();
         addAura("dire bear form");
-
-		tickWithPartyLowHealth(59);
-		tickWithPartyLowHealth(59);
+        
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("dire bear form");
         tickWithPartyLowHealth(39);
         tickWithPartyLowHealth(39);
+        
+        spellAvailable("healing touch");
+        spellAvailable("regrowth");
+        spellAvailable("rejuvenation");
+        addAura("dire bear form");
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
+        tickWithPartyLowHealth(1);
 
-		assertActions(">S:dire bear form>S:caster form>P:regrowth on party>P:rejuvenation on party>P:healing touch on party");
+		assertActions(">S:dire bear form>S:caster form>P:healing touch on party>S:caster form>P:rejuvenation on party>P:regrowth on party");
     }
     void curePoison()
     {

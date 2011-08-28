@@ -21,7 +21,7 @@ private:
     {
         return new ActionNode ("survival instincts",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("rejuvenation"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("barskin"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* thorns(PlayerbotAI* ai)
