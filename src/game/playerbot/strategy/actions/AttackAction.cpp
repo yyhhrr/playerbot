@@ -43,7 +43,7 @@ bool AttackAction::Attack(Unit* target)
     }
     if (!bot->IsWithinLOSInMap(target))
     {
-        ai->TellMaster("Target is not in my sight");
+        ai->TellMaster(LOG_LVL_DEBUG, "Target is not in my sight");
         return false;
     }
 

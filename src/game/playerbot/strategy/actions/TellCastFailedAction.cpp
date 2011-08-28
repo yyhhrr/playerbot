@@ -47,6 +47,7 @@ bool TellCastFailedAction::Execute(Event event)
     default:
         out << "cannot cast";
     }
-    ai->TellMaster(LOG_LVL_DEBUG, out.str());
+    int32 castTime = GetSpellCastTime(pSpellInfo);
+    ai->TellMaster(castTime < 2000 ? LOG_LVL_DEBUG : LOG_LVL_BASIC, out.str());
     return true;
 }

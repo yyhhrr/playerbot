@@ -24,13 +24,16 @@ namespace ai
 
         virtual bool Execute(Event event)
         {
-            ai->TellMaster("Wait for me!");
-
             bool canFollow = Follow(AI_VALUE(Unit*, "master target"));
             if (!canFollow)
-                ai->SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
-
-            return canFollow;
+            {
+                ai->TellMaster("I am stuck here!");
+                ai->SetNextCheckDelay(5000);
+                return false;
+            }
+            
+            ai->TellMaster("Wait for me!");
+            return true;
         }
    };
 }
