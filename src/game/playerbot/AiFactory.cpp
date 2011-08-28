@@ -12,6 +12,7 @@
 #include "strategy/druid/DruidAiObjectContext.h"
 #include "strategy/hunter/HunterAiObjectContext.h"
 #include "strategy/rogue/RogueAiObjectContext.h"
+#include "../Player.h"
 
 
 AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* ai)
@@ -51,36 +52,68 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
 
 void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 {
+    map<uint32, int32> tabs;
+    for (uint32 i = 0; i < uint32(3); i++)
+        tabs[i] = 0;
+
+    uint8 activeSpec = player->GetActiveSpec();
+    PlayerTalentMap talents = player->GetTalentMap(activeSpec);
+    for (PlayerTalentMap::iterator iter = talents.begin(); iter != talents.end(); ++iter)
+    {
+        if (iter->second.state == PLAYERSPELL_REMOVED)
+            continue;
+
+        TalentEntry const* talentInfo = iter->second.talentEntry;
+        if (!talentInfo)
+            continue;
+
+        TalentTabEntry const* talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
+        if (!talentTabInfo)
+            continue;
+
+        if ((player->getClassMask() & talentTabInfo->ClassMask) == 0)
+            continue;
+
+        tabs[talentTabInfo->tabpage]++;
+    }
+    int tab = -1, max = 0;
+    for (uint32 i = 0; i < uint32(3); i++)
+    {
+        if (tab == -1 || max < tabs[i])
+        {
+            tab = i;
+            max = tabs[i];
+        }
+    }
+    
     switch (player->getClass()){
         case CLASS_PRIEST:
-            engine->addStrategies("heal", "attack weak", NULL);
+            engine->addStrategy(tab == 2 ? "dps" : "heal");
             break;
         case CLASS_MAGE:
-            engine->addStrategies("frost", "attack weak", NULL);
-            break;
-        case CLASS_WARLOCK:
-            engine->addStrategies("dps", "attack weak", NULL);
+            engine->addStrategy(tab == 1 ? "fire" : "frost");
             break;
         case CLASS_WARRIOR:
-            engine->addStrategies("tank", "attack weak", NULL);
+            engine->addStrategy(tab == 2 ? "tank" : "dps");
             break;
         case CLASS_SHAMAN:
-            engine->addStrategies("heal", "attack weak", NULL);
+            engine->addStrategy(tab == 2 ? "heal" : "dps");
             break;
         case CLASS_PALADIN:
-            engine->addStrategies("tank", "attack weak", "barmor", NULL);
+            engine->addStrategy(tab == 1 ? "tank" : "dps");
+            engine->addStrategy("barmor");
             break;
         case CLASS_DRUID:
-            engine->addStrategies("bear", "attack weak", NULL);
+            engine->addStrategy(tab == 0 ? "caster" : "bear");
             break;
         case CLASS_HUNTER:
-            engine->addStrategies("dps", "attack weak", "bdps", NULL);
-            break;
+            engine->addStrategy("bdps");
         case CLASS_ROGUE:
-            engine->addStrategies("dps", "attack weak", NULL);
+        case CLASS_WARLOCK:
+            engine->addStrategy("dps");
             break;
     }
-    engine->addStrategies("racials", "chat", "world packet", NULL);
+    engine->addStrategies("attack weak", "racials", "chat", "world packet", NULL);
 }
 
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
@@ -92,35 +125,14 @@ Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade,
 void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
 {
     switch (player->getClass()){
-        case CLASS_PRIEST:
-            nonCombatEngine->addStrategy("attack weak");
-            break;
-        case CLASS_MAGE:
-            nonCombatEngine->addStrategy("attack weak");
-            break;
-        case CLASS_WARLOCK:
-            nonCombatEngine->addStrategy("attack weak");
-            break;
-        case CLASS_WARRIOR:
-            nonCombatEngine->addStrategy("attack weak");
-            break;
-        case CLASS_SHAMAN:
-            nonCombatEngine->addStrategy("attack weak");
-            break;
         case CLASS_PALADIN:
-            nonCombatEngine->addStrategies("attack weak", "bmana", NULL);
-            break;
-        case CLASS_DRUID:
-            nonCombatEngine->addStrategy("attack weak");
+            nonCombatEngine->addStrategy("bmana");
             break;
         case CLASS_HUNTER:
-            nonCombatEngine->addStrategies("attack weak", "bspeed", NULL);
-            break;
-        case CLASS_ROGUE:
-            nonCombatEngine->addStrategy("attack weak");
+            nonCombatEngine->addStrategy("bspeed");
             break;
     }
-    nonCombatEngine->addStrategies("nc", "emote", "food", "stay", "chat", "world packet", "quest", "loot", "gather", NULL);
+    nonCombatEngine->addStrategies("nc", "attack weak", "emote", "food", "stay", "chat", "world packet", "quest", "loot", "gather", NULL);
 }
 
 Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
