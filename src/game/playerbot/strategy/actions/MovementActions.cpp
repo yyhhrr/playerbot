@@ -183,12 +183,12 @@ void MovementAction::WaitForReach(float distance)
 bool MovementAction::Flee(Unit *target)
 {
     if (!target)
-        return false;
+        target = master;
 
     if (!IsMovingAllowed())
         return false;
 
-    FleeManager manager(bot, sPlayerbotAIConfig.spellDistance, GetFollowAngle());
+    FleeManager manager(bot, sPlayerbotAIConfig.fleeDistance, GetFollowAngle());
 
     float rx, ry, rz;
     if (!manager.CalculateDestination(&rx, &ry, &rz))

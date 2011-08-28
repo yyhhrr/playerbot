@@ -34,6 +34,7 @@ bool PlayerbotAIConfig::Initialize()
     reactDistance = config.GetFloatDefault("AiPlayerbot.ReactDistance", 100.0f);
     grindDistance = config.GetFloatDefault("AiPlayerbot.GrindDistance", 50.0f);
     lootDistance = config.GetFloatDefault("AiPlayerbot.LootDistance", 20.0f);
+    fleeDistance = config.GetFloatDefault("AiPlayerbot.FleeDistance", 15.0f);
     
     criticalHealth = config.GetIntDefault("AiPlayerbot.CriticalHealth", 30);
     lowHealth = config.GetIntDefault("AiPlayerbot.LowHealth", 50);

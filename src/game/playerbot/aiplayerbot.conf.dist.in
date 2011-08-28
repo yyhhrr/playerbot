@@ -38,6 +38,10 @@ ConfVersion=2010102201
 #        Distance to game objects, targets, etc. bot can interact to while grinding
 #    Default 35
 #
+#    AiPlayerbot.FleeDistance
+#        Distance to flee from or master when in danger
+#    Default 15
+#
 #    AiPlayerbot.RandomBotAccounts
 #        Comma-separated list of accounts where random bots are created
 #    Default <empty>
@@ -74,6 +78,7 @@ AiPlayerbot.SightDistance=35
 AiPlayerbot.SpellDistance=25
 AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
+AiPlayerbot.FleeDistance=15
 
 AiPlayerbot.CriticalHealth=30
 AiPlayerbot.LowHealth=50

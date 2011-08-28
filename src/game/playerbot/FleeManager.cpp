@@ -57,7 +57,7 @@ void FleeManager::calculatePossibleDestinations(list<FleePoint*> &points)
 	float botPosY = bot->GetPositionY();
 	float botPosZ = bot->GetPositionZ();
 
-	for (float radius = maxAllowedDistance; radius>=20.0f; radius -= 10.0f)
+	for (float radius = maxAllowedDistance; radius>=5.0f; radius -= 5.0f)
     {
 		for (float angle = -M_PI + followAngle; angle < M_PI + followAngle; angle += M_PI / 8)
         {
@@ -105,7 +105,7 @@ FleePoint* FleeManager::selectOptimalDestination(list<FleePoint*> &points)
 	for (list<FleePoint*>::iterator i = points.begin(); i != points.end(); i++)
     {
 		FleePoint* point = *i;
-		if (point->isReasonable() && (!selected || point->isBetterThan(selected)))
+		if (!selected || point->isBetterThan(selected))
 			selected = point;
 	}
 	return selected;
