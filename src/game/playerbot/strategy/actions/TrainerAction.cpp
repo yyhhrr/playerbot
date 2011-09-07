@@ -93,7 +93,9 @@ bool TrainerAction::Execute(Event event)
     }
 
     uint32 spell = chat->parseSpell(text);
-    SpellIds spells; spells.insert(spell);
+    SpellIds spells; 
+    if (spell)
+        spells.insert(spell);
 
     if (text == "learn")
         List(creature, &TrainerAction::Learn, spells);
