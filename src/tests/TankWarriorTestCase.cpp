@@ -59,6 +59,7 @@ protected:
         removeAura("battle shout");
 
         tickInSpellRange(); // battle shout
+        addAura("battle shout");
 
         tickInSpellRange(); // defensive stance
         tickInSpellRange(); // reach melee

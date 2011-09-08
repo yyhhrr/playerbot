@@ -61,24 +61,7 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return false;
 
-    float bx = bot->GetPositionX();
-    float by = bot->GetPositionY();
-    float bz = bot->GetPositionZ();
-
-    float tx = target->GetPositionX();
-    float ty = target->GetPositionY();
-    float tz = target->GetPositionZ();
-
-    float distanceToTarget = bot->GetDistance(target);
-
-    float angle = bot->GetAngle(target);
-
-    float destinationDistance = distanceToTarget - distance;
-    float dx = cos(angle) * destinationDistance + bx;
-    float dy = sin(angle) * destinationDistance + by;
-
-    bot->UpdateGroundPositionZ(dx, dy, tz);
-    return MoveTo(target->GetMapId(), dx, dy, tz);
+    return Follow(target, distance, GetFollowAngle());
 }
 
 float MovementAction::GetFollowAngle()
@@ -177,7 +160,7 @@ void MovementAction::WaitForReach(float distance)
     if (delay > 5000)
         delay = 5000;
 
-    bot->GetPlayerbotAI()->SetNextCheckDelay((uint32)delay);
+    ai->SetNextCheckDelay((uint32)delay);
 }
 
 bool MovementAction::Flee(Unit *target)
