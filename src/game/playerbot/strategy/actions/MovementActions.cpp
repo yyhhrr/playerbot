@@ -61,7 +61,26 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return false;
 
-    return Follow(target, distance, GetFollowAngle());
+    float bx = bot->GetPositionX();
+    float by = bot->GetPositionY();
+    float bz = bot->GetPositionZ();
+
+    float tx = target->GetPositionX();
+    float ty = target->GetPositionY();
+    float tz = target->GetPositionZ();
+
+    float distanceToTarget = bot->GetDistance(target);
+    float maxDistance = /*1.0f * */bot->GetSpeed(MOVE_RUN);
+    if (distanceToTarget > maxDistance)
+        distanceToTarget = maxDistance;
+
+    float angle = bot->GetAngle(target);
+
+    float destinationDistance = distanceToTarget - distance;
+    float dx = cos(angle) * destinationDistance + bx;
+    float dy = sin(angle) * destinationDistance + by;
+
+    return MoveTo(target->GetMapId(), dx, dy, tz);
 }
 
 float MovementAction::GetFollowAngle()
@@ -93,7 +112,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     float distance = bot->GetDistance(target);
 
-    if (distance < ATTACK_DISTANCE && distance > CONTACT_DISTANCE)
+    if (distance < CONTACT_DISTANCE * 2)
         return false;
 
     if (distance > sPlayerbotAIConfig.reactDistance)
