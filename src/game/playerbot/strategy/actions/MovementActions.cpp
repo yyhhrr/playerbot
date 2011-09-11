@@ -70,15 +70,17 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     float tz = target->GetPositionZ();
 
     float distanceToTarget = bot->GetDistance(target);
-    float maxDistance = /*1.0f * */bot->GetSpeed(MOVE_RUN);
-    if (distanceToTarget > maxDistance)
-        distanceToTarget = maxDistance;
-
     float angle = bot->GetAngle(target);
+    float needToGo = distanceToTarget - distance;
+    
+    float maxDistance = /*1.0f * */bot->GetSpeed(MOVE_RUN);
+    if (needToGo > 0 && needToGo > maxDistance)
+        distanceToTarget = maxDistance;
+    else if (needToGo < 0 && needToGo < -maxDistance)
+        distanceToTarget = -maxDistance;
 
-    float destinationDistance = distanceToTarget - distance;
-    float dx = cos(angle) * destinationDistance + bx;
-    float dy = sin(angle) * destinationDistance + by;
+    float dx = cos(angle) * needToGo + bx;
+    float dy = sin(angle) * needToGo + by;
 
     return MoveTo(target->GetMapId(), dx, dy, tz);
 }
