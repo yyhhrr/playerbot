@@ -80,6 +80,20 @@ namespace ahbot
         {
             return 5;
         }
+        
+        virtual int32 GetStackCount(ItemPrototype const* proto)
+        {
+            if (proto->Quality > ITEM_QUALITY_UNCOMMON)
+                return 1;
+
+            int maxStackSize = proto->GetMaxStackSize();
+            if (proto->Quality == ITEM_QUALITY_UNCOMMON && maxStackSize > 10)
+                maxStackSize = urand(1, 10);
+            else if (maxStackSize > 20)
+                maxStackSize = urand(1, 20);
+
+            return urand(1, maxStackSize);
+        }
     };
 
     class Trade : public Category

@@ -75,9 +75,9 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     
     float maxDistance = /*1.0f * */bot->GetSpeed(MOVE_RUN);
     if (needToGo > 0 && needToGo > maxDistance)
-        distanceToTarget = maxDistance;
+        needToGo = maxDistance;
     else if (needToGo < 0 && needToGo < -maxDistance)
-        distanceToTarget = -maxDistance;
+        needToGo = -maxDistance;
 
     float dx = cos(angle) * needToGo + bx;
     float dy = sin(angle) * needToGo + by;
@@ -129,11 +129,12 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
 bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
-    if (bot->GetDistance(x, y, z) > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "Cannot move: not allowed");
+    float distance = bot->GetDistance(x, y, z);
+    if (distance > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
         return false;
-    }
+    
+    if (distance < CONTACT_DISTANCE * 2)
+        return false;
 
     return IsMovingAllowed();
 }
