@@ -1574,6 +1574,8 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 59870:                                 // Glare of the Tribunal (h) (Halls of Stone)
                 case 64218:                                 // Overcharge
                 case 68950:                                 // Fear
+                case 68912:                                 // Wailing Souls (FoS)
+                case 69048:                                 // Mirrored Soul (FoS)
                     unMaxTargets = 1;
                     break;
                 case 28542:                                 // Life Drain
@@ -3608,6 +3610,11 @@ void Spell::finish(bool ok)
     // Stop Attack for some spells
     if( m_spellInfo->Attributes & SPELL_ATTR_STOP_ATTACK_TARGET )
         m_caster->AttackStop();
+
+    // update encounter state if needed
+    Map *map = m_caster->GetMap();
+    if (map->IsDungeon())
+        ((DungeonMap*)map)->GetPersistanceState()->UpdateEncounterState(ENCOUNTER_CREDIT_CAST_SPELL, m_spellInfo->Id);
 }
 
 void Spell::SendCastResult(SpellCastResult result)
