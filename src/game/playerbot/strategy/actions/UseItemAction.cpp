@@ -15,13 +15,13 @@ bool UseItemAction::Execute(Event event)
 
     if (gos.empty() && items.empty())
     {
-        ai->TellMaster("Nothing to use");
+        ai->TellMaster(LOG_LVL_DEBUG, "Nothing to use");
         return false;
     }
 
     if (gos.size() > 1 || items.size() > 1)
     {
-        ai->TellMaster("I can use only one item or game object a time");
+        ai->TellMaster(LOG_LVL_DEBUG, "I can use only one item or game object a time");
         return false;
     }
 
