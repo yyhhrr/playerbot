@@ -85,10 +85,6 @@ ActionNode* Strategy::GetAction(string name)
 
 void CombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
 {
-    triggers.push_back(new TriggerNode(
-        "panic",
-        NextAction::array(0, new NextAction("healthstone", 100.0f), NULL)));
-
 }
 
 void MeleeCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
@@ -103,4 +99,11 @@ void RangedCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "enemy out of spell",
         NextAction::array(0, new NextAction("reach spell", 10.0f), NULL)));
+}
+
+void FleeStrategy::InitTriggers(list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "panic",
+        NextAction::array(0, new NextAction("flee", 100.0f), NULL)));
 }

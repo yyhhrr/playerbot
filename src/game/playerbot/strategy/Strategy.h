@@ -58,4 +58,12 @@ namespace ai
         RangedCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
+
+    class FleeStrategy : public Strategy
+    {
+    public:
+        FleeStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
+        virtual string getName() { return "flee"; };
+    };
 }

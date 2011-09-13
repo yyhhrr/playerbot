@@ -9,7 +9,6 @@ using namespace ai;
 class GenericTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( GenericTestCase );
-    CPPUNIT_TEST( healthstone );
 	CPPUNIT_TEST( flee );
     CPPUNIT_TEST_SUITE_END();
 
@@ -17,20 +16,10 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(new DruidAiObjectContext(ai), "bear", NULL);
+		setupEngine(new DruidAiObjectContext(ai), "bear", "flee", NULL);
     }
 
 protected:
-    void healthstone()
-    {
-		itemAvailable("healthstone", 1);
-
-		lowHealth(1);
-		lowMana(1);
-        tick();
-
-        assertActions(">S:healthstone");
-    }
 	void flee()
 	{
 	    list<Item*> items;

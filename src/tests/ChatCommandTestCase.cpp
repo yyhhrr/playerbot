@@ -54,6 +54,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( grind );
       CPPUNIT_TEST( talk );
       CPPUNIT_TEST( cast );
+      CPPUNIT_TEST( invite );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -340,6 +341,13 @@ protected:
         trigger("cast");
         tick();
         assertActions(">S:cast custom spell");
+    }
+
+    void invite()
+    {
+        trigger("invite");
+        tick();
+        assertActions(">S:invite");
     }
 };
 

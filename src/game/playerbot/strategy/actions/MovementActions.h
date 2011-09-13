@@ -40,7 +40,6 @@ namespace ai
 		}
 
         virtual bool Execute(Event event);
-        virtual bool isUseful() { return bot->isInCombat(); }
 
 	private:
 		float distance;

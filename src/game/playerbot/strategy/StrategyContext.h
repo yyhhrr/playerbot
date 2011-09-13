@@ -25,9 +25,11 @@ namespace ai
             creators["chat"] = &StrategyContext::chat;
             creators["world packet"] = &StrategyContext::world_packet;
             creators["dead"] = &StrategyContext::dead;
+            creators["flee"] = &StrategyContext::flee;
         }
 
     private:
+        static Strategy* flee(PlayerbotAI* ai) { return new FleeStrategy(ai); }
         static Strategy* dead(PlayerbotAI* ai) { return new DeadStrategy(ai); }
         static Strategy* racials(PlayerbotAI* ai) { return new RacialsStrategy(ai); }
         static Strategy* loot(PlayerbotAI* ai) { return new LootNonCombatStrategy(ai); }

@@ -2924,6 +2924,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\game\playerbot\strategy\actions\InviteToGroupAction.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\game\playerbot\strategy\actions\LeaveGroupAction.h"
 						>
 					</File>
