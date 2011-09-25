@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "PartyMemberToHeal.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -37,14 +38,14 @@ Unit* PartyMemberToHeal::Calculate()
             continue;
 
         uint8 health = player->GetHealthPercent();
-        if (health < 25 || !IsTargetOfSpellCast(player, predicate))
+        if (health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
             calc.probe(health, player);
 
         Pet* pet = player->GetPet();
         if (pet && CanHealPet(pet)) 
         {
             health = pet->GetHealthPercent();
-            if (health < 25 || !IsTargetOfSpellCast(player, predicate))
+            if (health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
                 calc.probe(health, player);
         }
     }
