@@ -11,6 +11,7 @@ class HealPriestTestCase : public EngineTestBase
     CPPUNIT_TEST_SUITE( HealPriestTestCase );
     CPPUNIT_TEST( healHimself );
     CPPUNIT_TEST( healOthers );
+    CPPUNIT_TEST( aoe_heal );
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( nonCombat );
     CPPUNIT_TEST( dispel );
@@ -116,6 +117,14 @@ protected:
 
 
 		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>P:power word: shield on party>P:flash heal on party>P:renew on party>P:greater heal on party>T:shoot>P:flash heal on party>T:shoot");
+    }
+
+    void aoe_heal()
+    {
+        tickWithAoeHeal("medium");
+        tickWithAoeHeal("medium");
+
+        assertActions(">P:circle of healing>P:flash heal on party");
     }
 
     void buff()

@@ -23,6 +23,7 @@ public:
         creators["lesser heal on party"] = &lesser_heal_on_party;
         creators["flash heal"] = &flash_heal;
         creators["flash heal on party"] = &flash_heal_on_party;
+        creators["circle of healing"] = &circle_of_healing;
     }
 private:
     static ActionNode* holy_nova(PlayerbotAI* ai)
@@ -114,6 +115,13 @@ private:
         return new ActionNode ("flash heal on party",
             /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
             /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* circle_of_healing(PlayerbotAI* ai)
+    {
+        return new ActionNode ("circle of healing",
+            /*P*/ NextAction::array(0, new NextAction("remove shadowform"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("flash heal on party"), NULL),
             /*C*/ NULL);
     }
 };

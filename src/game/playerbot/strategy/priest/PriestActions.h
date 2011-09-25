@@ -208,4 +208,10 @@ namespace ai
 		CastResurrectionAction(PlayerbotAI* ai) : ResurrectPartyMemberAction(ai, "resurrection") {}
 	};
 
+	class CastCircleOfHealingAction : public CastAoeHealSpellAction
+	{
+	public:
+		CastCircleOfHealingAction(PlayerbotAI* ai) : CastAoeHealSpellAction(ai, "circle of healing") {}
+	};
+
 }
