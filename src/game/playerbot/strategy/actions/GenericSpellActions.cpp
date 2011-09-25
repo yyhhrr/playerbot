@@ -35,6 +35,11 @@ bool CastHealingSpellAction::isUseful()
 	return CastSpellAction::isUseful() && AI_VALUE2(uint8, "health", GetTargetName()) < (100 - estAmount);
 }
 
+bool CastAoeHealSpellAction::isUseful()
+{
+	return CastSpellAction::isUseful() && AI_VALUE2(uint8, "aoe heal", "medium") > 0;
+}
+
 
 Value<Unit*>* CurePartyMemberAction::GetTargetValue()
 {

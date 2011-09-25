@@ -130,6 +130,7 @@ namespace ai
 
             creators["possible targets"] = &MockValueContext::units;
             creators["has totem"] = &MockValueContext::logical;
+            creators["aoe heal"] = &MockValueContext::stats;
         }
 
     private:
@@ -191,6 +192,10 @@ namespace ai
               list<Item*> items; items.push_back((Item*)(void*)0x01);
               GetValue<list<Item*> >("inventory items", "drink")->Set(items);
               GetValue<list<Item*> >("inventory items", "food")->Set(items);
+
+              GetValue<uint8>("aoe heal", "low")->Set(0);
+              GetValue<uint8>("aoe heal", "medium")->Set(0);
+              GetValue<uint8>("aoe heal", "critical")->Set(0);
           }
 
     public:

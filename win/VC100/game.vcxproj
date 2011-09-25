@@ -476,6 +476,7 @@
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAI.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIBase.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotAIConfig.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotFactory.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotMgr.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Action.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\ActionBasket.cpp" />
@@ -528,6 +529,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellCastFailedAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellItemCountAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellLosAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellReputationAction.cpp" />
@@ -608,6 +610,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\ShamanTriggers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\TotemsShamanStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Strategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Trigger.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\CureTriggers.cpp" />
@@ -615,6 +618,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\HealthTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\triggers\LootTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Value.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\AoeHealValues.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\AttackerCountValues.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\AttackersValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\CcTargetValue.cpp" />
@@ -828,6 +832,7 @@
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIBase.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotAIConfig.h" />
     <ClInclude Include="..\..\src\game\playerbot\playerbotDefs.h" />
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotFactory.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Action.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ActionBasket.h" />
@@ -889,6 +894,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TalkToQuestGiverAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TaxiAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TeleportAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellCastFailedAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellItemCountAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellLosAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellMasterAction.h" />
@@ -982,6 +988,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanMultipliers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\ShamanTriggers.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\TotemsShamanStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Strategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\StrategyContext.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Trigger.h" />
@@ -998,6 +1005,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\triggers\WorldPacketTriggerContext.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Value.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\AlwaysLootListValue.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\AoeHealValues.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\AttackerCountValues.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\AttackersValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\AvailableLootValue.h" />

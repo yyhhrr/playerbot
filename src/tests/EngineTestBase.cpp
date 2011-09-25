@@ -264,6 +264,15 @@ void EngineTestBase::tickWithPartyLowHealth(int amount)
     set<uint8>("health", "party member to heal", 100);
 }
 
+void EngineTestBase::tickWithAoeHeal(string type, int amount)
+{
+    set<uint8>("health", "party member to heal", 45);
+	set<uint8>("aoe heal", "medium", amount);
+	tick();
+	set<uint8>("aoe heal", "medium", 0);
+    set<uint8>("health", "party member to heal", 100);
+}
+
 void EngineTestBase::tickWithAuraToDispel(uint32 type)
 {
 	ai->dispels[MockedTargets::GetSelf()] = type;

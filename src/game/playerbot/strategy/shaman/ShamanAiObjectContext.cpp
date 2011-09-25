@@ -136,7 +136,6 @@ namespace ai
                 creators["earth shield on party"] = &AiObjectContextInternal::earth_shield_on_party;
                 creators["chain heal"] = &AiObjectContextInternal::chain_heal;
                 creators["riptide"] = &AiObjectContextInternal::riptide;
-                creators["chain heal on party"] = &AiObjectContextInternal::chain_heal_on_party;
                 creators["riptide on party"] = &AiObjectContextInternal::riptide_on_party;
                 creators["stormstrike"] = &AiObjectContextInternal::stormstrike;
                 creators["lava lash"] = &AiObjectContextInternal::lava_lash;
@@ -179,7 +178,6 @@ namespace ai
             static Action* earth_shield_on_party(PlayerbotAI* ai) { return new CastEarthShieldOnPartyAction(ai); }
             static Action* chain_heal(PlayerbotAI* ai) { return new CastChainHealAction(ai); }
             static Action* riptide(PlayerbotAI* ai) { return new CastRiptideAction(ai); }
-            static Action* chain_heal_on_party(PlayerbotAI* ai) { return new CastChainHealOnPartyAction(ai); }
             static Action* riptide_on_party(PlayerbotAI* ai) { return new CastRiptideOnPartyAction(ai); }
             static Action* stormstrike(PlayerbotAI* ai) { return new CastStormstrikeAction(ai); }
             static Action* lava_lash(PlayerbotAI* ai) { return new CastLavaLashAction(ai); }

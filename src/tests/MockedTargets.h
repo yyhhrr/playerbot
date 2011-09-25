@@ -17,6 +17,7 @@ namespace ai
         static Player* GetCc() { return (Player*)12; }
 		static Player* GetLineTarget() { return (Player*)14; }
 		static Unit* GetLeastHpTarget() { return (Unit*)15; }
+		static Unit* GetLeastHpPartyMember() { return (Unit*)16; }
 
         static void Append(string &buffer, Unit* unit)
         {

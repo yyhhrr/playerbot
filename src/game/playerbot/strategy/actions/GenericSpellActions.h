@@ -127,6 +127,14 @@ namespace ai
         uint8 estAmount;
     };
 
+    class CastAoeHealSpellAction : public CastHealingSpellAction
+    {
+    public:
+    	CastAoeHealSpellAction(PlayerbotAI* ai, string spell, uint8 estAmount = 15.0f) : CastHealingSpellAction(ai, spell, estAmount) {}
+		virtual string GetTargetName() { return "party member to heal"; }
+        virtual bool isUseful();
+    };
+
 	class CastCureSpellAction : public CastSpellAction
 	{
 	public:

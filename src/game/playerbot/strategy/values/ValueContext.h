@@ -38,6 +38,7 @@
 #include "ChatValue.h"
 #include "HasTotemValue.h"
 #include "LeastHpTargetValue.h"
+#include "AoeHealValues.h"
 
 namespace ai
 {
@@ -99,9 +100,13 @@ namespace ai
             creators["last spell cast"] = &ValueContext::last_spell_cast;
             creators["chat"] = &ValueContext::chat;
             creators["has totem"] = &ValueContext::has_totem;
+
+            creators["aoe heal"] = &ValueContext::aoe_heal;
         }
 
     private:
+        static UntypedValue* aoe_heal(PlayerbotAI* ai) { return new AoeHealValue(ai); }
+
         static UntypedValue* chat(PlayerbotAI* ai) { return new ChatValue(ai); }
         static UntypedValue* last_spell_cast(PlayerbotAI* ai) { return new LastSpellCastValue(ai); }
         static UntypedValue* spell_cast_useful(PlayerbotAI* ai) { return new SpellCastUsefulValue(ai); }

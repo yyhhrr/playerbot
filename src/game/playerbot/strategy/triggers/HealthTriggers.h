@@ -100,4 +100,16 @@ namespace ai
         virtual bool IsActive();
     };
 
+    class AoeHealTrigger : public Trigger {
+    public:
+    	AoeHealTrigger(PlayerbotAI* ai, string name, string type, int count) :
+    		Trigger(ai, name), type(type), count(count) {}
+    public:
+        virtual bool IsActive();
+
+    protected:
+        int count;
+        string type;
+    };
+
 }

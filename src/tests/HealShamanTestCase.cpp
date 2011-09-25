@@ -11,6 +11,7 @@ class HealShamanTestCase : public EngineTestBase
     CPPUNIT_TEST_SUITE( HealShamanTestCase );
     CPPUNIT_TEST( healHimself );
     CPPUNIT_TEST( healOthers );
+    CPPUNIT_TEST( aoe_heal );
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( interruptSpell );
 	CPPUNIT_TEST( dispel );
@@ -29,7 +30,6 @@ public:
 protected:
     void healHimself()
     {
-		tickWithLowHealth(45);
         tickWithLowHealth(45);
 		tickWithLowHealth(35);
         tickWithLowHealth(35);
@@ -37,17 +37,24 @@ protected:
         tick();
         tickInMeleeRange();
 
-        assertActions(">S:chain heal>S:lesser healing wave>S:riptide>S:healing wave>T:reach melee>T:melee");
+        assertActions(">S:lesser healing wave>S:riptide>S:healing wave>T:reach melee>T:melee");
     }
 
     void healOthers()
     {
         tickWithPartyLowHealth(45);
-        tickWithPartyLowHealth(45);
         tickWithPartyLowHealth(35);
 		tickWithPartyLowHealth(35);
 
-        assertActions(">P:chain heal on party>P:lesser healing wave on party>P:riptide on party>P:healing wave on party");
+        assertActions(">P:lesser healing wave on party>P:riptide on party>P:healing wave on party");
+    }
+
+    void aoe_heal()
+    {
+        tickWithAoeHeal("medium");
+        tickWithAoeHeal("medium");
+
+        assertActions(">P:chain heal>P:lesser healing wave on party");
     }
 
     void buff()
