@@ -272,9 +272,9 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 updateFlags) const
         // Unit speeds
         *data << float(unit->GetSpeed(MOVE_WALK));
         *data << float(unit->GetSpeed(MOVE_RUN));
-        *data << float(unit->GetSpeed(MOVE_SWIM_BACK));
-        *data << float(unit->GetSpeed(MOVE_SWIM));
         *data << float(unit->GetSpeed(MOVE_RUN_BACK));
+        *data << float(unit->GetSpeed(MOVE_SWIM));
+        *data << float(unit->GetSpeed(MOVE_SWIM_BACK));
         *data << float(unit->GetSpeed(MOVE_FLIGHT));
         *data << float(unit->GetSpeed(MOVE_FLIGHT_BACK));
         *data << float(unit->GetSpeed(MOVE_TURN_RATE));
@@ -407,7 +407,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 updateFlags) const
     // 0x200
     if(updateFlags & UPDATEFLAG_ROTATION)
     {
-        *data << int64(((GameObject*)this)->GetRotation());
+        *data << int64(((GameObject*)this)->GetPackedWorldRotation());
     }
 }
 
