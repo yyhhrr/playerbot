@@ -35,6 +35,10 @@ class MANGOS_DLL_SPEC PlayerbotMgr : public PlayerbotAIBase
         void SaveToDB();
         void ResetSharedAi();
 
+        bool ProcessBot(string name, string cmdStr);
+        uint32 GetAccountId(string name);
+
+
     private:
         Player* const m_master;
         PlayerBotMap m_playerBots;

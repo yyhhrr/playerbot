@@ -4,6 +4,7 @@
 #include "strategy/values/SharedValueContext.h"
 #include "PlayerbotAIConfig.h"
 #include "PlayerbotFactory.h"
+#include "../AccountMgr.h"
 
 
 class LoginQueryHolder;
@@ -279,20 +280,69 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     for (vector<string>::iterator i = chars.begin(); i != chars.end(); i++)
     {
         string s = *i;
-        ObjectGuid member = sObjectMgr.GetPlayerGuidByName(s);
-        if (member == m_session->GetPlayer()->GetObjectGuid())
-            continue;
-
         PSendSysMessage("Processing bot %s...", s.c_str());
-        res &= processBotCommand(m_session, cmdStr, member);
-        if (!res)
+
+        uint32 accountId = mgr->GetAccountId(s);
+        if (accountId)
         {
-            PSendSysMessage("Error processing bot command for %s", s.c_str());
-            SetSentErrorMessage(true);
+            QueryResult* results = CharacterDatabase.PQuery(
+                "SELECT name FROM characters WHERE account = '%u'",
+                accountId);
+            if (results)
+            {
+                do
+                {
+                    Field* fields = results->Fetch();
+                    string charName = fields[0].GetCppString();
+                    res &= mgr->ProcessBot(charName, cmdStr);
+					if (!res)
+					{
+						PSendSysMessage("Error processing bot command for %s", charName.c_str());
+						SetSentErrorMessage(true);
+					}
+
+                } while (results->NextRow());
+
+                delete results;
+            }
         }
-    }
+
+        res &= mgr->ProcessBot(s, cmdStr);
+    
+		if (!res)
+		{
+			PSendSysMessage("Error processing bot command for %s", s.c_str());
+			SetSentErrorMessage(true);
+		}
+	}
+
     PSendSysMessage("Command %s processed", cmdStr.c_str());
     return res;
+}
+
+uint32 PlayerbotMgr::GetAccountId(string name)
+{
+    uint32 accountId = 0;
+
+    QueryResult *results = LoginDatabase.PQuery("SELECT id FROM account WHERE username = '%s'", name.c_str());
+    if(results)
+    {
+        Field* fields = results->Fetch();
+        accountId = fields[0].GetUInt32();
+        delete results;
+    }
+
+    return accountId;
+}
+
+bool PlayerbotMgr::ProcessBot(string name, string cmdStr)
+{
+    ObjectGuid member = sObjectMgr.GetPlayerGuidByName(name);
+	if (member != GetMaster()->GetObjectGuid())
+    {
+		return processBotCommand(GetMaster()->GetSession(), cmdStr, member);
+    }
+    return false;
 }
 
 void PlayerbotMgr::SaveToDB()

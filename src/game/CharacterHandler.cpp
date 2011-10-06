@@ -193,7 +193,11 @@ class CharacterHandler
             if (allowed)
                 mgr->OnBotLogin(bot);
             else
+            {
+                ChatHandler ch(masterSession);
+                ch.PSendSysMessage("You are not allowed to control bot %s...", bot->GetName());
                 mgr->LogoutPlayerBot(bot->GetObjectGuid().GetRawValue());
+            }
         }
 } chrHandler;
 
