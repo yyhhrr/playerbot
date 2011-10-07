@@ -14,11 +14,10 @@ void PlayerbotFactory::Randomize()
     bot->SetLevel(level);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
-    bot->resetTalents(true, true);
 
-    InitTalents();
-    InitSkills();
-    InitSpells();
+    //InitTalents();
+    //InitSkills();
+    //InitSpells();
     InitEquipment();
     
     //bot->SaveToDB();
@@ -80,11 +79,11 @@ bool PlayerbotFactory::EquipItem(uint8 slot)
         if (proto->Duration & 0x80000000)
             continue;
 
-        if (proto->Quality < ITEM_QUALITY_UNCOMMON || proto->Quality > ITEM_QUALITY_EPIC)
+        if (proto->Quality != ITEM_QUALITY_RARE)
             continue;
 
         uint32 requiredLevel = proto->RequiredLevel;
-        if (requiredLevel && (requiredLevel > level || requiredLevel < level - 10))
+        if (!requiredLevel || (requiredLevel > level || requiredLevel < level - 5))
             continue;
 
         uint16 dest = 0;
@@ -215,6 +214,8 @@ void PlayerbotFactory::InitSpells()
 
 void PlayerbotFactory::InitTalents()
 {
+    bot->resetTalents(true, true);
+
     uint32 classMask = bot->getClassMask();
     uint32 specNo = urand(0, 2);
 
