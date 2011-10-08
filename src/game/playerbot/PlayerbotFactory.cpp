@@ -16,8 +16,8 @@ void PlayerbotFactory::Randomize()
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 
     //InitTalents();
-    //InitSkills();
-    //InitSpells();
+    InitSkills();
+    InitSpells();
     InitEquipment();
     
     //bot->SaveToDB();

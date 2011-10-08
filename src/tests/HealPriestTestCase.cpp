@@ -138,19 +138,24 @@ protected:
         removePartyAura("power word: fortitude");
         removePartyAura("divine spirit");
 
-        tick(); // power word: fortitude
-        addAura("power word: fortitude");
+        tick();
+        addAura("divine spirit");
 
-        tickWithSpellAvailable("power word: fortitude"); // power word: fortitude on party
+        tick();
+        addAura("power word: fortutude");
+
+        tickWithSpellAvailable("divine spirit");
+        addPartyAura("divine spirit");
 
         tick(); // inner fire
 
-        tick(); // divine spirit
-        addAura("divine spirit");
+        tick();
+        addAura("power word: fortitude");
 
-		tickWithSpellAvailable("divine spirit");
+        tickWithSpellAvailable("power word: fortitude");
+        addPartyAura("power word: fortitude");
 
-		assertActions(">S:power word: fortitude>S:divine spirit>S:inner fire>P:power word: fortitude on party>P:divine spirit on party");
+		assertActions(">S:divine spirit>S:power word: fortitude>P:divine spirit on party>S:inner fire>P:power word: fortitude on party");
     }
 
     void fade()

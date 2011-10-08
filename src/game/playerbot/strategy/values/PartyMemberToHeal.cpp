@@ -30,6 +30,7 @@ Unit* PartyMemberToHeal::Calculate()
     if (!group)
         return NULL;
 
+    bool isRaid = bot->GetGroup()->isRaidGroup();
     MinValueCalculator calc(100);
     for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
     {
@@ -38,14 +39,14 @@ Unit* PartyMemberToHeal::Calculate()
             continue;
 
         uint8 health = player->GetHealthPercent();
-        if (health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
+        if (isRaid || health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
             calc.probe(health, player);
 
         Pet* pet = player->GetPet();
         if (pet && CanHealPet(pet)) 
         {
             health = pet->GetHealthPercent();
-            if (health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
+            if (isRaid || health < sPlayerbotAIConfig.mediumHealth || !IsTargetOfSpellCast(player, predicate))
                 calc.probe(health, player);
         }
     }
@@ -54,6 +55,5 @@ Unit* PartyMemberToHeal::Calculate()
 
 bool PartyMemberToHeal::CanHealPet(Pet* pet) 
 {
-    PetType type = pet->getPetType();
-    return type != SUMMON_PET && type != MINI_PET;
+    return HUNTER_PET ==  pet->getPetType();
 }

@@ -145,15 +145,15 @@ void HealPriestNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers
 
     triggers.push_back(new TriggerNode(
         "divine spirit",
-        NextAction::array(0, new NextAction("divine spirit", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("divine spirit", 22.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "divine spirit on party",
-        NextAction::array(0, new NextAction("divine spirit on party", 20.0f), NULL)));
+        NextAction::array(0, new NextAction("divine spirit on party", 21.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "inner fire",
-        NextAction::array(0, new NextAction("inner fire", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("inner fire", 19.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "low health",
