@@ -18,6 +18,7 @@
 #include "QuestAction.h"
 #include "LeaveGroupAction.h"
 #include "TellCastFailedAction.h"
+#include "AcceptDuelAction.h"
 
 namespace ai
 {
@@ -49,9 +50,11 @@ namespace ai
             creators["quest objective completed"] = &WorldPacketActionContext::quest_objective_completed;
             creators["party command"] = &WorldPacketActionContext::party_command;
             creators["tell cast failed"] = &WorldPacketActionContext::tell_cast_failed;
+            creators["accept duel"] = &WorldPacketActionContext::accept_duel;
         }
 
     private:
+        static Action* accept_duel(PlayerbotAI* ai) { return new AcceptDuelAction(ai); }
         static Action* tell_cast_failed(PlayerbotAI* ai) { return new TellCastFailedAction(ai); }
         static Action* party_command(PlayerbotAI* ai) { return new PartyCommandAction(ai); }
         static Action* quest_objective_completed(PlayerbotAI* ai) { return new QuestObjectiveCompletedAction(ai); }

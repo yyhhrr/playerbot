@@ -34,9 +34,11 @@ namespace ai
             creators["party command"] = &WorldPacketTriggerContext::party_command;
             creators["taxi done"] = &WorldPacketTriggerContext::taxi_done;
             creators["cast failed"] = &WorldPacketTriggerContext::cast_failed;
+            creators["duel requested"] = &WorldPacketTriggerContext::duel_requested;
         }
 
     private:
+        static Trigger* duel_requested(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "duel requested"); }
         static Trigger* cast_failed(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "cast failed"); }
         static Trigger* taxi_done(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "taxi done"); }
         static Trigger* party_command(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "party command"); }

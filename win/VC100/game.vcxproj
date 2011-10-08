@@ -552,6 +552,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\DuelStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Engine.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Event.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.cpp" />
@@ -836,6 +837,7 @@
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Action.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ActionBasket.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AcceptDuelAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AcceptInvitationAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AcceptQuestAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AcceptResurrectAction.h" />
@@ -923,6 +925,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\DuelStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Engine.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Event.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ExternalEventHelper.h" />

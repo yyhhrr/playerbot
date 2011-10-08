@@ -97,6 +97,7 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     botOutgoingPacketHandlers.AddHandler(SMSG_ITEM_PUSH_RESULT, "item push result");
     botOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
     botOutgoingPacketHandlers.AddHandler(SMSG_CAST_FAILED, "cast failed");
+    botOutgoingPacketHandlers.AddHandler(SMSG_DUEL_REQUESTED, "duel requested");
 
     masterOutgoingPacketHandlers.AddHandler(SMSG_PARTY_COMMAND_RESULT, "party command");
 }
@@ -347,7 +348,14 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
     }
 
     Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
-    if (target && target->isAlive() && target->IsHostileTo(bot))
+    if (bot->duel && !target) {
+        Player* target = bot->duel->opponent;
+
+        aiObjectContext->GetValue<Unit*>("current target")->Set(target);
+        bot->SetSelectionGuid(target->GetObjectGuid());
+        ChangeEngine(BOT_STATE_COMBAT);
+    }
+    else if (target && target->isAlive() && target->IsHostileTo(bot))
     {
         ChangeEngine(BOT_STATE_COMBAT);
     }
