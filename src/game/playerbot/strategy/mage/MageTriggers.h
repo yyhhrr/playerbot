@@ -22,6 +22,11 @@ namespace ai
         PyroblastTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "pyroblast") {}
     };
 
+    class HotStreakTrigger : public HasAuraTrigger {
+    public:
+        HotStreakTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "hot streak") {}
+    };
+
     class CounterspellInterruptSpellTrigger : public InterruptSpellTrigger
     {
     public:

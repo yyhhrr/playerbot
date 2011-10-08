@@ -44,7 +44,11 @@ protected:
 
 		tickWithLowHealth(19);
 
-		assertActions(">T:pyroblast>T:fireball>T:fire blast>T:scorch>T:frost nova>S:flee>T:fire blast>T:scorch>T:shoot>S:ice block");
+		addAura("hot streak");
+		spellAvailable("pyroblast");
+		tick();
+
+		assertActions(">T:pyroblast>T:fireball>T:fire blast>T:scorch>T:frost nova>S:flee>T:fire blast>T:scorch>T:shoot>S:ice block>T:pyroblast");
 	}
 
     void boost() 
