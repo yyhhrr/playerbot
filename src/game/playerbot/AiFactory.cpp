@@ -119,7 +119,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
 	Engine* engine = new Engine(facade, AiObjectContext);
     AddDefaultCombatStrategies(player, engine);
-    if (facade->GetMaster()->getFaction() != player->getFaction())
+    if (facade->IsOpposing(facade->GetMaster()))
         engine->addStrategies("grind", "dps", NULL);
 	return engine;
 }
@@ -142,7 +142,7 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 	Engine* nonCombatEngine = new Engine(facade, AiObjectContext);
 
     AddDefaultNonCombatStrategies(player, nonCombatEngine);
-    if (facade->GetMaster()->getFaction() != player->getFaction())
+    if (facade->IsOpposing(facade->GetMaster()))
         nonCombatEngine->addStrategy("grind");
 	return nonCombatEngine;
 }

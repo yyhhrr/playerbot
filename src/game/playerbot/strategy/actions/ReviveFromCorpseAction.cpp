@@ -31,12 +31,6 @@ bool ReviveFromCorpseAction::Execute(Event event)
         }
         context->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
-
-        if (urand(0, 10) >= 5 && bot->getFaction() != master->getFaction())
-        {
-			PlayerbotFactory factory(bot, master->getLevel());
-            factory.Randomize();
-        }
     }
     return true;
 }

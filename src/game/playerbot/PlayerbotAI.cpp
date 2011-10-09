@@ -424,7 +424,7 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
 
-    if (bot->getFaction() != master->getFaction())
+    if (IsOpposing(master))
     {
         if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
                 !master->GetInstanceId() && master->IsAllowedDamageInArea(bot) && !master->IsFlying())
@@ -681,7 +681,7 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 void PlayerbotAI::TellMaster(string text)
 {
     LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
-    if (GetMaster()->getFaction() != bot->getFaction() && logLevel != LOG_LVL_DEBUG)
+    if (IsOpposing(GetMaster()) && logLevel != LOG_LVL_DEBUG)
         return;
 
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
@@ -984,5 +984,19 @@ bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType)
             strcmpi((const char*)entry->SpellName[0], "ice armor"));
     }
     return false;
+}
+
+inline bool IsAlliance(uint8 race)
+{
+    return race == RACE_HUMAN || race == RACE_DWARF || race == RACE_NIGHTELF ||
+            race == RACE_GNOME || race == RACE_DRAENEI;
+}
+
+bool PlayerbotAI::IsOpposing(Player* player)
+{
+    if (IsAlliance(player->getRace()))
+        return !IsAlliance(bot->getRace());
+
+    return IsAlliance(bot->getRace());
 }
 

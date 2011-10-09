@@ -128,6 +128,7 @@ public:
     Player* GetMaster() { return mgr ? mgr->GetMaster() : NULL; }
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
     ChatHelper* GetChatHelper() { return &chatHelper; }
+    bool IsOpposing(Player* player);
 
 protected:
 	Player* bot;

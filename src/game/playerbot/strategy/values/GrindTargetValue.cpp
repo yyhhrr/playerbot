@@ -47,7 +47,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
         if (GetTargetingPlayerCount(unit) > assistCount)
             continue;
 
-		if (master->GetDistance(unit) >= sPlayerbotAIConfig.grindDistance && master->getFaction() == bot->getFaction())
+		if (master->GetDistance(unit) >= sPlayerbotAIConfig.grindDistance && ai->IsOpposing(master))
             continue;
 
         if (group)
