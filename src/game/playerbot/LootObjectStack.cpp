@@ -91,6 +91,7 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
                 if (lockInfo->Index[i] > 0)
                 {
                     reqItem = lockInfo->Index[i];
+                    this->guid = guid;
                 }
                 break;
             case LOCK_KEY_SKILL:
@@ -98,13 +99,13 @@ LootObject::LootObject(Player* bot, ObjectGuid guid)
                 {
                     skillId = SkillByLockType(LockType(lockInfo->Index[i]));
                     reqSkillValue = lockInfo->Skill[i];
+                    this->guid = guid;
                 }
                 break;
             default:
                 break;
             }
         }
-        this->guid = guid;
     }
 }
 

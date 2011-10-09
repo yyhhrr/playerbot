@@ -139,7 +139,7 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
             return spellId;
     }
 
-    return 3365; //Spell 3365 = Opening?
+    return 0; //Spell 3365 = Opening?
 }
 
 bool OpenLootAction::CanOpenLock(LootObject& lootObject, const SpellEntry* pSpellInfo, GameObject* go)

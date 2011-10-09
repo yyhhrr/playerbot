@@ -40,7 +40,7 @@ private:
     {
         return new ActionNode ("healing potion",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* follow_master_random(PlayerbotAI* ai)
