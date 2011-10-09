@@ -65,6 +65,12 @@ ConfVersion=2010102201
 #        Allow use guild members as bots
 #    Default 1
 #
+#    AiPlayerbot.PvpChance
+#        Allow opposing faction bots to summon themselves accidentaly near player and start PVP combat
+#        0 - Disabled
+#        1 and more - Enabled with chance higher with higher values
+#    Default 5
+#
 ###################################################################################################################
 
 AiPlayerbot.enabled=1
@@ -83,3 +89,5 @@ AiPlayerbot.FleeDistance=15
 AiPlayerbot.CriticalHealth=30
 AiPlayerbot.LowHealth=50
 AiPlayerbot.MediumHealth=70
+
+AiPlayerbot.PvpChance = 10

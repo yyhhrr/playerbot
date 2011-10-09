@@ -40,6 +40,8 @@ bool PlayerbotAIConfig::Initialize()
     lowHealth = config.GetIntDefault("AiPlayerbot.LowHealth", 50);
     mediumHealth = config.GetIntDefault("AiPlayerbot.MediumHealth", 70);
     
+    pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 5);
+
     allowGuildBots = config.GetBoolDefault("AiPlayerbot.AllowGuildBots", true);
     string accountStr = config.GetStringDefault("AiPlayerbot.RandomBotAccounts", "");
     vector<string> accounts = split(accountStr, ',');

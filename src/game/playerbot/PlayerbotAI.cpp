@@ -12,6 +12,7 @@
 #include "strategy/values/LastSpellCastValue.h"
 #include "LootObjectStack.h"
 #include "PlayerbotAIConfig.h"
+#include "PlayerbotAI.h"
 
 using namespace ai;
 using namespace std;
@@ -161,6 +162,22 @@ void PlayerbotAI::HandleTeleportAck()
 		bot->GetSession()->HandleMoveWorldportAckOpcode();
 }
 
+void PlayerbotAI::Reset()
+{
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+            engines[i]->Init();
+    currentEngine = engines[BOT_STATE_NON_COMBAT];
+    nextAICheckDelay = 0;
+    aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
+    aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
+    LastSpellCast & lastSpell = aiObjectContext->GetValue<LastSpellCast& >("last spell cast")->Get();
+    lastSpell.Reset();
+    LastMovement & lastMovement = aiObjectContext->GetValue<LastMovement& >("last movement")->Get();
+    lastMovement.Set(NULL);
+    bot->GetMotionMaster()->Clear();
+    bot->m_taxi.ClearTaxiDestinations();
+}
+
 void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 {
     if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid())
@@ -188,23 +205,7 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
     }
     else if (text == "reset")
     {
-        for (int i = 0 ; i < BOT_STATE_MAX; i++)
-            engines[i]->Init();
-
-        currentEngine = engines[BOT_STATE_NON_COMBAT];
-
-        nextAICheckDelay = 0;
-        aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
-        aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
-
-        LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
-        lastSpell.Reset();
-
-        LastMovement& lastMovement = aiObjectContext->GetValue<LastMovement&>("last movement")->Get();
-        lastMovement.Set(NULL);
-
-        bot->GetMotionMaster()->Clear();
-        bot->m_taxi.ClearTaxiDestinations();
+        Reset();
     }
     else
     {
@@ -341,9 +342,19 @@ void PlayerbotAI::HandleMasterOutgoingPacket(const WorldPacket& packet)
 
 void PlayerbotAI::ChangeActiveEngineIfNecessary()
 {
+	Player* master = GetMaster();
     if (!bot->isAlive())
     {
         ChangeEngine(BOT_STATE_DEAD);
+        if (!bot->IsFriendlyTo(master) && !bot->GetCorpse())
+        {
+            bot->SetBotDeathTimer();
+            bot->BuildPlayerRepop();
+            Corpse *corpse = bot->GetCorpse();
+            WorldLocation loc;
+            corpse->GetPosition( loc );
+            bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
+        }
         return;
     }
 
@@ -380,8 +391,15 @@ void PlayerbotAI::ChangeEngine(BotState type)
 
 void PlayerbotAI::DoNextAction()
 {
-    bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
-    bot->CheckAreaExploreAndOutdoor();
+    if (bot->IsBeingTeleported())
+        return;
+
+    Player* master = GetMaster();
+    if (bot->GetMapId() == master->GetMapId())
+    {
+        bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+        bot->CheckAreaExploreAndOutdoor();
+    }
 
     currentEngine->DoNextAction(NULL);
 
@@ -405,6 +423,58 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
+
+    if (bot->getFaction() != master->getFaction())
+    {
+        if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
+                !master->GetInstanceId() && master->IsAllowedDamageInArea(bot) && !master->IsFlying())
+        {
+            if (!bot->isAlive())
+            {
+                PlayerbotChatHandler ch(GetMaster());
+                ch.revive(*bot);
+                return;
+            }
+
+            bot->SetHealthPercent(100);
+
+            if (bot->GetMaxPower(POWER_MANA) > 0)
+                bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
+
+            if (bot->GetMaxPower(POWER_ENERGY) > 0)
+                bot->SetPower(POWER_ENERGY, bot->GetMaxPower(POWER_ENERGY));
+
+            WorldLocation loc;
+            master->GetPosition(loc);
+            loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+            loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+            loc.coord_z += 5;
+            bot->TeleportTo(loc);
+        }
+
+        if (urand(0, 1000) > 990 && !bot->isInCombat())
+        {
+            GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
+            uint32 index = urand(0, teleMap.size() - 1);
+            uint32 i = 0;
+            for(GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
+            {
+                GameTele const* tele = &itr->second;
+                if (i++ == index)
+                {
+                    Reset();
+                    bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
+                    if (!bot->isAlive())
+                    {
+                        PlayerbotChatHandler ch(GetMaster());
+                        ch.revive(*bot);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
 }
 
 void PlayerbotAI::ReInitCurrentEngine()
@@ -610,6 +680,10 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 
 void PlayerbotAI::TellMaster(string text)
 {
+    LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
+    if (GetMaster()->getFaction() != bot->getFaction() && logLevel != LOG_LVL_DEBUG)
+        return;
+
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
     GetMaster()->GetSession()->SendPacket(&data);

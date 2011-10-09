@@ -97,6 +97,7 @@ public:
     bool HasStrategy(string name, BotState type);
     void ResetStrategies();
     void ReInitCurrentEngine();
+    void Reset();
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);
     Unit* GetUnit(ObjectGuid guid);

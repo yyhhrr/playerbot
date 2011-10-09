@@ -1,13 +1,12 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "ReviveFromCorpseAction.h"
+#include "../../PlayerbotFactory.h"
 
 using namespace ai;
 
 bool ReviveFromCorpseAction::Execute(Event event)
 {
-
-
     Corpse* corpse = bot->GetCorpse();
     if (!corpse)
         return false;
@@ -32,6 +31,12 @@ bool ReviveFromCorpseAction::Execute(Event event)
         }
         context->GetValue<Unit*>("current target")->Set(NULL);
         bot->SetSelectionGuid(ObjectGuid());
+
+        if (urand(0, 10) >= 5 && bot->getFaction() != master->getFaction())
+        {
+			PlayerbotFactory factory(bot, master->getLevel());
+            factory.Randomize();
+        }
     }
     return true;
 }

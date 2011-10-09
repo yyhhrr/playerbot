@@ -54,7 +54,7 @@ private:
     {
         return new ActionNode ("attack anything",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("follow"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* move_random(PlayerbotAI* ai)
