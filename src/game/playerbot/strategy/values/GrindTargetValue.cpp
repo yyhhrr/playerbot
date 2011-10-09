@@ -7,13 +7,14 @@ using namespace ai;
 
 Unit* GrindTargetValue::Calculate()
 {
+    uint32 memberCount = 1;
     Group* group = bot->GetGroup();
-    if (!group)
-        return NULL;
+    if (group)
+        memberCount = group->GetMembersCount();
 
     Unit* target = NULL;
     uint32 assistCount = 0;
-    while (!target && assistCount < group->GetMembersCount())
+    while (!target && assistCount < memberCount)
     {
         target = FindTargetForGrinding(assistCount++);
     }
@@ -24,10 +25,8 @@ Unit* GrindTargetValue::Calculate()
 
 Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
 {
+    uint32 memberCount = 1;
     Group* group = bot->GetGroup();
-    if (!group)
-        return NULL;
-
 
     list<ObjectGuid> targets = *context->GetValue<list<ObjectGuid> >("possible targets");
 
@@ -51,14 +50,26 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
         if (master->GetDistance(unit) >= sPlayerbotAIConfig.grindDistance)
             continue;
 
-        Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
-        for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
+        if (group)
         {
-            Player *member = sObjectMgr.GetPlayer(itr->guid);
-            if( !member || !member->isAlive())
-                continue;
+            Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
+            for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
+            {
+                Player *member = sObjectMgr.GetPlayer(itr->guid);
+                if( !member || !member->isAlive())
+                    continue;
 
-            float d = member->GetDistance(unit);
+                float d = member->GetDistance(unit);
+                if (!result || d < distance)
+                {
+                    distance = d;
+                    result = unit;
+                }
+            }
+        }
+        else
+        {
+            float d = bot->GetDistance(unit);
             if (!result || d < distance)
             {
                 distance = d;
