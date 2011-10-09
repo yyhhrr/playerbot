@@ -155,6 +155,12 @@ bool MovementAction::Follow(Unit* target, float distance)
 
 bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
+    if (bot->GetDistance(master) < sPlayerbotAIConfig.reactDistance &&
+            abs(bot->GetPositionZ() - master->GetPositionZ()) >= sPlayerbotAIConfig.spellDistance)
+    {
+        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), true);
+    }
+
     if (!IsMovingAllowed(target))
         return false;
 
