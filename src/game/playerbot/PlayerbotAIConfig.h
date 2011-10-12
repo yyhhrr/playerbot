@@ -22,6 +22,7 @@ public:
     std::list<uint32> randomBotAccounts;
     uint32 criticalHealth, lowHealth, mediumHealth;
     uint32 pvpChance;
+    uint32 randomGearQuality;
 
 private:
     Config config;

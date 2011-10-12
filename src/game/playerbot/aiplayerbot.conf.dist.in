@@ -65,6 +65,11 @@ ConfVersion=2010102201
 #        Allow use guild members as bots
 #    Default 1
 #
+#    AiPlayerbot.RandomGearQuality
+#        Gear qualify for .bot init <name> coommand
+#        0 - Poor, 1 - Common, 2 - Uncommon, 3 - Rare, 4 - Epic, etc.
+#    Default 3 (rare)
+#
 #    AiPlayerbot.PvpChance
 #        Allow opposing faction bots to summon themselves accidentaly near player and start PVP combat
 #        0 - Disabled
@@ -91,3 +96,4 @@ AiPlayerbot.LowHealth=50
 AiPlayerbot.MediumHealth=70
 
 AiPlayerbot.PvpChance = 10
+AiPlayerbot.RandomGearQuality = 3

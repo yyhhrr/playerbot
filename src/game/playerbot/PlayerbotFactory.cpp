@@ -79,12 +79,55 @@ bool PlayerbotFactory::EquipItem(uint8 slot)
         if (proto->Duration & 0x80000000)
             continue;
 
-        if (proto->Quality != ITEM_QUALITY_RARE)
+        if (proto->Quality != sPlayerbotAIConfig.randomGearQuality)
             continue;
 
         uint32 requiredLevel = proto->RequiredLevel;
         if (!requiredLevel || (requiredLevel > level || requiredLevel < level - 5))
             continue;
+
+        if (proto->Class == ITEM_CLASS_WEAPON)
+        {
+            switch (bot->getClass())
+            {
+            case CLASS_PRIEST:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_STAFF &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_WAND &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE)
+                    continue;
+                break;
+            case CLASS_MAGE:
+            case CLASS_WARLOCK:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_STAFF &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_WAND &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD)
+                    continue;
+                break;
+            case CLASS_WARRIOR:
+            case CLASS_PALADIN:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE2 &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD2)
+                    continue;
+                break;
+            case CLASS_SHAMAN:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE)
+                    continue;
+                break;
+            case CLASS_DRUID:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE2 &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_STAFF)
+                    continue;
+                break;
+            case CLASS_HUNTER:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_AXE2)
+                    continue;
+                break;
+            case CLASS_ROGUE:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_DAGGER)
+                    continue;
+                break;
+            }
+        }
 
         uint16 dest = 0;
         if (CanEquipUnseenItem(slot, dest, itemId))

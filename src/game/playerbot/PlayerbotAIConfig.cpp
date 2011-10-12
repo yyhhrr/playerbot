@@ -41,6 +41,7 @@ bool PlayerbotAIConfig::Initialize()
     mediumHealth = config.GetIntDefault("AiPlayerbot.MediumHealth", 70);
     
     pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 5);
+    randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);
 
     allowGuildBots = config.GetBoolDefault("AiPlayerbot.AllowGuildBots", true);
     string accountStr = config.GetStringDefault("AiPlayerbot.RandomBotAccounts", "");
