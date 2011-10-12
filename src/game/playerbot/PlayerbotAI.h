@@ -98,6 +98,9 @@ public:
     void ResetStrategies();
     void ReInitCurrentEngine();
     void Reset();
+    void OnBotLogin();
+    void DoPvpAttack();
+    void RandomTeleport();
     bool IsTank(Player* player);
     Creature* GetCreature(ObjectGuid guid);
     Unit* GetUnit(ObjectGuid guid);

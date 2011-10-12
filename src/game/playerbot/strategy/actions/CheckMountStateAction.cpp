@@ -12,6 +12,9 @@ bool CheckMountStateAction::Execute(Event event)
     p.rpos(0);
     uint64 guid = extractGuid(p);
 
+    if (ai->IsOpposing(master) && bot->isInCombat())
+        return false;
+
     if (master->IsMounted() && !bot->IsMounted())
     {
         if (!master->GetAurasByType(SPELL_AURA_MOUNTED).empty())

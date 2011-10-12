@@ -153,6 +153,7 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
 
+    ai->OnBotLogin();
     ai->TellMaster("Hello!");
 }
 

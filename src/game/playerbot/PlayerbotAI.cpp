@@ -424,57 +424,70 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
 
-    if (IsOpposing(master))
+    if (!IsOpposing(master))
+        return;
+
+    if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
+            !master->GetInstanceId() && master->IsAllowedDamageInArea(bot))
     {
-        if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
-                !master->GetInstanceId() && master->IsAllowedDamageInArea(bot) && !master->IsFlying())
-        {
-            if (!bot->isAlive())
-            {
-                PlayerbotChatHandler ch(GetMaster());
-                ch.revive(*bot);
-                return;
-            }
-
-            bot->SetHealthPercent(100);
-
-            if (bot->GetMaxPower(POWER_MANA) > 0)
-                bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
-
-            if (bot->GetMaxPower(POWER_ENERGY) > 0)
-                bot->SetPower(POWER_ENERGY, bot->GetMaxPower(POWER_ENERGY));
-
-            WorldLocation loc;
-            master->GetPosition(loc);
-            loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-            loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-            loc.coord_z += 5;
-            bot->TeleportTo(loc);
-        }
-
-        if (urand(0, 1000) > 990 && !bot->isInCombat())
-        {
-            GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
-            uint32 index = urand(0, teleMap.size() - 1);
-            uint32 i = 0;
-            for(GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
-            {
-                GameTele const* tele = &itr->second;
-                if (i++ == index)
-                {
-                    Reset();
-                    bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
-                    if (!bot->isAlive())
-                    {
-                        PlayerbotChatHandler ch(GetMaster());
-                        ch.revive(*bot);
-                    }
-                    break;
-                }
-            }
-        }
+        Reset();
+        OnBotLogin();
+        DoPvpAttack();
     }
 
+    if (urand(0, 1000) > 990 && !bot->isInCombat())
+    {
+        Reset();
+        OnBotLogin();
+        RandomTeleport();
+    }
+}
+
+void PlayerbotAI::RandomTeleport()
+{
+    GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
+    uint32 index = urand(0, teleMap.size() - 1);
+    uint32 i = 0;
+    for(GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
+    {
+        GameTele const* tele = &itr->second;
+        if (i++ == index)
+        {
+            bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
+            break;
+        }
+    }
+}
+
+void PlayerbotAI::DoPvpAttack()
+{
+    WorldLocation loc;
+    GetMaster()->GetPosition(loc);
+    loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+    loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+    loc.coord_z += 5;
+    bot->TeleportTo(loc);
+}
+
+void PlayerbotAI::OnBotLogin()
+{
+    if (!IsOpposing(GetMaster()))
+        return;
+
+    if (!bot->isAlive())
+    {
+        PlayerbotChatHandler ch(GetMaster());
+        ch.revive(*bot);
+    }
+
+    bot->DurabilityRepairAll(false, 1.0f, false);
+    bot->SetHealthPercent(100);
+
+    if (bot->GetMaxPower(POWER_MANA) > 0)
+        bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
+
+    if (bot->GetMaxPower(POWER_ENERGY) > 0)
+        bot->SetPower(POWER_ENERGY, bot->GetMaxPower(POWER_ENERGY));
 }
 
 void PlayerbotAI::ReInitCurrentEngine()
