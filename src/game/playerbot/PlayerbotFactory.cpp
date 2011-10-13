@@ -86,6 +86,89 @@ bool PlayerbotFactory::EquipItem(uint8 slot)
         if (!requiredLevel || (requiredLevel > level || requiredLevel < level - 5))
             continue;
 
+        uint8 sp = 0, ap = 0, tank = 0;
+        for (int j = 0; j < MAX_ITEM_PROTO_STATS; ++j)
+        {
+            // for ItemStatValue != 0
+            if(!proto->ItemStat[j].ItemStatValue)
+                continue;
+
+            switch (proto->ItemStat[j].ItemStatType)
+            {
+            case ITEM_MOD_MANA:
+            case ITEM_MOD_INTELLECT:
+            case ITEM_MOD_SPIRIT:
+            case ITEM_MOD_MANA_REGENERATION:
+            case ITEM_MOD_SPELL_POWER:
+            case ITEM_MOD_SPELL_PENETRATION:
+                sp++;
+                break;
+
+            case ITEM_MOD_HEALTH:
+            case ITEM_MOD_STAMINA:
+            case ITEM_MOD_HEALTH_REGEN:
+            case ITEM_MOD_DEFENSE_SKILL_RATING:
+            case ITEM_MOD_DODGE_RATING:
+            case ITEM_MOD_PARRY_RATING:
+            case ITEM_MOD_BLOCK_RATING:
+            case ITEM_MOD_HIT_TAKEN_MELEE_RATING:
+            case ITEM_MOD_HIT_TAKEN_RANGED_RATING:
+            case ITEM_MOD_HIT_TAKEN_SPELL_RATING:
+            case ITEM_MOD_CRIT_TAKEN_MELEE_RATING:
+            case ITEM_MOD_CRIT_TAKEN_RANGED_RATING:
+            case ITEM_MOD_CRIT_TAKEN_SPELL_RATING:
+            case ITEM_MOD_HIT_TAKEN_RATING:
+            case ITEM_MOD_CRIT_TAKEN_RATING:
+            case ITEM_MOD_RESILIENCE_RATING:
+            case ITEM_MOD_BLOCK_VALUE:
+                tank++;
+                break;
+
+            case ITEM_MOD_AGILITY:
+            case ITEM_MOD_STRENGTH:
+            case ITEM_MOD_HIT_MELEE_RATING:
+            case ITEM_MOD_HIT_RANGED_RATING:
+            case ITEM_MOD_HIT_SPELL_RATING:
+            case ITEM_MOD_CRIT_MELEE_RATING:
+            case ITEM_MOD_CRIT_RANGED_RATING:
+            case ITEM_MOD_CRIT_SPELL_RATING:
+            case ITEM_MOD_HASTE_MELEE_RATING:
+            case ITEM_MOD_HASTE_RANGED_RATING:
+            case ITEM_MOD_HASTE_SPELL_RATING:
+            case ITEM_MOD_HIT_RATING:
+            case ITEM_MOD_CRIT_RATING:
+            case ITEM_MOD_HASTE_RATING:
+            case ITEM_MOD_EXPERTISE_RATING:
+            case ITEM_MOD_ATTACK_POWER:
+            case ITEM_MOD_RANGED_ATTACK_POWER:
+            case ITEM_MOD_ARMOR_PENETRATION_RATING:
+                ap++;
+                break;
+            }
+        }
+
+
+        switch (bot->getClass())
+        {
+        case CLASS_PRIEST:
+        case CLASS_MAGE:
+        case CLASS_WARLOCK:
+        case CLASS_DRUID:
+            if (!sp || sp < ap)
+                continue;
+            break;
+        case CLASS_PALADIN:
+            if (!tank || tank < sp)
+                continue;
+            break;
+        case CLASS_WARRIOR:
+        case CLASS_HUNTER:
+        case CLASS_ROGUE:
+            if (!ap || ap < sp)
+                continue;
+            break;
+        }
+
         if (proto->Class == ITEM_CLASS_WEAPON)
         {
             switch (bot->getClass())
