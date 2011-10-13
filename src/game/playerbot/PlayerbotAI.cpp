@@ -435,7 +435,7 @@ void PlayerbotAI::DoNextAction()
         DoPvpAttack();
     }
 
-    if (urand(0, 1000) > 990 && !bot->isInCombat())
+    if (urand(0, 1000) > 995 && !bot->isInCombat())
     {
         Reset();
         OnBotLogin();
