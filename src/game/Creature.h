@@ -207,6 +207,12 @@ struct CreatureData
     ObjectGuid GetObjectGuid(uint32 lowguid) const;
 };
 
+enum SplineFlags
+{
+    SPLINEFLAG_WALKMODE     = 0x00001000,
+    SPLINEFLAG_FLYING       = 0x00002000,
+};
+
 // from `creature_addon` and `creature_template_addon`tables
 struct CreatureDataAddon
 {
@@ -576,7 +582,6 @@ class MANGOS_DLL_SPEC Creature : public Unit
         const char* GetNameForLocaleIdx(int32 locale_idx) const;
 
         void SetDeathState(DeathState s);                   // overwrite virtual Unit::SetDeathState
-        bool FallGround();
 
         bool LoadFromDB(uint32 guid, Map *map);
         void SaveToDB();
@@ -681,8 +686,6 @@ class MANGOS_DLL_SPEC Creature : public Unit
         void GetSummonPoint(float &fX, float &fY, float &fZ, float &fOrient) const { fX = m_summonPos.x; fY = m_summonPos.y; fZ = m_summonPos.z; fOrient = m_summonPos.o; }
 
         void SetDeadByDefault (bool death_state) { m_isDeadByDefault = death_state; }
-
-        void SetActiveObjectState(bool on);
 
         void SetFactionTemporary(uint32 factionId, uint32 tempFactionFlags = TEMPFACTION_ALL);
         void ClearTemporaryFaction();

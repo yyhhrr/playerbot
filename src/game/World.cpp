@@ -63,6 +63,7 @@
 #include "Util.h"
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "CharacterDatabaseCleaner.h"
+#include "CreatureLinkingMgr.h"
 #include "ahbot/AhBot.h"
 #include "playerbot/PlayerbotAIConfig.h"
 
@@ -1068,6 +1069,9 @@ void World::SetInitialWorldSettings()
 
     sLog.outString( "Loading Gameobject Addon Data..." );
     sObjectMgr.LoadGameObjectAddon();
+
+    sLog.outString( "Loading CreatureLinking Data..." );    // must be after Creatures
+    sCreatureLinkingMgr.LoadFromDB();
 
     sLog.outString( "Loading Objects Pooling Data...");
     sPoolMgr.LoadFromDB();

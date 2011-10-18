@@ -1095,6 +1095,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\DuelStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2284,6 +2287,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\DuelStrategy.h">
       <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\CreatureLinkingMgr.h">
+      <Filter>World/Handlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
