@@ -22978,11 +22978,6 @@ uint32 Player::GetEquipGearScore(bool withBags, bool withBank)
 
     for (uint8 i = EQUIPMENT_SLOT_START; i < EQUIPMENT_SLOT_END; ++i)
     {
-        gearScore[i] = 0;
-    }
-
-    for (uint8 i = EQUIPMENT_SLOT_START; i < EQUIPMENT_SLOT_END; ++i)
-    {
         if (Item* item = GetItemByPos(INVENTORY_SLOT_BAG_0, i))
             _fillGearScoreData(item, &gearScore, twoHandScore);
     }
@@ -23039,7 +23034,7 @@ uint32 Player::GetEquipGearScore(bool withBags, bool withBank)
     uint32 sum = 0;
 
     // check if 2h hand is higher level than main hand + off hand
-    if ((gearScore[EQUIPMENT_SLOT_MAINHAND] + gearScore[EQUIPMENT_SLOT_OFFHAND]) / 2 < twoHandScore)
+    if (gearScore[EQUIPMENT_SLOT_MAINHAND] + gearScore[EQUIPMENT_SLOT_OFFHAND] < twoHandScore * 2)
     {
         gearScore[EQUIPMENT_SLOT_OFFHAND] = 0;  // off hand is ignored in calculations if 2h weapon has higher score
         --count;
@@ -23055,13 +23050,13 @@ uint32 Player::GetEquipGearScore(bool withBags, bool withBank)
     {
         uint32 res = uint32(sum / count);
         DEBUG_LOG("Player: calculating gear score for %u. Result is %u", GetObjectGuid().GetCounter(), res);
-        
+
         if (withBags && withBank)
             m_cachedGS = res;
-       
+
         return res;
     }
-    else 
+    else
         return 0;
 }
 
@@ -23128,7 +23123,7 @@ void Player::_fillGearScoreData(Item* item, GearScoreVec* gearScore, uint32& two
             break;
         // equipped gear score check uses both rings and trinkets for calculation, assume that for bags/banks it is the same
         // with keeping second highest score at second slot
-        case INVTYPE_FINGER:    
+        case INVTYPE_FINGER:
         {
             if ((*gearScore)[EQUIPMENT_SLOT_FINGER1] < level)
             {
