@@ -86,6 +86,7 @@ int main()
   sPlayerbotAIConfig.criticalHealth = 25;
   sPlayerbotAIConfig.lowHealth = 40;
   sPlayerbotAIConfig.mediumHealth = 60;
+  sPlayerbotAIConfig.almostFullHealth = 80;
 
   // Create the event manager and test controller
   CPPUNIT_NS::TestResult controller;

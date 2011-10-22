@@ -36,9 +36,10 @@ bool PlayerbotAIConfig::Initialize()
     lootDistance = config.GetFloatDefault("AiPlayerbot.LootDistance", 20.0f);
     fleeDistance = config.GetFloatDefault("AiPlayerbot.FleeDistance", 15.0f);
     
-    criticalHealth = config.GetIntDefault("AiPlayerbot.CriticalHealth", 30);
-    lowHealth = config.GetIntDefault("AiPlayerbot.LowHealth", 50);
-    mediumHealth = config.GetIntDefault("AiPlayerbot.MediumHealth", 70);
+    criticalHealth = config.GetIntDefault("AiPlayerbot.CriticalHealth", 25);
+    lowHealth = config.GetIntDefault("AiPlayerbot.LowHealth", 45);
+    mediumHealth = config.GetIntDefault("AiPlayerbot.MediumHealth", 65);
+    almostFullHealth = config.GetIntDefault("AiPlayerbot.AlmostFullHealth", 85);
     
     pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 5);
     randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);

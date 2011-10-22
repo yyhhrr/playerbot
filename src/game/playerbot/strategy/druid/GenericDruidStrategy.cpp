@@ -148,6 +148,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		"medium health",
 		NextAction::array(0, new NextAction("regrowth", 49.0f), NULL)));
 
+
     triggers.push_back(new TriggerNode(
         "low health",
         NextAction::array(0, new NextAction("healing touch", 69.0f), NULL)));
@@ -156,6 +157,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "party member low health",
         NextAction::array(0, new NextAction("healing touch on party", 70.0f), NULL)));
 
+
     triggers.push_back(new TriggerNode(
         "critical health",
         NextAction::array(0, new NextAction("rejuvenation", 70.0f), new NextAction("regrowth", 69.0f), NULL)));
@@ -163,6 +165,7 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "party member critical health",
         NextAction::array(0, new NextAction("rejuvenation on party", 70.0f), new NextAction("regrowth on party", 69.0f), NULL)));
+
 
     triggers.push_back(new TriggerNode(
         "cure poison",

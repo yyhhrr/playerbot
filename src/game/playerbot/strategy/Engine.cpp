@@ -89,6 +89,13 @@ void Engine::Init()
         Event emptyEvent;
         MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, emptyEvent);
     }
+
+	if (testMode)
+	{
+        FILE* file = fopen("test.log", "w");
+        fprintf(file, "\n");
+        fclose(file);
+	}
 }
 
 
@@ -428,5 +435,13 @@ void Engine::LogAction(const char* format, ...)
     vsprintf(buf, format, ap);
     va_end(ap);
 
-	sLog.outDebug("%s %s", testMode ? "test" : ai->GetBot()->GetName(), buf);
+    if (testMode)
+    {
+        FILE* file = fopen("test.log", "a");
+        fprintf(file, buf);
+        fprintf(file, "\n");
+        fclose(file);
+    }
+    else
+        sLog.outDebug("%s %s", ai->GetBot()->GetName(), buf);
 }

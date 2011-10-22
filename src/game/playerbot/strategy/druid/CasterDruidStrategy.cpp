@@ -112,6 +112,15 @@ void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "party member medium health",
         NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
 
+    triggers.push_back(new TriggerNode(
+        "almost full health",
+        NextAction::array(0, new NextAction("rejuvenation",49.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member almost full health",
+        NextAction::array(0, new NextAction("rejuvenation on party", 49.0f), NULL)));
+
+
 	triggers.push_back(new TriggerNode(
 		"insect swarm",
 		NextAction::array(0, new NextAction("insect swarm", 15.0f), NULL)));

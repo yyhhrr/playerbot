@@ -18,14 +18,18 @@ namespace ai
             creators["seldom"] = &TriggerContext::seldom;
 
             creators["target critical health"] = &TriggerContext::TargetCriticalHealth;
+
             creators["critical health"] = &TriggerContext::CriticalHealth;
             creators["low health"] = &TriggerContext::LowHealth;
             creators["medium health"] = &TriggerContext::MediumHealth;
+            creators["almost full health"] = &TriggerContext::AlmostFullHealth;
+
             creators["low mana"] = &TriggerContext::LowMana;
 
             creators["party member critical health"] = &TriggerContext::PartyMemberCriticalHealth;
             creators["party member low health"] = &TriggerContext::PartyMemberLowHealth;
             creators["party member medium health"] = &TriggerContext::PartyMemberMediumHealth;
+            creators["party member almost full health"] = &TriggerContext::PartyMemberAlmostFullHealth;
 
             creators["light rage available"] = &TriggerContext::LightRageAvailable;
             creators["medium rage available"] = &TriggerContext::MediumRageAvailable;
@@ -97,6 +101,7 @@ namespace ai
         static Trigger* LoseAggro(PlayerbotAI* ai) { return new LoseAggroTrigger(ai); }
         static Trigger* LowHealth(PlayerbotAI* ai) { return new LowHealthTrigger(ai); }
         static Trigger* MediumHealth(PlayerbotAI* ai) { return new MediumHealthTrigger(ai); }
+        static Trigger* AlmostFullHealth(PlayerbotAI* ai) { return new AlmostFullHealthTrigger(ai); }
         static Trigger* CriticalHealth(PlayerbotAI* ai) { return new CriticalHealthTrigger(ai); }
         static Trigger* TargetCriticalHealth(PlayerbotAI* ai) { return new TargetCriticalHealthTrigger(ai); }
         static Trigger* LowMana(PlayerbotAI* ai) { return new LowManaTrigger(ai); }
@@ -124,6 +129,7 @@ namespace ai
         static Trigger* PartyMemberDead(PlayerbotAI* ai) { return new PartyMemberDeadTrigger(ai); }
         static Trigger* PartyMemberLowHealth(PlayerbotAI* ai) { return new PartyMemberLowHealthTrigger(ai); }
         static Trigger* PartyMemberMediumHealth(PlayerbotAI* ai) { return new PartyMemberMediumHealthTrigger(ai); }
+        static Trigger* PartyMemberAlmostFullHealth(PlayerbotAI* ai) { return new PartyMemberAlmostFullHealthTrigger(ai); }
         static Trigger* PartyMemberCriticalHealth(PlayerbotAI* ai) { return new PartyMemberCriticalHealthTrigger(ai); }
         static Trigger* no_pet(PlayerbotAI* ai) { return new NoPetTrigger(ai); }
         static Trigger* has_attackers(PlayerbotAI* ai) { return new HasAttackersTrigger(ai); }

@@ -49,9 +49,12 @@ protected:
 
 		tickWithLowHealth(59);
 
+        spellAvailable("renew");
+        tickWithLowHealth(79);
+
 		tickWithSpellAvailable("shoot");
 
-		assertActions(">S:power word: shield>S:greater heal>S:renew>S:heal>S:lesser heal>T:shoot>S:flash heal>T:shoot");
+		assertActions(">S:power word: shield>S:greater heal>S:renew>S:heal>S:lesser heal>T:shoot>S:flash heal>S:renew>T:shoot");
     }
 
 	void racials()
@@ -113,10 +116,13 @@ protected:
         spellAvailable("flash heal");
 		tickWithPartyLowHealth(59);
 
+        spellAvailable("renew");
+        tickWithPartyLowHealth(79);
+
         tickWithSpellAvailable("shoot"); // shoot
 
 
-		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>P:power word: shield on party>P:flash heal on party>P:renew on party>P:greater heal on party>T:shoot>P:flash heal on party>T:shoot");
+		assertActions(">T:shoot>P:power word: shield on party>P:greater heal on party>P:renew on party>P:heal on party>P:lesser heal on party>P:power word: shield on party>P:flash heal on party>P:renew on party>P:greater heal on party>T:shoot>P:flash heal on party>P:renew on party>T:shoot");
     }
 
     void aoe_heal()
