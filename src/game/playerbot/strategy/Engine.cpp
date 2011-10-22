@@ -115,44 +115,55 @@ bool Engine::DoNextAction(Unit* unit, int depth)
             ActionNode* actionNode = queue.Pop();
             Action* action = InitializeAction(actionNode);
 
-            if (action && action->isUseful()) {
-                if (action->isPossible()) {
+			if (!action)
+			{
+			    LogAction("A:%s - UNKNOWN", actionNode->getName().c_str());
+			}
+			else if (action->isUseful())
+			{
+                if (action->isPossible()) 
+				{
                     if ((!skipPrerequisites || lastRelevance-relevance > 0.04) &&
-                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.02, false, event)) {
+                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.02, false, event)) 
+					{
                         PushAgain(actionNode, relevance + 0.01, event);
                         continue;
                     }
 
-                    sLog.outDetail("A:%s", action->getName().c_str());
-
                     actionExecuted = ListenAndExecute(action, event);
 
-                    if (actionExecuted) {
+                    if (actionExecuted) 
+					{
+                        LogAction("A:%s - OK", action->getName().c_str());
                         MultiplyAndPush(actionNode->getContinuers(), 0, false, event);
                         lastRelevance = relevance;
                         delete actionNode;
                         break;
                     }
-                    else {
+                    else 
+					{
                         MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
-                        sLog.outDetail("NOT EXECUTED:%s", actionNode->getName().c_str());
+                        LogAction("A:%s - FAILED", action->getName().c_str());
                     }
                 }
-                else {
+                else 
+				{
                     MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
-                    sLog.outDetail("IMPOSSIBLE:%s", actionNode->getName().c_str());
+                    LogAction("A:%s - IMPOSSIBLE", action->getName().c_str());
                 }
             }
-            else {
+            else 
+			{
                 lastRelevance = relevance;
-                sLog.outDetail("USELESS:%s", actionNode->getName().c_str());
+                LogAction("A:%s - USELESS", action->getName().c_str());
             }
             delete actionNode;
         }
     }
     while (basket);
 
-    if (!basket) {
+    if (!basket) 
+	{
         lastRelevance = 0.0f;
         PushDefaultActions();
         if (queue.Peek() && depth < 2)
@@ -160,7 +171,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
     }
 
     if (time(0) - currentTime > 1) {
-        sLog.outDetail("too long execution");
+        LogAction("too long execution");
     }
 
     return actionExecuted;
@@ -206,6 +217,7 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
 
                 if (k > 0)
                 {
+                    LogAction("PUSH:%s %f", action->getName().c_str(), k);
                     queue.Push(new ActionBasket(action, k, skipPrerequisites, event));
                     pushed = true;
                 }
@@ -249,6 +261,7 @@ void Engine::addStrategy(string name)
         for (set<string>::iterator i = siblings.begin(); i != siblings.end(); i++)
             removeStrategy(*i);
 
+        LogAction("S:+%s", strategy->getName().c_str());
         strategies[strategy->getName()] = strategy;
     }
     Init();
@@ -279,6 +292,7 @@ bool Engine::removeStrategy(string name)
     if (i == strategies.end())
         return false;
 
+    LogAction("S:-%s", name.c_str());
     strategies.erase(i);
     Init();
     return true;
@@ -322,6 +336,7 @@ void Engine::ProcessTriggers()
             if (!event)
                 continue;
 
+            LogAction("T:%s", trigger->getName().c_str());
             MultiplyAndPush(node->getHandlers(), 0.0f, false, event);
         }
     }
@@ -402,4 +417,16 @@ bool Engine::ListenAndExecute(Action* action, Event event)
     actionExecutionListeners.After(action, event);
 
     return actionExecuted;
+}
+
+void Engine::LogAction(const char* format, ...)
+{
+    char buf[1024];
+
+    va_list ap;
+    va_start(ap, format);
+    vsprintf(buf, format, ap);
+    va_end(ap);
+
+	sLog.outDebug("%s %s", testMode ? "test" : ai->GetBot()->GetName(), buf);
 }

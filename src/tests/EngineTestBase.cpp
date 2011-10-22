@@ -105,6 +105,7 @@ void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
     context = new AiObjectContextWrapper(ai, aiObjectContext);
     ai->SetContext(context);
     engine = new Engine(ai, context);
+	engine->testMode = true;
     engine->AddActionExecutionListener(new TestActionExecutionListener(ai));
 
 	va_list vl;
@@ -112,7 +113,6 @@ void EngineTestBase::setupEngine(AiObjectContext* aiObjectContext, ...)
 
 	va_generic(&EngineTestBase::setupEngineCallback, vl);
 
-	engine->testMode = true;
 	engine->Init();
 }
 

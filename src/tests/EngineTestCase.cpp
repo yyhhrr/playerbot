@@ -245,6 +245,7 @@ protected:
 	{
 		MockPlayerbotAIBase mock;
 		Engine engine(&mock, new TestAiObjectContext(&mock));
+		engine.testMode = true;
         engine.addStrategy("TestStrategy");
         engine.Init();
 
@@ -266,6 +267,7 @@ protected:
     {
 		MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
+        engine.testMode = true;
         engine.addStrategy("AnotherTestStrategy");
         engine.removeStrategy("AnotherTestStrategy");
         engine.Init();
@@ -281,6 +283,7 @@ protected:
     {
 		MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
+        engine.testMode = true;
         engine.addStrategy("AnotherTestStrategy");
         engine.addStrategy("TestStrategy");
         engine.Init();
@@ -293,6 +296,7 @@ protected:
     {
         MockPlayerbotAIBase mock;
         Engine engine(&mock, new TestAiObjectContext(&mock));
+        engine.testMode = true;
         engine.addStrategy("TestStrategy");
         engine.Init();
 

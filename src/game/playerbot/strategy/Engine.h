@@ -95,6 +95,9 @@ namespace ai
         Action* InitializeAction(ActionNode* actionNode);
         bool ListenAndExecute(Action* action, Event event);
 
+    private:
+        void LogAction(const char* format, ...);
+
     protected:
 	    Queue queue;
 	    std::list<TriggerNode*> triggers;
