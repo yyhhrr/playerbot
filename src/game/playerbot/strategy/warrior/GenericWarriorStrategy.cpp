@@ -60,8 +60,8 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("demoralizing shout", 23.0f), new NextAction("thunder clap", 23.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "medium rage available",
-        NextAction::array(0, new NextAction("cleave", 31.0f), NULL)));
+        "medium aoe",
+        NextAction::array(0, new NextAction("cleave", 21.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "high aoe",

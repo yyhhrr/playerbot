@@ -12,7 +12,7 @@ class DpsWarriorTestCase : public EngineTestBase
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( combatVsMelee );
     CPPUNIT_TEST( warriorMustHoldAggro );
-    CPPUNIT_TEST( warriorMustDemoralizeAttackers );
+    CPPUNIT_TEST( aoe );
     CPPUNIT_TEST( boost );
     CPPUNIT_TEST( execute );
     CPPUNIT_TEST( hamstring );
@@ -43,13 +43,15 @@ protected:
 
     }
 
-    void warriorMustDemoralizeAttackers()
+    void aoe()
     {
-        tickInMeleeRange(); // melee
+        tickInMeleeRange();
 
 		tickWithAttackerCount(3);
+		tickWithAttackerCount(3);
+		tickWithAttackerCount(3);
 
-		assertActions(">S:battle stance>T:demoralizing shout");
+		assertActions(">S:battle stance>T:demoralizing shout>T:thunder clap>T:cleave");
     }
 
     void warriorMustHoldAggro()

@@ -130,6 +130,7 @@ namespace ai
                 creators["sunder armor"] = &AiObjectContextInternal::sunder_armor;
                 creators["last stand"] = &AiObjectContextInternal::last_stand;
                 creators["shockwave"] = &AiObjectContextInternal::shockwave;
+                creators["cleave"] = &AiObjectContextInternal::cleave;
                 creators["concussion blow"] = &AiObjectContextInternal::concussion_blow;
             }
 
@@ -137,6 +138,7 @@ namespace ai
             static Action* devastate(PlayerbotAI* ai) { return new CastDevastateAction(ai); }
             static Action* last_stand(PlayerbotAI* ai) { return new CastLastStandAction(ai); }
             static Action* shockwave(PlayerbotAI* ai) { return new CastShockwaveAction(ai); }
+            static Action* cleave(PlayerbotAI* ai) { return new CastCleaveAction(ai); }
             static Action* concussion_blow(PlayerbotAI* ai) { return new CastConcussionBlowAction(ai); }
             static Action* taunt(PlayerbotAI* ai) { return new CastTauntAction(ai); }
             static Action* revenge(PlayerbotAI* ai) { return new CastRevengeAction(ai); }
