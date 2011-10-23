@@ -63,10 +63,15 @@ bool StayCircleAction::Execute(Event event)
 
     float range = 2.0f;
 
+    Unit* target = AI_VALUE(Unit*, "current target");
+    if (!target)
+        target = master;
+    else if (!ai->IsTank(bot))
+        range = sPlayerbotAIConfig.fleeDistance;
     
-    float x = master->GetPositionX();
-    float y = master->GetPositionY();
-    float z = master->GetPositionZ();
+    float x = target->GetPositionX();
+    float y = target->GetPositionY();
+    float z = target->GetPositionZ();
     float angle = GetFollowAngle();
 
     return MoveTo(bot->GetMapId(), x + cos(angle) * range, y + sin(angle) * range, z);

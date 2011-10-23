@@ -55,6 +55,7 @@ namespace ai
             creators["follow line"] = &MovementStrategyContext::follow_line;
             creators["stay"] = &MovementStrategyContext::stay;
             creators["goaway"] = &MovementStrategyContext::goaway;
+            creators["stay circle"] = &MovementStrategyContext::stay_circle;
         }
 
     private:
@@ -63,6 +64,7 @@ namespace ai
         static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineNonCombatStrategy(ai); }
         static Strategy* stay(PlayerbotAI* ai) { return new StayNonCombatStrategy(ai); }
         static Strategy* goaway(PlayerbotAI* ai) { return new GoAwayNonCombatStrategy(ai); }
+        static Strategy* stay_circle(PlayerbotAI* ai) { return new StayCircleStrategy(ai); }
     };
 
     class AssistStrategyContext : public NamedObjectContext<Strategy>

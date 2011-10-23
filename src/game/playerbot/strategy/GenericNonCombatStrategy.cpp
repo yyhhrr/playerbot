@@ -89,6 +89,11 @@ NextAction** FollowLineNonCombatStrategy::getDefaultActions()
 	return NextAction::array(0, new NextAction("follow line", 1.0f), NULL);
 }
 
+NextAction** StayCircleStrategy::getDefaultActions()
+{
+	return NextAction::array(0, new NextAction("stay circle", 50.0f), NULL);
+}
+
 
 NextAction** GoAwayNonCombatStrategy::getDefaultActions()
 {
