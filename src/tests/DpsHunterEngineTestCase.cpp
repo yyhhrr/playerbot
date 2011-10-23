@@ -16,6 +16,7 @@ class DpsHunterEngineTestCase : public EngineTestBase
   CPPUNIT_TEST( aoe );
   CPPUNIT_TEST( buff );
   CPPUNIT_TEST( incompatibles );
+  CPPUNIT_TEST( feign_death );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -75,11 +76,9 @@ protected:
     void summonPet()
     {
         tickWithNoPet();
-
-		tickWithPetDead();
 		tickWithPetLowHealth(30);
 
-		assertActions(">S:call pet>S:revive pet>Pet:mend pet");
+		assertActions(">S:call pet>Pet:mend pet");
 	}
 
 
@@ -132,6 +131,16 @@ protected:
         engine->addStrategies("bdps", "bspeed", "rnature", NULL);
 
         CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: rnature");
+    }
+
+    void feign_death()
+    {
+        tick();
+
+        tickWithMyAttackerCount(3);
+        tickWithMyAttackerCount(3);
+
+        assertActions(">T:hunter's mark>S:feign death>S:flee");
     }
 };
 

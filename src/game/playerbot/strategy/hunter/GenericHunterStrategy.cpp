@@ -13,6 +13,7 @@ public:
         creators["rapid fire"] = &rapid_fire;
         creators["boost"] = &rapid_fire;
         creators["aspect of the pack"] = &aspect_of_the_pack;
+        creators["feign death"] = &feign_death;
     }
 private:
     static ActionNode* rapid_fire(PlayerbotAI* ai)
@@ -27,6 +28,13 @@ private:
         return new ActionNode ("aspect of the pack",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("aspect of the cheetah"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* feign_death(PlayerbotAI* ai)
+    {
+        return new ActionNode ("feign death",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
             /*C*/ NULL);
     }
 };
@@ -45,8 +53,8 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("flee", 50.0f), new NextAction("concussive shot", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "hunters pet dead",
-        NextAction::array(0, new NextAction("revive pet", 60.0f), NULL)));
+        "medium threat",
+        NextAction::array(0, new NextAction("feign death", 52.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "hunters pet low health",
