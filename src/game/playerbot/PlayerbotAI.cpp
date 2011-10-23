@@ -386,6 +386,19 @@ void PlayerbotAI::ChangeEngine(BotState type)
     {
         currentEngine = engine;
         ReInitCurrentEngine();
+
+        switch (type)
+        {
+        case BOT_STATE_COMBAT:
+            sLog.outDebug("=== %s COMBAT ===", bot->GetName());
+            break;
+        case BOT_STATE_NON_COMBAT:
+            sLog.outDebug("=== %s NON-COMBAT ===", bot->GetName());
+            break;
+        case BOT_STATE_DEAD:
+            sLog.outDebug("=== %s DEAD ===", bot->GetName());
+            break;
+        }
     }
 }
 

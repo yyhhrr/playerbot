@@ -12,6 +12,7 @@ public:
     DpsHunterStrategyActionNodeFactory()
     {
         creators["aimed shot"] = &aimed_shot;
+        creators["chimera shot"] = &chimera_shot;
         creators["explosive shot"] = &explosive_shot;
         creators["concussive shot"] = &concussive_shot;
     }
@@ -19,6 +20,13 @@ private:
     static ActionNode* aimed_shot(PlayerbotAI* ai)
     {
         return new ActionNode ("aimed shot",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("chimera shot", 10.0f), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* chimera_shot(PlayerbotAI* ai)
+    {
+        return new ActionNode ("chimera shot",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("arcane shot", 10.0f), NULL),
             /*C*/ NULL);

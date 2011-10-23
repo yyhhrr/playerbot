@@ -11,16 +11,16 @@ namespace ai
     END_SPELL_ACTION()
 
     BEGIN_RANGED_SPELL_ACTION(CastArcaneShotAction, "arcane shot")
-        virtual bool isUseful();
     END_SPELL_ACTION()
 
     BEGIN_RANGED_SPELL_ACTION(CastExplosiveShotAction, "explosive shot")
-        virtual bool isUseful();
     END_SPELL_ACTION()
         
 
     BEGIN_RANGED_SPELL_ACTION(CastAimedShotAction, "aimed shot")
-        virtual bool isUseful();
+    END_SPELL_ACTION()
+
+    BEGIN_RANGED_SPELL_ACTION(CastChimeraShotAction, "chimera shot")
     END_SPELL_ACTION()
 
     BEGIN_RANGED_SPELL_ACTION(CastConcussiveShotAction, "concussive shot")

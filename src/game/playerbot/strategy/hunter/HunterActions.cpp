@@ -15,21 +15,6 @@ bool CastViperStingAction::isUseful()
     return AI_VALUE2(uint8, "mana", "self target") < 50 && AI_VALUE2(uint8, "mana", "current target") >= 30;
 }
 
-bool CastArcaneShotAction::isUseful()
-{
-    return AI_VALUE2(uint8, "health", "current target") >= 5 && AI_VALUE2(uint8, "mana", "self target") >= 30;
-}
-
-bool CastExplosiveShotAction::isUseful()
-{
-    return AI_VALUE2(uint8, "health", "current target") >= 25 && AI_VALUE2(uint8, "mana", "self target") >= 30;
-}
-
-bool CastAimedShotAction::isUseful()
-{
-    return AI_VALUE2(uint8, "health", "current target") >= 5 && AI_VALUE2(uint8, "mana", "self target") >= 30;
-}
-
 bool CastAspectOfTheCheetahAction::isUseful() 
 {
     return !ai->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
