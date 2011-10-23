@@ -94,6 +94,11 @@ NextAction** StayCircleStrategy::getDefaultActions()
 	return NextAction::array(0, new NextAction("stay circle", 50.0f), NULL);
 }
 
+NextAction** StayCombatStrategy::getDefaultActions()
+{
+	return NextAction::array(0, new NextAction("stay combat", 1.0f), NULL);
+}
+
 
 NextAction** GoAwayNonCombatStrategy::getDefaultActions()
 {
