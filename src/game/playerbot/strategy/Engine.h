@@ -51,12 +51,7 @@ namespace ai
     class Engine : public PlayerbotAIAware
     {
     public:
-        Engine(PlayerbotAI* ai, AiObjectContext *factory) : PlayerbotAIAware(ai), aiObjectContext(factory)
-        {
-            lastRelevance = 0.0f;
-            maxIterations = 10;
-			testMode = false;
-        }
+        Engine(PlayerbotAI* ai, AiObjectContext *factory);
 
 	    void Init();
         void addStrategy(string name);

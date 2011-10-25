@@ -70,7 +70,7 @@ private:
     {
         return new ActionNode ("mangle (bear)",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("maul"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("lacerate"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* maul(PlayerbotAI* ai)
@@ -98,7 +98,7 @@ private:
     {
         return new ActionNode ("lacerate",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("mangle (bear)"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("maul"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* growl(PlayerbotAI* ai)
@@ -124,7 +124,8 @@ BearTankDruidStrategy::BearTankDruidStrategy(PlayerbotAI* ai) : FeralDruidStrate
 
 NextAction** BearTankDruidStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("melee", 11.0f), new NextAction("lacerate", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("lacerate", 12.0f), new NextAction("mangle (bear)", 11.0f),
+            new NextAction("maul", 10.0f), new NextAction("faerie fire (feral)", 9.0f), NULL);
 }
 
 void BearTankDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -144,12 +145,12 @@ void BearTankDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("growl", 29.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "light aoe",
-        NextAction::array(0, new NextAction("demoralizing roar", 20.0f), NULL)));
+        "medium aoe",
+        NextAction::array(0, new NextAction("demoralizing roar", 29.0f), new NextAction("swipe (bear)", 28.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "medium aoe",
-        NextAction::array(0, new NextAction("swipe (bear)", 29.0f), NULL)));
+        "light aoe",
+        NextAction::array(0, new NextAction("swipe (bear)", 20.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "bash",

@@ -6,6 +6,13 @@
 using namespace ai;
 using namespace std;
 
+Engine::Engine(PlayerbotAI* ai, AiObjectContext *factory) : PlayerbotAIAware(ai), aiObjectContext(factory)
+{
+    lastRelevance = 0.0f;
+    maxIterations = 50;
+    testMode = false;
+}
+
 void ActionExecutionListeners::Before(Action* action, Event event)
 {
     for (list<ActionExecutionListener*>::iterator i = listeners.begin(); i!=listeners.end(); i++)
@@ -109,76 +116,83 @@ bool Engine::DoNextAction(Unit* unit, int depth)
     ProcessTriggers();
 
     int iterations = 0;
-    do {
-        basket = queue.Peek();
-        if (basket) {
-			if (++iterations > maxIterations)
-				break;
+    while (++iterations < maxIterations)
+    {
+        do {
+            basket = queue.Peek();
+            if (basket) {
+                if (++iterations > maxIterations)
+                    break;
 
-            float relevance = basket->getRelevance(); // just for reference
-            bool skipPrerequisites = basket->isSkipPrerequisites();
-            Event event = basket->getEvent();
-            // NOTE: queue.Pop() deletes basket
-            ActionNode* actionNode = queue.Pop();
-            Action* action = InitializeAction(actionNode);
+                float relevance = basket->getRelevance(); // just for reference
+                bool skipPrerequisites = basket->isSkipPrerequisites();
+                Event event = basket->getEvent();
+                // NOTE: queue.Pop() deletes basket
+                ActionNode* actionNode = queue.Pop();
+                Action* action = InitializeAction(actionNode);
 
-			if (!action)
-			{
-			    LogAction("A:%s - UNKNOWN", actionNode->getName().c_str());
-			}
-			else if (action->isUseful())
-			{
-                if (action->isPossible()) 
-				{
-                    if ((!skipPrerequisites || lastRelevance-relevance > 0.04) &&
-                            MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.02, false, event)) 
-					{
-                        PushAgain(actionNode, relevance + 0.01, event);
-                        continue;
-                    }
+                if (!action)
+                {
+                    LogAction("A:%s - UNKNOWN", actionNode->getName().c_str());
+                }
+                else if (action->isUseful())
+                {
+                    if (action->isPossible())
+                    {
+                        if ((!skipPrerequisites || lastRelevance-relevance > 0.04) &&
+                                MultiplyAndPush(actionNode->getPrerequisites(), relevance + 0.02, false, event))
+                        {
+                            PushAgain(actionNode, relevance + 0.01, event);
+                            continue;
+                        }
 
-                    actionExecuted = ListenAndExecute(action, event);
+                        actionExecuted = ListenAndExecute(action, event);
 
-                    if (actionExecuted) 
-					{
-                        LogAction("A:%s - OK", action->getName().c_str());
-                        MultiplyAndPush(actionNode->getContinuers(), 0, false, event);
-                        lastRelevance = relevance;
-                        delete actionNode;
-                        break;
+                        if (actionExecuted)
+                        {
+                            LogAction("A:%s - OK", action->getName().c_str());
+                            MultiplyAndPush(actionNode->getContinuers(), 0, false, event);
+                            lastRelevance = relevance;
+                            delete actionNode;
+                            break;
+                        }
+                        else
+                        {
+                            MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
+                            LogAction("A:%s - FAILED", action->getName().c_str());
+                        }
                     }
                     else 
-					{
+                    {
                         MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
-                        LogAction("A:%s - FAILED", action->getName().c_str());
+                        LogAction("A:%s - IMPOSSIBLE", action->getName().c_str());
                     }
                 }
                 else 
-				{
-                    MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
-                    LogAction("A:%s - IMPOSSIBLE", action->getName().c_str());
+                {
+                    lastRelevance = relevance;
+                    LogAction("A:%s - USELESS", action->getName().c_str());
                 }
+                delete actionNode;
             }
-            else 
-			{
-                lastRelevance = relevance;
-                LogAction("A:%s - USELESS", action->getName().c_str());
-            }
-            delete actionNode;
         }
-    }
-    while (basket);
+        while (basket);
 
-    if (!basket) 
-	{
-        lastRelevance = 0.0f;
-        PushDefaultActions();
-        if (queue.Peek() && depth < 2)
-            return DoNextAction(unit, depth + 1);
-    }
+        if (!basket)
+        {
+            lastRelevance = 0.0f;
+            PushDefaultActions();
+            if (queue.Peek() && depth < 2)
+                return DoNextAction(unit, depth + 1);
+        }
 
-    if (time(0) - currentTime > 1) {
-        LogAction("too long execution");
+        if (actionExecuted)
+            break;
+
+        if (time(0) - currentTime > 1) {
+            LogAction("too long execution");
+            break;
+        }
     }
 
     return actionExecuted;

@@ -7,10 +7,9 @@ using namespace ai;
 class BearTankDruidTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( BearTankDruidTestCase );
-        CPPUNIT_TEST( druidMustDoMauls );
-        CPPUNIT_TEST( combatVsMelee );
+        CPPUNIT_TEST( startMeleeCombat );
+        CPPUNIT_TEST( meleeCombat );
         CPPUNIT_TEST( druidMustHoldAggro );
-        CPPUNIT_TEST( druidMustDemoralizeAttackers );
         CPPUNIT_TEST( bearFormIfDireNotAvailable );
         CPPUNIT_TEST( healHimself );
         CPPUNIT_TEST( intensiveHealing );
@@ -32,6 +31,7 @@ public:
 
 		addAura("thorns");
         addTargetAura("faerie fire (feral)");
+        set<uint8>("rage", "self target", 100);
     }
 
 protected:
@@ -42,56 +42,16 @@ protected:
 		assertActions(">S:bear form");
     }
 
-    void druidMustDemoralizeAttackers()
-    {
-        tick();
-
-		spellAvailable("dire bear form");
-		removeAura("dire bear form");
-
-		tickWithAttackerCount(3);
-		addAura("dire bear form");
-		tickWithAttackerCount(3);
-
-		tickInMeleeRange();
-
-		tick();
-
-		assertActions(">S:dire bear form>S:dire bear form>T:reach melee>T:swipe (bear)>T:demoralizing roar");
-    }
-
     void druidMustHoldAggro()
     {
-        tick();
         addAura("dire bear form");
 
 		tickWithNoAggro();
 
-        tick();
-        tick();
-        tick();
-
-		assertActions(">S:dire bear form>T:growl>T:feral charge - bear>T:melee>T:lacerate");
+		assertActions(">T:growl");
     }
 
-    void druidMustDoMauls()
-    {
-        tick();
-        addAura("dire bear form");
-
-		tickInMeleeRange();
-		tick();
-
-		tickWithRage(21);
-		tickWithRage(21);
-		tickWithRage(21);
-
-		tickWithSpellAvailable("maul");
-
-		assertActions(">S:dire bear form>T:melee>T:lacerate>T:melee>T:mangle (bear)>T:melee>T:maul");
-    }
-
-    void combatVsMelee()
+    void startMeleeCombat()
     {
         removeTargetAura("faerie fire (feral)");
 
@@ -101,37 +61,53 @@ protected:
         tick();
         tickInMeleeRange();
 
-		tickOutOfMeleeRange();
+        tickOutOfMeleeRange();
+        tickInMeleeRange();
+
+        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:lacerate");
+    }
+
+    void meleeCombat()
+    {
+        addAura("dire bear form");
+
+        tickInMeleeRange();
+		tick();
 		tick();
 		tick();
 
-		tickWithRage(41);
-		tickWithRage(61);
-        tickWithRage(61);
-        tickWithRage(61);
+		tickWithSpellAvailable("lacerate");
+		tick();
+		tickWithSpellAvailable("lacerate");
+        tick();
 
-        assertActions(">S:dire bear form>T:feral charge - bear>T:faerie fire (feral)>T:reach melee>T:melee>T:lacerate>T:melee>T:mangle (bear)>T:melee>T:maul");
+        spellAvailable("lacerate");
+        spellAvailable("mangle (bear)");
+        spellAvailable("maul");
+        spellAvailable("faerie fire (feral)");
+
+		tickWithSpellAvailable("lacerate");
+		tickWithSpellAvailable("lacerate");
+		tickWithSpellAvailable("lacerate");
+		tickWithSpellAvailable("lacerate");
+		tickWithSpellAvailable("lacerate");
+
+        assertActions(">T:lacerate>T:mangle (bear)>T:maul>T:faerie fire (feral)>T:lacerate>T:melee>T:lacerate>T:melee>T:faerie fire (feral)>T:lacerate>T:mangle (bear)>T:maul>T:lacerate");
     }
 
     void healHimself()
     {
-        tick();
         addAura("dire bear form");
 
-		tickInMeleeRange();
-		tick();
-
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 
-        tick();
-		addAura("bear form");
-        tick();
+		addAura("dire bear form");
 
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
 
-        addAura("bear form");
+        addAura("dire bear form");
         spellAvailable("healing touch");
         spellAvailable("regrowth");
         spellAvailable("rejuvenation");
@@ -142,7 +118,7 @@ protected:
         tickWithLowHealth(1);
         tickWithLowHealth(1);
 
-        assertActions(">S:dire bear form>T:melee>T:lacerate>S:caster form>S:regrowth>S:bear form>T:melee>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:caster form>S:rejuvenation>S:regrowth>S:healing touch");
+        assertActions(">S:caster form>S:regrowth>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:caster form>S:rejuvenation>S:regrowth>S:healing touch");
     }
 
     void intensiveHealing()
@@ -195,15 +171,11 @@ protected:
     }
     void interruptSpells()
     {
-        tick();
         addAura("dire bear form");
-
-		tickInMeleeRange();
-		tick();
-
+        tickInMeleeRange();
 		tickWithTargetIsCastingNonMeleeSpell();
 
-        assertActions(">S:dire bear form>T:melee>T:lacerate>T:bash");
+        assertActions(">T:lacerate>T:bash");
     }
 	void buff()
 	{
@@ -232,10 +204,12 @@ protected:
     {
         addAura("dire bear form");
 		tickInMeleeRange();
-		tick();
+		tickWithAttackerCount(2);
+		tickWithAttackerCount(3);
+        spellAvailable("swipe (bear)");
 		tickWithAttackerCount(3);
 
-		assertActions(">T:melee>T:lacerate>T:swipe (bear)");
+		assertActions(">T:lacerate>T:swipe (bear)>T:demoralizing roar>T:swipe (bear)");
     }
 
     void incompatibles()
