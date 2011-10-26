@@ -25,9 +25,9 @@ bool PlayerbotAIConfig::Initialize()
 	if (!enabled)
 		sLog.outString("AI Playerbot is Disabled in aiplayerbot.conf");
     
-    globalCoolDown = (uint32) config.GetIntDefault("AiPlayerbot.GlobalCooldown", 1000);
+    globalCoolDown = (uint32) config.GetIntDefault("AiPlayerbot.GlobalCooldown", 1500);
     teleportDelay = config.GetIntDefault("AiPlayerbot.TeleportDelay", 10000);
-    reactDelay = (uint32) config.GetIntDefault("AiPlayerbot.ReactDelay", 100);
+    reactDelay = (uint32) config.GetIntDefault("AiPlayerbot.ReactDelay", 250);
     
     sightDistance = config.GetFloatDefault("AiPlayerbot.SightDistance", 40.0f);
     spellDistance = config.GetFloatDefault("AiPlayerbot.SpellDistance", 25.0f);

@@ -278,7 +278,7 @@ void PlayerbotAI::HandleBotOutgoingPacket(const WorldPacket& packet)
 
             uint32 delaytime;
             p >> delaytime;
-            if (delaytime < sPlayerbotAIConfig.globalCoolDown)
+            if (delaytime <= 1000)
                 IncreaseNextCheckDelay(delaytime);
             return;
         }
