@@ -46,15 +46,11 @@ protected:
 
 	void healHimself()
 	{
-		tickInMeleeRange();
-
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 
-		tick();
 		addAura("cat form");
-		tick();
 
         spellAvailable("healing touch");
         spellAvailable("regrowth");
@@ -69,9 +65,8 @@ protected:
         tickWithLowHealth(1);
         tickWithLowHealth(1);
         tickWithLowHealth(1);
-        tickWithLowHealth(1);
 
-        assertActions(">T:rake>S:caster form>S:regrowth>S:healing touch>S:cat form>T:mangle (cat)>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:rejuvenation>S:regrowth>S:healing touch");
+        assertActions(">S:caster form>S:regrowth>S:healing touch>S:caster form>S:regrowth>S:survival instincts>S:barskin>S:regrowth>S:healing touch");
 	}
 
     void intensiveHealing()
@@ -83,7 +78,6 @@ protected:
 
     void healOthers()
     {
-        tickInMeleeRange();
         addAura("cat form");
 
         tickWithPartyLowHealth(59);
@@ -105,7 +99,7 @@ protected:
         tickWithPartyLowHealth(1);
         tickWithPartyLowHealth(1);
 
-        assertActions(">T:rake>S:caster form>P:regrowth on party>P:healing touch on party>S:caster form>P:healing touch on party>S:caster form>P:rejuvenation on party>P:regrowth on party");
+        assertActions(">S:caster form>P:regrowth on party>P:healing touch on party>S:caster form>P:regrowth on party>S:caster form>P:regrowth on party>P:healing touch on party");
     }
 
     void boost()

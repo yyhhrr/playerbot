@@ -102,8 +102,6 @@ protected:
 		tickWithLowHealth(59);
 		tickWithLowHealth(59);
 
-		addAura("dire bear form");
-
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
 
@@ -116,9 +114,8 @@ protected:
         tickWithLowHealth(1);
         tickWithLowHealth(1);
         tickWithLowHealth(1);
-        tickWithLowHealth(1);
 
-        assertActions(">S:caster form>S:regrowth>S:caster form>S:healing touch>S:survival instincts>S:barskin>S:caster form>S:rejuvenation>S:regrowth>S:healing touch");
+        assertActions(">T:reach melee>T:lacerate>S:caster form>S:regrowth>S:survival instincts>S:barskin>S:caster form>S:regrowth>S:healing touch");
     }
 
     void intensiveHealing()
@@ -149,7 +146,7 @@ protected:
         tickWithPartyLowHealth(1);
         tickWithPartyLowHealth(1);
 
-		assertActions(">S:dire bear form>S:caster form>P:healing touch on party>S:caster form>P:rejuvenation on party>P:regrowth on party");
+		assertActions(">S:dire bear form>S:caster form>P:regrowth on party>S:caster form>P:regrowth on party>P:healing touch on party");
     }
     void curePoison()
     {
