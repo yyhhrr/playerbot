@@ -104,7 +104,6 @@ namespace ai
         float lastRelevance;
 
     public:
-        int maxIterations;
 		bool testMode;
 
     private:

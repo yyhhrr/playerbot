@@ -22,6 +22,10 @@ ConfVersion=2010102201
 #        but makes bots lazy
 #    Default 100 (0.1 sec)
 #
+#    AiPlayerbot.IterationsPerTickReactDelay
+#        Iterations count that ai engine computes per tick
+#    Default 10
+#
 #    AiPlayerbot.SightDistance
 #        Distance to game objects, targets, etc. bot can interact to
 #    Default 35
@@ -84,6 +88,8 @@ AiPlayerbot.RandomBotAccounts=11,12
 
 AiPlayerbot.GlobalCooldown=1000
 AiPlayerbot.ReactDelay=100
+
+AiPlayerbot.IterationsPerTick=10
 
 AiPlayerbot.SightDistance=35
 AiPlayerbot.SpellDistance=25

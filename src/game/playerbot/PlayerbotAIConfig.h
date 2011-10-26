@@ -23,6 +23,7 @@ public:
     uint32 criticalHealth, lowHealth, mediumHealth, almostFullHealth;
     uint32 pvpChance;
     uint32 randomGearQuality;
+    uint32 iterationsPerTick;
 
 private:
     Config config;

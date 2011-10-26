@@ -44,6 +44,8 @@ bool PlayerbotAIConfig::Initialize()
     pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 5);
     randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);
 
+    iterationsPerTick = config.GetIntDefault("AiPlayerbot.IterationsPerTick", 10);
+
     allowGuildBots = config.GetBoolDefault("AiPlayerbot.AllowGuildBots", true);
     string accountStr = config.GetStringDefault("AiPlayerbot.RandomBotAccounts", "");
     vector<string> accounts = split(accountStr, ',');

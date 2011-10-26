@@ -11,6 +11,7 @@
 #include "../game/playerbot/strategy/hunter/HunterAiObjectContext.h"
 #include "../game/playerbot/strategy/priest/PriestAiObjectContext.h"
 #include "../game/playerbot/strategy/shaman/ShamanAiObjectContext.h"
+#include "../game/playerbot/PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -51,64 +52,73 @@ protected:
     void druidBear()
     {
         setupEngine(new DruidAiObjectContext(ai), "tank", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void paladin()
     {
         setupEngine(new PaladinAiObjectContext(ai), "tank", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void priest()
     {
         setupEngine(new PriestAiObjectContext(ai), "heal", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void mage()
     {
         setupEngine(new MageAiObjectContext(ai), "frost", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void hunter()
     {
         setupEngine(new HunterAiObjectContext(ai), "dps", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void warrior()
     {
         setupEngine(new WarriorAiObjectContext(ai), "tank", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void druidCat()
     {
         setupEngine(new DruidAiObjectContext(ai), "dps", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void warlock()
     {
         setupEngine(new WarlockAiObjectContext(ai), "tank", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 
     void shaman()
     {
         setupEngine(new ShamanAiObjectContext(ai), "heal", NULL);
-        engine->maxIterations = 100;
+        sPlayerbotAIConfig.iterationsPerTick = 100;
         run();
+        sPlayerbotAIConfig.iterationsPerTick = 10;
     }
 };
 
