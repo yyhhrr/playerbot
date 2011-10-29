@@ -43,7 +43,7 @@ private:
     {
         return new ActionNode ("revenge",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("slam"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* devastate(PlayerbotAI* ai)
@@ -51,7 +51,7 @@ private:
         return new ActionNode ("devastate",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL),
-            /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
+            /*C*/ NULL);
     }
     static ActionNode* shockwave(PlayerbotAI* ai)
     {
@@ -69,7 +69,7 @@ TankWarriorStrategy::TankWarriorStrategy(PlayerbotAI* ai) : GenericWarriorStrate
 
 NextAction** TankWarriorStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("melee", 10.0f), new NextAction("devastate", 10.0f), new NextAction("revenge", 10.0f), NULL);
 }
 
 void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -103,6 +103,10 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"medium aoe",
 		NextAction::array(0, new NextAction("shockwave", 24.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		"light aoe",
+		NextAction::array(0, new NextAction("cleave", 23.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"concussion blow",
