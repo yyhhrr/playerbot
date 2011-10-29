@@ -65,6 +65,13 @@ bool AttackAction::Attack(Unit* target)
     if (bot->GetDistance(target) <= ATTACK_DISTANCE)
         mm.Clear();
 
+    context->GetValue<Unit*>("current target")->Set(target);
+    context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
+
+    bool alreadyAttacking = (bot->getVictim() == target && bot->hasUnitState(UNIT_STAT_MELEE_ATTACKING));
+    if (alreadyAttacking)
+        return false;
+
     bot->Attack(target, true);
 
     Pet* pet = bot->GetPet();
@@ -74,10 +81,6 @@ bool AttackAction::Attack(Unit* target)
         if (creatureAI)
             creatureAI->AttackStart(target);
     }
-
-
-    context->GetValue<Unit*>("current target")->Set(target);
-    context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
     return true;
 }
