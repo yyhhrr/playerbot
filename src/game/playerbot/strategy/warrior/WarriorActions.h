@@ -128,8 +128,10 @@ namespace ai
         virtual NextAction** getPrerequisites();
     END_SPELL_ACTION()
 
-    BEGIN_MELEE_SPELL_ACTION(CastDemoralizingShoutAction, "demoralizing shout")
-    END_SPELL_ACTION()
+    class CastDemoralizingShoutAction : public CastDebuffSpellAction {
+    public:
+        CastDemoralizingShoutAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "demoralizing shout") {}
+    };
 
     BEGIN_MELEE_SPELL_ACTION(CastChallengingShoutAction, "challenging shout")
     END_SPELL_ACTION()
