@@ -23,6 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImportLog {
 
+    protected static final int MAX_BUFFER_SIZE = 500000;
+
     @Inject
     private LogDao dao;
 
@@ -59,7 +61,7 @@ public class ImportLog {
         public void run() {
             while (!merged) {
                 int size = buffer.size();
-                System.out.println(size + " updates left");
+                System.out.println(size + " updates left, " + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "M");
 
                 try {
                     Thread.sleep(1000);
@@ -129,6 +131,13 @@ public class ImportLog {
                 }
                 
                 previoslyParsed = log.getDate();
+                
+                while (buffer.size() > MAX_BUFFER_SIZE) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                }
 
                 synchronized (buffer) {
                     buffer.add(log);
