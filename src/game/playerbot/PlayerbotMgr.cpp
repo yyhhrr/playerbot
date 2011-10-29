@@ -57,7 +57,7 @@ void PlayerbotMgr::UpdateAIInternal(uint32 elapsed)
     if (sharedAi)
         sharedAi->UpdateAI(elapsed);
 
-    SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
+    SetNextCheckDelay(sPlayerbotAIConfig.reactDelay);
 }
 
 void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)

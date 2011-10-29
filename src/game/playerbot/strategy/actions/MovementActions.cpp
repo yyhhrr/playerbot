@@ -182,8 +182,8 @@ void MovementAction::WaitForReach(float distance)
 {
     float delay = 1000.0f * ceil(distance / bot->GetSpeed(MOVE_RUN));
 
-    if (delay < sPlayerbotAIConfig.globalCoolDown)
-        delay = sPlayerbotAIConfig.globalCoolDown;
+    if (delay < sPlayerbotAIConfig.reactDelay)
+        delay = sPlayerbotAIConfig.reactDelay;
 
     if (delay > 5000)
         delay = 5000;
