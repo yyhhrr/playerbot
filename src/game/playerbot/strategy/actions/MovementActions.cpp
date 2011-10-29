@@ -42,7 +42,6 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     bot->UpdateGroundPositionZ(x, y, z);
 
     MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
 
     mm.MovePoint(mapId, x, y, z);
     WaitForReach(bot->GetDistance(x, y, z));
@@ -164,11 +163,10 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     if (!IsMovingAllowed(target))
         return false;
 
-    if (target->IsFriendlyTo(bot) && bot->IsMounted())
+    if (target->IsFriendlyTo(bot) && bot->IsMounted() && AI_VALUE(list<ObjectGuid>, "possible targets").empty())
         distance += angle;
 
     MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
     mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
