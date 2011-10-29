@@ -79,11 +79,12 @@ protected:
 
         tick(); // melee
 
-		tickWithAttackerCount(3); // shockwave
-		tickWithAttackerCount(2); // demoralizing shout
-		tickWithAttackerCount(2); // thunder clap
+		tickWithAttackerCount(3);
+		tickWithAttackerCount(3);
+		tickWithAttackerCount(2);
+		tickWithAttackerCount(2);
 
-        assertActions(">T:melee>T:shockwave>T:demoralizing shout>T:thunder clap");
+        assertActions(">T:melee>T:shockwave>T:cleave>T:demoralizing shout>T:thunder clap");
     }
 
     void warriorMustHoldAggro()

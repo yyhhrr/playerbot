@@ -15,6 +15,7 @@ public:
         creators["rend"] = &rend;
         creators["revenge"] = &revenge;
         creators["devastate"] = &devastate;
+        creators["shockwave"] = &shockwave;
     }
 private:
     static ActionNode* melee(PlayerbotAI* ai)
@@ -51,6 +52,13 @@ private:
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("sunder armor"), NULL),
             /*C*/ NextAction::array(0, new NextAction("revenge", 10.0f), NULL));
+    }
+    static ActionNode* shockwave(PlayerbotAI* ai)
+    {
+        return new ActionNode ("shockwave",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("cleave"), NULL),
+            /*C*/ NULL);
     }
 };
 
