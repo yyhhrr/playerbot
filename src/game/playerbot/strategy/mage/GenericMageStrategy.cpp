@@ -16,6 +16,7 @@ public:
         creators["frost nova"] = &frost_nova;
         creators["icy veins"] = &icy_veins;
         creators["combustion"] = &combustion;
+        creators["dragon's breath"] = &dragons_breath;
     }
 private:
     static ActionNode* frostbolt(PlayerbotAI* ai)
@@ -60,6 +61,13 @@ private:
             /*A*/ NULL,
             /*C*/ NULL);
     }
+    static ActionNode* dragons_breath(PlayerbotAI* ai)
+    {
+        return new ActionNode ("dragon's breath",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("fire nova"), NULL),
+            /*C*/ NULL);
+    }
 };
 
 GenericMageStrategy::GenericMageStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
@@ -98,4 +106,8 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"spellsteal",
 		NextAction::array(0, new NextAction("spellsteal", 40.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "medium threat",
+        NextAction::array(0, new NextAction("invisibility", 60.0f), NULL)));
 }

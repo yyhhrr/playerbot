@@ -10,8 +10,11 @@ class FireMageTestCase : public EngineTestBase
 {
   CPPUNIT_TEST_SUITE( FireMageTestCase );
   CPPUNIT_TEST( combatVsMelee );
+  CPPUNIT_TEST( avoid_melee );
+  CPPUNIT_TEST( panic );
   CPPUNIT_TEST( boost );
   CPPUNIT_TEST( aoe );
+  CPPUNIT_TEST( invisibility );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -25,48 +28,64 @@ protected:
  	void combatVsMelee()
 	{
         tick();
+		addTargetAura("living bomb");
+
+        tick();
 		addTargetAura("pyroblast");
 
         tick();
-		addTargetAura("fireball");
-
 		tick();
 		tick();
-        
-		tickInMeleeRange();
-		tickInMeleeRange();
 
-		spellAvailable("fire blast");
-		spellAvailable("scorch");
-		tickInSpellRange();
+        addAura("hot streak");
+        spellAvailable("pyroblast");
         tick();
         tick();
 
-		tickWithLowHealth(19);
-
-		addAura("hot streak");
-		spellAvailable("pyroblast");
-		tick();
-
-		assertActions(">T:pyroblast>T:fireball>T:fire blast>T:scorch>T:frost nova>S:flee>T:fire blast>T:scorch>T:shoot>S:ice block>T:pyroblast");
+        assertActions(">T:living bomb>T:pyroblast>T:scorch>T:fireball>T:fire blast>T:pyroblast>T:shoot");
 	}
+
+ 	void avoid_melee()
+ 	{
+		tickInMeleeRange();
+		tickInMeleeRange();
+
+		spellAvailable("flamestrike");
+		tickInMeleeRange();
+		tickInMeleeRange();
+
+		tickInMeleeRange();
+		tickInMeleeRange();
+
+		assertActions(">T:dragon's breath>T:flamestrike>T:fire nova>T:flamestrike>T:frost nova>S:flee");
+	}
+
+ 	void panic()
+ 	{
+        tickWithLowHealth(19);
+
+        assertActions(">S:ice block");
+ 	}
 
     void boost() 
     {
-        tick();
 		tickWithBalancePercent(1);
-        tick();
 
-		assertActions(">T:pyroblast>S:combustion>T:fireball");
+		assertActions(">S:combustion");
     }
 
     void aoe() 
     {
-        tick();
 		tickWithAttackerCount(3);
-        tick();
 
-		assertActions(">T:pyroblast>T:flamestrike>T:fireball");
+		assertActions(">T:flamestrike");
+    }
+
+    void invisibility()
+    {
+		tickWithMyAttackerCount(3);
+
+		assertActions(">S:invisibility");
     }
 };
 

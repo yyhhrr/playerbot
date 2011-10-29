@@ -136,4 +136,28 @@ namespace ai
 	public:
 		CastSpellstealAction(PlayerbotAI* ai) : CastSpellAction(ai, "spellsteal") {}
 	};
+
+	class CastLivingBombAction : public CastDebuffSpellAction
+	{
+	public:
+	    CastLivingBombAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "living bomb") {}
+	};
+
+	class CastDragonsBreathAction : public CastSpellAction
+	{
+	public:
+	    CastDragonsBreathAction(PlayerbotAI* ai) : CastSpellAction(ai, "dragon's breath") {}
+	};
+
+	class CastFireNovaAction : public CastSpellAction
+	{
+	public:
+	    CastFireNovaAction(PlayerbotAI* ai) : CastSpellAction(ai, "fire nova") {}
+	};
+
+	class CastInvisibilityAction : public CastBuffSpellAction
+	{
+	public:
+	    CastInvisibilityAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "invisibility") {}
+	};
 }

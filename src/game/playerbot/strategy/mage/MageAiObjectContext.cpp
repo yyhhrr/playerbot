@@ -74,6 +74,7 @@ namespace ai
                 creators["polymorph"] = &TriggerFactoryInternal::polymorph;
                 creators["spellsteal"] = &TriggerFactoryInternal::spellsteal;
                 creators["hot streak"] = &TriggerFactoryInternal::hot_streak;
+                creators["living bomb"] = &TriggerFactoryInternal::living_bomb;
 
             }
 
@@ -91,6 +92,7 @@ namespace ai
             static Trigger* counterspell(PlayerbotAI* ai) { return new CounterspellInterruptSpellTrigger(ai); }
             static Trigger* polymorph(PlayerbotAI* ai) { return new PolymorphTrigger(ai); }
             static Trigger* spellsteal(PlayerbotAI* ai) { return new SpellstealTrigger(ai); }
+            static Trigger* living_bomb(PlayerbotAI* ai) { return new LivingBombTrigger(ai); }
         };
     };
 };
@@ -130,6 +132,10 @@ namespace ai
                 creators["ice block"] = &AiObjectContextInternal::ice_block;
                 creators["polymorph"] = &AiObjectContextInternal::polymorph;
                 creators["spellsteal"] = &AiObjectContextInternal::spellsteal;
+                creators["living bomb"] = &AiObjectContextInternal::living_bomb;
+                creators["dragon's breath"] = &AiObjectContextInternal::dragons_breath;
+                creators["fire nova"] = &AiObjectContextInternal::fire_nova;
+                creators["invisibility"] = &AiObjectContextInternal::invisibility;
             }
 
         private:
@@ -156,6 +162,10 @@ namespace ai
             static Action* ice_block(PlayerbotAI* ai) { return new CastIceBlockAction(ai); }
             static Action* polymorph(PlayerbotAI* ai) { return new CastPolymorphAction(ai); }
             static Action* spellsteal(PlayerbotAI* ai) { return new CastSpellstealAction(ai); }
+            static Action* living_bomb(PlayerbotAI* ai) { return new CastLivingBombAction(ai); }
+            static Action* dragons_breath(PlayerbotAI* ai) { return new CastDragonsBreathAction(ai); }
+            static Action* fire_nova(PlayerbotAI* ai) { return new CastFireNovaAction(ai); }
+            static Action* invisibility(PlayerbotAI* ai) { return new CastInvisibilityAction(ai); }
         };
     };
 };
