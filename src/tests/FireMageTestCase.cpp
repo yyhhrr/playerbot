@@ -57,7 +57,7 @@ protected:
 		tickInMeleeRange();
 		tickInMeleeRange();
 
-		assertActions(">T:dragon's breath>T:flamestrike>T:fire nova>T:flamestrike>T:frost nova>S:flee");
+		assertActions(">T:dragon's breath>T:flamestrike>T:blast wave>T:flamestrike>T:frost nova>S:flee");
 	}
 
  	void panic()

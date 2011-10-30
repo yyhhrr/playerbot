@@ -134,7 +134,7 @@ namespace ai
                 creators["spellsteal"] = &AiObjectContextInternal::spellsteal;
                 creators["living bomb"] = &AiObjectContextInternal::living_bomb;
                 creators["dragon's breath"] = &AiObjectContextInternal::dragons_breath;
-                creators["fire nova"] = &AiObjectContextInternal::fire_nova;
+                creators["blast wave"] = &AiObjectContextInternal::blast_wave;
                 creators["invisibility"] = &AiObjectContextInternal::invisibility;
             }
 
@@ -164,7 +164,7 @@ namespace ai
             static Action* spellsteal(PlayerbotAI* ai) { return new CastSpellstealAction(ai); }
             static Action* living_bomb(PlayerbotAI* ai) { return new CastLivingBombAction(ai); }
             static Action* dragons_breath(PlayerbotAI* ai) { return new CastDragonsBreathAction(ai); }
-            static Action* fire_nova(PlayerbotAI* ai) { return new CastFireNovaAction(ai); }
+            static Action* blast_wave(PlayerbotAI* ai) { return new CastBlastWaveAction(ai); }
             static Action* invisibility(PlayerbotAI* ai) { return new CastInvisibilityAction(ai); }
         };
     };

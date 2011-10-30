@@ -2,7 +2,7 @@ SELECT text, status, COUNT(date) AS REPEATED
 FROM `playerbot_log`.`log` 
 WHERE 
     event = 'A'
-    AND bot = 'Juve'
+    AND bot = 'Eve'
     AND status = 'OK' -- IN ('OK', 'FAILED', 'IMPOSSIBLE', 'USELESS')
     
     -- Serpenshrine Cavern
@@ -25,7 +25,14 @@ WHERE
     -- AND date BETWEEN '2011-10-29 13:38:27' AND '2011-10-29 14:52:19'
     
     -- Auchenai Crypts
-    AND date BETWEEN '2011-10-29 16:24:43' AND '2011-10-29 17:06:53'
+    -- AND date BETWEEN '2011-10-29 16:24:43' AND '2011-10-29 17:06:53'
+
+    -- Botanica
+    -- AND date BETWEEN '2011-10-30 08:30:43' AND '2011-10-30 09:27:53'
+    
+    -- Eye
+    AND date BETWEEN '2011-10-30 14:45:24' AND '2011-10-30 15:53:15'
+
 
 GROUP BY text, status
 ORDER BY REPEATED DESC;

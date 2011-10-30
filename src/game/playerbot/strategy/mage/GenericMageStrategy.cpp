@@ -65,7 +65,7 @@ private:
     {
         return new ActionNode ("dragon's breath",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("fire nova"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("blast wave"), NULL),
             /*C*/ NULL);
     }
 };

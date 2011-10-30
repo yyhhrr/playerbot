@@ -149,10 +149,10 @@ namespace ai
 	    CastDragonsBreathAction(PlayerbotAI* ai) : CastSpellAction(ai, "dragon's breath") {}
 	};
 
-	class CastFireNovaAction : public CastSpellAction
+	class CastBlastWaveAction : public CastSpellAction
 	{
 	public:
-	    CastFireNovaAction(PlayerbotAI* ai) : CastSpellAction(ai, "fire nova") {}
+	    CastBlastWaveAction(PlayerbotAI* ai) : CastSpellAction(ai, "blast wave") {}
 	};
 
 	class CastInvisibilityAction : public CastBuffSpellAction
