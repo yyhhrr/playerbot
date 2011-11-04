@@ -28,6 +28,8 @@ public:
         creators["lesser heal on party"] = &lesser_heal_on_party;
         creators["flash heal"] = &flash_heal;
         creators["flash heal on party"] = &flash_heal_on_party;
+        creators["psychic scream"] = &psychic_scream;
+        creators["fade"] = &fade;
     }
 private:
     static ActionNode* inner_fire(PlayerbotAI* ai)
@@ -156,6 +158,20 @@ private:
             /*A*/ NextAction::array(0, new NextAction("greater heal on party"), NULL),
             /*C*/ NULL);
     }
+    static ActionNode* psychic_scream(PlayerbotAI* ai)
+    {
+        return new ActionNode ("psychic scream",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("fade"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* fade(PlayerbotAI* ai)
+    {
+        return new ActionNode ("fade",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*C*/ NULL);
+    }
 };
 
 GenericPriestStrategy::GenericPriestStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
@@ -210,5 +226,9 @@ void GenericPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "enemy too close",
         NextAction::array(0, new NextAction("fade", 50.0f), new NextAction("flee", 49.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "medium threat",
+        NextAction::array(0, new NextAction("psychic scream", 50.0f), NULL)));
 
 }

@@ -31,7 +31,11 @@ WHERE
     -- AND date BETWEEN '2011-10-30 08:30:43' AND '2011-10-30 09:27:53'
     
     -- Eye
-    AND date BETWEEN '2011-10-30 14:45:24' AND '2011-10-30 15:53:15'
+    -- AND date BETWEEN '2011-10-30 14:45:24' AND '2011-10-30 15:53:15'
+    
+    -- Stratholme
+    AND date BETWEEN '2011-11-03 19:44:26' AND '2011-11-03 21:02:54'
+    
 
 
 GROUP BY text, status

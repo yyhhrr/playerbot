@@ -137,9 +137,11 @@ namespace ai
                 creators["inner fire"] = &AiObjectContextInternal::inner_fire;
                 creators["resurrection"] = &AiObjectContextInternal::resurrection;
                 creators["circle of healing"] = &AiObjectContextInternal::circle_of_healing;
+                creators["psychic scream"] = &AiObjectContextInternal::psychic_scream;
             }
 
         private:
+            static Action* psychic_scream(PlayerbotAI* ai) { return new CastPsychicScreamAction(ai); }
             static Action* circle_of_healing(PlayerbotAI* ai) { return new CastCircleOfHealingAction(ai); }
             static Action* resurrection(PlayerbotAI* ai) { return new CastResurrectionAction(ai); }
             static Action* shadow_word_pain(PlayerbotAI* ai) { return new CastPowerWordPainAction(ai); }

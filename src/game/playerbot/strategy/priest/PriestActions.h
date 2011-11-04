@@ -214,4 +214,10 @@ namespace ai
 		CastCircleOfHealingAction(PlayerbotAI* ai) : CastAoeHealSpellAction(ai, "circle of healing") {}
 	};
 
+	class CastPsychicScreamAction : public CastSpellAction
+	{
+	public:
+	    CastPsychicScreamAction(PlayerbotAI* ai) : CastSpellAction(ai, "psychic scream") {}
+	};
+
 }

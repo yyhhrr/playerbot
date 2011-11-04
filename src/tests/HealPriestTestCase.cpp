@@ -15,7 +15,8 @@ class HealPriestTestCase : public EngineTestBase
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( nonCombat );
     CPPUNIT_TEST( dispel );
-    CPPUNIT_TEST( fade );
+    CPPUNIT_TEST( flee );
+    CPPUNIT_TEST( cc );
     CPPUNIT_TEST( enemyTooClose );
 	CPPUNIT_TEST( racials );
 	CPPUNIT_TEST( incompatibles );
@@ -164,15 +165,21 @@ protected:
 		assertActions(">S:divine spirit>S:power word: fortitude>P:divine spirit on party>S:inner fire>P:power word: fortitude on party");
     }
 
-    void fade()
+    void flee()
     {
-        tick();
+        tickInMeleeRange();
+        tickInMeleeRange();
 
-		tickWithMyAttackerCount(2);
+		assertActions(">S:fade>S:flee");
+    }
 
-		tickWithSpellAvailable("shoot");
+    void cc()
+    {
+		tickWithMyAttackerCount(3);
+		tickWithMyAttackerCount(3);
+		tickWithMyAttackerCount(3);
 
-		assertActions(">T:shoot>S:fade>T:shoot");
+		assertActions(">T:psychic scream>S:fade>S:flee");
     }
 
     void enemyTooClose()
