@@ -49,8 +49,9 @@ public class ImportLog {
         bean.run(cmd.getOptionValue("in"), cmd.getOptionValue("out"));
     }
 
-    private void run(String fileName, String ouputTableName) {
-        dao.initialize(ouputTableName);
+    private void run(String fileName, String tableName) {
+        dao.initialize(tableName);
+        dao.clear();
         
         new Thread(new LogFileParser(fileName)).start();
 
