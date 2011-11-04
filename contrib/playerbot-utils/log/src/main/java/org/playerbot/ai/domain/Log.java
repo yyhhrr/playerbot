@@ -4,18 +4,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-@Entity
-@Table(name = "log")
 public class Log implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,11 +19,8 @@ public class Log implements Serializable {
             super();
         }
 
-        @Column(name = "date")
-        @Temporal(TemporalType.TIMESTAMP)
         private Date date;
 
-        @Column(name = "number")
         private long number;
         
         @Override
@@ -52,19 +40,14 @@ public class Log implements Serializable {
         }
     }
     
-    @EmbeddedId
     private Key key = new Key();
 
-    @Column(name = "bot")
     private String bot;
 
-    @Column(name = "event")
     private String event;
 
-    @Column(name = "text")
     private String text;
 
-    @Column(name = "status")
     private String status;
 
     public Date getDate() {

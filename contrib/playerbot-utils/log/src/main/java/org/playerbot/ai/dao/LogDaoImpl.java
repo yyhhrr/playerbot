@@ -1,27 +1,76 @@
 package org.playerbot.ai.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Collection;
 
 import org.playerbot.ai.domain.Log;
-import org.springframework.orm.jpa.JpaCallback;
-import org.springframework.orm.jpa.support.JpaDaoSupport;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class LogDaoImpl extends JpaDaoSupport implements LogDao {
+public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
 
+    private static final String INSERT_TEMPLATE = "INSERT INTO %s (bot, event, status, date, number, text) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String DROP_TABLE_TEMPLATE = "DROP TABLE IF EXISTS %s";
+    private static final String CREATE_TABLE_TEMPLATE = "CREATE TABLE `%s` (" + 
+    		"  `date` datetime NOT NULL," + 
+    		"  `number` int(4) NOT NULL," + 
+    		"  `bot` char(10) DEFAULT NULL," + 
+    		"  `event` char(4) DEFAULT NULL," + 
+    		"  `text` varchar(255) DEFAULT NULL," + 
+    		"  `status` char(10) DEFAULT NULL," + 
+    		"  PRIMARY KEY (`date`,`number`)," + 
+    		"  KEY `STATUS` (`status`)," + 
+    		"  KEY `EVENT` (`event`)," + 
+    		"  KEY `BOT` (`bot`)" + 
+    		")";
+    private String tableName;
+
+    @Override
     @Transactional
-    public Log merge(final Log log) {
-        return getJpaTemplate().execute(new JpaCallback<Log>() {
-            public Log doInJpa(EntityManager em) throws PersistenceException {
-                Log merged = em.merge(log);
-                em.flush();
-                em.clear();
-                return merged;
+    public void initialize(String tableName) {
+        this.tableName = tableName;
+        
+        dropTableIfExists();
+        createTable();
+    }
+
+    
+    @Transactional
+    @Override
+    public void insert(final Collection<Log> batch) {
+        String sql = String.format(INSERT_TEMPLATE, tableName);
+        getJdbcTemplate().execute(sql, new PreparedStatementCallback<Void>() {
+
+            @Override
+            public Void doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+                for (Log log : batch) {
+                    ps.setString(1, log.getBot());
+                    ps.setString(2, log.getEvent());
+                    ps.setString(3, log.getStatus());
+                    ps.setTimestamp(4, new Timestamp(log.getDate().getTime()));
+                    ps.setLong(5, log.getNumber());
+                    ps.setString(6, log.getText());
+                    ps.executeUpdate();
+                }
+                return null;
             }
-        }, true);
+        });
+    }
+
+    private void dropTableIfExists() {
+        String sql = String.format(DROP_TABLE_TEMPLATE, tableName);
+        getJdbcTemplate().execute(sql);
+    }
+
+    private void createTable() {
+        String sql = String.format(CREATE_TABLE_TEMPLATE, tableName);
+        getJdbcTemplate().execute(sql);
     }
 
 }

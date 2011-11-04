@@ -1,9 +1,14 @@
 package org.playerbot.ai.dao;
 
+import java.util.Collection;
+
 import org.playerbot.ai.domain.Log;
 
 public interface LogDao {
+    
+    void initialize(String tableName);
 
-    Log merge(Log log);
+    void insert(Collection<Log> log);
+
 
 }

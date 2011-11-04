@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import javax.inject.Inject;
@@ -14,7 +16,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
-import org.apache.commons.lang.time.DateUtils;
 import org.playerbot.ai.dao.LogDao;
 import org.playerbot.ai.domain.Log;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImportLog {
 
-    protected static final int MAX_BUFFER_SIZE = 500000;
+    protected static final int MAX_BUFFER_SIZE = 5000;
 
     @Inject
     private LogDao dao;
@@ -32,22 +33,25 @@ public class ImportLog {
     private LineParser parser;
 
     private Queue<Log> buffer = new LinkedList<Log>();
-    private boolean parsed = false;
-    private boolean merged = false;
+    private volatile boolean finished = false;
+    private volatile long saved = 0; 
 
     public static void main(String[] args) throws Exception {
         Options options = new Options();
         options.addOption("in", true, "Input file");
+        options.addOption("out", true, "Output table name");
 
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = parser.parse(options, args);
 
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/META-INF/context.xml");
         ImportLog bean = ctx.getBean(ImportLog.class);
-        bean.run(cmd.getOptionValue("in"));
+        bean.run(cmd.getOptionValue("in"), cmd.getOptionValue("out"));
     }
 
-    private void run(String fileName) {
+    private void run(String fileName, String ouputTableName) {
+        dao.initialize(ouputTableName);
+        
         new Thread(new LogFileParser(fileName)).start();
 
         new Thread(new LogDbFlusher()).start();
@@ -59,9 +63,8 @@ public class ImportLog {
     private class Watcher implements Runnable {
 
         public void run() {
-            while (!merged) {
-                int size = buffer.size();
-                System.out.println(size + " updates left, " + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "M");
+            while (!finished || !buffer.isEmpty()) {
+                System.out.println(saved + " updates done, " + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "M");
 
                 try {
                     Thread.sleep(1000);
@@ -74,24 +77,23 @@ public class ImportLog {
 
     private class LogDbFlusher implements Runnable {
 
-        public void run() {
-            while (true) {
-                Log log;
-                synchronized (buffer) {
-                    log = buffer.poll();
-                }
+        public LogDbFlusher() {
+        }
 
-                if (log == null) {
-                    if (parsed)
-                        break;
+        public void run() {
+            while (!finished || !buffer.isEmpty()) {
+                if (buffer.isEmpty()) {
                     Thread.yield();
                     continue;
                 }
-
-                dao.merge(log);
+                List<Log> copy;
+                synchronized (buffer) {
+                    copy = new ArrayList<Log>(buffer);
+                    saved += buffer.size();
+                    buffer.clear();
+                }
+                dao.insert(copy);
             }
-
-            merged = true;
         }
 
     }
@@ -133,10 +135,7 @@ public class ImportLog {
                 previoslyParsed = log.getDate();
                 
                 while (buffer.size() > MAX_BUFFER_SIZE) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                    }
+                    Thread.yield();
                 }
 
                 synchronized (buffer) {
@@ -145,7 +144,7 @@ public class ImportLog {
             }
             reader.close();
 
-            parsed = true;
+            finished = true;
         }
 
     }
