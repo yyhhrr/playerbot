@@ -19,7 +19,7 @@ private:
     {
         return new ActionNode ("rapid fire",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("readyness"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("readiness"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* aspect_of_the_pack(PlayerbotAI* ai)

@@ -126,7 +126,7 @@ namespace ai
                 creators["freezing trap"] = &AiObjectContextInternal::freezing_trap;
                 creators["rapid fire"] = &AiObjectContextInternal::rapid_fire;
                 creators["boost"] = &AiObjectContextInternal::rapid_fire;
-                creators["readyness"] = &AiObjectContextInternal::readyness;
+                creators["readiness"] = &AiObjectContextInternal::readiness;
                 creators["aspect of the hawk"] = &AiObjectContextInternal::aspect_of_the_hawk;
                 creators["aspect of the wild"] = &AiObjectContextInternal::aspect_of_the_wild;
                 creators["aspect of the viper"] = &AiObjectContextInternal::aspect_of_the_viper;
@@ -159,7 +159,7 @@ namespace ai
             static Action* black_arrow(PlayerbotAI* ai) { return new CastBlackArrow(ai); }
             static Action* freezing_trap(PlayerbotAI* ai) { return new CastFreezingTrap(ai); }
             static Action* rapid_fire(PlayerbotAI* ai) { return new CastRapidFireAction(ai); }
-            static Action* readyness(PlayerbotAI* ai) { return new CastReadynessAction(ai); }
+            static Action* readiness(PlayerbotAI* ai) { return new CastReadinessAction(ai); }
             static Action* aspect_of_the_hawk(PlayerbotAI* ai) { return new CastAspectOfTheHawkAction(ai); }
             static Action* aspect_of_the_wild(PlayerbotAI* ai) { return new CastAspectOfTheWildAction(ai); }
             static Action* aspect_of_the_viper(PlayerbotAI* ai) { return new CastAspectOfTheViperAction(ai); }

@@ -107,9 +107,9 @@ namespace ai
 		CastRapidFireAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "rapid fire") {}
 	};
 
-	class CastReadynessAction : public CastBuffSpellAction {
+	class CastReadinessAction : public CastBuffSpellAction {
 	public:
-		CastReadynessAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "readyness") {}
+		CastReadinessAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "readiness") {}
 	};
 
 	class CastBlackArrow : public CastDebuffSpellAction {

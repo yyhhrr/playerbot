@@ -91,7 +91,7 @@ protected:
 		tickWithBalancePercent(1);
 		tickWithBalancePercent(1);
 
-		assertActions(">T:hunter's mark>S:rapid fire>S:readyness");
+		assertActions(">T:hunter's mark>S:rapid fire>S:readiness");
     }
 
 
