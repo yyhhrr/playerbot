@@ -17,5 +17,7 @@ public interface LogDao {
 
     Collection<RepeatedAction> listActionsRepeated(String bot, String status);
 
+    Collection<RepeatedAction> listTriggersRepeated(String bot);
+
 
 }

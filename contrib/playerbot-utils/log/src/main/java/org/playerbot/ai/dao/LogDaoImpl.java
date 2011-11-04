@@ -18,27 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
 
-    private static final String LIST_BOTS_TEMPLATE = "SELECT DISTINCT bot FROM %s ORDER BY bot";
-    private static final String INSERT_TEMPLATE = "INSERT INTO %s (bot, event, status, date, number, text) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String DROP_TABLE_TEMPLATE = "DROP TABLE IF EXISTS %s";
-    private static final String CREATE_TABLE_TEMPLATE = "CREATE TABLE `%s` (" + 
-    		"  `date` datetime NOT NULL," + 
-    		"  `number` int(4) NOT NULL," + 
-    		"  `bot` char(10) DEFAULT NULL," + 
-    		"  `event` char(4) DEFAULT NULL," + 
-    		"  `text` varchar(255) DEFAULT NULL," + 
-    		"  `status` char(10) DEFAULT NULL," + 
-    		"  PRIMARY KEY (`date`,`number`)," + 
-    		"  KEY `STATUS` (`status`)," + 
-    		"  KEY `EVENT` (`event`)," + 
-    		"  KEY `BOT` (`bot`)" + 
-    		")";
-    private static final String LIST_ACTIONS_REPEATED_TEMPLATE = "SELECT text, COUNT(date) AS repeated " + 
-    		"FROM `%s` " + 
-    		"WHERE event = 'A' AND bot = ? AND status = ? " + 
-    		"GROUP BY text " + 
-    		"ORDER BY repeated DESC;";
-    
     private String tableName;
 
     @Override
@@ -53,7 +32,8 @@ public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
         createTable();
     }
 
-    
+    private static final String INSERT_TEMPLATE = "INSERT INTO %s (bot, event, status, date, number, text) VALUES (?, ?, ?, ?, ?, ?)";
+
     @Transactional
     @Override
     public void insert(final Collection<Log> batch) {
@@ -76,16 +56,33 @@ public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
         });
     }
 
+    private static final String DROP_TABLE_TEMPLATE = "DROP TABLE IF EXISTS %s";
+    
     private void dropTableIfExists() {
         String sql = String.format(DROP_TABLE_TEMPLATE, tableName);
         getJdbcTemplate().execute(sql);
     }
 
+    private static final String CREATE_TABLE_TEMPLATE = "CREATE TABLE `%s` (" + 
+            "  `date` datetime NOT NULL," + 
+            "  `number` int(4) NOT NULL," + 
+            "  `bot` char(10) DEFAULT NULL," + 
+            "  `event` char(4) DEFAULT NULL," + 
+            "  `text` varchar(255) DEFAULT NULL," + 
+            "  `status` char(10) DEFAULT NULL," + 
+            "  PRIMARY KEY (`date`,`number`)," + 
+            "  KEY `STATUS` (`status`)," + 
+            "  KEY `EVENT` (`event`)," + 
+            "  KEY `BOT` (`bot`)" + 
+            ")";
+        
     private void createTable() {
         String sql = String.format(CREATE_TABLE_TEMPLATE, tableName);
         getJdbcTemplate().execute(sql);
     }
 
+    private static final String LIST_BOTS_TEMPLATE = "SELECT DISTINCT bot FROM %s ORDER BY bot";
+    
     @Override
     public Collection<String> listBots() {
         String sql = String.format(LIST_BOTS_TEMPLATE, tableName);
@@ -97,6 +94,12 @@ public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
         });
     }
 
+    private static final String LIST_ACTIONS_REPEATED_TEMPLATE = "SELECT text, COUNT(date) AS repeated " + 
+            "FROM `%s` " + 
+            "WHERE event = 'A' AND bot = ? AND status = ? " + 
+            "GROUP BY text " + 
+            "ORDER BY repeated DESC;";
+
     @Override
     public Collection<RepeatedAction> listActionsRepeated(String bot, String status) {
         String sql = String.format(LIST_ACTIONS_REPEATED_TEMPLATE, tableName);
@@ -107,6 +110,24 @@ public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
             }
         }, 
         bot, status);
+    }
+
+    private static final String LIST_TRIGGERS_REPEATED_TEMPLATE = "SELECT text, COUNT(date) AS repeated " + 
+            "FROM `%s` " + 
+            "WHERE event = 'T' AND bot = ? " + 
+            "GROUP BY text " + 
+            "ORDER BY repeated DESC;";
+    
+    @Override
+    public Collection<RepeatedAction> listTriggersRepeated(String bot) {
+        String sql = String.format(LIST_TRIGGERS_REPEATED_TEMPLATE, tableName);
+        return getJdbcTemplate().query(sql, new RowMapper<RepeatedAction>() {
+            @Override
+            public RepeatedAction mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new RepeatedAction(rs.getString(1), rs.getLong(2));
+            }
+        },
+        bot);
     }
 
 }

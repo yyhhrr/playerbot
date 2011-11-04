@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class AnalyseLog {
     @Inject
     private LogDao dao;
+    private Collection<String> bots;
 
     public static void main(String[] args) throws Exception {
         Options options = new Options();
@@ -37,16 +38,38 @@ public class AnalyseLog {
         
         dao.initialize(tableName);
 
-        Collection<String> bots = dao.listBots();
+        analyse();
+    }
+
+    private void analyse() {
+        bots = dao.listBots();
+        
+        analyseTriggers();
+        analyseRepeatedActions();
+    }
+
+    private void analyseTriggers() {
+        for (String bot : bots) {
+            drawTitle("Triggers", bot);
+            
+            drawActions(dao.listTriggersRepeated(bot));
+        }
+    }
+
+    private void analyseRepeatedActions() {
         String[] statuses = new String[] { "OK", "UNKNOWN", "FAILED", "IMPOSSIBLE" };
         for (String status : statuses) {
             for (String bot : bots) {
                 drawTitle(status, bot);
-                Collection<RepeatedAction> actions = dao.listActionsRepeated(bot, status);
-                for (RepeatedAction action : actions) {
-                    drawAction(action);
-                }
+                
+                drawActions(dao.listActionsRepeated(bot, status));
             }
+        }
+    }
+    
+    private void drawActions(Collection<RepeatedAction> actions) {
+        for (RepeatedAction action : actions) {
+            drawAction(action);
         }
     }
 
@@ -54,10 +77,14 @@ public class AnalyseLog {
         System.out.println(String.format("%8d %s", action.getCount(), action.getName()));
     }
 
+    private void drawTitle(String title) {
+        System.out.println("======================================================================");
+        System.out.println(title);
+        System.out.println("======================================================================");
+    }
+    
     private void drawTitle(String status, String bot) {
-        System.out.println("======================================================================");
-        System.out.println(bot + " - " + status);
-        System.out.println("======================================================================");
+        drawTitle(bot + " - " + status);
     }
 
 }
