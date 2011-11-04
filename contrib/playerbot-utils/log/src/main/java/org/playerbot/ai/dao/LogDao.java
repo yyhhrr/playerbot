@@ -19,5 +19,7 @@ public interface LogDao {
 
     Collection<RepeatedAction> listTriggersRepeated(String bot);
 
+    Collection<String> listNeverExecutedActions(String bot);
+
 
 }

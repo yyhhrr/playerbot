@@ -44,8 +44,20 @@ public class AnalyseLog {
     private void analyse() {
         bots = dao.listBots();
         
+        analyseNeverExecutedActions();
         analyseTriggers();
         analyseRepeatedActions();
+    }
+
+    private void analyseNeverExecutedActions() {
+        for (String bot : bots) {
+            drawTitle("Never executed", bot);
+            
+            Collection<String> actions = dao.listNeverExecutedActions(bot);
+            for (String action : actions) {
+                System.out.println(action);
+            }
+        }
     }
 
     private void analyseTriggers() {
