@@ -140,7 +140,8 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 
 bool MovementAction::IsMovingAllowed()
 {
-    if (bot->isFrozen() || bot->IsPolymorphed() || bot->isDead() || bot->IsNonMeleeSpellCasted(true))
+    if (bot->isFrozen() || bot->IsPolymorphed() || bot->isDead() ||
+            bot->IsNonMeleeSpellCasted(true) || bot->IsBeingTeleported() || bot->isInRoots())
         return false;
 
     MotionMaster &mm = *bot->GetMotionMaster();
@@ -154,19 +155,21 @@ bool MovementAction::Follow(Unit* target, float distance)
 
 bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
+    if (!IsMovingAllowed(target))
+        return false;
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+
     if (bot->GetDistance(master) < sPlayerbotAIConfig.reactDistance &&
             abs(bot->GetPositionZ() - master->GetPositionZ()) >= sPlayerbotAIConfig.spellDistance)
     {
-        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), true);
+        mm.Clear();
+        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), false);
     }
-
-    if (!IsMovingAllowed(target))
-        return false;
 
     if (target->IsFriendlyTo(bot) && bot->IsMounted() && AI_VALUE(list<ObjectGuid>, "possible targets").empty())
         distance += angle;
 
-    MotionMaster &mm = *bot->GetMotionMaster();
     mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
