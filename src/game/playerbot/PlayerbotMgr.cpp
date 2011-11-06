@@ -178,7 +178,7 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 
         mgr->LogoutPlayerBot(guid.GetRawValue());
     }
-    else if (cmdStr == "init")
+    else if (cmdStr == "init" && session->GetSecurity() >= SEC_GAMEMASTER)
     {
         if (!mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
@@ -224,7 +224,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     std::string cmdStr = cmd;
     std::string charnameStr = charname;
 
-    if (cmdStr == "option")
+    if (cmdStr == "option" && m_session->GetSecurity() >= SEC_GAMEMASTER)
     {
         if (charnameStr.find("=") == string::npos)
         {
