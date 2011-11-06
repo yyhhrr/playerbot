@@ -11,6 +11,7 @@ class ShamanNonCombatTestCase : public EngineTestBase
     CPPUNIT_TEST_SUITE( ShamanNonCombatTestCase );
 	CPPUNIT_TEST( ressurect );
 	CPPUNIT_TEST( swimming );
+	CPPUNIT_TEST( healing );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -26,6 +27,15 @@ protected:
 		tickWithDeadPartyMember();
 
 		assertActions(">P:ancestral spirit");
+	}
+
+	void healing()
+	{
+	    tickWithLowHealth(10);
+	    spellAvailable("healing wave");
+	    tickWithPartyLowHealth(10);
+
+		assertActions(">S:healing wave>P:healing wave on party");
 	}
 
 	void swimming()

@@ -156,6 +156,14 @@ void HealPriestNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers
         NextAction::array(0, new NextAction("inner fire", 19.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
+        "critical health",
+        NextAction::array(0, new NextAction("greater heal", 70.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member critical health",
+        NextAction::array(0, new NextAction("greater heal on party", 60.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "low health",
         NextAction::array(0, new NextAction("flash heal", 25.0f), NULL)));
 

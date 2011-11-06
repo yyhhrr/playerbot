@@ -29,6 +29,14 @@ void ShamanNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "water walking on party",
         NextAction::array(0, new NextAction("water walking on party", 11.0f), NULL)));
 
+    triggers.push_back(new TriggerNode(
+        "critical health",
+        NextAction::array(0, new NextAction("healing wave", 70.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member critical health",
+        NextAction::array(0, new NextAction("healing wave on party", 60.0f), NULL)));
+
 }
 
 void ShamanNonCombatStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)

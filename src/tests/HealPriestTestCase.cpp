@@ -12,8 +12,6 @@ class HealPriestTestCase : public EngineTestBase
     CPPUNIT_TEST( healHimself );
     CPPUNIT_TEST( healOthers );
     CPPUNIT_TEST( aoe_heal );
-    CPPUNIT_TEST( buff );
-    CPPUNIT_TEST( nonCombat );
     CPPUNIT_TEST( dispel );
     CPPUNIT_TEST( flee );
     CPPUNIT_TEST( cc );
@@ -80,18 +78,6 @@ protected:
 		assertActions(">S:lifeblood>S:gift of the naaru>S:power word: shield>S:greater heal>S:renew>S:heal>S:lesser heal>T:shoot>S:flash heal>T:shoot");
 	}
 
-    void nonCombat()
-    {
-        engine->removeStrategy("heal");
-        engine->addStrategy("nc");
-
-        addPartyAura("power word: fortitude");
-
-		tickWithDeadPartyMember();
-
-		assertActions(">P:resurrection");
-    }
-
     void healOthers()
     {
         tick(); // shoot
@@ -132,37 +118,6 @@ protected:
         tickWithAoeHeal("medium");
 
         assertActions(">P:circle of healing>P:flash heal on party");
-    }
-
-    void buff()
-    {
-        engine->removeStrategy("heal");
-        engine->addStrategy("nc");
-
-		removeAura("power word: fortitude");
-        removeAura("divine spirit");
-        removeAura("inner fire");
-        removePartyAura("power word: fortitude");
-        removePartyAura("divine spirit");
-
-        tick();
-        addAura("divine spirit");
-
-        tick();
-        addAura("power word: fortutude");
-
-        tickWithSpellAvailable("divine spirit");
-        addPartyAura("divine spirit");
-
-        tick(); // inner fire
-
-        tick();
-        addAura("power word: fortitude");
-
-        tickWithSpellAvailable("power word: fortitude");
-        addPartyAura("power word: fortitude");
-
-		assertActions(">S:divine spirit>S:power word: fortitude>P:divine spirit on party>S:inner fire>P:power word: fortitude on party");
     }
 
     void flee()

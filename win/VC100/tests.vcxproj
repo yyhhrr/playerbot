@@ -268,6 +268,7 @@
     <ClCompile Include="..\..\src\tests\MockPlayerbotAIBase.cpp" />
     <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\NonCombatEngineTestCase2.cpp" />
+    <ClCompile Include="..\..\src\tests\PriestNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\QualifiedValueTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\QuestStrategyTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\RacialsTestCase.cpp" />
