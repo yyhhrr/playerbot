@@ -224,6 +224,25 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     std::string cmdStr = cmd;
     std::string charnameStr = charname;
 
+    if (cmdStr == "option")
+    {
+        if (charnameStr.find("=") == string::npos)
+        {
+            string value = sPlayerbotAIConfig.GetValue(charnameStr);
+            ostringstream out; out << charnameStr << " = " << value;
+            PSendSysMessage(out.str().c_str());
+        }
+        else
+        {
+            string value = charnameStr.substr(charnameStr.find("=") + 1);
+            string option = charnameStr.substr(0, charnameStr.find("="));
+            sPlayerbotAIConfig.SetValue(option, value);
+            ostringstream out; out << charnameStr << " set to " << value;
+            PSendSysMessage(out.str().c_str());
+        }
+        return true;
+    }
+
     Player* player = m_session->GetPlayer();
 
     // create the playerbot manager if it doesn't already exist

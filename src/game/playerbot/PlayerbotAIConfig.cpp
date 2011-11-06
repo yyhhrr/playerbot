@@ -67,3 +67,93 @@ bool PlayerbotAIConfig::IsInRandomAccountList(uint32 id)
 {
     return find(randomBotAccounts.begin(), randomBotAccounts.end(), id) != randomBotAccounts.end();
 }
+
+string PlayerbotAIConfig::GetValue(string name)
+{
+    ostringstream out;
+
+    if (name == "GlobalCooldown")
+        out << globalCoolDown;
+    else if (name == "TeleportDelay")
+        out << teleportDelay;
+    else if (name == "ReactDelay")
+        out << reactDelay;
+
+    else if (name == "SightDistance")
+        out << sightDistance;
+    else if (name == "SpellDistance")
+        out << spellDistance;
+    else if (name == "ReactDistance")
+        out << reactDistance;
+    else if (name == "GrindDistance")
+        out << grindDistance;
+    else if (name == "LootDistance")
+        out << lootDistance;
+    else if (name == "FleeDistance")
+        out << fleeDistance;
+
+    else if (name == "CriticalHealth")
+        out << criticalHealth;
+    else if (name == "LowHealth")
+        out << lowHealth;
+    else if (name == "MediumHealth")
+        out << mediumHealth;
+    else if (name == "AlmostFullHealth")
+        out << almostFullHealth;
+    else if (name == "LowMana")
+        out << lowMana;
+
+    else if (name == "PvpChance")
+        out << pvpChance;
+
+    else if (name == "RandomGearQuality")
+        out << randomGearQuality;
+    else if (name == "IterationsPerTick")
+        out << iterationsPerTick;
+
+    return out.str();
+}
+
+void PlayerbotAIConfig::SetValue(string name, string value)
+{
+    istringstream out(value, istringstream::in);
+
+    if (name == "GlobalCooldown")
+        out >> globalCoolDown;
+    else if (name == "TeleportDelay")
+        out >> teleportDelay;
+    else if (name == "ReactDelay")
+        out >> reactDelay;
+
+    else if (name == "SightDistance")
+        out >> sightDistance;
+    else if (name == "SpellDistance")
+        out >> spellDistance;
+    else if (name == "ReactDistance")
+        out >> reactDistance;
+    else if (name == "GrindDistance")
+        out >> grindDistance;
+    else if (name == "LootDistance")
+        out >> lootDistance;
+    else if (name == "FleeDistance")
+        out >> fleeDistance;
+
+    else if (name == "CriticalHealth")
+        out >> criticalHealth;
+    else if (name == "LowHealth")
+        out >> lowHealth;
+    else if (name == "MediumHealth")
+        out >> mediumHealth;
+    else if (name == "AlmostFullHealth")
+        out >> almostFullHealth;
+    else if (name == "LowMana")
+        out >> lowMana;
+
+    else if (name == "PvpChance")
+        out >> pvpChance;
+
+    else if (name == "RandomGearQuality")
+        out >> randomGearQuality;
+    else if (name == "IterationsPerTick")
+        out >> iterationsPerTick;
+}

@@ -26,6 +26,9 @@ public:
     uint32 randomGearQuality;
     uint32 iterationsPerTick;
 
+    std::string GetValue(std::string name);
+    void SetValue(std::string name, std::string value);
+
 private:
     Config config;
 };
