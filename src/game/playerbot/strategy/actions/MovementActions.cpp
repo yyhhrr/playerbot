@@ -39,7 +39,8 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
-    bot->UpdateGroundPositionZ(x, y, z);
+    if (!bot->IsFlying() && !bot->IsUnderWater())
+        bot->UpdateAllowedPositionZ(x, y, z);
 
     MotionMaster &mm = *bot->GetMotionMaster();
 
