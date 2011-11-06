@@ -123,4 +123,5 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("help");
     supported.push_back("gb");
     supported.push_back("invite");
+    supported.push_back("spell");
 }

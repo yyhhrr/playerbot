@@ -59,6 +59,7 @@ namespace ai
             creators["talk"] = &ChatTriggerContext::talk;
             creators["cast"] = &ChatTriggerContext::talk;
             creators["invite"] = &ChatTriggerContext::invite;
+            creators["spell"] = &ChatTriggerContext::spell;
         }
 
     private:
@@ -110,5 +111,6 @@ namespace ai
         static Trigger* loot_all(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "add all loot"); }
         static Trigger* release(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "release"); }
         static Trigger* reset_ai(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "reset ai"); }
+        static Trigger* spell(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "spell"); }
     };
 };

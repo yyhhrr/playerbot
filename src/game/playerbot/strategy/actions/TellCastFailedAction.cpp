@@ -51,3 +51,20 @@ bool TellCastFailedAction::Execute(Event event)
     ai->TellMaster(castTime < 2000 ? LOG_LVL_DEBUG : LOG_LVL_BASIC, out.str());
     return true;
 }
+
+
+bool TellSpellAction::Execute(Event event)
+{
+    string spell = event.getParam();
+    uint32 spellId = AI_VALUE2(uint32, "spell id", spell);
+    if (!spellId)
+        return false;
+
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId );
+    if (!spellInfo)
+        return false;
+
+    ostringstream out; out << chat->formatSpell(spellInfo);
+    ai->TellMaster(out);
+    return true;
+}
