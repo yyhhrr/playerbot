@@ -50,13 +50,11 @@ public class AnalyseLog {
     }
 
     private void analyseNeverExecutedActions() {
-        for (String bot : bots) {
-            drawTitle("Never executed", bot);
-            
-            Collection<String> actions = dao.listNeverExecutedActions(bot);
-            for (String action : actions) {
-                System.out.println(action);
-            }
+        drawTitle("Never executed actions");
+        
+        Collection<String> actions = dao.listNeverExecutedActions();
+        for (String action : actions) {
+            System.out.println(action);
         }
     }
 

@@ -128,16 +128,16 @@ public class LogDaoImpl extends JdbcDaoSupport implements LogDao {
 
     private static final String LIST_NEVER_EXECUTED_ACTIONS_TEMPLATE = "SELECT text " + 
     		"FROM `%1$s` " + 
-    		"WHERE bot = ? AND event='A' AND status <> 'OK' " + 
+    		"WHERE event='A' AND status <> 'OK' " + 
     		"GROUP BY text " + 
     		"HAVING text NOT IN " + 
-    		"(SELECT DISTINCT text FROM `%1$s` WHERE bot = ? AND event='A' AND status = 'OK');" + 
+    		"(SELECT DISTINCT text FROM `%1$s` WHERE event='A' AND status = 'OK');" + 
     		"";
     
     @Override
-    public Collection<String> listNeverExecutedActions(String bot) {
+    public Collection<String> listNeverExecutedActions() {
         String sql = String.format(LIST_NEVER_EXECUTED_ACTIONS_TEMPLATE, tableName);
-        return getJdbcTemplate().query(sql, STRING_ROW_MAPPER, bot, bot);
+        return getJdbcTemplate().query(sql, STRING_ROW_MAPPER);
     }
 
 }
