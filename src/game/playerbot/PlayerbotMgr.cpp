@@ -207,7 +207,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 
     if (!*args)
     {
-        PSendSysMessage("usage: add/init/remove PLAYERNAME");
+        PSendSysMessage("usage: add/init/remove PLAYERNAME or option or option=value");
         SetSentErrorMessage(true);
         return false;
     }
@@ -216,7 +216,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     char *charname = strtok (NULL, " ");
     if (!cmd || !charname)
     {
-        PSendSysMessage("usage: add/init/remove PLAYERNAME");
+        PSendSysMessage("usage: add/init/remove PLAYERNAME or option or option=value");
         SetSentErrorMessage(true);
         return false;
     }

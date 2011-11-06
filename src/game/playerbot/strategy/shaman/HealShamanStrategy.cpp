@@ -28,11 +28,6 @@ HealShamanStrategy::HealShamanStrategy(PlayerbotAI* ai) : GenericShamanStrategy(
     actionNodeFactories.Add(new HealShamanStrategyActionNodeFactory());
 }
 
-NextAction** HealShamanStrategy::getDefaultActions()
-{
-    return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
-}
-
 void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericShamanStrategy::InitTriggers(triggers);

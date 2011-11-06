@@ -594,6 +594,22 @@ bool PlayerbotAI::IsTank(Player* player)
     return false;
 }
 
+bool PlayerbotAI::IsHeal(Player* player)
+{
+    PlayerbotAI* botAi = player->GetPlayerbotAI();
+    if (botAi)
+        return botAi->ContainsStrategy(STRATEGY_TYPE_HEAL);
+
+    switch (player->getClass())
+    {
+    case CLASS_PRIEST:
+        return true;
+    case CLASS_DRUID:
+        return HasAnyAuraOf(player, "tree of life form", NULL);
+    }
+    return false;
+}
+
 
 
 namespace MaNGOS

@@ -34,10 +34,7 @@ protected:
 		tickWithLowHealth(35);
         tickWithLowHealth(35);
         
-        tick();
-        tickInMeleeRange();
-
-        assertActions(">S:lesser healing wave>S:riptide>S:healing wave>T:reach melee>T:melee");
+        assertActions(">S:lesser healing wave>S:riptide>S:healing wave");
     }
 
     void healOthers()
@@ -89,10 +86,9 @@ protected:
 
 	void dispel() 
 	{
-		tickInMeleeRange();
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
-		assertActions(">T:melee>T:purge");
+		assertActions(">T:purge");
 	}
 };
 
