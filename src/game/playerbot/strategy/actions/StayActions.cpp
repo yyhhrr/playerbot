@@ -66,8 +66,24 @@ bool StayCircleAction::Execute(Event event)
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target)
         target = master;
-    else if (!ai->IsTank(bot))
+
+    switch (bot->getClass())
+    {
+    case CLASS_HUNTER:
+    case CLASS_MAGE:
+    case CLASS_PRIEST:
+    case CLASS_WARLOCK:
         range = sPlayerbotAIConfig.fleeDistance;
+        break;
+    case CLASS_DRUID:
+        if (!ai->IsTank(bot))
+            range = sPlayerbotAIConfig.fleeDistance;
+        break;
+    case CLASS_SHAMAN:
+        if (ai->IsHeal(bot))
+            range = sPlayerbotAIConfig.fleeDistance;
+        break;
+    }
     
     float x = target->GetPositionX();
     float y = target->GetPositionY();
