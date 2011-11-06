@@ -10,6 +10,7 @@ class DruidNonCombatTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( DruidNonCombatTestCase );
     CPPUNIT_TEST( buff );
+    CPPUNIT_TEST( low_mana );
 	CPPUNIT_TEST( resurrect );
     CPPUNIT_TEST_SUITE_END();
 
@@ -37,6 +38,18 @@ protected:
 
 		assertActions(">P:revive");
 	}
+
+    void low_mana()
+    {
+        set<uint8>("item count", "drink", 1);
+        tickWithLowMana(5);
+        tickWithLowMana(5);
+
+        set<uint8>("item count", "drink", 0);
+        tickWithLowMana(5);
+
+        assertActions(">S:innervate>S:drink>S:flee");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( DruidNonCombatTestCase );

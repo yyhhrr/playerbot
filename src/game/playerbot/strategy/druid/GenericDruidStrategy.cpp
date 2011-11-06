@@ -25,6 +25,7 @@ public:
         creators["abolish poison on party"] = &abolish_poison_on_party;
         creators["rebirth"] = &rebirth;
         creators["entangling roots on cc"] = &entangling_roots_on_cc;
+        creators["innervate"] = &innervate;
     }
 
 private:
@@ -133,6 +134,13 @@ private:
             /*A*/ NULL,
             /*C*/ NULL);
     }
+    static ActionNode* innervate(PlayerbotAI* ai)
+    {
+        return new ActionNode ("innervate",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("drink"), NULL),
+            /*C*/ NULL);
+    }
 };
 
 GenericDruidStrategy::GenericDruidStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
@@ -177,4 +185,8 @@ void GenericDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "entangling roots",
         NextAction::array(0, new NextAction("entangling roots on cc", 31.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("innervate", 55.0f), NULL)));
 }

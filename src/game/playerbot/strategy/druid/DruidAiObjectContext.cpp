@@ -163,6 +163,7 @@ namespace ai
                 creators["barskin"] = &AiObjectContextInternal::barskin;
                 creators["lacerate"] = &AiObjectContextInternal::lacerate;
                 creators["hurricane"] = &AiObjectContextInternal::hurricane;
+                creators["innervate"] = &AiObjectContextInternal::innervate;
             }
 
         private:
@@ -219,6 +220,7 @@ namespace ai
             static Action* barskin(PlayerbotAI* ai) { return new CastBarskinAction(ai); }
             static Action* lacerate(PlayerbotAI* ai) { return new CastLacerateAction(ai); }
             static Action* hurricane(PlayerbotAI* ai) { return new CastHurricaneAction(ai); }
+            static Action* innervate(PlayerbotAI* ai) { return new CastInnervateAction(ai); }
         };
     };
 };

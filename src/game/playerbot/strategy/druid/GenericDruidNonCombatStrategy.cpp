@@ -12,6 +12,7 @@ public:
     {
         creators["mark of the wild"] = &mark_of_the_wild;
         creators["mark of the wild on party"] = &mark_of_the_wild_on_party;
+        creators["innervate"] = &innervate;
     }
 private:
     static ActionNode* mark_of_the_wild(PlayerbotAI* ai)
@@ -26,6 +27,13 @@ private:
         return new ActionNode ("mark of the wild on party",
             /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* innervate(PlayerbotAI* ai)
+    {
+        return new ActionNode ("innervate",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("drink"), NULL),
             /*C*/ NULL);
     }
 };
@@ -50,4 +58,8 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 	triggers.push_back(new TriggerNode(
 		"party member dead",
 		NextAction::array(0, new NextAction("revive", 32.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("innervate", 55.0f), NULL)));
 }

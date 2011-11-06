@@ -213,4 +213,12 @@ namespace ai
     public:
         CastBarskinAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "barskin") {}
     };
+
+    class CastInnervateAction : public CastSpellAction
+    {
+    public:
+        CastInnervateAction(PlayerbotAI* ai) : CastSpellAction(ai, "innervate") {}
+
+        virtual string GetTargetName() { return "self target"; }
+    };
 }
