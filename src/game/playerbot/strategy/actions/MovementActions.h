@@ -40,6 +40,7 @@ namespace ai
 		}
 
         virtual bool Execute(Event event);
+        virtual bool isUseful();
 
 	private:
 		float distance;
