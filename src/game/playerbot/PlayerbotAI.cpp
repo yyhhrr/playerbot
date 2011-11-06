@@ -746,9 +746,51 @@ void PlayerbotAI::TellMaster(LogLevel level, string text)
 }
 
 
-bool PlayerbotAI::HasAura(string name, Unit* player)
+bool IsRealAura(Player* bot, Aura* aura, Unit* unit)
 {
-    return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), player);
+    if (!aura)
+        return false;
+
+    if (!unit->IsHostileTo(bot))
+        return true;
+
+    uint32 stacks = aura->GetHolder()->GetStackAmount();
+    if (stacks >= aura->GetSpellProto()->StackAmount)
+        return true;
+
+    if (aura->GetCaster() == bot || aura->IsPositive() || aura->IsAreaAura())
+        return true;
+
+    return false;
+}
+
+bool PlayerbotAI::HasAura(string name, Unit* unit)
+{
+    if (!unit)
+        return false;
+
+    wstring wnamepart;
+    if (!Utf8toWStr(name, wnamepart))
+        return 0;
+
+    wstrToLower(wnamepart);
+
+    for (uint32 auraType = SPELL_AURA_BIND_SIGHT; auraType < TOTAL_AURAS; auraType++)
+    {
+        Unit::AuraList auras = unit->GetAurasByType((AuraType)auraType);
+        for (Unit::AuraList::iterator i = auras.begin(); i != auras.end(); i++)
+        {
+            Aura* aura = *i;
+            const string auraName = aura->GetSpellProto()->SpellName[0];
+            if (auraName.empty() || auraName.length() != wnamepart.length() || !Utf8FitTo(auraName, wnamepart))
+                continue;
+
+            if (IsRealAura(bot, aura, unit))
+                return true;
+        }
+    }
+
+    return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), unit);
 }
 
 bool PlayerbotAI::HasAura(uint32 spellId, const Unit* unit)
@@ -759,19 +801,11 @@ bool PlayerbotAI::HasAura(uint32 spellId, const Unit* unit)
     for (uint32 effect = EFFECT_INDEX_0; effect <= EFFECT_INDEX_2; effect++)
     {
         Aura* aura = ((Unit*)unit)->GetAura(spellId, (SpellEffectIndex)effect);
-        if (!aura)
-            continue;
 
-        if (!unit->IsHostileTo(bot))
-            return true;
-
-        uint32 stacks = aura->GetHolder()->GetStackAmount();
-        if (stacks >= aura->GetSpellProto()->StackAmount)
-            return true;
-
-        if (aura->GetCaster() == bot || aura->IsPositive() || aura->IsAreaAura())
+        if (IsRealAura(bot, aura, (Unit*)unit))
             return true;
     }
+
     return false;
 }
 
