@@ -751,16 +751,27 @@ bool PlayerbotAI::HasAura(string name, Unit* player)
     return HasAura(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), player);
 }
 
-bool PlayerbotAI::HasAura(uint32 spellId, const Unit* player)
+bool PlayerbotAI::HasAura(uint32 spellId, const Unit* unit)
 {
-    if (!spellId || !player)
+    if (!spellId || !unit)
         return false;
 
-    Unit* unit = (Unit*)player;
-    if (unit->GetAura(spellId, EFFECT_INDEX_0) ||
-        unit->GetAura(spellId, EFFECT_INDEX_1) ||
-        unit->GetAura(spellId, EFFECT_INDEX_2))
-        return true;
+    for (uint32 effect = EFFECT_INDEX_0; effect <= EFFECT_INDEX_2; effect++)
+    {
+        Aura* aura = ((Unit*)unit)->GetAura(spellId, (SpellEffectIndex)effect);
+        if (!aura)
+            continue;
+
+        if (!unit->IsHostileTo(bot))
+            return true;
+
+        uint32 stacks = aura->GetHolder()->GetStackAmount();
+        if (stacks >= aura->GetSpellProto()->StackAmount)
+            return true;
+
+        if (aura->GetCaster() == bot || aura->IsPositive() || aura->IsAreaAura())
+            return true;
+    }
     return false;
 }
 

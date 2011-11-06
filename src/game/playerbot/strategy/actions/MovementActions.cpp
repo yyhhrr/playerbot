@@ -155,17 +155,17 @@ bool MovementAction::Follow(Unit* target, float distance)
 
 bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
-    if (!IsMovingAllowed(target))
-        return false;
-
     MotionMaster &mm = *bot->GetMotionMaster();
 
-    if (bot->GetDistance(master) < sPlayerbotAIConfig.reactDistance &&
+    if (bot->GetDistance(master->GetPositionX(), master->GetPositionY(), bot->GetPositionZ()) <= sPlayerbotAIConfig.spellDistance &&
             abs(bot->GetPositionZ() - master->GetPositionZ()) >= sPlayerbotAIConfig.spellDistance)
     {
         mm.Clear();
-        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), false);
+        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), true);
     }
+
+    if (!IsMovingAllowed(target))
+        return false;
 
     if (target->IsFriendlyTo(bot) && bot->IsMounted() && AI_VALUE(list<ObjectGuid>, "possible targets").empty())
         distance += angle;

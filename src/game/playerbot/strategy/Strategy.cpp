@@ -21,6 +21,7 @@ public:
         creators["move to loot"] = &move_to_loot;
         creators["food"] = &food;
         creators["drink"] = &drink;
+        creators["flee"] = &flee;
     }
 
 private:
@@ -85,6 +86,13 @@ private:
         return new ActionNode ("drink",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* flee(PlayerbotAI* ai)
+    {
+        return new ActionNode ("flee",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("follow master"), NULL),
             /*C*/ NULL);
     }
 };
