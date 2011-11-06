@@ -136,6 +136,7 @@ namespace ai
                 creators["dragon's breath"] = &AiObjectContextInternal::dragons_breath;
                 creators["blast wave"] = &AiObjectContextInternal::blast_wave;
                 creators["invisibility"] = &AiObjectContextInternal::invisibility;
+                creators["evocation"] = &AiObjectContextInternal::evocation;
             }
 
         private:
@@ -166,6 +167,7 @@ namespace ai
             static Action* dragons_breath(PlayerbotAI* ai) { return new CastDragonsBreathAction(ai); }
             static Action* blast_wave(PlayerbotAI* ai) { return new CastBlastWaveAction(ai); }
             static Action* invisibility(PlayerbotAI* ai) { return new CastInvisibilityAction(ai); }
+            static Action* evocation(PlayerbotAI* ai) { return new CastEvocationAction(ai); }
         };
     };
 };

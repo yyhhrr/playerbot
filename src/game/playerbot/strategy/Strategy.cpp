@@ -19,6 +19,8 @@ public:
         creators["attack anything"] = &attack_anything;
         creators["move random"] = &move_random;
         creators["move to loot"] = &move_to_loot;
+        creators["food"] = &food;
+        creators["drink"] = &drink;
     }
 
 private:
@@ -69,6 +71,20 @@ private:
         return new ActionNode ("move to loot",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("follow master"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* food(PlayerbotAI* ai)
+    {
+        return new ActionNode ("food",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* drink(PlayerbotAI* ai)
+    {
+        return new ActionNode ("drink",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
             /*C*/ NULL);
     }
 };

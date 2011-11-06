@@ -16,6 +16,7 @@ public:
         creators["frost nova"] = &frost_nova;
         creators["icy veins"] = &icy_veins;
         creators["combustion"] = &combustion;
+        creators["evocation"] = &evocation;
         creators["dragon's breath"] = &dragons_breath;
     }
 private:
@@ -59,6 +60,13 @@ private:
         return new ActionNode ("combustion",
             /*P*/ NULL,
             /*A*/ NULL,
+            /*C*/ NULL);
+    }
+    static ActionNode* evocation(PlayerbotAI* ai)
+    {
+        return new ActionNode ("evocation",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("drink"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* dragons_breath(PlayerbotAI* ai)
@@ -110,4 +118,8 @@ void GenericMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "medium threat",
         NextAction::array(0, new NextAction("invisibility", 60.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("evocation", 55.0f), NULL)));
 }

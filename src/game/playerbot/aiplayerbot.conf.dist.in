@@ -53,17 +53,25 @@ ConfVersion=2010102201
 #    AiPlayerbot.CriticalHealth
 #        Health level when healing is essential (in percents)
 #        Takes effect if health is less or equal to AiPlayerbot.CriticalHealth
-#    Default 30
+#    Default 25
 #
 #    AiPlayerbot.LowHealth
 #        Health level when healing is required (in percents)
 #        Takes effect if health is between AiPlayerbot.LowHealth and AiPlayerbot.CriticalHealth
-#    Default 50
+#    Default 45
 #
 #    AiPlayerbot.MediumHealth
 #        Health level when healing is nice (in percents). 
 #        Takes effect if health is between AiPlayerbot.MediumHealth and AiPlayerbot.LowHealth
-#    Default 70
+#    Default 65
+#
+#    AiPlayerbot.AlmostFullHealth
+#        Health level when healing over time is nice (in percents) 
+#    Default 85
+#
+#    AiPlayerbot.LowMana
+#        Mana level when drink is required 
+#    Default 15
 #
 #    AiPlayerbot.AllowGuildBots
 #        Allow use guild members as bots
@@ -97,9 +105,12 @@ AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
 AiPlayerbot.FleeDistance=15
 
-AiPlayerbot.CriticalHealth=30
-AiPlayerbot.LowHealth=50
-AiPlayerbot.MediumHealth=70
+AiPlayerbot.CriticalHealth=25
+AiPlayerbot.LowHealth=45
+AiPlayerbot.MediumHealth=65
+AiPlayerbot.AlmostFullHealth=85
+
+AiPlayerbot.LowMana=15
 
 AiPlayerbot.PvpChance = 10
 AiPlayerbot.RandomGearQuality = 3

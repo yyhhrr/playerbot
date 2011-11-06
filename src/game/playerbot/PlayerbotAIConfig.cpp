@@ -40,6 +40,7 @@ bool PlayerbotAIConfig::Initialize()
     lowHealth = config.GetIntDefault("AiPlayerbot.LowHealth", 45);
     mediumHealth = config.GetIntDefault("AiPlayerbot.MediumHealth", 65);
     almostFullHealth = config.GetIntDefault("AiPlayerbot.AlmostFullHealth", 85);
+    lowMana = config.GetIntDefault("AiPlayerbot.LowMana", 15);
     
     pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 5);
     randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);

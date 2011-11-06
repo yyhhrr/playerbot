@@ -8,8 +8,7 @@ using namespace ai;
 bool SealTrigger::IsActive() 
 {
 	Unit* target = GetTarget();
-	return AI_VALUE2(uint8, "mana", "self target") > 30 && 
-		!ai->HasAura("seal of justice", target) &&
+	return !ai->HasAura("seal of justice", target) &&
         !ai->HasAura("seal of command", target) &&
 		!ai->HasAura("seal of righteousness", target) &&
 		!ai->HasAura("seal of light", target) &&

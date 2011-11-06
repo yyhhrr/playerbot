@@ -2,12 +2,13 @@
 #include "../../playerbot.h"
 #include "GenericTriggers.h"
 #include "../../LootObjectStack.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
 bool LowManaTrigger::IsActive()
 {
-    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < 40;
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig.lowMana;
 }
 
 
@@ -33,8 +34,8 @@ bool LoseAggroTrigger::IsActive()
 
 bool PanicTrigger::IsActive()
 {
-    return AI_VALUE2(uint8, "health", "self target") < 25 &&
-		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") < 25);
+    return AI_VALUE2(uint8, "health", "self target") < sPlayerbotAIConfig.criticalHealth &&
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig.lowMana);
 }
 
 bool BuffTrigger::IsActive()
@@ -42,7 +43,7 @@ bool BuffTrigger::IsActive()
     Unit* target = GetTarget();
 	return SpellTrigger::IsActive() &&
 		!ai->HasAura(spell, target) &&
-		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > 40);
+		(!AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig.lowMana);
 }
 
 Value<Unit*>* BuffOnPartyTrigger::GetTargetValue()

@@ -160,4 +160,11 @@ namespace ai
 	public:
 	    CastInvisibilityAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "invisibility") {}
 	};
+
+	class CastEvocationAction : public CastSpellAction
+	{
+	public:
+	    CastEvocationAction(PlayerbotAI* ai) : CastSpellAction(ai, "evocation") {}
+	    virtual string GetTargetName() { return "self target"; }
+	};
 }

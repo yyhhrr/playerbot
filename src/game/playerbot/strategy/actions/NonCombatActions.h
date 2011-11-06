@@ -2,6 +2,7 @@
 
 #include "../Action.h"
 #include "UseItemAction.h"
+#include "../../PlayerbotAIConfig.h"
 
 namespace ai
 {
@@ -10,9 +11,17 @@ namespace ai
     public:
         DrinkAction(PlayerbotAI* ai) : UseItemAction(ai, "drink") {}
 
+        virtual bool Execute(Event event)
+        {
+            if (bot->isInCombat())
+                return false;
+
+            return UseItemAction::Execute(event);
+        }
+
         virtual bool isUseful()
         {
-            return UseItemAction::isUseful() && AI_VALUE2(uint8, "mana", "self target") < 40;
+            return UseItemAction::isUseful() && AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig.lowMana;
         }
     };
 
@@ -21,9 +30,17 @@ namespace ai
     public:
         EatAction(PlayerbotAI* ai) : UseItemAction(ai, "food") {}
 
+        virtual bool Execute(Event event)
+        {
+            if (bot->isInCombat())
+                return false;
+
+            return UseItemAction::Execute(event);
+        }
+
         virtual bool isUseful()
         {
-            return UseItemAction::isUseful() && AI_VALUE2(uint8, "health", "self target") < 40;
+            return UseItemAction::isUseful() && AI_VALUE2(uint8, "health", "self target") < sPlayerbotAIConfig.lowHealth;
         }
     };
 
