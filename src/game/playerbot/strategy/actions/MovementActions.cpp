@@ -39,9 +39,6 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
-    if (!bot->IsFlying() && !bot->IsUnderWater())
-        bot->UpdateAllowedPositionZ(x, y, z);
-
     MotionMaster &mm = *bot->GetMotionMaster();
 
     mm.MovePoint(mapId, x, y, z);
@@ -114,8 +111,11 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     float distance = bot->GetDistance(target);
 
-    if (distance < CONTACT_DISTANCE * 2)
+    if (distance < ATTACK_DISTANCE)
+    {
+        bot->SetFacingToObject(target);
         return false;
+    }
 
     if (distance > sPlayerbotAIConfig.reactDistance)
     {
@@ -133,7 +133,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
     if (distance > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
         return false;
     
-    if (distance < CONTACT_DISTANCE * 2)
+    if (distance < ATTACK_DISTANCE)
         return false;
 
     return IsMovingAllowed();
@@ -158,11 +158,21 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
 
-    if (bot->GetDistance(master->GetPositionX(), master->GetPositionY(), bot->GetPositionZ()) <= sPlayerbotAIConfig.spellDistance &&
+    if (bot->GetDistance2d(master->GetPositionX(), master->GetPositionY()) <= sPlayerbotAIConfig.sightDistance &&
             abs(bot->GetPositionZ() - master->GetPositionZ()) >= sPlayerbotAIConfig.spellDistance)
     {
         mm.Clear();
-        bot->SetPosition(bot->GetPositionX(), bot->GetPositionY(), master->GetPositionZ(), true);
+        float x = bot->GetPositionX(), y = bot->GetPositionY(), z = master->GetPositionZ();
+        if (master->GetMapId() && bot->GetMapId() != master->GetMapId())
+        {
+            bot->TeleportTo(master->GetMapId(), x, y, z, bot->GetOrientation());
+        }
+        else
+        {
+            bot->SetPosition(x, y, z, bot->GetOrientation(), true);
+        }
+        AI_VALUE(LastMovement&, "last movement").Set(target);
+        return true;
     }
 
     if (!IsMovingAllowed(target))
@@ -171,7 +181,7 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     if (target->IsFriendlyTo(bot) && bot->IsMounted() && AI_VALUE(list<ObjectGuid>, "possible targets").empty())
         distance += angle;
 
-    mm.MoveFollow(target, distance, angle);
+    MoveNear(target, distance);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
