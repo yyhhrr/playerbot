@@ -140,3 +140,11 @@ void CatDpsDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "medium aoe",
         NextAction::array(0, new NextAction("swipe (cat)", 28.0f), NULL)));
 }
+
+void CatAoeDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "medium aoe",
+        NextAction::array(0, new NextAction("swipe (cat)", 28.0f), NULL)));
+}
+

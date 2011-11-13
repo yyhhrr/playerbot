@@ -23,11 +23,13 @@ namespace ai
             StrategyFactoryInternal()
             {
                 creators["nc"] = &druid::StrategyFactoryInternal::nc;
+                creators["cat aoe"] = &druid::StrategyFactoryInternal::cat_aoe;
                 creators["caster aoe"] = &druid::StrategyFactoryInternal::caster_aoe;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new GenericDruidNonCombatStrategy(ai); }
+            static Strategy* cat_aoe(PlayerbotAI* ai) { return new CatAoeDruidStrategy(ai); }
             static Strategy* caster_aoe(PlayerbotAI* ai) { return new CasterDruidAoeStrategy(ai); }
         };
 

@@ -132,6 +132,8 @@ protected:
 
     void aoe()
     {
+        engine->addStrategy("cat aoe");
+
 		tickInMeleeRange();
 		tickWithAttackerCount(3);
 
