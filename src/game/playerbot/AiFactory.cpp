@@ -105,6 +105,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             break;
         case CLASS_DRUID:
             engine->addStrategy(tab == 0 ? "caster" : "bear");
+            if (tab == 0)
+                engine->addStrategy("caster aoe");
             break;
         case CLASS_HUNTER:
             engine->addStrategy("bdps");

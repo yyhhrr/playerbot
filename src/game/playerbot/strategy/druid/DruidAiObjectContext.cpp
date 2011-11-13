@@ -23,10 +23,12 @@ namespace ai
             StrategyFactoryInternal()
             {
                 creators["nc"] = &druid::StrategyFactoryInternal::nc;
+                creators["caster aoe"] = &druid::StrategyFactoryInternal::caster_aoe;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new GenericDruidNonCombatStrategy(ai); }
+            static Strategy* caster_aoe(PlayerbotAI* ai) { return new CasterDruidAoeStrategy(ai); }
         };
 
         class DruidStrategyFactoryInternal : public NamedObjectContext<Strategy>
