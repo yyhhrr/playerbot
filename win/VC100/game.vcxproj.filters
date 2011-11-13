@@ -1098,6 +1098,9 @@
     <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\RtiValue.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">

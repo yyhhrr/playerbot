@@ -39,6 +39,7 @@
 #include "HasTotemValue.h"
 #include "LeastHpTargetValue.h"
 #include "AoeHealValues.h"
+#include "RtiValue.h"
 
 namespace ai
 {
@@ -102,9 +103,13 @@ namespace ai
             creators["has totem"] = &ValueContext::has_totem;
 
             creators["aoe heal"] = &ValueContext::aoe_heal;
+
+            creators["rti"] = &ValueContext::rti;
         }
 
     private:
+        static UntypedValue* rti(PlayerbotAI* ai) { return new RtiValue(ai); }
+
         static UntypedValue* aoe_heal(PlayerbotAI* ai) { return new AoeHealValue(ai); }
 
         static UntypedValue* chat(PlayerbotAI* ai) { return new ChatValue(ai); }

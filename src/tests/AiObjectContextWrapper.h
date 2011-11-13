@@ -21,6 +21,12 @@ namespace ai
         MockFloatValue(PlayerbotAI* const ai) : ManualSetValue<float>(ai, 0) {}
     };
 
+    class MockStringValue : public ManualSetValue<string>, public Qualified
+    {
+    public:
+        MockStringValue(PlayerbotAI* const ai) : ManualSetValue<string>(ai, "") {}
+    };
+
     class MockItemValue : public ManualSetValue<list<Item*> >, public Qualified
     {
     public:
@@ -131,6 +137,8 @@ namespace ai
             creators["possible targets"] = &MockValueContext::units;
             creators["has totem"] = &MockValueContext::logical;
             creators["aoe heal"] = &MockValueContext::stats;
+
+            creators["rti"] = &MockValueContext::str;
         }
 
     private:
@@ -138,6 +146,7 @@ namespace ai
         static UntypedValue* stats(PlayerbotAI* ai) { return new MockStatsValue(ai); }
         static UntypedValue* item(PlayerbotAI* ai) { return new MockItemValue(ai); }
         static UntypedValue* floating(PlayerbotAI* ai) { return new MockFloatValue(ai); }
+        static UntypedValue* str(PlayerbotAI* ai) { return new MockStringValue(ai); }
         static UntypedValue* logical(PlayerbotAI* ai) { return new MockLogicalValue(ai); }
         static UntypedValue* mock(PlayerbotAI* ai) { return new MockTargetValue(ai); }
         static UntypedValue* party_member_without_aura(PlayerbotAI* ai) { return new MockPartyMemberWithoutAuraValue(ai); }

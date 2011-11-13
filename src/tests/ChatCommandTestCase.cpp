@@ -56,6 +56,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( cast );
       CPPUNIT_TEST( invite );
       CPPUNIT_TEST( spell );
+      CPPUNIT_TEST( rti );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -356,6 +357,13 @@ protected:
         trigger("spell");
         tick();
         assertActions(">S:spell");
+    }
+
+    void rti()
+    {
+        trigger("rti");
+        tick();
+        assertActions(">S:rti");
     }
 };
 

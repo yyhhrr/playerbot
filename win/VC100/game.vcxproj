@@ -641,6 +641,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PartyMemberValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PartyMemberWithoutAuraValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PossibleTargetsValue.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\RtiValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\SpellCastUsefulValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\SpellIdValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\StatsValues.cpp" />

@@ -41,6 +41,7 @@
 #include "CastCustomSpellAction.h"
 #include "InviteToGroupAction.h"
 #include "TellCastFailedAction.h"
+#include "RtiAction.h"
 
 namespace ai
 {
@@ -95,9 +96,11 @@ namespace ai
             creators["cast custom spell"] = &ChatActionContext::cast_custom_spell;
             creators["invite"] = &ChatActionContext::invite;
             creators["spell"] = &ChatActionContext::spell;
+            creators["rti"] = &ChatActionContext::rti;
         }
 
     private:
+        static Action* rti(PlayerbotAI* ai) { return new RtiAction(ai); }
         static Action* invite(PlayerbotAI* ai) { return new InviteToGroupAction(ai); }
         static Action* spell(PlayerbotAI* ai) { return new TellSpellAction(ai); }
         static Action* cast_custom_spell(PlayerbotAI* ai) { return new CastCustomSpellAction(ai); }
