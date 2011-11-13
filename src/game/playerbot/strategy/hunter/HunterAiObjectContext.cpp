@@ -24,9 +24,11 @@ namespace ai
             {
                 creators["dps"] = &hunter::StrategyFactoryInternal::dps;
                 creators["nc"] = &hunter::StrategyFactoryInternal::nc;
+                creators["aoe"] = &hunter::StrategyFactoryInternal::aoe;
             }
 
         private:
+            static Strategy* aoe(PlayerbotAI* ai) { return new DpsAoeHunterStrategy(ai); }
             static Strategy* dps(PlayerbotAI* ai) { return new DpsHunterStrategy(ai); }
             static Strategy* nc(PlayerbotAI* ai) { return new GenericHunterNonCombatStrategy(ai); }
         };

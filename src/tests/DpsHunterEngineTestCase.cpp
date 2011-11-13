@@ -104,6 +104,8 @@ protected:
 
     void aoe()
     {
+        engine->addStrategy("aoe");
+
 		addTargetAura("hunter's mark");
 		addTargetAura("black arrow");
 		addTargetAura("serpent sting");

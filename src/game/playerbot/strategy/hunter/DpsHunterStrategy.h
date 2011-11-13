@@ -15,4 +15,14 @@ namespace ai
         virtual NextAction** getDefaultActions();
 
     };
+
+    class DpsAoeHunterStrategy : public CombatStrategy
+    {
+    public:
+        DpsAoeHunterStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
+
+    public:
+        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
+        virtual string getName() { return "aoe"; }
+    };
 }

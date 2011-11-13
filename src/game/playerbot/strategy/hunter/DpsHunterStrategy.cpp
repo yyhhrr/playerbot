@@ -97,7 +97,10 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "freezing trap",
         NextAction::array(0, new NextAction("freezing trap", 83.0f), NULL)));
+}
 
+void DpsAoeHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
     triggers.push_back(new TriggerNode(
         "medium aoe",
         NextAction::array(0, new NextAction("multi-shot", 20.0f), NULL)));
