@@ -181,7 +181,10 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     if (target->IsFriendlyTo(bot) && bot->IsMounted() && AI_VALUE(list<ObjectGuid>, "possible targets").empty())
         distance += angle;
 
-    mm.MoveFollow(target, distance, angle);
+	bool canMove = MoveNear(target, distance);
+	if (!canMove)
+		return false;
+    //mm.MoveFollow(target, distance, angle);
 
     float distanceToRun = abs(bot->GetDistance(target) - distance);
     WaitForReach(distanceToRun);
