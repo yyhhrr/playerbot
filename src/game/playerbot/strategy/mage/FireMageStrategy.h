@@ -14,4 +14,14 @@ namespace ai
         virtual string getName() { return "fire"; }
         virtual NextAction** getDefaultActions();
     };
+
+    class FireMageAoeStrategy : public CombatStrategy
+    {
+    public:
+        FireMageAoeStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
+
+    public:
+        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
+        virtual string getName() { return "fire aoe"; }
+    };
 }

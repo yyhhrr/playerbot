@@ -76,6 +76,8 @@ protected:
 
     void aoe() 
     {
+        engine->addStrategy("fire aoe");
+
 		tickWithAttackerCount(3);
 
 		assertActions(">T:flamestrike");

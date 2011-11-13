@@ -91,6 +91,8 @@ protected:
 
    	void aoe()
 	{
+        engine->addStrategy("frost aoe");
+
 		tick();
 		tickWithAttackerCount(4);
 		tick();

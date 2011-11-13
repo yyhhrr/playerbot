@@ -140,10 +140,6 @@ void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"nature's grasp",
 		NextAction::array(0, new NextAction("nature's grasp", 20.0f), NULL)));
-
-	triggers.push_back(new TriggerNode(
-		"high aoe",
-		NextAction::array(0, new NextAction("starfall", 17.0f), NULL)));
 }
 
 void CasterDruidAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

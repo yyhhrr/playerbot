@@ -91,7 +91,10 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategy(tab == 2 ? "dps" : "heal");
             break;
         case CLASS_MAGE:
-            engine->addStrategy(tab == 1 ? "fire" : "frost");
+            if (tab == 1)
+                engine->addStrategies("fire", "fire aoe", NULL);
+            else
+                engine->addStrategies("frost", "frost aoe", NULL);
             break;
         case CLASS_WARRIOR:
             engine->addStrategy(tab == 2 ? "tank" : "dps");
