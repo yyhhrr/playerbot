@@ -17,6 +17,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( dpsAssist );
       CPPUNIT_TEST( tankAssist );
       CPPUNIT_TEST( attackWeak );
+      CPPUNIT_TEST( attackRti );
       CPPUNIT_TEST( loot );
       CPPUNIT_TEST( gather );
       CPPUNIT_TEST( goaway );
@@ -96,6 +97,17 @@ protected:
 		tickWithNoTarget();
 
 		assertActions(">S:stay>Tank:tank assist");
+	}
+
+	void attackRti()
+	{
+		engine->addStrategy("stay");
+		engine->addStrategy("attack rti");
+
+		tick();
+		tickWithNoTarget();
+
+		assertActions(">S:stay>Rti:attack rti target");
 	}
 
 	void attackWeak()

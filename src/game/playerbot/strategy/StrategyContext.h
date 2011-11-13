@@ -80,6 +80,7 @@ namespace ai
             creators["tank aoe"] = &AssistStrategyContext::tank_aoe;
             creators["attack weak"] = &AssistStrategyContext::attack_weak;
             creators["grind"] = &AssistStrategyContext::grind;
+            creators["attack rti"] = &AssistStrategyContext::attack_rti;
         }
 
     private:
@@ -89,6 +90,7 @@ namespace ai
         static Strategy* tank_aoe(PlayerbotAI* ai) { return new TankAoeStrategy(ai); }
         static Strategy* attack_weak(PlayerbotAI* ai) { return new AttackWeakStrategy(ai); }
         static Strategy* grind(PlayerbotAI* ai) { return new GrindingStrategy(ai); }
+        static Strategy* attack_rti(PlayerbotAI* ai) { return new AttackRtiStrategy(ai); }
     };
 
     class QuestStrategyContext : public NamedObjectContext<Strategy>

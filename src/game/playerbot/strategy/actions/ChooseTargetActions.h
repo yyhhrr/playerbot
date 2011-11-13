@@ -30,4 +30,10 @@ namespace ai
         virtual string GetTargetName() { return "least hp target"; }
     };
 
+    class AttackRtiTargetAction : public AttackAction {
+    public:
+        AttackRtiTargetAction(PlayerbotAI* ai) : AttackAction(ai, "attack rti target") {}
+        virtual string GetTargetName() { return "rti target"; }
+    };
+
 }

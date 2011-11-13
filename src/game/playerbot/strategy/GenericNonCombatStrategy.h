@@ -126,6 +126,16 @@ namespace ai
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 	};
 
+	class AttackRtiStrategy : public GenericNonCombatStrategy
+	{
+	public:
+	    AttackRtiStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+		virtual string getName() { return "attack rti"; }
+
+	public:
+		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
+	};
+
     class GrindingStrategy : public GenericNonCombatStrategy
     {
     public:

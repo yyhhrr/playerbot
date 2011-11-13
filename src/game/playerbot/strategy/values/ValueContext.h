@@ -18,6 +18,7 @@
 #include "CurrentCcTargetValue.h"
 #include "PetTargetValue.h"
 #include "GrindTargetValue.h"
+#include "RtiTargetValue.h"
 #include "PartyMemberToDispel.h"
 #include "StatsValues.h"
 #include "AttackerCountValues.h"
@@ -67,6 +68,7 @@ namespace ai
             creators["current cc target"] = &ValueContext::current_cc_target;
             creators["pet target"] = &ValueContext::pet_target;
             creators["grind target"] = &ValueContext::grind_target;
+            creators["rti target"] = &ValueContext::rti_target;
             creators["party member to dispel"] = &ValueContext::party_member_to_dispel;
             creators["health"] = &ValueContext::health;
             creators["rage"] = &ValueContext::rage;
@@ -163,6 +165,7 @@ namespace ai
         static UntypedValue* current_cc_target(PlayerbotAI* ai) { return new CurrentCcTargetValue(ai); }
         static UntypedValue* pet_target(PlayerbotAI* ai) { return new PetTargetValue(ai); }
         static UntypedValue* grind_target(PlayerbotAI* ai) { return new GrindTargetValue(ai); }
+        static UntypedValue* rti_target(PlayerbotAI* ai) { return new RtiTargetValue(ai); }
         static UntypedValue* has_totem(PlayerbotAI* ai) { return new HasTotemValue(ai); }
     };
 };

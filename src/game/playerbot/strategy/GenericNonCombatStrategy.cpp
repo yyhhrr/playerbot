@@ -55,6 +55,13 @@ void AttackWeakStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 		NextAction::array(0, new NextAction("attack least hp target", 60.0f), NULL)));
 }
 
+void AttackRtiStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+	triggers.push_back(new TriggerNode(
+		"no attackers",
+		NextAction::array(0, new NextAction("attack rti target", 60.0f), NULL)));
+}
+
 NextAction** GrindingStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("add all loot", 5.0f), NULL);
