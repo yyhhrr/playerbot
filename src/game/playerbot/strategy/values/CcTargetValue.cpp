@@ -2,6 +2,7 @@
 #include "../../playerbot.h"
 #include "CcTargetValue.h"
 #include "../../PlayerbotAIConfig.h"
+#include "../Action.h"
 
 using namespace ai;
 
@@ -19,16 +20,18 @@ protected:
     {
         float threat = threatManager->getThreat(bot);
         Unit* creature = threatManager->getOwner();
+        if (!creature || creature->isDead())
+            return;
 
         uint8 health = creature->GetHealthPercent();
-        if (health < 75)
+        if (health < sPlayerbotAIConfig.mediumHealth)
             return;
 
-        int tankCount, dpsCount;
-        GetPlayerCount(bot, creature, &tankCount, &dpsCount);
-
-        if (tankCount || dpsCount || !ai->CanCastSpell(spell, creature))
+        if (!ai->CanCastSpell(spell, creature))
             return;
+
+        if (*ai->GetAiObjectContext()->GetValue<Unit*>("rti target") == creature)
+            result = creature;
 
         float minDistance = sPlayerbotAIConfig.reactDistance;
         Group* group = bot->GetGroup();
@@ -50,7 +53,7 @@ protected:
             }
         }
 
-        if (minDistance < 20.0f)
+        if (minDistance < 10.0f)
             return;
 
         if (!result || minDistance > maxDistance)
