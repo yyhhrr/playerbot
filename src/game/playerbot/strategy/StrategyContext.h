@@ -24,7 +24,7 @@ namespace ai
             creators["low mana"] = &StrategyContext::low_mana;
             creators["food"] = &StrategyContext::food;
             creators["chat"] = &StrategyContext::chat;
-            creators["world packet"] = &StrategyContext::world_packet;
+            creators["default"] = &StrategyContext::world_packet;
             creators["dead"] = &StrategyContext::dead;
             creators["flee"] = &StrategyContext::flee;
             creators["duel"] = &StrategyContext::duel;

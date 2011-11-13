@@ -121,7 +121,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategy("dps");
             break;
     }
-    engine->addStrategies("flee", "attack weak", "racials", "chat", "world packet", "aoe", NULL);
+    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", NULL);
 }
 
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
@@ -143,7 +143,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
             break;
     }
     nonCombatEngine->addStrategies("nc", "attack weak", "emote", "food", "stay", "chat",
-            "world packet", "quest", "loot", "gather", "duel", NULL);
+            "default", "quest", "loot", "gather", "duel", NULL);
 }
 
 Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
@@ -157,7 +157,7 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 
 void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
 {
-    deadEngine->addStrategies("dead", "stay", "chat", "world packet", NULL);
+    deadEngine->addStrategies("dead", "stay", "chat", "default", NULL);
 }
 
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {

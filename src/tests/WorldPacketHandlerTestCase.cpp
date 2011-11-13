@@ -36,7 +36,7 @@ public:
     void setUp()
     {
 		EngineTestBase::setUp();
-		setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "world packet", NULL);
+		setupEngine(context = new MockAiObjectContext(ai, new AiObjectContext(ai), &ai->buffer), "default", NULL);
     }
 
 protected:
