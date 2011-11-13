@@ -66,6 +66,10 @@ void WorldPacketHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "item push result",
         NextAction::array(0, new NextAction("query item usage", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "ready check finished",
+        NextAction::array(0, new NextAction("finish ready check", relevance), NULL)));
 }
 
 WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTroughStrategy(ai)
@@ -74,4 +78,13 @@ WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* ai) : PassTr
     supported.push_back("check mount state");
     supported.push_back("quest objective completed");
     supported.push_back("party command");
+    supported.push_back("ready check");
+}
+
+
+void ReadyCheckStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "timer",
+        NextAction::array(0, new NextAction("ready check", relevance), NULL)));
 }

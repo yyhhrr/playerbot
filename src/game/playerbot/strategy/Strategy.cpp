@@ -17,7 +17,6 @@ public:
         creators["healing potion"] = &healing_potion;
         creators["be near"] = &follow_master_random;
         creators["attack anything"] = &attack_anything;
-        creators["attack rti target"] = &attack_rti_target;
         creators["move random"] = &move_random;
         creators["move to loot"] = &move_to_loot;
         creators["food"] = &food;
@@ -59,13 +58,6 @@ private:
         return new ActionNode ("attack anything",
             /*P*/ NULL,
             /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    static ActionNode* attack_rti_target(PlayerbotAI* ai)
-    {
-        return new ActionNode ("attack anything",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("attack weak"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* move_random(PlayerbotAI* ai)

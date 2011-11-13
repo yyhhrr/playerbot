@@ -517,6 +517,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryItemUsageAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ReadyCheckAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RememberTaxiAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\RepairAllAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ResetAiAction.cpp" />

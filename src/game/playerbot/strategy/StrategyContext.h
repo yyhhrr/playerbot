@@ -25,6 +25,7 @@ namespace ai
             creators["food"] = &StrategyContext::food;
             creators["chat"] = &StrategyContext::chat;
             creators["default"] = &StrategyContext::world_packet;
+            creators["ready check"] = &StrategyContext::ready_check;
             creators["dead"] = &StrategyContext::dead;
             creators["flee"] = &StrategyContext::flee;
             creators["duel"] = &StrategyContext::duel;
@@ -43,6 +44,7 @@ namespace ai
         static Strategy* food(PlayerbotAI* ai) { return new UseFoodStrategy(ai); }
         static Strategy* chat(PlayerbotAI* ai) { return new ChatCommandHandlerStrategy(ai); }
         static Strategy* world_packet(PlayerbotAI* ai) { return new WorldPacketHandlerStrategy(ai); }
+        static Strategy* ready_check(PlayerbotAI* ai) { return new ReadyCheckStrategy(ai); }
     };
 
     class MovementStrategyContext : public NamedObjectContext<Strategy>

@@ -35,9 +35,13 @@ namespace ai
             creators["taxi done"] = &WorldPacketTriggerContext::taxi_done;
             creators["cast failed"] = &WorldPacketTriggerContext::cast_failed;
             creators["duel requested"] = &WorldPacketTriggerContext::duel_requested;
+            creators["ready check"] = &WorldPacketTriggerContext::ready_check;
+            creators["ready check finished"] = &WorldPacketTriggerContext::ready_check_finished;
         }
 
     private:
+        static Trigger* ready_check_finished(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "ready check finished"); }
+        static Trigger* ready_check(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "ready check"); }
         static Trigger* duel_requested(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "duel requested"); }
         static Trigger* cast_failed(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "cast failed"); }
         static Trigger* taxi_done(PlayerbotAI* ai) { return new WorldPacketTrigger(ai, "taxi done"); }

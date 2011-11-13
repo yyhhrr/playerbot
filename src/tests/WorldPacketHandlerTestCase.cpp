@@ -30,6 +30,7 @@ class WorldPacketHandlerTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( quest_objective_completed );
       CPPUNIT_TEST( party_command );
       CPPUNIT_TEST( taxi_done );
+      CPPUNIT_TEST( ready_check );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -189,6 +190,22 @@ protected:
         tick();
 
         assertActions(">S:taxi");
+    }
+
+    void ready_check()
+    {
+        trigger("ready check");
+        tick();
+
+        assertActions(">S:ready check");
+    }
+
+    void ready_check_finished()
+    {
+        trigger("ready check finished");
+        tick();
+
+        assertActions(">S:finish ready check");
     }
 
 };

@@ -1101,6 +1101,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\RtiValue.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ReadyCheckAction.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">

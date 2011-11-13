@@ -19,6 +19,7 @@
 #include "LeaveGroupAction.h"
 #include "TellCastFailedAction.h"
 #include "AcceptDuelAction.h"
+#include "ReadyCheckAction.h"
 
 namespace ai
 {
@@ -51,9 +52,13 @@ namespace ai
             creators["party command"] = &WorldPacketActionContext::party_command;
             creators["tell cast failed"] = &WorldPacketActionContext::tell_cast_failed;
             creators["accept duel"] = &WorldPacketActionContext::accept_duel;
+            creators["ready check"] = &WorldPacketActionContext::ready_check;
+            creators["ready check finished"] = &WorldPacketActionContext::ready_check_finished;
         }
 
     private:
+        static Action* ready_check_finished(PlayerbotAI* ai) { return new FinishReadyCheckAction(ai); }
+        static Action* ready_check(PlayerbotAI* ai) { return new ReadyCheckAction(ai); }
         static Action* accept_duel(PlayerbotAI* ai) { return new AcceptDuelAction(ai); }
         static Action* tell_cast_failed(PlayerbotAI* ai) { return new TellCastFailedAction(ai); }
         static Action* party_command(PlayerbotAI* ai) { return new PartyCommandAction(ai); }
