@@ -26,11 +26,13 @@ namespace ai
             {
                 creators["nc"] = &shaman::StrategyFactoryInternal::nc;
                 creators["totems"] = &shaman::StrategyFactoryInternal::totems;
+                creators["melee aoe"] = &shaman::StrategyFactoryInternal::melee_aoe;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new ShamanNonCombatStrategy(ai); }
             static Strategy* totems(PlayerbotAI* ai) { return new TotemsShamanStrategy(ai); }
+            static Strategy* melee_aoe(PlayerbotAI* ai) { return new MeleeAoeShamanStrategy(ai); }
         };
 
         class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>

@@ -100,7 +100,10 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategy(tab == 2 ? "tank" : "dps");
             break;
         case CLASS_SHAMAN:
-            engine->addStrategy(tab == 2 ? "heal" : "dps");
+            if (tab == 2)
+                engine->addStrategy("heal");
+            else
+                engine->addStrategies("dps", "melee aoe", NULL);
             break;
         case CLASS_PALADIN:
             engine->addStrategy(tab == 1 ? "tank" : "dps");

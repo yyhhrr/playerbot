@@ -63,6 +63,8 @@ protected:
 
     void aoe()
     {
+        engine->addStrategy("melee aoe");
+
         tickInMeleeRange();
         tickWithAttackerCount(3);
         tickWithAttackerCount(3);
