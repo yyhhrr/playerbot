@@ -20,7 +20,7 @@ uint32 PricingStrategy::GetSellPrice(ItemPrototype const* proto, uint32 auctionH
 
 uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
-    uint32 untilTime = time(0) - 3600 * 36;
+    uint32 untilTime = time(0) - 3600 * 12;
     double price = sAhBotConfig.GetItemPriceMultiplier(proto->Name1) *
         GetRarityPriceMultiplier(proto) *
         GetCategoryPriceMultiplier(untilTime, auctionHouse) *
@@ -44,7 +44,7 @@ string PricingStrategy::ExplainSellPrice(ItemPrototype const* proto, uint32 auct
 
 string PricingStrategy::ExplainBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
-    uint32 untilTime = time(0) - 3600 * 36;
+    uint32 untilTime = time(0) - 3600 * 12;
     ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " * " << 
         GetRarityPriceMultiplier(proto) << " * " <<
         GetCategoryPriceMultiplier(untilTime, auctionHouse) << " * " << 
@@ -95,7 +95,7 @@ double PricingStrategy::GetCategoryPriceMultiplier(uint32 untilTime, uint32 auct
     double result = 1.0;
 
     QueryResult* results = CharacterDatabase.PQuery(
-        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE category = '%s' AND won = '1' AND buytime <= '%u' AND auction_house = '%u'",
+        "SELECT count(*) FROM (SELECT round(buytime/3600/24/5) as days FROM ahbot_history WHERE category = '%s' AND won = '1' AND buytime <= '%u' AND auction_house = '%u' group by days) q",
         category->GetName().c_str(), untilTime, auctionHouse);
     if (results)
     {
@@ -103,7 +103,7 @@ double PricingStrategy::GetCategoryPriceMultiplier(uint32 untilTime, uint32 auct
         uint32 count = fields[0].GetUInt32();
 
         if (count)
-            result = sqrt(GetMultiplier(count, fields[1].GetUInt32(), fields[2].GetUInt32()));
+            result += count;
 
         delete results;
     }
@@ -123,7 +123,7 @@ double PricingStrategy::GetItemPriceMultiplier(ItemPrototype const* proto, uint3
     double result = 1.0;
 
     QueryResult* results = CharacterDatabase.PQuery(
-        "SELECT COUNT(*), MIN(buytime), MAX(buytime) FROM ahbot_history WHERE won = '1' AND item = '%u' AND buytime <= '%u' AND auction_house = '%u'",
+        "SELECT count(*) FROM (SELECT round(buytime/3600/24/5) as days FROM ahbot_history WHERE won = '1' AND item = '%u' AND buytime <= '%u' AND auction_house = '%u' group by days) q",
         proto->ItemId, untilTime, auctionHouse);
     if (results)
     {
@@ -131,7 +131,7 @@ double PricingStrategy::GetItemPriceMultiplier(ItemPrototype const* proto, uint3
         uint32 count = fields[0].GetUInt32();
 
         if (count)
-            result = GetMultiplier(count, fields[1].GetUInt32(), fields[2].GetUInt32());
+            result += count;
 
         delete results;
     }
@@ -149,16 +149,15 @@ uint32 PricingStrategy::ApplyQualityMultiplier(ItemPrototype const* proto, uint3
 
 uint32 PricingStrategy::GetDefaultBuyPrice(ItemPrototype const* proto)
 {
-    uint32 defaultPrice = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
-    uint32 buyPrice = proto->BuyPrice / 4;
-    if (!buyPrice)
-        buyPrice = defaultPrice;
+    uint32 price = 0;
 
-    uint32 sellPrice = proto->SellPrice;
-    if (!sellPrice)
-        sellPrice = defaultPrice;
+    if (proto->SellPrice)
+        price = proto->SellPrice;
+    else if (proto->BuyPrice)
+        price = proto->BuyPrice / 4;
+    else
+        price = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
 
-    uint32 price = (buyPrice + sellPrice + defaultPrice) / 3;
     return ApplyQualityMultiplier(proto, price) * sAhBotConfig.priceMultiplier;
 }
 
