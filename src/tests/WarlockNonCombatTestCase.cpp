@@ -22,10 +22,10 @@ public:
 protected:
     void buff()
     {
-		tickWithSpellUnavailable("demon armor");
-
-		tickWithSpellAvailable("demon armor");
-		tick();
+        tick();
+        tick();
+        tick();
+        addAura("fel armor");
 
 		itemAvailable("soulstone", 2);
 		tick();
@@ -40,7 +40,7 @@ protected:
         tick();
         addAura("spellstone");
 
-        assertActions(">S:demon skin>S:demon armor>S:create healthstone>S:create firestone>S:create spellstone>S:spellstone");
+        assertActions(">S:fel armor>S:demon armor>S:demon skin>S:create healthstone>S:create firestone>S:create spellstone>S:spellstone");
     }
     
 };

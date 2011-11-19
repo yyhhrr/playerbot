@@ -99,6 +99,7 @@ namespace ai
             AiObjectContextInternal()
             {
                 creators["summon imp"] = &AiObjectContextInternal::summon_imp;
+                creators["fel armor"] = &AiObjectContextInternal::fel_armor;
                 creators["demon armor"] = &AiObjectContextInternal::demon_armor;
                 creators["demon skin"] = &AiObjectContextInternal::demon_skin;
                 creators["create healthstone"] = &AiObjectContextInternal::create_healthstone;
@@ -119,6 +120,7 @@ namespace ai
         private:
             static Action* immolate(PlayerbotAI* ai) { return new CastImmolateAction(ai); }
             static Action* summon_imp(PlayerbotAI* ai) { return new CastSummonImpAction(ai); }
+            static Action* fel_armor(PlayerbotAI* ai) { return new CastFelArmorAction(ai); }
             static Action* demon_armor(PlayerbotAI* ai) { return new CastDemonArmorAction(ai); }
             static Action* demon_skin(PlayerbotAI* ai) { return new CastDemonSkinAction(ai); }
             static Action* create_healthstone(PlayerbotAI* ai) { return new CastCreateHealthstoneAction(ai); }

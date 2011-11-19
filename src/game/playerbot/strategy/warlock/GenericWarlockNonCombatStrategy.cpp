@@ -10,9 +10,17 @@ class GenericWarlockNonCombatStrategyActionNodeFactory : public NamedObjectFacto
 public:
     GenericWarlockNonCombatStrategyActionNodeFactory()
     {
+        creators["fel armor"] = &fel_armor;
         creators["demon armor"] = &demon_armor;
     }
 private:
+    static ActionNode* fel_armor(PlayerbotAI* ai)
+    {
+        return new ActionNode ("fel armor",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("demon armor"), NULL),
+            /*C*/ NULL);
+    }
     static ActionNode* demon_armor(PlayerbotAI* ai)
     {
         return new ActionNode ("demon armor",
@@ -33,7 +41,7 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
     triggers.push_back(new TriggerNode(
         "demon armor",
-        NextAction::array(0, new NextAction("demon armor", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("fel armor", 21.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"no healthstone",
