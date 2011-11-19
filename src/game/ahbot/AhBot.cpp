@@ -115,6 +115,8 @@ void AhBot::ForceUpdate()
 
     sLog.outString("AhBot is now checking auctions");
 
+    CheckCategoryMultipliers();
+
     for (int i = 0; i < MAX_AUCTIONS; i++)
     {
         InAuctionItemsBag inAuctionItems(auctionIds[i]);
@@ -366,6 +368,7 @@ void AhBot::Expire(int auction)
         ++itr;
     }
 
+    CharacterDatabase.PExecute("DELETE FROM ahbot_category");
     sLog.outDetail("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
 }
 
@@ -462,4 +465,36 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
 
     result += (data[AHBOT_WON_PLAYER] - data[AHBOT_WON_SELF]);
     return result < 0 ? 0 : (uint32)result;
+}
+
+void AhBot::CheckCategoryMultipliers()
+{
+    QueryResult* results = CharacterDatabase.PQuery("SELECT category, multiplier, expire_time FROM ahbot_category");
+    if (results)
+    {
+        do
+        {
+            Field* fields = results->Fetch();
+            categoryMultipliers[fields[0].GetCppString()] = fields[1].GetFloat();
+            categoryMultiplierExpireTimes[fields[0].GetCppString()] = fields[2].GetUInt64();
+
+        } while (results->NextRow());
+
+        delete results;
+    }
+
+    CharacterDatabase.PExecute("DELETE FROM ahbot_category");
+
+    for (int i = 0; i < CategoryList::instance.size(); i++)
+    {
+        string name = CategoryList::instance[i]->GetName();
+        if (categoryMultiplierExpireTimes[name] <= time(0))
+        {
+            categoryMultipliers[name] = (double)urand(20, 100) / 20.0;
+            categoryMultiplierExpireTimes[name] = time(0) + urand(4, 7) * 3600 * 24;
+        }
+
+        CharacterDatabase.PExecute("INSERT INTO ahbot_category (category, multiplier, expire_time) VALUES ('%s','%f','%u')",
+                name.c_str(), categoryMultipliers[name], categoryMultiplierExpireTimes[name]);
+    }
 }

@@ -3,6 +3,7 @@
 #include "ItemBag.h"
 #include "AhBotConfig.h"
 #include "../../shared/Database/DatabaseEnv.h"
+#include "AhBot.h"
 
 using namespace ahbot;
 
@@ -10,6 +11,7 @@ uint32 PricingStrategy::GetSellPrice(ItemPrototype const* proto, uint32 auctionH
 {
     uint32 now = time(0);
     double price = sAhBotConfig.GetItemPriceMultiplier(proto->Name1) *
+        auctionbot.GetCategoryMultiplier(category->GetName()) *
         GetRarityPriceMultiplier(proto) *
         GetCategoryPriceMultiplier(now, auctionHouse) *
         GetItemPriceMultiplier(proto, now, auctionHouse) *
@@ -22,6 +24,7 @@ uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHo
 {
     uint32 untilTime = time(0) - 3600 * 12;
     double price = sAhBotConfig.GetItemPriceMultiplier(proto->Name1) *
+        auctionbot.GetCategoryMultiplier(category->GetName()) *
         GetRarityPriceMultiplier(proto) *
         GetCategoryPriceMultiplier(untilTime, auctionHouse) *
         GetItemPriceMultiplier(proto, untilTime, auctionHouse) *
@@ -33,24 +36,26 @@ uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHo
 string PricingStrategy::ExplainSellPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
     uint32 untilTime = time(0);
-    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " * " << 
-        GetRarityPriceMultiplier(proto) << " * " <<
-        GetCategoryPriceMultiplier(untilTime, auctionHouse) << " * " << 
-        GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " * " << 
-        sAhBotConfig.GetSellPriceMultiplier(category->GetName()) << " * " << 
-        GetDefaultSellPrice(proto);
+    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
+        auctionbot.GetCategoryMultiplier(category->GetName()) << " (random) * " <<
+        GetRarityPriceMultiplier(proto) << " (rariry) * " <<
+        GetCategoryPriceMultiplier(untilTime, auctionHouse) << " (category) * " <<
+        GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " (item) * " <<
+        sAhBotConfig.GetSellPriceMultiplier(category->GetName()) << " (sell) * " <<
+        GetDefaultSellPrice(proto) << " (price)";
     return out.str();
 }
 
 string PricingStrategy::ExplainBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
     uint32 untilTime = time(0) - 3600 * 12;
-    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " * " << 
-        GetRarityPriceMultiplier(proto) << " * " <<
-        GetCategoryPriceMultiplier(untilTime, auctionHouse) << " * " << 
-        GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " * " << 
-        sAhBotConfig.GetBuyPriceMultiplier(category->GetName()) << " * " << 
-        GetDefaultBuyPrice(proto);
+    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
+        auctionbot.GetCategoryMultiplier(category->GetName()) << " (random) * " <<
+        GetRarityPriceMultiplier(proto) << " (rarity) * " <<
+        GetCategoryPriceMultiplier(untilTime, auctionHouse) << " (category) * " <<
+        GetItemPriceMultiplier(proto, untilTime, auctionHouse) << " (item) * " <<
+        sAhBotConfig.GetBuyPriceMultiplier(category->GetName()) << " (buy) * " <<
+        GetDefaultBuyPrice(proto) << " (price)";
     return out.str();
 }
 

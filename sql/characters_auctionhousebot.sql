@@ -13,5 +13,13 @@ CREATE TABLE `ahbot_history` (
   KEY `won` (`won`),
   KEY `category` (`category`),
   KEY `auction_house` (`auction_house`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ahbot_category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category` varchar(45) DEFAULT NULL,
+  `multiplier` decimal(20, 2) NOT NULL,
+  `expire_time` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `helper` (`category`, `multiplier`, `expire_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

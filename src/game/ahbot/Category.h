@@ -16,8 +16,8 @@ namespace ahbot
         virtual ~Category() { if (pricingStrategy) delete pricingStrategy; }
 
     public:
-        virtual bool Contains(ItemPrototype const* proto) = 0;
-        virtual string GetName() = 0;
+        virtual bool Contains(ItemPrototype const* proto) { return false; }
+        virtual string GetName() { return "default"; }
         virtual string GetDisplayName() { return GetName(); }
 
         virtual int32 GetMaxAllowedAuctionCount();

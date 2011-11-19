@@ -30,6 +30,7 @@ namespace ahbot
         void HandleCommand(string command);
         void Won(AuctionEntry* entry) { AddToHistory(entry); }
         void Expired(AuctionEntry* entry) { /* do nothing */ }
+        double GetCategoryMultiplier(string category) { return categoryMultipliers[category]; }
 
     private:
         void Update(int auction, ItemBag* inAuction);
@@ -41,6 +42,7 @@ namespace ahbot
         void AddToHistory(AuctionEntry* entry);
         void CleanupHistory();
         uint32 GetAvailableMoney(uint32 auctionHouse);
+        void CheckCategoryMultipliers();
 
     private:
         AvailableItemsBag availableItems;
@@ -48,6 +50,8 @@ namespace ahbot
         WorldSession* session;
         Player* player;
         time_t nextAICheckTime;
+        map<string, double> categoryMultipliers;
+        map<string, uint64> categoryMultiplierExpireTimes;
     };
 };
 
