@@ -161,7 +161,10 @@ uint32 PricingStrategy::GetDefaultBuyPrice(ItemPrototype const* proto)
     else if (proto->BuyPrice)
         price = proto->BuyPrice / 4;
     else
-        price = sAhBotConfig.defaultMinPrice * proto->ItemLevel * proto->ItemLevel / 10;
+    {
+        uint32 level = max(proto->ItemLevel, proto->RequiredLevel);
+        price = sAhBotConfig.defaultMinPrice * level * level / 10;
+    }
 
     return ApplyQualityMultiplier(proto, price) * sAhBotConfig.priceMultiplier;
 }
