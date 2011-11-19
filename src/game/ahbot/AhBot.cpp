@@ -218,9 +218,14 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
     maxAllowedAuctionCount = urand(1 + maxAllowedAuctionCount / 2, maxAllowedAuctionCount);
 
     vector<uint32>& available = availableItems.Get(category);
-    for (vector<uint32>::iterator i = available.begin(); i != available.end(); i++)
+    if (available.size() < 5)
+        return;
+
+    int count = 0;
+    while (count++ < available.size() * 10)
     {
-        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(*i);
+        uint32 index = urand(0, available.size() - 1);
+        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(available[index]);
         if (!proto)
             continue;
 
