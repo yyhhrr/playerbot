@@ -119,8 +119,7 @@ namespace ahbot
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
-            return proto->Class == ITEM_CLASS_GEM &&
-                proto->SubClass == ITEM_SUBCLASS_GEM_SIMPLE;
+            return proto->Class == ITEM_CLASS_GEM;
         }
 
         virtual string GetName() { return "Jems"; }
