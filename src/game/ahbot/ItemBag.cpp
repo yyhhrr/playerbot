@@ -41,6 +41,8 @@ CategoryList::CategoryList()
     Add(new Jems());
     Add(new Elemental());
 
+    Add(new Glyph());
+
     Add(new OtherConsumable());
     Add(new OtherTrade());
     Add(new Other());

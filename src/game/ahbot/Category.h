@@ -287,6 +287,30 @@ namespace ahbot
         }
     };
 
+    class Glyph : public Category
+    {
+    public:
+        Glyph() : Category() {}
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return proto->Class == ITEM_CLASS_GLYPH;
+        }
+
+        virtual string GetName() { return "glyph"; }
+
+        virtual int32 GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+
+        virtual int32 GetStackCount(ItemPrototype const* proto)
+        {
+            return 1;
+        }
+    };
+
     class QualityCategoryWrapper : public Category
     {
     public:
