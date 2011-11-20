@@ -86,6 +86,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
         }
     }
     
+    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", NULL);
+
     switch (player->getClass()){
         case CLASS_PRIEST:
             engine->addStrategy(tab == 2 ? "dps" : "heal");
@@ -106,13 +108,18 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
                 engine->addStrategies("dps", "melee aoe", NULL);
             break;
         case CLASS_PALADIN:
-            engine->addStrategy(tab == 1 ? "tank" : "dps");
+            if (tab == 1)
+                engine->addStrategies("tank", "tank aoe", NULL);
+            else
+                engine->addStrategy("dps");
+
             engine->addStrategy("barmor");
             break;
         case CLASS_DRUID:
-            engine->addStrategy(tab == 0 ? "caster" : "bear");
             if (tab == 0)
-                engine->addStrategy("caster aoe");
+                engine->addStrategies("caster", "caster aoe", NULL);
+            else
+                engine->addStrategies("bear", "tank aoe", NULL);
             break;
         case CLASS_HUNTER:
             engine->addStrategy("bdps");
@@ -121,7 +128,6 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategy("dps");
             break;
     }
-    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", NULL);
 }
 
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
