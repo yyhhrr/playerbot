@@ -41,7 +41,7 @@ namespace ai
                 return NULL;
 
             Unit* unit = ai->GetUnit(guid);
-            if (unit->isDead())
+            if (!unit || unit->isDead())
                 return NULL;
 
             return unit;
