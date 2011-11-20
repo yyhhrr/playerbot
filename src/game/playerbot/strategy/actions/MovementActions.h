@@ -13,13 +13,13 @@ namespace ai
         }
 
     protected:
-        bool MoveNear(uint32 mapId, float x, float y, float z, float distance = 2.0f);
+        bool MoveNear(uint32 mapId, float x, float y, float z, float distance = sPlayerbotAIConfig.meleeDistance);
         bool MoveTo(uint32 mapId, float x, float y, float z);
         bool MoveTo(Unit* target, float distance = 0.0f);
-        bool MoveNear(WorldObject* target, float distance = 2.0f);
+        bool MoveNear(WorldObject* target, float distance = sPlayerbotAIConfig.meleeDistance);
         bool MoveTo(WorldObject* target);
         float GetFollowAngle();
-        bool Follow(Unit* target, float distance = 2.0f);
+        bool Follow(Unit* target, float distance = sPlayerbotAIConfig.meleeDistance);
         bool Follow(Unit* target, float distance, float angle);
         void WaitForReach(float distance);
         bool IsMovingAllowed(Unit* target);

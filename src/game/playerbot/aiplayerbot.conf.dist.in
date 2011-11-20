@@ -34,6 +34,10 @@ ConfVersion=2010102201
 #        Distance to target bot needs to maintain before casting a ranged spell
 #    Default 35
 #
+#    AiPlayerbot.MeleeDistance
+#        Distance to target when melee can be started
+#    Default 2.5
+#
 #    AiPlayerbot.ReactDistance
 #        Maximim distance from master bot can react (does not affect chat)
 #    Default 35
@@ -101,6 +105,7 @@ AiPlayerbot.IterationsPerTick=10
 
 AiPlayerbot.SightDistance=35
 AiPlayerbot.SpellDistance=25
+AiPlayerbot.MeleeDistance=2.5
 AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
 AiPlayerbot.FleeDistance=15

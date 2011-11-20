@@ -62,9 +62,6 @@ bool AttackAction::Attack(Unit* target)
     if (!bot->isInFront(target, ATTACK_DISTANCE))
         bot->SetFacingTo(bot->GetAngle(target));
 
-    if (bot->GetDistance(target) <= ATTACK_DISTANCE)
-        mm.Clear();
-
     context->GetValue<Unit*>("current target")->Set(target);
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 

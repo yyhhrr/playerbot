@@ -58,7 +58,7 @@ public:
         Player* bot = ai->GetBot();
         Group *group = bot->GetGroup();
         if(!group)
-            return "";
+            return message;
 
         bool found = false;
         for (list<string>::iterator i = rtis.begin(); i != rtis.end(); i++)

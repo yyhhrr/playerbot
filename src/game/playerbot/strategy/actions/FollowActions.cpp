@@ -1,12 +1,13 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "FollowActions.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
 bool FollowLineAction::Execute(Event event)
 {
-	return Follow(AI_VALUE(Unit*, "line target"), 2.0f, 0.0f);
+	return Follow(AI_VALUE(Unit*, "line target"), sPlayerbotAIConfig.meleeDistance, 0.0f);
 }
 
 bool FollowMasterAction::Execute(Event event)

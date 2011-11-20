@@ -20,6 +20,11 @@ namespace ai
 	public:
 		FollowMasterAction(PlayerbotAI* ai) : MovementAction(ai, "follow master") {}
 		virtual bool Execute(Event event);
+
+        virtual bool isUseful()
+        {
+            return AI_VALUE2(float, "distance", "master target") > sPlayerbotAIConfig.meleeDistance;
+        }
 	};
 
     class FollowMasterRandomAction : public MovementAction {

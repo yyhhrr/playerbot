@@ -111,11 +111,8 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     float distance = bot->GetDistance(target);
 
-    if (distance < ATTACK_DISTANCE / 2)
-    {
-        bot->SetFacingToObject(target);
+    if (distance <= sPlayerbotAIConfig.meleeDistance)
         return false;
-    }
 
     if (distance > sPlayerbotAIConfig.reactDistance)
     {
@@ -133,7 +130,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
     if (distance > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
         return false;
     
-    if (distance < ATTACK_DISTANCE / 2)
+    if (distance <= sPlayerbotAIConfig.meleeDistance)
         return false;
 
     return IsMovingAllowed();
@@ -195,13 +192,13 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = 1000.0f * ceil(distance / bot->GetSpeed(MOVE_RUN));
+    float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN);
 
     if (delay < sPlayerbotAIConfig.reactDelay)
         delay = sPlayerbotAIConfig.reactDelay;
 
-    if (delay > 5000)
-        delay = 5000;
+    if (delay > sPlayerbotAIConfig.globalCoolDown)
+        delay = sPlayerbotAIConfig.globalCoolDown;
 
     ai->SetNextCheckDelay((uint32)delay);
 }
