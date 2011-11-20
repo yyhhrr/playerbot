@@ -11,23 +11,6 @@ namespace ai
         virtual string Filter(string message);
     };
 
-    class StrategyChatFilter : public ChatFilter
-    {
-    public:
-        StrategyChatFilter(PlayerbotAI* ai) : ChatFilter(ai) {}
-        virtual string Filter(string message);
-    };
-
-    class ClassChatFilter : public ChatFilter
-    {
-    public:
-        ClassChatFilter(PlayerbotAI* ai);
-        virtual string Filter(string message);
-
-    private:
-        map<string, uint8> classNames;
-    };
-
     class CompositeChatFilter : public ChatFilter
     {
     public:
