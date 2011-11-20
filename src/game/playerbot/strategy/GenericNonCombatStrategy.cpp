@@ -107,9 +107,16 @@ NextAction** StayCombatStrategy::getDefaultActions()
 }
 
 
-NextAction** GoAwayNonCombatStrategy::getDefaultActions()
+NextAction** GoAwayStrategy::getDefaultActions()
 {
     return NextAction::array(0, new NextAction("goaway", 1.0f), NULL);
+}
+
+void GoAwayStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "enemy too close",
+        NextAction::array(0, new NextAction("goaway", 50.0f), NULL)));
 }
 
 void RandomEmoteStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

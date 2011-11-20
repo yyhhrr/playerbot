@@ -66,7 +66,7 @@ namespace ai
         static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterNonCombatStrategy(ai); }
         static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineNonCombatStrategy(ai); }
         static Strategy* stay(PlayerbotAI* ai) { return new StayNonCombatStrategy(ai); }
-        static Strategy* goaway(PlayerbotAI* ai) { return new GoAwayNonCombatStrategy(ai); }
+        static Strategy* goaway(PlayerbotAI* ai) { return new GoAwayStrategy(ai); }
         static Strategy* stay_circle(PlayerbotAI* ai) { return new StayCircleStrategy(ai); }
         static Strategy* stay_combat(PlayerbotAI* ai) { return new StayCombatStrategy(ai); }
     };

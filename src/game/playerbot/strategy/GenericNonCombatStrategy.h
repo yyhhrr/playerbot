@@ -40,12 +40,13 @@ namespace ai
 		virtual NextAction** getDefaultActions();
 	};
 
-    class GoAwayNonCombatStrategy : public GenericNonCombatStrategy
+    class GoAwayStrategy : public GenericNonCombatStrategy
     {
     public:
-        GoAwayNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        GoAwayStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
         virtual string getName() { return "goaway"; }
         virtual NextAction** getDefaultActions();
+        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
 
     class StayCircleStrategy : public GenericNonCombatStrategy

@@ -39,13 +39,15 @@ protected:
     {
         engine->addStrategy("goaway");
 		tickWithAttackerCount(0);
-        assertActions(">S:goaway");
+		tickInMeleeRange();
+        assertActions(">S:goaway>S:goaway");
     }
 
     void followMaster()
     {
         engine->addStrategy("follow master");
 
+        set<float>("distance", "master target", 20);
 		tickWithAttackerCount(0);
 		assertActions(">S:follow master");
     }
