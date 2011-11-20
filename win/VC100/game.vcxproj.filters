@@ -1104,6 +1104,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\ReadyCheckAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\ChatFilter.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2296,6 +2299,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\CreatureLinkingMgr.h">
       <Filter>World/Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\ChatFilter.h">
+      <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

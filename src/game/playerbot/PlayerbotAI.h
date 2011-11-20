@@ -5,6 +5,7 @@
 #include "strategy/AiObjectContext.h"
 #include "strategy/Engine.h"
 #include "strategy/ExternalEventHelper.h"
+#include "ChatFilter.h"
 
 class Player;
 class PlayerbotMgr;
@@ -145,5 +146,6 @@ protected:
     PacketHandlingHelper botOutgoingPacketHandlers;
     PacketHandlingHelper masterIncomingPacketHandlers;
     PacketHandlingHelper masterOutgoingPacketHandlers;
+    CompositeChatFilter chatFilter;
 };
 

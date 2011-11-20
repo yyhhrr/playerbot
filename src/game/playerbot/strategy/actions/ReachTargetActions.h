@@ -45,7 +45,7 @@ namespace ai
     class ReachMeleeAction : public ReachTargetAction
 	{
     public:
-        ReachMeleeAction(PlayerbotAI* ai) : ReachTargetAction(ai, "reach melee", 1.5f) {}
+        ReachMeleeAction(PlayerbotAI* ai) : ReachTargetAction(ai, "reach melee", ATTACK_DISTANCE / 2) {}
     };
 
     class ReachSpellAction : public ReachTargetAction

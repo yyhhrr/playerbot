@@ -111,7 +111,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 
     float distance = bot->GetDistance(target);
 
-    if (distance < ATTACK_DISTANCE)
+    if (distance < ATTACK_DISTANCE / 2)
     {
         bot->SetFacingToObject(target);
         return false;
@@ -133,7 +133,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
     if (distance > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
         return false;
     
-    if (distance < ATTACK_DISTANCE)
+    if (distance < ATTACK_DISTANCE / 2)
         return false;
 
     return IsMovingAllowed();

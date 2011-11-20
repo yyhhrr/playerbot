@@ -50,14 +50,14 @@ void PacketHandlingHelper::AddPacket(const WorldPacket& packet)
 
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL),
-    currentEngine(NULL), chatHelper(this)
+    currentEngine(NULL), chatHelper(this), chatFilter(this)
 {
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
         engines[i] = NULL;
 }
 
 PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<UntypedValue>* sharedValues) :
-    PlayerbotAIBase(), chatHelper(this)
+    PlayerbotAIBase(), chatHelper(this), chatFilter(this)
 {
 	this->mgr = mgr;
 	this->bot = bot;
@@ -200,18 +200,22 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
 		text.find("CTRA") != wstring::npos)
 		return;
 
-    if (text.size() > 2 && text.substr(0, 2) == "d " || text.size() > 3 && text.substr(0, 3) == "do ")
+	string filtered = chatFilter.Filter(text);
+	if (filtered.empty())
+	    return;
+
+    if (filtered.size() > 2 && filtered.substr(0, 2) == "d " || filtered.size() > 3 && filtered.substr(0, 3) == "do ")
     {
-        std::string action = text.substr(text.find(" ") + 1);
+        std::string action = filtered.substr(filtered.find(" ") + 1);
         DoSpecificAction(action);
     }
-    else if (text == "reset")
+    else if (filtered == "reset")
     {
         Reset();
     }
     else
     {
-        chatCommands.push(text);
+        chatCommands.push(filtered);
     }
 }
 
