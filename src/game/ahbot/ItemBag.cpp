@@ -126,25 +126,8 @@ bool ItemBag::Add(ItemPrototype const* proto)
 
 void AvailableItemsBag::Load()
 {
-    set<uint32> vendorItems;
-
-    QueryResult* results = WorldDatabase.PQuery("SELECT distinct item FROM npc_vendor");
-    if (results != NULL)
-    {
-        do
-        {
-            Field* fields = results->Fetch();
-            vendorItems.insert(fields[0].GetUInt32());
-        } while (results->NextRow());
-
-        delete results;
-    }
-
     for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
     {
-        if (vendorItems.find(itemId) != vendorItems.end())
-            continue;
-
         Add(sObjectMgr.GetItemPrototype(itemId));
     }
 
