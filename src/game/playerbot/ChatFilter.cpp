@@ -27,14 +27,70 @@ public:
         if (tank && !ai->IsTank(bot))
             return "";
 
-        bool dps = message.find("@dps") == 0 || message.find("@heal") == 0;
+        bool dps = message.find("@dps") == 0;
         if (dps && ai->IsTank(bot))
+            return "";
+
+        bool heal = message.find("@heal") == 0;
+        if (heal && !ai->IsHeal(bot))
             return "";
 
         if (tank || dps)
             return ChatFilter::Filter(message);
 
         return message;
+    }
+};
+
+class CombatTypeChatFilter : public ChatFilter
+{
+public:
+    CombatTypeChatFilter(PlayerbotAI* ai) : ChatFilter(ai) {}
+
+    virtual string Filter(string message)
+    {
+        Player* bot = ai->GetBot();
+
+        bool melee = message.find("@melee") == 0;
+        bool ranged = message.find("@ranged") == 0;
+
+        if (!melee && !ranged)
+            return message;
+
+        switch (bot->getClass())
+        {
+            case CLASS_WARRIOR:
+            case CLASS_PALADIN:
+            case CLASS_ROGUE:
+            case CLASS_DEATH_KNIGHT:
+                if (ranged)
+                    return "";
+                break;
+
+            case CLASS_HUNTER:
+            case CLASS_PRIEST:
+            case CLASS_MAGE:
+            case CLASS_WARLOCK:
+                if (melee)
+                    return "";
+                break;
+
+            case CLASS_DRUID:
+                if (ranged && ai->IsTank(bot))
+                    return "";
+                if (melee && !ai->IsTank(bot))
+                    return "";
+                break;
+
+            case CLASS_SHAMAN:
+                if (melee && ai->IsHeal(bot))
+                    return "";
+                if (ranged && !ai->IsHeal(bot))
+                    return "";
+                break;
+        }
+
+        return ChatFilter::Filter(message);
     }
 };
 
@@ -140,6 +196,7 @@ CompositeChatFilter::CompositeChatFilter(PlayerbotAI* ai) : ChatFilter(ai)
     filters.push_back(new StrategyChatFilter(ai));
     filters.push_back(new ClassChatFilter(ai));
     filters.push_back(new RtiChatFilter(ai));
+    filters.push_back(new CombatTypeChatFilter(ai));
 }
 
 CompositeChatFilter::~CompositeChatFilter()
