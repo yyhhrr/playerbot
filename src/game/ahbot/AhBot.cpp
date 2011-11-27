@@ -232,7 +232,8 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
         if (inAuctionItems->GetCount(category) >= maxAllowedAuctionCount)
             break;
 
-        if (inAuctionItems->GetCount(category, proto->ItemId) >= category->GetMaxAllowedItemAuctionCount(proto))
+        int32 maxAllowedItems = category->GetMaxAllowedItemAuctionCount(proto);
+        if (maxAllowedItems && inAuctionItems->GetCount(category, proto->ItemId) >= maxAllowedItems)
             continue;
 
         inAuctionItems->Add(proto);

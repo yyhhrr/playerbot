@@ -15,7 +15,7 @@ int32 Category::GetStackCount(ItemPrototype const* proto)
 
 int32 Category::GetMaxAllowedItemAuctionCount(ItemPrototype const* proto)
 {
-    return 1;
+    return 0;
 }
 
 int32 Category::GetMaxAllowedAuctionCount()
