@@ -41,6 +41,10 @@ void TankPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("judgement of light", 1.2f), NULL)));
 
     triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("judgement of wisdom", 8.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "righteous fury",
         NextAction::array(0, new NextAction("righteous fury", 15.0f), NULL)));
 

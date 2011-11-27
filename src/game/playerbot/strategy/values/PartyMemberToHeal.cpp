@@ -55,5 +55,5 @@ Unit* PartyMemberToHeal::Calculate()
 
 bool PartyMemberToHeal::CanHealPet(Pet* pet) 
 {
-    return HUNTER_PET ==  pet->getPetType();
+    return MINI_PET != pet->getPetType();
 }

@@ -23,6 +23,7 @@ class TankPaladinTestCase : public EngineTestBase
 		CPPUNIT_TEST( combatIncompatibles );
 		CPPUNIT_TEST( buffIncompatibles );
 		CPPUNIT_TEST( resistanceIncompatibles );
+		CPPUNIT_TEST( lowMana );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -124,6 +125,14 @@ protected:
 		tickWithTargetLowHealth(19);
 
         assertActions(">T:reach melee>T:melee>T:judgement of light>T:hammer of wrath");
+    }
+
+    void lowMana()
+    {
+        tickWithLowMana(10);
+        tickWithLowMana(10);
+
+        assertActions(">T:melee>T:judgement of wisdom");
     }
 
     void stopEnemyMove()
