@@ -125,11 +125,14 @@ public:
             if (!isRti)
                 continue;
 
+            ObjectGuid rtiTarget = group->GetTargetIcon(RtiTargetValue::GetRtiIndex(rti.substr(1)));
+            if (bot->GetObjectGuid() == rtiTarget)
+                return ChatFilter::Filter(message);
+
             Unit* target = *ai->GetAiObjectContext()->GetValue<Unit*>("current target");
             if (!target)
                 return "";
 
-            ObjectGuid rtiTarget = group->GetTargetIcon(RtiTargetValue::GetRtiIndex(rti.substr(1)));
             if (target->GetObjectGuid() != rtiTarget)
                 return "";
 
