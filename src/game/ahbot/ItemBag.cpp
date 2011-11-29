@@ -126,8 +126,25 @@ bool ItemBag::Add(ItemPrototype const* proto)
 
 void AvailableItemsBag::Load()
 {
-    for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
-    {
+    set<uint32> vendorItems;
+
+      QueryResult* results = WorldDatabase.PQuery("SELECT item, count(item) as cnt FROM npc_vendor group by item having cnt > 20");
+      if (results != NULL)
+      {
+          do
+          {
+              Field* fields = results->Fetch();
+              vendorItems.insert(fields[0].GetUInt32());
+          } while (results->NextRow());
+
+          delete results;
+      }
+
+      for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+      {
+          if (vendorItems.find(itemId) != vendorItems.end())
+              continue;
+
         Add(sObjectMgr.GetItemPrototype(itemId));
     }
 
