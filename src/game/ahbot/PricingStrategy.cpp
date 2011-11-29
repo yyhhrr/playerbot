@@ -20,8 +20,27 @@ uint32 PricingStrategy::GetSellPrice(ItemPrototype const* proto, uint32 auctionH
     return (uint32)price;
 }
 
+double PricingStrategy::GetMarketPrice(uint32 itemId)
+{
+    double marketPrice = 0;
+
+    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price where item = '%u'", itemId);
+    if (results)
+    {
+        marketPrice = results->Fetch()[0].GetFloat();
+        delete results;
+    }
+
+    return marketPrice;
+}
+
 uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
+    double marketPrice = GetMarketPrice(proto->ItemId);
+
+    if (marketPrice > 0)
+        return marketPrice;
+
     uint32 untilTime = time(0) - 3600 * 12;
     double price = sAhBotConfig.GetItemPriceMultiplier(proto->Name1) *
         auctionbot.GetCategoryMultiplier(category->GetName()) *
@@ -35,8 +54,10 @@ uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHo
 
 string PricingStrategy::ExplainSellPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
+    ostringstream out;
+
     uint32 untilTime = time(0);
-    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
+    out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
         auctionbot.GetCategoryMultiplier(category->GetName()) << " (random) * " <<
         GetRarityPriceMultiplier(proto) << " (rariry) * " <<
         GetCategoryPriceMultiplier(untilTime, auctionHouse) << " (category) * " <<
@@ -48,8 +69,17 @@ string PricingStrategy::ExplainSellPrice(ItemPrototype const* proto, uint32 auct
 
 string PricingStrategy::ExplainBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
+    ostringstream out;
+
+    double marketPrice = GetMarketPrice(proto->ItemId);
+    if (marketPrice > 0)
+    {
+        out << marketPrice << " (market)";
+        return out.str();
+    }
+
     uint32 untilTime = time(0) - 3600 * 12;
-    ostringstream out; out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
+    out << sAhBotConfig.GetItemPriceMultiplier(proto->Name1) << " (item const) * " <<
         auctionbot.GetCategoryMultiplier(category->GetName()) << " (random) * " <<
         GetRarityPriceMultiplier(proto) << " (rarity) * " <<
         GetCategoryPriceMultiplier(untilTime, auctionHouse) << " (category) * " <<

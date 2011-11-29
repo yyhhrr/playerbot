@@ -190,6 +190,8 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         entry->bid = curPrice + urand(1, 1 + bidPrice / 10);
         availableMoney -= curPrice;
 
+        updateMarketPrice(item->GetProto()->ItemId, (entry->startbid + entry->buyout) / 2.0 / item->GetCount());
+
         if (entry->buyout && (entry->bid >= entry->buyout || 100 * (entry->buyout - entry->bid) / price < 25))
         {
             entry->bid = entry->buyout;
@@ -288,6 +290,8 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
 
     auctionHouse->AddAuction(auctionEntry);
     auctionEntry->SaveToDB();
+
+    updateMarketPrice(proto->ItemId, (bidPrice + buyoutPrice) / 2.0 / stackCount);
 
     sLog.outDetail("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auction, bidPrice, buyoutPrice);
 }
@@ -404,6 +408,8 @@ void AhBot::AddToHistory(AuctionEntry* entry)
     if (entry->bidder == player->GetGUIDLow())
         won = AHBOT_WON_SELF;
 
+    updateMarketPrice(proto->ItemId, (entry->startbid + entry->buyout) / 2.0 / entry->itemCount);
+
     uint32 now = time(0);
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
         "VALUES ('%u', '%u', '%u', '%u', '%s', '%u', '%u')",
@@ -494,7 +500,7 @@ void AhBot::CheckCategoryMultipliers()
     for (int i = 0; i < CategoryList::instance.size(); i++)
     {
         string name = CategoryList::instance[i]->GetName();
-        if (categoryMultiplierExpireTimes[name] <= time(0))
+        if (categoryMultiplierExpireTimes[name] <= time(0) || categoryMultipliers[name] <= 0)
         {
             categoryMultipliers[name] = (double)urand(20, 100) / 20.0;
             categoryMultiplierExpireTimes[name] = time(0) + urand(4, 7) * 3600 * 24;
@@ -503,4 +509,25 @@ void AhBot::CheckCategoryMultipliers()
         CharacterDatabase.PExecute("INSERT INTO ahbot_category (category, multiplier, expire_time) VALUES ('%s','%f','%u')",
                 name.c_str(), categoryMultipliers[name], categoryMultiplierExpireTimes[name]);
     }
+}
+
+
+void AhBot::updateMarketPrice(uint32 itemId, double price)
+{
+    double marketPrice = 0;
+
+    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price where item = '%u'", itemId);
+    if (results)
+    {
+        marketPrice = results->Fetch()[0].GetFloat();
+        delete results;
+    }
+
+    if (marketPrice > 0)
+        marketPrice = (marketPrice + price) / 2;
+    else
+        marketPrice = price;
+
+    CharacterDatabase.PExecute("DELETE FROM ahbot_price WHERE item = '%u'", itemId);
+    CharacterDatabase.PExecute("INSERT INTO ahbot_price (item, price) VALUES ('%u', '%lf')", itemId, marketPrice);
 }
