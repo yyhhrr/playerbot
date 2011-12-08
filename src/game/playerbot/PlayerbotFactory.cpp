@@ -323,10 +323,12 @@ void PlayerbotFactory::InitSpells()
             if (!tSpell)
                 continue;
 
-            if (!tSpell->learnedSpell && !bot->IsSpellFitByClassAndRace(tSpell->learnedSpell))
+            uint32 reqLevel = 0;
+            if (!tSpell->learnedSpell && !bot->IsSpellFitByClassAndRace(tSpell->learnedSpell, &reqLevel))
                 continue;
 
-            TrainerSpellState state = bot->GetTrainerSpellState(tSpell);
+            reqLevel = tSpell->isProvidedReqLevel ? tSpell->reqLevel : std::max(reqLevel, tSpell->reqLevel);
+            TrainerSpellState state = bot->GetTrainerSpellState(tSpell, reqLevel);
             if (state != TRAINER_SPELL_GREEN)
                 continue;
             
