@@ -13,6 +13,10 @@ public:
 public:
     virtual bool Check(Unit* unit)
     {
+        Pet* pet = dynamic_cast<Pet*>(unit);
+        if (pet && (pet->getPetType() == MINI_PET || pet->getPetType() == SUMMON_PET))
+            return false;
+
         return unit->isAlive() && !ai->HasAura(aura, unit);
     }
 
