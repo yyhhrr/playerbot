@@ -92,6 +92,12 @@ ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
 string ChatHelper::formatMoney(uint32 copper)
 {
     ostringstream out;
+	if (!copper)
+	{
+		out << "0|TInterface\\AddOns\\AtlasLoot\\Images\\bronze:0|t";
+		return out.str();
+	}
+
     uint32 gold = uint32(copper / 10000);
     copper -= (gold * 10000);
     uint32 silver = uint32(copper / 100);

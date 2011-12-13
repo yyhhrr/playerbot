@@ -13,9 +13,13 @@ bool StatsAction::Execute(Event event)
     out << ", ";
     ListBagSlots(out);
     out << ", ";
-    ListXP(out);
-    out << ", ";
     ListRepairCost(out);
+
+	if (event.getParam() == "xp" || event.getParam() == "all") 
+	{
+		out << ", ";
+		ListXP(out);
+	}
 
     ai->TellMaster(out);
     return true;
@@ -74,7 +78,7 @@ void StatsAction::ListXP( ostringstream &out )
 
 void StatsAction::ListRepairCost(ostringstream &out)
 {
-    out << chat->formatMoney(EstRepairAll()) << " repair";
+    out << chat->formatMoney(EstRepairAll()) << " Repair";
 }
 
 uint32 StatsAction::EstRepairAll()
