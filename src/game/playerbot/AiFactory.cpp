@@ -50,41 +50,45 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
     return NULL;
 }
 
-void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
+int AiFactory::GetPlayerSpecTab(Player* player)
 {
-    map<uint32, int32> tabs;
-    for (uint32 i = 0; i < uint32(3); i++)
+    map<uint32,int32> tabs;
+    for(uint32 i = 0;i < uint32(3);i++)
         tabs[i] = 0;
 
     uint8 activeSpec = player->GetActiveSpec();
     PlayerTalentMap talents = player->GetTalentMap(activeSpec);
-    for (PlayerTalentMap::iterator iter = talents.begin(); iter != talents.end(); ++iter)
-    {
-        if (iter->second.state == PLAYERSPELL_REMOVED)
+    for(PlayerTalentMap::iterator iter = talents.begin();iter != talents.end();++iter){
+        if(iter->second.state == PLAYERSPELL_REMOVED)
             continue;
 
-        TalentEntry const* talentInfo = iter->second.talentEntry;
-        if (!talentInfo)
+        const TalentEntry *talentInfo = iter->second.talentEntry;
+        if(!talentInfo)
             continue;
 
-        TalentTabEntry const* talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
-        if (!talentTabInfo)
+        const TalentTabEntry *talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
+        if(!talentTabInfo)
             continue;
 
-        if ((player->getClassMask() & talentTabInfo->ClassMask) == 0)
+        if((player->getClassMask() & talentTabInfo->ClassMask) == 0)
             continue;
 
         tabs[talentTabInfo->tabpage]++;
     }
     int tab = -1, max = 0;
-    for (uint32 i = 0; i < uint32(3); i++)
-    {
-        if (tab == -1 || max < tabs[i])
-        {
+    for(uint32 i = 0;i < uint32(3);i++){
+        if(tab == -1 || max < tabs[i]){
             tab = i;
             max = tabs[i];
         }
     }
+
+    return tab;
+}
+
+void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
+{
+    int tab = GetPlayerSpecTab(player);
     
     engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", NULL);
 
@@ -111,9 +115,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             if (tab == 1)
                 engine->addStrategies("tank", "tank aoe", NULL);
             else
-                engine->addStrategy("dps");
-
-            engine->addStrategy("barmor");
+                engine->addStrategies("dps", NULL);
             break;
         case CLASS_DRUID:
             if (tab == 0)
@@ -140,9 +142,14 @@ Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade,
 
 void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
 {
+    int tab = GetPlayerSpecTab(player);
+
     switch (player->getClass()){
         case CLASS_PALADIN:
-            nonCombatEngine->addStrategy("bmana");
+            if (tab == 1)
+                nonCombatEngine->addStrategy("barmor");
+            else
+                nonCombatEngine->addStrategy("bdps");
             break;
         case CLASS_HUNTER:
             nonCombatEngine->addStrategy("bspeed");

@@ -14,4 +14,7 @@ public:
     static void AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine);
     static void AddDefaultDeadStrategies(Engine* deadEngine);
     static void AddDefaultCombatStrategies(Player* player, Engine* engine);
+
+private:
+    static int GetPlayerSpecTab(Player* player);
 };
