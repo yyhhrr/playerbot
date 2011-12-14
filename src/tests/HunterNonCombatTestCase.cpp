@@ -10,6 +10,7 @@ class HunterNonCombatTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( HunterNonCombatTestCase );
     CPPUNIT_TEST( buff );
+    CPPUNIT_TEST( lowMana );
     CPPUNIT_TEST( summonPet );
 	CPPUNIT_TEST( buffIfPackUnavailable );
     CPPUNIT_TEST_SUITE_END();
@@ -35,6 +36,21 @@ protected:
 		tickWithAttackerCount(1);
         
         assertActions(">S:aspect of the pack>S:trueshot aura>S:aspect of the hawk");
+    }
+
+    void lowMana()
+    {
+        addAura("trueshot aura");
+        engine->addStrategy("bspeed");
+
+		tick();
+        addAura("aspect of the pack");
+
+        tickWithLowMana(1);
+        addAura("aspect of the viper");
+        tickWithLowMana(1);
+
+        assertActions(">S:aspect of the pack>S:aspect of the viper");
     }
 
     void summonPet()

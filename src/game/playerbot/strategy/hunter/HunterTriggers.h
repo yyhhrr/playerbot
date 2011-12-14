@@ -38,7 +38,7 @@ namespace ai
 			Unit* target = GetTarget();
             return !ai->HasAura(spell, target) && 
 				ai->CanCastSpell(spell, target) && 
-				AI_VALUE2(uint8, "mana", "self target") < 50; 
+				AI_VALUE2(uint8, "mana", "self target") <= sPlayerbotAIConfig.lowMana;
         };
     };
 
@@ -47,7 +47,8 @@ namespace ai
     public: 
         HunterAspectOfThePackTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the pack") {}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the cheetah", GetTarget());
+			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the cheetah", GetTarget()) &&
+			        AI_VALUE2(uint8, "mana", "self target") >= 60;
         };
     };
 

@@ -62,6 +62,10 @@ void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigg
         NextAction::array(0, new NextAction("call pet", 60.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("aspect of the viper", 11.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "hunters pet dead",
         NextAction::array(0, new NextAction("revive pet", 60.0f), NULL)));
 
