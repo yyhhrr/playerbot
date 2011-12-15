@@ -94,6 +94,11 @@ namespace ai
 		CastSealOfCommandAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "seal of command") {}
 	};
 
+	class CastSealOfVengeanceAction : public CastBuffSpellAction {
+	public:
+	    CastSealOfVengeanceAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "seal of vengeance") {}
+	};
+
 
 	class CastBlessingOfMightAction : public CastBuffSpellAction {
 	public:
