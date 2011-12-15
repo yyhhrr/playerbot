@@ -10,16 +10,18 @@ bool StatsAction::Execute(Event event)
     ostringstream out;
 
     ListGold(out);
+
     out << ", ";
     ListBagSlots(out);
+
     out << ", ";
     ListRepairCost(out);
 
-	if (event.getParam() == "xp" || event.getParam() == "all") 
-	{
-		out << ", ";
-		ListXP(out);
-	}
+    if (bot->GetUInt32Value(PLAYER_NEXT_LEVEL_XP))
+    {
+        out << ", ";
+        ListXP(out);
+    }
 
     ai->TellMaster(out);
     return true;
