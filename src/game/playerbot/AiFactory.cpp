@@ -113,9 +113,9 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             break;
         case CLASS_PALADIN:
             if (tab == 1)
-                engine->addStrategies("tank", "tank aoe", NULL);
+                engine->addStrategies("tank", "tank aoe", "barmor", NULL);
             else
-                engine->addStrategies("dps", NULL);
+                engine->addStrategies("dps", "bdps", NULL);
             break;
         case CLASS_DRUID:
             if (tab == 0)
@@ -142,14 +142,9 @@ Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade,
 
 void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
 {
-    int tab = GetPlayerSpecTab(player);
-
     switch (player->getClass()){
         case CLASS_PALADIN:
-            if (tab == 1)
-                nonCombatEngine->addStrategy("barmor");
-            else
-                nonCombatEngine->addStrategy("bdps");
+            nonCombatEngine->addStrategy("bspeed");
             break;
         case CLASS_HUNTER:
             nonCombatEngine->addStrategy("bspeed");
