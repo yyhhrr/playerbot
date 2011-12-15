@@ -54,6 +54,7 @@ namespace ai
                 creators["bmana"] = &paladin::BuffStrategyFactoryInternal::bmana;
                 creators["bdps"] = &paladin::BuffStrategyFactoryInternal::bdps;
                 creators["barmor"] = &paladin::BuffStrategyFactoryInternal::barmor;
+                creators["bspeed"] = &paladin::BuffStrategyFactoryInternal::bspeed;
             }
 
         private:
@@ -61,6 +62,7 @@ namespace ai
             static Strategy* bmana(PlayerbotAI* ai) { return new PaladinBuffManaStrategy(ai); }
             static Strategy* bdps(PlayerbotAI* ai) { return new PaladinBuffDpsStrategy(ai); }
             static Strategy* barmor(PlayerbotAI* ai) { return new PaladinBuffArmorStrategy(ai); }
+            static Strategy* bspeed(PlayerbotAI* ai) { return new PaladinBuffSpeedStrategy(ai); }
         };
 
         class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>

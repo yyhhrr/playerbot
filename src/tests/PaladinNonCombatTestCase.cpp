@@ -27,6 +27,8 @@ protected:
     void buff()
     {
         tick(); 
+
+        engine->addStrategy("bspeed");
         set<bool>("mounted", true);
 		tick();
         set<bool>("mounted", false);

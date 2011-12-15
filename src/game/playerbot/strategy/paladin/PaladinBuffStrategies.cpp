@@ -19,6 +19,13 @@ void PaladinBuffHealthStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("seal of light", 24.0f), NULL)));
 }
 
+void PaladinBuffSpeedStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "crusader aura",
+        NextAction::array(0, new NextAction("crusader aura", 40.0f), NULL)));
+}
+
 void PaladinBuffDpsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
