@@ -46,7 +46,7 @@ public:
                 name == "feral charge - bear" || name == "feral charge - cat" ||
                 name == "charge")
         {
-            ai->GetAiObjectContext()->GetValue<float>("distance", "current target")->Set(0);
+            ai->GetAiObjectContext()->GetValue<float>("distance", "current target")->Set(ATTACK_DISTANCE / 2);
         }
 
         remove(name, " on party");

@@ -20,11 +20,6 @@ bool CastAspectOfTheCheetahAction::isUseful()
     return !ai->HasAnyAuraOf(GetTarget(), "aspect of the cheetah", "aspect of the pack", NULL);
 }
 
-bool CastAspectOfTheViperAction::isUseful() 
-{
-	return CastBuffSpellAction::isUseful() && AI_VALUE2(uint8, "mana", "self target") < 50;
-}
-
 Value<Unit*>* CastFreezingTrap::GetTargetValue()
 {
     return context->GetValue<Unit*>("cc target", "freezing trap");

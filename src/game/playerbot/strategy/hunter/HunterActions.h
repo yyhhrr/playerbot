@@ -73,7 +73,6 @@ namespace ai
 	class CastAspectOfTheViperAction : public CastBuffSpellAction {
 	public:
 		CastAspectOfTheViperAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "aspect of the viper") {}
-		virtual bool isUseful();
 	};
 
 	class CastCallPetAction : public CastBuffSpellAction {

@@ -36,34 +36,17 @@ GenericHunterNonCombatStrategy::GenericHunterNonCombatStrategy(PlayerbotAI* ai) 
     actionNodeFactories.Add(new GenericHunterNonCombatStrategyActionNodeFactory());
 }
 
-void HunterBuffSpeedNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
-{
-    GenericNonCombatStrategy::InitTriggers(triggers);
-
-    triggers.push_back(new TriggerNode(
-        "aspect of the pack",
-        NextAction::array(0, new NextAction("aspect of the pack", 10.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "trueshot aura",
-        NextAction::array(0, new NextAction("trueshot aura", 2.0f), NULL)));
-}
-
 void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     GenericNonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "has attackers",
-        NextAction::array(0, new NextAction("aspect of the hawk", 90.0f), NULL)));
+        "trueshot aura",
+        NextAction::array(0, new NextAction("trueshot aura", 2.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "no pet",
         NextAction::array(0, new NextAction("call pet", 60.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "low mana",
-        NextAction::array(0, new NextAction("aspect of the viper", 11.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "hunters pet dead",

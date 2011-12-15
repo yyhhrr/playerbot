@@ -63,10 +63,6 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericHunterStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "aspect of the viper",
-        NextAction::array(0, new NextAction("aspect of the viper", 91.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "black arrow",
         NextAction::array(0, new NextAction("black arrow", 51.0f), NULL)));
 

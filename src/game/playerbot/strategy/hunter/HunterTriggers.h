@@ -13,9 +13,6 @@ namespace ai
         HunterAspectOfTheHawkTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the hawk") {
 			checkInterval = 1;
 		}
-        virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the viper", GetTarget());
-        };
     };
 
 	class HunterAspectOfTheWildTrigger : public BuffTrigger
@@ -24,22 +21,16 @@ namespace ai
 		HunterAspectOfTheWildTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the wild") {
 			checkInterval = 1;
 		}
-		virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the viper", GetTarget());
-		};
 	};
 
     class HunterAspectOfTheViperTrigger : public BuffTrigger
     { 
     public: 
         HunterAspectOfTheViperTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the viper") {}
-        virtual bool IsActive() 
-		{
-			Unit* target = GetTarget();
-            return !ai->HasAura(spell, target) && 
-				ai->CanCastSpell(spell, target) && 
-				AI_VALUE2(uint8, "mana", "self target") <= sPlayerbotAIConfig.lowMana;
-        };
+        virtual bool IsActive()
+        {
+            return SpellTrigger::IsActive() && !ai->HasAura(spell, GetTarget());
+        }
     };
 
     class HunterAspectOfThePackTrigger : public BuffTrigger
@@ -47,8 +38,7 @@ namespace ai
     public: 
         HunterAspectOfThePackTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "aspect of the pack") {}
         virtual bool IsActive() {
-			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the cheetah", GetTarget()) &&
-			        AI_VALUE2(uint8, "mana", "self target") >= 60;
+			return BuffTrigger::IsActive() && !ai->HasAura("aspect of the cheetah", GetTarget());
         };
     };
 

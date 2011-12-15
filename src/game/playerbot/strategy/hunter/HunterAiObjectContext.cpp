@@ -40,12 +40,14 @@ namespace ai
             {
                 creators["bspeed"] = &hunter::BuffStrategyFactoryInternal::bspeed;
                 creators["bdps"] = &hunter::BuffStrategyFactoryInternal::bdps;
+                creators["bmana"] = &hunter::BuffStrategyFactoryInternal::bmana;
                 creators["rnature"] = &hunter::BuffStrategyFactoryInternal::rnature;
             }
 
         private:
-            static Strategy* bspeed(PlayerbotAI* ai) { return new HunterBuffSpeedNonCombatStrategy(ai); }
+            static Strategy* bspeed(PlayerbotAI* ai) { return new HunterBuffSpeedStrategy(ai); }
             static Strategy* bdps(PlayerbotAI* ai) { return new HunterBuffDpsStrategy(ai); }
+            static Strategy* bmana(PlayerbotAI* ai) { return new HunterBuffManaStrategy(ai); }
             static Strategy* rnature(PlayerbotAI* ai) { return new HunterNatureResistanceStrategy(ai); }
         };
     };
@@ -74,6 +76,7 @@ namespace ai
                 creators["rapid fire"] = &TriggerFactoryInternal::rapid_fire;
                 creators["aspect of the hawk"] = &TriggerFactoryInternal::aspect_of_the_hawk;
                 creators["aspect of the wild"] = &TriggerFactoryInternal::aspect_of_the_wild;
+                creators["aspect of the viper"] = &TriggerFactoryInternal::aspect_of_the_viper;
                 creators["trueshot aura"] = &TriggerFactoryInternal::trueshot_aura;
             }
 

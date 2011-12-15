@@ -66,11 +66,10 @@ protected:
         removeAura("aspect of the hawk");
 
 		tickWithLowMana(30);
-		tickWithLowMana(30);
 
 		tick();
 
-		assertActions(">S:aspect of the viper>T:viper sting>S:aspect of the hawk");
+		assertActions(">T:viper sting>S:aspect of the hawk");
 
     }
 

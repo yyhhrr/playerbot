@@ -33,6 +33,7 @@ protected:
         addAura("aspect of the pack");
         tick();
 
+        engine->addStrategy("bdps");
 		tickWithAttackerCount(1);
         
         assertActions(">S:aspect of the pack>S:trueshot aura>S:aspect of the hawk");
@@ -41,16 +42,13 @@ protected:
     void lowMana()
     {
         addAura("trueshot aura");
-        engine->addStrategy("bspeed");
 
+        engine->addStrategy("bmana");
+        
 		tick();
-        addAura("aspect of the pack");
-
-        tickWithLowMana(1);
         addAura("aspect of the viper");
-        tickWithLowMana(1);
 
-        assertActions(">S:aspect of the pack>S:aspect of the viper");
+        assertActions(">S:aspect of the viper");
     }
 
     void summonPet()
