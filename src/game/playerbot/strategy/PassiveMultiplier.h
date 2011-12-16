@@ -7,10 +7,14 @@ namespace ai
     class PassiveMultiplier : public Multiplier
     {
     public:
-        PassiveMultiplier() : Multiplier() {}
+        PassiveMultiplier();
 
     public:
         virtual float GetValue(Action* action);
+
+    private:
+        static list<string> allowedActions;
+        static list<string> allowedParts;
     };
 
 }
