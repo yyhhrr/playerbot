@@ -7,8 +7,6 @@ using namespace ai;
 
 bool RepairAllAction::Execute(Event event)
 {
-
-
     list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
     for (list<ObjectGuid>::iterator i = npcs.begin(); i != npcs.end(); i++)
     {
@@ -20,11 +18,12 @@ bool RepairAllAction::Execute(Event event)
             bot->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
 
         float discountMod = bot->GetReputationPriceDiscount(unit);
-
         uint32 totalCost = bot->DurabilityRepairAll(true, discountMod, false);
+
         ostringstream out;
-        out << "Repaired at " << unit->GetName() << ". Cost " << totalCost;
+        out << "Repair: " << chat->formatMoney(totalCost) << " (" << unit->GetName() << ")";
         ai->TellMaster(out);
+
         return true;
     }
 
