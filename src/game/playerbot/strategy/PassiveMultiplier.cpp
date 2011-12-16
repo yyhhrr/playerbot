@@ -14,6 +14,7 @@ PassiveMultiplier::PassiveMultiplier() : Multiplier()
         allowedActions.push_back("co");
         allowedActions.push_back("nc");
         allowedActions.push_back("reset ai");
+        allowedActions.push_back("check mount state");
     }
 
     if (allowedParts.empty())
