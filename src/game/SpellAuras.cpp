@@ -2477,6 +2477,12 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
 
                 return;
             }
+            case 43681:                                     // Inactive
+            {
+                if (m_removeMode == AURA_REMOVE_BY_EXPIRE && target->GetTypeId() == TYPEID_PLAYER)
+                    ((Player*)target)->ToggleAFK();
+                return;
+            }
             case 43969:                                     // Feathered Charm
             {
                 // Steelfeather Quest Credit, Are there any requirements for this, like area?
