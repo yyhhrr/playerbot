@@ -22,6 +22,25 @@ namespace ai
         CastFireBlastAction(PlayerbotAI* ai) : CastSpellAction(ai, "fire blast") {}
     };
 
+    class CastArcaneBlastAction : public CastBuffSpellAction
+    {
+    public:
+        CastArcaneBlastAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "arcane blast") {}
+        virtual string GetTargetName() { return "current target"; }
+    };
+
+    class CastArcaneBarrageAction : public CastSpellAction
+    {
+    public:
+        CastArcaneBarrageAction(PlayerbotAI* ai) : CastSpellAction(ai, "arcane barrage") {}
+    };
+
+    class CastArcaneMissilesAction : public CastSpellAction
+    {
+    public:
+        CastArcaneMissilesAction(PlayerbotAI* ai) : CastSpellAction(ai, "arcane missiles") {}
+    };
+
     class CastPyroblastAction : public CastSpellAction
     {
     public:

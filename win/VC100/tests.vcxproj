@@ -247,6 +247,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\AcceptAllQuestStrategyTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\ArcaneMageTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\BearTankDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CasterDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CatDpsDruidTestCase.cpp" />

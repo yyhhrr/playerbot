@@ -32,6 +32,16 @@ namespace ai
         HotStreakTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "hot streak") {}
     };
 
+    class MissileBarrageTrigger : public HasAuraTrigger {
+    public:
+        MissileBarrageTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "missile barrage") {}
+    };
+
+    class ArcaneBlastTrigger : public BuffTrigger {
+    public:
+        ArcaneBlastTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "arcane blast") {}
+    };
+
     class CounterspellInterruptSpellTrigger : public InterruptSpellTrigger
     {
     public:

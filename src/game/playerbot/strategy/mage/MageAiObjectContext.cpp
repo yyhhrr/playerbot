@@ -4,6 +4,7 @@
 #include "MageActions.h"
 #include "MageAiObjectContext.h"
 #include "FrostMageStrategy.h"
+#include "ArcaneMageStrategy.h"
 #include "GenericMageNonCombatStrategy.h"
 #include "FireMageStrategy.h"
 #include "../PullStrategy.h"
@@ -44,11 +45,13 @@ namespace ai
             {
                 creators["frost"] = &mage::MageStrategyFactoryInternal::frost;
                 creators["fire"] = &mage::MageStrategyFactoryInternal::fire;
+                creators["arcane"] = &mage::MageStrategyFactoryInternal::arcane;
             }
 
         private:
             static Strategy* frost(PlayerbotAI* ai) { return new FrostMageStrategy(ai); }
             static Strategy* fire(PlayerbotAI* ai) { return new FireMageStrategy(ai); }
+            static Strategy* arcane(PlayerbotAI* ai) { return new ArcaneMageStrategy(ai); }
         };
     };
 };
@@ -79,6 +82,8 @@ namespace ai
                 creators["spellsteal"] = &TriggerFactoryInternal::spellsteal;
                 creators["hot streak"] = &TriggerFactoryInternal::hot_streak;
                 creators["living bomb"] = &TriggerFactoryInternal::living_bomb;
+                creators["missile barrage"] = &TriggerFactoryInternal::missile_barrage;
+                creators["arcane blast"] = &TriggerFactoryInternal::arcane_blast;
 
             }
 
@@ -97,6 +102,8 @@ namespace ai
             static Trigger* polymorph(PlayerbotAI* ai) { return new PolymorphTrigger(ai); }
             static Trigger* spellsteal(PlayerbotAI* ai) { return new SpellstealTrigger(ai); }
             static Trigger* living_bomb(PlayerbotAI* ai) { return new LivingBombTrigger(ai); }
+            static Trigger* missile_barrage(PlayerbotAI* ai) { return new MissileBarrageTrigger(ai); }
+            static Trigger* arcane_blast(PlayerbotAI* ai) { return new ArcaneBlastTrigger(ai); }
         };
     };
 };
@@ -141,9 +148,15 @@ namespace ai
                 creators["blast wave"] = &AiObjectContextInternal::blast_wave;
                 creators["invisibility"] = &AiObjectContextInternal::invisibility;
                 creators["evocation"] = &AiObjectContextInternal::evocation;
+                creators["arcane blast"] = &AiObjectContextInternal::arcane_blast;
+                creators["arcane barrage"] = &AiObjectContextInternal::arcane_barrage;
+                creators["arcane missiles"] = &AiObjectContextInternal::arcane_missiles;
             }
 
         private:
+            static Action* arcane_missiles(PlayerbotAI* ai) { return new CastArcaneMissilesAction(ai); }
+            static Action* arcane_barrage(PlayerbotAI* ai) { return new CastArcaneBarrageAction(ai); }
+            static Action* arcane_blast(PlayerbotAI* ai) { return new CastArcaneBlastAction(ai); }
             static Action* frostbolt(PlayerbotAI* ai) { return new CastFrostboltAction(ai); }
             static Action* blizzard(PlayerbotAI* ai) { return new CastBlizzardAction(ai); }
             static Action* frost_nova(PlayerbotAI* ai) { return new CastFrostNovaAction(ai); }

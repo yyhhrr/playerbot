@@ -569,6 +569,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\GenericMageNonCombatStrategy.cpp" />
@@ -947,6 +948,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\ItemVisitors.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\GenericMageNonCombatStrategy.h" />

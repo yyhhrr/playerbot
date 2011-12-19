@@ -1107,6 +1107,9 @@
     <ClCompile Include="..\..\src\game\playerbot\ChatFilter.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2301,6 +2304,9 @@
       <Filter>World/Handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\ChatFilter.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
