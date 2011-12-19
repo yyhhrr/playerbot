@@ -15,6 +15,7 @@ class HealShamanTestCase : public EngineTestBase
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( interruptSpell );
 	CPPUNIT_TEST( dispel );
+	CPPUNIT_TEST( lowMana );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -89,6 +90,12 @@ protected:
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
 		assertActions(">T:purge");
+	}
+
+	void lowMana()
+	{
+	    tickWithLowMana(1);
+		assertActions(">S:mana tide totem");
 	}
 };
 

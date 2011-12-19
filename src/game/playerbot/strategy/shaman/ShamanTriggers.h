@@ -30,6 +30,12 @@ namespace ai
     class ManaSpringTotemTrigger : public TotemTrigger {
     public:
         ManaSpringTotemTrigger(PlayerbotAI* ai) : TotemTrigger(ai, "mana spring totem") {}
+        virtual bool IsActive()
+        {
+            return AI_VALUE(uint8, "attacker count") >= attackerCount &&
+                    !AI_VALUE2(bool, "has totem", "mana tide totem") &&
+                    !AI_VALUE2(bool, "has totem", name);
+        }
     };
 
     class FlametongueTotemTrigger : public TotemTrigger {
