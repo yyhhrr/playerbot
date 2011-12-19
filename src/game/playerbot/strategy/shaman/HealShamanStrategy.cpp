@@ -43,4 +43,29 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
         "water shield",
 		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
+
+
+    triggers.push_back(new TriggerNode(
+        "cleanse spirit poison",
+        NextAction::array(0, new NextAction("cleanse spirit", 24.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "cleanse spirit curse",
+        NextAction::array(0, new NextAction("cleanse spirit", 24.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "cleanse spirit disease",
+        NextAction::array(0, new NextAction("cleanse spirit", 24.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member cleanse spirit poison",
+        NextAction::array(0, new NextAction("cleanse spirit poison on party", 23.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member cleanse spirit curse",
+        NextAction::array(0, new NextAction("cleanse spirit curse on party", 23.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "party member cleanse spirit disease",
+        NextAction::array(0, new NextAction("cleanse spirit disease on party", 23.0f), NULL)));
 }

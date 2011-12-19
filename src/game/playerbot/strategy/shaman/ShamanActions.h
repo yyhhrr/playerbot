@@ -200,4 +200,31 @@ namespace ai
         CastWaterWalkingOnPartyAction(PlayerbotAI* ai) : BuffOnPartyAction(ai, "water walking") {}
     };
 
+
+    class CastCleanseSpiritAction : public CastCureSpellAction {
+    public:
+        CastCleanseSpiritAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "cleanse spirit") {}
+    };
+
+    class CastCleanseSpiritPoisonOnPartyAction : public CurePartyMemberAction
+    {
+    public:
+        CastCleanseSpiritPoisonOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse spirit", DISPEL_POISON) {}
+
+        virtual string getName() { return "cleanse spirit poison on party"; }
+    };
+    class CastCleanseSpiritCurseOnPartyAction : public CurePartyMemberAction
+    {
+    public:
+        CastCleanseSpiritCurseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse spirit", DISPEL_CURSE) {}
+
+        virtual string getName() { return "cleanse spirit curse on party"; }
+    };
+    class CastCleanseSpiritDiseaseOnPartyAction : public CurePartyMemberAction
+    {
+    public:
+        CastCleanseSpiritDiseaseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse spirit", DISPEL_DISEASE) {}
+
+        virtual string getName() { return "cleanse spirit disease on party"; }
+    };
 }

@@ -15,6 +15,7 @@ class HealShamanTestCase : public EngineTestBase
     CPPUNIT_TEST( buff );
     CPPUNIT_TEST( interruptSpell );
 	CPPUNIT_TEST( dispel );
+	CPPUNIT_TEST( cure );
 	CPPUNIT_TEST( lowMana );
     CPPUNIT_TEST_SUITE_END();
 
@@ -90,6 +91,25 @@ protected:
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
 		assertActions(">T:purge");
+	}
+
+	void cure()
+	{
+		tickWithAuraToDispel(DISPEL_CURSE);
+		spellAvailable("cleanse spirit");
+		tickWithAuraToDispel(DISPEL_DISEASE);
+        spellAvailable("cleanse spirit");
+		tickWithAuraToDispel(DISPEL_POISON);
+        spellAvailable("cleanse spirit");
+
+        tickWithPartyAuraToDispel(DISPEL_CURSE);
+		spellAvailable("cleanse spirit");
+		tickWithPartyAuraToDispel(DISPEL_DISEASE);
+        spellAvailable("cleanse spirit");
+		tickWithPartyAuraToDispel(DISPEL_POISON);
+        spellAvailable("cleanse spirit");
+
+		assertActions(">S:cleanse spirit>S:cleanse spirit>S:cleanse spirit>P:cleanse spirit curse on party>P:cleanse spirit disease on party>P:cleanse spirit poison on party");
 	}
 
 	void lowMana()

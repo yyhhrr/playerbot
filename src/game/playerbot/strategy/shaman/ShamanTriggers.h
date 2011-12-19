@@ -121,4 +121,41 @@ namespace ai
             return BuffOnPartyTrigger::IsActive() && AI_VALUE2(bool, "swimming", "self target");
         }
     };
+
+    class CleanseSpiritPoisonTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseSpiritPoisonTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "cleanse spirit", DISPEL_POISON) {}
+    };
+
+    class PartyMemberCleanseSpiritPoisonTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        PartyMemberCleanseSpiritPoisonTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cleanse spirit", DISPEL_POISON) {}
+    };
+
+    class CleanseSpiritCurseTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseSpiritCurseTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "cleanse spirit", DISPEL_CURSE) {}
+    };
+
+    class PartyMemberCleanseSpiritCurseTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        PartyMemberCleanseSpiritCurseTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cleanse spirit", DISPEL_CURSE) {}
+    };
+
+    class CleanseSpiritDiseaseTrigger : public NeedCureTrigger
+    {
+    public:
+        CleanseSpiritDiseaseTrigger(PlayerbotAI* ai) : NeedCureTrigger(ai, "cleanse spirit", DISPEL_DISEASE) {}
+    };
+
+    class PartyMemberCleanseSpiritDiseaseTrigger : public PartyMemberNeedCureTrigger
+    {
+    public:
+        PartyMemberCleanseSpiritDiseaseTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cleanse spirit", DISPEL_DISEASE) {}
+    };
+
 }

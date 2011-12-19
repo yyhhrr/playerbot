@@ -78,10 +78,22 @@ namespace ai
                 creators["water walking"] = &TriggerFactoryInternal::water_walking;
                 creators["water breathing on party"] = &TriggerFactoryInternal::water_breathing_on_party;
                 creators["water walking on party"] = &TriggerFactoryInternal::water_walking_on_party;
+                creators["cleanse spirit poison"] = &TriggerFactoryInternal::cleanse_poison;
+                creators["cleanse spirit curse"] = &TriggerFactoryInternal::cleanse_curse;
+                creators["cleanse spirit disease"] = &TriggerFactoryInternal::cleanse_disease;
+                creators["party member cleanse spirit poison"] = &TriggerFactoryInternal::party_member_cleanse_poison;
+                creators["party member cleanse spirit curse"] = &TriggerFactoryInternal::party_member_cleanse_curse;
+                creators["party member cleanse spirit disease"] = &TriggerFactoryInternal::party_member_cleanse_disease;
 
             }
 
         private:
+            static Trigger* party_member_cleanse_disease(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritDiseaseTrigger(ai); }
+            static Trigger* party_member_cleanse_curse(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritCurseTrigger(ai); }
+            static Trigger* party_member_cleanse_poison(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritPoisonTrigger(ai); }
+            static Trigger* cleanse_disease(PlayerbotAI* ai) { return new CleanseSpiritDiseaseTrigger(ai); }
+            static Trigger* cleanse_curse(PlayerbotAI* ai) { return new CleanseSpiritCurseTrigger(ai); }
+            static Trigger* cleanse_poison(PlayerbotAI* ai) { return new CleanseSpiritPoisonTrigger(ai); }
             static Trigger* water_breathing(PlayerbotAI* ai) { return new WaterBreathingTrigger(ai); }
             static Trigger* water_walking(PlayerbotAI* ai) { return new WaterWalkingTrigger(ai); }
             static Trigger* water_breathing_on_party(PlayerbotAI* ai) { return new WaterBreathingOnPartyTrigger(ai); }
@@ -147,9 +159,17 @@ namespace ai
                 creators["water breathing"] = &AiObjectContextInternal::water_breathing;
                 creators["water walking on party"] = &AiObjectContextInternal::water_walking_on_party;
                 creators["water breathing on party"] = &AiObjectContextInternal::water_breathing_on_party;
+                creators["cleanse spirit"] = &AiObjectContextInternal::cleanse_spirit;
+                creators["cleanse spirit poison on party"] = &AiObjectContextInternal::cleanse_spirit_poison_on_party;
+                creators["cleanse spirit disease on party"] = &AiObjectContextInternal::cleanse_spirit_disease_on_party;
+                creators["cleanse spirit curse on party"] = &AiObjectContextInternal::cleanse_spirit_curse_on_party;
             }
 
         private:
+            static Action* cleanse_spirit_poison_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritPoisonOnPartyAction(ai); }
+            static Action* cleanse_spirit_disease_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritDiseaseOnPartyAction(ai); }
+            static Action* cleanse_spirit_curse_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritCurseOnPartyAction(ai); }
+            static Action* cleanse_spirit(PlayerbotAI* ai) { return new CastCleanseSpiritAction(ai); }
             static Action* water_walking(PlayerbotAI* ai) { return new CastWaterWalkingAction(ai); }
             static Action* water_breathing(PlayerbotAI* ai) { return new CastWaterBreathingAction(ai); }
             static Action* water_walking_on_party(PlayerbotAI* ai) { return new CastWaterWalkingOnPartyAction(ai); }
