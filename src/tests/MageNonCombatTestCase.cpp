@@ -10,6 +10,8 @@ class MageNonCombatTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( MageNonCombatTestCase );
     CPPUNIT_TEST( buff );
+    CPPUNIT_TEST( bdps );
+    CPPUNIT_TEST( bmana );
     CPPUNIT_TEST( low_mana );
     CPPUNIT_TEST_SUITE_END();
 
@@ -31,15 +33,39 @@ protected:
 		tickWithSpellAvailable("arcane intellect");
         addPartyAura("arcane intellect");
 
-        tick();
-        tick();
-        tick();
-        addAura("mage armor");
-
 		tickWithNoDrink();
 		tickWithNoFood();
 
-        assertActions(">S:arcane intellect>P:arcane intellect on party>S:mage armor>S:ice armor>S:frost armor>S:conjure water>S:conjure food");
+        assertActions(">S:arcane intellect>P:arcane intellect on party>S:conjure water>S:conjure food");
+    }
+
+    void bmana()
+    {
+        engine->addStrategy("bmana");
+
+        addAura("arcane intellect");
+        addPartyAura("arcane intellect");
+
+        tick();
+        tick();
+        tick();
+
+        assertActions(">S:mage armor>S:ice armor>S:frost armor");
+    }
+
+    void bdps()
+    {
+        engine->addStrategy("bdps");
+
+        addAura("arcane intellect");
+        addPartyAura("arcane intellect");
+
+        tick();
+        tick();
+        tick();
+        tick();
+
+        assertActions(">S:molten armor>S:mage armor>S:ice armor>S:frost armor");
     }
     
     void low_mana()

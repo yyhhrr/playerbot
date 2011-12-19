@@ -144,12 +144,20 @@ Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade,
 
 void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
 {
+    int tab = GetPlayerSpecTab(player);
+
     switch (player->getClass()){
         case CLASS_PALADIN:
             nonCombatEngine->addStrategy("bspeed");
             break;
         case CLASS_HUNTER:
             nonCombatEngine->addStrategy("bspeed");
+            break;
+        case CLASS_MAGE:
+            if (tab == 1)
+                nonCombatEngine->addStrategy("bdps");
+            else
+                nonCombatEngine->addStrategy("bmana");
             break;
     }
     nonCombatEngine->addStrategies("nc", "attack weak", "emote", "food", "stay", "chat",

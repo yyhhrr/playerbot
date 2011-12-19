@@ -53,6 +53,20 @@ namespace ai
             static Strategy* fire(PlayerbotAI* ai) { return new FireMageStrategy(ai); }
             static Strategy* arcane(PlayerbotAI* ai) { return new ArcaneMageStrategy(ai); }
         };
+
+        class MageBuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            MageBuffStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["bmana"] = &mage::MageBuffStrategyFactoryInternal::bmana;
+                creators["bdps"] = &mage::MageBuffStrategyFactoryInternal::bdps;
+            }
+
+        private:
+            static Strategy* bmana(PlayerbotAI* ai) { return new MageBuffManaStrategy(ai); }
+            static Strategy* bdps(PlayerbotAI* ai) { return new MageBuffDpsStrategy(ai); }
+        };
     };
 };
 
@@ -127,6 +141,7 @@ namespace ai
                 creators["arcane intellect on party"] = &AiObjectContextInternal::arcane_intellect_on_party;
                 creators["conjure water"] = &AiObjectContextInternal::conjure_water;
                 creators["conjure food"] = &AiObjectContextInternal::conjure_food;
+                creators["molten armor"] = &AiObjectContextInternal::molten_armor;
                 creators["mage armor"] = &AiObjectContextInternal::mage_armor;
                 creators["ice armor"] = &AiObjectContextInternal::ice_armor;
                 creators["frost armor"] = &AiObjectContextInternal::frost_armor;
@@ -164,6 +179,7 @@ namespace ai
             static Action* arcane_intellect_on_party(PlayerbotAI* ai) { return new CastArcaneIntellectOnPartyAction(ai); }
             static Action* conjure_water(PlayerbotAI* ai) { return new CastConjureWaterAction(ai); }
             static Action* conjure_food(PlayerbotAI* ai) { return new CastConjureFoodAction(ai); }
+            static Action* molten_armor(PlayerbotAI* ai) { return new CastMoltenArmorAction(ai); }
             static Action* mage_armor(PlayerbotAI* ai) { return new CastMageArmorAction(ai); }
             static Action* ice_armor(PlayerbotAI* ai) { return new CastIceArmorAction(ai); }
             static Action* frost_armor(PlayerbotAI* ai) { return new CastFrostArmorAction(ai); }
@@ -195,6 +211,7 @@ MageAiObjectContext::MageAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai)
 {
     strategyContexts.Add(new ai::mage::StrategyFactoryInternal());
     strategyContexts.Add(new ai::mage::MageStrategyFactoryInternal());
+    strategyContexts.Add(new ai::mage::MageBuffStrategyFactoryInternal());
     actionContexts.Add(new ai::mage::AiObjectContextInternal());
     triggerContexts.Add(new ai::mage::TriggerFactoryInternal());
 }
