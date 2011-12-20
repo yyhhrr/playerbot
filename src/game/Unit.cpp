@@ -862,7 +862,12 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
                     if (m->IsRaidOrHeroicDungeon())
                     {
                         if(cVictim->GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_INSTANCE_BIND)
+                        {
                             ((DungeonMap *)m)->PermBindAllPlayers(creditedPlayer);
+                            // wow armory begin
+                            creditedPlayer->CreateWowarmoryFeed(3, cVictim->GetCreatureInfo()->Entry, 0, 0);
+                            // wow armory end
+                        }
                     }
                     else
                     {
