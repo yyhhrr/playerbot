@@ -15,6 +15,8 @@ namespace ai
         {
             if (bot->isAlive() || bot->GetCorpse())
                 return false;
+
+            ai->ChangeStrategy("-follow,+stay", BOT_STATE_NON_COMBAT);
 			
             bot->SetBotDeathTimer();
             bot->BuildPlayerRepop();
