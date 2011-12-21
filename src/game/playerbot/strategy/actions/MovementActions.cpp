@@ -138,7 +138,8 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 
 bool MovementAction::IsMovingAllowed()
 {
-    if (bot->isFrozen() || bot->IsPolymorphed() || bot->isDead() ||
+    if (bot->isFrozen() || bot->IsPolymorphed() ||
+            (bot->isDead() && !bot->GetCorpse()) ||
             bot->IsNonMeleeSpellCasted(true) || bot->IsBeingTeleported() || bot->isInRoots())
         return false;
 

@@ -175,7 +175,7 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 
 void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
 {
-    deadEngine->addStrategies("dead", "stay", "chat", "default", NULL);
+    deadEngine->addStrategies("dead", "stay", "chat", "default", "follow master", NULL);
 }
 
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {

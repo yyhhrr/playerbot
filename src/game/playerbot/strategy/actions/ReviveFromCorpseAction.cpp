@@ -2,6 +2,7 @@
 #include "../../playerbot.h"
 #include "ReviveFromCorpseAction.h"
 #include "../../PlayerbotFactory.h"
+#include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
 
@@ -12,25 +13,16 @@ bool ReviveFromCorpseAction::Execute(Event event)
         return false;
 
     time_t reclaimTime = corpse->GetGhostTime() + bot->GetCorpseReclaimDelay( corpse->GetType()==CORPSE_RESURRECTABLE_PVP );
-    if (reclaimTime > time(0))
+    if (reclaimTime > time(0) || corpse->GetDistance(bot) > sPlayerbotAIConfig.spellDistance)
+        return false;
+
+    PlayerbotChatHandler ch(master);
+    if (! ch.revive(*bot))
     {
-        ostringstream os;
-        os << "Will resurrect in ";
-        os << (reclaimTime - time(0));
-        os << " secs";
-        ai->TellMaster(os.str());
-        ai->SetNextCheckDelay(5000);
+        ai->TellMaster(".. could not be revived ..");
+        return false;
     }
-    else
-    {
-        PlayerbotChatHandler ch(master);
-        if (! ch.revive(*bot))
-        {
-            ai->TellMaster(".. could not be revived ..");
-            return false;
-        }
-        context->GetValue<Unit*>("current target")->Set(NULL);
-        bot->SetSelectionGuid(ObjectGuid());
-    }
+    context->GetValue<Unit*>("current target")->Set(NULL);
+    bot->SetSelectionGuid(ObjectGuid());
     return true;
 }

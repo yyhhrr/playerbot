@@ -31,7 +31,6 @@
 #include "SetHomeAction.h"
 #include "ResetAiAction.h"
 #include "DestroyItemAction.h"
-#include "GraveyardActions.h"
 #include "BuffAction.h"
 #include "AttackAction.h"
 #include "HelpAction.h"
@@ -84,7 +83,6 @@ namespace ai
             creators["home"] = &ChatActionContext::home;
             creators["destroy"] = &ChatActionContext::destroy;
             creators["reset ai"] = &ChatActionContext::reset_ai;
-            creators["graveyard"] = &ChatActionContext::graveyard;
             creators["buff"] = &ChatActionContext::buff;
             creators["help"] = &ChatActionContext::help;
             creators["gb"] = &ChatActionContext::gb;
@@ -112,7 +110,6 @@ namespace ai
         static Action* help(PlayerbotAI* ai) { return new HelpAction(ai); }
         static Action* buff(PlayerbotAI* ai) { return new BuffAction(ai); }
         static Action* destroy(PlayerbotAI* ai) { return new DestroyItemAction(ai); }
-        static Action* graveyard(PlayerbotAI* ai) { return new RepopAtGraveyardAction(ai); }
         static Action* home(PlayerbotAI* ai) { return new SetHomeAction(ai); }
         static Action* chat(PlayerbotAI* ai) { return new ChangeChatAction(ai); }
         static Action* attack_my_target(PlayerbotAI* ai) { return new AttackMyTargetAction(ai); }

@@ -352,6 +352,7 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
     if (!bot->isAlive())
     {
         ChangeEngine(BOT_STATE_DEAD);
+
         if (!bot->IsFriendlyTo(master) && !bot->GetCorpse())
         {
             bot->SetBotDeathTimer();

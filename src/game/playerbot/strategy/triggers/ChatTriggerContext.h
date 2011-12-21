@@ -47,7 +47,6 @@ namespace ai
             creators["home"] = &ChatTriggerContext::home;
             creators["reset ai"] = &ChatTriggerContext::reset_ai;
             creators["destroy"] = &ChatTriggerContext::destroy;
-            creators["graveyard"] = &ChatTriggerContext::graveyard;
             creators["emote"] = &ChatTriggerContext::emote;
             creators["buff"] = &ChatTriggerContext::buff;
             creators["help"] = &ChatTriggerContext::help;
@@ -76,7 +75,6 @@ namespace ai
         static Trigger* help(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "help"); }
         static Trigger* buff(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "buff"); }
         static Trigger* emote(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "emote"); }
-        static Trigger* graveyard(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "graveyard"); }
         static Trigger* destroy(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "destroy"); }
         static Trigger* home(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "home"); }
         static Trigger* accept(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "accept"); }

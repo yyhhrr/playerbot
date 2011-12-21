@@ -43,7 +43,6 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( home );
       CPPUNIT_TEST( destroy );
       CPPUNIT_TEST( reset_ai );
-      CPPUNIT_TEST( graveyard );
       CPPUNIT_TEST( emote );
       CPPUNIT_TEST( buff );
       CPPUNIT_TEST( help );
@@ -275,11 +274,6 @@ protected:
     void destroy()
     {
         assertCommand("destroy");
-    }
-
-    void graveyard()
-    {
-        assertCommand("graveyard");
     }
 
     void emote()

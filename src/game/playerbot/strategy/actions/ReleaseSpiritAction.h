@@ -2,6 +2,7 @@
 
 #include "../Action.h"
 #include "MovementActions.h"
+#include "../values/LastMovementValue.h"
 
 namespace ai
 {
@@ -12,19 +13,13 @@ namespace ai
     public:
         virtual bool Execute(Event event)
         {
-            
-
             if (bot->isAlive() || bot->GetCorpse())
                 return false;
-
+			
             bot->SetBotDeathTimer();
             bot->BuildPlayerRepop();
 
-            WorldLocation loc;
-            Corpse *corpse = bot->GetCorpse();
-            corpse->GetPosition( loc );
-            bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
-
+            bot->RepopAtGraveyard();
             return true;
         }
     };

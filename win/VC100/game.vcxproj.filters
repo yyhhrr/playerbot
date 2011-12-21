@@ -570,9 +570,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GossipHelloAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\GraveyardActions.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\InventoryAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1644,9 +1641,6 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GossipHelloAction.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\GraveyardActions.h">
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\InventoryAction.h">
