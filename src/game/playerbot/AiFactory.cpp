@@ -160,7 +160,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
                 nonCombatEngine->addStrategy("bmana");
             break;
     }
-    nonCombatEngine->addStrategies("nc", "attack weak", "emote", "food", "stay", "chat",
+    nonCombatEngine->addStrategies("nc", "attack weak", "food", "stay", "chat",
             "default", "quest", "loot", "gather", "duel", NULL);
 }
 
