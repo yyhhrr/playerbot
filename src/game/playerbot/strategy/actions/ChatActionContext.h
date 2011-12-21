@@ -41,6 +41,7 @@
 #include "InviteToGroupAction.h"
 #include "TellCastFailedAction.h"
 #include "RtiAction.h"
+#include "ReviveFromCorpseAction.h"
 
 namespace ai
 {
@@ -95,9 +96,11 @@ namespace ai
             creators["invite"] = &ChatActionContext::invite;
             creators["spell"] = &ChatActionContext::spell;
             creators["rti"] = &ChatActionContext::rti;
+            creators["spirit healer"] = &ChatActionContext::spirit_healer;
         }
 
     private:
+        static Action* spirit_healer(PlayerbotAI* ai) { return new SpiritHealerAction(ai); }
         static Action* rti(PlayerbotAI* ai) { return new RtiAction(ai); }
         static Action* invite(PlayerbotAI* ai) { return new InviteToGroupAction(ai); }
         static Action* spell(PlayerbotAI* ai) { return new TellSpellAction(ai); }

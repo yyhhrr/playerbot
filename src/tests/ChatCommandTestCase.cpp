@@ -56,6 +56,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( invite );
       CPPUNIT_TEST( spell );
       CPPUNIT_TEST( rti );
+      CPPUNIT_TEST( revive );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -358,6 +359,13 @@ protected:
         trigger("rti");
         tick();
         assertActions(">S:rti");
+    }
+
+    void revive()
+    {
+        trigger("revive");
+        tick();
+        assertActions(">S:spirit healer");
     }
 };
 

@@ -26,3 +26,31 @@ bool ReviveFromCorpseAction::Execute(Event event)
     bot->SetSelectionGuid(ObjectGuid());
     return true;
 }
+
+bool SpiritHealerAction::Execute(Event event)
+{
+    Corpse* corpse = bot->GetCorpse();
+    if (!corpse)
+        return false;
+
+    list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
+    for (list<ObjectGuid>::iterator i = npcs.begin(); i != npcs.end(); i++)
+    {
+        Unit* unit = ai->GetUnit(*i);
+        if (unit && unit->isSpiritHealer())
+        {
+            PlayerbotChatHandler ch(master);
+            if (! ch.revive(*bot))
+            {
+                ai->TellMaster(".. could not be revived ..");
+                return false;
+            }
+            context->GetValue<Unit*>("current target")->Set(NULL);
+            bot->SetSelectionGuid(ObjectGuid());
+            return true;
+        }
+    }
+
+    ai->TellMaster("Cannot find any spirit healer nearby");
+    return false;
+}
