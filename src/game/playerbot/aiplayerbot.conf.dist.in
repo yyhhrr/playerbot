@@ -22,6 +22,10 @@ ConfVersion=2010102201
 #        but makes bots lazy
 #    Default 100 (0.1 sec)
 #
+#    AiPlayerbot.TeleportDelay
+#        Delay in milliseconds before bot is teleported (e.g. follow master in an instance)
+#    Default 10000 (10 secs)
+#
 #    AiPlayerbot.IterationsPerTickReactDelay
 #        Iterations count that ai engine computes per tick
 #    Default 10
@@ -100,6 +104,7 @@ AiPlayerbot.RandomBotAccounts=11,12
 
 AiPlayerbot.GlobalCooldown=1500
 AiPlayerbot.ReactDelay=250
+AiPlayerbot.TeleportDelay=10000
 
 AiPlayerbot.IterationsPerTick=10
 
