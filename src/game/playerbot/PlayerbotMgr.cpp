@@ -326,14 +326,15 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
                 delete results;
             }
         }
-
-        res &= mgr->ProcessBot(s, cmdStr);
-    
-		if (!res)
-		{
-			PSendSysMessage("Error processing bot command for %s", s.c_str());
-			SetSentErrorMessage(true);
-		}
+        else
+        {
+            if (!mgr->ProcessBot(s, cmdStr))
+            {
+                PSendSysMessage("Error processing bot command for %s", s.c_str());
+                SetSentErrorMessage(true);
+                res = false;
+            }
+        }
 	}
 
     PSendSysMessage("Command %s processed", cmdStr.c_str());
