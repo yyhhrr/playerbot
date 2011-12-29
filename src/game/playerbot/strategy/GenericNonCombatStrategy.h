@@ -57,6 +57,14 @@ namespace ai
         virtual NextAction** getDefaultActions();
     };
 
+    class StayLineStrategy : public GenericNonCombatStrategy
+    {
+    public:
+        StayLineStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        virtual string getName() { return "stay line"; }
+        virtual NextAction** getDefaultActions();
+    };
+
     class StayCombatStrategy : public GenericNonCombatStrategy
     {
     public:

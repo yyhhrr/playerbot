@@ -23,7 +23,35 @@ void StayActionBase::Stay()
 }
 
 
-void StayActionBase::StayLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range)
+bool StayActionBase::StayLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range)
+{
+    if (line.size() < 5)
+    {
+        return StaySingleLine(line, diff, cx, cy, cz, orientation, range);
+    }
+
+    int lines = ceil((double)line.size() / 5.0);
+    for (int i = 0; i < lines; i++)
+    {
+        float radius = range * i;
+        float x = cx + cos(orientation) * radius;
+        float y = cy + sin(orientation) * radius;
+        vector<Player*> singleLine;
+        for (int j = 0; j < 5 && !line.empty(); j++)
+        {
+            singleLine.push_back(line[line.size() - 1]);
+            line.pop_back();
+        }
+
+        bool ok = StaySingleLine(singleLine, diff, x, y,cz, orientation, range);
+        if (ok)
+            return true;
+    }
+
+    return false;
+}
+
+bool StayActionBase::StaySingleLine(vector<Player*> line, float diff, float cx, float cy, float cz, float orientation, float range)
 {
     Stay();
 
@@ -42,12 +70,13 @@ void StayActionBase::StayLine(vector<Player*> line, float diff, float cx, float 
             float angle = orientation + M_PI / 2.0f;
             float radius = range * index;
 
-            MoveTo(bot->GetMapId(), x + cos(angle) * radius, y + sin(angle) * radius, cz);
-            return;
+            return MoveTo(bot->GetMapId(), x + cos(angle) * radius, y + sin(angle) * radius, cz);
         }
 
         index++;
     }
+
+    return false;
 }
 
 bool StayAction::Execute(Event event)
@@ -120,8 +149,7 @@ bool StayLineAction::Execute(Event event)
 
     players.insert(players.begin() + group->GetMembersCount() / 2, master);
 
-    StayLine(players, 0.0f, x, y, z, orientation, range);
-    return true;
+    return StayLine(players, 0.0f, x, y, z, orientation, range);
 }
 
 bool StayCombatAction::Execute(Event event)
