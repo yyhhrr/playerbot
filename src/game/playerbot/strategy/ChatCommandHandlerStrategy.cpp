@@ -93,6 +93,14 @@ void ChatCommandHandlerStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "revive",
         NextAction::array(0, new NextAction("spirit healer", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "goaway",
+        NextAction::array(0, new NextAction("goaway chat shortcut", relevance), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "warning",
+        NextAction::array(0, new NextAction("goaway chat shortcut", relevance), NULL)));
 }
 
 

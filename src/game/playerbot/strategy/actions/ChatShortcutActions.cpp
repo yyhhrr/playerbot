@@ -28,6 +28,14 @@ bool FleeChatShortcutAction::Execute(Event event)
     return true;
 }
 
+bool GoawayChatShortcutAction::Execute(Event event)
+{
+    ai->ChangeStrategy("+goaway", BOT_STATE_NON_COMBAT);
+    ai->ChangeStrategy("+goaway", BOT_STATE_COMBAT);
+    ai->TellMaster("Will run away from target or you");
+    return true;
+}
+
 bool GrindChatShortcutAction::Execute(Event event)
 {
     ai->ChangeStrategy("+grind,-passive", BOT_STATE_NON_COMBAT);

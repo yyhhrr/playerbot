@@ -23,6 +23,12 @@ namespace ai
         virtual bool Execute(Event event);
     };
 
+    class GoawayChatShortcutAction : public Action {
+    public:
+        GoawayChatShortcutAction(PlayerbotAI* ai) : Action(ai, "goaway chat shortcut") {}
+        virtual bool Execute(Event event);
+    };
+
     class GrindChatShortcutAction : public Action {
     public:
         GrindChatShortcutAction(PlayerbotAI* ai) : Action(ai, "grind chat shortcut") {}

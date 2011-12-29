@@ -57,6 +57,8 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( spell );
       CPPUNIT_TEST( rti );
       CPPUNIT_TEST( revive );
+      CPPUNIT_TEST( goaway );
+      CPPUNIT_TEST( warning );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -366,6 +368,20 @@ protected:
         trigger("revive");
         tick();
         assertActions(">S:spirit healer");
+    }
+
+    void goaway()
+    {
+        trigger("goaway");
+        tick();
+        assertActions(">S:goaway chat shortcut");
+    }
+
+    void warning()
+    {
+        trigger("warning");
+        tick();
+        assertActions(">S:goaway chat shortcut");
     }
 };
 

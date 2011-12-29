@@ -180,7 +180,7 @@ void PlayerbotAI::Reset()
     bot->m_taxi.ClearTaxiDestinations();
 }
 
-void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
+void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPlayer)
 {
     if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid())
         return;
@@ -190,6 +190,12 @@ void PlayerbotAI::HandleCommand(const string& text, Player& fromPlayer)
         char symbol = *i;
         if (symbol < 32 || symbol > 127)
             return;
+    }
+
+    if (type == CHAT_MSG_RAID_WARNING && text.find(bot->GetName()) != string::npos)
+    {
+        chatCommands.push("warning");
+        return;
     }
 
 	// ignore any messages from Addons
