@@ -61,12 +61,12 @@ namespace ai
             creators["spell"] = &ChatTriggerContext::spell;
             creators["rti"] = &ChatTriggerContext::rti;
             creators["revive"] = &ChatTriggerContext::revive;
-            creators["goaway"] = &ChatTriggerContext::goaway;
+            creators["runaway"] = &ChatTriggerContext::runaway;
             creators["warning"] = &ChatTriggerContext::warning;
         }
 
     private:
-        static Trigger* goaway(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "goaway"); }
+        static Trigger* runaway(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "runaway"); }
         static Trigger* warning(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "warning"); }
         static Trigger* revive(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "revive"); }
         static Trigger* rti(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "rti"); }

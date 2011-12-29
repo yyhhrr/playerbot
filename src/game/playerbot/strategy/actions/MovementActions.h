@@ -47,10 +47,10 @@ namespace ai
     };
 
 
-    class GoAwayAction : public MovementAction
+    class RunAwayAction : public MovementAction
     {
     public:
-        GoAwayAction(PlayerbotAI* ai) : MovementAction(ai, "goaway") {}
+        RunAwayAction(PlayerbotAI* ai) : MovementAction(ai, "runaway") {}
         virtual bool Execute(Event event);
     };
 

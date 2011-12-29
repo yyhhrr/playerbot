@@ -20,7 +20,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( attackRti );
       CPPUNIT_TEST( loot );
       CPPUNIT_TEST( gather );
-      CPPUNIT_TEST( goaway );
+      CPPUNIT_TEST( runaway );
       CPPUNIT_TEST( passive );
       CPPUNIT_TEST( movementStrategies );
       CPPUNIT_TEST( assistStrategies );
@@ -35,12 +35,12 @@ public:
 	}
 
 protected:
-    void goaway()
+    void runaway()
     {
-        engine->addStrategy("goaway");
+        engine->addStrategy("runaway");
 		tickWithAttackerCount(0);
 		tickInMeleeRange();
-        assertActions(">S:goaway>S:goaway");
+        assertActions(">S:runaway>S:runaway");
     }
 
     void followMaster()
@@ -195,7 +195,7 @@ protected:
         engine->addStrategy("follow master");
         engine->addStrategy("follow line");
         engine->addStrategy("be near");
-        engine->addStrategy("goaway");
+        engine->addStrategy("runaway");
         engine->addStrategy("stay");
 
         cout << engine->ListStrategies();

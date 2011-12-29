@@ -46,7 +46,7 @@ namespace ai
             creators["follow"] = &ActionContext::follow_master;
             creators["follow master"] = &ActionContext::follow_master;
             creators["be near"] = &ActionContext::follow_master_random;
-            creators["goaway"] = &ActionContext::goaway;
+            creators["runaway"] = &ActionContext::runaway;
             creators["stay"] = &ActionContext::stay;
             creators["stay circle"] = &ActionContext::stay_circle;
             creators["stay line"] = &ActionContext::stay_line;
@@ -82,7 +82,7 @@ namespace ai
         static Action* stay_line(PlayerbotAI* ai) { return new StayLineAction(ai); }
         static Action* stay_circle(PlayerbotAI* ai) { return new StayCircleAction(ai); }
         static Action* stay(PlayerbotAI* ai) { return new StayAction(ai); }
-        static Action* goaway(PlayerbotAI* ai) { return new GoAwayAction(ai); }
+        static Action* runaway(PlayerbotAI* ai) { return new RunAwayAction(ai); }
         static Action* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomAction(ai); }
         static Action* follow_master(PlayerbotAI* ai) { return new FollowMasterAction(ai); }
         static Action* follow_line(PlayerbotAI* ai) { return new FollowLineAction(ai); }

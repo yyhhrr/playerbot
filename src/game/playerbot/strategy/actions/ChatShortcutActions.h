@@ -25,7 +25,7 @@ namespace ai
 
     class GoawayChatShortcutAction : public Action {
     public:
-        GoawayChatShortcutAction(PlayerbotAI* ai) : Action(ai, "goaway chat shortcut") {}
+        GoawayChatShortcutAction(PlayerbotAI* ai) : Action(ai, "runaway chat shortcut") {}
         virtual bool Execute(Event event);
     };
 

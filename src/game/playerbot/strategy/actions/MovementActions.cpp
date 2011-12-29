@@ -231,7 +231,7 @@ bool FleeAction::isUseful()
     return AI_VALUE(uint8, "attacker count") > 0;
 }
 
-bool GoAwayAction::Execute(Event event)
+bool RunAwayAction::Execute(Event event)
 {
     return Flee(AI_VALUE(Unit*, "master target"));
 }

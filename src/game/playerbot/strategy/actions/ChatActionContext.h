@@ -90,7 +90,7 @@ namespace ai
             creators["follow chat shortcut"] = &ChatActionContext::follow_chat_shortcut;
             creators["stay chat shortcut"] = &ChatActionContext::stay_chat_shortcut;
             creators["flee chat shortcut"] = &ChatActionContext::flee_chat_shortcut;
-            creators["goaway chat shortcut"] = &ChatActionContext::goaway_chat_shortcut;
+            creators["runaway chat shortcut"] = &ChatActionContext::runaway_chat_shortcut;
             creators["grind chat shortcut"] = &ChatActionContext::grind_chat_shortcut;
             creators["gossip hello"] = &ChatActionContext::gossip_hello;
             creators["cast custom spell"] = &ChatActionContext::cast_custom_spell;
@@ -108,7 +108,7 @@ namespace ai
         static Action* cast_custom_spell(PlayerbotAI* ai) { return new CastCustomSpellAction(ai); }
         static Action* grind_chat_shortcut(PlayerbotAI* ai) { return new GrindChatShortcutAction(ai); }
         static Action* flee_chat_shortcut(PlayerbotAI* ai) { return new FleeChatShortcutAction(ai); }
-        static Action* goaway_chat_shortcut(PlayerbotAI* ai) { return new GoawayChatShortcutAction(ai); }
+        static Action* runaway_chat_shortcut(PlayerbotAI* ai) { return new GoawayChatShortcutAction(ai); }
         static Action* stay_chat_shortcut(PlayerbotAI* ai) { return new StayChatShortcutAction(ai); }
         static Action* follow_chat_shortcut(PlayerbotAI* ai) { return new FollowChatShortcutAction(ai); }
         static Action* gb(PlayerbotAI* ai) { return new GuildBankAction(ai); }
