@@ -46,7 +46,7 @@ private:
     }
 };
 
-DpsPriestStrategy::DpsPriestStrategy(PlayerbotAI* ai) : HealPriestStrategy(ai)
+DpsPriestStrategy::DpsPriestStrategy(PlayerbotAI* ai) : GenericPriestStrategy(ai)
 {
     actionNodeFactories.Add(new DpsPriestStrategyActionNodeFactory());
 }
@@ -58,7 +58,7 @@ NextAction** DpsPriestStrategy::getDefaultActions()
 
 void DpsPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    HealPriestStrategy::InitTriggers(triggers);
+    GenericPriestStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "devouring plague",

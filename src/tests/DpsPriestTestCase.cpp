@@ -49,10 +49,7 @@ protected:
         tickWithLowHealth(1); // -shadowform
         tickWithLowHealth(1); // greater heal
         
-        tickWithLowHealth(1); 
-        tickWithLowHealth(1); 
-        
-        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:mind blast>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal>S:renew>S:greater heal");
+        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:mind blast>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
     }
 };
 

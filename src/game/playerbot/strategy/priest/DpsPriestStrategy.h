@@ -4,7 +4,7 @@
 
 namespace ai
 {
-    class DpsPriestStrategy : public HealPriestStrategy
+    class DpsPriestStrategy : public GenericPriestStrategy
     {
     public:
         DpsPriestStrategy(PlayerbotAI* ai);
@@ -13,6 +13,6 @@ namespace ai
         virtual NextAction** getDefaultActions();
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
         virtual string getName() { return "dps"; }
-
+        virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
     };
 }
