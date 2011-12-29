@@ -190,7 +190,8 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         entry->bid = curPrice + urand(1, 1 + bidPrice / 10);
         availableMoney -= curPrice;
 
-        updateMarketPrice(item->GetProto()->ItemId, (entry->startbid + entry->buyout) / 2.0 / item->GetCount());
+        sLog.outDebug("Answer auction: market price adjust");
+        updateMarketPrice(item->GetProto()->ItemId, entry->buyout / item->GetCount());
 
         if (entry->buyout && (entry->bid >= entry->buyout || 100 * (entry->buyout - entry->bid) / price < 25))
         {
@@ -291,7 +292,8 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     auctionHouse->AddAuction(auctionEntry);
     auctionEntry->SaveToDB();
 
-    updateMarketPrice(proto->ItemId, (bidPrice + buyoutPrice) / 2.0 / stackCount);
+    sLog.outDebug("AddAuction: market price adjust");
+    updateMarketPrice(proto->ItemId, buyoutPrice / stackCount);
 
     sLog.outDetail("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auction, bidPrice, buyoutPrice);
 }
@@ -408,7 +410,8 @@ void AhBot::AddToHistory(AuctionEntry* entry)
     if (entry->bidder == player->GetGUIDLow())
         won = AHBOT_WON_SELF;
 
-    updateMarketPrice(proto->ItemId, (entry->startbid + entry->buyout) / 2.0 / entry->itemCount);
+    sLog.outDebug("AddToHistory: market price adjust");
+    updateMarketPrice(proto->ItemId, entry->buyout / entry->itemCount);
 
     uint32 now = time(0);
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
