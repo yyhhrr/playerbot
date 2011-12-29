@@ -314,9 +314,9 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
                 {
                     Field* fields = results->Fetch();
                     string charName = fields[0].GetCppString();
-                    res &= mgr->ProcessBot(charName, cmdStr);
-					if (!res)
+					if (!mgr->ProcessBot(charName, cmdStr))
 					{
+					    res = false;
 						PSendSysMessage("Error processing bot command for %s", charName.c_str());
 						SetSentErrorMessage(true);
 					}

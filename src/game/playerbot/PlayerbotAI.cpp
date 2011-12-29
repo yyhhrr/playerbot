@@ -192,7 +192,7 @@ void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPla
             return;
     }
 
-    if (type == CHAT_MSG_RAID_WARNING && text.find(bot->GetName()) != string::npos)
+    if (type == CHAT_MSG_RAID_WARNING && text.find(bot->GetName()) != string::npos && text.find("award") == string::npos)
     {
         chatCommands.push("warning");
         return;
