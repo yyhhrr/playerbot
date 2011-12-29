@@ -62,9 +62,9 @@ void TankPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 	triggers.push_back(new TriggerNode(
 		"holy shield",
-		NextAction::array(0, new NextAction("holy shield", 18.0f), NULL)));
+		NextAction::array(0, new NextAction("holy shield", 30.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "blessing",
-        NextAction::array(0, new NextAction("blessing of sanctuary", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("blessing of sanctuary", 31.0f), NULL)));
 }
