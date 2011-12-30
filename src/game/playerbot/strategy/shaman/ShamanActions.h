@@ -257,4 +257,10 @@ namespace ai
     public:
         CastLightningBoltAction(PlayerbotAI* ai) : CastSpellAction(ai, "lightning bolt") {}
     };
+
+    class CastThunderstormAction : public CastMeleeSpellAction
+    {
+    public:
+        CastThunderstormAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "thunderstorm") {}
+    };
 }

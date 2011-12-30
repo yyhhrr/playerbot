@@ -177,9 +177,11 @@ namespace ai
                 creators["frost shock"] = &AiObjectContextInternal::frost_shock;
                 creators["chain lightning"] = &AiObjectContextInternal::chain_lightning;
                 creators["lightning bolt"] = &AiObjectContextInternal::lightning_bolt;
+                creators["thunderstorm"] = &AiObjectContextInternal::thunderstorm;
             }
 
         private:
+            static Action* thunderstorm(PlayerbotAI* ai) { return new CastThunderstormAction(ai); }
             static Action* lightning_bolt(PlayerbotAI* ai) { return new CastLightningBoltAction(ai); }
             static Action* chain_lightning(PlayerbotAI* ai) { return new CastChainLightningAction(ai); }
             static Action* frost_shock(PlayerbotAI* ai) { return new CastFrostShockAction(ai); }

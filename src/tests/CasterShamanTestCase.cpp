@@ -71,8 +71,9 @@ protected:
         tickWithAttackerCount(3);
         tickWithAttackerCount(3);
         tickWithAttackerCount(3);
+        tickWithAttackerCount(3);
 
-        assertActions(">T:reach melee>S:magma totem>T:fire nova>T:chain lightning");
+        assertActions(">T:reach melee>S:magma totem>T:thunderstorm>T:fire nova>T:chain lightning");
     }
 
     void snare()
