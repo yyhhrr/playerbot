@@ -11,9 +11,10 @@ public:
     DpsRogueStrategyActionNodeFactory()
     {
         creators["mutilate"] = &mutilate;
+        creators["sinister strike"] = &sinister_strike;
+        creators["kick"] = &kick;
         creators["kidney shot"] = &kidney_shot;
         creators["rupture"] = &rupture;
-        creators["slice and dice"] = &slice_and_dice;
         creators["backstab"] = &backstab;
     }
 private:
@@ -24,23 +25,30 @@ private:
             /*A*/ NextAction::array(0, new NextAction("sinister strike"), NULL),
             /*C*/ NULL);
     }
+    static ActionNode* sinister_strike(PlayerbotAI* ai)
+    {
+        return new ActionNode ("sinister strike",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("melee"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* kick(PlayerbotAI* ai)
+    {
+        return new ActionNode ("kick",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("kidney shot"), NULL),
+            /*C*/ NULL);
+    }
     static ActionNode* kidney_shot(PlayerbotAI* ai)
     {
         return new ActionNode ("kidney shot",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("rupture"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* rupture(PlayerbotAI* ai)
     {
         return new ActionNode ("rupture",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("slice and dice"), NULL),
-            /*C*/ NULL);
-    }
-    static ActionNode* slice_and_dice(PlayerbotAI* ai)
-    {
-        return new ActionNode ("slice and dice",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("eviscerate"), NULL),
             /*C*/ NULL);
@@ -61,7 +69,7 @@ DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
 
 NextAction** DpsRogueStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("mutilate", 10.0f), NULL);
 }
 
 void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -69,16 +77,12 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "enemy out of melee",
-        NextAction::array(0, new NextAction("melee", 10.0f), NULL)));
-
-	triggers.push_back(new TriggerNode(
-		"high energy available",
-		NextAction::array(0, new NextAction("mutilate", 20.0f), NULL)));
+        "slice and dice",
+        NextAction::array(0, new NextAction("slice and dice", 15.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "combo points available",
-        NextAction::array(0, new NextAction("kidney shot", 30.0f), NULL)));
+        NextAction::array(0, new NextAction("eviscerate", 31.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"medium threat",

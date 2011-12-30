@@ -19,44 +19,48 @@ public:
     {
 		EngineTestBase::setUp();
 		setupEngine(new RogueAiObjectContext(ai), "dps", NULL);
+        addTargetAura("slice and dice");
     }
 
 protected:
     void combatVsMelee()
     {
+        removeTargetAura("slice and dice");
+
 		tickOutOfMeleeRange();
 		tickInMeleeRange();
 
+		addTargetAura("slice and dice");
+
 		tickWithEnergy(70);
+        tickWithEnergy(70);
         tickWithEnergy(70);
 
         tickWithComboPoints(5);
         tickWithComboPoints(5);
-		tickWithComboPoints(5);
-		tickWithComboPoints(5);
 
         tickBehindTarget();
         
-        assertActions(">T:reach melee>T:melee>T:mutilate>T:sinister strike>T:kidney shot>T:rupture>T:slice and dice>T:eviscerate>T:backstab");
+        assertActions(">T:reach melee>T:slice and dice>T:mutilate>T:sinister strike>T:melee>T:eviscerate>T:melee>T:backstab");
     }
 
 	void healHimself()
 	{
-		tickInMeleeRange();
 		tickWithLowHealth(39);
 		tickWithLowHealth(39);
 		tickWithMyAttackerCount(3);
 
-		assertActions(">T:melee>S:evasion>S:feint>S:vanish");
+		assertActions(">S:evasion>S:feint>S:vanish");
 	}
 
 	void interruptSpells()
 	{
-		tickInMeleeRange();
+        tickInMeleeRange();
 
 		tickWithTargetIsCastingNonMeleeSpell();
+		tickWithTargetIsCastingNonMeleeSpell();
 
-		assertActions(">T:melee>T:kick");
+		assertActions(">T:mutilate>T:kick>T:kidney shot");
 	}
 };
 

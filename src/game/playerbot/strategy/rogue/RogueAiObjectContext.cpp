@@ -47,11 +47,15 @@ namespace ai
             TriggerFactoryInternal()
             {
                 creators["kick"] = &TriggerFactoryInternal::kick;
+                creators["rupture"] = &TriggerFactoryInternal::rupture;
+                creators["slice and dice"] = &TriggerFactoryInternal::slice_and_dice;
 
             }
 
         private:
             static Trigger* kick(PlayerbotAI* ai) { return new KickInterruptSpellTrigger(ai); }
+            static Trigger* rupture(PlayerbotAI* ai) { return new RuptureTrigger(ai); }
+            static Trigger* slice_and_dice(PlayerbotAI* ai) { return new SliceAndDiceTrigger(ai); }
         };
     };
 };
