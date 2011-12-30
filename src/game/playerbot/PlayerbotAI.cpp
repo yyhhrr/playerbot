@@ -874,10 +874,10 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
     ObjectGuid oldSel = bot->GetSelectionGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
     Spell *spell = new Spell(bot, spellInfo, false );
-    SpellCastTargets targets;
-    targets.setUnitTarget(target);
+
+    spell->m_targets.setUnitTarget(target);
     spell->m_CastItem = aiObjectContext->GetValue<Item*>("item for spell", spellid)->Get();
-    targets.setItemTarget(spell->m_CastItem);
+    spell->m_targets.setItemTarget(spell->m_CastItem);
     SpellCastResult result = spell->CheckCast(false);
     delete spell;
     bot->SetSelectionGuid(oldSel);
