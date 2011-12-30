@@ -20,11 +20,11 @@ uint32 PricingStrategy::GetSellPrice(ItemPrototype const* proto, uint32 auctionH
     return (uint32)price;
 }
 
-double PricingStrategy::GetMarketPrice(uint32 itemId)
+double PricingStrategy::GetMarketPrice(uint32 itemId, uint32 auctionHouse)
 {
     double marketPrice = 0;
 
-    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price where item = '%u'", itemId);
+    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price WHERE item = '%u' AND auction_house = '%u'", itemId, auctionHouse);
     if (results)
     {
         marketPrice = results->Fetch()[0].GetFloat();
@@ -36,7 +36,7 @@ double PricingStrategy::GetMarketPrice(uint32 itemId)
 
 uint32 PricingStrategy::GetBuyPrice(ItemPrototype const* proto, uint32 auctionHouse)
 {
-    double marketPrice = GetMarketPrice(proto->ItemId);
+    double marketPrice = GetMarketPrice(proto->ItemId, auctionHouse);
 
     if (marketPrice > 0)
         return marketPrice;
@@ -71,7 +71,7 @@ string PricingStrategy::ExplainBuyPrice(ItemPrototype const* proto, uint32 aucti
 {
     ostringstream out;
 
-    double marketPrice = GetMarketPrice(proto->ItemId);
+    double marketPrice = GetMarketPrice(proto->ItemId, auctionHouse);
     if (marketPrice > 0)
     {
         out << marketPrice << " (market)";

@@ -43,7 +43,7 @@ namespace ahbot
         void CleanupHistory();
         uint32 GetAvailableMoney(uint32 auctionHouse);
         void CheckCategoryMultipliers();
-        void updateMarketPrice(uint32 itemId, double price);
+        void updateMarketPrice(uint32 itemId, double price, uint32 auctionHouse);
 
     private:
         AvailableItemsBag availableItems;

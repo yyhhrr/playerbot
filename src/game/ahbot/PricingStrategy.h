@@ -27,7 +27,7 @@ namespace ahbot
         virtual double GetItemPriceMultiplier(ItemPrototype const* proto, uint32 untilTime, uint32 auctionHouse);
         virtual double GetRarityPriceMultiplier(ItemPrototype const* proto);
         double GetMultiplier(double count, double firstBuyTime, double lastBuyTime);
-        double GetMarketPrice(uint32 itemId);
+        double GetMarketPrice(uint32 itemId, uint32 auctionHouse);
 
     protected:
         Category* category;

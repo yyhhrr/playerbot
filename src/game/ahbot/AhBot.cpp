@@ -191,7 +191,7 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         availableMoney -= curPrice;
 
         sLog.outDebug("Answer auction: market price adjust");
-        updateMarketPrice(item->GetProto()->ItemId, entry->buyout / item->GetCount());
+        updateMarketPrice(item->GetProto()->ItemId, entry->buyout / item->GetCount(), auction);
 
         if (entry->buyout && (entry->bid >= entry->buyout || 100 * (entry->buyout - entry->bid) / price < 25))
         {
@@ -293,7 +293,7 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     auctionEntry->SaveToDB();
 
     sLog.outDebug("AddAuction: market price adjust");
-    updateMarketPrice(proto->ItemId, buyoutPrice / stackCount);
+    updateMarketPrice(proto->ItemId, buyoutPrice / stackCount, auction);
 
     sLog.outDetail("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auction, bidPrice, buyoutPrice);
 }
@@ -411,7 +411,7 @@ void AhBot::AddToHistory(AuctionEntry* entry)
         won = AHBOT_WON_SELF;
 
     sLog.outDebug("AddToHistory: market price adjust");
-    updateMarketPrice(proto->ItemId, entry->buyout / entry->itemCount);
+    updateMarketPrice(proto->ItemId, entry->buyout / entry->itemCount, entry->auctionHouseEntry->houseId);
 
     uint32 now = time(0);
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
@@ -515,11 +515,11 @@ void AhBot::CheckCategoryMultipliers()
 }
 
 
-void AhBot::updateMarketPrice(uint32 itemId, double price)
+void AhBot::updateMarketPrice(uint32 itemId, double price, uint32 auctionHouse)
 {
     double marketPrice = 0;
 
-    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price where item = '%u'", itemId);
+    QueryResult* results = CharacterDatabase.PQuery("SELECT price FROM ahbot_price WHERE item = '%u' AND auction_house = '%u'", itemId, auctionHouse);
     if (results)
     {
         marketPrice = results->Fetch()[0].GetFloat();
@@ -531,6 +531,6 @@ void AhBot::updateMarketPrice(uint32 itemId, double price)
     else
         marketPrice = price;
 
-    CharacterDatabase.PExecute("DELETE FROM ahbot_price WHERE item = '%u'", itemId);
-    CharacterDatabase.PExecute("INSERT INTO ahbot_price (item, price) VALUES ('%u', '%lf')", itemId, marketPrice);
+    CharacterDatabase.PExecute("DELETE FROM ahbot_price WHERE item = '%u' AND auction_house = '%u'", itemId, auctionHouse);
+    CharacterDatabase.PExecute("INSERT INTO ahbot_price (item, price, auction_house) VALUES ('%u', '%lf', '%u')", itemId, marketPrice, auctionHouse);
 }
