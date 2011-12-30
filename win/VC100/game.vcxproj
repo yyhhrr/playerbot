@@ -540,6 +540,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TrainerAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UnequipAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseItemAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObject.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObjectContext.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.cpp" />

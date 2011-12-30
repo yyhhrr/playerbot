@@ -1110,6 +1110,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\CasterShamanStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
