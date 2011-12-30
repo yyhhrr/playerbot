@@ -85,10 +85,6 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("rupture", 13.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "expose armor",
-        NextAction::array(0, new NextAction("expose armor", 14.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "combo points available",
         NextAction::array(0, new NextAction("eviscerate", 31.0f), NULL)));
 

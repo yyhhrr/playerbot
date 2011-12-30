@@ -10,10 +10,10 @@ namespace ai
         KickInterruptSpellTrigger(PlayerbotAI* ai) : InterruptSpellTrigger(ai, "kick") {}
     };
 
-    class SliceAndDiceTrigger : public DebuffTrigger
+    class SliceAndDiceTrigger : public BuffTrigger
     {
     public:
-        SliceAndDiceTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "slice and dice") {}
+        SliceAndDiceTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "slice and dice") {}
     };
 
     class RuptureTrigger : public DebuffTrigger
