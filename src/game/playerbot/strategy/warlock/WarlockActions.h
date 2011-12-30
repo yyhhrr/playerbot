@@ -108,4 +108,16 @@ namespace ai
         virtual Value<Unit*>* GetTargetValue();
     };
     
+    class CastSeedOfCorruptionAction : public CastDebuffSpellAction
+    {
+    public:
+        CastSeedOfCorruptionAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "seed of corruption") {}
+    };
+
+    class CastRainOfFireAction : public CastSpellAction
+    {
+    public:
+        CastRainOfFireAction(PlayerbotAI* ai) : CastSpellAction(ai, "rain of fire") {}
+    };
+
 }

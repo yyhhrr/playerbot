@@ -25,10 +25,12 @@ namespace ai
             {
                 creators["nc"] = &warlock::StrategyFactoryInternal::nc;
                 creators["pull"] = &warlock::StrategyFactoryInternal::pull;
+                creators["aoe"] = &warlock::StrategyFactoryInternal::aoe;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new GenericWarlockNonCombatStrategy(ai); }
+            static Strategy* aoe(PlayerbotAI* ai) { return new DpsAoeWarlockStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
         };
 
@@ -115,6 +117,8 @@ namespace ai
                 creators["drain mana"] = &AiObjectContextInternal::drain_mana;
                 creators["drain life"] = &AiObjectContextInternal::drain_life;
                 creators["banish"] = &AiObjectContextInternal::banish;
+                creators["seed of corruption"] = &AiObjectContextInternal::seed_of_corruption;
+                creators["rain of fire"] = &AiObjectContextInternal::rain_of_fire;
             }
 
         private:
@@ -135,6 +139,8 @@ namespace ai
             static Action* drain_mana(PlayerbotAI* ai) { return new CastDrainManaAction(ai); }
             static Action* drain_life(PlayerbotAI* ai) { return new CastDrainLifeAction(ai); }
             static Action* banish(PlayerbotAI* ai) { return new CastBanishAction(ai); }
+            static Action* seed_of_corruption(PlayerbotAI* ai) { return new CastSeedOfCorruptionAction(ai); }
+            static Action* rain_of_fire(PlayerbotAI* ai) { return new CastRainOfFireAction(ai); }
 
         };
     };

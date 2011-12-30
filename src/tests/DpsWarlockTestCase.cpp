@@ -11,6 +11,7 @@ class DpsWarlockTestCase : public EngineTestBase
   CPPUNIT_TEST_SUITE( DpsWarlockTestCase );
       CPPUNIT_TEST( combatVsMelee );
       CPPUNIT_TEST( summonPet );
+      CPPUNIT_TEST( aoe );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -38,10 +39,11 @@ protected:
 		spellAvailable("drain soul");
 		tick();
 
+		spellAvailable("shadow bolt");
 		addAura("shadow trance"); 
 		tick();
 
-		assertActions(">T:corruption>T:curse of agony>T:drain life>T:shoot>T:drain soul>T:shadow bolt");
+		assertActions(">T:corruption>T:curse of agony>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt");
 	}
 
     void summonPet()
@@ -49,6 +51,17 @@ protected:
         tickWithNoPet();
 
 		assertActions(">S:summon imp");
+    }
+
+    void aoe()
+    {
+        engine->addStrategy("aoe");
+
+        tickWithAttackerCount(3);
+        tickWithAttackerCount(4);
+        tickWithAttackerCount(4);
+
+		assertActions(">T:seed of corruption>T:rain of fire>T:corruption");
     }
 };
 
