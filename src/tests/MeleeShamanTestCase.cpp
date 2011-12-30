@@ -33,9 +33,8 @@ protected:
         tick();
 		tick();
 		tick();
-		tick();
 
-        assertActions(">T:reach melee>S:searing totem>T:melee>T:stormstrike>T:lava lash>T:melee");
+        assertActions(">T:reach melee>S:searing totem>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()
