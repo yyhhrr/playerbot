@@ -6,9 +6,6 @@ using namespace ai;
 
 Item* ItemForSpellValue::Calculate()
 {
-    
-    
-
     uint32 spellid = atoi(qualifier.c_str());
     if (!spellid)
         return NULL;

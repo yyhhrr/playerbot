@@ -7,7 +7,7 @@ using namespace ai;
 
 bool FollowLineAction::Execute(Event event)
 {
-	return Follow(AI_VALUE(Unit*, "line target"), sPlayerbotAIConfig.meleeDistance, 0.0f);
+	return Follow(AI_VALUE(Unit*, "line target"), sPlayerbotAIConfig.followDistance, 0.0f);
 }
 
 bool FollowMasterAction::Execute(Event event)

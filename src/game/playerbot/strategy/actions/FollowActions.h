@@ -23,7 +23,7 @@ namespace ai
 
         virtual bool isUseful()
         {
-            return AI_VALUE2(float, "distance", "master target") > sPlayerbotAIConfig.meleeDistance;
+            return AI_VALUE2(float, "distance", "master target") > sPlayerbotAIConfig.followDistance;
         }
 	};
 

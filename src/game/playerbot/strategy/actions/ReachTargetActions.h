@@ -14,8 +14,7 @@ namespace ai
         }
         virtual bool Execute(Event event)
 		{
-			MoveTo(AI_VALUE(Unit*, "current target"), distance);
-            return true;
+			return MoveTo(AI_VALUE(Unit*, "current target"), distance);
         }
         virtual bool isUseful()
 		{

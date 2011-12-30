@@ -59,17 +59,21 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
 
+    mm.Clear();
     if (!bot->isInFront(target, ATTACK_DISTANCE))
         bot->SetFacingTo(bot->GetAngle(target));
 
     context->GetValue<Unit*>("current target")->Set(target);
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
-    bool alreadyAttacking = (bot->getVictim() == target && bot->hasUnitState(UNIT_STAT_MELEE_ATTACKING));
-    if (alreadyAttacking)
+    if (AI_VALUE2(float, "distance", "current target") > sPlayerbotAIConfig.meleeDistance)
         return false;
 
-    bot->Attack(target, true);
+    bool alreadyAttacking = (bot->getVictim() == target && bot->hasUnitState(UNIT_STAT_MELEE_ATTACKING));
+    if (alreadyAttacking)
+        return true;
+
+    bool result = bot->Attack(target, true);
 
     Pet* pet = bot->GetPet();
     if (pet)
@@ -79,5 +83,5 @@ bool AttackAction::Attack(Unit* target)
             creatureAI->AttackStart(target);
     }
 
-    return true;
+    return result;
 }

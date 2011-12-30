@@ -40,6 +40,10 @@ ConfVersion=2010102201
 #
 #    AiPlayerbot.MeleeDistance
 #        Distance to target when melee can be started
+#    Default 1.5
+#
+#    AiPlayerbot.FollowDistance
+#        Distance to target while following (not in melee combat)
 #    Default 2.5
 #
 #    AiPlayerbot.ReactDistance
@@ -110,7 +114,8 @@ AiPlayerbot.IterationsPerTick=10
 
 AiPlayerbot.SightDistance=35
 AiPlayerbot.SpellDistance=25
-AiPlayerbot.MeleeDistance=2.5
+AiPlayerbot.MeleeDistance=1.5
+AiPlayerbot.FollowDistance=2.0
 AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
 AiPlayerbot.FleeDistance=15

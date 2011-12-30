@@ -83,6 +83,7 @@ int main()
   sPlayerbotAIConfig.reactDistance = 100.0f;
   sPlayerbotAIConfig.grindDistance = 50.0f;
   sPlayerbotAIConfig.meleeDistance = ATTACK_DISTANCE;
+  sPlayerbotAIConfig.followDistance = ATTACK_DISTANCE;
   sPlayerbotAIConfig.lootDistance = 20.0f;
   sPlayerbotAIConfig.criticalHealth = 25;
   sPlayerbotAIConfig.lowHealth = 40;

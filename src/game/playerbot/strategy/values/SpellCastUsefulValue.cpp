@@ -42,9 +42,14 @@ bool SpellCastUsefulValue::Calculate()
             return false;
     }
 
-    Item *item = AI_VALUE2(Item*, "item for spell", spellid);
-    if (item && item->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-        return false;
+    // TODO: workaround
+    if (qualifier == "windfury weapon" || qualifier == "flametongue weapon" || qualifier == "frostbrand weapon" ||
+            qualifier == "rockbiter weapon" || qualifier == "earthliving weapon")
+    {
+        Item *item = AI_VALUE2(Item*, "item for spell", spellid);
+        if (item && item->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
+            return false;
+    }
 
 	return true;
 }
