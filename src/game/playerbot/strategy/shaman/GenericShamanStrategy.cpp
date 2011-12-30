@@ -122,4 +122,12 @@ void GenericShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"low health",
 		NextAction::array(0, new NextAction("riptide", 26.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		"heroism",
+		NextAction::array(0, new NextAction("heroism", 31.0f), NULL)));
+
+	triggers.push_back(new TriggerNode(
+		"bloodlust",
+		NextAction::array(0, new NextAction("bloodlust", 30.0f), NULL)));
 }

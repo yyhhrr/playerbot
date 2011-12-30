@@ -13,6 +13,7 @@ class MeleeShamanTestCase : public EngineTestBase
 	CPPUNIT_TEST( buff );
 	CPPUNIT_TEST( incompatibles );
     CPPUNIT_TEST( aoe );
+    CPPUNIT_TEST( boost );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -68,6 +69,14 @@ protected:
         tickWithAttackerCount(3);
 
         assertActions(">S:searing totem>S:magma totem>T:fire nova");
+    }
+
+    void boost()
+    {
+        tickWithBalancePercent(1);
+        tickWithBalancePercent(1);
+
+        assertActions(">S:heroism>S:bloodlust");
     }
 };
 

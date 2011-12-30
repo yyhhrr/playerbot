@@ -91,10 +91,13 @@ namespace ai
                 creators["party member cleanse spirit disease"] = &TriggerFactoryInternal::party_member_cleanse_disease;
                 creators["shock"] = &TriggerFactoryInternal::shock;
                 creators["frost shock snare"] = &TriggerFactoryInternal::frost_shock_snare;
-
+                creators["heroism"] = &TriggerFactoryInternal::heroism;
+                creators["bloodlust"] = &TriggerFactoryInternal::bloodlust;
             }
 
         private:
+            static Trigger* heroism(PlayerbotAI* ai) { return new HeroismTrigger(ai); }
+            static Trigger* bloodlust(PlayerbotAI* ai) { return new BloodlustTrigger(ai); }
             static Trigger* party_member_cleanse_disease(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritDiseaseTrigger(ai); }
             static Trigger* party_member_cleanse_curse(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritCurseTrigger(ai); }
             static Trigger* party_member_cleanse_poison(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritPoisonTrigger(ai); }
@@ -178,9 +181,13 @@ namespace ai
                 creators["chain lightning"] = &AiObjectContextInternal::chain_lightning;
                 creators["lightning bolt"] = &AiObjectContextInternal::lightning_bolt;
                 creators["thunderstorm"] = &AiObjectContextInternal::thunderstorm;
+                creators["heroism"] = &AiObjectContextInternal::heroism;
+                creators["bloodlust"] = &AiObjectContextInternal::bloodlust;
             }
 
         private:
+            static Action* heroism(PlayerbotAI* ai) { return new CastHeroismAction(ai); }
+            static Action* bloodlust(PlayerbotAI* ai) { return new CastBloodlustAction(ai); }
             static Action* thunderstorm(PlayerbotAI* ai) { return new CastThunderstormAction(ai); }
             static Action* lightning_bolt(PlayerbotAI* ai) { return new CastLightningBoltAction(ai); }
             static Action* chain_lightning(PlayerbotAI* ai) { return new CastChainLightningAction(ai); }
