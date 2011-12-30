@@ -49,6 +49,7 @@ namespace ai
                 creators["kick"] = &TriggerFactoryInternal::kick;
                 creators["rupture"] = &TriggerFactoryInternal::rupture;
                 creators["slice and dice"] = &TriggerFactoryInternal::slice_and_dice;
+                creators["expose armor"] = &TriggerFactoryInternal::expose_armor;
 
             }
 
@@ -56,6 +57,7 @@ namespace ai
             static Trigger* kick(PlayerbotAI* ai) { return new KickInterruptSpellTrigger(ai); }
             static Trigger* rupture(PlayerbotAI* ai) { return new RuptureTrigger(ai); }
             static Trigger* slice_and_dice(PlayerbotAI* ai) { return new SliceAndDiceTrigger(ai); }
+            static Trigger* expose_armor(PlayerbotAI* ai) { return new ExposeArmorTrigger(ai); }
         };
     };
 };
@@ -83,6 +85,7 @@ namespace ai
                 creators["kick"] = &AiObjectContextInternal::kick;
                 creators["feint"] = &AiObjectContextInternal::feint;
                 creators["backstab"] = &AiObjectContextInternal::backstab;
+                creators["expose armor"] = &AiObjectContextInternal::expose_armor;
             }
 
         private:
@@ -97,6 +100,7 @@ namespace ai
             static Action* kick(PlayerbotAI* ai) { return new CastKickAction(ai); }
             static Action* feint(PlayerbotAI* ai) { return new CastFeintAction(ai); }
             static Action* backstab(PlayerbotAI* ai) { return new CastBackstabAction(ai); }
+            static Action* expose_armor(PlayerbotAI* ai) { return new CastExposeArmorAction(ai); }
         };
     };
 };

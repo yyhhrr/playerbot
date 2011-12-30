@@ -22,4 +22,10 @@ namespace ai
         RuptureTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "rupture") {}
     };
 
+    class ExposeArmorTrigger : public DebuffTrigger
+    {
+    public:
+        ExposeArmorTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "expose armor") {}
+    };
+
 }

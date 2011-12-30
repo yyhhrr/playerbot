@@ -20,17 +20,26 @@ public:
 		EngineTestBase::setUp();
 		setupEngine(new RogueAiObjectContext(ai), "dps", NULL);
         addTargetAura("slice and dice");
+        addTargetAura("expose armor");
+        addTargetAura("rupture");
     }
 
 protected:
     void combatVsMelee()
     {
         removeTargetAura("slice and dice");
+        removeTargetAura("expose armor");
+        removeTargetAura("rupture");
 
 		tickOutOfMeleeRange();
 		tickInMeleeRange();
-
 		addTargetAura("slice and dice");
+
+		tick();
+        addTargetAura("expose armor");
+
+        tick();
+        addTargetAura("rupture");
 
 		tickWithEnergy(70);
         tickWithEnergy(70);
@@ -41,7 +50,7 @@ protected:
 
         tickBehindTarget();
         
-        assertActions(">T:reach melee>T:slice and dice>T:mutilate>T:sinister strike>T:melee>T:eviscerate>T:melee>T:backstab");
+        assertActions(">T:reach melee>T:slice and dice>T:expose armor>T:rupture>T:mutilate>T:sinister strike>T:melee>T:eviscerate>T:melee>T:backstab");
     }
 
 	void healHimself()
