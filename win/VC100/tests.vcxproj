@@ -250,6 +250,7 @@
     <ClCompile Include="..\..\src\tests\ArcaneMageTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\BearTankDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CasterDruidTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\CasterShamanTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\CatDpsDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ChatCommandTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ChatFilterTestCase.cpp" />

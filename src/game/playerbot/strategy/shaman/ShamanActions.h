@@ -135,9 +135,9 @@ namespace ai
         CastWindfuryTotemAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "windfury totem") {}
     };
 
-    class CastSearingTotemAction : public CastMeleeSpellAction {
+    class CastSearingTotemAction : public CastSpellAction {
     public:
-        CastSearingTotemAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "searing totem") {}
+        CastSearingTotemAction(PlayerbotAI* ai) : CastSpellAction(ai, "searing totem") {}
         virtual string GetTargetName() { return "self target"; }
     };
 
@@ -226,5 +226,35 @@ namespace ai
         CastCleanseSpiritDiseaseOnPartyAction(PlayerbotAI* ai) : CurePartyMemberAction(ai, "cleanse spirit", DISPEL_DISEASE) {}
 
         virtual string getName() { return "cleanse spirit disease on party"; }
+    };
+
+    class CastFlameShockAction : public CastDebuffSpellAction
+    {
+    public:
+        CastFlameShockAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "flame shock") {}
+    };
+
+    class CastEarthShockAction : public CastDebuffSpellAction
+    {
+    public:
+        CastEarthShockAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "earth shock") {}
+    };
+
+    class CastFrostShockAction : public CastDebuffSpellAction
+    {
+    public:
+        CastFrostShockAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "frost shock") {}
+    };
+
+    class CastChainLightningAction : public CastSpellAction
+    {
+    public:
+        CastChainLightningAction(PlayerbotAI* ai) : CastSpellAction(ai, "chain lightning") {}
+    };
+
+    class CastLightningBoltAction : public CastSpellAction
+    {
+    public:
+        CastLightningBoltAction(PlayerbotAI* ai) : CastSpellAction(ai, "lightning bolt") {}
     };
 }

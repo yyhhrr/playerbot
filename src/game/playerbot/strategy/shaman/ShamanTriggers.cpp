@@ -11,3 +11,9 @@ bool ShamanWeaponTrigger::IsActive()
             && !ai->HasAnyAuraOf(GetTarget(), "frostbrand weapon", "rockbiter weapon", "flametongue weapon",
                     "earthliving weapon", "windfury weapon", NULL);
 }
+
+bool ShockTrigger::IsActive()
+{
+    return SpellTrigger::IsActive()
+            && !ai->HasAnyAuraOf(GetTarget(), "frost shock", "earth shock", "flame shock", NULL);
+}

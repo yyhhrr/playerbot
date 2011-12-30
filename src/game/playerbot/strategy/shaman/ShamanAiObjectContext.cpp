@@ -8,6 +8,7 @@
 #include "ShamanTriggers.h"
 #include "../NamedObjectContext.h"
 #include "TotemsShamanStrategy.h"
+#include "CasterShamanStrategy.h"
 
 using namespace ai;
 
@@ -27,12 +28,14 @@ namespace ai
                 creators["nc"] = &shaman::StrategyFactoryInternal::nc;
                 creators["totems"] = &shaman::StrategyFactoryInternal::totems;
                 creators["melee aoe"] = &shaman::StrategyFactoryInternal::melee_aoe;
+                creators["caster aoe"] = &shaman::StrategyFactoryInternal::caster_aoe;
             }
 
         private:
             static Strategy* nc(PlayerbotAI* ai) { return new ShamanNonCombatStrategy(ai); }
             static Strategy* totems(PlayerbotAI* ai) { return new TotemsShamanStrategy(ai); }
             static Strategy* melee_aoe(PlayerbotAI* ai) { return new MeleeAoeShamanStrategy(ai); }
+            static Strategy* caster_aoe(PlayerbotAI* ai) { return new CasterAoeShamanStrategy(ai); }
         };
 
         class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -43,11 +46,13 @@ namespace ai
                 creators["heal"] = &shaman::CombatStrategyFactoryInternal::heal;
                 creators["melee"] = &shaman::CombatStrategyFactoryInternal::dps;
                 creators["dps"] = &shaman::CombatStrategyFactoryInternal::dps;
+                creators["caster"] = &shaman::CombatStrategyFactoryInternal::caster;
             }
 
         private:
             static Strategy* heal(PlayerbotAI* ai) { return new HealShamanStrategy(ai); }
             static Strategy* dps(PlayerbotAI* ai) { return new MeleeShamanStrategy(ai); }
+            static Strategy* caster(PlayerbotAI* ai) { return new CasterShamanStrategy(ai); }
         };
     };
 };
@@ -84,6 +89,8 @@ namespace ai
                 creators["party member cleanse spirit poison"] = &TriggerFactoryInternal::party_member_cleanse_poison;
                 creators["party member cleanse spirit curse"] = &TriggerFactoryInternal::party_member_cleanse_curse;
                 creators["party member cleanse spirit disease"] = &TriggerFactoryInternal::party_member_cleanse_disease;
+                creators["shock"] = &TriggerFactoryInternal::shock;
+                creators["frost shock snare"] = &TriggerFactoryInternal::frost_shock_snare;
 
             }
 
@@ -109,6 +116,8 @@ namespace ai
             static Trigger* shaman_weapon(PlayerbotAI* ai) { return new ShamanWeaponTrigger(ai); }
             static Trigger* water_shield(PlayerbotAI* ai) { return new WaterShieldTrigger(ai); }
             static Trigger* lightning_shield(PlayerbotAI* ai) { return new LightningShieldTrigger(ai); }
+            static Trigger* shock(PlayerbotAI* ai) { return new ShockTrigger(ai); }
+            static Trigger* frost_shock_snare(PlayerbotAI* ai) { return new FrostShockSnareTrigger(ai); }
         };
     };
 };
@@ -163,9 +172,19 @@ namespace ai
                 creators["cleanse spirit poison on party"] = &AiObjectContextInternal::cleanse_spirit_poison_on_party;
                 creators["cleanse spirit disease on party"] = &AiObjectContextInternal::cleanse_spirit_disease_on_party;
                 creators["cleanse spirit curse on party"] = &AiObjectContextInternal::cleanse_spirit_curse_on_party;
+                creators["flame shock"] = &AiObjectContextInternal::flame_shock;
+                creators["earth shock"] = &AiObjectContextInternal::earth_shock;
+                creators["frost shock"] = &AiObjectContextInternal::frost_shock;
+                creators["chain lightning"] = &AiObjectContextInternal::chain_lightning;
+                creators["lightning bolt"] = &AiObjectContextInternal::lightning_bolt;
             }
 
         private:
+            static Action* lightning_bolt(PlayerbotAI* ai) { return new CastLightningBoltAction(ai); }
+            static Action* chain_lightning(PlayerbotAI* ai) { return new CastChainLightningAction(ai); }
+            static Action* frost_shock(PlayerbotAI* ai) { return new CastFrostShockAction(ai); }
+            static Action* earth_shock(PlayerbotAI* ai) { return new CastEarthShockAction(ai); }
+            static Action* flame_shock(PlayerbotAI* ai) { return new CastFlameShockAction(ai); }
             static Action* cleanse_spirit_poison_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritPoisonOnPartyAction(ai); }
             static Action* cleanse_spirit_disease_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritDiseaseOnPartyAction(ai); }
             static Action* cleanse_spirit_curse_on_party(PlayerbotAI* ai) { return new CastCleanseSpiritCurseOnPartyAction(ai); }

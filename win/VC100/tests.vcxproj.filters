@@ -181,6 +181,9 @@
     <ClCompile Include="..\..\src\tests\ArcaneMageTestCase.cpp">
       <Filter>Mage</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\CasterShamanTestCase.cpp">
+      <Filter>Shaman</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\EngineTestBase.h">

@@ -606,6 +606,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueAiObjectContext.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueTriggers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\CasterShamanStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\GenericShamanStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\HealShamanStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.cpp" />
@@ -989,6 +990,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueMultipliers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueOpeningActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueTriggers.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\CasterShamanStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\GenericShamanStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\HealShamanStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\MeleeShamanStrategy.h" />

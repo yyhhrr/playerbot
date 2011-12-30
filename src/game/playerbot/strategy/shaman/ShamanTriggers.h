@@ -158,4 +158,14 @@ namespace ai
         PartyMemberCleanseSpiritDiseaseTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cleanse spirit", DISPEL_DISEASE) {}
     };
 
+    class ShockTrigger : public DebuffTrigger {
+    public:
+        ShockTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "earth shock") {}
+        virtual bool IsActive();
+    };
+
+    class FrostShockSnareTrigger : public SnareTargetTrigger {
+    public:
+        FrostShockSnareTrigger(PlayerbotAI* ai) : SnareTargetTrigger(ai, "frost shock") {}
+    };
 }

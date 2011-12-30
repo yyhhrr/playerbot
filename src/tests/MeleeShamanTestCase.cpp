@@ -28,13 +28,12 @@ public:
 protected:
     void combat()
     {
-		tick();
 		tickInMeleeRange();
         tick();
 		tick();
 		tick();
 
-        assertActions(">T:reach melee>S:searing totem>T:stormstrike>T:lava lash>T:melee");
+        assertActions(">S:searing totem>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()
