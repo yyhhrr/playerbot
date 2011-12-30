@@ -93,7 +93,11 @@ public class ImportLog {
                     saved += buffer.size();
                     buffer.clear();
                 }
-                dao.insert(copy);
+                try {
+                    dao.insert(copy);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
