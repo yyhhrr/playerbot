@@ -41,7 +41,9 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
 
     MotionMaster &mm = *bot->GetMotionMaster();
 
-    mm.MovePoint(mapId, x, y, z);
+    bool generatePath = bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty() &&
+            !bot->IsFlying();
+    mm.MovePoint(mapId, x, y, z, generatePath);
     WaitForReach(bot->GetDistance(x, y, z));
 
     AI_VALUE(LastMovement&, "last movement").Set(x, y, z, bot->GetOrientation());
