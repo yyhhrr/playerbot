@@ -66,15 +66,6 @@ bool AttackAction::Attack(Unit* target)
     context->GetValue<Unit*>("current target")->Set(target);
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 
-    if (AI_VALUE2(float, "distance", "current target") > sPlayerbotAIConfig.meleeDistance)
-        return false;
-
-    bool alreadyAttacking = (bot->getVictim() == target && bot->hasUnitState(UNIT_STAT_MELEE_ATTACKING));
-    if (alreadyAttacking)
-        return true;
-
-    bool result = bot->Attack(target, true);
-
     Pet* pet = bot->GetPet();
     if (pet)
     {
@@ -82,6 +73,11 @@ bool AttackAction::Attack(Unit* target)
         if (creatureAI)
             creatureAI->AttackStart(target);
     }
+
+    bool result = bot->Attack(target, true);
+
+    if (AI_VALUE2(float, "distance", "current target") > sPlayerbotAIConfig.meleeDistance)
+        return false;
 
     return result;
 }
