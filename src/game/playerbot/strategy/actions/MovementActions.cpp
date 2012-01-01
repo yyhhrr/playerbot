@@ -129,10 +129,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
     float distance = bot->GetDistance(x, y, z);
-    if (distance > sPlayerbotAIConfig.reactDistance || !bot->IsWithinLOS(x, y, z))
-        return false;
-    
-    if (distance <= sPlayerbotAIConfig.followDistance)
+    if (distance > sPlayerbotAIConfig.reactDistance || distance <= sPlayerbotAIConfig.followDistance)
         return false;
 
     return IsMovingAllowed();
