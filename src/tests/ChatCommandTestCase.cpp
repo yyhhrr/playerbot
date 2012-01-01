@@ -237,7 +237,7 @@ protected:
     {
         assertParametrizedCommand("co", "?");
         assertParametrizedCommand("nc", "?");
-        assertParametrizedCommand("ds", "?");
+        assertParametrizedCommand("dead", "?");
     }
 
     void trainer()
