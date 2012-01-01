@@ -33,6 +33,9 @@ uint32 SpellIdValue::Calculate()
         if (!pSpellInfo)
             continue;
 
+        if (pSpellInfo->Effect[0] == SPELL_EFFECT_LEARN_SPELL)
+            continue;
+
         const string name = pSpellInfo->SpellName[loc];
         if (name.empty() || name.length() != wnamepart.length() || !Utf8FitTo(name, wnamepart))
             continue;

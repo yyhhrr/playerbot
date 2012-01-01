@@ -2,6 +2,7 @@
 #include "../../playerbot.h"
 #include "DruidMultipliers.h"
 #include "CasterDruidStrategy.h"
+#include "FeralDruidStrategy.h"
 
 using namespace ai;
 
@@ -97,6 +98,7 @@ private:
 CasterDruidStrategy::CasterDruidStrategy(PlayerbotAI* ai) : GenericDruidStrategy(ai)
 {
     actionNodeFactories.Add(new CasterDruidStrategyActionNodeFactory());
+    actionNodeFactories.Add(new ShapeshiftDruidStrategyActionNodeFactory());
 }
 
 NextAction** CasterDruidStrategy::getDefaultActions()

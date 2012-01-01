@@ -40,16 +40,7 @@ bool CheckMountStateAction::Execute(Event event)
 
 void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
 {
-    ai->RemoveAura("bear form");
-    ai->RemoveAura("dire bear form");
-    ai->RemoveAura("moonkin form");
-    ai->RemoveAura("travel form");
-    ai->RemoveAura("cat form");
-    ai->RemoveAura("flight form");
-    ai->RemoveAura("swift flight form");
-    ai->RemoveAura("aquatic form");
-    ai->RemoveAura("ghost wolf");
-
+    ai->RemoveShapeshift();
     
     uint32 spellMount = 0;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)

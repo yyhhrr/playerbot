@@ -545,6 +545,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObject.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObjectContext.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\HealDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ChatCommandHandlerStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DeadStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.cpp" />
@@ -938,6 +939,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\HealDruidStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\DuelStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Engine.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Event.h" />

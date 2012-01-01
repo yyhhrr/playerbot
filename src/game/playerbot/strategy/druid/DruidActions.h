@@ -22,20 +22,11 @@ namespace ai
 	class CastRejuvenationAction : public CastHealingSpellAction {
 	public:
 		CastRejuvenationAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "rejuvenation") {}
-
-		virtual NextAction** getPrerequisites() {
-			return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), CastHealingSpellAction::getPrerequisites());
-		}
-
 	};
 
 	class CastRegrowthAction : public CastHealingSpellAction {
 	public:
 		CastRegrowthAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "regrowth") {}
-
-		virtual NextAction** getPrerequisites() {
-			return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), CastHealingSpellAction::getPrerequisites());
-		}
 
 	};
 
@@ -43,40 +34,24 @@ namespace ai
     public:
         CastHealingTouchAction(PlayerbotAI* ai) : CastHealingSpellAction(ai, "healing touch") {}
 
-        virtual NextAction** getPrerequisites() {
-            return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), CastHealingSpellAction::getPrerequisites());
-        }
-
     };
 
     class CastRejuvenationOnPartyAction : public HealPartyMemberAction
     {
     public:
         CastRejuvenationOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "rejuvenation") {}
-
-		virtual NextAction** getPrerequisites() {
-			return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), HealPartyMemberAction::getPrerequisites());
-		}
     };
 
     class CastRegrowthOnPartyAction : public HealPartyMemberAction
     {
     public:
         CastRegrowthOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "regrowth") {}
-
-		virtual NextAction** getPrerequisites() {
-			return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), HealPartyMemberAction::getPrerequisites());
-		}
     };
 
     class CastHealingTouchOnPartyAction : public HealPartyMemberAction
     {
     public:
         CastHealingTouchOnPartyAction(PlayerbotAI* ai) : HealPartyMemberAction(ai, "healing touch") {}
-
-        virtual NextAction** getPrerequisites() {
-            return NextAction::merge( NextAction::array(0, new NextAction("caster form"), NULL), HealPartyMemberAction::getPrerequisites());
-        }
     };
 
 	class CastReviveAction : public ResurrectPartyMemberAction
@@ -220,5 +195,11 @@ namespace ai
         CastInnervateAction(PlayerbotAI* ai) : CastSpellAction(ai, "innervate") {}
 
         virtual string GetTargetName() { return "self target"; }
+    };
+
+    class CastTranquilityAction : public CastAoeHealSpellAction
+    {
+    public:
+        CastTranquilityAction(PlayerbotAI* ai) : CastAoeHealSpellAction(ai, "tranquility") {}
     };
 }

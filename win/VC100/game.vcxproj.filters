@@ -1104,6 +1104,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\druid\HealDruidStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2311,6 +2314,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\RacialsStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\druid\HealDruidStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

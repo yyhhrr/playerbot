@@ -12,13 +12,6 @@ public:
     {
         creators["melee"] = &melee;
         creators["caster form"] = &caster_form;
-        creators["gift of the naaru"] = &gift_of_the_naaru;
-        creators["regrowth"] = &regrowth;
-        creators["rejuvenation"] = &rejuvenation;
-        creators["healing touch"] = &healing_touch;
-        creators["regrowth on party"] = &regrowth_on_party;
-        creators["rejuvenation on party"] = &rejuvenation_on_party;
-        creators["healing touch on party"] = &healing_touch_on_party;
         creators["cure poison"] = &cure_poison;
         creators["cure poison on party"] = &cure_poison_on_party;
         creators["abolish poison"] = &abolish_poison;
@@ -40,55 +33,6 @@ private:
     {
         return new ActionNode ("caster form",
             /*P*/ NULL,
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    static ActionNode* gift_of_the_naaru(PlayerbotAI* ai)
-    {
-        return new ActionNode ("gift of the naaru",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("regrowth"), NULL),
-            /*C*/ NULL);
-    }
-    static ActionNode* regrowth(PlayerbotAI* ai)
-    {
-        return new ActionNode ("regrowth",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("healing touch"), NULL),
-            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
-    }
-    static ActionNode* rejuvenation(PlayerbotAI* ai)
-    {
-        return new ActionNode ("rejuvenation",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    static ActionNode* healing_touch(PlayerbotAI* ai)
-    {
-        return new ActionNode ("healing touch",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    static ActionNode* regrowth_on_party(PlayerbotAI* ai)
-    {
-        return new ActionNode ("regrowth on party",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NextAction::array(0, new NextAction("healing touch on party"), NULL),
-            /*C*/ NextAction::array(0, new NextAction("melee", 10.0f), NULL));
-    }
-    static ActionNode* rejuvenation_on_party(PlayerbotAI* ai)
-    {
-        return new ActionNode ("rejuvenation on party",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
-            /*A*/ NULL,
-            /*C*/ NULL);
-    }
-    static ActionNode* healing_touch_on_party(PlayerbotAI* ai)
-    {
-        return new ActionNode ("healing touch on party",
-            /*P*/ NextAction::array(0, new NextAction("caster form"), NULL),
             /*A*/ NULL,
             /*C*/ NULL);
     }

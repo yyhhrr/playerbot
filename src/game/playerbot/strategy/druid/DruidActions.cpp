@@ -6,15 +6,9 @@ using namespace ai;
 
 bool CastCasterFormAction::Execute(Event event)
 {
-    ai->RemoveAura("dire bear form");
-    ai->RemoveAura("bear form");
-    ai->RemoveAura("cat form");
-	ai->RemoveAura("moonkin form");
-    ai->RemoveAura("travel form");
-	ai->RemoveAura("aquatic form");
+    ai->RemoveShapeshift();
     return true;
 }
-
 
 NextAction** CastAbolishPoisonAction::getAlternatives()
 {

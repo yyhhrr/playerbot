@@ -14,6 +14,7 @@ bool TaxiAction::Execute(Event event)
     ai->RemoveAura("moonkin form");
     ai->RemoveAura("travel form");
     ai->RemoveAura("aquatic form");
+    ai->RemoveAura("tree of life form");
 
     LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
 

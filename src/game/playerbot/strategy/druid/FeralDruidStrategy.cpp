@@ -64,6 +64,7 @@ private:
 FeralDruidStrategy::FeralDruidStrategy(PlayerbotAI* ai) : GenericDruidStrategy(ai)
 {
     actionNodeFactories.Add(new FeralDruidStrategyActionNodeFactory());
+    actionNodeFactories.Add(new ShapeshiftDruidStrategyActionNodeFactory());
 }
 
 void FeralDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

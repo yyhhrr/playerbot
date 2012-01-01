@@ -1090,3 +1090,16 @@ bool PlayerbotAI::IsOpposing(Player* player)
     return IsAlliance(bot->getRace());
 }
 
+void PlayerbotAI::RemoveShapeshift()
+{
+    RemoveAura("bear form");
+    RemoveAura("dire bear form");
+    RemoveAura("moonkin form");
+    RemoveAura("travel form");
+    RemoveAura("cat form");
+    RemoveAura("flight form");
+    RemoveAura("swift flight form");
+    RemoveAura("aquatic form");
+    RemoveAura("ghost wolf");
+    RemoveAura("tree of life");
+}

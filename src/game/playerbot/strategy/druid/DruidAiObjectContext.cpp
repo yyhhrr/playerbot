@@ -8,6 +8,7 @@
 #include "GenericDruidNonCombatStrategy.h"
 #include "../NamedObjectContext.h"
 #include "DruidTriggers.h"
+#include "HealDruidStrategy.h"
 
 using namespace ai;
 
@@ -43,12 +44,14 @@ namespace ai
                 creators["cat"] = &druid::DruidStrategyFactoryInternal::cat;
                 creators["caster"] = &druid::DruidStrategyFactoryInternal::caster;
                 creators["dps"] = &druid::DruidStrategyFactoryInternal::caster;
+                creators["heal"] = &druid::DruidStrategyFactoryInternal::heal;
             }
 
         private:
             static Strategy* bear(PlayerbotAI* ai) { return new BearTankDruidStrategy(ai); }
             static Strategy* cat(PlayerbotAI* ai) { return new CatDpsDruidStrategy(ai); }
             static Strategy* caster(PlayerbotAI* ai) { return new CasterDruidStrategy(ai); }
+            static Strategy* heal(PlayerbotAI* ai) { return new HealDruidStrategy(ai); }
         };
     };
 };
@@ -80,6 +83,7 @@ namespace ai
                 creators["entangling roots"] = &TriggerFactoryInternal::entangling_roots;
                 creators["bear form"] = &TriggerFactoryInternal::bear_form;
                 creators["cat form"] = &TriggerFactoryInternal::cat_form;
+                creators["tree form"] = &TriggerFactoryInternal::tree_form;
             }
 
         private:
@@ -99,6 +103,7 @@ namespace ai
             static Trigger* entangling_roots(PlayerbotAI* ai) { return new EntanglingRootsTrigger(ai); }
             static Trigger* bear_form(PlayerbotAI* ai) { return new BearFormTrigger(ai); }
             static Trigger* cat_form(PlayerbotAI* ai) { return new CatFormTrigger(ai); }
+            static Trigger* tree_form(PlayerbotAI* ai) { return new TreeFormTrigger(ai); }
         };
     };
 };
@@ -123,6 +128,7 @@ namespace ai
                 creators["dire bear form"] = &AiObjectContextInternal::dire_bear_form;
                 creators["moonkin form"] = &AiObjectContextInternal::moonkin_form;
                 creators["cat form"] = &AiObjectContextInternal::cat_form;
+                creators["tree form"] = &AiObjectContextInternal::tree_form;
                 creators["caster form"] = &AiObjectContextInternal::caster_form;
                 creators["mangle (bear)"] = &AiObjectContextInternal::mangle_bear;
                 creators["maul"] = &AiObjectContextInternal::maul;
@@ -168,9 +174,11 @@ namespace ai
                 creators["lacerate"] = &AiObjectContextInternal::lacerate;
                 creators["hurricane"] = &AiObjectContextInternal::hurricane;
                 creators["innervate"] = &AiObjectContextInternal::innervate;
+                creators["tranquility"] = &AiObjectContextInternal::tranquility;
             }
 
         private:
+            static Action* tranquility(PlayerbotAI* ai) { return new CastTranquilityAction(ai); }
             static Action* feral_charge_bear(PlayerbotAI* ai) { return new CastFeralChargeBearAction(ai); }
             static Action* feral_charge_cat(PlayerbotAI* ai) { return new CastFeralChargeCatAction(ai); }
             static Action* swipe_bear(PlayerbotAI* ai) { return new CastSwipeBearAction(ai); }
@@ -179,6 +187,7 @@ namespace ai
             static Action* bear_form(PlayerbotAI* ai) { return new CastBearFormAction(ai); }
             static Action* dire_bear_form(PlayerbotAI* ai) { return new CastDireBearFormAction(ai); }
             static Action* cat_form(PlayerbotAI* ai) { return new CastCatFormAction(ai); }
+            static Action* tree_form(PlayerbotAI* ai) { return new CastTreeFormAction(ai); }
             static Action* caster_form(PlayerbotAI* ai) { return new CastCasterFormAction(ai); }
             static Action* mangle_bear(PlayerbotAI* ai) { return new CastMangleBearAction(ai); }
             static Action* maul(PlayerbotAI* ai) { return new CastMaulAction(ai); }

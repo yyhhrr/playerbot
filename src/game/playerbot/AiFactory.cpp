@@ -124,6 +124,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
         case CLASS_DRUID:
             if (tab == 0)
                 engine->addStrategies("caster", "caster aoe", NULL);
+            else if (tab == 2)
+                engine->addStrategies("heal", NULL);
             else
                 engine->addStrategies("bear", "tank aoe", NULL);
             break;

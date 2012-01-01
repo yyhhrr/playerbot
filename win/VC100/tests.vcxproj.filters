@@ -187,6 +187,9 @@
     <ClCompile Include="..\..\src\tests\KiteTestCase.cpp">
       <Filter>Generic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\HealDruidTestCase.cpp">
+      <Filter>Druid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\EngineTestBase.h">

@@ -114,6 +114,7 @@ public:
     int32 CalculateGlobalCooldown(uint32 spellid);
     void InterruptSpell();
     void RemoveAura(string name);
+    void RemoveShapeshift();
 
     virtual bool CanCastSpell(string name, Unit* target);
     virtual bool CastSpell(string name, Unit* target);
