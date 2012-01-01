@@ -27,8 +27,9 @@ protected:
     {
         itemAvailable("soul shard", 2);
         tickWithNoPet();
+        tickWithNoPet();
 
-		assertActions(">S:summon voidwalker");
+		assertActions(">S:summon felguard>S:summon voidwalker");
     }
 
     void cc()

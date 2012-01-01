@@ -131,7 +131,10 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             engine->addStrategy("bdps");
         case CLASS_ROGUE:
         case CLASS_WARLOCK:
-            engine->addStrategy("dps");
+            if (tab == 1)
+                engine->addStrategy("tank");
+            else
+                engine->addStrategy("dps");
             break;
     }
 }

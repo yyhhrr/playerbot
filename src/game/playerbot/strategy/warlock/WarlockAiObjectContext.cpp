@@ -109,6 +109,7 @@ namespace ai
                 creators["create spellstone"] = &AiObjectContextInternal::create_spellstone;
                 creators["spellstone"] = &AiObjectContextInternal::spellstone;
                 creators["summon voidwalker"] = &AiObjectContextInternal::summon_voidwalker;
+                creators["summon felguard"] = &AiObjectContextInternal::summon_felguard;
                 creators["immolate"] = &AiObjectContextInternal::immolate;
                 creators["corruption"] = &AiObjectContextInternal::corruption;
                 creators["curse of agony"] = &AiObjectContextInternal::curse_of_agony;
@@ -132,6 +133,7 @@ namespace ai
             static Action* create_spellstone(PlayerbotAI* ai) { return new CastCreateSpellstoneAction(ai); }
             static Action* spellstone(PlayerbotAI* ai) { return new UseSpellItemAction(ai, "spellstone"); }
             static Action* summon_voidwalker(PlayerbotAI* ai) { return new CastSummonVoidwalkerAction(ai); }
+            static Action* summon_felguard(PlayerbotAI* ai) { return new CastSummonFelguardAction(ai); }
             static Action* corruption(PlayerbotAI* ai) { return new CastCorruptionAction(ai); }
             static Action* curse_of_agony(PlayerbotAI* ai) { return new CastCurseOfAgonyAction(ai); }
             static Action* shadow_bolt(PlayerbotAI* ai) { return new CastShadowBoltAction(ai); }

@@ -77,6 +77,12 @@ namespace ai
 		CastSummonVoidwalkerAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "summon voidwalker") {}
 	};
 
+	class CastSummonFelguardAction : public CastBuffSpellAction
+	{
+	public:
+		CastSummonFelguardAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "summon felguard") {}
+	};
+
 	class CastSummonImpAction : public CastBuffSpellAction 
 	{
 	public:
