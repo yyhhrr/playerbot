@@ -100,6 +100,12 @@ namespace ai
 		virtual bool IsActive();
 	};
 
+	class HasAggroTrigger : public Trigger {
+	public:
+	    HasAggroTrigger(PlayerbotAI* ai) : Trigger(ai, "have aggro") {}
+		virtual bool IsActive();
+	};
+
 	class SpellTrigger : public Trigger
 	{
 	public:

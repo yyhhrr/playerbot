@@ -569,6 +569,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterBuffStrategies.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\KiteStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.cpp" />
@@ -951,6 +952,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ItemVisitors.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\KiteStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.h" />

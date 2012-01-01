@@ -47,6 +47,7 @@ namespace ai
 
             creators["tank aoe"] = &TriggerContext::TankAoe;
             creators["lose aggro"] = &TriggerContext::LoseAggro;
+            creators["has aggro"] = &TriggerContext::HasAggro;
 
             creators["light aoe"] = &TriggerContext::LightAoe;
             creators["medium aoe"] = &TriggerContext::MediumAoe;
@@ -99,6 +100,7 @@ namespace ai
         static Trigger* MediumAoe(PlayerbotAI* ai) { return new MediumAoeTrigger(ai); }
         static Trigger* HighAoe(PlayerbotAI* ai) { return new HighAoeTrigger(ai); }
         static Trigger* LoseAggro(PlayerbotAI* ai) { return new LoseAggroTrigger(ai); }
+        static Trigger* HasAggro(PlayerbotAI* ai) { return new HasAggroTrigger(ai); }
         static Trigger* LowHealth(PlayerbotAI* ai) { return new LowHealthTrigger(ai); }
         static Trigger* MediumHealth(PlayerbotAI* ai) { return new MediumHealthTrigger(ai); }
         static Trigger* AlmostFullHealth(PlayerbotAI* ai) { return new AlmostFullHealthTrigger(ai); }

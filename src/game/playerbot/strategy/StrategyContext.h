@@ -8,6 +8,7 @@
 #include "QuestStrategies.h"
 #include "LootNonCombatStrategy.h"
 #include "DuelStrategy.h"
+#include "KiteStrategy.h"
 
 namespace ai
 {
@@ -29,9 +30,11 @@ namespace ai
             creators["dead"] = &StrategyContext::dead;
             creators["flee"] = &StrategyContext::flee;
             creators["duel"] = &StrategyContext::duel;
+            creators["kite"] = &StrategyContext::kite;
         }
 
     private:
+        static Strategy* kite(PlayerbotAI* ai) { return new KiteStrategy(ai); }
         static Strategy* duel(PlayerbotAI* ai) { return new DuelStrategy(ai); }
         static Strategy* flee(PlayerbotAI* ai) { return new FleeStrategy(ai); }
         static Strategy* dead(PlayerbotAI* ai) { return new DeadStrategy(ai); }

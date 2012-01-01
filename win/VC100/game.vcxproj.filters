@@ -1119,6 +1119,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\KiteStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2325,6 +2328,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\shaman\CasterShamanStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\KiteStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

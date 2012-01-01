@@ -32,6 +32,11 @@ bool LoseAggroTrigger::IsActive()
     return !AI_VALUE2(bool, "has aggro", "current target");
 }
 
+bool HasAggroTrigger::IsActive()
+{
+    return AI_VALUE2(bool, "has aggro", "current target");
+}
+
 bool PanicTrigger::IsActive()
 {
     return AI_VALUE2(uint8, "health", "self target") < sPlayerbotAIConfig.criticalHealth &&
