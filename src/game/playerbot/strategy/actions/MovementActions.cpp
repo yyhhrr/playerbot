@@ -42,7 +42,7 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     MotionMaster &mm = *bot->GetMotionMaster();
 
     bool generatePath = bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty() &&
-            !bot->IsFlying();
+            !bot->IsFlying() && !bot->IsUnderWater();
     mm.MovePoint(mapId, x, y, z, generatePath);
     WaitForReach(bot->GetDistance(x, y, z));
 
