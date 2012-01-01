@@ -1,6 +1,6 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
-#include "PassiveMultiplier.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
+#include "../PassiveMultiplier.h"
 #include "PullStrategy.h"
 
 using namespace ai;

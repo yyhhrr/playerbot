@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Strategy.h"
-#include "AiObjectContext.h"
-
 namespace ai
 {
     class LootNonCombatStrategy : public Strategy

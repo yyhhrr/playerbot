@@ -681,12 +681,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObjectContext.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\DeadStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -723,9 +717,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\Event.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -748,9 +739,6 @@
       <Filter>playerbot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp">
@@ -837,16 +825,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\PullStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\QuestStrategies.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\Queue.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\RacialsStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.cpp">
@@ -1032,9 +1011,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorTriggers.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\WorldPacketHandlerStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\ahbot\AhBot.cpp">
       <Filter>AhBot</Filter>
     </ClCompile>
@@ -1095,9 +1071,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\AoeHealValues.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\DuelStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
@@ -1119,7 +1092,16 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\KiteStrategy.cpp">
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ChatCommandHandlerStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DeadStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DuelStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\KiteStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LootNonCombatStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\PullStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\QuestStrategies.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\RacialsStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\WorldPacketHandlerStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1847,9 +1829,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\ExternalEventHelper.h">
       <Filter>playerbot</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
@@ -1977,9 +1956,6 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\Queue.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\RacialsStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.h">
@@ -2331,6 +2307,10 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\KiteStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\RacialsStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "RogueAiObjectContext.h"
 #include "DpsRogueStrategy.h"
 #include "GenericRogueNonCombatStrategy.h"
-#include "../PullStrategy.h"
+#include "../generic/PullStrategy.h"
 #include "../NamedObjectContext.h"
 
 using namespace ai;

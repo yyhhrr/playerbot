@@ -1,8 +1,8 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
 #include "GenericNonCombatStrategy.h"
-#include "PassiveMultiplier.h"
-#include "LowManaMultiplier.h"
+#include "../PassiveMultiplier.h"
+#include "../LowManaMultiplier.h"
 
 using namespace ai;
 

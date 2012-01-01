@@ -1,5 +1,5 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
 #include "DuelStrategy.h"
 
 using namespace ai;

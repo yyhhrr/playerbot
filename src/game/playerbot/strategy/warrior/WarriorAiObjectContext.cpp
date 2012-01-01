@@ -5,7 +5,7 @@
 #include "GenericWarriorNonCombatStrategy.h"
 #include "TankWarriorStrategy.h"
 #include "DpsWarriorStrategy.h"
-#include "../PullStrategy.h"
+#include "../generic/PullStrategy.h"
 #include "WarriorTriggers.h"
 #include "../NamedObjectContext.h"
 

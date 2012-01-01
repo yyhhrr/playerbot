@@ -545,8 +545,8 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObject.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObjectContext.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\DeadStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ChatCommandHandlerStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DeadStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\CasterDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\CatDpsDruidStrategy.cpp" />
@@ -557,10 +557,10 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\FeralDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\GenericDruidStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\DuelStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DuelStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Engine.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Event.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.cpp" />
@@ -569,8 +569,8 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterBuffStrategies.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\KiteStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\KiteStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LootNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp" />
@@ -600,10 +600,10 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestAiObjectContext.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\PullStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\QuestStrategies.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\PullStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\QuestStrategies.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\Queue.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\RacialsStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\RacialsStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\GenericRogueNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\rogue\RogueActions.cpp" />
@@ -670,7 +670,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorAiObjectContext.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorMultipliers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\warrior\WarriorTriggers.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\WorldPacketHandlerStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\WorldPacketHandlerStrategy.cpp" />
     <ClCompile Include="..\..\src\game\PlayerDump.cpp" />
     <ClCompile Include="..\..\src\game\PointMovementGenerator.cpp" />
     <ClCompile Include="..\..\src\game\PoolManager.cpp" />
@@ -942,7 +942,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\Engine.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Event.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ExternalEventHelper.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\GenericNonCombatStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GenericNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.h" />
@@ -988,7 +988,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\PullStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\QuestStrategies.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\Queue.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\RacialsStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\RacialsStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\DpsRogueStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\GenericRogueNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\rogue\RogueActions.h" />

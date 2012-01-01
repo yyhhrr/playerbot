@@ -5,7 +5,7 @@
 #include "DpsWarlockStrategy.h"
 #include "GenericWarlockNonCombatStrategy.h"
 #include "TankWarlockStrategy.h"
-#include "../PullStrategy.h"
+#include "../generic/PullStrategy.h"
 #include "WarlockTriggers.h"
 #include "../NamedObjectContext.h"
 #include "../actions/UseItemAction.h"

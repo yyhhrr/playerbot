@@ -1,5 +1,5 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
 #include "LootNonCombatStrategy.h"
 
 using namespace ai;

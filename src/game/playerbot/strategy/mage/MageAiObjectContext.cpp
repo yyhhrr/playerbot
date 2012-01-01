@@ -7,7 +7,7 @@
 #include "ArcaneMageStrategy.h"
 #include "GenericMageNonCombatStrategy.h"
 #include "FireMageStrategy.h"
-#include "../PullStrategy.h"
+#include "../generic/PullStrategy.h"
 #include "MageTriggers.h"
 #include "../NamedObjectContext.h"
 

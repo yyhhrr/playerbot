@@ -4,7 +4,7 @@
 #include "PriestAiObjectContext.h"
 #include "HealPriestNonCombatStrategy.h"
 #include "DpsPriestStrategy.h"
-#include "../PullStrategy.h"
+#include "../generic/PullStrategy.h"
 #include "PriestTriggers.h"
 #include "../NamedObjectContext.h"
 

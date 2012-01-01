@@ -1,6 +1,6 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
-#include "Strategy.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
+#include "../Strategy.h"
 #include "DeadStrategy.h"
 
 using namespace ai;

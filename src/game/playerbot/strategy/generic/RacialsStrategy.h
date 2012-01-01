@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Strategy.h"
-
 namespace ai
 {
     class RacialsStrategy : public Strategy

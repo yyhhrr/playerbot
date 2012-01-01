@@ -1,14 +1,14 @@
 #pragma once;
 
-#include "GenericNonCombatStrategy.h"
-#include "RacialsStrategy.h"
-#include "ChatCommandHandlerStrategy.h"
-#include "WorldPacketHandlerStrategy.h"
-#include "DeadStrategy.h"
-#include "QuestStrategies.h"
-#include "LootNonCombatStrategy.h"
-#include "DuelStrategy.h"
-#include "KiteStrategy.h"
+#include "generic/GenericNonCombatStrategy.h"
+#include "generic/RacialsStrategy.h"
+#include "generic/ChatCommandHandlerStrategy.h"
+#include "generic/WorldPacketHandlerStrategy.h"
+#include "generic/DeadStrategy.h"
+#include "generic/QuestStrategies.h"
+#include "generic/LootNonCombatStrategy.h"
+#include "generic/DuelStrategy.h"
+#include "generic/KiteStrategy.h"
 
 namespace ai
 {
