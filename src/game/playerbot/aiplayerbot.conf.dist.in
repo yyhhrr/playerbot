@@ -106,8 +106,8 @@ AiPlayerbot.enabled=1
 AiPlayerbot.AllowGuildBots=1
 AiPlayerbot.RandomBotAccounts=11,12
 
-AiPlayerbot.GlobalCooldown=1500
-AiPlayerbot.ReactDelay=250
+AiPlayerbot.GlobalCooldown=600
+AiPlayerbot.ReactDelay=100
 AiPlayerbot.TeleportDelay=10000
 
 AiPlayerbot.IterationsPerTick=10
