@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../generic/GenericNonCombatStrategy.h"
+#include "../generic/NonCombatStrategy.h"
 
 namespace ai
 {
-    class GenericPaladinNonCombatStrategy : public GenericNonCombatStrategy
+    class GenericPaladinNonCombatStrategy : public NonCombatStrategy
     {
     public:
-        GenericPaladinNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        GenericPaladinNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
         virtual string getName() { return "nc"; }
     
     public:

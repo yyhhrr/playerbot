@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FeralDruidStrategy.h"
+#include "../generic/CombatStrategy.h"
 
 namespace ai
 {

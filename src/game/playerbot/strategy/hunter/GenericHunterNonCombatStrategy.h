@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../generic/GenericNonCombatStrategy.h"
+#include "../generic/NonCombatStrategy.h"
 
 namespace ai
 {
-    class GenericHunterNonCombatStrategy : public GenericNonCombatStrategy
+    class GenericHunterNonCombatStrategy : public NonCombatStrategy
     {
     public:
         GenericHunterNonCombatStrategy(PlayerbotAI* ai);

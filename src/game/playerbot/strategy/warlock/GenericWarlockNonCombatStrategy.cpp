@@ -30,14 +30,14 @@ private:
     }
 };
 
-GenericWarlockNonCombatStrategy::GenericWarlockNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai)
+GenericWarlockNonCombatStrategy::GenericWarlockNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericWarlockNonCombatStrategyActionNodeFactory());
 }
 
 void GenericWarlockNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    GenericNonCombatStrategy::InitTriggers(triggers);
+    NonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "demon armor",

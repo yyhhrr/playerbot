@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RangedCombatStrategy.h"
+
 namespace ai
 {
     class PullStrategy : public RangedCombatStrategy

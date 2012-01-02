@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GenericHunterStrategy.h"
+#include "../generic/CombatStrategy.h"
 
 namespace ai
 {

@@ -107,27 +107,3 @@ ActionNode* Strategy::GetAction(string name)
     return actionNodeFactories.GetObject(name, ai);
 }
 
-void CombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
-{
-}
-
-void MeleeCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
-{
-    triggers.push_back(new TriggerNode(
-        "enemy out of melee",
-        NextAction::array(0, new NextAction("reach melee", 10.0f), NULL)));
-}
-
-void RangedCombatStrategy::InitTriggers(list<TriggerNode*> &triggers)
-{
-    triggers.push_back(new TriggerNode(
-        "enemy out of spell",
-        NextAction::array(0, new NextAction("reach spell", 10.0f), NULL)));
-}
-
-void FleeStrategy::InitTriggers(list<TriggerNode*> &triggers)
-{
-    triggers.push_back(new TriggerNode(
-        "panic",
-        NextAction::array(0, new NextAction("flee", 100.0f), NULL)));
-}

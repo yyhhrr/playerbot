@@ -1,6 +1,6 @@
 #pragma once;
 
-#include "generic/GenericNonCombatStrategy.h"
+#include "generic/NonCombatStrategy.h"
 #include "generic/RacialsStrategy.h"
 #include "generic/ChatCommandHandlerStrategy.h"
 #include "generic/WorldPacketHandlerStrategy.h"
@@ -9,6 +9,26 @@
 #include "generic/LootNonCombatStrategy.h"
 #include "generic/DuelStrategy.h"
 #include "generic/KiteStrategy.h"
+#include "generic/FleeStrategy.h"
+#include "generic/FollowMasterStrategy.h"
+#include "generic/FollowMasterRandomStrategy.h"
+#include "generic/FollowLineStrategy.h"
+#include "generic/RunawayStrategy.h"
+#include "generic/StayCircleStrategy.h"
+#include "generic/StayLineStrategy.h"
+#include "generic/StayCombatStrategy.h"
+#include "generic/StayStrategy.h"
+#include "generic/UseFoodStrategy.h"
+#include "generic/LowManaStrategy.h"
+#include "generic/EmoteStrategy.h"
+#include "generic/AttackRtiStrategy.h"
+#include "generic/AttackWeakStrategy.h"
+#include "generic/TankAoeStrategy.h"
+#include "generic/TankAssistStrategy.h"
+#include "generic/DpsAoeStrategy.h"
+#include "generic/DpsAssistStrategy.h"
+#include "generic/PassiveStrategy.h"
+#include "generic/GrindingStrategy.h"
 
 namespace ai
 {
@@ -41,7 +61,7 @@ namespace ai
         static Strategy* racials(PlayerbotAI* ai) { return new RacialsStrategy(ai); }
         static Strategy* loot(PlayerbotAI* ai) { return new LootNonCombatStrategy(ai); }
         static Strategy* gather(PlayerbotAI* ai) { return new GatherStrategy(ai); }
-        static Strategy* emote(PlayerbotAI* ai) { return new RandomEmoteStrategy(ai); }
+        static Strategy* emote(PlayerbotAI* ai) { return new EmoteStrategy(ai); }
         static Strategy* passive(PlayerbotAI* ai) { return new PassiveStrategy(ai); }
         static Strategy* low_mana(PlayerbotAI* ai) { return new LowManaStrategy(ai); }
         static Strategy* food(PlayerbotAI* ai) { return new UseFoodStrategy(ai); }
@@ -67,10 +87,10 @@ namespace ai
 
     private:
         static Strategy* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomStrategy(ai); }
-        static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterNonCombatStrategy(ai); }
-        static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineNonCombatStrategy(ai); }
-        static Strategy* stay(PlayerbotAI* ai) { return new StayNonCombatStrategy(ai); }
-        static Strategy* runaway(PlayerbotAI* ai) { return new RunAwayStrategy(ai); }
+        static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterStrategy(ai); }
+        static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineStrategy(ai); }
+        static Strategy* stay(PlayerbotAI* ai) { return new StayStrategy(ai); }
+        static Strategy* runaway(PlayerbotAI* ai) { return new RunawayStrategy(ai); }
         static Strategy* stay_circle(PlayerbotAI* ai) { return new StayCircleStrategy(ai); }
         static Strategy* stay_combat(PlayerbotAI* ai) { return new StayCombatStrategy(ai); }
         static Strategy* stay_line(PlayerbotAI* ai) { return new StayLineStrategy(ai); }

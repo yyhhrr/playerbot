@@ -7,7 +7,7 @@ using namespace ai;
 
 void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    GenericNonCombatStrategy::InitTriggers(triggers);
+    NonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "blessing of kings on party",

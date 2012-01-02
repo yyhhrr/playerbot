@@ -38,14 +38,14 @@ private:
     }
 };
 
-GenericDruidNonCombatStrategy::GenericDruidNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai)
+GenericDruidNonCombatStrategy::GenericDruidNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericDruidNonCombatStrategyActionNodeFactory());
 }
 
 void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    GenericNonCombatStrategy::InitTriggers(triggers);
+    NonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "mark of the wild",

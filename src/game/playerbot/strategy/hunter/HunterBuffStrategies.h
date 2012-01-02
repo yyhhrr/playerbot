@@ -1,44 +1,44 @@
 #pragma once
 
 #include "GenericHunterStrategy.h"
-#include "../generic/GenericNonCombatStrategy.h"
+#include "../generic/NonCombatStrategy.h"
 
 namespace ai
 {
-    class HunterBuffSpeedStrategy : public GenericNonCombatStrategy
+    class HunterBuffSpeedStrategy : public NonCombatStrategy
     {
     public:
-        HunterBuffSpeedStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        HunterBuffSpeedStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
         virtual string getName() { return "bspeed"; }
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
 
-    class HunterBuffManaStrategy : public GenericNonCombatStrategy
+    class HunterBuffManaStrategy : public NonCombatStrategy
     {
     public:
-        HunterBuffManaStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+        HunterBuffManaStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
         virtual string getName() { return "bmana"; }
 
     public:
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
     };
 
-	class HunterBuffDpsStrategy : public GenericNonCombatStrategy
+	class HunterBuffDpsStrategy : public NonCombatStrategy
 	{
 	public:
-		HunterBuffDpsStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+		HunterBuffDpsStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
 		virtual string getName() { return "bdps"; }
 
 	public:
 		virtual void InitTriggers(std::list<TriggerNode*> &triggers);
 	};
 
-	class HunterNatureResistanceStrategy : public GenericNonCombatStrategy
+	class HunterNatureResistanceStrategy : public NonCombatStrategy
 	{
 	public:
-		HunterNatureResistanceStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai) {}
+		HunterNatureResistanceStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
 		virtual string getName() { return "rnature"; }
 
 	public:

@@ -31,14 +31,14 @@ private:
     }
 };
 
-GenericHunterNonCombatStrategy::GenericHunterNonCombatStrategy(PlayerbotAI* ai) : GenericNonCombatStrategy(ai)
+GenericHunterNonCombatStrategy::GenericHunterNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericHunterNonCombatStrategyActionNodeFactory());
 }
 
 void GenericHunterNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    GenericNonCombatStrategy::InitTriggers(triggers);
+    NonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "trueshot aura",

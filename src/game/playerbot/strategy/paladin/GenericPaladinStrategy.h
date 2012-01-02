@@ -2,6 +2,7 @@
 
 #include "../Strategy.h"
 #include "PaladinAiObjectContext.h"
+#include "../generic/CombatStrategy.h"
 
 namespace ai
 {

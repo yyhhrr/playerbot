@@ -35,35 +35,4 @@ namespace ai
         NamedObjectFactoryList<ActionNode> actionNodeFactories;
     };
 
-    class CombatStrategy : public Strategy
-    {
-    public:
-        CombatStrategy(PlayerbotAI* ai) : Strategy(ai) {}
-        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-		virtual StrategyType GetType() { return STRATEGY_TYPE_COMBAT; }
-    };
-
-
-    class MeleeCombatStrategy : public CombatStrategy
-    {
-    public:
-        MeleeCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
-        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-    };
-
-
-    class RangedCombatStrategy : public CombatStrategy
-    {
-    public:
-        RangedCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai) {}
-        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-    };
-
-    class FleeStrategy : public Strategy
-    {
-    public:
-        FleeStrategy(PlayerbotAI* ai) : Strategy(ai) {}
-        virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual string getName() { return "flee"; };
-    };
 }
