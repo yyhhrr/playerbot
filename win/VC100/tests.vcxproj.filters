@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\src\tests\WarrirorNonCombatTestCase.cpp">
       <Filter>Warrior</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\DpsPriestTestCase.cpp">
-      <Filter>Priest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\HealPriestTestCase.cpp">
       <Filter>Priest</Filter>
     </ClCompile>
@@ -189,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\HealDruidTestCase.cpp">
       <Filter>Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\DpsPriestTestCase.cpp">
+      <Filter>Priest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

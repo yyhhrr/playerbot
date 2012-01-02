@@ -3,7 +3,7 @@
 #include "PriestActions.h"
 #include "PriestAiObjectContext.h"
 #include "HealPriestNonCombatStrategy.h"
-#include "DpsPriestStrategy.h"
+#include "ShadowPriestStrategy.h"
 #include "../generic/PullStrategy.h"
 #include "PriestTriggers.h"
 #include "../NamedObjectContext.h"
@@ -37,12 +37,13 @@ namespace ai
             CombatStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
             {
                 creators["heal"] = &priest::CombatStrategyFactoryInternal::heal;
+                creators["shadow"] = &priest::CombatStrategyFactoryInternal::dps;
                 creators["dps"] = &priest::CombatStrategyFactoryInternal::dps;
             }
 
         private:
             static Strategy* heal(PlayerbotAI* ai) { return new HealPriestStrategy(ai); }
-            static Strategy* dps(PlayerbotAI* ai) { return new DpsPriestStrategy(ai); }
+            static Strategy* dps(PlayerbotAI* ai) { return new ShadowPriestStrategy(ai); }
         };
     };
 };
@@ -69,10 +70,14 @@ namespace ai
                 creators["divine spirit"] = &TriggerFactoryInternal::divine_spirit;
                 creators["divine spirit on party"] = &TriggerFactoryInternal::divine_spirit_on_party;
                 creators["inner fire"] = &TriggerFactoryInternal::inner_fire;
+                creators["vampiric touch"] = &TriggerFactoryInternal::vampiric_touch;
+                creators["shadowform"] = &TriggerFactoryInternal::shadowform;
 
             }
 
         private:
+            static Trigger* shadowform(PlayerbotAI* ai) { return new ShadowformTrigger(ai); }
+            static Trigger* vampiric_touch(PlayerbotAI* ai) { return new VampiricTouchTrigger(ai); }
             static Trigger* devouring_plague(PlayerbotAI* ai) { return new DevouringPlagueTrigger(ai); }
             static Trigger* shadow_word_pain(PlayerbotAI* ai) { return new PowerWordPainTrigger(ai); }
             static Trigger* dispel_magic(PlayerbotAI* ai) { return new DispelMagicTrigger(ai); }
@@ -138,9 +143,11 @@ namespace ai
                 creators["resurrection"] = &AiObjectContextInternal::resurrection;
                 creators["circle of healing"] = &AiObjectContextInternal::circle_of_healing;
                 creators["psychic scream"] = &AiObjectContextInternal::psychic_scream;
+                creators["vampiric touch"] = &AiObjectContextInternal::vampiric_touch;
             }
 
         private:
+            static Action* vampiric_touch(PlayerbotAI* ai) { return new CastVampiricTouchAction(ai); }
             static Action* psychic_scream(PlayerbotAI* ai) { return new CastPsychicScreamAction(ai); }
             static Action* circle_of_healing(PlayerbotAI* ai) { return new CastCircleOfHealingAction(ai); }
             static Action* resurrection(PlayerbotAI* ai) { return new CastResurrectionAction(ai); }

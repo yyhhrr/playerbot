@@ -177,9 +177,9 @@ protected:
 
     void incompatibles()
     {
-        engine->addStrategies("heal", "dps", NULL);
+        engine->addStrategies("heal", "shadow", NULL);
 
-        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: dps");
+        CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: shadow");
     }
 };
 

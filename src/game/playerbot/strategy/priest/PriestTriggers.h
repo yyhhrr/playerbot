@@ -13,6 +13,7 @@ namespace ai
 
     DEBUFF_TRIGGER(PowerWordPainTrigger, "shadow word: pain", "shadow word: pain")
     DEBUFF_TRIGGER(DevouringPlagueTrigger, "devouring plague", "devouring plague")
+    DEBUFF_TRIGGER(VampiricTouchTrigger, "vampiric touch", "vampiric touch")
 
     class DispelMagicTrigger : public NeedCureTrigger 
     {
@@ -36,5 +37,11 @@ namespace ai
     {
     public:
         PartyMemberCureDiseaseTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cure disease", DISPEL_DISEASE) {}
+    };
+
+    class ShadowformTrigger : public BuffTrigger {
+    public:
+        ShadowformTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "shadowform") {}
+        virtual bool IsActive() { return !ai->HasAura("shadowform", bot); }
     };
 }

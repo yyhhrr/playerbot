@@ -801,9 +801,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\PassiveMultiplier.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\DpsPriestStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1174,6 +1171,9 @@
       <Filter>playerbot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\ShadowPriestStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1997,9 +1997,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\PassTroughStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\DpsPriestStrategy.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
@@ -2458,6 +2455,12 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\ShadowPriestStrategyActionNodeFactory.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\ShadowPriestStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

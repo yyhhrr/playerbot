@@ -254,6 +254,7 @@
     <ClCompile Include="..\..\src\tests\CatDpsDruidTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ChatCommandTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ChatFilterTestCase.cpp" />
+    <ClCompile Include="..\..\src\tests\DpsPriestTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DruidNonCombatTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsHunterEngineTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DuelTestCase.cpp" />
@@ -281,7 +282,6 @@
     <ClCompile Include="..\..\src\tests\TankWarriorTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\ValueTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\WarrirorNonCombatTestCase.cpp" />
-    <ClCompile Include="..\..\src\tests\DpsPriestTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\HealPriestTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\DpsPaladinTestCase.cpp" />
     <ClCompile Include="..\..\src\tests\PaladinNonCombatTestCase.cpp" />

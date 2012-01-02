@@ -153,6 +153,9 @@ namespace ai
     BEGIN_DEBUFF_ACTION(CastDevouringPlagueAction, "devouring plague")
     END_SPELL_ACTION()
 
+    BEGIN_DEBUFF_ACTION(CastVampiricTouchAction, "vampiric touch")
+    END_SPELL_ACTION()
+
     BEGIN_RANGED_SPELL_ACTION(CastMindBlastAction, "mind blast")
     END_SPELL_ACTION()
 

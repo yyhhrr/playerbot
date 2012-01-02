@@ -29,27 +29,28 @@ public:
 protected:
     void combat()
     {
-        tick(); // shadowform
+        tick();
         addAura("shadowform");
 
-        tick(); // shadow word: pain
-        tick(); // devouring plague
-        tick(); // mind blast
-        tick(); // shoot
+        tick();
+        tick();
+        tick();
+        tick();
+        tick();
+        tick();
 
-        // heal if need
-        tickWithLowHealth(39); // shirld
-        tickWithLowHealth(39); // -shadowform
-        tickWithLowHealth(39); // greater heal
+        tickWithLowHealth(39);
+        tickWithLowHealth(39);
+        tickWithLowHealth(39);
 
         spellAvailable("power word: shield");
         spellAvailable("greater heal");
         addAura("shadowform");
-        tickWithLowHealth(1); // shirld
-        tickWithLowHealth(1); // -shadowform
-        tickWithLowHealth(1); // greater heal
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
+        tickWithLowHealth(1);
         
-        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:mind blast>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
+        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:vampiric touch>T:mind blast>T:mind flay>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
     }
 };
 

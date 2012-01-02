@@ -4,15 +4,15 @@
 
 namespace ai
 {
-    class DpsPriestStrategy : public GenericPriestStrategy
+    class ShadowPriestStrategy : public GenericPriestStrategy
     {
     public:
-        DpsPriestStrategy(PlayerbotAI* ai);
+        ShadowPriestStrategy(PlayerbotAI* ai);
 
     public:
         virtual NextAction** getDefaultActions();
         virtual void InitTriggers(std::list<TriggerNode*> &triggers);
-        virtual string getName() { return "dps"; }
+        virtual string getName() { return "shadow"; }
         virtual StrategyType GetType() { return STRATEGY_TYPE_DPS; }
     };
 }
