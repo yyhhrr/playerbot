@@ -10,6 +10,7 @@ class GenericTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( GenericTestCase );
 	CPPUNIT_TEST( flee );
+	CPPUNIT_TEST( adds );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -31,6 +32,19 @@ protected:
 		tick();
 
 		assertActions(">S:flee");
+	}
+
+	void adds()
+	{
+	    engine->addStrategy("flee from adds");
+
+	    list<ObjectGuid> adds;
+	    adds.push_front(ObjectGuid(uint64(1)));
+	    set<list<ObjectGuid> >("nearest adds", adds);
+
+	    tick();
+
+		assertActions(">S:runaway");
 	}
 };
 

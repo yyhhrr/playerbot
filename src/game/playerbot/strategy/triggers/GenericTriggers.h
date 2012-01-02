@@ -451,6 +451,16 @@ namespace ai
     public:
         virtual bool IsActive();
     };
+
+    class HasNearestAddsTrigger : public Trigger
+    {
+    public:
+        HasNearestAddsTrigger(PlayerbotAI* ai) : Trigger(ai, "has nearest adds") {}
+
+    public:
+        virtual bool IsActive();
+    };
+
 }
 
 #include "RangeTriggers.h"

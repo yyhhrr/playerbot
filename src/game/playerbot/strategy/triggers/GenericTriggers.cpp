@@ -187,3 +187,10 @@ bool IsSwimmingTrigger::IsActive()
 {
     return AI_VALUE2(bool, "swimming", "self target");
 }
+
+bool HasNearestAddsTrigger::IsActive()
+{
+    list<ObjectGuid> targets = AI_VALUE(list<ObjectGuid>, "nearest adds");
+    return targets.size();
+}
+

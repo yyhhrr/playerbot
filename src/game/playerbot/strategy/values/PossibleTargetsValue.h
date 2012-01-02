@@ -12,8 +12,8 @@ namespace ai
           NearestUnitsValue(ai) {}
 
     protected:
-        void FindUnits(list<Unit*> &targets);
-        bool AcceptUnit(Unit* unit);
+        virtual void FindUnits(list<Unit*> &targets);
+        virtual bool AcceptUnit(Unit* unit);
 
 	};
 }

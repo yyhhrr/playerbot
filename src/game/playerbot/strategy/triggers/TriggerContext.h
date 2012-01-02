@@ -44,6 +44,7 @@ namespace ai
             creators["no target"] = &TriggerContext::NoTarget;
             creators["target in sight"] = &TriggerContext::TargetInSight;
             creators["not least hp target active"] = &TriggerContext::not_least_hp_target_active;
+            creators["has nearest adds"] = &TriggerContext::has_nearest_adds;
 
             creators["tank aoe"] = &TriggerContext::TankAoe;
             creators["lose aggro"] = &TriggerContext::LoseAggro;
@@ -120,6 +121,7 @@ namespace ai
         static Trigger* NoTarget(PlayerbotAI* ai) { return new NoTargetTrigger(ai); }
         static Trigger* TargetInSight(PlayerbotAI* ai) { return new TargetInSightTrigger(ai); }
         static Trigger* not_least_hp_target_active(PlayerbotAI* ai) { return new NotLeastHpTargetActiveTrigger(ai); }
+        static Trigger* has_nearest_adds(PlayerbotAI* ai) { return new HasNearestAddsTrigger(ai); }
         static Trigger* Random(PlayerbotAI* ai) { return new RandomTrigger(ai); }
         static Trigger* seldom(PlayerbotAI* ai) { return new SeldomTrigger(ai); }
         static Trigger* EnemyOutOfMelee(PlayerbotAI* ai) { return new EnemyOutOfMeleeTrigger(ai); }

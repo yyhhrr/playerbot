@@ -1176,6 +1176,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestNonCombatStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\NearestAdsValue.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2464,6 +2467,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestNonCombatStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\NearestAdsValue.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

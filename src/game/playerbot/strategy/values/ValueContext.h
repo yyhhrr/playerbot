@@ -4,6 +4,7 @@
 #include "LogLevelValue.h"
 #include "NearestNpcsValue.h"
 #include "PossibleTargetsValue.h"
+#include "NearestAdsValue.h"
 #include "NearestCorpsesValue.h"
 #include "PartyMemberWithoutAuraValue.h"
 #include "PartyMemberToHeal.h"
@@ -52,6 +53,7 @@ namespace ai
             creators["nearest game objects"] = &ValueContext::nearest_game_objects;
             creators["nearest npcs"] = &ValueContext::nearest_npcs;
             creators["possible targets"] = &ValueContext::possible_targets;
+            creators["nearest adds"] = &ValueContext::nearest_adds;
             creators["nearest corpses"] = &ValueContext::nearest_corpses;
             creators["log level"] = &ValueContext::log_level;
             creators["party member without aura"] = &ValueContext::party_member_without_aura;
@@ -150,6 +152,7 @@ namespace ai
         static UntypedValue* nearest_npcs(PlayerbotAI* ai) { return new NearestNpcsValue(ai); }
         static UntypedValue* nearest_corpses(PlayerbotAI* ai) { return new NearestCorpsesValue(ai); }
         static UntypedValue* possible_targets(PlayerbotAI* ai) { return new PossibleTargetsValue(ai); }
+        static UntypedValue* nearest_adds(PlayerbotAI* ai) { return new NearestAdsValue(ai); }
         static UntypedValue* party_member_without_aura(PlayerbotAI* ai) { return new PartyMemberWithoutAuraValue(ai); }
         static UntypedValue* party_member_to_heal(PlayerbotAI* ai) { return new PartyMemberToHeal(ai); }
         static UntypedValue* party_member_to_resurrect(PlayerbotAI* ai) { return new PartyMemberToResurrect(ai); }

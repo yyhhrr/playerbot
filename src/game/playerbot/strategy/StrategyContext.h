@@ -80,6 +80,7 @@ namespace ai
             creators["follow line"] = &MovementStrategyContext::follow_line;
             creators["stay"] = &MovementStrategyContext::stay;
             creators["runaway"] = &MovementStrategyContext::runaway;
+            creators["flee from adds"] = &MovementStrategyContext::flee_from_adds;
             creators["stay circle"] = &MovementStrategyContext::stay_circle;
             creators["stay combat"] = &MovementStrategyContext::stay_combat;
             creators["stay line"] = &MovementStrategyContext::stay_line;
@@ -91,6 +92,7 @@ namespace ai
         static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineStrategy(ai); }
         static Strategy* stay(PlayerbotAI* ai) { return new StayStrategy(ai); }
         static Strategy* runaway(PlayerbotAI* ai) { return new RunawayStrategy(ai); }
+        static Strategy* flee_from_adds(PlayerbotAI* ai) { return new FleeFromAddsStrategy(ai); }
         static Strategy* stay_circle(PlayerbotAI* ai) { return new StayCircleStrategy(ai); }
         static Strategy* stay_combat(PlayerbotAI* ai) { return new StayCombatStrategy(ai); }
         static Strategy* stay_line(PlayerbotAI* ai) { return new StayLineStrategy(ai); }

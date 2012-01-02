@@ -663,6 +663,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\ItemForSpellValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\LeastHpTargetValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\LineTargetValue.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\NearestAdsValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\NearestCorpsesValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\NearestGameObjects.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\NearestNpcsValue.cpp" />
@@ -1099,6 +1100,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\LogLevelValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\LootStrategyValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\MasterTargetValue.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\NearestAdsValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\NearestCorpsesValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\NearestGameObjects.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\NearestNpcsValue.h" />
