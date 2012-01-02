@@ -126,14 +126,14 @@ private:
     }
 };
 
-HealPriestNonCombatStrategy::HealPriestNonCombatStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+HealPriestNonCombatStrategy::HealPriestNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
 {
     actionNodeFactories.Add(new HealPriestNonCombatStrategyActionNodeFactory());
 }
 
 void HealPriestNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    CombatStrategy::InitTriggers(triggers);
+    NonCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "power word: fortitude",
