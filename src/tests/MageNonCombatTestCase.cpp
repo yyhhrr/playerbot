@@ -13,6 +13,7 @@ class MageNonCombatTestCase : public EngineTestBase
     CPPUNIT_TEST( bdps );
     CPPUNIT_TEST( bmana );
     CPPUNIT_TEST( low_mana );
+    CPPUNIT_TEST( dispel );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -81,6 +82,20 @@ protected:
         tickWithLowMana(5);
 
         assertActions(">S:evocation>S:drink>S:flee");
+    }
+
+    void dispel()
+    {
+        addAura("arcane intellect");
+        addPartyAura("arcane intellect");
+        addAura("mage armor");
+
+        tickWithAuraToDispel(DISPEL_CURSE);
+
+        spellAvailable("remove curse");
+        tickWithPartyAuraToDispel(DISPEL_CURSE);
+
+        assertActions(">S:remove curse>P:remove curse on party");
     }
 
 };
