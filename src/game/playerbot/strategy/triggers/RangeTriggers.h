@@ -10,7 +10,7 @@ namespace ai
         virtual bool IsActive()
 		{
 			Unit* target = AI_VALUE(Unit*, "current target");
-            return target && AI_VALUE2(float, "distance", "current target") <= ATTACK_DISTANCE;
+            return target && AI_VALUE2(float, "distance", "current target") <= sPlayerbotAIConfig.tooCloseDistance;
         }
     };
 
@@ -33,7 +33,7 @@ namespace ai
     class EnemyOutOfMeleeTrigger : public EnemyOutOfRangeTrigger
 	{
     public:
-        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", ATTACK_DISTANCE) {}
+        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", sPlayerbotAIConfig.meleeDistance) {}
     };
 
     class EnemyOutOfSpellRangeTrigger : public EnemyOutOfRangeTrigger

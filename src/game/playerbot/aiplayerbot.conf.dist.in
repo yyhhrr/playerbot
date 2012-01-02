@@ -54,6 +54,10 @@ ConfVersion=2010102201
 #        Distance to game objects, targets, etc. bot can interact to while grinding
 #    Default 35
 #
+#    AiPlayerbot.TooCloseDistance
+#        Distance when flee is necessary
+#    Default 10
+#
 #    AiPlayerbot.FleeDistance
 #        Distance to flee from or master when in danger
 #    Default 15
@@ -119,6 +123,7 @@ AiPlayerbot.FollowDistance=2.0
 AiPlayerbot.ReactDistance=100
 AiPlayerbot.GrindDistance=50
 AiPlayerbot.FleeDistance=15
+AiPlayerbot.TooCloseDistance=10
 
 AiPlayerbot.CriticalHealth=25
 AiPlayerbot.LowHealth=45

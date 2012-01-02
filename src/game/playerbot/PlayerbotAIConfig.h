@@ -18,7 +18,7 @@ public:
     bool enabled;
     bool allowGuildBots;
     uint32 globalCoolDown, reactDelay, teleportDelay;
-    float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance, fleeDistance, meleeDistance, followDistance;
+    float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance, fleeDistance, tooCloseDistance, meleeDistance, followDistance;
     std::list<uint32> randomBotAccounts;
     uint32 criticalHealth, lowHealth, mediumHealth, almostFullHealth;
     uint32 lowMana;
