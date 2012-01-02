@@ -4,17 +4,14 @@
 #include "../../PlayerbotAIConfig.h"
 
 using namespace ai;
+using namespace std;
 
-Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
+Unit* PartyMemberValue::FindPartyMember(list<Player*>* party, FindPlayerPredicate &predicate)
 {
-
-    Group* group = bot->GetGroup();
-    if (!group)
-        return NULL;
-
-    for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next())
+    for (list<Player*>::iterator i = party->begin(); i != party->end(); ++i)
     {
-        Player* player = gref->getSource();
+        Player* player = *i;
+
         if (Check(player) && predicate.Check(player))
             return player;
 
@@ -22,6 +19,44 @@ Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
         if (pet && Check(pet) && predicate.Check(pet))
             return pet;
     }
+
+    return NULL;
+}
+
+Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate &predicate)
+{
+    Group* group = bot->GetGroup();
+    if (!group)
+        return NULL;
+
+    list<Player*> healers, tanks, others, masters;
+    masters.push_back(master);
+    for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next())
+    {
+        Player* player = gref->getSource();
+
+        if (ai->IsHeal(player))
+            healers.push_back(player);
+        else if (ai->IsTank(player))
+            tanks.push_back(player);
+        else if (player != master)
+            others.push_back(player);
+    }
+
+    list<list<Player*>* > lists;
+    lists.push_back(&healers);
+    lists.push_back(&tanks);
+    lists.push_back(&masters);
+    lists.push_back(&others);
+
+    for (list<list<Player*>* >::iterator i = lists.begin(); i != lists.end(); ++i)
+    {
+        list<Player*>* party = *i;
+        Unit* target = FindPartyMember(party, predicate);
+        if (target)
+            return target;
+    }
+
     return NULL;
 }
 

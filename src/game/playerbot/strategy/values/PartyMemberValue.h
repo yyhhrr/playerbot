@@ -25,6 +25,7 @@ namespace ai
 
     protected:
         Unit* FindPartyMember(FindPlayerPredicate &predicate);
+        Unit* FindPartyMember(list<Player*>* party, FindPlayerPredicate &predicate);
         bool Check(Unit* player);
 	};
 }
