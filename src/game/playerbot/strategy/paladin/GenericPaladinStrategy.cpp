@@ -22,6 +22,7 @@ public:
         creators["flash of light on party"] = &flash_of_light_on_party;
         creators["holy wrath"] = &holy_wrath;
         creators["lay on hands"] = &lay_on_hands;
+        creators["lay on hands on party"] = &lay_on_hands_on_party;
     }
 private:
     static ActionNode* lay_on_hands(PlayerbotAI* ai)
@@ -29,6 +30,13 @@ private:
         return new ActionNode ("lay on hands",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("divine shield"), new NextAction("flash of light"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* lay_on_hands_on_party(PlayerbotAI* ai)
+    {
+        return new ActionNode ("lay on hands on party",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("flash of light"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* seal_of_light(PlayerbotAI* ai)
@@ -136,11 +144,11 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "medium health",
-        NextAction::array(0, new NextAction("flash of light", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("flash of light", 25.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "party member medium health",
-        NextAction::array(0, new NextAction("flash of light on party", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("flash of light on party", 26.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "low health",
@@ -152,7 +160,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 	triggers.push_back(new TriggerNode(
 		"hammer of justice interrupt",
-		NextAction::array(0, new NextAction("hammer of justice", 40.0f), NULL)));
+		NextAction::array(0, new NextAction("hammer of justice", 55.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"critical health",
