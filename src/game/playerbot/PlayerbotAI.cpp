@@ -871,7 +871,7 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
     if (!spellInfo)
         return false;
 
-    if (target->IsImmuneToSpell(spellInfo) || target->IsImmuneToSpellEffect(spellInfo, EFFECT_INDEX_0))
+    if (target->IsImmuneToSpell(spellInfo))
         return false;
 
     ObjectGuid oldSel = bot->GetSelectionGuid();
