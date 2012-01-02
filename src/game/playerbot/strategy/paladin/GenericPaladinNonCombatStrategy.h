@@ -7,7 +7,7 @@ namespace ai
     class GenericPaladinNonCombatStrategy : public NonCombatStrategy
     {
     public:
-        GenericPaladinNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+        GenericPaladinNonCombatStrategy(PlayerbotAI* ai);
         virtual string getName() { return "nc"; }
     
     public:
