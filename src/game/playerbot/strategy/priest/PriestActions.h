@@ -90,6 +90,11 @@ namespace ai
         }
     };
 
+	class CastVampiricEmbraceAction : public CastBuffSpellAction {
+	public:
+		CastVampiricEmbraceAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "vampiric embrace") {}
+	};
+
 	class CastPowerWordShieldAction : public CastBuffSpellAction {
 	public:
 		CastPowerWordShieldAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "power word: shield") {}

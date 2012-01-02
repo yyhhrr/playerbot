@@ -10,6 +10,7 @@ namespace ai
     BUFF_ON_PARTY_TRIGGER(DivineSpiritOnPartyTrigger, "divine spirit", "divine spirit on party")
     BUFF_TRIGGER(DivineSpiritTrigger, "divine spirit", "divine spirit")
     BUFF_TRIGGER(InnerFireTrigger, "inner fire", "inner fire")
+    BUFF_TRIGGER(VampiricEmbraceTrigger, "vampiric embrace", "vampiric embrace")
 
     DEBUFF_TRIGGER(PowerWordPainTrigger, "shadow word: pain", "shadow word: pain")
     DEBUFF_TRIGGER(DevouringPlagueTrigger, "devouring plague", "devouring plague")

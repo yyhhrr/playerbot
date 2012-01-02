@@ -24,6 +24,10 @@ void ShadowPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "shadowform",
         NextAction::array(0, new NextAction("shadowform", 15.0f), NULL)));
 
+    triggers.push_back(new TriggerNode(
+        "vampiric embrace",
+        NextAction::array(0, new NextAction("vampiric embrace", 16.0f), NULL)));
+
 
     triggers.push_back(new TriggerNode(
         "devouring plague",

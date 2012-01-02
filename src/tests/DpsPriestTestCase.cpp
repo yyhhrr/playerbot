@@ -30,6 +30,9 @@ protected:
     void combat()
     {
         tick();
+        addAura("vampiric embrace");
+
+        tick();
         addAura("shadowform");
 
         tick();
@@ -50,7 +53,7 @@ protected:
         tickWithLowHealth(1);
         tickWithLowHealth(1);
         
-        assertActions(">S:shadowform>T:devouring plague>T:shadow word: pain>T:vampiric touch>T:mind blast>T:mind flay>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
+        assertActions(">S:vampiric embrace>S:shadowform>T:devouring plague>T:shadow word: pain>T:vampiric touch>T:mind blast>T:mind flay>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
     }
 };
 

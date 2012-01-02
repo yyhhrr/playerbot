@@ -72,10 +72,12 @@ namespace ai
                 creators["inner fire"] = &TriggerFactoryInternal::inner_fire;
                 creators["vampiric touch"] = &TriggerFactoryInternal::vampiric_touch;
                 creators["shadowform"] = &TriggerFactoryInternal::shadowform;
+                creators["vampiric embrace"] = &TriggerFactoryInternal::vampiric_embrace;
 
             }
 
         private:
+            static Trigger* vampiric_embrace(PlayerbotAI* ai) { return new VampiricEmbraceTrigger(ai); }
             static Trigger* shadowform(PlayerbotAI* ai) { return new ShadowformTrigger(ai); }
             static Trigger* vampiric_touch(PlayerbotAI* ai) { return new VampiricTouchTrigger(ai); }
             static Trigger* devouring_plague(PlayerbotAI* ai) { return new DevouringPlagueTrigger(ai); }
@@ -144,9 +146,11 @@ namespace ai
                 creators["circle of healing"] = &AiObjectContextInternal::circle_of_healing;
                 creators["psychic scream"] = &AiObjectContextInternal::psychic_scream;
                 creators["vampiric touch"] = &AiObjectContextInternal::vampiric_touch;
+                creators["vampiric embrace"] = &AiObjectContextInternal::vampiric_embrace;
             }
 
         private:
+            static Action* vampiric_embrace(PlayerbotAI* ai) { return new CastVampiricEmbraceAction(ai); }
             static Action* vampiric_touch(PlayerbotAI* ai) { return new CastVampiricTouchAction(ai); }
             static Action* psychic_scream(PlayerbotAI* ai) { return new CastPsychicScreamAction(ai); }
             static Action* circle_of_healing(PlayerbotAI* ai) { return new CastCircleOfHealingAction(ai); }
