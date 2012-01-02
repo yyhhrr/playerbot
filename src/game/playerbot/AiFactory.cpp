@@ -130,7 +130,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
                 engine->addStrategies("bear", "tank aoe", NULL);
             break;
         case CLASS_HUNTER:
-            engine->addStrategy("bdps");
+            engine->addStrategies("dps", "bdps", NULL);
         case CLASS_ROGUE:
         case CLASS_WARLOCK:
             if (tab == 1)

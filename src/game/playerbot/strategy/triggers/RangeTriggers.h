@@ -33,7 +33,7 @@ namespace ai
     class EnemyOutOfMeleeTrigger : public EnemyOutOfRangeTrigger
 	{
     public:
-        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", sPlayerbotAIConfig.meleeDistance) {}
+        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", sPlayerbotAIConfig.meleeDistance + 1.0f) {}
     };
 
     class EnemyOutOfSpellRangeTrigger : public EnemyOutOfRangeTrigger
