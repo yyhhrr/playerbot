@@ -228,4 +228,10 @@ namespace ai
 	    CastPsychicScreamAction(PlayerbotAI* ai) : CastSpellAction(ai, "psychic scream") {}
 	};
 
+	class CastDispersionAction : public CastBuffSpellAction
+	{
+	public:
+	    CastDispersionAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "dispersion") {}
+	};
+
 }

@@ -40,4 +40,9 @@ void ShadowPriestStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "vampiric touch",
         NextAction::array(0, new NextAction("vampiric touch", 11.0f), NULL)));
+
+
+    triggers.push_back(new TriggerNode(
+        "low mana",
+        NextAction::array(0, new NextAction("dispersion", 55.0f), NULL)));
 }

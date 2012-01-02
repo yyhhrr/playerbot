@@ -147,9 +147,11 @@ namespace ai
                 creators["psychic scream"] = &AiObjectContextInternal::psychic_scream;
                 creators["vampiric touch"] = &AiObjectContextInternal::vampiric_touch;
                 creators["vampiric embrace"] = &AiObjectContextInternal::vampiric_embrace;
+                creators["dispersion"] = &AiObjectContextInternal::dispersion;
             }
 
         private:
+            static Action* dispersion(PlayerbotAI* ai) { return new CastDispersionAction(ai); }
             static Action* vampiric_embrace(PlayerbotAI* ai) { return new CastVampiricEmbraceAction(ai); }
             static Action* vampiric_touch(PlayerbotAI* ai) { return new CastVampiricTouchAction(ai); }
             static Action* psychic_scream(PlayerbotAI* ai) { return new CastPsychicScreamAction(ai); }

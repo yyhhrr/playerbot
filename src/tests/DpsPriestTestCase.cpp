@@ -10,6 +10,7 @@ class DpsPriestTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( DpsPriestTestCase );
     CPPUNIT_TEST( combat );
+    CPPUNIT_TEST( low_mana );
     CPPUNIT_TEST_SUITE_END();
 
 
@@ -54,6 +55,13 @@ protected:
         tickWithLowHealth(1);
         
         assertActions(">S:vampiric embrace>S:shadowform>T:devouring plague>T:shadow word: pain>T:vampiric touch>T:mind blast>T:mind flay>T:shoot>S:remove shadowform>S:power word: shield>S:greater heal>S:remove shadowform>S:power word: shield>S:flash heal");
+    }
+
+    void low_mana()
+    {
+        tickWithLowMana(1);
+
+        assertActions(">S:dispersion");
     }
 };
 
