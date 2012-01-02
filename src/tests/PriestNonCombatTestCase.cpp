@@ -13,6 +13,7 @@ class PriestNonCombatTestCase : public EngineTestBase
     CPPUNIT_TEST( healing );
     CPPUNIT_TEST( aoe_heal );
     CPPUNIT_TEST( nonCombat );
+    CPPUNIT_TEST( dispel );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -87,6 +88,24 @@ protected:
         tick();
 
 		assertActions(">S:divine spirit>P:divine spirit on party>S:power word: fortitude>P:power word: fortitude on party>S:inner fire");
+    }
+
+    void dispel()
+    {
+        tickWithAuraToDispel(DISPEL_DISEASE);
+        tickWithAuraToDispel(DISPEL_DISEASE);
+
+        spellAvailable("abolish disease");
+        spellAvailable("cure disease");
+        tickWithPartyAuraToDispel(DISPEL_DISEASE);
+        tickWithPartyAuraToDispel(DISPEL_DISEASE);
+
+        tickWithAuraToDispel(DISPEL_MAGIC);
+
+        spellAvailable("dispel magic");
+        tickWithPartyAuraToDispel(DISPEL_MAGIC);
+
+		assertActions(">S:abolish disease>S:cure disease>P:abolish disease on party>P:cure disease on party>S:dispel magic>P:dispel magic on party");
     }
 };
 
