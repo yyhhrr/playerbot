@@ -1043,10 +1043,10 @@ bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)
             uint32 spellId = entry->Id;
 
             bool isPositiveSpell = IsPositiveSpell(spellId);
-            if (bot->IsFriendlyTo(target) && isPositiveSpell)
+            if (isPositiveSpell && bot->IsFriendlyTo(target))
                 continue;
 
-            if (bot->IsHostileTo(target) && !isPositiveSpell)
+            if (!isPositiveSpell && bot->IsHostileTo(target))
                 continue;
 
             if (canDispel(entry, dispelType))
@@ -1066,14 +1066,14 @@ int strcmpi(const char* s1, const char* s2)
 
 bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType)
 {
-    if (entry->Dispel == dispelType) {
-        return !entry->SpellName[0] ||
-            (strcmpi((const char*)entry->SpellName[0], "demon skin") &&
-            strcmpi((const char*)entry->SpellName[0], "mage armor") &&
-            strcmpi((const char*)entry->SpellName[0], "frost armor") &&
-            strcmpi((const char*)entry->SpellName[0], "ice armor"));
-    }
-    return false;
+    if (entry->Dispel != dispelType)
+        return false;
+
+    return !entry->SpellName[0] ||
+        (strcmpi((const char*)entry->SpellName[0], "demon skin") &&
+        strcmpi((const char*)entry->SpellName[0], "mage armor") &&
+        strcmpi((const char*)entry->SpellName[0], "frost armor") &&
+        strcmpi((const char*)entry->SpellName[0], "ice armor"));
 }
 
 inline bool IsAlliance(uint8 race)

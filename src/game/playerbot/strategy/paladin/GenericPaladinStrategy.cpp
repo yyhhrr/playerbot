@@ -148,7 +148,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "party member low health",
-        NextAction::array(0, new NextAction("divine protection on party", 40.0f), new NextAction("holy light on party", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("holy light on party", 40.0f), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"hammer of justice interrupt",
