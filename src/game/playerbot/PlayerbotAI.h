@@ -121,7 +121,7 @@ public:
     virtual bool HasAura(string spellName, Unit* player);
     virtual bool HasAnyAuraOf(Unit* player, ...);
 
-    virtual bool IsSpellCasting(Unit* player);
+    virtual bool IsInterruptableSpellCasting(Unit* player, string spell);
     virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
     bool CanCastSpell(uint32 spellid, Unit* target);
 

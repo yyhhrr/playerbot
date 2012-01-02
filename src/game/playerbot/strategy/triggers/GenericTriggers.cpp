@@ -129,7 +129,7 @@ bool ItemCountTrigger::IsActive()
 
 bool InterruptSpellTrigger::IsActive()
 {
-	return SpellTrigger::IsActive() && ai->IsSpellCasting(GetTarget());
+	return SpellTrigger::IsActive() && ai->IsInterruptableSpellCasting(GetTarget(), getName());
 }
 
 bool HasAuraTrigger::IsActive()

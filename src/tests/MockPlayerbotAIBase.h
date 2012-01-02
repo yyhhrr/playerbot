@@ -1,9 +1,5 @@
 #pragma once
 
-#include "string "
-
-using namespace std;
-
 #include "MockedTargets.h"
 
 namespace ai
@@ -23,7 +19,7 @@ namespace ai
         virtual bool CanCastSpell(string name, Unit* target);
         virtual bool CastSpell(string name, Unit* target);
         virtual bool HasAura(string spellName, Unit* player);
-        virtual bool IsSpellCasting(Unit* player);
+        virtual bool IsInterruptableSpellCasting(Unit* player, string spell);
         virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
         virtual bool IsSpellCastUseful(string name, Unit* target);
 

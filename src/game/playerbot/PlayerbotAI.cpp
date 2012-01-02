@@ -871,6 +871,9 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
     if (!spellInfo)
         return false;
 
+    if (target->IsImmuneToSpell(spellInfo) || target->IsImmuneToSpellEffect(spellInfo, EFFECT_INDEX_0))
+        return false;
+
     ObjectGuid oldSel = bot->GetSelectionGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
     Spell *spell = new Spell(bot, spellInfo, false );
@@ -1026,9 +1029,30 @@ void PlayerbotAI::RemoveAura(string name)
         bot->RemoveAurasDueToSpell(spellid);
 }
 
-bool PlayerbotAI::IsSpellCasting(Unit* player)
+bool PlayerbotAI::IsInterruptableSpellCasting(Unit* target, string spell)
 {
-    return player->IsNonMeleeSpellCasted(true);
+    uint32 spellid = aiObjectContext->GetValue<uint32>("spell id", spell)->Get();
+    if (!spellid || !target->IsNonMeleeSpellCasted(true))
+        return false;
+
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
+    if (!spellInfo)
+        return false;
+
+    if (target->IsImmuneToSpell(spellInfo))
+        return false;
+
+    for (int32 i = EFFECT_INDEX_0; i <= EFFECT_INDEX_2; i++)
+    {
+        if ((spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_INTERRUPT) && spellInfo->PreventionType == SPELL_PREVENTION_TYPE_SILENCE)
+            return true;
+
+        if ((spellInfo->Effect[i] == SPELL_EFFECT_CANCEL_AURA || spellInfo->Effect[i] == SPELL_EFFECT_INTERRUPT_CAST) &&
+                !target->IsImmuneToSpellEffect(spellInfo, (SpellEffectIndex)i))
+            return true;
+    }
+
+    return false;
 }
 
 bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)

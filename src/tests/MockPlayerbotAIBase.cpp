@@ -68,7 +68,7 @@ bool MockPlayerbotAIBase::HasAura(string spellName, Unit* player)
     return false;
 
 }
-bool MockPlayerbotAIBase::IsSpellCasting(Unit* player)
+bool MockPlayerbotAIBase::IsInterruptableSpellCasting(Unit* player, string spell)
 {
     return targetIsCastingNonMeleeSpell;
 }
