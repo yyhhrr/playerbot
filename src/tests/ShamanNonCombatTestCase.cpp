@@ -9,9 +9,10 @@ using namespace ai;
 class ShamanNonCombatTestCase : public EngineTestBase
 {
     CPPUNIT_TEST_SUITE( ShamanNonCombatTestCase );
-	CPPUNIT_TEST( ressurect );
-	CPPUNIT_TEST( swimming );
-	CPPUNIT_TEST( healing );
+        CPPUNIT_TEST( ressurect );
+        CPPUNIT_TEST( swimming );
+        CPPUNIT_TEST( healing );
+        CPPUNIT_TEST( aoe );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -36,6 +37,13 @@ protected:
 	    tickWithPartyLowHealth(10);
 
 		assertActions(">S:healing wave>P:healing wave on party");
+	}
+
+	void aoe()
+	{
+	    tickWithAoeHeal("medium");
+
+		assertActions(">P:chain heal");
 	}
 
 	void swimming()
