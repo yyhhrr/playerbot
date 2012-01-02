@@ -12,7 +12,6 @@ class TankPaladinTestCase : public EngineTestBase
 		CPPUNIT_TEST( combatVsMelee );
 		CPPUNIT_TEST( paladinMustHoldAggro );
 		CPPUNIT_TEST( healing );
-		CPPUNIT_TEST( stopEnemyMove );
 		CPPUNIT_TEST( buff );
 		CPPUNIT_TEST( bmana );
 		CPPUNIT_TEST( curePoison );
@@ -133,16 +132,6 @@ protected:
         tickWithLowMana(10);
 
         assertActions(">T:melee>T:judgement of wisdom");
-    }
-
-    void stopEnemyMove()
-    {
-		tickWithTargetIsMoving();
-
-		tick();
-		tick();
-
-        assertActions(">T:hammer of justice>T:melee>T:judgement of light");
     }
 
 	void interruptSpells()
