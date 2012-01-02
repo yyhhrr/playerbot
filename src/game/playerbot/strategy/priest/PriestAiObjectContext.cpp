@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "PriestActions.h"
 #include "PriestAiObjectContext.h"
-#include "HealPriestNonCombatStrategy.h"
+#include "PriestNonCombatStrategy.h"
 #include "ShadowPriestStrategy.h"
 #include "../generic/PullStrategy.h"
 #include "PriestTriggers.h"
@@ -27,7 +27,7 @@ namespace ai
             }
 
         private:
-            static Strategy* nc(PlayerbotAI* ai) { return new HealPriestNonCombatStrategy(ai); }
+            static Strategy* nc(PlayerbotAI* ai) { return new PriestNonCombatStrategy(ai); }
             static Strategy* pull(PlayerbotAI* ai) { return new PullStrategy(ai, "shoot"); }
         };
 

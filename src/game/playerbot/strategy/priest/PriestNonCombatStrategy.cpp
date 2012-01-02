@@ -1,17 +1,17 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "PriestMultipliers.h"
-#include "HealPriestNonCombatStrategy.h"
-#include "HealPriestNonCombatStrategyActionNodeFactory.h"
+#include "PriestNonCombatStrategy.h"
+#include "PriestNonCombatStrategyActionNodeFactory.h"
 
 using namespace ai;
 
-HealPriestNonCombatStrategy::HealPriestNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
+PriestNonCombatStrategy::PriestNonCombatStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai)
 {
-    actionNodeFactories.Add(new HealPriestNonCombatStrategyActionNodeFactory());
+    actionNodeFactories.Add(new PriestNonCombatStrategyActionNodeFactory());
 }
 
-void HealPriestNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+void PriestNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     NonCombatStrategy::InitTriggers(triggers);
 

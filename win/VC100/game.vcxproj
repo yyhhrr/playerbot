@@ -617,11 +617,11 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\paladin\TankPaladinStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\PassiveMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\HealPriestNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\HealPriestStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestAiObjectContext.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\PullStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\QuestStrategies.cpp" />
@@ -1027,11 +1027,12 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\PassiveMultiplier.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\PassTroughStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\GenericPriestStrategy.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\HealPriestNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\HealPriestStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestAiObjectContext.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestMultipliers.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestNonCombatStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestNonCombatStrategyActionNodeFactory.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\PriestTriggers.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\ShadowPriestStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\priest\ShadowPriestStrategyActionNodeFactory.h" />

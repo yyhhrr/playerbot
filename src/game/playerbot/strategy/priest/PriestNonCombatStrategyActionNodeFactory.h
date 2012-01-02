@@ -2,10 +2,10 @@
 
 namespace ai
 {
-    class HealPriestNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
+    class PriestNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
     {
     public:
-        HealPriestNonCombatStrategyActionNodeFactory()
+        PriestNonCombatStrategyActionNodeFactory()
         {
             creators["holy nova"] = &holy_nova;
             creators["power word: shield"] = &power_word_shield;
