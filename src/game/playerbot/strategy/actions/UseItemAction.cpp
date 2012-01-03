@@ -32,22 +32,6 @@ bool UseItemAction::Execute(Event event)
     }
 
     Item* item = *items.begin();
-    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
-        return false;
-
-    if (bot->isInCombat())
-    {
-        for(int i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
-        {
-            SpellEntry const *spellInfo = sSpellStore.LookupEntry(item->GetProto()->Spells[i].SpellId);
-            if (spellInfo && IsNonCombatSpell(spellInfo))
-                return false;
-        }
-
-        if (item->IsPotion() && bot->GetLastPotionId())
-            return false;
-    }
-
     return UseItem(item, *gos.begin());
 }
 
@@ -64,13 +48,21 @@ void UseItemAction::UseGameObject(ObjectGuid guid)
 
 bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 {
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-    bot->clearUnitState( UNIT_STAT_CHASE );
-    bot->clearUnitState( UNIT_STAT_FOLLOW );
+    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
+        return false;
 
-    if (!bot->IsStandState())
-        bot->SetStandState(UNIT_STAND_STATE_STAND);
+    if (bot->isInCombat())
+    {
+        for(int i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+        {
+            SpellEntry const *spellInfo = sSpellStore.LookupEntry(item->GetProto()->Spells[i].SpellId);
+            if (spellInfo && IsNonCombatSpell(spellInfo))
+                return false;
+        }
+
+        if (item->IsPotion() && bot->GetLastPotionId())
+            return false;
+    }
 
     if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
     {
@@ -185,6 +177,14 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         *packet << TARGET_FLAG_SELF;
         out << " on self";
     }
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+    bot->clearUnitState( UNIT_STAT_CHASE );
+    bot->clearUnitState( UNIT_STAT_FOLLOW );
+
+    if (!bot->IsStandState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     ai->TellMaster(out);
     bot->GetSession()->QueuePacket(packet);
