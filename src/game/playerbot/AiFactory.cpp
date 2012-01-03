@@ -168,7 +168,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
             break;
     }
     nonCombatEngine->addStrategies("nc", "attack weak", "food", "stay", "chat",
-            "default", "quest", "loot", "gather", "duel", NULL);
+            "default", "quest", "loot", "gather", "duel", "emote", NULL);
 }
 
 Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
