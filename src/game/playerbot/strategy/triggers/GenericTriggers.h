@@ -281,7 +281,7 @@ namespace ai
     class RandomTrigger : public Trigger
     {
     public:
-        RandomTrigger(PlayerbotAI* ai, int probability = 20) : Trigger(ai)
+        RandomTrigger(PlayerbotAI* ai, int probability = 200) : Trigger(ai)
         {
             this->probability = probability;
         }
