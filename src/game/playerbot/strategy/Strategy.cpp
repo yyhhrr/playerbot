@@ -100,7 +100,7 @@ private:
     {
         return new ActionNode ("flee",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("follow master"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
 };
