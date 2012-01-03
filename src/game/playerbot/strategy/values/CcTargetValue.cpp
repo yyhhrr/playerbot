@@ -31,12 +31,21 @@ protected:
             return;
 
         if (*ai->GetAiObjectContext()->GetValue<Unit*>("rti target") == creature)
+        {
             result = creature;
+            return;
+        }
 
         float minDistance = sPlayerbotAIConfig.reactDistance;
         Group* group = bot->GetGroup();
         if (group)
         {
+            if (group->GetTargetIcon(4) == creature->GetObjectGuid())
+            {
+                result = creature;
+                return;
+            }
+
             Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
             for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
             {
