@@ -51,6 +51,9 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
     if (bot->CanUseItem(item) != EQUIP_ERR_OK)
         return false;
 
+    if (bot->IsNonMeleeSpellCasted(true))
+        return false;
+
     if (bot->isInCombat())
     {
         for(int i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
