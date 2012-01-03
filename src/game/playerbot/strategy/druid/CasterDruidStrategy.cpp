@@ -103,7 +103,7 @@ CasterDruidStrategy::CasterDruidStrategy(PlayerbotAI* ai) : GenericDruidStrategy
 
 NextAction** CasterDruidStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("starfire", 11.0f), new NextAction("wrath", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("starfire", ACTION_NORMAL + 2), new NextAction("wrath", ACTION_NORMAL + 1), NULL);
 }
 
 void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -112,45 +112,45 @@ void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "medium health",
-        NextAction::array(0, new NextAction("regrowth", 49.0f), NULL)));
+        NextAction::array(0, new NextAction("regrowth", ACTION_MEDIUM_HEAL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "party member medium health",
-        NextAction::array(0, new NextAction("regrowth on party", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("regrowth on party", ACTION_MEDIUM_HEAL + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "almost full health",
-        NextAction::array(0, new NextAction("rejuvenation",49.0f), NULL)));
+        NextAction::array(0, new NextAction("rejuvenation", ACTION_LIGHT_HEAL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "party member almost full health",
-        NextAction::array(0, new NextAction("rejuvenation on party", 49.0f), NULL)));
+        NextAction::array(0, new NextAction("rejuvenation on party", ACTION_LIGHT_HEAL + 1), NULL)));
 
 
 	triggers.push_back(new TriggerNode(
 		"insect swarm",
-		NextAction::array(0, new NextAction("insect swarm", 15.0f), NULL)));
+		NextAction::array(0, new NextAction("insect swarm", ACTION_NORMAL + 5), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"moonfire",
-		NextAction::array(0, new NextAction("moonfire", 14.0f), NULL)));
+		NextAction::array(0, new NextAction("moonfire", ACTION_NORMAL + 4), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"faerie fire",
-		NextAction::array(0, new NextAction("faerie fire", 16.0f), NULL)));
+		NextAction::array(0, new NextAction("faerie fire", ACTION_HIGH), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"nature's grasp",
-		NextAction::array(0, new NextAction("nature's grasp", 20.0f), NULL)));
+		NextAction::array(0, new NextAction("nature's grasp", ACTION_EMERGENCY), NULL)));
 
     triggers.push_back(new TriggerNode(
         "entangling roots",
-        NextAction::array(0, new NextAction("entangling roots on cc", ACTION_HIGH + 1), NULL)));
+        NextAction::array(0, new NextAction("entangling roots on cc", ACTION_HIGH + 2), NULL)));
 }
 
 void CasterDruidAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
 	triggers.push_back(new TriggerNode(
 		"high aoe",
-		NextAction::array(0, new NextAction("starfall", 17.0f), NULL)));
+		NextAction::array(0, new NextAction("starfall", ACTION_HIGH + 1), NULL)));
 }
