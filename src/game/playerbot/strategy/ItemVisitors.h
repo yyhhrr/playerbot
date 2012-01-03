@@ -186,46 +186,6 @@ namespace ai
         string name;
     };
 
-
-
-    class FindPotionVisitor : public FindUsableItemVisitor {
-    public:
-        FindPotionVisitor(Player* bot, uint32 spellId) : FindUsableItemVisitor(bot) 
-        {
-            this->spellId = spellId;
-        }
-
-        virtual bool Accept(const ItemPrototype* proto)
-        {
-            return proto->Class == ITEM_CLASS_CONSUMABLE && 
-                proto->SubClass == ITEM_SUBCLASS_POTION &&    
-                proto->Spells[0].SpellCategory == 4 && 
-                proto->Spells[0].SpellId == spellId;
-        }
-
-    private:
-        uint32 spellId;
-    };
-
-    class FindFoodVisitor : public FindUsableItemVisitor {
-    public:
-        FindFoodVisitor(Player* bot, uint32 spellCategory) : FindUsableItemVisitor(bot) 
-        {
-            this->spellCategory = spellCategory;
-        }
-
-        virtual bool Accept(const ItemPrototype* proto)
-        {
-            return proto->Class == ITEM_CLASS_CONSUMABLE && 
-                proto->SubClass == ITEM_SUBCLASS_FOOD && 
-                proto->Spells[0].SpellCategory == spellCategory;
-        }
-
-    private:
-        uint32 spellCategory;
-    };
-
-
     class FindUsableNamedItemVisitor : public FindUsableItemVisitor {
     public:
         FindUsableNamedItemVisitor(Player* bot, string name) : FindUsableItemVisitor(bot) 

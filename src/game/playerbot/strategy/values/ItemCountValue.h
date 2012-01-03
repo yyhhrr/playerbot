@@ -5,27 +5,31 @@
 
 namespace ai
 {
-    class ItemCountValue : public CalculatedValue<uint8>, public Qualified, InventoryAction
-	{
-	public:
-        ItemCountValue(PlayerbotAI* ai) : CalculatedValue<uint8>(ai), InventoryAction(ai, "empty") {}
-
-    public:
-        virtual uint8 Calculate();
-        Item* Find(FindItemVisitor &visitor);
-        virtual bool Execute(Event event) { return false; }
-	};
-
-    class InventoryItemValue : public CalculatedValue<list<Item*> >, public Qualified, InventoryAction
+    class InventoryItemValueBase : public InventoryAction
     {
     public:
-        InventoryItemValue(PlayerbotAI* ai) : CalculatedValue<list<Item*> >(ai), InventoryAction(ai, "empty") {}
-
-        virtual list<Item*> Calculate();
-
+        InventoryItemValueBase(PlayerbotAI* ai) : InventoryAction(ai, "empty") {}
         virtual bool Execute(Event event) { return false; }
 
     protected:
-        Item* Find(FindItemVisitor &visitor);
+        list<Item*> Find(string qualifier);
+    };
+
+    class ItemCountValue : public CalculatedValue<uint8>, public Qualified, InventoryItemValueBase
+	{
+	public:
+        ItemCountValue(PlayerbotAI* ai) : CalculatedValue<uint8>(ai), InventoryItemValueBase(ai) {}
+
+    public:
+        virtual uint8 Calculate();
+	};
+
+    class InventoryItemValue : public CalculatedValue<list<Item*> >, public Qualified, InventoryItemValueBase
+    {
+    public:
+        InventoryItemValue(PlayerbotAI* ai) : CalculatedValue<list<Item*> >(ai), InventoryItemValueBase(ai) {}
+
+    public:
+        virtual list<Item*> Calculate();
     };
 }

@@ -11,6 +11,7 @@ public:
     HealShamanStrategyActionNodeFactory()
     {
         creators["earthliving weapon"] = &earthliving_weapon;
+        creators["mana tide totem"] = &mana_tide_totem;
     }
 private:
     static ActionNode* earthliving_weapon(PlayerbotAI* ai)
@@ -18,6 +19,13 @@ private:
         return new ActionNode ("earthliving weapon",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* mana_tide_totem(PlayerbotAI* ai)
+    {
+        return new ActionNode ("mana tide totem",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("mana potion"), NULL),
             /*C*/ NULL);
     }
 

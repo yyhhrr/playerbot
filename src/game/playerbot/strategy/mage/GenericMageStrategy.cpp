@@ -66,7 +66,7 @@ private:
     {
         return new ActionNode ("evocation",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("drink"), NULL),
+            /*A*/ NextAction::array(0, new NextAction("mana potion"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* dragons_breath(PlayerbotAI* ai)

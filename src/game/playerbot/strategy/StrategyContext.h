@@ -29,6 +29,7 @@
 #include "generic/DpsAssistStrategy.h"
 #include "generic/PassiveStrategy.h"
 #include "generic/GrindingStrategy.h"
+#include "generic/UsePotionsStrategy.h"
 
 namespace ai
 {
@@ -51,9 +52,11 @@ namespace ai
             creators["flee"] = &StrategyContext::flee;
             creators["duel"] = &StrategyContext::duel;
             creators["kite"] = &StrategyContext::kite;
+            creators["potions"] = &StrategyContext::potions;
         }
 
     private:
+        static Strategy* potions(PlayerbotAI* ai) { return new UsePotionsStrategy(ai); }
         static Strategy* kite(PlayerbotAI* ai) { return new KiteStrategy(ai); }
         static Strategy* duel(PlayerbotAI* ai) { return new DuelStrategy(ai); }
         static Strategy* flee(PlayerbotAI* ai) { return new FleeStrategy(ai); }

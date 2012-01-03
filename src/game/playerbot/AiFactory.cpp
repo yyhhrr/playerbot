@@ -90,7 +90,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 {
     int tab = GetPlayerSpecTab(player);
     
-    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", NULL);
+    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", "potions", NULL);
 
     switch (player->getClass()){
         case CLASS_PRIEST:

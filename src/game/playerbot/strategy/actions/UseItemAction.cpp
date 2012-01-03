@@ -37,7 +37,24 @@ bool UseItemAction::Execute(Event event)
         return true;
     }
 
-    UseItem(*items.begin(), *gos.begin());
+    Item* item = *items.begin();
+    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
+        return false;
+
+    if (bot->isInCombat())
+    {
+        for(int i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+        {
+            SpellEntry const *spellInfo = sSpellStore.LookupEntry(item->GetProto()->Spells[i].SpellId);
+            if (spellInfo && IsNonCombatSpell(spellInfo))
+                return false;
+        }
+
+        if (item->IsPotion() && bot->GetLastPotionId())
+            return false;
+    }
+
+    UseItem(item, *gos.begin());
     return true;
 }
 

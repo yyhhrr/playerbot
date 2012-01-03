@@ -585,6 +585,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\TankAoeStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\TankAssistStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\UsePotionsStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.cpp" />
@@ -993,6 +994,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\TankAoeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\TankAssistStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\UsePotionsStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\DpsHunterStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterNonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\hunter\GenericHunterStrategy.h" />

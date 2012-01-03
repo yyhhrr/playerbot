@@ -14,13 +14,14 @@ public:
     {
         creators["melee"] = &melee;
         creators["healthstone"] = &healthstone;
-        creators["healing potion"] = &healing_potion;
         creators["be near"] = &follow_master_random;
         creators["attack anything"] = &attack_anything;
         creators["move random"] = &move_random;
         creators["move to loot"] = &move_to_loot;
         creators["food"] = &food;
         creators["drink"] = &drink;
+        creators["mana potion"] = &mana_potion;
+        creators["healing potion"] = &healing_potion;
         creators["flee"] = &flee;
     }
 
@@ -37,13 +38,6 @@ private:
         return new ActionNode ("healthstone",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("healing potion"), NULL),
-            /*C*/ NULL);
-    }
-    static ActionNode* healing_potion(PlayerbotAI* ai)
-    {
-        return new ActionNode ("healing potion",
-            /*P*/ NULL,
-            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* follow_master_random(PlayerbotAI* ai)
@@ -86,6 +80,20 @@ private:
         return new ActionNode ("drink",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* mana_potion(PlayerbotAI* ai)
+    {
+        return new ActionNode ("mana potion",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("drink"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* healing_potion(PlayerbotAI* ai)
+    {
+        return new ActionNode ("healing potion",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("food"), NULL),
             /*C*/ NULL);
     }
     static ActionNode* flee(PlayerbotAI* ai)
