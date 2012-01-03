@@ -16,12 +16,7 @@ bool ReadyCheckAction::Execute(Event event)
 	if (player == bot->GetObjectGuid())
         return false;
 
-	bool ready = ReadyCheck();
-
-	if (!ready)
-	    ai->ChangeStrategy("+ready check", BOT_STATE_NON_COMBAT);
-
-	return ready;
+	return ReadyCheck();
 }
 
 bool ReadyCheckAction::ReadyCheck()
