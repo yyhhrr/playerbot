@@ -65,7 +65,7 @@ bool PartyMemberValue::Check(Unit* player)
 
 
     return player != bot &&
-        bot->GetDistance(player) < sPlayerbotAIConfig.sightDistance &&
+        bot->GetDistance(player) < sPlayerbotAIConfig.spellDistance &&
         bot->IsWithinLOS(player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
 }
 
