@@ -849,7 +849,7 @@ bool PlayerbotAI::CanCastSpell(string name, Unit* target)
     return CanCastSpell(aiObjectContext->GetValue<uint32>("spell id", name)->Get(), target);
 }
 
-bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
+bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target, bool checkHasSpell)
 {
     if (!spellid)
         return false;
@@ -857,7 +857,10 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target)
     if (!target)
         target = bot;
 
-    if (!bot->HasSpell(spellid) || bot->HasSpellCooldown(spellid))
+    if (checkHasSpell && !bot->HasSpell(spellid))
+        return false;
+
+    if (bot->HasSpellCooldown(spellid))
         return false;
 
     bool positiveSpell = IsPositiveSpell(spellid);

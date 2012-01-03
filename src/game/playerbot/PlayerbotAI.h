@@ -123,7 +123,7 @@ public:
 
     virtual bool IsInterruptableSpellCasting(Unit* player, string spell);
     virtual bool HasAuraToDispel(Unit* player, uint32 dispelType);
-    bool CanCastSpell(uint32 spellid, Unit* target);
+    bool CanCastSpell(uint32 spellid, Unit* target, bool checkHasSpell = true);
 
     bool HasAura(uint32 spellId, const Unit* player);
     bool CastSpell(uint32 spellId, Unit* target);

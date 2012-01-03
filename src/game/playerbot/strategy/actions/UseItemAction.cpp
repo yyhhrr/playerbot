@@ -19,12 +19,6 @@ bool UseItemAction::Execute(Event event)
         return false;
     }
 
-    if (gos.size() > 1 || items.size() > 1)
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "I can use only one item or game object a time");
-        return false;
-    }
-
     if (!gos.empty() && items.empty())
     {
         UseGameObject(*gos.begin());
@@ -88,13 +82,12 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
     uint8 cast_count = 1;
-    uint32 spellid = 0;
     uint64 item_guid = item->GetObjectGuid().GetRawValue();
     uint32 glyphIndex = 0;
     uint8 unk_flags = 0;
 
     WorldPacket* const packet = new WorldPacket(CMSG_USE_ITEM, 1 + 1 + 1 + 4 + 8 + 4 + 1 + 8 + 1);
-    *packet << bagIndex << slot << cast_count << spellid << item_guid
+    *packet << bagIndex << slot << cast_count << uint32(0) << item_guid
         << glyphIndex << unk_flags;
 
     bool targetSelected = false;
@@ -152,7 +145,12 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 
         const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
         if (!(pSpellInfo->Targets & TARGET_FLAG_ITEM))
+		{
+            if (!ai->CanCastSpell(spellId, bot, false))
+                return false;
+
             continue;
+		}
 
         Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
         if (!itemForSpell)
