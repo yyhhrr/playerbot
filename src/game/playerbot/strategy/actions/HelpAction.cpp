@@ -34,7 +34,7 @@ void HelpAction::TellChatCommands()
 void HelpAction::TellStrategies()
 {
     ostringstream out;
-    out << "Possible strategies (co/nc commands): ";
+    out << "Possible strategies (co/nc/dead commands): ";
     out << CombineSupported(ai->GetAiObjectContext()->GetSupportedStrategies());
     ai->TellMaster(out);
 }
