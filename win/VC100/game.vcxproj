@@ -488,6 +488,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\AddLootAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\AreaTriggerAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\AttackAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BankAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BuffAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BuyAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.cpp" />
@@ -885,6 +886,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AddLootAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AreaTriggerAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\AttackAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BankAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BuffAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BuyAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\CastCustomSpellAction.h" />

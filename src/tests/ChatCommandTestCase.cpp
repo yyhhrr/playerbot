@@ -47,6 +47,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( buff );
       CPPUNIT_TEST( help );
       CPPUNIT_TEST( gb );
+      CPPUNIT_TEST( bank );
       CPPUNIT_TEST( follow );
       CPPUNIT_TEST( flee );
       CPPUNIT_TEST( stay );
@@ -326,6 +327,11 @@ protected:
     void gb()
     {
         assertParametrizedCommand("gb", "link");
+    }
+
+    void bank()
+    {
+        assertParametrizedCommand("bank", "link");
     }
 
     void talk()
