@@ -46,10 +46,6 @@ protected:
 
 	void healHimself()
 	{
-		tickWithLowHealth(59);
-		tickWithLowHealth(59);
-		tickWithLowHealth(59);
-
 		addAura("cat form");
 
         spellAvailable("healing touch");
@@ -66,7 +62,7 @@ protected:
         tickWithLowHealth(1);
         tickWithLowHealth(1);
 
-        assertActions(">S:caster form>S:regrowth>S:healing touch>S:caster form>S:regrowth>S:survival instincts>S:barskin>S:regrowth>S:healing touch");
+        assertActions(">S:caster form>S:regrowth>S:survival instincts>S:barskin>S:regrowth>S:healing touch");
 	}
 
     void intensiveHealing()
@@ -78,12 +74,6 @@ protected:
 
     void healOthers()
     {
-        addAura("cat form");
-
-        tickWithPartyLowHealth(59);
-        tickWithPartyLowHealth(59);
-        tickWithPartyLowHealth(59);
-
         spellAvailable("healing touch");
         spellAvailable("regrowth");
         spellAvailable("rejuvenation");
@@ -99,23 +89,21 @@ protected:
         tickWithPartyLowHealth(1);
         tickWithPartyLowHealth(1);
 
-        assertActions(">S:caster form>P:regrowth on party>P:healing touch on party>S:caster form>P:regrowth on party>S:caster form>P:regrowth on party>P:healing touch on party");
+        assertActions(">S:caster form>P:regrowth on party>S:caster form>P:regrowth on party>P:healing touch on party");
     }
 
     void boost()
     {
 		tickWithBalancePercent(49);
-		tick();
 
-		assertActions(">S:tiger's fury>T:reach melee");
+		assertActions(">S:tiger's fury");
     }
 
     void cower()
     {
 		tickWithMyAttackerCount(2);
 
-		tickOutOfMeleeRange();
-		assertActions(">S:cower>T:reach melee");
+		assertActions(">S:cower");
     }
 
     void buff()
@@ -123,6 +111,7 @@ protected:
         removeAura("cat form");
         removeAura("thorns");
         tick();
+        addAura("cat form");
 
         removeTargetAura("faerie fire (feral)");
         tickInMeleeRange();
