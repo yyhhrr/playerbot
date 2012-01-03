@@ -27,11 +27,31 @@ bool ReadyCheckAction::Execute(Event event)
 bool ReadyCheckAction::ReadyCheck()
 {
     bool health = AI_VALUE2(uint8, "health", "self target") > sPlayerbotAIConfig.almostFullHealth;
-    bool mana = !AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig.almostFullHealth;
-    bool distance = bot->GetDistance(master) <= sPlayerbotAIConfig.sightDistance;
-
-    if (!health || !mana || !distance)
+    if (!health)
+    {
+        ai->TellMaster("Low health!");
         return false;
+    }
+
+    bool mana = !AI_VALUE2(bool, "has mana", "self target") || AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig.mediumHealth;
+    if (!mana)
+    {
+        ai->TellMaster("Low mana!");
+        return false;
+    }
+
+    bool distance = bot->GetDistance(master) <= sPlayerbotAIConfig.sightDistance;
+    if (!distance)
+    {
+        ai->TellMaster("Too far away!");
+        return false;
+    }
+
+    if (bot->getClass() == CLASS_HUNTER && !bot->GetUInt32Value(PLAYER_AMMO_ID))
+    {
+        ai->TellMaster("Out of ammo!");
+        return false;
+    }
 
     WorldPacket* const packet = new WorldPacket(MSG_RAID_READY_CHECK);
     *packet << bot->GetObjectGuid();
