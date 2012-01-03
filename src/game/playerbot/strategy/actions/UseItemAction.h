@@ -13,7 +13,7 @@ namespace ai
         virtual bool isPossible();
 
     private:
-        void UseItem(Item* item, ObjectGuid go = ObjectGuid());
+        bool UseItem(Item* item, ObjectGuid go = ObjectGuid());
         void UseGameObject(ObjectGuid guid);
     };
 

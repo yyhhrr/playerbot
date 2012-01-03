@@ -245,6 +245,12 @@ list<Item*> InventoryAction::parseItems(string text)
             found.push_back(item);
     }
 
+    FindUsableNamedItemVisitor visitor(bot, text);
+    IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
+    Item* item = visitor.GetResult();
+    if (item)
+        found.push_back(item);
+
     uint32 quality = chat->parseItemQuality(text);
     if (quality != MAX_ITEM_QUALITY)
     {

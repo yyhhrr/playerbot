@@ -54,8 +54,7 @@ bool UseItemAction::Execute(Event event)
             return false;
     }
 
-    UseItem(item, *gos.begin());
-    return true;
+    return UseItem(item, *gos.begin());
 }
 
 void UseItemAction::UseGameObject(ObjectGuid guid)
@@ -69,7 +68,7 @@ void UseItemAction::UseGameObject(ObjectGuid guid)
     ai->TellMaster(out);
 }
 
-void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
+bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 {
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
@@ -112,7 +111,7 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         }
     }
 
-    if (!targetSelected)
+    if (!targetSelected && item->GetProto()->Class != ITEM_CLASS_CONSUMABLE)
     {
         ObjectGuid masterSelection = master->GetSelectionGuid();
         if (masterSelection)
@@ -140,10 +139,11 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             bot->GetSession()->QueuePacket(packet); // queue the packet to get around race condition
             ostringstream out; out << "Got quest " << chat->formatQuest(qInfo);
             ai->TellMaster(out);
+            return true;
         }
-        return;
     }
 
+    bool requiresItem = false;
     for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
     {
         uint32 spellId = item->GetProto()->Spells[i].SpellId;
@@ -157,6 +157,8 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
         if (!itemForSpell)
             continue;
+
+        requiresItem = true;
 
         if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
             continue;
@@ -177,6 +179,9 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         break;
     }
     
+    if (requiresItem)
+        return false;
+
     if (!targetSelected)
     {
         *packet << TARGET_FLAG_SELF;
@@ -185,6 +190,7 @@ void UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 
     ai->TellMaster(out);
     bot->GetSession()->QueuePacket(packet);
+    return true;
 }
 
 bool UseItemAction::isPossible()
