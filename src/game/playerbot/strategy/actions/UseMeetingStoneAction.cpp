@@ -12,6 +12,9 @@ bool UseMeetingStoneAction::Execute(Event event)
     if (master->GetSelectionGuid() && master->GetSelectionGuid() != bot->GetObjectGuid())
         return false;
 
+    if (!master->GetSelectionGuid() && master->GetGroup() != bot->GetGroup())
+        return false;
+
     GameObject* gameObject = master->GetMap()->GetGameObject(guid);
     if (!gameObject)
         return false;
