@@ -213,50 +213,40 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindFoodVisitor visitor(bot, 11);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        Item* item = visitor.GetResult();
-        if (item)
-            found.push_back(item);
+        found.merge(visitor.GetResult());
     }
 
     if (text == "drink")
     {
         FindFoodVisitor visitor(bot, 59);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        Item* item = visitor.GetResult();
-        if (item)
-            found.push_back(item);
+        found.merge(visitor.GetResult());
     }
 
     if (text == "mana potion")
     {
         FindPotionVisitor visitor(bot, SPELL_EFFECT_ENERGIZE);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        Item* item = visitor.GetResult();
-        if (item)
-            found.push_back(item);
+        found.merge(visitor.GetResult());
     }
 
     if (text == "healing potion")
     {
         FindPotionVisitor visitor(bot, SPELL_EFFECT_HEAL);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        Item* item = visitor.GetResult();
-        if (item)
-            found.push_back(item);
+        found.merge(visitor.GetResult());
     }
 
     FindUsableNamedItemVisitor visitor(bot, text);
     IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-    Item* item = visitor.GetResult();
-    if (item)
-        found.push_back(item);
+    found.merge(visitor.GetResult());
 
     uint32 quality = chat->parseItemQuality(text);
     if (quality != MAX_ITEM_QUALITY)
     {
         FindItemsToTradeByQualityVisitor visitor(quality, count);
         IterateItems(&visitor);
-        found = visitor.GetResult();
+        found.merge(visitor.GetResult());
     }
 
     uint32 itemClass = MAX_ITEM_CLASS, itemSubClass = 0;
@@ -264,7 +254,7 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindItemsToTradeByClassVisitor visitor(itemClass, itemSubClass, count);
         IterateItems(&visitor);
-        found = visitor.GetResult();
+        found.merge(visitor.GetResult());
     }
 
     uint32 fromSlot = chat->parseSlot(text);
@@ -280,9 +270,7 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindItemByIdVisitor visitor(*i);
         IterateItems(&visitor, ITERATE_ALL_ITEMS);
-        Item* item = visitor.GetResult();
-        if (item)
-            found.push_back(item);
+        found.merge(visitor.GetResult());
     }
 
     return found;

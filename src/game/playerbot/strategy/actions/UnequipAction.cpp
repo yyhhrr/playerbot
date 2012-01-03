@@ -21,8 +21,8 @@ bool UnequipAction::Execute(Event event)
 void UnequipAction::UnequipItem(FindItemVisitor* visitor)
 {
     IterateItems(visitor, ITERATE_ALL_ITEMS);
-    Item *item = visitor->GetResult();
-    if (item) UnequipItem(*item);
+    list<Item*> items = visitor->GetResult();
+	if (!items.empty()) UnequipItem(**items.begin());
 }
 
 void UnequipAction::UnequipItem(Item& item)

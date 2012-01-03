@@ -75,8 +75,8 @@ void EquipAction::TellEquipmentSets()
 void EquipAction::EquipItem(FindItemVisitor* visitor)
 {
     IterateItems(visitor);
-    Item *item = visitor->GetResult();
-    if (item) EquipItem(*item);
+    list<Item*> items = visitor->GetResult();
+	if (!items.empty()) EquipItem(**items.begin());
 }
 
 

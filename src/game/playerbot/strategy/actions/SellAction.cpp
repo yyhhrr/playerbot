@@ -60,8 +60,9 @@ bool SellAction::Execute(Event event)
 void SellAction::Sell(FindItemVisitor* visitor)
 {
     IterateItems(visitor);
-    Item* item = visitor->GetResult();
-    if (item) Sell(item);
+    list<Item*> items = visitor->GetResult();
+    for (list<Item*>::iterator i = items.begin(); i != items.end(); ++i)
+        Sell(*i);
 }
 
 void SellAction::Sell(Item* item)

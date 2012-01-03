@@ -20,8 +20,10 @@ bool DestroyItemAction::Execute(Event event)
 void DestroyItemAction::DestroyItem(FindItemVisitor* visitor)
 {
     IterateItems(visitor);
-    Item *item = visitor->GetResult();
-    if (item) {
+    list<Item*> items = visitor->GetResult();
+	for (list<Item*>::iterator i = items.begin(); i != items.end(); ++i)
+    {
+		Item* item = *i;
         bot->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
         bot->SaveInventoryAndGoldToDB();
         ostringstream out; out << chat->formatItem(item->GetProto()) << " destroyed";

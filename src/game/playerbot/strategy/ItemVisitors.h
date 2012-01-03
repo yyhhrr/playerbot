@@ -21,17 +21,17 @@ namespace ai
             if (!Accept(item->GetProto()))
                 return true;
 
-            result = item;
-            return false;
+            result.push_back(item);
+            return true;
         }
 
-        Item* GetResult() { return result; }
+        list<Item*>& GetResult() { return result; }
 
     protected:
         virtual bool Accept(const ItemPrototype* proto) = 0;
 
     private:
-        Item* result;
+        list<Item*> result;
     };
 
     enum IterateItemsMask
