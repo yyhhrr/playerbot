@@ -2,17 +2,20 @@
 #include "../triggers/GenericTriggers.h"
 
 namespace ai {
-    class MarkOfTheWildOnPartyTrigger : public BuffOnPartyTrigger {
+    class MarkOfTheWildOnPartyTrigger : public BuffOnPartyTrigger
+    {
     public:
         MarkOfTheWildOnPartyTrigger(PlayerbotAI* ai) : BuffOnPartyTrigger(ai, "mark of the wild") {}
     };
 
-    class MarkOfTheWildTrigger : public BuffTrigger {
+    class MarkOfTheWildTrigger : public BuffTrigger
+    {
     public:
         MarkOfTheWildTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "mark of the wild") {}
     };
 
-    class ThornsTrigger : public BuffTrigger {
+    class ThornsTrigger : public BuffTrigger
+    {
     public:
         ThornsTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "thorns") {}
     };
@@ -83,21 +86,36 @@ namespace ai {
         PartyMemberCurePoisonTrigger(PlayerbotAI* ai) : PartyMemberNeedCureTrigger(ai, "cure poison", DISPEL_POISON) {}
     };
 
-    class BearFormTrigger : public BuffTrigger {
+    class BearFormTrigger : public BuffTrigger
+    {
     public:
         BearFormTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "bear form") {}
         virtual bool IsActive() { return !ai->HasAnyAuraOf(bot, "bear form", "dire bear form", NULL); }
     };
 
-    class TreeFormTrigger : public BuffTrigger {
+    class TreeFormTrigger : public BuffTrigger
+    {
     public:
         TreeFormTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "tree of life") {}
         virtual bool IsActive() { return !ai->HasAura("tree of life", bot); }
     };
 
-    class CatFormTrigger : public BuffTrigger {
+    class CatFormTrigger : public BuffTrigger
+    {
     public:
         CatFormTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "cat form") {}
         virtual bool IsActive() { return !ai->HasAura("cat form", bot); }
+    };
+
+    class EclipseSolarTrigger : public HasAuraTrigger
+    {
+    public:
+        EclipseSolarTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "eclipse (solar)") {}
+    };
+
+    class EclipseLunarTrigger : public HasAuraTrigger
+    {
+    public:
+        EclipseLunarTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "eclipse (lunar)") {}
     };
 }

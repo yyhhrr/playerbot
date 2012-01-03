@@ -84,9 +84,13 @@ namespace ai
                 creators["bear form"] = &TriggerFactoryInternal::bear_form;
                 creators["cat form"] = &TriggerFactoryInternal::cat_form;
                 creators["tree form"] = &TriggerFactoryInternal::tree_form;
+                creators["eclipse (solar)"] = &TriggerFactoryInternal::eclipse_solar;
+                creators["eclipse (lunar)"] = &TriggerFactoryInternal::eclipse_lunar;
             }
 
         private:
+            static Trigger* eclipse_solar(PlayerbotAI* ai) { return new EclipseSolarTrigger(ai); }
+            static Trigger* eclipse_lunar(PlayerbotAI* ai) { return new EclipseLunarTrigger(ai); }
             static Trigger* Thorns(PlayerbotAI* ai) { return new ThornsTrigger(ai); }
             static Trigger* bash(PlayerbotAI* ai) { return new BashInterruptSpellTrigger(ai); }
             static Trigger* faerie_fire_feral(PlayerbotAI* ai) { return new FaerieFireFeralTrigger(ai); }
