@@ -33,9 +33,6 @@ protected:
 		tickInMeleeRange();
 		addAura("slice and dice");
 
-        tick();
-        addTargetAura("rupture");
-
 		tickWithEnergy(70);
         tickWithEnergy(70);
         tickWithEnergy(70);
@@ -45,7 +42,7 @@ protected:
 
         tickBehindTarget();
         
-        assertActions(">T:reach melee>T:slice and dice>T:rupture>T:mutilate>T:sinister strike>T:melee>T:eviscerate>T:melee>T:backstab");
+        assertActions(">T:reach melee>T:slice and dice>T:mutilate>T:sinister strike>T:melee>T:rupture>T:eviscerate>T:backstab");
     }
 
 	void healHimself()

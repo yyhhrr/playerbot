@@ -69,7 +69,7 @@ DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
 
 NextAction** DpsRogueStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("mutilate", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("mutilate", ACTION_NORMAL), NULL);
 }
 
 void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -78,29 +78,25 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "slice and dice",
-        NextAction::array(0, new NextAction("slice and dice", 15.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "rupture",
-        NextAction::array(0, new NextAction("rupture", 13.0f), NULL)));
+        NextAction::array(0, new NextAction("slice and dice", ACTION_HIGH + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "combo points available",
-        NextAction::array(0, new NextAction("eviscerate", 31.0f), NULL)));
+        NextAction::array(0, new NextAction("rupture", ACTION_HIGH + 2), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"medium threat",
-		NextAction::array(0, new NextAction("vanish", 40.0f), NULL)));
+		NextAction::array(0, new NextAction("vanish", ACTION_HIGH), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"low health",
-		NextAction::array(0, new NextAction("evasion", 50.0f), new NextAction("feint", 50.0f), NULL)));
+		NextAction::array(0, new NextAction("evasion", ACTION_EMERGENCY), new NextAction("feint", ACTION_EMERGENCY), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"kick",
-		NextAction::array(0, new NextAction("kick", 30.0f), NULL)));
+		NextAction::array(0, new NextAction("kick", ACTION_INTERRUPT + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "behind target",
-        NextAction::array(0, new NextAction("backstab", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("backstab", ACTION_NORMAL), NULL)));
 }
