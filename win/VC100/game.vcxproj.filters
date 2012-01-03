@@ -1185,6 +1185,15 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\BankAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\PositionAction.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\PositionValue.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2482,6 +2491,15 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\BankAction.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\PositionAction.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\PositionValue.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

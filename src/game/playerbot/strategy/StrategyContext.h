@@ -30,6 +30,7 @@
 #include "generic/PassiveStrategy.h"
 #include "generic/GrindingStrategy.h"
 #include "generic/UsePotionsStrategy.h"
+#include "generic/GuardStrategy.h"
 
 namespace ai
 {
@@ -87,9 +88,11 @@ namespace ai
             creators["stay circle"] = &MovementStrategyContext::stay_circle;
             creators["stay combat"] = &MovementStrategyContext::stay_combat;
             creators["stay line"] = &MovementStrategyContext::stay_line;
+            creators["guard"] = &MovementStrategyContext::guard;
         }
 
     private:
+        static Strategy* guard(PlayerbotAI* ai) { return new GuardStrategy(ai); }
         static Strategy* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomStrategy(ai); }
         static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterStrategy(ai); }
         static Strategy* follow_line(PlayerbotAI* ai) { return new FollowLineStrategy(ai); }

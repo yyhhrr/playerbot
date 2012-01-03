@@ -60,6 +60,7 @@ class ChatCommandTestCase : public MockedAiObjectContextTestCase
       CPPUNIT_TEST( revive );
       CPPUNIT_TEST( runaway );
       CPPUNIT_TEST( warning );
+      CPPUNIT_TEST( position );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -388,6 +389,11 @@ protected:
         trigger("warning");
         tick();
         assertActions(">S:runaway chat shortcut");
+    }
+
+    void position()
+    {
+        assertParametrizedCommand("position", "guard");
     }
 };
 

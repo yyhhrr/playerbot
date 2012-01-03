@@ -517,6 +517,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\LootStrategyAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\MovementActions.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\NonCombatActions.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\PositionAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryItemUsageAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\QuestAction.cpp" />
@@ -573,6 +574,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\FollowMasterRandomStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\FollowMasterStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GrindingStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\MeleeCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.cpp" />
@@ -674,6 +676,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PartyMemberToResurrect.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PartyMemberValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PartyMemberWithoutAuraValue.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\PositionValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\PossibleTargetsValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\RtiValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\SpellCastUsefulValue.cpp" />
@@ -919,6 +922,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\MovementActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\NonCombatActions.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\PassLeadershipToMasterAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\PositionAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryItemUsageAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QueryQuestAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\QuestAction.h" />
@@ -982,6 +986,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\FollowMasterRandomStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\FollowMasterStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GrindingStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\MeleeCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.h" />
@@ -1115,6 +1120,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\PartyMemberValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\PartyMemberWithoutAuraValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\PetTargetValue.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\PositionValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\PossibleTargetsValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\SelfTargetValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\SharedValueContext.h" />

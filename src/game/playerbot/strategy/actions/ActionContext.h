@@ -11,6 +11,7 @@
 #include "ChangeStrategyAction.h"
 #include "ChooseTargetActions.h"
 #include "SuggestWhatToDoAction.h"
+#include "PositionAction.h"
 
 namespace ai
 {
@@ -58,9 +59,11 @@ namespace ai
             creators["move random"] = &ActionContext::move_random;
             creators["move to loot"] = &ActionContext::move_to_loot;
             creators["open loot"] = &ActionContext::open_loot;
+            creators["guard"] = &ActionContext::guard;
         }
 
     private:
+        static Action* guard(PlayerbotAI* ai) { return new GuardAction(ai); }
         static Action* open_loot(PlayerbotAI* ai) { return new OpenLootAction(ai); }
         static Action* move_to_loot(PlayerbotAI* ai) { return new MoveToLootAction(ai); }
         static Action* move_random(PlayerbotAI* ai) { return new MoveRandomAction(ai); }

@@ -12,6 +12,7 @@ class GenericTestCase : public EngineTestBase
 	CPPUNIT_TEST( flee );
 	CPPUNIT_TEST( adds );
 	CPPUNIT_TEST( potions );
+	CPPUNIT_TEST( guard );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -74,6 +75,16 @@ protected:
 	    tickWithLowHealth(1);
 
 		assertActions(">S:mana potion>S:drink>S:flee>S:healing potion>S:food>S:flee");
+	}
+
+	void guard()
+	{
+	    engine->removeStrategy("bear");
+	    engine->addStrategy("guard");
+
+	    tick();
+
+		assertActions(">S:move to position");
 	}
 };
 

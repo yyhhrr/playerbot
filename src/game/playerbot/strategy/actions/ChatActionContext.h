@@ -43,6 +43,7 @@
 #include "RtiAction.h"
 #include "ReviveFromCorpseAction.h"
 #include "BankAction.h"
+#include "PositionAction.h"
 
 namespace ai
 {
@@ -100,9 +101,11 @@ namespace ai
             creators["spell"] = &ChatActionContext::spell;
             creators["rti"] = &ChatActionContext::rti;
             creators["spirit healer"] = &ChatActionContext::spirit_healer;
+            creators["position"] = &ChatActionContext::position;
         }
 
     private:
+        static Action* position(PlayerbotAI* ai) { return new PositionAction(ai); }
         static Action* spirit_healer(PlayerbotAI* ai) { return new SpiritHealerAction(ai); }
         static Action* rti(PlayerbotAI* ai) { return new RtiAction(ai); }
         static Action* invite(PlayerbotAI* ai) { return new InviteToGroupAction(ai); }

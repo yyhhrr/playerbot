@@ -42,6 +42,7 @@
 #include "LeastHpTargetValue.h"
 #include "AoeHealValues.h"
 #include "RtiValue.h"
+#include "PositionValue.h"
 
 namespace ai
 {
@@ -109,9 +110,11 @@ namespace ai
             creators["aoe heal"] = &ValueContext::aoe_heal;
 
             creators["rti"] = &ValueContext::rti;
+            creators["position"] = &ValueContext::position;
         }
 
     private:
+        static UntypedValue* position(PlayerbotAI* ai) { return new PositionValue(ai); }
         static UntypedValue* rti(PlayerbotAI* ai) { return new RtiValue(ai); }
 
         static UntypedValue* aoe_heal(PlayerbotAI* ai) { return new AoeHealValue(ai); }
