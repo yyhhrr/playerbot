@@ -47,10 +47,25 @@ bool ReadyCheckAction::ReadyCheck()
         return false;
     }
 
-    if (bot->getClass() == CLASS_HUNTER && !bot->GetUInt32Value(PLAYER_AMMO_ID))
+    if (bot->getClass() == CLASS_HUNTER)
     {
-        ai->TellMaster("Out of ammo!");
-        return false;
+        if (!bot->GetUInt32Value(PLAYER_AMMO_ID))
+        {
+            ai->TellMaster("Out of ammo!");
+            return false;
+        }
+
+        if (!bot->GetPet())
+        {
+            ai->TellMaster("No pet!");
+            return false;
+        }
+
+        if (bot->GetPet()->GetHappinessState() == UNHAPPY)
+        {
+            ai->TellMaster("Pet is unhappy!");
+            return false;
+        }
     }
 
     WorldPacket* const packet = new WorldPacket(MSG_RAID_READY_CHECK);
