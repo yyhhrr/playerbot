@@ -82,7 +82,7 @@ namespace ai
             return true;
         }
 
-        list<Item*> GetResult() 
+        list<Item*>& GetResult()
         {
             return result;
         }
@@ -128,7 +128,7 @@ namespace ai
             return true;
         }
 
-        list<Item*> GetResult() 
+        list<Item*>& GetResult()
         {
             return result;
         }

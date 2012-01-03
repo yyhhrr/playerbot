@@ -118,6 +118,11 @@ bool compare_items(const ItemPrototype *proto1, const ItemPrototype *proto2)
     return false;
 }
 
+bool compare_items_by_level(const Item* item1, const Item* item2)
+{
+    return compare_items(item1->GetProto(), item2->GetProto());
+}
+
 void InventoryAction::TellItems(map<uint32, int> itemMap)
 {
     list<ItemPrototype const*> items;
@@ -203,7 +208,7 @@ void InventoryAction::TellItem(ItemPrototype const * proto, int count)
 
 list<Item*> InventoryAction::parseItems(string text)
 {
-    list<Item*> found;
+    set<Item*> found;
     size_t pos = text.find(" ");
     int count = pos!=string::npos ? atoi(text.substr(pos + 1).c_str()) : TRADE_SLOT_TRADED_COUNT;
     if (count < 1) count = 1;
@@ -213,40 +218,40 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindFoodVisitor visitor(bot, 11);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     if (text == "drink")
     {
         FindFoodVisitor visitor(bot, 59);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     if (text == "mana potion")
     {
         FindPotionVisitor visitor(bot, SPELL_EFFECT_ENERGIZE);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     if (text == "healing potion")
     {
         FindPotionVisitor visitor(bot, SPELL_EFFECT_HEAL);
         IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     FindUsableNamedItemVisitor visitor(bot, text);
     IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);
-    found.merge(visitor.GetResult());
+    found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
 
     uint32 quality = chat->parseItemQuality(text);
     if (quality != MAX_ITEM_QUALITY)
     {
         FindItemsToTradeByQualityVisitor visitor(quality, count);
         IterateItems(&visitor);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     uint32 itemClass = MAX_ITEM_CLASS, itemSubClass = 0;
@@ -254,7 +259,7 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindItemsToTradeByClassVisitor visitor(itemClass, itemSubClass, count);
         IterateItems(&visitor);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
     uint32 fromSlot = chat->parseSlot(text);
@@ -262,7 +267,7 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         Item* item = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, fromSlot);
         if (item)
-            found.push_back(item);
+            found.insert(item);
     }
 
     ItemIds ids = chat->parseItems(text);
@@ -270,8 +275,14 @@ list<Item*> InventoryAction::parseItems(string text)
     {
         FindItemByIdVisitor visitor(*i);
         IterateItems(&visitor, ITERATE_ALL_ITEMS);
-        found.merge(visitor.GetResult());
+        found.insert(visitor.GetResult().begin(), visitor.GetResult().end());
     }
 
-    return found;
+    list<Item*> result;
+    for (set<Item*>::iterator i = found.begin(); i != found.end(); ++i)
+        result.push_back(*i);
+
+    result.sort(compare_items_by_level);
+
+    return result;
 }
