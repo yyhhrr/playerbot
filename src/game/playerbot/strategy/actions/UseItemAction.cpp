@@ -144,13 +144,13 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             continue;
 
         const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-        if (!(pSpellInfo->Targets & TARGET_FLAG_ITEM))
-		{
-            if (!ai->CanCastSpell(spellId, bot, false))
-                return false;
+		requiresItem |= (pSpellInfo->Targets & TARGET_FLAG_ITEM);
 
+        if (!ai->CanCastSpell(spellId, bot, false))
+            return false;
+
+        if (!(pSpellInfo->Targets & TARGET_FLAG_ITEM))
             continue;
-		}
 
         Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
         if (!itemForSpell)
@@ -177,7 +177,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         break;
     }
     
-    if (requiresItem)
+    if (!targetSelected && requiresItem)
         return false;
 
     if (!targetSelected)
