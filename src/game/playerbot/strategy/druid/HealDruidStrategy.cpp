@@ -46,4 +46,8 @@ void HealDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "medium aoe heal",
         NextAction::array(0, new NextAction("tranquility", 51.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "entangling roots",
+        NextAction::array(0, new NextAction("entangling roots on cc", ACTION_HIGH + 1), NULL)));
 }

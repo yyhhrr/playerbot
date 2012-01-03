@@ -142,6 +142,10 @@ void CasterDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 	triggers.push_back(new TriggerNode(
 		"nature's grasp",
 		NextAction::array(0, new NextAction("nature's grasp", 20.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "entangling roots",
+        NextAction::array(0, new NextAction("entangling roots on cc", ACTION_HIGH + 1), NULL)));
 }
 
 void CasterDruidAoeStrategy::InitTriggers(std::list<TriggerNode*> &triggers)

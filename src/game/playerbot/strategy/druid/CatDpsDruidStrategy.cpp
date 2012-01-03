@@ -139,6 +139,11 @@ void CatDpsDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "medium aoe",
         NextAction::array(0, new NextAction("swipe (cat)", 28.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "entangling roots",
+        NextAction::array(0, new NextAction("entangling roots on cc", ACTION_HIGH + 1), NULL)));
+
 }
 
 void CatAoeDruidStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
