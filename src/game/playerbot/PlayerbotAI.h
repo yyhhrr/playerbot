@@ -115,6 +115,7 @@ public:
     void InterruptSpell();
     void RemoveAura(string name);
     void RemoveShapeshift();
+    void WaitForSpellCast(uint32 spellId);
 
     virtual bool CanCastSpell(string name, Unit* target);
     virtual bool CastSpell(string name, Unit* target);

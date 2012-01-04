@@ -169,6 +169,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             targetSelected = true;
             out << " on "<< chat->formatItem(itemForSpell->GetProto());
         }
+        ai->WaitForSpellCast(spellId);
         break;
     }
     

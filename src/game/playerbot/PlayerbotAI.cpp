@@ -981,6 +981,19 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!bot->isInFront(faceTo, sPlayerbotAIConfig.spellDistance))
         bot->SetFacingTo(bot->GetAngle(faceTo));
 
+    WaitForSpellCast(spellId);
+
+    spell->prepare(&targets, false);
+    bot->SetSelectionGuid(oldSel);
+
+    LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
+    return lastSpell.id == spellId;
+}
+
+void PlayerbotAI::WaitForSpellCast(uint32 spellId)
+{
+    const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+
     float castTime = GetSpellCastTime(pSpellInfo) + sPlayerbotAIConfig.reactDelay;
     if (IsChanneledSpell(pSpellInfo))
     {
@@ -996,12 +1009,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         castTime = globalCooldown;
 
     SetNextCheckDelay(castTime);
-    
-    spell->prepare(&targets, false);
-    bot->SetSelectionGuid(oldSel);
-
-    LastSpellCast& lastSpell = aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get();
-    return lastSpell.id == spellId;
 }
 
 void PlayerbotAI::InterruptSpell()
