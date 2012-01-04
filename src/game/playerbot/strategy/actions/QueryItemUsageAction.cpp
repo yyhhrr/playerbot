@@ -38,7 +38,7 @@ bool QueryItemUsageAction::Execute(Event event)
         if (!item)
             return false;
 
-        ostringstream out; out << chat->formatItem(item);
+        ostringstream out; out << chat->formatItem(item, count);
         if (created)
             out << " created";
         else if (received)
