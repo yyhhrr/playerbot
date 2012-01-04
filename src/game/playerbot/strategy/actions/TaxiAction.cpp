@@ -7,14 +7,7 @@ using namespace ai;
 
 bool TaxiAction::Execute(Event event)
 {
-    // TODO: workaround
-    ai->RemoveAura("dire bear form");
-    ai->RemoveAura("bear form");
-    ai->RemoveAura("cat form");
-    ai->RemoveAura("moonkin form");
-    ai->RemoveAura("travel form");
-    ai->RemoveAura("aquatic form");
-    ai->RemoveAura("tree of life form");
+    ai->RemoveShapeshift();
 
     LastMovement& movement = context->GetValue<LastMovement&>("last movement")->Get();
 
