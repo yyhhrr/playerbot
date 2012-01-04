@@ -11,7 +11,6 @@ public:
     CasterShamanStrategyActionNodeFactory()
     {
         creators["magma totem"] = &magma_totem;
-        creators["flame shock"] = &flame_shock;
     }
 private:
     static ActionNode* magma_totem(PlayerbotAI* ai)
@@ -20,13 +19,6 @@ private:
             /*P*/ NULL,
             /*A*/ NULL,
             /*C*/ NextAction::array(0, new NextAction("fire nova"), NULL));
-    }
-    static ActionNode* flame_shock(PlayerbotAI* ai)
-    {
-        return new ActionNode ("flame shock",
-            /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("earth shock"), NULL),
-            /*C*/ NULL);
     }
 };
 

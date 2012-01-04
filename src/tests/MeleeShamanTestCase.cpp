@@ -30,11 +30,16 @@ protected:
     void combat()
     {
 		tickInMeleeRange();
+
+        tick();
+        tick();
+        addTargetAura("flame shock");
+
         tick();
 		tick();
 		tick();
 
-        assertActions(">S:searing totem>T:stormstrike>T:lava lash>T:melee");
+        assertActions(">S:searing totem>T:flame shock>T:earth shock>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()
