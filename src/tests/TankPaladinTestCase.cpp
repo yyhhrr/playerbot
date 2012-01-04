@@ -74,12 +74,12 @@ protected:
         addAura("blessing of kings");
 
         tick();
-        addAura("holy shield");
-
-        tick();
         addAura("righteous fury");
 
-        assertActions(">S:devotion aura>S:seal of light>S:seal of justice>S:blessing of sanctuary>S:blessing of kings>S:holy shield>S:righteous fury");
+        tick();
+        addAura("holy shield");
+
+        assertActions(">S:devotion aura>S:seal of light>S:seal of justice>S:blessing of sanctuary>S:blessing of kings>S:righteous fury>S:holy shield");
     }
 
     void healing()
@@ -106,12 +106,11 @@ protected:
 		tickWithAttackerCount(2);
 
 		tickWithAttackerCount(3);
-		tickWithAttackerCount(3);
 
 		tickWithNoAggro();
 		tickWithNoAggro();
 
-		assertActions(">T:hammer of the righteous>T:avenger's shield>T:consecration>T:holy wrath>T:hand of reckoning>T:judgement of justice");
+		assertActions(">T:hammer of the righteous>T:avenger's shield>T:consecration>T:hand of reckoning>T:judgement of justice");
     }
 
     void combatVsMelee()
@@ -119,28 +118,24 @@ protected:
 		tickOutOfMeleeRange();
 
         tick();
-        tick();
 
 		tickWithTargetLowHealth(19);
 
-        assertActions(">T:reach melee>T:melee>T:judgement of light>T:hammer of wrath");
+        assertActions(">T:reach melee>T:judgement of light>T:hammer of wrath");
     }
 
     void lowMana()
     {
         tickWithLowMana(10);
-        tickWithLowMana(10);
 
-        assertActions(">T:melee>T:judgement of wisdom");
+        assertActions(">T:judgement of wisdom");
     }
 
 	void interruptSpells()
 	{
 		tickWithTargetIsCastingNonMeleeSpell();
 
-		tick();
-
-		assertActions(">T:hammer of justice>T:melee");
+		assertActions(">T:hammer of justice");
 	}
 
     void cureDisease()

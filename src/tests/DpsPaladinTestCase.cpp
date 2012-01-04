@@ -56,16 +56,17 @@ protected:
 		tickOutOfMeleeRange();
         
         tick(); 
-        tick(); 
 		tick(); 
 		addTargetAura("judgement of wisdom");
 		
+		tick();
+
 		tickWithAttackerCount(3);
 		tickWithAttackerCount(3);
 
 		tickWithTargetLowHealth(19);
 
-		assertActions(">T:reach melee>T:melee>T:crusader strike>T:judgement of wisdom>S:divine storm>T:consecration>T:hammer of wrath");
+		assertActions(">T:reach melee>T:judgement of wisdom>T:judgement of light>T:crusader strike>S:divine storm>T:consecration>T:hammer of wrath");
     }
 };
 

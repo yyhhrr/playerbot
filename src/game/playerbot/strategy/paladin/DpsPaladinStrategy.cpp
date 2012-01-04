@@ -54,7 +54,7 @@ DpsPaladinStrategy::DpsPaladinStrategy(PlayerbotAI* ai) : GenericPaladinStrategy
 
 NextAction** DpsPaladinStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("crusader strike", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("crusader strike", ACTION_NORMAL + 1), NULL);
 }
 
 void DpsPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -63,21 +63,21 @@ void DpsPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     
     triggers.push_back(new TriggerNode(
         "low health",
-        NextAction::array(0, new NextAction("divine shield", 50.0f), new NextAction("holy light", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("divine shield", ACTION_CRITICAL_HEAL + 1), new NextAction("holy light", ACTION_CRITICAL_HEAL + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "judgement of wisdom",
-        NextAction::array(0, new NextAction("judgement of wisdom", 1.2f), NULL)));
+        NextAction::array(0, new NextAction("judgement of wisdom", ACTION_NORMAL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "blessing",
-        NextAction::array(0, new NextAction("blessing of might", 21.0f), NULL)));
+        NextAction::array(0, new NextAction("blessing of might", ACTION_HIGH + 8), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"medium aoe",
-		NextAction::array(0, new NextAction("divine storm", 27.0f), new NextAction("consecration", 27.0f), NULL)));
+		NextAction::array(0, new NextAction("divine storm", ACTION_HIGH + 1), new NextAction("consecration", ACTION_HIGH + 1), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"art of war",
-		NextAction::array(0, new NextAction("exorcism", 27.0f), NULL)));
+		NextAction::array(0, new NextAction("exorcism", ACTION_HIGH + 2), NULL)));
 }
