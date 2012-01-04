@@ -71,6 +71,7 @@ namespace ai
                 creators["banish"] = &TriggerFactoryInternal::banish;
                 creators["spellstone"] = &TriggerFactoryInternal::spellstone;
                 creators["backlash"] = &TriggerFactoryInternal::backlash;
+                creators["fear"] = &TriggerFactoryInternal::fear;
 
 
             }
@@ -86,6 +87,7 @@ namespace ai
             static Trigger* banish(PlayerbotAI* ai) { return new BanishTrigger(ai); }
             static Trigger* spellstone(PlayerbotAI* ai) { return new SpellstoneTrigger(ai); }
             static Trigger* backlash(PlayerbotAI* ai) { return new BacklashTrigger(ai); }
+            static Trigger* fear(PlayerbotAI* ai) { return new FearTrigger(ai); }
 
         };
     };
@@ -124,9 +126,11 @@ namespace ai
                 creators["rain of fire"] = &AiObjectContextInternal::rain_of_fire;
                 creators["shadowfury"] = &AiObjectContextInternal::shadowfury;
                 creators["life tap"] = &AiObjectContextInternal::life_tap;
+                creators["fear"] = &AiObjectContextInternal::fear;
             }
 
         private:
+            static Action* fear(PlayerbotAI* ai) { return new CastFearAction(ai); }
             static Action* immolate(PlayerbotAI* ai) { return new CastImmolateAction(ai); }
             static Action* summon_imp(PlayerbotAI* ai) { return new CastSummonImpAction(ai); }
             static Action* fel_armor(PlayerbotAI* ai) { return new CastFelArmorAction(ai); }

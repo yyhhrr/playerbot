@@ -11,6 +11,7 @@ public:
     GenericWarlockStrategyActionNodeFactory()
     {
         creators["summon voidwalker"] = &summon_voidwalker;
+        creators["banish"] = &banish;
     }
 private:
     static ActionNode* summon_voidwalker(PlayerbotAI* ai)
@@ -18,6 +19,13 @@ private:
         return new ActionNode ("summon voidwalker",
             /*P*/ NULL,
             /*A*/ NextAction::array(0, new NextAction("drain soul"), NULL),
+            /*C*/ NULL);
+    }
+    static ActionNode* banish(PlayerbotAI* ai)
+    {
+        return new ActionNode ("banish",
+            /*P*/ NULL,
+            /*A*/ NextAction::array(0, new NextAction("fear"), NULL),
             /*C*/ NULL);
     }
 };
@@ -59,4 +67,8 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "banish",
         NextAction::array(0, new NextAction("banish", 21.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "fear",
+        NextAction::array(0, new NextAction("fear", 20.0f), NULL)));
 }

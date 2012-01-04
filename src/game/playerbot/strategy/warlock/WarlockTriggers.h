@@ -56,4 +56,11 @@ namespace ai
     public:
         HasHealthstoneTrigger(PlayerbotAI* ai) : ItemCountTrigger(ai, "healthstone", 1) {}
     };
+
+    class FearTrigger : public HasCcTargetTrigger
+    {
+    public:
+        FearTrigger(PlayerbotAI* ai) : HasCcTargetTrigger(ai, "fear") {}
+    };
+
 }

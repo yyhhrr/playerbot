@@ -132,6 +132,13 @@ namespace ai
         CastShadowfuryAction(PlayerbotAI* ai) : CastSpellAction(ai, "shadowfury") {}
     };
 
+    class CastFearAction : public CastBuffSpellAction
+    {
+    public:
+        CastFearAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "fear") {}
+        virtual Value<Unit*>* GetTargetValue() { return context->GetValue<Unit*>("cc target", getName()); }
+    };
+
     class CastLifeTapAction: public CastSpellAction
     {
     public:
