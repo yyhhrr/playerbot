@@ -24,12 +24,6 @@ namespace ai
     BEGIN_RANGED_SPELL_ACTION(CastShadowBoltAction, "shadow bolt")
     END_SPELL_ACTION()
 
-	class CastImmolateAction : public CastDebuffSpellAction 
-	{
-	public:
-		CastImmolateAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "immolate") {}
-	};
-
 	class CastDrainSoulAction : public CastDebuffSpellAction 
 	{
 	public:
@@ -130,6 +124,18 @@ namespace ai
     {
     public:
         CastShadowfuryAction(PlayerbotAI* ai) : CastSpellAction(ai, "shadowfury") {}
+    };
+
+    class CastImmolateAction : public CastDebuffSpellAction
+    {
+    public:
+        CastImmolateAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "immolate") {}
+    };
+
+    class CastIncinirateAction : public CastSpellAction
+    {
+    public:
+        CastIncinirateAction(PlayerbotAI* ai) : CastSpellAction(ai, "incinirate") {}
     };
 
     class CastFearAction : public CastBuffSpellAction

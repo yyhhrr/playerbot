@@ -71,4 +71,8 @@ void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode(
         "fear",
         NextAction::array(0, new NextAction("fear", 20.0f), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "immolate",
+        NextAction::array(0, new NextAction("immolate", 19.0f), NULL)));
 }

@@ -72,6 +72,7 @@ namespace ai
                 creators["spellstone"] = &TriggerFactoryInternal::spellstone;
                 creators["backlash"] = &TriggerFactoryInternal::backlash;
                 creators["fear"] = &TriggerFactoryInternal::fear;
+                creators["immolate"] = &TriggerFactoryInternal::immolate;
 
 
             }
@@ -88,6 +89,7 @@ namespace ai
             static Trigger* spellstone(PlayerbotAI* ai) { return new SpellstoneTrigger(ai); }
             static Trigger* backlash(PlayerbotAI* ai) { return new BacklashTrigger(ai); }
             static Trigger* fear(PlayerbotAI* ai) { return new FearTrigger(ai); }
+            static Trigger* immolate(PlayerbotAI* ai) { return new ImmolateTrigger(ai); }
 
         };
     };
@@ -127,9 +129,11 @@ namespace ai
                 creators["shadowfury"] = &AiObjectContextInternal::shadowfury;
                 creators["life tap"] = &AiObjectContextInternal::life_tap;
                 creators["fear"] = &AiObjectContextInternal::fear;
+                creators["incinirate"] = &AiObjectContextInternal::incinirate;
             }
 
         private:
+            static Action* incinirate(PlayerbotAI* ai) { return new CastIncinirateAction(ai); }
             static Action* fear(PlayerbotAI* ai) { return new CastFearAction(ai); }
             static Action* immolate(PlayerbotAI* ai) { return new CastImmolateAction(ai); }
             static Action* summon_imp(PlayerbotAI* ai) { return new CastSummonImpAction(ai); }

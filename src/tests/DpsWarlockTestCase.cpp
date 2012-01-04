@@ -25,10 +25,15 @@ public:
 protected:
  	void combatVsMelee()
 	{
+ 	    tick();
+ 	    addTargetAura("immolate");
+
         tick(); 
-        addAura("corruption");
+        addTargetAura("corruption");
         tick(); 
-        addAura("curse of agony");
+        addTargetAura("curse of agony");
+
+        tick();
         
         tickWithLowHealth(49);
 
@@ -48,7 +53,7 @@ protected:
 		addAura("backlash");
 		tick();
 
-		assertActions(">T:corruption>T:curse of agony>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt>T:shadow bolt");
+		assertActions(">T:immolate>T:corruption>T:curse of agony>T:incinirate>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt>T:shadow bolt");
 	}
 
     void summonPet()
@@ -72,9 +77,8 @@ protected:
         tickWithAttackerCount(2);
         tickWithAttackerCount(3);
         tickWithAttackerCount(4);
-        tickWithAttackerCount(4);
 
-		assertActions(">T:shadowfury>T:seed of corruption>T:rain of fire>T:corruption");
+		assertActions(">T:shadowfury>T:seed of corruption>T:rain of fire");
     }
 };
 
