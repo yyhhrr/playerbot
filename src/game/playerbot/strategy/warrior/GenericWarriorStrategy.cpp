@@ -49,33 +49,29 @@ void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "battle shout",
-        NextAction::array(0, new NextAction("battle shout", 80.0f), NULL)));
+        NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "rend",
-        NextAction::array(0, new NextAction("rend", 1.3f), NULL)));
+        NextAction::array(0, new NextAction("rend", ACTION_NORMAL + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "light aoe",
-        NextAction::array(0, new NextAction("demoralizing shout", 23.0f), new NextAction("thunder clap", 23.0f), NULL)));
+        NextAction::array(0, new NextAction("thunder clap", ACTION_HIGH + 2), new NextAction("demoralizing shout", ACTION_HIGH + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "medium aoe",
-        NextAction::array(0, new NextAction("cleave", 21.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "high aoe",
-        NextAction::array(0, new NextAction("challenging shout", 23.0f), NULL)));
+        NextAction::array(0, new NextAction("cleave", ACTION_HIGH + 3), NULL)));
 
     triggers.push_back(new TriggerNode(
         "bloodrage",
-        NextAction::array(0, new NextAction("bloodrage", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("bloodrage", ACTION_HIGH + 1), NULL)));
 
     triggers.push_back(new TriggerNode(
         "shield bash",
-        NextAction::array(0, new NextAction("shield bash", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("shield bash", ACTION_NORMAL + 4), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"critical health",
-		NextAction::array(0, new NextAction("intimidating shout", 90.0f), NULL)));
+		NextAction::array(0, new NextAction("intimidating shout", ACTION_EMERGENCY), NULL)));
 }

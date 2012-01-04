@@ -18,8 +18,16 @@ public:
         creators["mocking blow"] = &mocking_blow;
         creators["death wish"] = &death_wish;
         creators["execute"] = &execute;
+        creators["reach melee"] = &reach_melee;
     }
 private:
+    static ActionNode* reach_melee(PlayerbotAI* ai)
+    {
+        return new ActionNode ("reach melee",
+            /*P*/ NextAction::array(0, new NextAction("charge"), NULL),
+            /*A*/ NULL,
+            /*C*/ NULL);
+    }
     static ActionNode* overpower(PlayerbotAI* ai)
     {
         return new ActionNode ("overpower",
@@ -85,7 +93,7 @@ DpsWarriorStrategy::DpsWarriorStrategy(PlayerbotAI* ai) : GenericWarriorStrategy
 
 NextAction** DpsWarriorStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("melee", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("bloodthirst", ACTION_NORMAL + 1), NULL);
 }
 
 void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -93,26 +101,22 @@ void DpsWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     GenericWarriorStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "medium rage available",
-        NextAction::array(0, new NextAction("bloodthirst", 20.0f), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "lose aggro",
-        NextAction::array(0, new NextAction("mocking blow", 30.0f), NULL)));
+        NextAction::array(0, new NextAction("mocking blow", ACTION_HIGH + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "target critical health",
-        NextAction::array(0, new NextAction("execute", 60.0f), NULL)));
+        NextAction::array(0, new NextAction("execute", ACTION_HIGH + 4), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"hamstring",
-		NextAction::array(0, new NextAction("hamstring", 50.0f), NULL)));
+		NextAction::array(0, new NextAction("hamstring", ACTION_INTERRUPT), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"victory rush",
-		NextAction::array(0, new NextAction("victory rush", 60.0f), NULL)));
+		NextAction::array(0, new NextAction("victory rush", ACTION_HIGH + 3), NULL)));
 
     triggers.push_back(new TriggerNode(
         "death wish",
-        NextAction::array(0, new NextAction("death wish", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("death wish", ACTION_HIGH + 2), NULL)));
 }

@@ -69,7 +69,7 @@ TankWarriorStrategy::TankWarriorStrategy(PlayerbotAI* ai) : GenericWarriorStrate
 
 NextAction** TankWarriorStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("melee", 10.0f), new NextAction("devastate", 10.0f), new NextAction("revenge", 10.0f), NULL);
+    return NextAction::array(0, new NextAction("devastate", ACTION_NORMAL + 1), new NextAction("revenge", ACTION_NORMAL + 1), NULL);
 }
 
 void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
@@ -78,41 +78,41 @@ void TankWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "medium rage available",
-        NextAction::array(0, new NextAction("shield slam", 21.0f), new NextAction("heroic strike", 1.3f), NULL)));
-
-    triggers.push_back(new TriggerNode(
-        "light rage available",
-        NextAction::array(0, new NextAction("devastate", 1.4f), NULL)));
+        NextAction::array(0, new NextAction("shield slam", ACTION_NORMAL + 2), new NextAction("heroic strike", ACTION_NORMAL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "disarm",
-        NextAction::array(0, new NextAction("disarm", 1.2f), NULL)));
+        NextAction::array(0, new NextAction("disarm", ACTION_NORMAL), NULL)));
 
     triggers.push_back(new TriggerNode(
         "lose aggro",
-        NextAction::array(0, new NextAction("taunt", 30.0f), NULL)));
+        NextAction::array(0, new NextAction("taunt", ACTION_HIGH + 9), NULL)));
 
     triggers.push_back(new TriggerNode(
         "medium health",
-        NextAction::array(0, new NextAction("shield wall", 50.0f), NULL)));
+        NextAction::array(0, new NextAction("shield wall", ACTION_MEDIUM_HEAL), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"critical health",
-		NextAction::array(0, new NextAction("last stand", 91.0f), NULL)));
+		NextAction::array(0, new NextAction("last stand", ACTION_EMERGENCY + 3), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"medium aoe",
-		NextAction::array(0, new NextAction("shockwave", 24.0f), NULL)));
+		NextAction::array(0, new NextAction("shockwave", ACTION_HIGH + 2), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"light aoe",
-		NextAction::array(0, new NextAction("cleave", 23.0f), NULL)));
+		NextAction::array(0, new NextAction("cleave", ACTION_HIGH + 1), NULL)));
+
+    triggers.push_back(new TriggerNode(
+        "high aoe",
+        NextAction::array(0, new NextAction("challenging shout", ACTION_HIGH + 3), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"concussion blow",
-		NextAction::array(0, new NextAction("concussion blow", 50.0f), NULL)));
+		NextAction::array(0, new NextAction("concussion blow", ACTION_INTERRUPT), NULL)));
 
     triggers.push_back(new TriggerNode(
         "sword and board",
-        NextAction::array(0, new NextAction("shield slam", 40.0f), NULL)));
+        NextAction::array(0, new NextAction("shield slam", ACTION_HIGH + 3), NULL)));
 }

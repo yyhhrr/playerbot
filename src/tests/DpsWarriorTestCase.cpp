@@ -51,7 +51,7 @@ protected:
 		tickWithAttackerCount(3);
 		tickWithAttackerCount(3);
 
-		assertActions(">S:battle stance>T:demoralizing shout>T:thunder clap>T:cleave");
+		assertActions(">S:battle stance>T:cleave>T:thunder clap>T:demoralizing shout");
     }
 
     void warriorMustHoldAggro()
@@ -59,11 +59,8 @@ protected:
         tickInMeleeRange(); // melee
 
 		tickWithNoAggro();
-		tickWithNoAggro();
 
-        tick();
-
-		assertActions(">S:battle stance>T:mocking blow>T:charge>T:melee");
+		assertActions(">S:battle stance>T:mocking blow");
     }
 
     void combatVsMelee()
@@ -78,16 +75,14 @@ protected:
 		tickInMeleeRange();
 
         tick();
-
-		spellAvailable("rend");
         addTargetAura("rend");
 
-        tickWithRage(41);
-        tickWithRage(41);
+        tick();
 
-        tick(); // bloodrage
+        set<uint8>("rage", "self target", 0);
+        tick();
 
-		assertActions(">S:battle stance>T:charge>T:melee>T:reach melee>T:rend>T:melee>T:bloodthirst>T:heroic strike>S:bloodrage");
+		assertActions(">S:battle stance>T:charge>T:bloodthirst>T:reach melee>T:rend>T:heroic strike>T:melee>S:bloodrage");
     }
 
     void boost()
@@ -96,11 +91,8 @@ protected:
 
 		tickWithBalancePercent(1);
 		tickWithBalancePercent(1);
-		tickWithBalancePercent(1);
 
-        tick(); // melee
-
-		assertActions(">S:battle stance>S:death wish>S:berserker rage>T:charge>T:melee");
+		assertActions(">S:battle stance>S:death wish>S:berserker rage");
     }
 
     void execute()
@@ -109,9 +101,7 @@ protected:
 
 		tickWithTargetLowHealth(19);
 
-        tick(); // melee
-
-		assertActions(">S:battle stance>T:execute>T:charge");
+		assertActions(">S:battle stance>T:execute");
     }
 
 
@@ -120,11 +110,8 @@ protected:
 		tickInMeleeRange(); // reach melee
 
 		tickWithTargetIsMoving();
-		tickWithTargetIsMoving();
 
-        tickWithSpellAvailable("defensive stance"); // melee
-
-		assertActions(">S:battle stance>T:hamstring>T:charge>T:melee");
+		assertActions(">S:battle stance>T:hamstring");
     }
 
 

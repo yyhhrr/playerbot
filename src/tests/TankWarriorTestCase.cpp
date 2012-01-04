@@ -81,7 +81,7 @@ protected:
 		tickWithAttackerCount(2);
 		tickWithAttackerCount(2);
 
-        assertActions(">T:shockwave>T:cleave>T:demoralizing shout>T:thunder clap>T:cleave");
+        assertActions(">T:cleave>T:thunder clap>T:demoralizing shout>T:shockwave>T:cleave");
     }
 
     void warriorMustHoldAggro()
@@ -102,7 +102,7 @@ protected:
         tick();
         tick();
 
-        assertActions(">S:defensive stance>T:reach melee>S:bloodrage>T:melee>T:devastate>T:revenge");
+        assertActions(">S:defensive stance>T:reach melee>S:bloodrage>T:devastate>T:revenge>T:rend");
     }
 
     void melee()
@@ -127,7 +127,7 @@ protected:
 		tickWithSpellAvailable("devastate");
         tickWithSpellAvailable("shield slam");
 
-		assertActions(">T:melee>T:devastate>T:revenge>T:sunder armor>T:rend>T:disarm>T:shield slam>T:heroic strike>T:devastate>T:shield slam");
+		assertActions(">T:devastate>T:revenge>T:rend>T:disarm>T:sunder armor>T:melee>T:shield slam>T:heroic strike>T:melee>T:shield slam");
     }
 
     void revengeIfDodge()
