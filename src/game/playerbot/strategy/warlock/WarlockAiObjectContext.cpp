@@ -130,9 +130,11 @@ namespace ai
                 creators["life tap"] = &AiObjectContextInternal::life_tap;
                 creators["fear"] = &AiObjectContextInternal::fear;
                 creators["incinirate"] = &AiObjectContextInternal::incinirate;
+                creators["conflagrate"] = &AiObjectContextInternal::conflagrate;
             }
 
         private:
+            static Action* conflagrate(PlayerbotAI* ai) { return new CastConflagrateAction(ai); }
             static Action* incinirate(PlayerbotAI* ai) { return new CastIncinirateAction(ai); }
             static Action* fear(PlayerbotAI* ai) { return new CastFearAction(ai); }
             static Action* immolate(PlayerbotAI* ai) { return new CastImmolateAction(ai); }

@@ -28,6 +28,8 @@ protected:
  	    tick();
  	    addTargetAura("immolate");
 
+ 	    tick();
+
         tick(); 
         addTargetAura("corruption");
         tick(); 
@@ -53,7 +55,7 @@ protected:
 		addAura("backlash");
 		tick();
 
-		assertActions(">T:immolate>T:corruption>T:curse of agony>T:incinirate>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt>T:shadow bolt");
+		assertActions(">T:immolate>T:conflagrate>T:corruption>T:curse of agony>T:incinirate>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt>T:shadow bolt");
 	}
 
     void summonPet()
