@@ -123,6 +123,7 @@ namespace ai
                 creators["seed of corruption"] = &AiObjectContextInternal::seed_of_corruption;
                 creators["rain of fire"] = &AiObjectContextInternal::rain_of_fire;
                 creators["shadowfury"] = &AiObjectContextInternal::shadowfury;
+                creators["life tap"] = &AiObjectContextInternal::life_tap;
             }
 
         private:
@@ -147,6 +148,7 @@ namespace ai
             static Action* seed_of_corruption(PlayerbotAI* ai) { return new CastSeedOfCorruptionAction(ai); }
             static Action* rain_of_fire(PlayerbotAI* ai) { return new CastRainOfFireAction(ai); }
             static Action* shadowfury(PlayerbotAI* ai) { return new CastShadowfuryAction(ai); }
+            static Action* life_tap(PlayerbotAI* ai) { return new CastLifeTapAction(ai); }
 
         };
     };

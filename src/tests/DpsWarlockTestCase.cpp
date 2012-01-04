@@ -12,6 +12,7 @@ class DpsWarlockTestCase : public EngineTestBase
       CPPUNIT_TEST( combatVsMelee );
       CPPUNIT_TEST( summonPet );
       CPPUNIT_TEST( aoe );
+      CPPUNIT_TEST( low_mana );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -55,6 +56,13 @@ protected:
         tickWithNoPet();
 
 		assertActions(">S:summon imp");
+    }
+
+    void low_mana()
+    {
+        tickWithLowMana(1);
+
+		assertActions(">S:life tap");
     }
 
     void aoe()
