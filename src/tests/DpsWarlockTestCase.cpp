@@ -40,10 +40,14 @@ protected:
 		tick();
 
 		spellAvailable("shadow bolt");
-		addAura("shadow trance"); 
+		addAura("shadow trance");
 		tick();
 
-		assertActions(">T:corruption>T:curse of agony>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt");
+        spellAvailable("shadow bolt");
+		addAura("backlash");
+		tick();
+
+		assertActions(">T:corruption>T:curse of agony>T:drain life>T:shadow bolt>T:drain soul>T:shoot>T:shadow bolt>T:shadow bolt");
 	}
 
     void summonPet()

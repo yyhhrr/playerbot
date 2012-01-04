@@ -27,6 +27,12 @@ namespace ai
         ShadowTranceTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "shadow trance") {}
     };
 
+    class BacklashTrigger : public HasAuraTrigger
+    {
+    public:
+        BacklashTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "backlash") {}
+    };
+
     class BanishTrigger : public HasCcTargetTrigger
     {
     public:

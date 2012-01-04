@@ -70,6 +70,7 @@ namespace ai
                 creators["curse of agony"] = &TriggerFactoryInternal::curse_of_agony;
                 creators["banish"] = &TriggerFactoryInternal::banish;
                 creators["spellstone"] = &TriggerFactoryInternal::spellstone;
+                creators["backlash"] = &TriggerFactoryInternal::backlash;
 
 
             }
@@ -84,6 +85,7 @@ namespace ai
             static Trigger* curse_of_agony(PlayerbotAI* ai) { return new CurseOfAgonyTrigger(ai); }
             static Trigger* banish(PlayerbotAI* ai) { return new BanishTrigger(ai); }
             static Trigger* spellstone(PlayerbotAI* ai) { return new SpellstoneTrigger(ai); }
+            static Trigger* backlash(PlayerbotAI* ai) { return new BacklashTrigger(ai); }
 
         };
     };
