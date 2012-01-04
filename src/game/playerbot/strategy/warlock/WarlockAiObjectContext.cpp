@@ -122,6 +122,7 @@ namespace ai
                 creators["banish"] = &AiObjectContextInternal::banish;
                 creators["seed of corruption"] = &AiObjectContextInternal::seed_of_corruption;
                 creators["rain of fire"] = &AiObjectContextInternal::rain_of_fire;
+                creators["shadowfury"] = &AiObjectContextInternal::shadowfury;
             }
 
         private:
@@ -145,6 +146,7 @@ namespace ai
             static Action* banish(PlayerbotAI* ai) { return new CastBanishAction(ai); }
             static Action* seed_of_corruption(PlayerbotAI* ai) { return new CastSeedOfCorruptionAction(ai); }
             static Action* rain_of_fire(PlayerbotAI* ai) { return new CastRainOfFireAction(ai); }
+            static Action* shadowfury(PlayerbotAI* ai) { return new CastShadowfuryAction(ai); }
 
         };
     };

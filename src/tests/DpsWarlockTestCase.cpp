@@ -61,11 +61,12 @@ protected:
     {
         engine->addStrategy("aoe");
 
+        tickWithAttackerCount(2);
         tickWithAttackerCount(3);
         tickWithAttackerCount(4);
         tickWithAttackerCount(4);
 
-		assertActions(">T:seed of corruption>T:rain of fire>T:corruption");
+		assertActions(">T:shadowfury>T:seed of corruption>T:rain of fire>T:corruption");
     }
 };
 

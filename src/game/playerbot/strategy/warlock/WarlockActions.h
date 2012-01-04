@@ -126,4 +126,10 @@ namespace ai
         CastRainOfFireAction(PlayerbotAI* ai) : CastSpellAction(ai, "rain of fire") {}
     };
 
+    class CastShadowfuryAction : public CastSpellAction
+    {
+    public:
+        CastShadowfuryAction(PlayerbotAI* ai) : CastSpellAction(ai, "shadowfury") {}
+    };
+
 }
