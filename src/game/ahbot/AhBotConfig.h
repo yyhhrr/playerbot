@@ -21,6 +21,7 @@ public:
     float priceMultiplier, priceQualityMultiplier;
     uint32 defaultMinPrice;
     uint32 maxItemLevel;
+    float underPriceProbability;
 
     float GetSellPriceMultiplier(string category)
     {
