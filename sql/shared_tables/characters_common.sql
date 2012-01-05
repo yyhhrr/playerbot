@@ -25,7 +25,11 @@ DROP VIEW IF EXISTS    `instance`;
 DROP VIEW IF EXISTS    `instance_reset`;
 
 
-CREATE  VIEW `character_queststatus` AS SELECT * FROM `characters_common`.`character_queststatus`;
+CREATE  VIEW `character_queststatus` AS 
+SELECT * FROM `characters_common`.`character_queststatus`
+WHERE quest IN (SELECT entry FROM `udb`.`quest_template` WHERE QuestLevel <= 70 AND MinLevel <= 70);
+
+
 CREATE  VIEW `character_achievement` AS SELECT * FROM `characters_common`.`character_achievement`;
 CREATE  VIEW `character_achievement_progress` AS SELECT * FROM `characters_common`.`character_achievement_progress`;
 CREATE  VIEW `character_queststatus_daily` AS SELECT * FROM `characters_common`.`character_queststatus_daily`;
