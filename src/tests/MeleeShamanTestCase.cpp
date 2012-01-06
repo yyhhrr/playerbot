@@ -39,10 +39,7 @@ protected:
 		tick();
 		tick();
 
-		addAura("maelstrom weapon");
-		tick();
-
-        assertActions(">S:searing totem>T:flame shock>T:earth shock>T:stormstrike>T:lava lash>T:melee>T:lightning bolt");
+        assertActions(">S:searing totem>T:flame shock>T:earth shock>T:stormstrike>T:lava lash>T:melee");
     }
 
     void buff()
