@@ -928,8 +928,12 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.Clear();
+    mm.MoveIdle();
     bot->clearUnitState( UNIT_STAT_CHASE );
     bot->clearUnitState( UNIT_STAT_FOLLOW );
+
+    if (bot->isMoving())
+        return false;
 
     if (!bot->IsStandState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);

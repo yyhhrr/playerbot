@@ -124,6 +124,15 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         }
     }
 
+    MotionMaster &mm = *bot->GetMotionMaster();
+    mm.Clear();
+    mm.MoveIdle();
+    bot->clearUnitState( UNIT_STAT_CHASE );
+    bot->clearUnitState( UNIT_STAT_FOLLOW );
+
+    if (bot->isMoving())
+        return false;
+
     bool requiresItem = false;
     for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
     {
@@ -174,11 +183,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         *packet << TARGET_FLAG_SELF;
         out << " on self";
     }
-
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.Clear();
-    bot->clearUnitState( UNIT_STAT_CHASE );
-    bot->clearUnitState( UNIT_STAT_FOLLOW );
 
     if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
     {

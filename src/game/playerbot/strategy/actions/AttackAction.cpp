@@ -60,6 +60,7 @@ bool AttackAction::Attack(Unit* target)
     bot->SetSelectionGuid(target->GetObjectGuid());
 
     mm.Clear();
+    mm.MoveIdle();
     if (!bot->isInFront(target, ATTACK_DISTANCE))
         bot->SetFacingTo(bot->GetAngle(target));
 
