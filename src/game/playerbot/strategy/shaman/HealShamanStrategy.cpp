@@ -48,11 +48,6 @@ void HealShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "low mana",
         NextAction::array(0, new NextAction("mana tide totem", 22.0f), NULL)));
 
-	triggers.push_back(new TriggerNode(
-        "water shield",
-		NextAction::array(0, new NextAction("water shield", 22.0f), NULL)));
-
-
     triggers.push_back(new TriggerNode(
         "cleanse spirit poison",
         NextAction::array(0, new NextAction("cleanse spirit", 24.0f), NULL)));

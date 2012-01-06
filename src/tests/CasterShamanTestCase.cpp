@@ -44,6 +44,7 @@ protected:
 
     void buff()
     {
+        engine->addStrategy("bmana");
         removeAura("water shield");
         removeAura("flametongue weapon");
 

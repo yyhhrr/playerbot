@@ -38,6 +38,20 @@ namespace ai
             static Strategy* caster_aoe(PlayerbotAI* ai) { return new CasterAoeShamanStrategy(ai); }
         };
 
+        class BuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
+        {
+        public:
+            BuffStrategyFactoryInternal() : NamedObjectContext<Strategy>(false, true)
+            {
+                creators["bmana"] = &shaman::BuffStrategyFactoryInternal::bmana;
+                creators["bdps"] = &shaman::BuffStrategyFactoryInternal::bdps;
+            }
+
+        private:
+            static Strategy* bmana(PlayerbotAI* ai) { return new ShamanBuffManaStrategy(ai); }
+            static Strategy* bdps(PlayerbotAI* ai) { return new ShamanBuffDpsStrategy(ai); }
+        };
+
         class CombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
         {
         public:
@@ -242,6 +256,7 @@ ShamanAiObjectContext::ShamanAiObjectContext(PlayerbotAI* ai) : AiObjectContext(
 {
     strategyContexts.Add(new ai::shaman::StrategyFactoryInternal());
     strategyContexts.Add(new ai::shaman::CombatStrategyFactoryInternal());
+    strategyContexts.Add(new ai::shaman::BuffStrategyFactoryInternal());
     actionContexts.Add(new ai::shaman::AiObjectContextInternal());
     triggerContexts.Add(new ai::shaman::TriggerFactoryInternal());
 }

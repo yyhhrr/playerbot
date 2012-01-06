@@ -56,10 +56,6 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "shaman weapon",
         NextAction::array(0, new NextAction("windfury weapon", 22.0f), NULL)));
 
-	triggers.push_back(new TriggerNode(
-		"lightning shield",
-		NextAction::array(0, new NextAction("lightning shield", 22.0f), NULL)));
-
     triggers.push_back(new TriggerNode(
         "searing totem",
         NextAction::array(0, new NextAction("searing totem", 22.0f), NULL)));

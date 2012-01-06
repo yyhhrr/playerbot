@@ -44,6 +44,7 @@ protected:
 
     void buff()
     {
+        engine->addStrategy("bdps");
         removeAura("lightning shield");
         tickInMeleeRange();
 

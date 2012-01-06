@@ -57,22 +57,19 @@ void FleeManager::calculatePossibleDestinations(list<FleePoint*> &points)
 	float botPosY = bot->GetPositionY();
 	float botPosZ = bot->GetPositionZ();
 
-	for (float radius = maxAllowedDistance; radius>=5.0f; radius -= 5.0f)
+    for (float angle = -M_PI + followAngle; angle < M_PI + followAngle; angle += M_PI / 8)
     {
-		for (float angle = -M_PI + followAngle; angle < M_PI + followAngle; angle += M_PI / 8)
-        {
-			float x = botPosX + cos(angle) * radius;
-			float y = botPosY + sin(angle) * radius;
+        float x = botPosX + cos(angle) * maxAllowedDistance;
+        float y = botPosY + sin(angle) * maxAllowedDistance;
 
-			if (!bot->IsWithinLOS(x, y, botPosZ))
-				continue;
+        if (!bot->IsWithinLOS(x, y, botPosZ))
+            continue;
 
-			FleePoint *point = new FleePoint(x, y, botPosZ);
-			calculateDistanceToPlayers(point);
-			calculateDistanceToCreatures(point);
-			points.push_back(point);
-		}
-	}
+        FleePoint *point = new FleePoint(x, y, botPosZ);
+        calculateDistanceToPlayers(point);
+        calculateDistanceToCreatures(point);
+        points.push_back(point);
+    }
 }
 
 void FleeManager::cleanup(list<FleePoint*> &points)

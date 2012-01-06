@@ -109,11 +109,11 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
             break;
         case CLASS_SHAMAN:
             if (tab == 0)
-                engine->addStrategies("caster", "caster aoe", NULL);
+                engine->addStrategies("caster", "caster aoe", "bmana", NULL);
             else if (tab == 2)
-                engine->addStrategy("heal");
+                engine->addStrategies("heal", "bmana", NULL);
             else
-                engine->addStrategies("dps", "melee aoe", NULL);
+                engine->addStrategies("dps", "melee aoe", "bdps", NULL);
             break;
         case CLASS_PALADIN:
             if (tab == 1)
