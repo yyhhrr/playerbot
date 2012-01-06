@@ -359,11 +359,11 @@ bool StoreLootAction::IsLootAllowed(uint32 itemid)
 
     if (lootStrategy == LOOTSTRATEGY_SKILL)
     {
-        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a quest item");
+        ai->TellMaster(LOG_LVL_DEBUG, "Not allowed loot: not a tradeskill item");
         return false;
     }
 
-    if (proto->Quality == ITEM_QUALITY_POOR)
+    if (proto->Class == ITEM_CLASS_MONEY || proto->Quality == ITEM_QUALITY_POOR)
         return true;
 
     if (lootStrategy == LOOTSTRATEGY_GRAY)
