@@ -107,9 +107,11 @@ namespace ai
                 creators["frost shock snare"] = &TriggerFactoryInternal::frost_shock_snare;
                 creators["heroism"] = &TriggerFactoryInternal::heroism;
                 creators["bloodlust"] = &TriggerFactoryInternal::bloodlust;
+                creators["maelstrom weapon"] = &TriggerFactoryInternal::maelstrom_weapon;
             }
 
         private:
+            static Trigger* maelstrom_weapon(PlayerbotAI* ai) { return new MaelstromWeaponTrigger(ai); }
             static Trigger* heroism(PlayerbotAI* ai) { return new HeroismTrigger(ai); }
             static Trigger* bloodlust(PlayerbotAI* ai) { return new BloodlustTrigger(ai); }
             static Trigger* party_member_cleanse_disease(PlayerbotAI* ai) { return new PartyMemberCleanseSpiritDiseaseTrigger(ai); }

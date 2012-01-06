@@ -180,4 +180,10 @@ namespace ai
     public:
         BloodlustTrigger(PlayerbotAI* ai) : BoostTrigger(ai, "bloodlust") {}
     };
+
+    class MaelstromWeaponTrigger : public HasAuraTrigger
+    {
+    public:
+        MaelstromWeaponTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "maelstrom weapon") {}
+    };
 }
