@@ -91,6 +91,7 @@ int main()
   sPlayerbotAIConfig.mediumHealth = 60;
   sPlayerbotAIConfig.almostFullHealth = 80;
   sPlayerbotAIConfig.lowMana = 40;
+  sPlayerbotAIConfig.mediumMana = 60;
   sPlayerbotAIConfig.iterationsPerTick = 10;
 
   // Create the event manager and test controller

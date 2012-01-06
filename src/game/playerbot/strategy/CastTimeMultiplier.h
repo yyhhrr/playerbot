@@ -4,10 +4,10 @@
 
 namespace ai 
 {
-    class LowManaMultiplier : public Multiplier
+    class CastTimeMultiplier : public Multiplier
     {
     public:
-        LowManaMultiplier(PlayerbotAI* ai) : Multiplier(ai) {}
+        CastTimeMultiplier(PlayerbotAI* ai) : Multiplier(ai) {}
 
     public:
         virtual float GetValue(Action* action);

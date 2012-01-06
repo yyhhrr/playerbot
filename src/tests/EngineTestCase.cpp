@@ -96,7 +96,7 @@ private:
 class TestMultiplier : public Multiplier
 {
 public:
-    TestMultiplier() : Multiplier() { asked = 0; }
+    TestMultiplier(PlayerbotAI* const ai) : Multiplier(ai) { asked = 0; }
     float GetValue(Action* action) { return asked = 5.0f; }
 
     static int asked;
@@ -115,7 +115,7 @@ public:
 
     virtual void InitMultipliers(std::list<Multiplier*> &multipliers)
     {
-        multipliers.push_back(new TestMultiplier());
+        multipliers.push_back(new TestMultiplier(ai));
     }
 
     virtual void InitTriggers(std::list<TriggerNode*> &triggers)

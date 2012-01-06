@@ -8,6 +8,6 @@ using namespace ai;
 
 void PassiveStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 {
-    multipliers.push_back(new PassiveMultiplier());
+    multipliers.push_back(new PassiveMultiplier(ai));
 }
 

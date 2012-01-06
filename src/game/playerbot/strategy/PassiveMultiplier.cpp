@@ -7,7 +7,7 @@ using namespace ai;
 list<string> PassiveMultiplier::allowedActions;
 list<string> PassiveMultiplier::allowedParts;
 
-PassiveMultiplier::PassiveMultiplier() : Multiplier()
+PassiveMultiplier::PassiveMultiplier(PlayerbotAI* ai) : Multiplier(ai)
 {
     if (allowedActions.empty())
     {

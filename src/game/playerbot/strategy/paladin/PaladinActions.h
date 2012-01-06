@@ -243,9 +243,9 @@ namespace ai
 		virtual string getName() { return "purify disease on party"; }
 	};
 
-	class CastHandOfReckoningAction : public CastDebuffSpellAction {
+	class CastHandOfReckoningAction : public CastSpellAction {
 	public:
-		CastHandOfReckoningAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "hand of reckoning") {}
+		CastHandOfReckoningAction(PlayerbotAI* ai) : CastSpellAction(ai, "hand of reckoning") {}
 	};
 
 	class CastCleanseAction : public CastCureSpellAction {

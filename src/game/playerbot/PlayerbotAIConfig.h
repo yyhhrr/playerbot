@@ -21,7 +21,7 @@ public:
     float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance, fleeDistance, tooCloseDistance, meleeDistance, followDistance;
     std::list<uint32> randomBotAccounts;
     uint32 criticalHealth, lowHealth, mediumHealth, almostFullHealth;
-    uint32 lowMana;
+    uint32 lowMana, mediumMana;
     uint32 pvpChance;
     uint32 randomGearQuality;
     uint32 iterationsPerTick;

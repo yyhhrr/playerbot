@@ -31,6 +31,7 @@
 #include "generic/GrindingStrategy.h"
 #include "generic/UsePotionsStrategy.h"
 #include "generic/GuardStrategy.h"
+#include "generic/CastTimeStrategy.h"
 
 namespace ai
 {
@@ -54,9 +55,11 @@ namespace ai
             creators["duel"] = &StrategyContext::duel;
             creators["kite"] = &StrategyContext::kite;
             creators["potions"] = &StrategyContext::potions;
+            creators["cast time"] = &StrategyContext::cast_time;
         }
 
     private:
+        static Strategy* cast_time(PlayerbotAI* ai) { return new CastTimeStrategy(ai); }
         static Strategy* potions(PlayerbotAI* ai) { return new UsePotionsStrategy(ai); }
         static Strategy* kite(PlayerbotAI* ai) { return new KiteStrategy(ai); }
         static Strategy* duel(PlayerbotAI* ai) { return new DuelStrategy(ai); }

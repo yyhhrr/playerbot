@@ -3,10 +3,10 @@
 
 namespace ai 
 {
-    class Multiplier
+    class Multiplier : public AiObject
     {
     public:
-        Multiplier() {}
+        Multiplier(PlayerbotAI* ai) : AiObject(ai) {}
         virtual ~Multiplier() {}
 
     public:

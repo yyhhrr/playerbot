@@ -1,6 +1,8 @@
 #include "../../pchdef.h"
 #include "../playerbot.h"
 #include "LowManaMultiplier.h"
+#include "../PlayerbotAIConfig.h"
+#include "actions/GenericSpellActions.h"
 
 using namespace ai;
 
@@ -8,22 +10,31 @@ float LowManaMultiplier::GetValue(Action* action)
 {
     if (action == NULL) return 1.0f;
 
+    uint8 health = AI_VALUE2(uint8, "health", "self target");
+    uint8 targetHealth = AI_VALUE2(uint8, "health", "current target");
+    uint8 mana = AI_VALUE2(uint8, "mana", "self target");
+    bool hasMana = AI_VALUE2(bool, "has mana", "self target");
+    bool mediumMana = hasMana && mana < sPlayerbotAIConfig.mediumMana;
+
     string name = action->getName();
 
-    // Hunter
-    if (name == "arcane shot" || 
-        name == "multi-shot" ||
-        name == "serpent sting" ||
-        name == "viper sting" ||
-        name == "scorpid sting" 
-        ) return !(rand() % 50) ? 1 : 0;
+    if (health < sPlayerbotAIConfig.lowHealth)
+        return 1.0f;
 
-    // Priest
-    if (name == "shadow word: pain" || 
-        name == "devouring plague" || 
-        name == "mind blast" 
-        ) return !(rand() % 50) ? 1 : 0;
+    if (mediumMana && dynamic_cast<CastBuffSpellAction*>(action))
+        return 0.0f;
 
+    if (action->GetTarget() != AI_VALUE(Unit*, "current target"))
+        return 1.0f;
+
+    if (AI_VALUE(uint8, "balance") <= 50)
+        return 1.0f;
+
+    if (targetHealth < sPlayerbotAIConfig.lowHealth && dynamic_cast<CastDebuffSpellAction*>(action))
+        return 0.0f;
+
+    if (mediumMana && dynamic_cast<CastDebuffSpellAction*>(action))
+        return 0.0f;
 
     return 1.0f;
 }

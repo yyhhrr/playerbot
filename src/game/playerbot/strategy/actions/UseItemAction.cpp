@@ -67,13 +67,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             return false;
     }
 
-    if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
-    {
-        ai->ChangeStrategy("-follow,+stay", BOT_STATE_NON_COMBAT);
-        ai->TellMaster("I will eat/drink for 30 secs");
-        ai->SetNextCheckDelay(30000);
-    }
-
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
     uint8 cast_count = 1;

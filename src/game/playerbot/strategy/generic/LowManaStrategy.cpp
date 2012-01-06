@@ -7,5 +7,5 @@ using namespace ai;
 
 void LowManaStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 {
-    multipliers.push_back(new LowManaMultiplier());
+    multipliers.push_back(new LowManaMultiplier(ai));
 }

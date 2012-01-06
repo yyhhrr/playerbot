@@ -228,10 +228,11 @@ namespace ai
 	    CastPsychicScreamAction(PlayerbotAI* ai) : CastSpellAction(ai, "psychic scream") {}
 	};
 
-	class CastDispersionAction : public CastBuffSpellAction
+	class CastDispersionAction : public CastSpellAction
 	{
 	public:
-	    CastDispersionAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "dispersion") {}
+	    CastDispersionAction(PlayerbotAI* ai) : CastSpellAction(ai, "dispersion") {}
+	    virtual string GetTargetName() { return "self target"; }
 	};
 
 }

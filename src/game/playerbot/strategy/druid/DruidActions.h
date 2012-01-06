@@ -130,16 +130,16 @@ namespace ai
 		CastStarfireAction(PlayerbotAI* ai) : CastSpellAction(ai, "starfire") {}
 	};
 
-	class CastEntanglingRootsAction : public CastDebuffSpellAction
+	class CastEntanglingRootsAction : public CastSpellAction
 	{
 	public:
-		CastEntanglingRootsAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "entangling roots") {}
+		CastEntanglingRootsAction(PlayerbotAI* ai) : CastSpellAction(ai, "entangling roots") {}
 	};
 
-    class CastEntanglingRootsCcAction : public CastDebuffSpellAction
+    class CastEntanglingRootsCcAction : public CastSpellAction
     {
     public:
-        CastEntanglingRootsCcAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "entangling roots on cc") {}
+        CastEntanglingRootsCcAction(PlayerbotAI* ai) : CastSpellAction(ai, "entangling roots on cc") {}
         virtual Value<Unit*>* GetTargetValue();
         virtual bool Execute(Event event);
     };
@@ -150,10 +150,10 @@ namespace ai
 		CastNaturesGraspAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "nature's grasp") {}
 	};
 
-	class CastHibernateAction : public CastDebuffSpellAction
+	class CastHibernateAction : public CastSpellAction
 	{
 	public:
-		CastHibernateAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "hibernate") {}
+		CastHibernateAction(PlayerbotAI* ai) : CastSpellAction(ai, "hibernate") {}
 	};
 
 	class CastCurePoisonAction : public CastCureSpellAction

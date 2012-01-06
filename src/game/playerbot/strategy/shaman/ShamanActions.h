@@ -110,9 +110,10 @@ namespace ai
         CastManaSpringTotemAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "mana spring totem") {}
     };
 
-	class CastManaTideTotemAction : public CastBuffSpellAction {
+	class CastManaTideTotemAction : public CastSpellAction {
 	public:
-		CastManaTideTotemAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "mana tide totem") {}
+		CastManaTideTotemAction(PlayerbotAI* ai) : CastSpellAction(ai, "mana tide totem") {}
+		virtual string GetTargetName() { return "self target"; }
 	};
 
 	class CastHealingStreamTotemAction : public CastBuffSpellAction {

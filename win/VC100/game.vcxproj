@@ -547,9 +547,11 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\UseMeetingStoneAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObject.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\AiObjectContext.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\CastTimeMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\HealDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\AttackRtiStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\AttackWeakStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ChatCommandHandlerStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\CombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DeadStrategy.cpp" />
@@ -955,6 +957,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\WorldPacketActionContext.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\AiObject.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\AiObjectContext.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\CastTimeMultiplier.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\ChatCommandHandlerStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\DeadStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.h" />
@@ -977,6 +980,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\ExternalEventHelper.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\AttackRtiStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\AttackWeakStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\CombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\DpsAoeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\DpsAssistStrategy.h" />

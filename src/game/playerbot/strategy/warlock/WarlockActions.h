@@ -24,26 +24,26 @@ namespace ai
     BEGIN_RANGED_SPELL_ACTION(CastShadowBoltAction, "shadow bolt")
     END_SPELL_ACTION()
 
-	class CastDrainSoulAction : public CastDebuffSpellAction 
+	class CastDrainSoulAction : public CastSpellAction
 	{
 	public:
-		CastDrainSoulAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "drain soul") {}
+		CastDrainSoulAction(PlayerbotAI* ai) : CastSpellAction(ai, "drain soul") {}
 		virtual bool isUseful() 
 		{
 			return AI_VALUE2(uint8, "item count", "soul shard") < 2;
 		}
 	};
 
-	class CastDrainManaAction : public CastDebuffSpellAction 
+	class CastDrainManaAction : public CastSpellAction
 	{
 	public:
-		CastDrainManaAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "drain mana") {}
+		CastDrainManaAction(PlayerbotAI* ai) : CastSpellAction(ai, "drain mana") {}
 	};
 
-	class CastDrainLifeAction : public CastDebuffSpellAction 
+	class CastDrainLifeAction : public CastSpellAction
 	{
 	public:
-		CastDrainLifeAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "drain life") {}
+		CastDrainLifeAction(PlayerbotAI* ai) : CastSpellAction(ai, "drain life") {}
 	};
 
 	class CastCurseOfAgonyAction : public CastDebuffSpellAction 
@@ -132,10 +132,10 @@ namespace ai
         CastImmolateAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "immolate") {}
     };
 
-    class CastConflagrateAction : public CastDebuffSpellAction
+    class CastConflagrateAction : public CastSpellAction
     {
     public:
-        CastConflagrateAction(PlayerbotAI* ai) : CastDebuffSpellAction(ai, "conflagrate") {}
+        CastConflagrateAction(PlayerbotAI* ai) : CastSpellAction(ai, "conflagrate") {}
     };
 
     class CastIncinirateAction : public CastSpellAction

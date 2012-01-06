@@ -8,7 +8,7 @@ using namespace ai;
 class MagePullMultiplier : public PassiveMultiplier
 {
 public:
-    MagePullMultiplier(string action) : PassiveMultiplier() 
+    MagePullMultiplier(PlayerbotAI* ai, string action) : PassiveMultiplier(ai)
     {
         this->action = action;
     }
@@ -46,7 +46,7 @@ void PullStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 void PullStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
 {
-    multipliers.push_back(new MagePullMultiplier(action));
+    multipliers.push_back(new MagePullMultiplier(ai, action));
     RangedCombatStrategy::InitMultipliers(multipliers);
 }
 
