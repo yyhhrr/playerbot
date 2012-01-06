@@ -180,8 +180,15 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
     bot->clearUnitState( UNIT_STAT_CHASE );
     bot->clearUnitState( UNIT_STAT_FOLLOW );
 
-    if (!bot->IsStandState())
+    if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
+    {
+        bot->SetStandState(UNIT_STAND_STATE_SIT);
+        ai->SetNextCheckDelay(30000);
+    }
+    else
+    {
         bot->SetStandState(UNIT_STAND_STATE_STAND);
+    }
 
     ai->TellMaster(out);
     bot->GetSession()->QueuePacket(packet);
