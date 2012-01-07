@@ -72,14 +72,14 @@ private:
     {
         return new ActionNode ("food",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* drink(PlayerbotAI* ai)
     {
         return new ActionNode ("drink",
             /*P*/ NULL,
-            /*A*/ NextAction::array(0, new NextAction("flee"), NULL),
+            /*A*/ NULL,
             /*C*/ NULL);
     }
     static ActionNode* mana_potion(PlayerbotAI* ai)

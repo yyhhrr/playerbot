@@ -69,5 +69,5 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trigge
 
     triggers.push_back(new TriggerNode(
         "low mana",
-        NextAction::array(0, new NextAction("innervate", 55.0f), NULL)));
+        NextAction::array(0, new NextAction("innervate", ACTION_EMERGENCY + 5), NULL)));
 }

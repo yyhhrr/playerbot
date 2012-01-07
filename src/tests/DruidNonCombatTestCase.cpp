@@ -42,6 +42,7 @@ protected:
 
 	void low_mana()
 	{
+	    engine->addStrategy("flee");
         set<uint8>("item count", "drink", 1);
         tickWithLowMana(5);
         tickWithLowMana(5);

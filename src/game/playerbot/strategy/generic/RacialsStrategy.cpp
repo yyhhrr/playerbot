@@ -30,7 +30,7 @@ void RacialsStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "low mana", 
-        NextAction::array(0, new NextAction("arcane torrent", 55.0f), NULL)));
+        NextAction::array(0, new NextAction("arcane torrent", ACTION_EMERGENCY + 6), NULL)));
 }
 
 RacialsStrategy::RacialsStrategy(PlayerbotAI* ai) : Strategy(ai)

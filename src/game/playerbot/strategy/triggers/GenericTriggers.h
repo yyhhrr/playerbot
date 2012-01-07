@@ -334,7 +334,15 @@ namespace ai
 	class LowManaTrigger : public Trigger
 	{
 	public:
-		LowManaTrigger(PlayerbotAI* ai) : Trigger(ai, "low mana", 5) {}
+		LowManaTrigger(PlayerbotAI* ai) : Trigger(ai, "low mana") {}
+
+		virtual bool IsActive();
+	};
+
+	class MediumManaTrigger : public Trigger
+	{
+	public:
+		MediumManaTrigger(PlayerbotAI* ai) : Trigger(ai, "medium mana") {}
 
 		virtual bool IsActive();
 	};

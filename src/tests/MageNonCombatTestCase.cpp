@@ -71,6 +71,7 @@ protected:
     
     void low_mana()
     {
+        engine->addStrategy("flee");
         addAura("arcane intellect");
         addPartyAura("arcane intellect");
         addAura("mage armor");

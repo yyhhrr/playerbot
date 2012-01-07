@@ -51,6 +51,7 @@ protected:
 
 	void potions()
 	{
+        engine->addStrategy("flee");
 	    engine->addStrategy("potions");
 
         set<uint8>("item count", "mana potion", 1);
@@ -61,6 +62,10 @@ protected:
         spellUnavailable("innervate");
         spellUnavailable("barskin");
         spellUnavailable("survival instincts");
+
+        spellUnavailable("regrowth");
+        spellUnavailable("healing touch");
+        spellUnavailable("rejuvenation");
 
 	    tickWithLowMana(1);
         set<uint8>("item count", "mana potion", 0);

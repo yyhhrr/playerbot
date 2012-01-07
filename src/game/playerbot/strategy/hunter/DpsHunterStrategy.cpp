@@ -80,7 +80,7 @@ void DpsHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "low mana",
-        NextAction::array(0, new NextAction("viper sting", 51.0f), NULL)));
+        NextAction::array(0, new NextAction("viper sting", ACTION_EMERGENCY + 5), NULL)));
 
     triggers.push_back(new TriggerNode(
         "no pet",
