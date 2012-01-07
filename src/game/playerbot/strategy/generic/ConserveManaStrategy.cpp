@@ -1,12 +1,12 @@
-#include "../../pchdef.h"
-#include "../playerbot.h"
-#include "LowManaMultiplier.h"
-#include "../PlayerbotAIConfig.h"
-#include "actions/GenericSpellActions.h"
+#include "../../../pchdef.h"
+#include "../../playerbot.h"
+#include "ConserveManaStrategy.h"
+#include "../../PlayerbotAIConfig.h"
+#include "../actions/GenericSpellActions.h"
 
 using namespace ai;
 
-float LowManaMultiplier::GetValue(Action* action)
+float ConserveManaMultiplier::GetValue(Action* action)
 {
     if (action == NULL) return 1.0f;
 
@@ -37,4 +37,9 @@ float LowManaMultiplier::GetValue(Action* action)
         return 0.0f;
 
     return 1.0f;
+}
+
+void ConserveManaStrategy::InitMultipliers(std::list<Multiplier*> &multipliers)
+{
+    multipliers.push_back(new ConserveManaMultiplier(ai));
 }

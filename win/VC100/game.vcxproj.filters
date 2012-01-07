@@ -741,9 +741,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1125,9 +1122,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\PassiveStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.cpp">
-      <Filter>playerbot</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -1198,6 +1192,9 @@
       <Filter>playerbot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1955,9 +1952,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
@@ -2430,9 +2424,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\PassiveStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.h">
-      <Filter>playerbot</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
@@ -2512,6 +2503,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

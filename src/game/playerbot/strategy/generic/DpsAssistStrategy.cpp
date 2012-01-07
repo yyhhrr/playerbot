@@ -1,13 +1,8 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "DpsAssistStrategy.h"
-#include "../PassiveMultiplier.h"
-#include "../LowManaMultiplier.h"
 
 using namespace ai;
-
-
-
 
 void DpsAssistStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {

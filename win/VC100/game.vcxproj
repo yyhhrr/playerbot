@@ -554,6 +554,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ChatCommandHandlerStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\CombatStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\DeadStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\BearTankDruidStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\druid\CasterDruidStrategy.cpp" />
@@ -577,7 +578,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\FollowMasterStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GrindingStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\MeleeCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\PassiveStrategy.cpp" />
@@ -601,7 +601,6 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\hunter\HunterTriggers.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\KiteStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\LootNonCombatStrategy.cpp" />
-    <ClCompile Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.cpp" />
@@ -982,6 +981,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\AttackWeakStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\CastTimeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\CombatStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\DpsAoeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\DpsAssistStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\EmoteStrategy.h" />
@@ -991,7 +991,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\FollowMasterStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GrindingStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\GuardStrategy.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\LowManaStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\MeleeCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\NonCombatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\PassiveStrategy.h" />
@@ -1017,7 +1016,6 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\ItemVisitors.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\KiteStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\LootNonCombatStrategy.h" />
-    <ClInclude Include="..\..\src\game\playerbot\strategy\LowManaMultiplier.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\ArcaneMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FireMageStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\mage\FrostMageStrategy.h" />
