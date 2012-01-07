@@ -15,7 +15,7 @@ namespace ai
         void ListItems();
         bool Withdraw(const uint32 itemid);
         bool Deposit(Item* pItem);
-        Item* BankAction::FindItemInBank(uint32 ItemId);
+        Item* FindItemInBank(uint32 ItemId);
     };
 
 }

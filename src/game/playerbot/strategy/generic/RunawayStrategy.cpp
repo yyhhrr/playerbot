@@ -1,6 +1,6 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
-#include "RunAwayStrategy.h"
+#include "RunawayStrategy.h"
 
 using namespace ai;
 
