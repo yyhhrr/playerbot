@@ -26,7 +26,6 @@ public:
 		setupEngine(new ShamanAiObjectContext(ai), "heal", NULL);
 
         addAura("water shield");
-        addAura("earthliving weapon");
     }
 
 protected:
@@ -64,12 +63,10 @@ protected:
         tick(); 
         addAura("water shield");
 
-        removeAura("earthliving weapon");
-        tick(); 
-        tick(); 
-        tick(); 
-        tick(); 
-        addAura("earthliving weapon");
+        tickWithItemForSpell("earthliving weapon");
+        tickWithItemForSpell("earthliving weapon");
+        tickWithItemForSpell("earthliving weapon");
+        tickWithItemForSpell("earthliving weapon");
 
         engine->addStrategy("totems");
         tick();

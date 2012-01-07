@@ -469,6 +469,15 @@ namespace ai
         virtual bool IsActive();
     };
 
+    class HasItemForSpellTrigger : public Trigger
+    {
+    public:
+        HasItemForSpellTrigger(PlayerbotAI* ai, string spell) : Trigger(ai, spell) {}
+
+    public:
+        virtual bool IsActive();
+    };
+
 }
 
 #include "RangeTriggers.h"

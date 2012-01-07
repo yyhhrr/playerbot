@@ -27,10 +27,16 @@ namespace ai
         MockStringValue(PlayerbotAI* const ai) : ManualSetValue<string>(ai, "") {}
     };
 
-    class MockItemValue : public ManualSetValue<list<Item*> >, public Qualified
+    class MockItemListValue : public ManualSetValue<list<Item*> >, public Qualified
     {
     public:
-        MockItemValue(PlayerbotAI* const ai) : ManualSetValue<list<Item*> >(ai, list<Item*>()) {}
+        MockItemListValue(PlayerbotAI* const ai) : ManualSetValue<list<Item*> >(ai, list<Item*>()) {}
+    };
+
+    class MockItemValue : public ManualSetValue<Item*>, public Qualified
+    {
+    public:
+        MockItemValue(PlayerbotAI* const ai) : ManualSetValue<Item*>(ai, NULL) {}
     };
 
     class MockLogicalValue : public ManualSetValue<bool>, public Qualified
@@ -90,6 +96,16 @@ namespace ai
         MockUnitListValue(PlayerbotAI* const ai) : ManualSetValue<list<ObjectGuid>>(ai, list<ObjectGuid>()) {}
     };
 
+    class MockSpellIdValue : public CalculatedValue<uint32>, public Qualified
+    {
+    public:
+        MockSpellIdValue(PlayerbotAI* ai) : CalculatedValue<uint32>(ai) {}
+
+    public:
+        virtual uint32 Calculate() { return 1; }
+
+    };
+
     class MockValueContext : public NamedObjectContext<UntypedValue>
     {
     public:
@@ -131,7 +147,8 @@ namespace ai
             creators["swimming"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
             creators["item count"] = &MockValueContext::stats;
-            creators["inventory items"] = &MockValueContext::item;
+            creators["inventory items"] = &MockValueContext::itemlist;
+            creators["item for spell"] = &MockValueContext::item;
             creators["spell cast useful"] = &MockValueContext::always_true;
             creators["can loot"] = &MockValueContext::logical;
 
@@ -141,11 +158,13 @@ namespace ai
             creators["aoe heal"] = &MockValueContext::stats;
 
             creators["rti"] = &MockValueContext::str;
+            creators["spell id"] = &MockValueContext::spell_id;
         }
 
     private:
         static UntypedValue* always_true(PlayerbotAI* ai) { return new AlwaysTrueValue(ai); }
         static UntypedValue* stats(PlayerbotAI* ai) { return new MockStatsValue(ai); }
+        static UntypedValue* itemlist(PlayerbotAI* ai) { return new MockItemListValue(ai); }
         static UntypedValue* item(PlayerbotAI* ai) { return new MockItemValue(ai); }
         static UntypedValue* floating(PlayerbotAI* ai) { return new MockFloatValue(ai); }
         static UntypedValue* str(PlayerbotAI* ai) { return new MockStringValue(ai); }
@@ -155,6 +174,7 @@ namespace ai
         static UntypedValue* party_member_to_heal(PlayerbotAI* ai) { return new MockPartyMemberToHeal(ai); }
         static UntypedValue* party_member_to_dispel(PlayerbotAI* ai) { return new MockPartyMemberToDispel(ai); }
         static UntypedValue* units(PlayerbotAI* ai) { return new MockUnitListValue(ai); }
+        static UntypedValue* spell_id(PlayerbotAI* ai) { return new MockSpellIdValue(ai); }
     };
 
     class AiObjectContextWrapper : public AiObjectContext

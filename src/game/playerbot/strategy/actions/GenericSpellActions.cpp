@@ -19,15 +19,18 @@ bool CastSpellAction::isUseful()
 	return GetTarget() && AI_VALUE2(bool, "spell cast useful", spell);
 }
 
-
-bool CastAuraSpellAction::isPossible() 
-{
-	return CastSpellAction::isPossible() && !ai->HasAura(spell, GetTarget());
-}
-
 bool CastAuraSpellAction::isUseful() 
 {
 	return CastSpellAction::isUseful() && !ai->HasAura(spell, GetTarget());
+}
+
+bool CastEnchantItemAction::isUseful()
+{
+    if (!CastSpellAction::isUseful())
+        return false;
+
+    uint32 spellId = AI_VALUE2(uint32, "spell id", spell);
+    return spellId && AI_VALUE2(Item*, "item for spell", spellId);
 }
 
 bool CastHealingSpellAction::isUseful() 

@@ -79,7 +79,6 @@ namespace ai
 	public:
 		CastAuraSpellAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell) {}
 
-		virtual bool isPossible();
 		virtual bool isUseful();
 	};
 
@@ -107,6 +106,18 @@ namespace ai
 			range = sPlayerbotAIConfig.spellDistance;
 		}
 
+        virtual string GetTargetName() { return "self target"; }
+	};
+
+	class CastEnchantItemAction : public CastSpellAction
+	{
+	public:
+	    CastEnchantItemAction(PlayerbotAI* ai, string spell) : CastSpellAction(ai, spell)
+		{
+			range = sPlayerbotAIConfig.spellDistance;
+		}
+
+        virtual bool isUseful();
         virtual string GetTargetName() { return "self target"; }
 	};
 

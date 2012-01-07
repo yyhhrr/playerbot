@@ -23,7 +23,6 @@ public:
 		setupEngine(new ShamanAiObjectContext(ai), "caster", NULL);
 
         addAura("water shield");
-        addAura("flametongue weapon");
         addTargetAura("flame shock");
     }
 
@@ -46,10 +45,8 @@ protected:
     {
         engine->addStrategy("bmana");
         removeAura("water shield");
-        removeAura("flametongue weapon");
 
-        tick();
-        addAura("flametongue weapon");
+        tickWithItemForSpell("flametongue weapon");
 
         tick();
         addAura("water shield");

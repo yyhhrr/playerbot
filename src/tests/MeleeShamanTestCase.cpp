@@ -23,7 +23,6 @@ public:
 		setupEngine(new ShamanAiObjectContext(ai), "melee", NULL);
 
         addAura("lightning shield");
-        addAura("windfury weapon");
     }
 
 protected:
@@ -51,10 +50,8 @@ protected:
         tick();
         addAura("lightning shield");
 
-        removeAura("windfury weapon");
-        tick();
-        tick();
-        addAura("windfury weapon");
+        tickWithItemForSpell("windfury weapon");
+        tickWithItemForSpell("windfury weapon");
 
         assertActions(">S:lightning shield>S:searing totem>S:windfury weapon>S:rockbiter weapon");
     }

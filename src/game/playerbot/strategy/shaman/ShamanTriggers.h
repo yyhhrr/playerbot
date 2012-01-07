@@ -7,6 +7,8 @@ namespace ai
     public:
         ShamanWeaponTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "rockbiter weapon") {}
         virtual bool IsActive();
+    private:
+        static list<string> spells;
     };
 
     class TotemTrigger : public Trigger {

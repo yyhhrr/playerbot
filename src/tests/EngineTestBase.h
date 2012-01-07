@@ -78,6 +78,7 @@ protected:
     void tickWhileSwimming();
     void setInMeleeRange();
     void tickWithAoeHeal(string type, int amount = 2);
+    void tickWithItemForSpell(string spell);
 
 protected:
     MockPlayerbotAIBase *ai;

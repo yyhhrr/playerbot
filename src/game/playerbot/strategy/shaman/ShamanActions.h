@@ -65,29 +65,29 @@ namespace ai
 		CastLightningShieldAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "lightning shield") {}
 	};
 
-    class CastEarthlivingWeaponAction : public CastBuffSpellAction {
+    class CastEarthlivingWeaponAction : public CastEnchantItemAction {
     public:
-        CastEarthlivingWeaponAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "earthliving weapon") {}
+        CastEarthlivingWeaponAction(PlayerbotAI* ai) : CastEnchantItemAction(ai, "earthliving weapon") {}
     };
 
-    class CastRockbiterWeaponAction : public CastBuffSpellAction {
+    class CastRockbiterWeaponAction : public CastEnchantItemAction {
     public:
-        CastRockbiterWeaponAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "rockbiter weapon") {}
+        CastRockbiterWeaponAction(PlayerbotAI* ai) : CastEnchantItemAction(ai, "rockbiter weapon") {}
     };
 
-    class CastFlametongueWeaponAction : public CastBuffSpellAction {
+    class CastFlametongueWeaponAction : public CastEnchantItemAction {
     public:
-        CastFlametongueWeaponAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "flametongue weapon") {}
+        CastFlametongueWeaponAction(PlayerbotAI* ai) : CastEnchantItemAction(ai, "flametongue weapon") {}
     };
 
-    class CastFrostbrandWeaponAction : public CastBuffSpellAction {
+    class CastFrostbrandWeaponAction : public CastEnchantItemAction {
     public:
-        CastFrostbrandWeaponAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "frostbrand weapon") {}
+        CastFrostbrandWeaponAction(PlayerbotAI* ai) : CastEnchantItemAction(ai, "frostbrand weapon") {}
     };
 
-    class CastWindfuryWeaponAction : public CastBuffSpellAction {
+    class CastWindfuryWeaponAction : public CastEnchantItemAction {
     public:
-        CastWindfuryWeaponAction(PlayerbotAI* ai) : CastBuffSpellAction(ai, "windfury weapon") {}
+        CastWindfuryWeaponAction(PlayerbotAI* ai) : CastEnchantItemAction(ai, "windfury weapon") {}
     };
 
     class CastStoneskinTotemAction : public CastBuffSpellAction {

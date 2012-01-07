@@ -460,3 +460,10 @@ void EngineTestBase::tickWhileSwimming()
     tick();
     set<bool>("swimming", "self target", false);
 }
+
+void EngineTestBase::tickWithItemForSpell(string spell)
+{
+    set<Item*>("item for spell", "1", (Item*)(void*)0x01);
+    tick();
+    set<Item*>("item for spell", "1", NULL);
+}

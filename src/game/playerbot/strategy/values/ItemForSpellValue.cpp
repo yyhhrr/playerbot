@@ -16,16 +16,15 @@ Item* ItemForSpellValue::Calculate()
 
     Player* trader = bot->GetTrader();
     if (trader)
-    {
         return trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
-    }
+
     for( uint8 slot=EQUIPMENT_SLOT_START; slot<EQUIPMENT_SLOT_END; slot++ ) {
-        Item* const pItem = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );
-        if( !pItem )
+        Item* const itemForSpell = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );
+        if (!itemForSpell || itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
             continue;
 
-        if (pItem->IsFitToSpellRequirements(spellInfo))
-            return pItem;
+        if (itemForSpell->IsFitToSpellRequirements(spellInfo))
+            return itemForSpell;
     }
     return NULL;
 }

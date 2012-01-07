@@ -199,3 +199,10 @@ bool HasNearestAddsTrigger::IsActive()
     return targets.size();
 }
 
+bool HasItemForSpellTrigger::IsActive()
+{
+	string spell = getName();
+    uint32 spellId = AI_VALUE2(uint32, "spell id", spell);
+    return spellId && AI_VALUE2(Item*, "item for spell", spellId);
+}
+
