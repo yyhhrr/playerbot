@@ -16,7 +16,11 @@ Item* ItemForSpellValue::Calculate()
 
     Player* trader = bot->GetTrader();
     if (trader)
-        return trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
+    {
+        Item* const itemForSpell = trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
+        if (itemForSpell && itemForSpell->IsFitToSpellRequirements(spellInfo))
+            return itemForSpell;
+    }
 
     for( uint8 slot=EQUIPMENT_SLOT_START; slot<EQUIPMENT_SLOT_END; slot++ ) {
         Item* const itemForSpell = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );

@@ -20,30 +20,25 @@ bool UseItemAction::Execute(Event event)
     }
 
     if (!gos.empty() && items.empty())
-    {
-        UseGameObject(*gos.begin());
-        return true;
-    }
+        return UseGameObject(*gos.begin());
 
     if (gos.empty() && !items.empty())
-    {
-        UseItem(*items.begin());
-        return true;
-    }
+        return UseItem(*items.begin());
 
     Item* item = *items.begin();
     return UseItem(item, *gos.begin());
 }
 
-void UseItemAction::UseGameObject(ObjectGuid guid)
+bool UseItemAction::UseGameObject(ObjectGuid guid)
 {
     GameObject* go = ai->GetGameObject(guid);
     if (!go || !go->isSpawned())
-        return;
+        return false;
 
     go->Use(bot);
     ostringstream out; out << "Using " << chat->formatGameobject(go);
     ai->TellMaster(out);
+    return true;
 }
 
 bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
@@ -142,8 +137,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
         if (!ai->CanCastSpell(spellId, bot, false))
             continue;
 
-        ai->WaitForSpellCast(spellId);
-
         const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
         if (pSpellInfo->Targets & TARGET_FLAG_ITEM)
         {
@@ -156,9 +149,13 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
 
             if (bot->GetTrader())
             {
+                if (selfOnly)
+                    return false;
+
                 *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
                 targetSelected = true;
                 out << " on traded item";
+                ai->WaitForSpellCast(spellId);
             }
             else
             {
@@ -166,6 +163,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
                 *packet << itemForSpell->GetPackGUID();
                 targetSelected = true;
                 out << " on "<< chat->formatItem(itemForSpell->GetProto());
+                ai->WaitForSpellCast(spellId);
             }
         }
         else
