@@ -133,56 +133,52 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
     if (bot->isMoving())
         return false;
 
-    bool requiresItem = false;
     for (int i=0; i<MAX_ITEM_PROTO_SPELLS; i++)
     {
         uint32 spellId = item->GetProto()->Spells[i].SpellId;
         if (!spellId)
             continue;
 
-        const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
-		requiresItem |= (pSpellInfo->Targets & TARGET_FLAG_ITEM);
-
         if (!ai->CanCastSpell(spellId, bot, false))
-            return false;
-
-        if (!(pSpellInfo->Targets & TARGET_FLAG_ITEM))
             continue;
 
-        Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
-        if (!itemForSpell)
-            continue;
+        ai->WaitForSpellCast(spellId);
 
-        requiresItem = true;
-
-        if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-            continue;
-
-        if (bot->GetTrader())
+        const SpellEntry* const pSpellInfo = sSpellStore.LookupEntry(spellId);
+        if (pSpellInfo->Targets & TARGET_FLAG_ITEM)
         {
-            *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
-            targetSelected = true;
-            out << " on traded item";
+            Item* itemForSpell = AI_VALUE2(Item*, "item for spell", spellId);
+            if (!itemForSpell)
+                continue;
+
+            if (itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
+                continue;
+
+            if (bot->GetTrader())
+            {
+                *packet << TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
+                targetSelected = true;
+                out << " on traded item";
+            }
+            else
+            {
+                *packet << TARGET_FLAG_ITEM;
+                *packet << itemForSpell->GetPackGUID();
+                targetSelected = true;
+                out << " on "<< chat->formatItem(itemForSpell->GetProto());
+            }
         }
         else
         {
-            *packet << TARGET_FLAG_ITEM;
-            *packet << itemForSpell->GetPackGUID();
+            *packet << TARGET_FLAG_SELF;
             targetSelected = true;
-            out << " on "<< chat->formatItem(itemForSpell->GetProto());
+            out << " on self";
         }
-        ai->WaitForSpellCast(spellId);
         break;
     }
     
-    if (!targetSelected && requiresItem)
-        return false;
-
     if (!targetSelected)
-    {
-        *packet << TARGET_FLAG_SELF;
-        out << " on self";
-    }
+        return false;
 
     if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
     {
