@@ -39,10 +39,14 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
-    MotionMaster &mm = *bot->GetMotionMaster();
+    if (bot->IsSitState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
+
+    bot->CastStop();
 
     bool generatePath = bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty() &&
             !bot->IsFlying() && !bot->IsUnderWater();
+    MotionMaster &mm = *bot->GetMotionMaster();
     mm.MovePoint(mapId, x, y, z, generatePath);
     WaitForReach(bot->GetDistance(x, y, z));
 
@@ -117,11 +121,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
         return false;
 
     if (distance > sPlayerbotAIConfig.reactDistance)
-    {
-        ai->TellMaster(LOG_LVL_DEBUG, "I am too far away");
-        ai->SetNextCheckDelay(sPlayerbotAIConfig.globalCoolDown);
         return false;
-    }
 
     return IsMovingAllowed();
 }
@@ -194,11 +194,8 @@ void MovementAction::WaitForReach(float distance)
 {
     float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN);
 
-    if (delay < sPlayerbotAIConfig.reactDelay)
+    if (delay > sPlayerbotAIConfig.reactDelay)
         delay = sPlayerbotAIConfig.reactDelay;
-
-    if (delay > sPlayerbotAIConfig.globalCoolDown)
-        delay = sPlayerbotAIConfig.globalCoolDown;
 
     ai->SetNextCheckDelay((uint32)delay);
 }

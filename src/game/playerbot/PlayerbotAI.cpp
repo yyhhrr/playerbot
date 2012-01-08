@@ -329,17 +329,10 @@ int32 PlayerbotAI::CalculateGlobalCooldown(uint32 spellid)
 
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellid );
 
-    if (!spellInfo ||
-        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_1 ||
-        spellInfo->Attributes & SPELL_ATTR_ON_NEXT_SWING_2 ||
-        spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE ||
-        !spellInfo->StartRecoveryCategory)
-        return 0;
-
-    if (spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQ_WAND)
+    if (bot->GetGlobalCooldownMgr().HasGlobalCooldown(spellInfo))
         return sPlayerbotAIConfig.globalCoolDown;
 
-    return sPlayerbotAIConfig.globalCoolDown;
+    return sPlayerbotAIConfig.reactDelay;
 }
 
 void PlayerbotAI::HandleMasterIncomingPacket(const WorldPacket& packet)
