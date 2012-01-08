@@ -97,6 +97,6 @@ void EquipAction::EquipItem(Item& item)
         bot->GetSession()->QueuePacket(packet);
     }
 
-    ostringstream out; out << chat->formatItem(item.GetProto()) << " equipped";
+    ostringstream out; out << "equipping " << chat->formatItem(item.GetProto());
     ai->TellMaster(out);
 }
