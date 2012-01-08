@@ -23,6 +23,9 @@ protected:
         if (!creature || creature->isDead())
             return;
 
+        if (*ai->GetAiObjectContext()->GetValue<Unit*>("current target") == creature)
+            return;
+
         uint8 health = creature->GetHealthPercent();
         if (health < sPlayerbotAIConfig.mediumHealth)
             return;
@@ -36,34 +39,39 @@ protected:
             return;
         }
 
-        float minDistance = sPlayerbotAIConfig.reactDistance;
+        float minDistance = sPlayerbotAIConfig.spellDistance;
         Group* group = bot->GetGroup();
-        if (group)
+        if (!group)
+            return;
+
+        if (group->GetTargetIcon(4) == creature->GetObjectGuid())
         {
-            if (group->GetTargetIcon(4) == creature->GetObjectGuid())
-            {
-                result = creature;
-                return;
-            }
-
-            Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
-            for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
-            {
-                Player *member = sObjectMgr.GetPlayer(itr->guid);
-                if( !member || !member->isAlive() || member == bot)
-                    continue;
-
-                if (!ai->IsTank(member))
-                    continue;
-
-                float distance = member->GetDistance(creature);
-                if (distance < minDistance)
-                    minDistance = distance;
-            }
+            result = creature;
+            return;
         }
 
-        if (minDistance < 10.0f)
+        int tankCount, dpsCount;
+        GetPlayerCount(bot, creature, &tankCount, &dpsCount);
+        if (!tankCount || !dpsCount)
+        {
+            result = creature;
             return;
+        }
+
+        Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
+        for (Group::member_citerator itr = groupSlot.begin(); itr != groupSlot.end(); itr++)
+        {
+            Player *member = sObjectMgr.GetPlayer(itr->guid);
+            if( !member || !member->isAlive() || member == bot)
+                continue;
+
+            if (!ai->IsTank(member))
+                continue;
+
+            float distance = member->GetDistance(creature);
+            if (distance < minDistance)
+                minDistance = distance;
+        }
 
         if (!result || minDistance > maxDistance)
         {
