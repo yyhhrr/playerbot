@@ -9,8 +9,6 @@ DROP TABLE IF EXISTS    `character_queststatus_monthly`;
 DROP TABLE IF EXISTS    `character_queststatus_weekly`;
 DROP TABLE IF EXISTS    `character_reputation`;
 DROP TABLE IF EXISTS    `character_social`;
-DROP TABLE IF EXISTS    `instance`;
-DROP TABLE IF EXISTS    `instance_reset`;
 
 
 DROP VIEW IF EXISTS    `character_queststatus`;
@@ -21,8 +19,6 @@ DROP VIEW IF EXISTS    `character_queststatus_monthly`;
 DROP VIEW IF EXISTS    `character_queststatus_weekly`;
 DROP VIEW IF EXISTS    `character_reputation`;
 DROP VIEW IF EXISTS    `character_social`;
-DROP VIEW IF EXISTS    `instance`;
-DROP VIEW IF EXISTS    `instance_reset`;
 
 
 CREATE  VIEW `character_queststatus` AS 
@@ -37,5 +33,3 @@ CREATE  VIEW `character_queststatus_monthly` AS SELECT * FROM `characters_common
 CREATE  VIEW `character_queststatus_weekly` AS SELECT * FROM `characters_common`.`character_queststatus_weekly`;
 CREATE  VIEW `character_reputation` AS SELECT * FROM `characters_common`.`character_reputation`;
 CREATE  VIEW `character_social` AS SELECT * FROM `characters_common`.`character_social`;
-CREATE  VIEW `instance` AS SELECT * FROM `characters_common`.`instance`;
-CREATE  VIEW `instance_reset` AS SELECT * FROM `characters_common`.`instance_reset`;
