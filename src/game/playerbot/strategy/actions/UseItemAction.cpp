@@ -1,6 +1,7 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "UseItemAction.h"
+#include "../../../../shared/Database/DBCStore.h"
 
 using namespace ai;
 
@@ -13,20 +14,28 @@ bool UseItemAction::Execute(Event event)
     list<Item*> items = AI_VALUE2(list<Item*>, "inventory items", name);
     list<ObjectGuid> gos = chat->parseGameobjects(name);
 
-    if (gos.empty() && items.empty())
+    if (gos.empty())
     {
-        ai->TellMaster(LOG_LVL_DEBUG, "Nothing to use");
-        return false;
+        if (items.size() > 1)
+        {
+            list<Item*>::iterator i = items.begin();
+            Item* itemTarget = *i++;
+            Item* item = *i;
+            return UseItemOnItem(item, itemTarget);
+        }
+        else if (!items.empty())
+            return UseItemAuto(*items.begin());
+    }
+    else
+    {
+        if (items.empty())
+            return UseGameObject(*gos.begin());
+        else
+            return UseItemOnGameObject(*items.begin(), *gos.begin());
     }
 
-    if (!gos.empty() && items.empty())
-        return UseGameObject(*gos.begin());
-
-    if (gos.empty() && !items.empty())
-        return UseItem(*items.begin());
-
-    Item* item = *items.begin();
-    return UseItem(item, *gos.begin());
+    ai->TellMaster(LOG_LVL_DEBUG, "Nothing to use");
+    return false;
 }
 
 bool UseItemAction::UseGameObject(ObjectGuid guid)
@@ -41,7 +50,22 @@ bool UseItemAction::UseGameObject(ObjectGuid guid)
     return true;
 }
 
-bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
+bool UseItemAction::UseItemAuto(Item* item)
+{
+    return UseItem(item, ObjectGuid(), NULL);
+}
+
+bool UseItemAction::UseItemOnGameObject(Item* item, ObjectGuid go)
+{
+    return UseItem(item, go, NULL);
+}
+
+bool UseItemAction::UseItemOnItem(Item* item, Item* itemTarget)
+{
+    return UseItem(item, ObjectGuid(), itemTarget);
+}
+
+bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 {
     if (bot->CanUseItem(item) != EQUIP_ERR_OK)
         return false;
@@ -83,6 +107,24 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
             uint32 targetFlag = TARGET_FLAG_OBJECT;
             *packet << targetFlag << goGuid.WriteAsPacked();
             out << " on " << chat->formatGameobject(go);
+            targetSelected = true;
+        }
+    }
+
+    if (itemTarget)
+    {
+        if (item->GetProto()->Class == ITEM_CLASS_GEM)
+        {
+            bool fit = SocketItem(itemTarget, item) || SocketItem(itemTarget, item, true);
+            if (!fit)
+                ai->TellMaster("Socket does not fit");
+            return fit;
+        }
+        else
+        {
+            uint32 targetFlag = TARGET_FLAG_ITEM;
+            *packet << targetFlag << itemTarget->GetPackGUID();
+            out << " on " << chat->formatItem(itemTarget->GetProto());
             targetSelected = true;
         }
     }
@@ -192,6 +234,64 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid)
     bot->GetSession()->QueuePacket(packet);
     return true;
 }
+
+bool UseItemAction::SocketItem(Item* item, Item* gem, bool replace)
+{
+    WorldPacket* const packet = new WorldPacket(CMSG_SOCKET_GEMS);
+    *packet << item->GetObjectGuid();
+
+    bool fits = false;
+    for (uint32 enchant_slot = SOCK_ENCHANTMENT_SLOT; enchant_slot < SOCK_ENCHANTMENT_SLOT + MAX_GEM_SOCKETS; ++enchant_slot)
+    {
+        uint8 SocketColor = item->GetProto()->Socket[enchant_slot-SOCK_ENCHANTMENT_SLOT].Color;
+        GemPropertiesEntry const* gemProperty = sGemPropertiesStore.LookupEntry(gem->GetProto()->GemProperties);
+        if (gemProperty && (gemProperty->color & SocketColor))
+        {
+            if (fits)
+            {
+                *packet << ObjectGuid();
+                continue;
+            }
+
+            uint32 enchant_id = item->GetEnchantmentId(EnchantmentSlot(enchant_slot));
+            if (!enchant_id)
+            {
+                *packet << gem->GetObjectGuid();
+                fits = true;
+                continue;
+            }
+
+            SpellItemEnchantmentEntry const* enchantEntry = sSpellItemEnchantmentStore.LookupEntry(enchant_id);
+            if (!enchantEntry || !enchantEntry->GemID)
+            {
+                *packet << gem->GetObjectGuid();
+                fits = true;
+                continue;
+            }
+
+			if (replace && enchantEntry->GemID != gem->GetProto()->ItemId)
+            {
+                *packet << gem->GetObjectGuid();
+                fits = true;
+                continue;
+            }
+
+        }
+
+        *packet << ObjectGuid();
+    }
+
+    if (fits)
+    {
+        ostringstream out; out << "Socketing " << chat->formatItem(item->GetProto());
+        out << " with "<< chat->formatItem(gem->GetProto());
+        ai->TellMaster(out);
+
+        bot->GetSession()->QueuePacket(packet);
+    }
+    return fits;
+}
+
 
 bool UseItemAction::isPossible()
 {

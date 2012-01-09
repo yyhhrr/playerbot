@@ -13,8 +13,12 @@ namespace ai
         virtual bool isPossible();
 
     private:
-        bool UseItem(Item* item, ObjectGuid go = ObjectGuid());
+        bool UseItemAuto(Item* item);
+        bool UseItemOnGameObject(Item* item, ObjectGuid go);
+        bool UseItemOnItem(Item* item, Item* itemTarget);
+        bool UseItem(Item* item, ObjectGuid go, Item* itemTarget);
         bool UseGameObject(ObjectGuid guid);
+        bool SocketItem(Item* item, Item* gem, bool replace = false);
 
     private:
         bool selfOnly;

@@ -178,7 +178,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libmySQL.lib;libeay32.lib;ws2_32.lib;winmm.lib;odbc32.lib;odbccp32.lib;advapi32.lib;dbghelp.lib;framework.lib;game.lib;cppunit.lib;msvcrtd.lib;ACEd.lib;g3dlite.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libmySQL.lib;libeay32.lib;ws2_32.lib;winmm.lib;odbc32.lib;odbccp32.lib;advapi32.lib;dbghelp.lib;framework.lib;game.lib;cppunit.lib;msvcrtd.lib;ACEd.lib;g3dlite.lib;zlib.lib;Detour.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <Version>
       </Version>
