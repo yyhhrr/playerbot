@@ -257,6 +257,12 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     item->AddToUpdateQueueOf(player);
 
     uint32 price = category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction]);
+
+    sLog.outDebug("AddAuction: market price adjust");
+    updateMarketPrice(proto->ItemId, price, auction);
+
+    price = category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction]);
+
     uint32 stackCount = category->GetStackCount(proto);
     if (!price || !stackCount)
         return;
@@ -294,9 +300,6 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
 
     auctionHouse->AddAuction(auctionEntry);
     auctionEntry->SaveToDB();
-
-    sLog.outDebug("AddAuction: market price adjust");
-    updateMarketPrice(proto->ItemId, buyoutPrice / stackCount, auction);
 
     sLog.outDetail("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auction, bidPrice, buyoutPrice);
 }
