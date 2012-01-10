@@ -392,7 +392,7 @@ void AhBot::Expire(int auction)
 
 void AhBot::AddToHistory(AuctionEntry* entry)
 {
-    if (!player)
+    if (!player || !entry)
         return;
 
     if (entry->bidder != player->GetGUIDLow() && entry->owner != player->GetGUIDLow())
@@ -417,7 +417,8 @@ void AhBot::AddToHistory(AuctionEntry* entry)
         won = AHBOT_WON_SELF;
 
     sLog.outDebug("AddToHistory: market price adjust");
-    updateMarketPrice(proto->ItemId, entry->buyout / entry->itemCount, entry->auctionHouseEntry->houseId);
+    int count = entry->itemCount ? entry->itemCount : 1;
+    updateMarketPrice(proto->ItemId, entry->buyout / count, entry->auctionHouseEntry->houseId);
 
     uint32 now = time(0);
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
