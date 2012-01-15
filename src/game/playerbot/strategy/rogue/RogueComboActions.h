@@ -2,27 +2,38 @@
 
 namespace ai
 {
-	class CastSinisterStrikeAction : public CastMeleeSpellAction 
-	{ 
-	public: 
-		CastSinisterStrikeAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "sinister strike") {} 
+	class CastComboAction : public CastMeleeSpellAction
+	{
+	public:
+	    CastComboAction(PlayerbotAI* ai, string name) : CastMeleeSpellAction(ai, name) {}
+
+	    virtual bool isUseful()
+	    {
+	        return CastMeleeSpellAction::isUseful() && AI_VALUE2(uint8, "combo", "self target") < 5;
+	    }
 	};
 
-    class CastMutilateAction : public CastMeleeSpellAction 
+	class CastSinisterStrikeAction : public CastComboAction
+	{ 
+	public: 
+		CastSinisterStrikeAction(PlayerbotAI* ai) : CastComboAction(ai, "sinister strike") {}
+	};
+
+    class CastMutilateAction : public CastComboAction
     { 
     public: 
-        CastMutilateAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "mutilate") {} 
+        CastMutilateAction(PlayerbotAI* ai) : CastComboAction(ai, "mutilate") {}
     };
 
-	class CastGougeAction : public CastMeleeSpellAction 
+	class CastGougeAction : public CastComboAction
 	{ 
 	public: 
-		CastGougeAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "gouge") {} 
+		CastGougeAction(PlayerbotAI* ai) : CastComboAction(ai, "gouge") {}
 	};
 
-    class CastBackstabAction : public CastMeleeSpellAction 
+    class CastBackstabAction : public CastComboAction
     { 
     public: 
-        CastBackstabAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "backstab") {} 
+        CastBackstabAction(PlayerbotAI* ai) : CastComboAction(ai, "backstab") {}
     };
 }
