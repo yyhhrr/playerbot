@@ -12,7 +12,7 @@ bool CheckMountStateAction::Execute(Event event)
     p.rpos(0);
     uint64 guid = extractGuid(p);
 
-    if (ai->IsOpposing(master) && bot->isInCombat())
+    if ((ai->IsOpposing(master) && bot->isInCombat()) || !bot->GetGroup())
         return false;
 
     if (master->IsMounted() && !bot->IsMounted())
