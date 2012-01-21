@@ -34,7 +34,7 @@ bool QuestAction::ProcessQuests(WorldObject* questGiver)
 {
     ObjectGuid guid = questGiver->GetObjectGuid();
 
-    if (!bot->IsWithinLOSInMap(questGiver) || bot->GetDistance(questGiver) > INTERACTION_DISTANCE)
+    if (bot->GetDistance(questGiver) > INTERACTION_DISTANCE)
     {
         ai->TellMaster("Cannot talk to quest giver");
         return false;
