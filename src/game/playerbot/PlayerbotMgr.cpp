@@ -178,12 +178,15 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 
         mgr->LogoutPlayerBot(guid.GetRawValue());
     }
-    else if (cmdStr == "init" && session->GetSecurity() >= SEC_GAMEMASTER)
+    else if (cmdStr == "init")
     {
-        if (!mgr->GetPlayerBot(guid.GetRawValue()))
+        Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
+        if (!bot)
             return false;
 
-        mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
+        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
+        if (session->GetSecurity() >= SEC_GAMEMASTER || sPlayerbotAIConfig.IsInRandomAccountList(account))
+            mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
     }
 
     return true;
