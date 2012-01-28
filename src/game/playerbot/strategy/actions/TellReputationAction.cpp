@@ -25,7 +25,7 @@ bool TellReputationAction::Execute(Event event)
 
     ostringstream out;
     out << "Reputation with " << entry->name[0] << ": ";
-    ReputationRank rank = bot->GetReputationMgr().GetRank(entry);
+    ReputationRank rank = bot->GetReputationMgr().GetRank(entry, false);
     switch (rank) {
         case REP_HATED:
             out << "hated";
