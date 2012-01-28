@@ -56,5 +56,29 @@ uint32 SpellIdValue::Calculate()
         }
     }
 
+    Pet* pet = bot->GetPet();
+    if (!foundSpellId && pet)
+    {
+        for (PetSpellMap::const_iterator itr = pet->m_spells.begin(); itr != pet->m_spells.end(); ++itr)
+        {
+            if(itr->second.state == PETSPELL_REMOVED)
+                continue;
+
+            uint32 spellId = itr->first;
+            const SpellEntry* pSpellInfo = sSpellStore.LookupEntry(spellId);
+            if (!pSpellInfo)
+                continue;
+
+            if (pSpellInfo->Effect[0] == SPELL_EFFECT_LEARN_SPELL)
+                continue;
+
+            const string name = pSpellInfo->SpellName[loc];
+            if (name.empty() || name.length() != wnamepart.length() || !Utf8FitTo(name, wnamepart))
+                continue;
+
+            foundSpellId = spellId;
+        }
+    }
+
     return foundSpellId;
 }

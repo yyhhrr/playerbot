@@ -916,6 +916,14 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     if (!target)
         target = bot;
 
+    Pet* pet = bot->GetPet();
+    if (pet && pet->HasSpell(spellId))
+    {
+        pet->ToggleAutocast(spellId, true);
+        TellMaster("My pet will auto-cast this spell");
+        return true;
+    }
+
     aiObjectContext->GetValue<LastSpellCast&>("last spell cast")->Get().Set(spellId, target->GetObjectGuid(), time(0));
     aiObjectContext->GetValue<LastMovement&>("last movement")->Get().Set(NULL);
 
