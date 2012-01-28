@@ -17,11 +17,15 @@ public:
 private:
     void InitEquipment();
     bool CanEquipUnseenItem(uint8 slot, uint16 &dest, uint32 item);
-    bool EquipItem(uint8 slot);
+    bool EquipItem(uint8 slot, uint32 desiredQuality);
     void InitSkills();
     void SetRandomSkill(uint16 id);
     void InitSpells();
+    void InitAvailableSpells();
     void InitTalents();
+    void InitTalents(uint32 specNo);
+    void InitQuests();
+    void InitPet();
 
 private:
     Player* bot;

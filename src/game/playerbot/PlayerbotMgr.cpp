@@ -133,14 +133,6 @@ Player* PlayerbotMgr::GetPlayerBot(uint64 playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
-    uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-    if (sPlayerbotAIConfig.IsInRandomAccountList(account) && bot->getLevel() != m_master->getLevel())
-    {
-        bot->RelocateToHomebind();
-        PlayerbotFactory factory(bot, m_master->getLevel());
-        factory.Randomize();
-    }
-
     ResetSharedAi();
 
     PlayerbotAI* ai = new PlayerbotAI(this, bot, ((SharedPlayerbotAI*)sharedAi)->GetSharedValues());
