@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
+ * Copyright (C) 2005-2012 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,9 +259,9 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
     {
         for (pathStartIndex = 0; pathStartIndex < m_polyLength; ++pathStartIndex)
         {
-            // here to carch few bugs
-            MANGOS_ASSERT(m_pathPolyRefs[pathStartIndex] != INVALID_POLYREF);
-            
+            // here to catch few bugs
+            MANGOS_ASSERT(m_pathPolyRefs[pathStartIndex] != INVALID_POLYREF || m_sourceUnit->PrintEntryError("PathFinder::BuildPolyPath"));
+
             if (m_pathPolyRefs[pathStartIndex] == startPoly)
             {
                 startPolyFound = true;
@@ -445,7 +445,7 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
         (!(m_type & PATHFIND_NORMAL) || !inRange(getEndPosition(), getActualEndPosition(), 1.0f, 1.0f)))
     {
         // we may want to keep partial subpath
-        if(dist3DSqr(getActualEndPosition(), getEndPosition()) < 
+        if(dist3DSqr(getActualEndPosition(), getEndPosition()) <
             0.3f * dist3DSqr(getStartPosition(), getEndPosition()))
         {
             setActualEndPosition(getEndPosition());
