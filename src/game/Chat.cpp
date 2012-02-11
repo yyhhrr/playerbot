@@ -823,13 +823,10 @@ ChatCommand * ChatHandler::getCommandTable()
         { "waterwalk",      SEC_GAMEMASTER,     false, &ChatHandler::HandleWaterwalkCommand,           "", NULL },
         { "quit",           SEC_CONSOLE,        true,  &ChatHandler::HandleQuitCommand,                "", NULL },
         { "gearscore",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowGearScoreCommand,       "", NULL },
-<<<<<<< HEAD
+        { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
         // Playerbot mod
         { "bot",            SEC_PLAYER,         false, &ChatHandler::HandlePlayerbotCommand,           "", NULL },
         { "ahbot",          SEC_GAMEMASTER,     true, &ChatHandler::HandleAhBotCommand,               "", NULL },
-=======
->>>>>>> remotes/origin/master
-        { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
