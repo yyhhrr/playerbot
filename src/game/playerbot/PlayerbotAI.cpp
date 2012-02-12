@@ -931,15 +931,14 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     MotionMaster &mm = *bot->GetMotionMaster();
     if (bot->isMoving() && GetSpellCastTime(pSpellInfo, NULL))
-        return false;
+    {
+        mm.Clear();
+        mm.MoveIdle();
+        mm.UpdateMotion(0);
+    }
 
-    mm.Clear();
-    mm.MoveIdle();
     bot->clearUnitState( UNIT_STAT_CHASE );
     bot->clearUnitState( UNIT_STAT_FOLLOW );
-
-    if (!bot->IsStandState())
-        bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     ObjectGuid oldSel = bot->GetSelectionGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
