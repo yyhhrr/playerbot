@@ -32,8 +32,7 @@ bool AddAllLootAction::Execute(Event event)
 
 bool AddAllLootAction::AddLoot(ObjectGuid guid)
 {
-    AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
-    return true;
+    return AI_VALUE(LootObjectStack*, "available loot")->Add(guid);
 }
 
 bool AddGatheringLootAction::AddLoot(ObjectGuid guid)
@@ -49,6 +48,5 @@ bool AddGatheringLootAction::AddLoot(ObjectGuid guid)
     if (!loot.IsLootPossible(bot))
         return false;
 
-    AddAllLootAction::AddLoot(guid);
-    return true;
+    return AddAllLootAction::AddLoot(guid);
 }
