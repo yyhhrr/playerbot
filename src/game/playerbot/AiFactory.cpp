@@ -92,51 +92,61 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
     
     engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", "potions", "cast time", "conserve mana", NULL);
 
-    switch (player->getClass()){
+    switch (player->getClass())
+    {
         case CLASS_PRIEST:
-            engine->addStrategy(tab == 2 ? "dps" : "heal");
+            if (tab == 2)
+                engine->addStrategies("dps", "threat", NULL);
+            else
+                engine->addStrategy("heal");
             break;
         case CLASS_MAGE:
             if (tab == 0)
-                engine->addStrategies("arcane", NULL);
+                engine->addStrategies("arcane", "threat", NULL);
             else if (tab == 1)
-                engine->addStrategies("fire", "fire aoe", NULL);
+                engine->addStrategies("fire", "fire aoe", "threat", NULL);
             else
-                engine->addStrategies("frost", "frost aoe", NULL);
+                engine->addStrategies("frost", "frost aoe", "threat", NULL);
             break;
         case CLASS_WARRIOR:
-            engine->addStrategy(tab == 2 ? "tank" : "dps");
+            if (tab == 2)
+                engine->addStrategy("tank");
+            else
+                engine->addStrategies("dps", "threat", NULL);
             break;
         case CLASS_SHAMAN:
             if (tab == 0)
-                engine->addStrategies("caster", "caster aoe", "bmana", NULL);
+                engine->addStrategies("caster", "caster aoe", "bmana", "threat", NULL);
             else if (tab == 2)
                 engine->addStrategies("heal", "bmana", NULL);
             else
-                engine->addStrategies("dps", "melee aoe", "bdps", NULL);
+                engine->addStrategies("dps", "melee aoe", "bdps", "threat", NULL);
             break;
         case CLASS_PALADIN:
             if (tab == 1)
                 engine->addStrategies("tank", "tank aoe", "barmor", NULL);
             else
-                engine->addStrategies("dps", "bdps", NULL);
+                engine->addStrategies("dps", "bdps", "threat", NULL);
             break;
         case CLASS_DRUID:
             if (tab == 0)
-                engine->addStrategies("caster", "caster aoe", NULL);
+                engine->addStrategies("caster", "caster aoe", "threat", NULL);
             else if (tab == 2)
                 engine->addStrategies("heal", NULL);
             else
-                engine->addStrategies("bear", "tank aoe", NULL);
+                engine->addStrategies("bear", "tank aoe", "threat", NULL);
             break;
         case CLASS_HUNTER:
-            engine->addStrategies("dps", "bdps", NULL);
+            engine->addStrategies("dps", "bdps", "threat", NULL);
+            break;
         case CLASS_ROGUE:
+            engine->addStrategies("dps", "threat", NULL);
+            break;
         case CLASS_WARLOCK:
             if (tab == 1)
-                engine->addStrategy("tank");
+                engine->addStrategies("tank", "threat", NULL);
             else
-                engine->addStrategy("dps");
+                engine->addStrategies("dps", "threat", NULL);
             break;
     }
 }
