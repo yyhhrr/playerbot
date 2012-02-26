@@ -43,6 +43,7 @@
 #include "AoeHealValues.h"
 #include "RtiValue.h"
 #include "PositionValue.h"
+#include "ThreatValues.h"
 
 namespace ai
 {
@@ -111,6 +112,7 @@ namespace ai
 
             creators["rti"] = &ValueContext::rti;
             creators["position"] = &ValueContext::position;
+            creators["threat"] = &ValueContext::threat;
         }
 
     private:
@@ -173,5 +175,6 @@ namespace ai
         static UntypedValue* grind_target(PlayerbotAI* ai) { return new GrindTargetValue(ai); }
         static UntypedValue* rti_target(PlayerbotAI* ai) { return new RtiTargetValue(ai); }
         static UntypedValue* has_totem(PlayerbotAI* ai) { return new HasTotemValue(ai); }
+        static UntypedValue* threat(PlayerbotAI* ai) { return new ThreatValue(ai); }
     };
 };

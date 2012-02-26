@@ -159,6 +159,7 @@ namespace ai
 
             creators["rti"] = &MockValueContext::str;
             creators["spell id"] = &MockValueContext::spell_id;
+            creators["threat"] = &MockValueContext::stats;
         }
 
     private:
@@ -228,6 +229,8 @@ namespace ai
               GetValue<uint8>("aoe heal", "low")->Set(0);
               GetValue<uint8>("aoe heal", "medium")->Set(0);
               GetValue<uint8>("aoe heal", "critical")->Set(0);
+
+              GetValue<uint8>("threat")->Set(0);
           }
 
     public:

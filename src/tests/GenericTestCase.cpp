@@ -13,6 +13,7 @@ class GenericTestCase : public EngineTestBase
 	CPPUNIT_TEST( adds );
 	CPPUNIT_TEST( potions );
 	CPPUNIT_TEST( guard );
+	CPPUNIT_TEST( threat );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -90,6 +91,16 @@ protected:
 	    tick();
 
 		assertActions(">S:move to position");
+	}
+
+	void threat()
+	{
+	    engine->addStrategy("threat");
+
+        set<uint8>("threat", 100);
+	    tick();
+
+		assertActions(">T:reach melee");
 	}
 };
 

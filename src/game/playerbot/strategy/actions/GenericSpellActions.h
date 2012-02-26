@@ -57,6 +57,7 @@ namespace ai
         virtual bool Execute(Event event);
         virtual bool isPossible();
 		virtual bool isUseful();
+        virtual ActionThreatType getThreatType() { return ACTION_THREAT_SINGLE; }
 
 		virtual NextAction** getPrerequisites()
 		{
@@ -133,6 +134,7 @@ namespace ai
         }
 		virtual string GetTargetName() { return "self target"; }
         virtual bool isUseful();
+        virtual ActionThreatType getThreatType() { return ACTION_THREAT_AOE; }
 
     protected:
         uint8 estAmount;
@@ -223,6 +225,7 @@ namespace ai
     {
     public:
         CastShootAction(PlayerbotAI* ai) : CastSpellAction(ai, "shoot") {}
+        virtual ActionThreatType getThreatType() { return ACTION_THREAT_NONE; }
     };
 
 	class CastLifeBloodAction : public CastHealingSpellAction

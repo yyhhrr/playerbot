@@ -39,6 +39,13 @@ namespace ai
     
     class ActionBasket;
 
+    enum ActionThreatType
+    {
+        ACTION_THREAT_NONE = 0,
+        ACTION_THREAT_SINGLE= 1,
+        ACTION_THREAT_AOE = 2
+    };
+
     class Action : public AiNamedObject
 	{
 	public:
@@ -52,7 +59,7 @@ namespace ai
         virtual NextAction** getPrerequisites() { return NULL; }
         virtual NextAction** getAlternatives() { return NULL; }
         virtual NextAction** getContinuers() { return NULL; }
-        virtual int getKind() { return 0; }
+        virtual ActionThreatType getThreatType() { return ACTION_THREAT_NONE; }
         void Update() {}
         virtual Unit* GetTarget();
         virtual Value<Unit*>* GetTargetValue();

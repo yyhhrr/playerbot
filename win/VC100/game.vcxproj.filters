@@ -1194,6 +1194,12 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\ThreatValues.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ThreatStrategy.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2500,6 +2506,12 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\ConserveManaStrategy.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\ThreatValues.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\ThreatStrategy.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>
