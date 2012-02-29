@@ -28,7 +28,7 @@ namespace ai
 	class StatAvailable : public Trigger
 	{
 	public:
-		StatAvailable(PlayerbotAI* ai, int amount) : Trigger(ai)
+		StatAvailable(PlayerbotAI* ai, int amount, string name = "stat available") : Trigger(ai, name)
 		{
 			this->amount = amount;
 		}
@@ -40,7 +40,7 @@ namespace ai
 	class RageAvailable : public StatAvailable
     {
     public:
-        RageAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
+        RageAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount, "rage available") {}
         virtual bool IsActive();
     };
 
@@ -65,7 +65,7 @@ namespace ai
 	class EnergyAvailable : public StatAvailable
 	{
 	public:
-		EnergyAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount) {}
+		EnergyAvailable(PlayerbotAI* ai, int amount) : StatAvailable(ai, amount, "energy available") {}
 		virtual bool IsActive();
 	};
 
@@ -90,7 +90,7 @@ namespace ai
 	class ComboPointsAvailableTrigger : public StatAvailable
 	{
 	public:
-	    ComboPointsAvailableTrigger(PlayerbotAI* ai, int amount = 5) : StatAvailable(ai, amount) {}
+	    ComboPointsAvailableTrigger(PlayerbotAI* ai, int amount = 5) : StatAvailable(ai, amount, "combo points available") {}
 		virtual bool IsActive();
 	};
 

@@ -29,7 +29,7 @@ bool EnergyAvailable::IsActive()
 
 bool ComboPointsAvailableTrigger::IsActive()
 {
-    return AI_VALUE2(uint8, "combo", "self target") >= amount;
+    return AI_VALUE2(uint8, "combo", "current target") >= amount;
 }
 
 bool LoseAggroTrigger::IsActive()

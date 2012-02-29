@@ -311,9 +311,9 @@ void EngineTestBase::healthRestored()
 
 void EngineTestBase::tickWithComboPoints(int amount)
 {
-    set<uint8>("combo", "self target", amount);
+    set<uint8>("combo", "current target", amount);
 	tick();
-    set<uint8>("combo", "self target", 0);
+    set<uint8>("combo", "current target", 0);
 }
 
 void EngineTestBase::tickWithTargetIsCastingNonMeleeSpell()

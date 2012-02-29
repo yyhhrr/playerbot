@@ -56,10 +56,11 @@ bool HasManaValue::Calculate()
 
 uint8 ComboPointsValue::Calculate() 
 {
-    Player* target = dynamic_cast<Player*>(GetTarget());
-    if (!target)
+    Unit *target = GetTarget();
+    if (!target || target->GetObjectGuid() != bot->GetComboTargetGuid())
         return 0;
-    return target->GetComboPoints();
+
+    return bot->GetComboPoints();
 }
 
 bool IsMountedValue::Calculate()
