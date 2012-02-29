@@ -935,9 +935,7 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         mm.Clear();
         mm.MoveIdle();
         mm.UpdateMotion(0);
-
-        if (!bot->isInCombat())
-            return false;
+        return false;
     }
 
     bot->clearUnitState( UNIT_STAT_CHASE );
