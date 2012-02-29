@@ -436,7 +436,7 @@ namespace ai
     class NoPossibleTargetsTrigger : public Trigger
     {
     public:
-        NoPossibleTargetsTrigger(PlayerbotAI* ai) : Trigger(ai, "no possible targets") {}
+        NoPossibleTargetsTrigger(PlayerbotAI* ai) : Trigger(ai, "no possible targets", 5) {}
 
     public:
         virtual bool IsActive();
