@@ -26,15 +26,12 @@ public:
 protected:
     void combatVsMelee()
     {
-        removeAura("slice and dice");
         removeTargetAura("rupture");
 
 		tickOutOfMeleeRange();
 		tickInMeleeRange();
-		addAura("slice and dice");
 
 		tickWithEnergy(70);
-        tickWithEnergy(70);
         tickWithEnergy(70);
 
         tickWithComboPoints(5);
@@ -42,7 +39,7 @@ protected:
 
         tickBehindTarget();
         
-        assertActions(">T:reach melee>T:slice and dice>T:mutilate>T:sinister strike>T:melee>T:rupture>T:eviscerate>T:backstab");
+        assertActions(">T:reach melee>T:mutilate>T:sinister strike>T:melee>T:rupture>T:eviscerate>T:backstab");
     }
 
 	void healHimself()

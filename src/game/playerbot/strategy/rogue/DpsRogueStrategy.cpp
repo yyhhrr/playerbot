@@ -77,10 +77,6 @@ void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "slice and dice",
-        NextAction::array(0, new NextAction("slice and dice", ACTION_HIGH + 1), NULL)));
-
-    triggers.push_back(new TriggerNode(
         "combo points available",
         NextAction::array(0, new NextAction("rupture", ACTION_HIGH + 2), NULL)));
 
