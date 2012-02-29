@@ -1,13 +1,13 @@
 #pragma once
 #include "../Value.h"
+#include "TargetValue.h"
 
 namespace ai
 {
-
-    class LeastHpTargetValue : public CalculatedValue<Unit*>
+    class LeastHpTargetValue : public TargetValue
 	{
 	public:
-        LeastHpTargetValue(PlayerbotAI* ai) : CalculatedValue<Unit*>(ai) {}
+        LeastHpTargetValue(PlayerbotAI* ai) : TargetValue(ai) {}
 
     public:
         Unit* Calculate();

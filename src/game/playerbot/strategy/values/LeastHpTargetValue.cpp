@@ -1,24 +1,37 @@
 #include "../../../pchdef.h"
 #include "../../playerbot.h"
 #include "LeastHpTargetValue.h"
+#include "TargetValue.h"
 
 using namespace ai;
 using namespace std;
 
-Unit* LeastHpTargetValue::Calculate()
+class FindLeastHpTargetStrategy : public FindTargetStrategy
 {
-    Unit* target = NULL;
-
-    list<ObjectGuid> targets = AI_VALUE(list<ObjectGuid>, "attackers");
-    for (list<ObjectGuid>::iterator i = targets.begin(); i != targets.end(); ++i)
+public:
+    FindLeastHpTargetStrategy(PlayerbotAI* ai) : FindTargetStrategy(ai)
     {
-        Unit* unit = ai->GetUnit(*i);
-        if (!unit)
-            continue;
-
-        if (!target || target->GetHealth() > unit->GetHealth())
-            target = unit;
+        minHealth = 0;
     }
 
-    return target;
+protected:
+    virtual void CheckAttacker(Player* bot, Player* player, ThreatManager* threatManager)
+    {
+        Unit* creature = threatManager->getOwner();
+        if (!creature)
+            return;
+
+        if (!result || result->GetHealth() > creature->GetHealth())
+            result = creature;
+    }
+
+protected:
+    float minHealth;
+};
+
+
+Unit* LeastHpTargetValue::Calculate()
+{
+    FindLeastHpTargetStrategy strategy(ai);
+    return FindTarget(&strategy);
 }
