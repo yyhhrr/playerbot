@@ -47,9 +47,6 @@ bool AttackAction::Attack(Unit* target)
         return false;
     }
 
-    if (bot->getStandState() != UNIT_STAND_STATE_STAND)
-        bot->SetStandState(UNIT_STAND_STATE_STAND);
-
     if (bot->IsMounted())
     {
         WorldPacket emptyPacket;
@@ -59,8 +56,6 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
 
-    mm.Clear();
-    mm.MoveIdle();
     if (!bot->isInFront(target, ATTACK_DISTANCE))
         bot->SetFacingTo(bot->GetAngle(target));
 

@@ -116,10 +116,6 @@ bool MovementAction::IsMovingAllowed(Unit* target)
         return false;
 
     float distance = bot->GetDistance(target);
-
-    if (distance <= sPlayerbotAIConfig.followDistance)
-        return false;
-
     if (distance > sPlayerbotAIConfig.reactDistance)
         return false;
 
@@ -129,7 +125,7 @@ bool MovementAction::IsMovingAllowed(Unit* target)
 bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
 {
     float distance = bot->GetDistance(x, y, z);
-    if (distance > sPlayerbotAIConfig.reactDistance || distance <= sPlayerbotAIConfig.followDistance)
+    if (distance > sPlayerbotAIConfig.reactDistance)
         return false;
 
     return IsMovingAllowed();
@@ -139,7 +135,7 @@ bool MovementAction::IsMovingAllowed()
 {
     if (bot->isFrozen() || bot->IsPolymorphed() ||
             (bot->isDead() && !bot->GetCorpse()) ||
-            bot->IsNonMeleeSpellCasted(true) || bot->IsBeingTeleported() || bot->isInRoots())
+            bot->IsBeingTeleported() || bot->isInRoots())
         return false;
 
     MotionMaster &mm = *bot->GetMotionMaster();
