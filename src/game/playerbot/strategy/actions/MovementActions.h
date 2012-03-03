@@ -67,4 +67,21 @@ namespace ai
         MoveToLootAction(PlayerbotAI* ai) : MovementAction(ai, "move to loot") {}
         virtual bool Execute(Event event);
     };
+
+    class MoveOutOfEnemyContactAction : public MovementAction
+    {
+    public:
+        MoveOutOfEnemyContactAction(PlayerbotAI* ai) : MovementAction(ai, "move out of enemy contact") {}
+        virtual bool Execute(Event event);
+        virtual bool isUseful();
+    };
+
+    class SetFacingTargetAction : public MovementAction
+    {
+    public:
+        SetFacingTargetAction(PlayerbotAI* ai) : MovementAction(ai, "set facing") {}
+        virtual bool Execute(Event event);
+        virtual bool isUseful();
+    };
+
 }

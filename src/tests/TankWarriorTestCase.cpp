@@ -29,7 +29,7 @@ public:
         // this buff is combat-only, so skip for most test cases
         addAura("battle shout");
         set<uint8>("rage", "self target", 20);
-        set<float>("distance", "current target", 0.0f);
+        set<float>("distance", "current target", ATTACK_DISTANCE - 1);
     }
 
 protected:

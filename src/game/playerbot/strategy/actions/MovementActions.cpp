@@ -62,7 +62,31 @@ bool MovementAction::MoveTo(WorldObject* target)
 
 bool MovementAction::MoveTo(Unit* target, float distance)
 {
-    return MoveNear(target, distance);
+    if (!IsMovingAllowed(target))
+        return false;
+
+    float bx = bot->GetPositionX();
+    float by = bot->GetPositionY();
+    float bz = bot->GetPositionZ();
+
+    float tx = target->GetPositionX();
+    float ty = target->GetPositionY();
+    float tz = target->GetPositionZ();
+
+    float distanceToTarget = bot->GetDistance(target);
+    float angle = bot->GetAngle(target);
+    float needToGo = distanceToTarget - distance;
+
+    float maxDistance = distanceToTarget;
+    if (needToGo > 0 && needToGo > maxDistance)
+        needToGo = maxDistance;
+    else if (needToGo < 0 && needToGo < -maxDistance)
+        needToGo = -maxDistance;
+
+    float dx = cos(angle) * needToGo + bx;
+    float dy = sin(angle) * needToGo + by;
+
+    return MoveTo(target->GetMapId(), dx, dy, tz);
 }
 
 float MovementAction::GetFollowAngle()
@@ -264,4 +288,37 @@ bool MoveToLootAction::Execute(Event event)
         return false;
 
     return MoveNear(loot.GetWorldObject(bot));
+}
+
+bool MoveOutOfEnemyContactAction::Execute(Event event)
+{
+    Unit* target = AI_VALUE(Unit*, "current target");
+    if (!target)
+        return false;
+
+    return MoveNear(target, sPlayerbotAIConfig.meleeDistance);
+}
+
+bool MoveOutOfEnemyContactAction::isUseful()
+{
+    return AI_VALUE2(float, "distance", "current target") <= sPlayerbotAIConfig.meleeDistance / 2;
+}
+
+bool SetFacingTargetAction::Execute(Event event)
+{
+    Unit* target = AI_VALUE(Unit*, "current target");
+    if (!target)
+        return false;
+
+    MotionMaster &mm = *bot->GetMotionMaster();
+    bot->SetInFront(target);
+    mm.Clear();
+    mm.MoveIdle();
+    mm.UpdateMotion(0);
+    return true;
+}
+
+bool SetFacingTargetAction::isUseful()
+{
+    return !AI_VALUE2(bool, "facing", "current target");
 }

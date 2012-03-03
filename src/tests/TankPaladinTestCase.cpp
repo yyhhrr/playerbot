@@ -39,7 +39,7 @@ public:
 
 		addAura("holy shield");
 
-        set<float>("distance", "current target", 0.0f);
+        set<float>("distance", "current target", ATTACK_DISTANCE - 1);
     }
 
 protected:

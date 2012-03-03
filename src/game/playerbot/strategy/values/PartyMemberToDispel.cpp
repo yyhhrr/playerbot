@@ -4,30 +4,30 @@
 
 using namespace ai;
 
+class PartyMemberToDispelPredicate : public FindPlayerPredicate, public PlayerbotAIAware
+{
+public:
+    PartyMemberToDispelPredicate(PlayerbotAI* ai, uint32 dispelType) :
+        PlayerbotAIAware(ai), FindPlayerPredicate(), dispelType(dispelType) {}
+
+public:
+    virtual bool Check(Unit* unit)
+    {
+        Pet* pet = dynamic_cast<Pet*>(unit);
+        if (pet && (pet->getPetType() == MINI_PET || pet->getPetType() == SUMMON_PET))
+            return false;
+
+        return unit->isAlive() && ai->HasAuraToDispel(unit, dispelType);
+    }
+
+private:
+    uint32 dispelType;
+};
 
 Unit* PartyMemberToDispel::Calculate()
 {
     uint32 dispelType = atoi(qualifier.c_str());
 
-    
-    Group* group = bot->GetGroup();
-    if (!group)
-        return NULL;
-
-    for (GroupReference *gref = group->GetFirstMember(); gref; gref = gref->next()) 
-    {
-        Player* player = gref->getSource();
-        if( !player || !player->isAlive() || player == bot)
-            continue;
-
-        if (ai->HasAuraToDispel(player, dispelType))
-            return player;
-
-        Pet* pet = player->GetPet();
-        if (pet && ai->HasAuraToDispel(pet, dispelType))
-            return pet;
-    }
-
-    return NULL;
+    PartyMemberToDispelPredicate predicate(ai, dispelType);
+    return FindPartyMember(predicate);
 }
-

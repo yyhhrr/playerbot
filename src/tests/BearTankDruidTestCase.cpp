@@ -91,7 +91,7 @@ protected:
 		tickWithSpellAvailable("lacerate");
 		tickWithSpellAvailable("lacerate");
 
-        assertActions(">T:lacerate>T:mangle (bear)>T:maul>T:faerie fire (feral)>T:lacerate>T:melee>T:lacerate>T:melee>T:faerie fire (feral)>T:lacerate>T:mangle (bear)>T:maul>T:lacerate");
+        assertActions(">T:lacerate>T:mangle (bear)>T:maul>T:feral charge - bear>T:faerie fire (feral)>T:lacerate>T:lacerate>T:melee>T:faerie fire (feral)>T:lacerate>T:mangle (bear)>T:maul>T:lacerate");
     }
 
     void healHimself()
@@ -182,9 +182,7 @@ protected:
         tickInMeleeRange();
 		addAura("dire bear form");
 
-        tick();
-
-        assertActions(">S:thorns>S:dire bear form>T:faerie fire (feral)");
+        assertActions(">S:thorns>S:dire bear form");
 	}
 
     void aoe()

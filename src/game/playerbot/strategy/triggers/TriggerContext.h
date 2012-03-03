@@ -57,7 +57,8 @@ namespace ai
 
             creators["enemy out of melee"] = &TriggerContext::EnemyOutOfMelee;
             creators["enemy out of spell"] = &TriggerContext::EnemyOutOfSpell;
-            creators["enemy too close"] = &TriggerContext::EnemyTooClose;
+            creators["enemy too close for spell"] = &TriggerContext::enemy_too_close_for_spell;
+            creators["enemy too close for melee"] = &TriggerContext::enemy_too_close_for_melee;
 
             creators["combo points available"] = &TriggerContext::ComboPointsAvailable;
 
@@ -74,6 +75,7 @@ namespace ai
 
             creators["panic"] = &TriggerContext::panic;
             creators["behind target"] = &TriggerContext::behind_target;
+            creators["not facing target"] = &TriggerContext::not_facing_target;
             creators["far from master"] = &TriggerContext::far_from_master;
             creators["far from loot target"] = &TriggerContext::far_from_loot_target;
             creators["can loot"] = &TriggerContext::can_loot;
@@ -95,6 +97,7 @@ namespace ai
         static Trigger* far_from_loot_target(PlayerbotAI* ai) { return new FarFromCurrentLootTrigger(ai); }
         static Trigger* far_from_master(PlayerbotAI* ai) { return new FarFromMasterTrigger(ai); }
         static Trigger* behind_target(PlayerbotAI* ai) { return new IsBehindTargetTrigger(ai); }
+        static Trigger* not_facing_target(PlayerbotAI* ai) { return new IsNotFacingTargetTrigger(ai); }
         static Trigger* panic(PlayerbotAI* ai) { return new PanicTrigger(ai); }
         static Trigger* no_drink(PlayerbotAI* ai) { return new NoDrinkTrigger(ai); }
         static Trigger* no_food(PlayerbotAI* ai) { return new NoFoodTrigger(ai); }
@@ -128,7 +131,8 @@ namespace ai
         static Trigger* seldom(PlayerbotAI* ai) { return new SeldomTrigger(ai); }
         static Trigger* EnemyOutOfMelee(PlayerbotAI* ai) { return new EnemyOutOfMeleeTrigger(ai); }
         static Trigger* EnemyOutOfSpell(PlayerbotAI* ai) { return new EnemyOutOfSpellRangeTrigger(ai); }
-        static Trigger* EnemyTooClose(PlayerbotAI* ai) { return new EnemyTooCloseTrigger(ai); }
+        static Trigger* enemy_too_close_for_spell(PlayerbotAI* ai) { return new EnemyTooCloseForSpellTrigger(ai); }
+        static Trigger* enemy_too_close_for_melee(PlayerbotAI* ai) { return new EnemyTooCloseForMeleeTrigger(ai); }
         static Trigger* ComboPointsAvailable(PlayerbotAI* ai) { return new ComboPointsAvailableTrigger(ai); }
         static Trigger* MediumThreat(PlayerbotAI* ai) { return new MediumThreatTrigger(ai); }
         static Trigger* Dead(PlayerbotAI* ai) { return new DeadTrigger(ai); }

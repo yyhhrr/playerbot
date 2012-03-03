@@ -414,6 +414,15 @@ namespace ai
         virtual bool IsActive();
     };
 
+    class IsNotFacingTargetTrigger : public Trigger
+    {
+    public:
+        IsNotFacingTargetTrigger(PlayerbotAI* ai) : Trigger(ai) {}
+
+    public:
+        virtual bool IsActive();
+    };
+
     class HasCcTargetTrigger : public Trigger
     {
     public:

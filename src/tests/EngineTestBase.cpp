@@ -46,7 +46,7 @@ public:
                 name == "feral charge - bear" || name == "feral charge - cat" ||
                 name == "charge")
         {
-            ai->GetAiObjectContext()->GetValue<float>("distance", "current target")->Set(ATTACK_DISTANCE / 2);
+            ai->GetAiObjectContext()->GetValue<float>("distance", "current target")->Set(ATTACK_DISTANCE - 1);
         }
 
         remove(name, " on party");
@@ -201,17 +201,17 @@ void EngineTestBase::tickOutOfMeleeRange()
 {
     set<float>("distance", "current target", 15.0f);
     tick();
-    set<float>("distance", "current target", 0.0f);
+    set<float>("distance", "current target", ATTACK_DISTANCE - 1);
 }
 
 void EngineTestBase::setInMeleeRange()
 {
-    set<float>("distance", "current target", 0.0f);
+    set<float>("distance", "current target", ATTACK_DISTANCE - 1);
 }
 
 void EngineTestBase::tickInMeleeRange()
 {
-    set<float>("distance", "current target", 0.0f);
+    set<float>("distance", "current target", ATTACK_DISTANCE - 1);
 	tick();
 }
 

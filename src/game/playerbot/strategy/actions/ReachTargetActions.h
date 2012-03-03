@@ -6,7 +6,8 @@
 
 namespace ai
 {
-    class ReachTargetAction : public MovementAction {
+    class ReachTargetAction : public MovementAction
+    {
     public:
         ReachTargetAction(PlayerbotAI* ai, string name, float distance) : MovementAction(ai, name)
 		{
@@ -26,7 +27,8 @@ namespace ai
         float distance;
     };
 
-    class CastReachTargetSpellAction : public CastSpellAction {
+    class CastReachTargetSpellAction : public CastSpellAction
+    {
     public:
         CastReachTargetSpellAction(PlayerbotAI* ai, string spell, float distance) : CastSpellAction(ai, spell)
 		{

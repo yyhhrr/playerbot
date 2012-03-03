@@ -60,6 +60,8 @@ namespace ai
             creators["move to loot"] = &ActionContext::move_to_loot;
             creators["open loot"] = &ActionContext::open_loot;
             creators["guard"] = &ActionContext::guard;
+            creators["move out of enemy contact"] = &ActionContext::move_out_of_enemy_contact;
+            creators["set facing"] = &ActionContext::set_facing;
         }
 
     private:
@@ -101,6 +103,8 @@ namespace ai
         static Action* mana_potion(PlayerbotAI* ai) { return new UseManaPotion(ai); }
         static Action* healing_potion(PlayerbotAI* ai) { return new UseHealingPotion(ai); }
         static Action* healthstone(PlayerbotAI* ai) { return new UseItemAction(ai, "healthstone"); }
+        static Action* move_out_of_enemy_contact(PlayerbotAI* ai) { return new MoveOutOfEnemyContactAction(ai); }
+        static Action* set_facing(PlayerbotAI* ai) { return new SetFacingTargetAction(ai); }
     };
 
 };

@@ -164,6 +164,11 @@ bool IsBehindTargetTrigger::IsActive()
     return target && AI_VALUE2(bool, "behind", "current target");
 }
 
+bool IsNotFacingTargetTrigger::IsActive()
+{
+    return !AI_VALUE2(bool, "facing", "current target");
+}
+
 bool HasCcTargetTrigger::IsActive()
 {
     return AI_VALUE(uint8, "attacker count") > 2 && AI_VALUE2(Unit*, "cc target", getName()) &&

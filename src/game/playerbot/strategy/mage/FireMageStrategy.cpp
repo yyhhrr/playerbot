@@ -31,7 +31,7 @@ void FireMageStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         NextAction::array(0, new NextAction("combustion", 50.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
-        "enemy too close",
+        "enemy too close for spell",
         NextAction::array(0, new NextAction("dragon's breath", 70.0f), new NextAction("flamestrike", 70.0f), new NextAction("frost nova", 69.0f), NULL)));
 }
 

@@ -14,6 +14,7 @@ class GenericTestCase : public EngineTestBase
 	CPPUNIT_TEST( potions );
 	CPPUNIT_TEST( guard );
 	CPPUNIT_TEST( threat );
+	CPPUNIT_TEST( facing );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -101,6 +102,18 @@ protected:
 	    tick();
 
 		assertActions(">T:reach melee");
+	}
+
+	void facing()
+	{
+	    addAura("thorns");
+	    addAura("dire bear form");
+
+        set<bool>("facing", "current target", false);
+	    tick();
+        set<bool>("facing", "current target", true);
+
+		assertActions(">S:set facing");
 	}
 };
 

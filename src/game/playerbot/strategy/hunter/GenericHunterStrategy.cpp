@@ -49,7 +49,7 @@ void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
     CombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
-        "enemy too close",
+        "enemy too close for spell",
         NextAction::array(0, new NextAction("flee", 50.0f), new NextAction("concussive shot", 40.0f), NULL)));
 
     triggers.push_back(new TriggerNode(

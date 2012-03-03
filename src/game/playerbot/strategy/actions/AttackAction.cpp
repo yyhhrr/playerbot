@@ -56,9 +56,6 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
 
-    if (!bot->isInFront(target, sPlayerbotAIConfig.meleeDistance))
-        bot->SetFacingTo(bot->GetAngle(target));
-
     context->GetValue<Unit*>("current target")->Set(target);
     context->GetValue<LootObjectStack*>("available loot")->Get()->Add(guid);
 

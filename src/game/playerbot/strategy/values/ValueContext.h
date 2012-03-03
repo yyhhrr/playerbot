@@ -32,6 +32,7 @@
 #include "DistanceValue.h"
 #include "IsMovingValue.h"
 #include "IsBehindValue.h"
+#include "IsFacingValue.h"
 #include "ItemCountValue.h"
 #include "SpellIdValue.h"
 #include "ItemForSpellValue.h"
@@ -97,6 +98,7 @@ namespace ai
             creators["moving"] = &ValueContext::moving;
             creators["swimming"] = &ValueContext::swimming;
             creators["behind"] = &ValueContext::behind;
+            creators["facing"] = &ValueContext::facing;
 
             creators["item count"] = &ValueContext::item_count;
             creators["inventory items"] = &ValueContext::inventory_item;
@@ -129,6 +131,7 @@ namespace ai
         static UntypedValue* inventory_item(PlayerbotAI* ai) { return new InventoryItemValue(ai); }
         static UntypedValue* item_count(PlayerbotAI* ai) { return new ItemCountValue(ai); }
         static UntypedValue* behind(PlayerbotAI* ai) { return new IsBehindValue(ai); }
+        static UntypedValue* facing(PlayerbotAI* ai) { return new IsFacingValue(ai); }
         static UntypedValue* moving(PlayerbotAI* ai) { return new IsMovingValue(ai); }
         static UntypedValue* swimming(PlayerbotAI* ai) { return new IsSwimmingValue(ai); }
         static UntypedValue* distance(PlayerbotAI* ai) { return new DistanceValue(ai); }

@@ -146,6 +146,7 @@ namespace ai
             creators["moving"] = &MockValueContext::logical;
             creators["swimming"] = &MockValueContext::logical;
             creators["behind"] = &MockValueContext::logical;
+            creators["facing"] = &MockValueContext::logical;
             creators["item count"] = &MockValueContext::stats;
             creators["inventory items"] = &MockValueContext::itemlist;
             creators["item for spell"] = &MockValueContext::item;
@@ -221,6 +222,8 @@ namespace ai
 
               GetValue<bool>("has aggro", "current target")->Set(true);
               GetValue<bool>("can loot")->Set(false);
+
+              GetValue<bool>("facing", "current target")->Set(true);
 
               list<Item*> items; items.push_back((Item*)(void*)0x01);
               GetValue<list<Item*> >("inventory items", "drink")->Set(items);
