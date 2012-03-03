@@ -56,7 +56,7 @@ bool AttackAction::Attack(Unit* target)
     ObjectGuid guid = target->GetObjectGuid();
     bot->SetSelectionGuid(target->GetObjectGuid());
 
-    if (!bot->isInFront(target, ATTACK_DISTANCE))
+    if (!bot->isInFront(target, sPlayerbotAIConfig.meleeDistance))
         bot->SetFacingTo(bot->GetAngle(target));
 
     context->GetValue<Unit*>("current target")->Set(target);
@@ -70,10 +70,6 @@ bool AttackAction::Attack(Unit* target)
             creatureAI->AttackStart(target);
     }
 
-    bool result = bot->Attack(target, true);
-
-    if (AI_VALUE2(float, "distance", "current target") > sPlayerbotAIConfig.meleeDistance)
-        return false;
-
-    return result;
+    bot->Attack(target, true);
+    return true;
 }

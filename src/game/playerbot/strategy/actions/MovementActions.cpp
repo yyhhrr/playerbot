@@ -63,33 +63,6 @@ bool MovementAction::MoveTo(WorldObject* target)
 bool MovementAction::MoveTo(Unit* target, float distance)
 {
     return MoveNear(target, distance);
-
-    /*if (!IsMovingAllowed(target))
-        return false;
-
-    float bx = bot->GetPositionX();
-    float by = bot->GetPositionY();
-    float bz = bot->GetPositionZ();
-
-    float tx = target->GetPositionX();
-    float ty = target->GetPositionY();
-    float tz = target->GetPositionZ();
-
-    float distanceToTarget = bot->GetDistance(target);
-    float angle = bot->GetAngle(target);
-    float needToGo = distanceToTarget - distance;
-    
-    float maxDistance = sPlayerbotAIConfig.reactDelay * bot->GetSpeed(MOVE_RUN) / 1000.0f;
-    if (needToGo > 0 && needToGo > maxDistance)
-        needToGo = maxDistance;
-    else if (needToGo < 0 && needToGo < -maxDistance)
-        needToGo = -maxDistance;
-
-    float dx = cos(angle) * needToGo + bx;
-    float dy = sin(angle) * needToGo + by;
-
-    return MoveTo(target->GetMapId(), dx, dy, tz);
-    */
 }
 
 float MovementAction::GetFollowAngle()
