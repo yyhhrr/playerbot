@@ -11,6 +11,9 @@ bool CastSpellAction::Execute(Event event)
 
 bool CastSpellAction::isPossible() 
 {
+    if (AI_VALUE2(float, "distance", GetTargetName()) > range)
+        return false;
+
 	return ai->CanCastSpell(spell, GetTarget());
 }
 

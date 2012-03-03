@@ -38,14 +38,14 @@ private:
     }
 };
 
-GenericWarriorStrategy::GenericWarriorStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+GenericWarriorStrategy::GenericWarriorStrategy(PlayerbotAI* ai) : MeleeCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericWarriorStrategyActionNodeFactory());
 }
 
 void GenericWarriorStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-	CombatStrategy::InitTriggers(triggers);
+    MeleeCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "battle shout",

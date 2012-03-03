@@ -68,6 +68,10 @@ void MeleeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 void MeleeAoeShamanStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
+        "enemy out of melee",
+        NextAction::array(0, new NextAction("reach melee", ACTION_NORMAL + 9), NULL)));
+
+    triggers.push_back(new TriggerNode(
         "magma totem",
         NextAction::array(0, new NextAction("magma totem", 26.0f), NULL)));
 

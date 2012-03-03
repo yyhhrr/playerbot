@@ -62,7 +62,7 @@ private:
     }
 };
 
-DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* ai) : MeleeCombatStrategy(ai)
 {
     actionNodeFactories.Add(new DpsRogueStrategyActionNodeFactory());
 }
@@ -74,7 +74,7 @@ NextAction** DpsRogueStrategy::getDefaultActions()
 
 void DpsRogueStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    CombatStrategy::InitTriggers(triggers);
+    MeleeCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "combo points available",

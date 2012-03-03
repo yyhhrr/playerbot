@@ -39,6 +39,8 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
+    WaitForReach(bot->GetDistance(x, y, z));
+
     if (bot->IsSitState())
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
@@ -48,7 +50,6 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
             !bot->IsFlying() && !bot->IsUnderWater();
     MotionMaster &mm = *bot->GetMotionMaster();
     mm.MovePoint(mapId, x, y, z, generatePath);
-    WaitForReach(bot->GetDistance(x, y, z));
 
     AI_VALUE(LastMovement&, "last movement").Set(x, y, z, bot->GetOrientation());
     return true;
@@ -61,7 +62,9 @@ bool MovementAction::MoveTo(WorldObject* target)
 
 bool MovementAction::MoveTo(Unit* target, float distance)
 {
-    if (!IsMovingAllowed(target))
+    return MoveNear(target, distance);
+
+    /*if (!IsMovingAllowed(target))
         return false;
 
     float bx = bot->GetPositionX();
@@ -76,7 +79,7 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     float angle = bot->GetAngle(target);
     float needToGo = distanceToTarget - distance;
     
-    float maxDistance = /*1.0f * */bot->GetSpeed(MOVE_RUN);
+    float maxDistance = sPlayerbotAIConfig.reactDelay * bot->GetSpeed(MOVE_RUN) / 1000.0f;
     if (needToGo > 0 && needToGo > maxDistance)
         needToGo = maxDistance;
     else if (needToGo < 0 && needToGo < -maxDistance)
@@ -86,6 +89,7 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     float dy = sin(angle) * needToGo + by;
 
     return MoveTo(target->GetMapId(), dx, dy, tz);
+    */
 }
 
 float MovementAction::GetFollowAngle()

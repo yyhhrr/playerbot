@@ -2,11 +2,11 @@
 
 #include "../Strategy.h"
 #include "PaladinAiObjectContext.h"
-#include "../generic/CombatStrategy.h"
+#include "../generic/MeleeCombatStrategy.h"
 
 namespace ai
 {
-    class GenericPaladinStrategy : public CombatStrategy
+    class GenericPaladinStrategy : public MeleeCombatStrategy
     {
     public:
         GenericPaladinStrategy(PlayerbotAI* ai);

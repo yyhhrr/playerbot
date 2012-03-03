@@ -63,9 +63,8 @@ protected:
         addAura("battle shout");
 
         tickInSpellRange();
-        tickInSpellRange();
 
-		assertActions(">S:battle shout>S:bloodrage>S:defensive stance");
+		assertActions(">S:battle shout>S:bloodrage");
 
     }
 
@@ -96,13 +95,13 @@ protected:
     void startMeleeCombat()
     {
         tickOutOfMeleeRange();
-        tickOutOfMeleeRange();
         tickWithRage(0);
         tickInMeleeRange();
         tick();
         tick();
+        tick();
 
-        assertActions(">S:defensive stance>T:reach melee>S:bloodrage>T:devastate>T:revenge>T:rend");
+        assertActions(">T:reach melee>S:bloodrage>S:defensive stance>T:devastate>T:revenge>T:rend");
     }
 
     void melee()

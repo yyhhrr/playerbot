@@ -14,32 +14,40 @@ namespace ai
         }
     };
 
-    class EnemyOutOfRangeTrigger : public Trigger {
+    class OutOfRangeTrigger : public Trigger {
     public:
-        EnemyOutOfRangeTrigger(PlayerbotAI* ai, string name, float distance) : Trigger(ai, name)
+        OutOfRangeTrigger(PlayerbotAI* ai, string name, float distance) : Trigger(ai, name)
 		{
             this->distance = distance;
         }
         virtual bool IsActive()
 		{
-			Unit* target = AI_VALUE(Unit*, "current target");
-			return target && AI_VALUE2(float, "distance", "current target") > distance;
+			Unit* target = AI_VALUE(Unit*, GetTargetName());
+			return target && AI_VALUE2(float, "distance", GetTargetName()) > distance;
         }
+        virtual string GetTargetName() { return "current target"; }
 
     protected:
         float distance;
     };
 
-    class EnemyOutOfMeleeTrigger : public EnemyOutOfRangeTrigger
+    class EnemyOutOfMeleeTrigger : public OutOfRangeTrigger
 	{
     public:
-        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of melee range", sPlayerbotAIConfig.meleeDistance + 1.0f) {}
+        EnemyOutOfMeleeTrigger(PlayerbotAI* ai) : OutOfRangeTrigger(ai, "enemy out of melee range", sPlayerbotAIConfig.meleeDistance) {}
     };
 
-    class EnemyOutOfSpellRangeTrigger : public EnemyOutOfRangeTrigger
+    class EnemyOutOfSpellRangeTrigger : public OutOfRangeTrigger
 	{
     public:
-        EnemyOutOfSpellRangeTrigger(PlayerbotAI* ai) : EnemyOutOfRangeTrigger(ai, "enemy out of spell range", sPlayerbotAIConfig.spellDistance) {}
+        EnemyOutOfSpellRangeTrigger(PlayerbotAI* ai) : OutOfRangeTrigger(ai, "enemy out of spell range", sPlayerbotAIConfig.spellDistance) {}
+    };
+
+    class PartyMemberToHealOutOfSpellRangeTrigger : public OutOfRangeTrigger
+	{
+    public:
+        PartyMemberToHealOutOfSpellRangeTrigger(PlayerbotAI* ai) : OutOfRangeTrigger(ai, "party member to heal out of spell range", sPlayerbotAIConfig.spellDistance) {}
+        virtual string GetTargetName() { return "party member to heal"; }
     };
 
     class FarFromMasterTrigger : public Trigger {
