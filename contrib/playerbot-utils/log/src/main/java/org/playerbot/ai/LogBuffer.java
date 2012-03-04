@@ -33,7 +33,6 @@ public class LogBuffer {
     }
 
     public void clear() {
-        checkClosed();
         data.clear();
     }
 

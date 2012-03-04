@@ -8,6 +8,7 @@ import org.playerbot.ai.domain.Log;
 import org.playerbot.ai.processors.ActionCounter;
 import org.playerbot.ai.processors.CompositeProcessor;
 import org.playerbot.ai.processors.NeverExecutedActionsFinder;
+import org.playerbot.ai.processors.PatternFinder;
 import org.playerbot.ai.processors.Processor;
 import org.playerbot.ai.processors.ProcessorFactory;
 import org.playerbot.ai.processors.TittledProcessor;
@@ -23,6 +24,14 @@ public class LogProcessor implements Runnable {
     private Collection<Processor> processors = new ArrayList<Processor>();
 
     private void initProcessors() {
+        processors.add(new CompositeProcessor(new ProcessorFactory() {
+            
+            @Override
+            public Processor create() {
+                return new PatternFinder(10);
+            }
+        }));
+        
         processors.add(new TittledProcessor(new NeverExecutedActionsFinder()));
         
         processors.add(new CompositeProcessor(new ProcessorFactory() {
