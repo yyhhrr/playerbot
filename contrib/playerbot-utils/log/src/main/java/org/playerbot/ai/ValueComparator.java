@@ -20,8 +20,10 @@ public class ValueComparator<T> implements Comparator<String> {
         if (o2 != null && o1 == null)
             return 1;
         
-        if (o1 instanceof Comparable<?> && o2 instanceof Comparable<?>)
-            return ((Comparable) o2).compareTo(o1);
+        if (o1 instanceof Comparable<?> && o2 instanceof Comparable<?>) {
+            int compared = ((Comparable) o2).compareTo(o1);
+            return compared < 0 ? -1 : 1;
+        }
 
         throw new IllegalArgumentException(String.format("Types %s and %s are not supported", o1.getClass(), o2.getClass()));
     }

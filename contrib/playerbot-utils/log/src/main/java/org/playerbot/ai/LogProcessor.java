@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.playerbot.ai.domain.Log;
+import org.playerbot.ai.processors.ActionCounter;
 import org.playerbot.ai.processors.CompositeProcessor;
 import org.playerbot.ai.processors.Processor;
 import org.playerbot.ai.processors.ProcessorFactory;
@@ -34,6 +35,17 @@ public class LogProcessor implements Runnable {
                 return new TriggerCounter();
             }
         }));
+
+        String[] statuses = { "OK", "FAILED", "IMPOSSIBLE", "UNKNOWN" };
+        for (final String status : statuses) {
+            processors.add(new CompositeProcessor(new ProcessorFactory() {
+                
+                @Override
+                public Processor create() {
+                    return new ActionCounter(status);
+                }
+            }));
+        }
     }
     
     public void run() {
