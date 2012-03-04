@@ -19,6 +19,7 @@ namespace ai
     public:
         StayAction(PlayerbotAI* ai) : StayActionBase(ai, "stay") {}
         virtual bool Execute(Event event);
+        virtual bool isUseful();
     };
 
     class StayCircleAction : public StayActionBase {

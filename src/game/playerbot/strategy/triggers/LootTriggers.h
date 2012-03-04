@@ -7,7 +7,7 @@ namespace ai
     class LootAvailableTrigger : public Trigger
     {
     public:
-        LootAvailableTrigger(PlayerbotAI* ai) : Trigger(ai, "loot available", 5) {}
+        LootAvailableTrigger(PlayerbotAI* ai) : Trigger(ai, "loot available") {}
 
         virtual bool IsActive();
     };

@@ -435,7 +435,7 @@ namespace ai
 	class NoMovementTrigger : public Trigger
 	{
 	public:
-		NoMovementTrigger(PlayerbotAI* ai, string name) : Trigger(ai, name, 5) {}
+		NoMovementTrigger(PlayerbotAI* ai, string name) : Trigger(ai, name) {}
 
 	public:
 		virtual bool IsActive();
@@ -445,7 +445,7 @@ namespace ai
     class NoPossibleTargetsTrigger : public Trigger
     {
     public:
-        NoPossibleTargetsTrigger(PlayerbotAI* ai) : Trigger(ai, "no possible targets", 5) {}
+        NoPossibleTargetsTrigger(PlayerbotAI* ai) : Trigger(ai, "no possible targets") {}
 
     public:
         virtual bool IsActive();

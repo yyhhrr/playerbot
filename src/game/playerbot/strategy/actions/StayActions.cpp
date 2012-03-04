@@ -87,6 +87,11 @@ bool StayAction::Execute(Event event)
     return true;
 }
 
+bool StayAction::isUseful()
+{
+    return !AI_VALUE2(bool, "moving", "self target");
+}
+
 bool StayCircleAction::Execute(Event event)
 {
     Stay();
@@ -114,7 +119,7 @@ bool StayCircleAction::Execute(Event event)
             range = sPlayerbotAIConfig.fleeDistance;
         break;
     }
-    
+
     float x = target->GetPositionX();
     float y = target->GetPositionY();
     float z = target->GetPositionZ();
@@ -131,7 +136,7 @@ bool StayLineAction::Execute(Event event)
 
     float range = 2.0f;
 
-    
+
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
@@ -161,7 +166,7 @@ bool StayCombatAction::Execute(Event event)
 
     float range = 2.0f;
 
-    
+
     float x = master->GetPositionX();
     float y = master->GetPositionY();
     float z = master->GetPositionZ();
