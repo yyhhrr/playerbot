@@ -28,7 +28,7 @@ public class LogProcessor implements Runnable {
             
             @Override
             public Processor create() {
-                return new PatternFinder(10);
+                return new PatternFinder(5);
             }
         }));
         

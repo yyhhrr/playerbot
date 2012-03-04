@@ -7,15 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.playerbot.ai.domain.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PatternFinder implements Processor {
-    private Logger logger = LoggerFactory.getLogger(getClass());
-        
+    
     private List<String> tmpActions = new LinkedList<String>(); 
     private String[] actions; 
     private Map<String, Integer> patterns = new HashMap<String, Integer>();
+    private List<String> alreadyProcessedPatterns = new LinkedList<String>();
     private int minCount;
 
     public PatternFinder(int minCount) {
@@ -30,6 +28,10 @@ public class PatternFinder implements Processor {
         
         String action = entry.getText();
         tmpActions.add(action);
+        
+        if (tmpActions.size() > 1000) {
+            calculate();
+        }
     }
     
     @Override
@@ -46,14 +48,14 @@ public class PatternFinder implements Processor {
 
     private void calculate() {
         actions = tmpActions.toArray(new String[tmpActions.size()]);
-        
+        tmpActions.clear();
+        alreadyProcessedPatterns.clear();
+
         for (int i = 10; i > 3; i--)
             calculate(i);
     }
     
     private void calculate(int length) {
-        logger.info(String.format("Calculating %d-patterns in %d actions", length, actions.length));
-        
         for (int i = 0; i < actions.length - length; i++) {
             calculate(i, length);
         }        
@@ -61,8 +63,10 @@ public class PatternFinder implements Processor {
 
     private void calculate(int start, int length) {
         String formattedPattern = format(start, length);
-        if (patterns.containsKey(formattedPattern))
+        if (alreadyProcessedPatterns.contains(formattedPattern))
             return;
+        
+        alreadyProcessedPatterns.add(formattedPattern);
         
         for (String existingPattern : patterns.keySet()) {
             if (existingPattern.contains(formattedPattern))
