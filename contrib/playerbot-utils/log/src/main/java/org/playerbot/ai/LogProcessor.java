@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.playerbot.ai.domain.Log;
 import org.playerbot.ai.processors.ActionCounter;
 import org.playerbot.ai.processors.CompositeProcessor;
+import org.playerbot.ai.processors.NeverExecutedActionsFinder;
 import org.playerbot.ai.processors.Processor;
 import org.playerbot.ai.processors.ProcessorFactory;
 import org.playerbot.ai.processors.TriggerCounter;
@@ -46,6 +47,14 @@ public class LogProcessor implements Runnable {
                 }
             }));
         }
+    
+        processors.add(new CompositeProcessor(new ProcessorFactory() {
+            
+            @Override
+            public Processor create() {
+                return new NeverExecutedActionsFinder();
+            }
+        }));
     }
     
     public void run() {
