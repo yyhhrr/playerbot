@@ -1,2 +1,1 @@
-       1 action2
-       1 action1
+action2

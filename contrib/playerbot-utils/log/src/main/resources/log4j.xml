@@ -11,10 +11,10 @@
             <param name="ConversionPattern" value="%d %-5p: %m [%c]%n" />
         </layout>
     </appender>
-
-    <appender name="output" class="org.apache.log4j.ConsoleAppender">
-        <param name="Encoding" value="UTF-8"/>
-        <param name="Target" value="System.out" />
+    
+    <appender name="output" class="org.apache.log4j.FileAppender">
+        <param name="file" value="${logfile}" />
+        <param name="append" value="false" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%m" />
         </layout>
@@ -30,9 +30,4 @@
         <appender-ref ref="console"/>
     </logger>
     
-    <logger name="org.springframework">
-        <level value="warn"/>
-        <appender-ref ref="console"/>
-    </logger>
-
 </log4j:configuration>

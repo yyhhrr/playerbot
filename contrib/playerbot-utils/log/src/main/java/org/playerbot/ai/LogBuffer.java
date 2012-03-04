@@ -4,11 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.playerbot.ai.domain.Log;
-import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 
-@Component
 public class LogBuffer {
     private Queue<Log> data = new LinkedList<Log>();
     private volatile boolean closed = false;

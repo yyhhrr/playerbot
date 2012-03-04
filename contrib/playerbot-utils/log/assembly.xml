@@ -19,10 +19,6 @@
             <outputDirectory />
             <outputFileNameMapping />
             <unpack>true</unpack>
-            <excludes>
-                <exclude>**/spring.handlers</exclude>
-                <exclude>**/spring.schemas</exclude>
-            </excludes>
         </dependencySet>
     </dependencySets>
 </assembly>

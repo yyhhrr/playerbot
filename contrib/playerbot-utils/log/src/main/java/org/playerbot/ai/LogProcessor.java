@@ -4,31 +4,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import org.playerbot.ai.domain.Log;
 import org.playerbot.ai.processors.ActionCounter;
 import org.playerbot.ai.processors.CompositeProcessor;
 import org.playerbot.ai.processors.NeverExecutedActionsFinder;
 import org.playerbot.ai.processors.Processor;
 import org.playerbot.ai.processors.ProcessorFactory;
+import org.playerbot.ai.processors.TittledProcessor;
 import org.playerbot.ai.processors.TriggerCounter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LogProcessor implements Runnable {
     private Logger logger = LoggerFactory.getLogger("output");
 
-    @Inject
     private LogBuffer buffer;
 
     private Collection<Processor> processors = new ArrayList<Processor>();
 
-    @PostConstruct
-    public void postConstruct() {
+    private void initProcessors() {
+        processors.add(new TittledProcessor(new NeverExecutedActionsFinder()));
+        
+        processors.add(new CompositeProcessor(new ProcessorFactory() {
+            
+            @Override
+            public Processor create() {
+                return new NeverExecutedActionsFinder();
+            }
+        }));
+        
         processors.add(new CompositeProcessor(new ProcessorFactory() {
             
             @Override
@@ -47,14 +51,6 @@ public class LogProcessor implements Runnable {
                 }
             }));
         }
-    
-        processors.add(new CompositeProcessor(new ProcessorFactory() {
-            
-            @Override
-            public Processor create() {
-                return new NeverExecutedActionsFinder();
-            }
-        }));
     }
     
     public void run() {
@@ -98,7 +94,10 @@ public class LogProcessor implements Runnable {
         }
     }
 
-    public Thread startProcessing() {
+    public Thread startProcessing(LogBuffer buffer) {
+        this.buffer = buffer;
+        initProcessors();
+        
         Thread thread = new Thread(this);
         thread.start();
         return thread;

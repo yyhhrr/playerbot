@@ -7,9 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.playerbot.ai.domain.Log;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LineParser {
     private static final Pattern PATTERN = Pattern
             .compile("(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d)\\s([a-zA-Z]+)\\s([a-zA-Z]+):(.+)");

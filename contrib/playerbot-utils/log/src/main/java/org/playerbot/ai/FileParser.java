@@ -6,27 +6,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import org.playerbot.ai.domain.Log;
-import org.springframework.stereotype.Component;
 
-@Component
 public class FileParser implements Runnable {
     
     protected static final int MAX_BUFFER_SIZE = 5000;
 
-    @Inject
-    private LineParser parser;
+    private LineParser parser = new LineParser();
     
-    @Inject
     private LogBuffer buffer;
 
     private String fileName;
     
     private long linesParsed = 0; 
 
-    public Thread startParsing(String fileName) {
+    public Thread startParsing(LogBuffer buffer, String fileName) {
+        this.buffer = buffer;
         this.fileName = fileName;
         Thread thread = new Thread(this);
         thread.start();

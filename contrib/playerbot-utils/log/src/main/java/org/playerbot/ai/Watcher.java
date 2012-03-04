@@ -1,19 +1,12 @@
 package org.playerbot.ai;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
 public class Watcher implements Runnable {
     private Logger logger = LoggerFactory.getLogger(getClass());
     
-    @Inject
     private FileParser parser;
-    
-    @Inject
     private LogBuffer buffer;
 
     public void run() {
@@ -27,7 +20,10 @@ public class Watcher implements Runnable {
         }
     }
 
-    public Thread startWatching() {
+    public Thread startWatching(LogBuffer buffer, FileParser parser) {
+        this.buffer = buffer;
+        this.parser = parser;
+        
         Thread thread = new Thread(this);
         thread.start();
         return thread;
