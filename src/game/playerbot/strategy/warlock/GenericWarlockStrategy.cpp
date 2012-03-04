@@ -30,7 +30,7 @@ private:
     }
 };
 
-GenericWarlockStrategy::GenericWarlockStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+GenericWarlockStrategy::GenericWarlockStrategy(PlayerbotAI* ai) : RangedCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericWarlockStrategyActionNodeFactory());
 }
@@ -42,7 +42,7 @@ NextAction** GenericWarlockStrategy::getDefaultActions()
 
 void GenericWarlockStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    CombatStrategy::InitTriggers(triggers);
+    RangedCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "corruption",

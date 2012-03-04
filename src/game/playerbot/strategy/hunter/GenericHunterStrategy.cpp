@@ -39,14 +39,14 @@ private:
     }
 };
 
-GenericHunterStrategy::GenericHunterStrategy(PlayerbotAI* ai) : CombatStrategy(ai)
+GenericHunterStrategy::GenericHunterStrategy(PlayerbotAI* ai) : RangedCombatStrategy(ai)
 {
     actionNodeFactories.Add(new GenericHunterStrategyActionNodeFactory());
 }
 
 void GenericHunterStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
-    CombatStrategy::InitTriggers(triggers);
+    RangedCombatStrategy::InitTriggers(triggers);
 
     triggers.push_back(new TriggerNode(
         "enemy too close for spell",
