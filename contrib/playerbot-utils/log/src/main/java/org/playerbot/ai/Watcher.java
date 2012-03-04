@@ -2,10 +2,13 @@ package org.playerbot.ai;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Watcher implements Runnable {
+    private Logger logger = LoggerFactory.getLogger(getClass());
     
     @Inject
     private FileParser parser;
@@ -15,7 +18,7 @@ public class Watcher implements Runnable {
 
     public void run() {
         while (!buffer.isClosed()) {
-            System.out.println(parser.getLinesParsed() + " lines parsed, " + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "M");
+            logger.info(parser.getLinesParsed() + " lines parsed, " + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "M");
 
             try {
                 Thread.sleep(1000);

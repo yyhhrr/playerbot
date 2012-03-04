@@ -19,6 +19,11 @@ public class Log implements Serializable {
             super();
         }
 
+        public Key(Date date, long number) {
+            this.date = date;
+            this.number = number;
+        }
+
         private Date date;
 
         private long number;
@@ -49,6 +54,19 @@ public class Log implements Serializable {
     private String text;
 
     private String status;
+
+    public Log() {
+        super();
+    }
+
+    public Log(Date date, long number, String bot, String event, String text, String status) {
+        super();
+        this.key = new Key(date, number);
+        this.bot = bot;
+        this.event = event;
+        this.text = text;
+        this.status = status;
+    }
 
     public Date getDate() {
         return key.date;
