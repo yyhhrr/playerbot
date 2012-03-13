@@ -77,7 +77,7 @@ bool MovementAction::MoveTo(Unit* target, float distance)
     float angle = bot->GetAngle(target);
     float needToGo = distanceToTarget - distance;
 
-    float maxDistance = distanceToTarget;
+    float maxDistance = 2 * bot->GetSpeed(MOVE_RUN);
     if (needToGo > 0 && needToGo > maxDistance)
         needToGo = maxDistance;
     else if (needToGo < 0 && needToGo < -maxDistance)
@@ -191,8 +191,8 @@ void MovementAction::WaitForReach(float distance)
 {
     float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN);
 
-    if (delay > sPlayerbotAIConfig.reactDelay)
-        delay = sPlayerbotAIConfig.reactDelay;
+    if (delay > sPlayerbotAIConfig.teleportDelay)
+        delay = sPlayerbotAIConfig.teleportDelay;
 
     ai->SetNextCheckDelay((uint32)delay);
 }
