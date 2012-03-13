@@ -132,6 +132,7 @@ protected:
     {
 		tickWithMyAttackerCount(3);
 		tickWithMyAttackerCount(3);
+        set<float>("distance", "current target", 5);
 		tickWithMyAttackerCount(3);
 
 		assertActions(">T:psychic scream>S:fade>S:flee");

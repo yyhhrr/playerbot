@@ -68,7 +68,7 @@ protected:
 
         assertActions(">S:molten armor>S:mage armor>S:ice armor>S:frost armor");
     }
-    
+
     void low_mana()
     {
         engine->addStrategy("flee");
@@ -80,9 +80,12 @@ protected:
         tickWithLowMana(5);
 
         set<uint8>("item count", "drink", 0);
+        set<float>("distance", "current target", 5);
+        tickWithLowMana(5);
+        tickWithLowMana(5);
         tickWithLowMana(5);
 
-        assertActions(">S:evocation>S:drink>S:flee");
+        assertActions(">S:evocation>S:drink>T:frost nova>S:flee>S:flee");
     }
 
     void dispel()

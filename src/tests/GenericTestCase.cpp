@@ -31,6 +31,7 @@ protected:
         set<list<Item*> >("inventory items", "drink", items);
 	    set<list<Item*> >("inventory items", "food", items);
 
+        set<float>("distance", "current target", 5);
 		lowHealth(1);
 		lowMana(1);
 		tick();
@@ -73,12 +74,14 @@ protected:
         set<uint8>("item count", "mana potion", 0);
 	    tickWithLowMana(1);
         set<uint8>("item count", "drink", 0);
+        set<float>("distance", "current target", 5);
 	    tickWithLowMana(1);
 
 	    tickWithLowHealth(1);
         set<uint8>("item count", "healing potion", 0);
 	    tickWithLowHealth(1);
         set<uint8>("item count", "food", 0);
+        set<float>("distance", "current target", 5);
 	    tickWithLowHealth(1);
 
 		assertActions(">S:mana potion>S:drink>S:flee>S:healing potion>S:food>S:flee");

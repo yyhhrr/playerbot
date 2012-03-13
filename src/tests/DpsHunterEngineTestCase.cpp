@@ -140,6 +140,7 @@ protected:
         tick();
 
         tickWithMyAttackerCount(3);
+        set<float>("distance", "current target", 5);
         tickWithMyAttackerCount(3);
 
         assertActions(">T:hunter's mark>S:feign death>S:flee");
