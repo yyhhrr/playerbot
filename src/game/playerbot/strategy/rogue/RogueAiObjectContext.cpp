@@ -74,6 +74,7 @@ namespace ai
         public:
             AiObjectContextInternal()
             {
+                creators["riposte"] = &AiObjectContextInternal::riposte;
                 creators["mutilate"] = &AiObjectContextInternal::mutilate;
                 creators["sinister strike"] = &AiObjectContextInternal::sinister_strike;
                 creators["kidney shot"] = &AiObjectContextInternal::kidney_shot;
@@ -89,6 +90,7 @@ namespace ai
             }
 
         private:
+            static Action* riposte(PlayerbotAI* ai) { return new CastRiposteAction(ai); }
             static Action* mutilate(PlayerbotAI* ai) { return new CastMutilateAction(ai); }
             static Action* sinister_strike(PlayerbotAI* ai) { return new CastSinisterStrikeAction(ai); }
             static Action* kidney_shot(PlayerbotAI* ai) { return new CastKidneyShotAction(ai); }
@@ -109,5 +111,5 @@ RogueAiObjectContext::RogueAiObjectContext(PlayerbotAI* ai) : AiObjectContext(ai
 {
     strategyContexts.Add(new ai::rogue::StrategyFactoryInternal());
     actionContexts.Add(new ai::rogue::AiObjectContextInternal());
-    triggerContexts.Add(new ai::rogue::TriggerFactoryInternal());    
+    triggerContexts.Add(new ai::rogue::TriggerFactoryInternal());
 }

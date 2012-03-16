@@ -30,6 +30,7 @@ protected:
 
 		tickOutOfMeleeRange();
 		tickInMeleeRange();
+		tick();
 
 		tickWithEnergy(70);
         tickWithEnergy(70);
@@ -38,8 +39,8 @@ protected:
         tickWithComboPoints(5);
 
         tickBehindTarget();
-        
-        assertActions(">T:reach melee>T:mutilate>T:sinister strike>T:melee>T:rupture>T:eviscerate>T:backstab");
+
+        assertActions(">T:reach melee>T:riposte>T:mutilate>T:sinister strike>T:melee>T:rupture>T:eviscerate>T:backstab");
     }
 
 	void healHimself()
@@ -58,7 +59,7 @@ protected:
 		tickWithTargetIsCastingNonMeleeSpell();
 		tickWithTargetIsCastingNonMeleeSpell();
 
-		assertActions(">T:mutilate>T:kick>T:kidney shot");
+		assertActions(">T:riposte>T:kick>T:kidney shot");
 	}
 };
 

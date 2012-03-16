@@ -14,26 +14,32 @@ namespace ai
 	};
 
 	class CastSinisterStrikeAction : public CastComboAction
-	{ 
-	public: 
+	{
+	public:
 		CastSinisterStrikeAction(PlayerbotAI* ai) : CastComboAction(ai, "sinister strike") {}
 	};
 
     class CastMutilateAction : public CastComboAction
-    { 
-    public: 
+    {
+    public:
         CastMutilateAction(PlayerbotAI* ai) : CastComboAction(ai, "mutilate") {}
     };
 
+    class CastRiposteAction : public CastComboAction
+    {
+    public:
+        CastRiposteAction(PlayerbotAI* ai) : CastComboAction(ai, "riposte") {}
+    };
+
 	class CastGougeAction : public CastComboAction
-	{ 
-	public: 
+	{
+	public:
 		CastGougeAction(PlayerbotAI* ai) : CastComboAction(ai, "gouge") {}
 	};
 
     class CastBackstabAction : public CastComboAction
-    { 
-    public: 
+    {
+    public:
         CastBackstabAction(PlayerbotAI* ai) : CastComboAction(ai, "backstab") {}
     };
 }
