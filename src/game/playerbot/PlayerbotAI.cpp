@@ -932,9 +932,6 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
     MotionMaster &mm = *bot->GetMotionMaster();
     if (bot->isMoving() && GetSpellCastTime(pSpellInfo, NULL))
     {
-        mm.Clear();
-        mm.MoveIdle();
-        mm.UpdateMotion(0);
         return false;
     }
 
@@ -986,9 +983,11 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
 
     if (!bot->isInFront(faceTo, sPlayerbotAIConfig.spellDistance))
     {
-        bot->SetOrientation(bot->GetAngle(faceTo));
-//        bot->SetFacingTo(bot->GetAngle(faceTo));
-//        return false;
+        if (sPlayerbotAIConfig.splineFacing)
+            bot->SetFacingTo(bot->GetAngle(faceTo));
+        else
+            bot->SetOrientation(bot->GetAngle(faceTo));
+        return false;
     }
 
     WaitForSpellCast(spellId);

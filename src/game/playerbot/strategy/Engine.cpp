@@ -160,7 +160,7 @@ bool Engine::DoNextAction(Unit* unit, int depth)
                         LogAction("A:%s - FAILED", action->getName().c_str());
                     }
                 }
-                else 
+                else
                 {
                     MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.03, false, event);
                     LogAction("A:%s - IMPOSSIBLE", action->getName().c_str());
@@ -450,5 +450,7 @@ void Engine::LogAction(const char* format, ...)
         fclose(file);
     }
     else
+    {
         sLog.outDebug("%s %s", ai->GetBot()->GetName(), buf);
+    }
 }

@@ -62,6 +62,8 @@ bool PlayerbotAIConfig::Initialize()
         randomBotAccounts.push_back(id);
     }
 
+    splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);
+
     sLog.outString("AI Playerbot configuration loaded");
     return true;
 }

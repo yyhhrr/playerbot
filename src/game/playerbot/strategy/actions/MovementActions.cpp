@@ -308,12 +308,14 @@ bool SetFacingTargetAction::Execute(Event event)
     if (!target)
         return false;
 
-//    bot->SetFacingTo(bot->GetAngle(target));
-    MotionMaster &mm = *bot->GetMotionMaster();
-    bot->SetInFront(target);
-    mm.Clear();
-    mm.MoveIdle();
-    mm.UpdateMotion(0);
+    if (sPlayerbotAIConfig.splineFacing)
+    {
+        bot->SetFacingTo(bot->GetAngle(target));
+    }
+    else
+    {
+        bot->SetInFront(target);
+    }
     return true;
 }
 
