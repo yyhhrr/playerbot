@@ -18,6 +18,7 @@ class HealPriestTestCase : public EngineTestBase
     CPPUNIT_TEST( enemyTooClose );
 	CPPUNIT_TEST( racials );
 	CPPUNIT_TEST( incompatibles );
+	CPPUNIT_TEST( range );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -181,6 +182,13 @@ protected:
         engine->addStrategies("heal", "shadow", NULL);
 
         CPPUNIT_ASSERT(engine->ListStrategies() == "Strategies: shadow");
+    }
+
+    void range()
+    {
+        tickOutOfSpellRange();
+
+        assertActions(">T:reach spell");
     }
 };
 

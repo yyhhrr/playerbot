@@ -17,6 +17,7 @@ class HealShamanTestCase : public EngineTestBase
 	CPPUNIT_TEST( dispel );
 	CPPUNIT_TEST( cure );
 	CPPUNIT_TEST( lowMana );
+	CPPUNIT_TEST( range );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -34,7 +35,7 @@ protected:
         tickWithLowHealth(45);
 		tickWithLowHealth(35);
         tickWithLowHealth(35);
-        
+
         assertActions(">S:lesser healing wave>S:riptide>S:healing wave");
     }
 
@@ -60,7 +61,7 @@ protected:
         engine->addStrategy("bmana");
         removeAura("water shield");
 
-        tick(); 
+        tick();
         addAura("water shield");
 
         tickWithItemForSpell("earthliving weapon");
@@ -77,14 +78,14 @@ protected:
         assertActions(">S:water shield>S:earthliving weapon>S:flametongue weapon>S:frostbrand weapon>S:rockbiter weapon>S:mana spring totem>S:strength of earth totem>S:flametongue totem>S:windfury totem");
     }
 
-    void interruptSpell() 
+    void interruptSpell()
     {
         tickWithTargetIsCastingNonMeleeSpell();
-        
+
 		assertActions(">T:wind shear");
     }
 
-	void dispel() 
+	void dispel()
 	{
 		tickWithTargetAuraToDispel(DISPEL_MAGIC);
 
@@ -115,6 +116,13 @@ protected:
 	    tickWithLowMana(1);
 		assertActions(">S:mana tide totem");
 	}
+
+    void range()
+    {
+        tickOutOfSpellRange();
+
+        assertActions(">T:reach spell");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( HealShamanTestCase );

@@ -12,6 +12,7 @@ class HealDruidTestCase : public EngineTestBase
     CPPUNIT_TEST( healHimself );
     CPPUNIT_TEST( healOthers );
 	CPPUNIT_TEST( aoe );
+	CPPUNIT_TEST( range );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -77,6 +78,13 @@ protected:
         tickWithAoeHeal("medium");
 
 		assertActions(">P:tranquility");
+    }
+
+    void range()
+    {
+        tickOutOfSpellRange();
+
+        assertActions(">T:reach spell");
     }
 };
 
