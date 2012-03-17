@@ -180,16 +180,13 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
 		return false;
     //mm.MoveFollow(target, distance, angle);
 
-    float distanceToRun = abs(bot->GetDistance(target) - distance);
-    WaitForReach(distanceToRun);
-
     AI_VALUE(LastMovement&, "last movement").Set(target);
     return true;
 }
 
 void MovementAction::WaitForReach(float distance)
 {
-    float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN);
+    float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN) + sPlayerbotAIConfig.reactDelay;
 
     if (delay > sPlayerbotAIConfig.teleportDelay)
         delay = sPlayerbotAIConfig.teleportDelay;
@@ -311,6 +308,7 @@ bool SetFacingTargetAction::Execute(Event event)
     if (!target)
         return false;
 
+//    bot->SetFacingTo(bot->GetAngle(target));
     MotionMaster &mm = *bot->GetMotionMaster();
     bot->SetInFront(target);
     mm.Clear();

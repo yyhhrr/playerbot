@@ -109,9 +109,11 @@ protected:
 
 	void facing()
 	{
-	    addAura("thorns");
-	    addAura("dire bear form");
+        addAura("dire bear form");
+        addAura("thorns");
+        addTargetAura("faerie fire (feral)");
 
+        set<float>("distance", "current target", ATTACK_DISTANCE - 1);
         set<bool>("facing", "current target", false);
 	    tick();
         set<bool>("facing", "current target", true);
