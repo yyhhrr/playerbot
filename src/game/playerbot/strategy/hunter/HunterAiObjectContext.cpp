@@ -139,6 +139,7 @@ namespace ai
                 creators["aspect of the cheetah"] = &AiObjectContextInternal::aspect_of_the_cheetah;
                 creators["trueshot aura"] = &AiObjectContextInternal::trueshot_aura;
                 creators["feign death"] = &AiObjectContextInternal::feign_death;
+                creators["wing clip"] = &AiObjectContextInternal::wing_clip;
             }
 
         private:
@@ -170,6 +171,7 @@ namespace ai
             static Action* aspect_of_the_viper(PlayerbotAI* ai) { return new CastAspectOfTheViperAction(ai); }
             static Action* aspect_of_the_pack(PlayerbotAI* ai) { return new CastAspectOfThePackAction(ai); }
             static Action* aspect_of_the_cheetah(PlayerbotAI* ai) { return new CastAspectOfTheCheetahAction(ai); }
+            static Action* wing_clip(PlayerbotAI* ai) { return new CastWingClipAction(ai); }
         };
     };
 };
