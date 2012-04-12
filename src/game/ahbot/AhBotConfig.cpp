@@ -29,7 +29,7 @@ bool AhBotConfig::Initialize()
     if (!enabled)
         sLog.outString("AhBot is Disabled in ahbot.conf");
 
-    updateInterval = config.GetIntDefault("AhBot.UpdateIntervalInSeconds", 60);
+    updateInterval = config.GetIntDefault("AhBot.UpdateIntervalInSeconds", 300);
     historyDays = config.GetIntDefault("AhBot.History.Days", 30);
     alwaysAvailableMoney = config.GetIntDefault("AhBot.AlwaysAvailableMoney", 10000);
     priceMultiplier = config.GetFloatDefault("AhBot.PriceMultiplier", 1.0f);
@@ -37,6 +37,8 @@ bool AhBotConfig::Initialize()
     maxItemLevel = config.GetIntDefault("AhBot.MaxItemLevel", 300);
     priceQualityMultiplier = config.GetFloatDefault("AhBot.PriceQualityMultiplier", 1.0f);
     underPriceProbability = config.GetFloatDefault("AhBot.UnderPriceProbability", 0.05f);
+    buyProbability = config.GetFloatDefault("AhBot.BuyProbability", 0.25f);
+    sellProbability = config.GetFloatDefault("AhBot.SellProbability", 0.15f);
 
     sLog.outString("AhBot configuration loaded");
     return true;

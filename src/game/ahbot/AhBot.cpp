@@ -122,6 +122,8 @@ void AhBot::ForceUpdate()
         InAuctionItemsBag inAuctionItems(auctionIds[i]);
         Update(i, &inAuctionItems);
     }
+
+    sLog.outString("AhBot auction check finished. Next check in %d seconds", sAhBotConfig.updateInterval);
 }
 
 void AhBot::Update(int auction, ItemBag* inAuctionItems)
@@ -165,6 +167,9 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
 
         Item *item = sAuctionMgr.GetAItem(entry->itemGuidLow);
         if (!item)
+            continue;
+
+        if (urand(0, 100) > sAhBotConfig.buyProbability * 100)
             continue;
 
         uint32 price = category->GetPricingStrategy()->GetBuyPrice(item->GetProto(), auctionIds[auction]);
@@ -237,6 +242,9 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
 
         int32 maxAllowedItems = category->GetMaxAllowedItemAuctionCount(proto);
         if (maxAllowedItems && inAuctionItems->GetCount(category, proto->ItemId) >= maxAllowedItems)
+            continue;
+
+        if (urand(0, 100) > sAhBotConfig.sellProbability * 100)
             continue;
 
         inAuctionItems->Add(proto);

@@ -13,6 +13,8 @@ ConfVersion=2010102201
 # Disable original AuctionHouseBot
 AuctionHouseBot.Seller.Enabled = 0
 AuctionHouseBot.Buyer.Enabled = 0
+AhBot.BuyProbability = 0.25
+AhBot.SellProbability = 0.15
 
 # Replace with the new AhBot
 AhBot.Enabled = 1
