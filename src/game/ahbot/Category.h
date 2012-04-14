@@ -38,7 +38,7 @@ namespace ahbot
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
-            return proto->Class == ITEM_CLASS_CONSUMABLE && proto->ItemLevel > 1;
+            return proto->Class == ITEM_CLASS_CONSUMABLE;
         }
 
         virtual string GetName() { return "consumable"; }
@@ -80,7 +80,7 @@ namespace ahbot
         {
             return 5;
         }
-        
+
         virtual int32 GetStackCount(ItemPrototype const* proto)
         {
             if (proto->Quality > ITEM_QUALITY_UNCOMMON)
