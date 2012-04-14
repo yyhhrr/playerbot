@@ -12,8 +12,6 @@ AhBotConfig::AhBotConfig()
 
 bool AhBotConfig::Initialize()
 {
-    sLog.outString("Initializing AhBot by ike3");
-
     if (!config.SetSource("ahbot.conf"))
     {
         sLog.outString("AhBot is Disabled. Unable to open configuration file ahbot.conf");
@@ -40,6 +38,5 @@ bool AhBotConfig::Initialize()
     buyProbability = config.GetFloatDefault("AhBot.BuyProbability", 0.25f);
     sellProbability = config.GetFloatDefault("AhBot.SellProbability", 0.15f);
 
-    sLog.outString("AhBot configuration loaded");
-    return true;
+    return enabled;
 }

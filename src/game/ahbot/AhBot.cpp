@@ -67,18 +67,29 @@ uint32 AhBot::auctionIds[MAX_AUCTIONS] = {2, 6, 7};
 
 void AhBot::Init()
 {
-    sAhBotConfig.Initialize();
+    sLog.outString("Initializing AhBot by ike3");
 
-    if (!sAhBotConfig.enabled)
+    if (!sAhBotConfig.Initialize())
         return;
 
     session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
     player = new Player(session);
-    player->MinimalLoadFromDB(NULL, GetAHBplayerGUID());
+    if (!player->MinimalLoadFromDB(NULL, GetAHBplayerGUID()))
+    {
+        sLog.outString("AhBot character [account=%d, guid=%d] not found. AhBot is disabled.",
+                sAhBotConfig.account, sAhBotConfig.guid);
+        delete player;
+        delete session;
+        player = NULL;
+        session = NULL;
+        return;
+    }
 
     ObjectAccessor::Instance().AddObject(player);
 
     availableItems.Init();
+
+    sLog.outString("AhBot loaded");
 }
 
 AhBot::~AhBot()
@@ -165,16 +176,17 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         if (entry->owner == player->GetGUIDLow() || entry->bidder == player->GetGUIDLow())
             continue;
 
-        Item *item = sAuctionMgr.GetAItem(entry->itemGuidLow);
-        if (!item)
+        if (urand(0, 100) > sAhBotConfig.buyProbability * 100)
             continue;
 
-        if (urand(0, 100) > sAhBotConfig.buyProbability * 100)
+        Item *item = sAuctionMgr.GetAItem(entry->itemGuidLow);
+        if (!item)
             continue;
 
         uint32 price = category->GetPricingStrategy()->GetBuyPrice(item->GetProto(), auctionIds[auction]);
         if (!price || !item->GetCount())
             continue;
+
         uint32 bidPrice = item->GetCount() * price;
         uint32 buyoutPrice = item->GetCount() * urand(price, 4 * price / 3);
 
@@ -195,22 +207,21 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
         entry->bid = curPrice + urand(1, 1 + bidPrice / 10);
         availableMoney -= curPrice;
 
-        sLog.outDebug("Answer auction: market price adjust");
-        updateMarketPrice(item->GetProto()->ItemId, entry->buyout / item->GetCount(), auction);
+        updateMarketPrice(item->GetProto()->ItemId, entry->buyout / item->GetCount(), auctionIds[auction]);
 
         if (entry->buyout && (entry->bid >= entry->buyout || 100 * (entry->buyout - entry->bid) / price < 25))
         {
             entry->bid = entry->buyout;
             entry->AuctionBidWinning(NULL);
 
-            sLog.outDetail("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auction, entry->buyout);
+            sLog.outString("AhBot won %s in auction %d for %d", item->GetProto()->Name1, auctionIds[auction], entry->buyout);
         }
         else
         {
             CharacterDatabase.PExecute("UPDATE auction SET buyguid = '%u',lastbid = '%u' WHERE id = '%u'",
                 entry->bidder, entry->bid, entry->Id);
 
-            sLog.outDetail("AhBot placed bid %d for %s in auction %d", entry->bid, item->GetProto()->Name1, auction);
+            sLog.outString("AhBot placed bid %d for %s in auction %d", entry->bid, item->GetProto()->Name1, auctionIds[auction]);
         }
    }
 }
@@ -220,31 +231,28 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
     vector<uint32>& inAuction = inAuctionItems->Get(category);
 
     int32 maxAllowedAuctionCount = category->GetMaxAllowedAuctionCount();
-    if (inAuctionItems->GetCount(category) >= maxAllowedAuctionCount)
+    if (inAuctionItems->GetCount(category) >= maxAllowedAuctionCount / 2)
         return;
 
     maxAllowedAuctionCount = urand(1 + maxAllowedAuctionCount / 2, maxAllowedAuctionCount);
 
-    vector<uint32>& available = availableItems.Get(category);
-    if (available.size() < 5)
-        return;
+    vector<uint32> available = availableItems.Get(category);
+    Shuffle(available);
 
-    int count = 0;
-    while (count++ < available.size() * 10)
+    for (vector<uint32>::iterator i = available.begin(); i != available.end(); i++)
     {
-        uint32 index = urand(0, available.size() - 1);
-        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(available[index]);
-        if (!proto)
-            continue;
-
         if (inAuctionItems->GetCount(category) >= maxAllowedAuctionCount)
             break;
 
-        int32 maxAllowedItems = category->GetMaxAllowedItemAuctionCount(proto);
-        if (maxAllowedItems && inAuctionItems->GetCount(category, proto->ItemId) >= maxAllowedItems)
+        if (urand(0, 100) > sAhBotConfig.sellProbability * 100)
             continue;
 
-        if (urand(0, 100) > sAhBotConfig.sellProbability * 100)
+        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(*i);
+        if (!proto)
+            continue;
+
+        int32 maxAllowedItems = category->GetMaxAllowedItemAuctionCount(proto);
+        if (maxAllowedItems && inAuctionItems->GetCount(category, proto->ItemId) >= maxAllowedItems)
             continue;
 
         inAuctionItems->Add(proto);
@@ -254,7 +262,7 @@ void AhBot::AddAuctions(int auction, Category* category, ItemBag* inAuctionItems
 
 void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* proto)
 {
-    Item* item = Item::CreateItem(proto->ItemId, 1, player);
+    Item* item = Item::CreateItem(proto->ItemId, 1, NULL);
     if (!item)
         return;
 
@@ -262,12 +270,10 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     if (randomPropertyId)
         item->SetItemRandomProperties(randomPropertyId);
 
-    item->AddToUpdateQueueOf(player);
-
     uint32 price = category->GetPricingStrategy()->GetSellPrice(proto, auctionIds[auction]);
 
     sLog.outDebug("AddAuction: market price adjust");
-    updateMarketPrice(proto->ItemId, price, auction);
+    updateMarketPrice(proto->ItemId, price, auctionIds[auction]);
 
     price = category->GetPricingStrategy()->GetBuyPrice(proto, auctionIds[auction]);
 
@@ -302,14 +308,13 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     auctionEntry->moneyDeliveryTime = 0;
     auctionEntry->auctionHouseEntry = ahEntry;
     item->SaveToDB();
-    item->RemoveFromUpdateQueueOf(player);
 
     sAuctionMgr.AddAItem(item);
 
     auctionHouse->AddAuction(auctionEntry);
     auctionEntry->SaveToDB();
 
-    sLog.outDetail("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auction, bidPrice, buyoutPrice);
+    sLog.outString("AhBot added %d of %s to auction %d for %d..%d", stackCount, proto->Name1, auctionIds[auction], bidPrice, buyoutPrice);
 }
 
 void AhBot::HandleCommand(string command)
