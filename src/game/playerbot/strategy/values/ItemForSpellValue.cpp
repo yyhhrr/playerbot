@@ -14,21 +14,49 @@ Item* ItemForSpellValue::Calculate()
     if (!spellInfo)
         return NULL;
 
+    Item* itemForSpell = NULL;
     Player* trader = bot->GetTrader();
     if (trader)
     {
-        Item* const itemForSpell = trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
+        itemForSpell = trader->GetTradeData()->GetItem(TRADE_SLOT_NONTRADED);
         if (itemForSpell && itemForSpell->IsFitToSpellRequirements(spellInfo))
             return itemForSpell;
     }
 
-    for( uint8 slot=EQUIPMENT_SLOT_START; slot<EQUIPMENT_SLOT_END; slot++ ) {
-        Item* const itemForSpell = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );
-        if (!itemForSpell || itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
-            continue;
+    // Workaround as some spells have no item mask (e.g. shaman weapon enhancements)
+    if (!strcmpi(spellInfo->SpellName[0], "rockbiter weapon") ||
+            !strcmpi(spellInfo->SpellName[0], "flametongue weapon") ||
+            !strcmpi(spellInfo->SpellName[0], "earthliving weapon") ||
+            !strcmpi(spellInfo->SpellName[0], "frostbrand weapon") ||
+            !strcmpi(spellInfo->SpellName[0], "windfury weapon"))
+    {
+        itemForSpell = GetItemFitsToSpellRequirements(EQUIPMENT_SLOT_MAINHAND, spellInfo);
+        if (itemForSpell && itemForSpell->GetProto()->Class == ITEM_CLASS_WEAPON)
+            return itemForSpell;
 
-        if (itemForSpell->IsFitToSpellRequirements(spellInfo))
+        itemForSpell = GetItemFitsToSpellRequirements(EQUIPMENT_SLOT_OFFHAND, spellInfo);
+        if (itemForSpell && itemForSpell->GetProto()->Class == ITEM_CLASS_WEAPON)
+            return itemForSpell;
+
+        return NULL;
+    }
+
+    for( uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; slot++ ) {
+        itemForSpell = GetItemFitsToSpellRequirements(slot, spellInfo);
+        if (itemForSpell)
             return itemForSpell;
     }
+    return NULL;
+}
+
+Item* ItemForSpellValue::GetItemFitsToSpellRequirements(uint8 slot, SpellEntry const *spellInfo)
+{
+    Item* const itemForSpell = bot->GetItemByPos( INVENTORY_SLOT_BAG_0, slot );
+    if (!itemForSpell || itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
+        return NULL;
+
+    if (itemForSpell->IsFitToSpellRequirements(spellInfo))
+        return itemForSpell;
+
     return NULL;
 }
