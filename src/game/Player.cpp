@@ -3285,12 +3285,12 @@ bool Player::IsNeedCastPassiveLikeSpellAtLearn(SpellEntry const* spellInfo) cons
     if (IsNeedCastSpellAtFormApply(spellInfo, form))        // SPELL_ATTR_PASSIVE | SPELL_ATTR_UNK7 spells
         return true;                                        // all stance req. cases, not have auarastate cases
 
-    if (!(spellInfo->Attributes & SPELL_ATTR_PASSIVE))
+    if (!spellInfo->HasAttribute(SPELL_ATTR_PASSIVE))
         return false;
 
     // note: form passives activated with shapeshift spells be implemented by HandleShapeshiftBoosts instead of spell_learn_spell
     // talent dependent passives activated at form apply have proper stance data
-    bool need_cast = (!spellInfo->Stances || !form && (spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT));
+    bool need_cast = !spellInfo->Stances || !form && spellInfo->HasAttribute(SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT);
 
     // Check CasterAuraStates
     return need_cast && (!spellInfo->CasterAuraState || HasAuraState(AuraState(spellInfo->CasterAuraState)));
@@ -5948,7 +5948,7 @@ bool Player::IsActionButtonDataValid(uint8 button, uint32 action, uint8 type, Pl
                 }
                 // current range for button of totem bar is from ACTION_BUTTON_SHAMAN_TOTEMS_BAR to (but not including) ACTION_BUTTON_SHAMAN_TOTEMS_BAR + 12
                 else if(button >= ACTION_BUTTON_SHAMAN_TOTEMS_BAR && button < (ACTION_BUTTON_SHAMAN_TOTEMS_BAR + 12)
-                    && !(spellProto->AttributesEx7 & SPELL_ATTR_EX7_TOTEM_SPELL))
+                    && !spellProto->HasAttribute(SPELL_ATTR_EX7_TOTEM_SPELL))
                 {
                     if (msg)
                         sLog.outError( "Spell action %u not added into button %u for player %s: attempt to add non totem spell to totem bar", action, button, player->GetName() );
@@ -13000,6 +13000,14 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
 
         if (!isGameMaster())                                // Let GM always see menu items regardless of conditions
         {
+            if (itr->second.conditionId && !sObjectMgr.IsPlayerMeetToNEWCondition(this, itr->second.conditionId))
+            {
+                if (itr->second.option_id == GOSSIP_OPTION_QUESTGIVER)
+                    canSeeQuests = false;
+                continue;
+            }
+            else if (!itr->second.conditionId)
+        {
             if (itr->second.cond_1 && !sObjectMgr.IsPlayerMeetToCondition(this, itr->second.cond_1))
             {
                 if (itr->second.option_id == GOSSIP_OPTION_QUESTGIVER)
@@ -13020,6 +13028,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
                     canSeeQuests = false;
                 continue;
             }
+        }
         }
 
         if (pSource->GetTypeId() == TYPEID_UNIT)
@@ -13370,7 +13379,18 @@ uint32 Player::GetGossipTextId(uint32 menuId, WorldObject* pSource)
 
     GossipMenusMapBounds pMenuBounds = sObjectMgr.GetGossipMenusMapBounds(menuId);
 
-    for(GossipMenusMap::const_iterator itr = pMenuBounds.first; itr != pMenuBounds.second; ++itr)
+    for (GossipMenusMap::const_iterator itr = pMenuBounds.first; itr != pMenuBounds.second; ++itr)
+    {
+        if (itr->second.conditionId && sObjectMgr.IsPlayerMeetToNEWCondition(this, itr->second.conditionId))
+        {
+            textId = itr->second.text_id;
+
+            // Start related script
+            if (itr->second.script_id)
+                GetMap()->ScriptsStart(sGossipScripts, itr->second.script_id, this, pSource);
+            break;
+        }
+        else if (!itr->second.conditionId)
     {
         if (sObjectMgr.IsPlayerMeetToCondition(this, itr->second.cond_1) && sObjectMgr.IsPlayerMeetToCondition(this, itr->second.cond_2))
         {
@@ -13381,6 +13401,7 @@ uint32 Player::GetGossipTextId(uint32 menuId, WorldObject* pSource)
                 GetMap()->ScriptsStart(sGossipScripts, itr->second.script_id, this, pSource);
             break;
         }
+    }
     }
 
     return textId;
@@ -19128,7 +19149,7 @@ void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs )
         }
 
         // Not send cooldown for this spells
-        if (spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE)
+        if (spellInfo->HasAttribute(SPELL_ATTR_DISABLED_WHILE_ACTIVE))
             continue;
 
         if((idSchoolMask & GetSpellSchoolMask(spellInfo)) && GetSpellCooldownDelay(unSpellId) < unTimeMs )
@@ -20906,8 +20927,7 @@ bool Player::HasItemFitToSpellReqirements(SpellEntry const* spellInfo, Item cons
 bool Player::CanNoReagentCast(SpellEntry const* spellInfo) const
 {
     // don't take reagents for spells with SPELL_ATTR_EX5_NO_REAGENT_WHILE_PREP
-    if (spellInfo->AttributesEx5 & SPELL_ATTR_EX5_NO_REAGENT_WHILE_PREP &&
-        HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION))
+    if (spellInfo->HasAttribute(SPELL_ATTR_EX5_NO_REAGENT_WHILE_PREP) && HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PREPARATION))
         return true;
 
     // Check no reagent use mask
