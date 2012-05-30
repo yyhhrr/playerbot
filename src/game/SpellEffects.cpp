@@ -3333,12 +3333,23 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
 
     // Script based implementation. Must be used only for not good for implementation in core spell effects
     // So called only for not processed cases
+    bool libraryResult = false;
     if (gameObjTarget)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, gameObjTarget);
+        libraryResult = sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, gameObjTarget);
     else if (unitTarget && unitTarget->GetTypeId() == TYPEID_UNIT)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, (Creature*)unitTarget);
+        libraryResult = sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, (Creature*)unitTarget);
     else if (itemTarget)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, itemTarget);
+        libraryResult = sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, eff_idx, itemTarget);
+
+    if (libraryResult || !unitTarget)
+        return;
+
+    // Previous effect might have started script
+    if (!ScriptMgr::CanSpellEffectStartDBScript(m_spellInfo, eff_idx))
+        return;
+
+    DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell ScriptStart spellid %u in EffectDummy", m_spellInfo->Id);
+    m_caster->GetMap()->ScriptsStart(sSpellScripts, m_spellInfo->Id, m_caster, unitTarget);
 }
 
 void Spell::EffectTriggerSpellWithValue(SpellEffectIndex eff_idx)
@@ -3518,10 +3529,19 @@ void Spell::EffectTriggerSpell(SpellEffectIndex effIndex)
     }
 
     // normal case
-    SpellEntry const *spellInfo = sSpellStore.LookupEntry( triggered_spell_id );
+    SpellEntry const* spellInfo = sSpellStore.LookupEntry(triggered_spell_id);
     if (!spellInfo)
     {
-        sLog.outError("EffectTriggerSpell of spell %u: triggering unknown spell id %i", m_spellInfo->Id,triggered_spell_id);
+        // No previous Effect might have started a script
+        bool startDBScript = unitTarget && ScriptMgr::CanSpellEffectStartDBScript(m_spellInfo, effIndex);
+        if (startDBScript)
+        {
+            DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell ScriptStart spellid %u in EffectTriggerSpell", m_spellInfo->Id);
+            startDBScript = m_caster->GetMap()->ScriptsStart(sSpellScripts, m_spellInfo->Id, m_caster, unitTarget);
+        }
+
+        if (!startDBScript)
+            sLog.outError("EffectTriggerSpell of spell %u: triggering unknown spell id %i", m_spellInfo->Id, triggered_spell_id);
         return;
     }
 
@@ -7604,6 +7624,22 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     unitTarget->CastSpell(m_caster, 69023, true);
                     return;
                 }
+                case 69140:                                 // Coldflame (random target selection)
+                {
+                    if (!unitTarget)
+                        return;
+
+                    m_caster->CastSpell(unitTarget, m_spellInfo->CalculateSimpleValue(eff_idx), true);
+                    return;
+                }
+                case 69147:                                 // Coldflame
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, m_spellInfo->CalculateSimpleValue(eff_idx), true);
+                    return;
+                }
                 case 69377:                                 // Fortitude
                 {
                     if (!unitTarget)
@@ -7633,6 +7669,17 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                 {
                     // cast Whiteout visual
                     m_caster->CastSpell(unitTarget, 72036, true);
+                    return;
+                }
+                case 72705:                                 // Coldflame (summon around the caster)
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Cast summon spells 72701, 72702, 72703, 72704
+                    for (uint32 triggeredSpell = m_spellInfo->CalculateSimpleValue(eff_idx); triggeredSpell < m_spellInfo->Id; ++triggeredSpell)
+                        unitTarget->CastSpell(unitTarget, triggeredSpell, true);
+
                     return;
                 }
             }
@@ -8039,7 +8086,11 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
     if (!unitTarget)
         return;
 
-    DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell ScriptStart spellid %u in EffectScriptEffect ", m_spellInfo->Id);
+    // Previous effect might have started script
+    if (!ScriptMgr::CanSpellEffectStartDBScript(m_spellInfo, eff_idx))
+        return;
+
+    DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell ScriptStart spellid %u in EffectScriptEffect", m_spellInfo->Id);
     m_caster->GetMap()->ScriptsStart(sSpellScripts, m_spellInfo->Id, m_caster, unitTarget);
 }
 

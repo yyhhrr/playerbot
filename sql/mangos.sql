@@ -24,7 +24,7 @@ CREATE TABLE `db_version` (
   `version` varchar(120) default NULL,
   `creature_ai_version` varchar(120) default NULL,
   `cache_id` int(10) default '0',
-  `required_11968_01_mangos_creature_linking_template` bit(1) default NULL
+  `required_11994_01_mangos_creature_linking` bit(1) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Used DB version notes';
 
 --
@@ -964,6 +964,28 @@ CREATE TABLE `creature_involvedrelation` (
 LOCK TABLES `creature_involvedrelation` WRITE;
 /*!40000 ALTER TABLE `creature_involvedrelation` DISABLE KEYS */;
 /*!40000 ALTER TABLE `creature_involvedrelation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `creature_linking`
+--
+
+DROP TABLE IF EXISTS creature_linking;
+CREATE TABLE `creature_linking` (
+  `guid` int(10) UNSIGNED NOT NULL COMMENT 'creature.guid of the slave mob that is linked',
+  `master_guid` int(10) UNSIGNED NOT NULL COMMENT 'master to trigger events',
+  `flag` mediumint(8) UNSIGNED NOT NULL COMMENT 'flag - describing what should happen when',
+  PRIMARY KEY  (`guid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Creature Linking System';
+
+
+--
+-- Dumping data for table `creature_linking`
+--
+
+LOCK TABLES `creature_linking` WRITE;
+/*!40000 ALTER TABLE `creature_linking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `creature_linking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2131,6 +2153,40 @@ CREATE TABLE `gameobject_template` (
 LOCK TABLES `gameobject_template` WRITE;
 /*!40000 ALTER TABLE `gameobject_template` DISABLE KEYS */;
 /*!40000 ALTER TABLE `gameobject_template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gameobject_template_scripts`
+--
+
+DROP TABLE IF EXISTS `gameobject_template_scripts`;
+CREATE TABLE `gameobject_template_scripts` (
+  `id` mediumint(8) unsigned NOT NULL default '0',
+  `delay` int(10) unsigned NOT NULL default '0',
+  `command` mediumint(8) unsigned NOT NULL default '0',
+  `datalong` mediumint(8) unsigned NOT NULL default '0',
+  `datalong2` int(10) unsigned NOT NULL default '0',
+  `buddy_entry` int(10) unsigned NOT NULL default '0',
+  `search_radius` int(10) unsigned NOT NULL default '0',
+  `data_flags` tinyint(3) unsigned NOT NULL default '0',
+  `dataint` int(11) NOT NULL default '0',
+  `dataint2` int(11) NOT NULL default '0',
+  `dataint3` int(11) NOT NULL default '0',
+  `dataint4` int(11) NOT NULL default '0',
+  `x` float NOT NULL default '0',
+  `y` float NOT NULL default '0',
+  `z` float NOT NULL default '0',
+  `o` float NOT NULL default '0',
+  `comments` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `gameobject_template_scripts`
+--
+
+LOCK TABLES `gameobject_template_scripts` WRITE;
+/*!40000 ALTER TABLE `gameobject_template_scripts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gameobject_template_scripts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
