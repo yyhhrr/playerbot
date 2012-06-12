@@ -2376,6 +2376,15 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     m_caster->CastSpell(m_caster, 54851, true);
                     return;
                 }
+                case 54092:                                 // Monster Slayer's Kit
+                {
+                    if (!unitTarget)
+                        return;
+
+                    uint32 spellIds[] = {51853, 54063, 54071, 54086};
+                    m_caster->CastSpell(unitTarget, spellIds[urand(0, 3)], true);
+                    return;
+                }
                 case 55004:                                 // Nitro Boosts
                 {
                     if (!m_CastItem)
@@ -6884,6 +6893,14 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     unitTarget->RemoveAurasDueToSpell(46394);
                     return;
                 }
+                case 45204:                                 // Clone Me!
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(m_caster, m_spellInfo->CalculateSimpleValue(eff_idx), true);
+                    return;
+                }
                 case 45206:                                 // Copy Off-hand Weapon
                 {
                     if (m_caster->GetTypeId() != TYPEID_UNIT || !unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
@@ -8554,34 +8571,35 @@ void Spell::EffectSummonObject(SpellEffectIndex eff_idx)
 
 void Spell::EffectResurrect(SpellEffectIndex /*eff_idx*/)
 {
-    if(!unitTarget)
-        return;
-    if(unitTarget->GetTypeId() != TYPEID_PLAYER)
+    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    if(unitTarget->isAlive())
-        return;
-    if(!unitTarget->IsInWorld())
+    if (unitTarget->isAlive() || !unitTarget->IsInWorld())
         return;
 
     switch (m_spellInfo->Id)
     {
-        // Defibrillate (Goblin Jumper Cables) have 33% chance on success
-        case 8342:
-            if (roll_chance_i(67))
+        case 8342:                                          // Defibrillate (Goblin Jumper Cables) has 33% chance on success
+        case 22999:                                         // Defibrillate (Goblin Jumper Cables XL) has 50% chance on success
+        case 54732:                                         // Defibrillate (Gnomish Army Knife) has 67% chance on success
+        {
+            uint32 failChance = 0;
+            uint32 failSpellId = 0;
+            switch (m_spellInfo->Id)
             {
-                m_caster->CastSpell(m_caster, 8338, true, m_CastItem);
+                case 8342:  failChance=67; failSpellId = 8338;  break;
+                case 22999: failChance=50; failSpellId = 23055; break;
+                case 54732: failChance=33; failSpellId = 0; break;
+            }
+
+            if (roll_chance_i(failChance))
+            {
+                if (failSpellId)
+                    m_caster->CastSpell(m_caster, failSpellId, true, m_CastItem);
                 return;
             }
             break;
-        // Defibrillate (Goblin Jumper Cables XL) have 50% chance on success
-        case 22999:
-            if (roll_chance_i(50))
-            {
-                m_caster->CastSpell(m_caster, 23055, true, m_CastItem);
-                return;
-            }
-            break;
+        }
         default:
             break;
     }
