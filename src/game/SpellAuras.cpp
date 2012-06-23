@@ -2055,6 +2055,30 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                         if (Unit* caster = GetCaster())
                             caster->CastSpell(caster, 13138, true, NULL, this);
                         return;
+                    case 28832:                             // Mark of Korth'azz
+                    case 28833:                             // Mark of Blaumeux
+                    case 28834:                             // Mark of Rivendare
+                    case 28835:                             // Mark of Zeliek
+                    {
+                        int32 damage = 0;
+
+                        switch (GetStackAmount())
+                        {
+                            case 1:
+                                return;
+                            case 2: damage =   500; break;
+                            case 3: damage =  1500; break;
+                            case 4: damage =  4000; break;
+                            case 5: damage = 12500; break;
+                            default:
+                                damage = 14000 + 1000 * GetStackAmount();
+                                break;
+                        }
+
+                        if (Unit* caster = GetCaster())
+                            caster->CastCustomSpell(target, 28836, &damage, NULL, NULL, true, NULL, this);
+                        return;
+                    }
                     case 31606:                             // Stormcrow Amulet
                     {
                         CreatureInfo const * cInfo = ObjectMgr::GetCreatureTemplate(17970);
@@ -2073,6 +2097,11 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                         // real time randomness is unclear, using max 30 seconds here
                         // see further down for expire of this aura
                         GetHolder()->SetAuraDuration(urand(1, 30)*IN_MILLISECONDS);
+                        return;
+                    }
+                    case 33326:                             // Stolen Soul Dispel
+                    {
+                        target->RemoveAurasDueToSpell(32346);
                         return;
                     }
                     // Gender spells
