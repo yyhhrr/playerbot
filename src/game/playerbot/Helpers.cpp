@@ -1,11 +1,15 @@
 #include "../pchdef.h"
 #include "playerbot.h"
+#include <algorithm>
+#include <functional>
+#include <cctype>
+#include <locale>
 
-vector<string>& split(const string &s, char delim, vector<string> &elems) 
+vector<string>& split(const string &s, char delim, vector<string> &elems)
 {
     stringstream ss(s);
     string item;
-    while(getline(ss, item, delim)) 
+    while(getline(ss, item, delim))
     {
         elems.push_back(item);
     }
@@ -13,7 +17,7 @@ vector<string>& split(const string &s, char delim, vector<string> &elems)
 }
 
 
-vector<string> split(const string &s, char delim) 
+vector<string> split(const string &s, char delim)
 {
     vector<string> elems;
     return split(s, delim, elems);
@@ -69,4 +73,18 @@ uint64 extractGuid(WorldPacket& packet)
         testMask <<= 1;
     }
     return guid;
+}
+
+std::string &ltrim(std::string &s) {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+        return s;
+}
+
+std::string &rtrim(std::string &s) {
+        s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        return s;
+}
+
+std::string &trim(std::string &s) {
+        return ltrim(rtrim(s));
 }
