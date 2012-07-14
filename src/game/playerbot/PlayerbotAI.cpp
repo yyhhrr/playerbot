@@ -21,6 +21,7 @@ vector<string>& split(const string &s, char delim, vector<string> &elems);
 vector<string> split(const string &s, char delim);
 char * strstri (string str1, string str2);
 uint64 extractGuid(WorldPacket& packet);
+std::string &trim(std::string &s);
 
 uint32 PlayerbotChatHandler::extractQuestId(string str)
 {
@@ -206,7 +207,7 @@ void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPla
 		text.find("CTRA") != wstring::npos)
 		return;
 
-	string filtered = chatFilter.Filter(text);
+	string filtered = chatFilter.Filter(trim((string&)text));
 	if (filtered.empty())
 	    return;
 
