@@ -492,8 +492,8 @@ ObjectGuid PlayerbotFactory::GetRandomBot()
 
 void PlayerbotFactory::InitQuests()
 {
-    QueryResult *results = WorldDatabase.PQuery("SELECT entry FROM udb.quest_template where QuestLevel = -1 and RequiredClasses = '%u' and MinLevel >= '%u'",
-            bot->getRace(), bot->getLevel());
+    QueryResult *results = WorldDatabase.PQuery("SELECT entry FROM udb.quest_template where QuestLevel = -1 and RequiredClasses = '%u' and MinLevel <= '%u'",
+            bot->getClass(), bot->getLevel());
     if (!results)
         return;
 
