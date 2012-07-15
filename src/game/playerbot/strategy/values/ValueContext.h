@@ -72,6 +72,7 @@ namespace ai
             creators["cc target"] = &ValueContext::cc_target;
             creators["current cc target"] = &ValueContext::current_cc_target;
             creators["pet target"] = &ValueContext::pet_target;
+            creators["old target"] = &ValueContext::old_target;
             creators["grind target"] = &ValueContext::grind_target;
             creators["rti target"] = &ValueContext::rti_target;
             creators["party member to dispel"] = &ValueContext::party_member_to_dispel;
@@ -166,6 +167,7 @@ namespace ai
         static UntypedValue* party_member_to_resurrect(PlayerbotAI* ai) { return new PartyMemberToResurrect(ai); }
         static UntypedValue* party_member_to_dispel(PlayerbotAI* ai) { return new PartyMemberToDispel(ai); }
         static UntypedValue* current_target(PlayerbotAI* ai) { return new CurrentTargetValue(ai); }
+        static UntypedValue* old_target(PlayerbotAI* ai) { return new CurrentTargetValue(ai); }
         static UntypedValue* self_target(PlayerbotAI* ai) { return new SelfTargetValue(ai); }
         static UntypedValue* master(PlayerbotAI* ai) { return new MasterTargetValue(ai); }
         static UntypedValue* line_target(PlayerbotAI* ai) { return new LineTargetValue(ai); }

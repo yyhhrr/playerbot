@@ -539,6 +539,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellItemCountAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellLosAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellReputationAction.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellTargetAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TradeAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TradeStatusAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TrainerAction.cpp" />
@@ -588,6 +589,7 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\StayStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\TankAoeStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\TankAssistStrategy.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\generic\TellTargetStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\ThreatStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\generic\UsePotionsStrategy.cpp" />
@@ -948,6 +950,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellLosAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellMasterAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellReputationAction.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellTargetAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TradeAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TradeStatusAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TrainerAction.h" />
@@ -1003,6 +1006,7 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\StayStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\TankAoeStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\TankAssistStrategy.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\generic\TellTargetStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\ThreatStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\UseFoodStrategy.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\generic\UsePotionsStrategy.h" />

@@ -211,3 +211,11 @@ bool HasItemForSpellTrigger::IsActive()
     return spellId && AI_VALUE2(Item*, "item for spell", spellId);
 }
 
+
+bool TargetChangedTrigger::IsActive()
+{
+    Unit* oldTarget = context->GetValue<Unit*>("old target")->Get();
+    Unit* target = context->GetValue<Unit*>("current target")->Get();
+    return target && oldTarget != target;
+}
+

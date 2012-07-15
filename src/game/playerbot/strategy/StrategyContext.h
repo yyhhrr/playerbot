@@ -33,6 +33,7 @@
 #include "generic/GuardStrategy.h"
 #include "generic/CastTimeStrategy.h"
 #include "generic/ThreatStrategy.h"
+#include "generic/TellTargetStrategy.h"
 
 namespace ai
 {
@@ -58,9 +59,11 @@ namespace ai
             creators["potions"] = &StrategyContext::potions;
             creators["cast time"] = &StrategyContext::cast_time;
             creators["threat"] = &StrategyContext::threat;
+            creators["tell target"] = &StrategyContext::tell_target;
         }
 
     private:
+        static Strategy* tell_target(PlayerbotAI* ai) { return new TellTargetStrategy(ai); }
         static Strategy* threat(PlayerbotAI* ai) { return new ThreatStrategy(ai); }
         static Strategy* cast_time(PlayerbotAI* ai) { return new CastTimeStrategy(ai); }
         static Strategy* potions(PlayerbotAI* ai) { return new UsePotionsStrategy(ai); }

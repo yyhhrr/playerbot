@@ -116,6 +116,7 @@ namespace ai
             creators["party member to dispel"] = &MockValueContext::party_member_to_dispel;
             creators["party member to resurrect"] = &MockValueContext::mock;
             creators["current target"] = &MockValueContext::mock;
+            creators["old target"] = &MockValueContext::mock;
             creators["self target"] = &MockValueContext::mock;
             creators["master target"] = &MockValueContext::mock;
             creators["line target"] = &MockValueContext::mock;
@@ -192,6 +193,7 @@ namespace ai
               GetValue<Unit*>("dps target")->Set(MockedTargets::GetTargetForDps());
               GetValue<Unit*>("current cc target")->Set(NULL);
               GetValue<Unit*>("current target")->Set(MockedTargets::GetCurrentTarget());
+              GetValue<Unit*>("old target")->Set(MockedTargets::GetCurrentTarget());
               GetValue<Unit*>("pet target")->Set(MockedTargets::GetPet());
               GetValue<Unit*>("least hp target")->Set(MockedTargets::GetLeastHpTarget());
               GetValue<Unit*>("rti target")->Set(MockedTargets::GetRtiTarget());

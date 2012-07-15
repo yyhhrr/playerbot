@@ -25,6 +25,7 @@ class NonCombatEngineTestCase : public EngineTestBase
       CPPUNIT_TEST( movementStrategies );
       CPPUNIT_TEST( assistStrategies );
       CPPUNIT_TEST( out_of_react );
+      CPPUNIT_TEST( tell_target );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -218,6 +219,16 @@ protected:
         set<float>("distance", "master target", 100.0f / 2 + 10);
         tick();
         assertActions(">S:tell out of react range");
+    }
+
+    void tell_target()
+    {
+        engine->addStrategy("tell target");
+        set<Unit*>("old target", MockedTargets::GetPet());
+        tick();
+        set<Unit*>("current target", NULL);
+        tick();
+        assertActions(">S:tell target");
     }
 };
 

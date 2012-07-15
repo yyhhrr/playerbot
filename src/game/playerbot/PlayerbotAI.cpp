@@ -367,9 +367,10 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
 
     Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
     if (bot->duel && !target) {
-        Player* target = bot->duel->opponent;
+        aiObjectContext->GetValue<Unit*>("old target")->Set(target);
 
-        aiObjectContext->GetValue<Unit*>("current target")->Set(target);
+        Player* target = bot->duel->opponent;
+        aiObjectContext->GetValue<Unit*>("old target")->Set(target);
         bot->SetSelectionGuid(target->GetObjectGuid());
         ChangeEngine(BOT_STATE_COMBAT);
     }

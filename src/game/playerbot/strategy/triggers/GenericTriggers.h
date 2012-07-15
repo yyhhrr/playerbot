@@ -487,6 +487,15 @@ namespace ai
         virtual bool IsActive();
     };
 
+    class TargetChangedTrigger : public Trigger
+    {
+    public:
+        TargetChangedTrigger(PlayerbotAI* ai) : Trigger(ai, "target changed") {}
+
+    public:
+        virtual bool IsActive();
+    };
+
 }
 
 #include "RangeTriggers.h"

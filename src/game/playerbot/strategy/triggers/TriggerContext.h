@@ -80,6 +80,7 @@ namespace ai
             creators["far from loot target"] = &TriggerContext::far_from_loot_target;
             creators["can loot"] = &TriggerContext::can_loot;
             creators["swimming"] = &TriggerContext::swimming;
+            creators["target changed"] = &TriggerContext::target_changed;
 
             creators["critical aoe heal"] = &TriggerContext::critical_aoe_heal;
             creators["low aoe heal"] = &TriggerContext::low_aoe_heal;
@@ -90,7 +91,7 @@ namespace ai
         static Trigger* critical_aoe_heal(PlayerbotAI* ai) { return new AoeHealTrigger(ai, "critical aoe heal", "critical", 2); }
         static Trigger* low_aoe_heal(PlayerbotAI* ai) { return new AoeHealTrigger(ai, "low aoe heal", "low", 2); }
         static Trigger* medium_aoe_heal(PlayerbotAI* ai) { return new AoeHealTrigger(ai, "medium aoe heal", "medium", 2); }
-
+        static Trigger* target_changed(PlayerbotAI* ai) { return new TargetChangedTrigger(ai); }
         static Trigger* swimming(PlayerbotAI* ai) { return new IsSwimmingTrigger(ai); }
         static Trigger* no_possible_targets(PlayerbotAI* ai) { return new NoPossibleTargetsTrigger(ai); }
         static Trigger* can_loot(PlayerbotAI* ai) { return new CanLootTrigger(ai); }
