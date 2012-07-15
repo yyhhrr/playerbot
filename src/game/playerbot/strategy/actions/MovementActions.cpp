@@ -39,17 +39,21 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     if (!IsMovingAllowed(mapId, x, y, z))
         return false;
 
-    WaitForReach(bot->GetDistance(x, y, z));
+    float distance = bot->GetDistance(x, y, z);
+    if (distance > sPlayerbotAIConfig.meleeDistance / 2)
+    {
+        WaitForReach(distance);
 
-    if (bot->IsSitState())
-        bot->SetStandState(UNIT_STAND_STATE_STAND);
+        if (bot->IsSitState())
+            bot->SetStandState(UNIT_STAND_STATE_STAND);
 
-    bot->CastStop();
+        bot->CastStop();
 
-    bool generatePath = bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty() &&
-            !bot->IsFlying() && !bot->IsUnderWater();
-    MotionMaster &mm = *bot->GetMotionMaster();
-    mm.MovePoint(mapId, x, y, z, generatePath);
+        bool generatePath = bot->GetAurasByType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED).empty() &&
+                !bot->IsFlying() && !bot->IsUnderWater();
+        MotionMaster &mm = *bot->GetMotionMaster();
+        mm.MovePoint(mapId, x, y, z, generatePath);
+    }
 
     AI_VALUE(LastMovement&, "last movement").Set(x, y, z, bot->GetOrientation());
     return true;
