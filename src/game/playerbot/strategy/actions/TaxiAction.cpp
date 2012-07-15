@@ -39,7 +39,7 @@ bool TaxiAction::Execute(Event event)
 
         if (!bot->ActivateTaxiPathTo(movement.taxiNodes, npc))
         {
-            ai->TellMaster("I can not fly with you");
+            ai->TellMaster("I can't fly with you");
             return false;
         }
 

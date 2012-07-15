@@ -15,7 +15,7 @@ bool SetHomeAction::Execute(Event event)
             continue;
 
         bot->GetSession()->SendBindPoint(unit);
-        ai->TellMaster("Home inn set");
+        ai->TellMaster("This inn is my new home");
         return true;
     }
 

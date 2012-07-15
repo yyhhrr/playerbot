@@ -183,7 +183,7 @@ void PlayerbotAI::Reset()
 
 void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPlayer)
 {
-    if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid())
+    if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid() || fromPlayer.GetPlayerbotAI())
         return;
 
     for (string::const_iterator i = text.begin(); i != text.end(); i++)

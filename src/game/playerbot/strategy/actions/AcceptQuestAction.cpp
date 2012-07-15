@@ -23,7 +23,7 @@ bool AcceptQuestAction::Execute(Event event)
         guid = master->GetSelectionGuid().GetRawValue();
         if (!guid)
         {
-            ai->TellMaster("Please select questgiver first");
+            ai->TellMaster("Please select quest giver NPC");
             return false;
         }
     }
