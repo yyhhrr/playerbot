@@ -95,17 +95,23 @@ bool PlayerbotFactory::EquipItem(uint8 slot, uint32 desiredQuality)
         if (!proto)
             continue;
 
-        if (proto->Class != ITEM_CLASS_WEAPON && 
-            proto->Class != ITEM_CLASS_ARMOR && 
-            proto->Class != ITEM_CLASS_CONTAINER && 
+        if (proto->Class != ITEM_CLASS_WEAPON &&
+            proto->Class != ITEM_CLASS_ARMOR &&
+            proto->Class != ITEM_CLASS_CONTAINER &&
             proto->Class != ITEM_CLASS_PROJECTILE)
             continue;
 
+        if (proto->Duration & 0x80000000)
+            continue;
+
+        if (proto->Quality != desiredQuality)
+            continue;
+
         if (proto->Class == ITEM_CLASS_ARMOR && (
-            slot == EQUIPMENT_SLOT_HEAD || 
-            slot == EQUIPMENT_SLOT_SHOULDERS || 
+            slot == EQUIPMENT_SLOT_HEAD ||
+            slot == EQUIPMENT_SLOT_SHOULDERS ||
             slot == EQUIPMENT_SLOT_CHEST ||
-            slot == EQUIPMENT_SLOT_WAIST || 
+            slot == EQUIPMENT_SLOT_WAIST ||
             slot == EQUIPMENT_SLOT_LEGS ||
             slot == EQUIPMENT_SLOT_FEET ||
             slot == EQUIPMENT_SLOT_WRISTS ||
@@ -127,12 +133,6 @@ bool PlayerbotFactory::EquipItem(uint8 slot, uint32 desiredQuality)
                     continue;
             }
         }
-
-        if (proto->Duration & 0x80000000)
-            continue;
-
-        if (proto->Quality != desiredQuality)
-            continue;
 
         uint32 requiredLevel = proto->RequiredLevel;
         if (!requiredLevel || (requiredLevel > level || requiredLevel < level - 5))
@@ -402,7 +402,7 @@ void PlayerbotFactory::InitAvailableSpells()
             TrainerSpellState state = bot->GetTrainerSpellState(tSpell, reqLevel);
             if (state != TRAINER_SPELL_GREEN)
                 continue;
-            
+
             if (tSpell->IsCastable())
                 bot->CastSpell(bot, tSpell->spell, true);
             else
@@ -467,7 +467,7 @@ ObjectGuid PlayerbotFactory::GetRandomBot()
         uint32 accountId = *i;
         if (!sAccountMgr.GetCharactersCount(accountId))
             continue;
-        
+
         QueryResult *result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account = '%u'", accountId);
         if (!result)
             continue;
@@ -492,24 +492,30 @@ ObjectGuid PlayerbotFactory::GetRandomBot()
 
 void PlayerbotFactory::InitQuests()
 {
-    ObjectMgr::QuestMap const& qTemplates = sObjectMgr.GetQuestTemplates();
-    for (ObjectMgr::QuestMap::const_iterator iter = qTemplates.begin(); iter != qTemplates.end(); ++iter)
-    {
-        Quest *quest = iter->second;
+    QueryResult *results = WorldDatabase.PQuery("SELECT entry FROM udb.quest_template where QuestLevel = -1 and RequiredClasses = '%u' and MinLevel >= '%u'",
+            bot->getRace(), bot->getLevel());
+    if (!results)
+        return;
 
-		bot->SetQuestStatus(quest->GetQuestId(), QUEST_STATUS_NONE);
+    do
+    {
+        Field* fields = results->Fetch();
+        uint32 questId = fields[0].GetUInt32();
+        Quest const *quest = sObjectMgr.GetQuestTemplate(questId);
+
+        if (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE)
+            continue;
+
+        bot->SetQuestStatus(questId, QUEST_STATUS_NONE);
 
         if (!bot->SatisfyQuestClass(quest, false) ||
                 !bot->SatisfyQuestRace(quest, false) ||
                 !bot->SatisfyQuestStatus(quest, false))
             continue;
 
-        if (quest->GetMinLevel() > 0 && bot->getLevel() < quest->GetMinLevel())
-            continue;
+        bot->SetQuestStatus(questId, QUEST_STATUS_COMPLETE);
 
-        if (quest->GetQuestLevel() > 0 && bot->getLevel() < quest->GetQuestLevel())
-            continue;
+    } while (results->NextRow());
 
-        bot->SetQuestStatus(quest->GetQuestId(), QUEST_STATUS_COMPLETE);
-    }
+    delete results;
 }
