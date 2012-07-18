@@ -500,6 +500,7 @@ void PlayerbotAI::DoPvpAttack()
     loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
     loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
     loc.coord_z += 5;
+    bot->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
     bot->TeleportTo(loc);
 }
 
