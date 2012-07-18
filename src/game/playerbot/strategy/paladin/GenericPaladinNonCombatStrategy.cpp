@@ -41,7 +41,7 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
     triggers.push_back(new TriggerNode(
         "cleanse cure disease",
-        NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
+        NextAction::array(0, new NextAction("cleanse disease", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cleanse party member cure disease",
@@ -49,7 +49,7 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
     triggers.push_back(new TriggerNode(
         "cleanse cure poison",
-        NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
+        NextAction::array(0, new NextAction("cleanse poison", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cleanse party member cure poison",
@@ -57,7 +57,7 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::list<TriggerNode*> &trig
 
     triggers.push_back(new TriggerNode(
         "cleanse cure magic",
-        NextAction::array(0, new NextAction("cleanse", 41.0f), NULL)));
+        NextAction::array(0, new NextAction("cleanse magic", 41.0f), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cleanse party member cure magic",

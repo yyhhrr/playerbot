@@ -8,7 +8,9 @@ namespace ai
         GenericPaladinStrategyActionNodeFactory()
         {
             creators["seal of light"] = &seal_of_light;
-            creators["cleanse"] = &cleanse;
+            creators["cleanse poison"] = &cleanse_poison;
+            creators["cleanse disease"] = &cleanse_disease;
+            creators["cleanse magic"] = &cleanse_magic;
             creators["cleanse poison on party"] = &cleanse_poison_on_party;
             creators["cleanse disease on party"] = &cleanse_disease_on_party;
             creators["seal of wisdom"] = &seal_of_wisdom;
@@ -44,11 +46,25 @@ namespace ai
                 /*A*/ NextAction::array(0, new NextAction("seal of justice"), NULL),
                 /*C*/ NULL);
         }
-        static ActionNode* cleanse(PlayerbotAI* ai)
+        static ActionNode* cleanse_poison(PlayerbotAI* ai)
         {
-            return new ActionNode ("cleanse",
+            return new ActionNode ("cleanse poison",
                 /*P*/ NULL,
-                /*A*/ NextAction::array(0, new NextAction("purify"), NULL),
+                /*A*/ NextAction::array(0, new NextAction("purify poison"), NULL),
+                /*C*/ NULL);
+        }
+        static ActionNode* cleanse_magic(PlayerbotAI* ai)
+        {
+            return new ActionNode ("cleanse magic",
+                /*P*/ NULL,
+                /*A*/ NULL,
+                /*C*/ NULL);
+        }
+        static ActionNode* cleanse_disease(PlayerbotAI* ai)
+        {
+            return new ActionNode ("cleanse disease",
+                /*P*/ NULL,
+                /*A*/ NextAction::array(0, new NextAction("purify disease"), NULL),
                 /*C*/ NULL);
         }
         static ActionNode* cleanse_poison_on_party(PlayerbotAI* ai)

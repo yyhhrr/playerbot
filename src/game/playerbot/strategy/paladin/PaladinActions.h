@@ -222,9 +222,14 @@ namespace ai
 		CastHammerOfTheRighteousAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "hammer of the righteous") {}
 	};
 
-	class CastPurifyAction : public CastCureSpellAction {
+	class CastPurifyPoisonAction : public CastCureSpellAction {
 	public:
-		CastPurifyAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "purify") {}
+		CastPurifyPoisonAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "purify") {}
+	};
+
+	class CastPurifyDiseaseAction : public CastCureSpellAction {
+	public:
+		CastPurifyDiseaseAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "purify") {}
 	};
 
     class CastPurifyPoisonOnPartyAction : public CurePartyMemberAction
@@ -248,9 +253,19 @@ namespace ai
 		CastHandOfReckoningAction(PlayerbotAI* ai) : CastSpellAction(ai, "hand of reckoning") {}
 	};
 
-	class CastCleanseAction : public CastCureSpellAction {
+	class CastCleansePoisonAction : public CastCureSpellAction {
 	public:
-		CastCleanseAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "cleanse") {}
+		CastCleansePoisonAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "cleanse") {}
+	};
+
+	class CastCleanseDiseaseAction : public CastCureSpellAction {
+	public:
+		CastCleanseDiseaseAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "cleanse") {}
+	};
+
+	class CastCleanseMagicAction : public CastCureSpellAction {
+	public:
+		CastCleanseMagicAction(PlayerbotAI* ai) : CastCureSpellAction(ai, "cleanse") {}
 	};
 
     class CastCleansePoisonOnPartyAction : public CurePartyMemberAction

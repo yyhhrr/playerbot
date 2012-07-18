@@ -152,13 +152,8 @@ protected:
 
 	void cureMagic()
 	{
-		spellAvailable("cleanse");
-		tickWithAuraToDispel(DISPEL_MAGIC);
-
-		spellAvailable("cleanse");
-		tickWithPartyAuraToDispel(DISPEL_MAGIC);
-
-		assertActions(">S:cleanse>P:cleanse magic on party");
+        cureKind(DISPEL_MAGIC);
+        assertActions(">S:cleanse>P:cleanse magic on party>T:judgement of light>T:melee");
 	}
 
     void cureKind(DispelType type)

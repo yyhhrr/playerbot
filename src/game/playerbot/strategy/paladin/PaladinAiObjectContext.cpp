@@ -166,8 +166,11 @@ namespace ai
                 creators["devotion aura"] = &AiObjectContextInternal::devotion_aura;
                 creators["holy wrath"] = &AiObjectContextInternal::holy_wrath;
                 creators["consecration"] = &AiObjectContextInternal::consecration;
-                creators["cleanse"] = &AiObjectContextInternal::cleanse;
-                creators["purify"] = &AiObjectContextInternal::purify;
+                creators["cleanse disease"] = &AiObjectContextInternal::cleanse_disease;
+                creators["cleanse poison"] = &AiObjectContextInternal::cleanse_poison;
+                creators["cleanse magic"] = &AiObjectContextInternal::cleanse_magic;
+                creators["purify disease"] = &AiObjectContextInternal::purify_disease;
+                creators["purify poison"] = &AiObjectContextInternal::purify_poison;
                 creators["cleanse poison on party"] = &AiObjectContextInternal::cleanse_poison_on_party;
                 creators["cleanse disease on party"] = &AiObjectContextInternal::cleanse_disease_on_party;
                 creators["cleanse magic on party"] = &AiObjectContextInternal::cleanse_magic_on_party;
@@ -219,8 +222,11 @@ namespace ai
             static Action* devotion_aura(PlayerbotAI* ai) { return new CastDevotionAuraAction(ai); }
             static Action* holy_wrath(PlayerbotAI* ai) { return new CastHolyWrathAction(ai); }
             static Action* consecration(PlayerbotAI* ai) { return new CastConsecrationAction(ai); }
-            static Action* cleanse(PlayerbotAI* ai) { return new CastCleanseAction(ai); }
-            static Action* purify(PlayerbotAI* ai) { return new CastPurifyAction(ai); }
+            static Action* cleanse_poison(PlayerbotAI* ai) { return new CastCleansePoisonAction(ai); }
+            static Action* cleanse_disease(PlayerbotAI* ai) { return new CastCleanseDiseaseAction(ai); }
+            static Action* cleanse_magic(PlayerbotAI* ai) { return new CastCleanseMagicAction(ai); }
+            static Action* purify_poison(PlayerbotAI* ai) { return new CastPurifyPoisonAction(ai); }
+            static Action* purify_disease(PlayerbotAI* ai) { return new CastPurifyDiseaseAction(ai); }
             static Action* cleanse_poison_on_party(PlayerbotAI* ai) { return new CastCleansePoisonOnPartyAction(ai); }
             static Action* cleanse_disease_on_party(PlayerbotAI* ai) { return new CastCleanseDiseaseOnPartyAction(ai); }
             static Action* cleanse_magic_on_party(PlayerbotAI* ai) { return new CastCleanseMagicOnPartyAction(ai); }

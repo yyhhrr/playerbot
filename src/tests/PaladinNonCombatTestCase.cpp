@@ -30,7 +30,7 @@ public:
 protected:
     void buff()
     {
-        tick(); 
+        tick();
 
         engine->addStrategy("bspeed");
         set<bool>("mounted", true);
@@ -74,13 +74,8 @@ protected:
 
     void cureMagic()
     {
-        spellAvailable("cleanse");
-        tickWithAuraToDispel(DISPEL_MAGIC);
-
-        spellAvailable("cleanse");
-        tickWithPartyAuraToDispel(DISPEL_MAGIC);
-
-        assertActions(">S:cleanse>P:cleanse magic on party");
+        cureKind(DISPEL_MAGIC);
+        assertActions(">S:cleanse>P:cleanse magic on party>P:blessing of kings on party");
     }
 
     void cureKind(DispelType type)

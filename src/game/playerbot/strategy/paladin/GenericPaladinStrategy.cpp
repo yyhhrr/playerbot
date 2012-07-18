@@ -49,7 +49,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "cleanse cure disease",
-        NextAction::array(0, new NextAction("cleanse", ACTION_DISPEL + 2), NULL)));
+        NextAction::array(0, new NextAction("cleanse disease", ACTION_DISPEL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cleanse party member cure disease",
@@ -57,7 +57,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
     triggers.push_back(new TriggerNode(
         "cleanse cure poison",
-        NextAction::array(0, new NextAction("cleanse", ACTION_DISPEL + 2), NULL)));
+        NextAction::array(0, new NextAction("cleanse poison", ACTION_DISPEL + 2), NULL)));
 
     triggers.push_back(new TriggerNode(
         "cleanse party member cure poison",
@@ -65,7 +65,7 @@ void GenericPaladinStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 
 	triggers.push_back(new TriggerNode(
 		"cleanse cure magic",
-		NextAction::array(0, new NextAction("cleanse", ACTION_DISPEL + 2), NULL)));
+		NextAction::array(0, new NextAction("cleanse magic", ACTION_DISPEL + 2), NULL)));
 
 	triggers.push_back(new TriggerNode(
 		"cleanse party member cure magic",
