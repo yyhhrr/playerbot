@@ -481,6 +481,9 @@ void PlayerbotAI::RandomTeleport()
             if (entry->map_type != MAP_COMMON)
                 continue;
 
+            PlayerbotFactory factory(bot, GetMaster()->getLevel());
+            factory.RandomizeForZone(tele->mapId);
+
             bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
             break;
         }

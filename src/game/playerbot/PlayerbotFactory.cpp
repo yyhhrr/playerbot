@@ -23,6 +23,23 @@ void PlayerbotFactory::Randomize()
     InitPet();
 }
 
+void PlayerbotFactory::RandomizeForZone(uint32 mapId)
+{
+    QueryResult *results = WorldDatabase.PQuery("SELECT avg(t.minlevel) minlevel, avg(t.maxlevel) maxlevel FROM creature c "
+            "inner join creature_template t on c.guid = t.entry "
+            "where c.map = '%u'", mapId);
+    if (results)
+    {
+        Field* fields = results->Fetch();
+        uint32 minLevel = fields[0].GetUInt32();
+        uint32 maxLevel = fields[1].GetUInt32();
+        this->level = urand(minLevel, maxLevel);
+        delete results;
+    }
+
+    Randomize();
+}
+
 void PlayerbotFactory::InitPet()
 {
     Pet* pet = bot->GetPet();

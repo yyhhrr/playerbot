@@ -13,6 +13,7 @@ public:
 
     static ObjectGuid GetRandomBot();
     void Randomize();
+    void RandomizeForZone(uint32 mapId);
 
 private:
     void InitEquipment();
