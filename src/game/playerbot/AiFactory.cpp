@@ -201,5 +201,9 @@ void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
     Engine* deadEngine = new Engine(facade, AiObjectContext);
     AddDefaultDeadStrategies(deadEngine);
+    if (facade->IsOpposing(facade->GetMaster()))
+    {
+        deadEngine->removeStrategy("follow master");
+    }
     return deadEngine;
 }
