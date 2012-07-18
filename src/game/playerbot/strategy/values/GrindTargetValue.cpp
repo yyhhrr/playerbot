@@ -7,6 +7,11 @@ using namespace ai;
 
 Unit* GrindTargetValue::Calculate()
 {
+    if (ai->IsOpposing(master) && bot->IsWithinDistInMap(master, sPlayerbotAIConfig.sightDistance))
+    {
+        return master;
+    }
+
     uint32 memberCount = 1;
     Group* group = bot->GetGroup();
     if (group)
