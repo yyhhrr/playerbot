@@ -1620,6 +1620,7 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 64531:                                 // Rapid Burst (h)
                 case 65121:                                 // Searing Light (h)
                 case 65301:                                 // Psychosis (Ulduar, Yogg-Saron)
+                case 65872:                                 // Pursuing Spikes
                 case 65950:                                 // Touch of Light (ToCrusader, Val'kyr Twins)
                 case 66001:                                 // Touch of Darkness (ToCrusader, Val'kyr Twins)
                 case 66152:                                 // Bullet Controller Summon Periodic Trigger Light (ToCrusader)
@@ -4363,8 +4364,38 @@ void Spell::SendInterrupted(uint8 result)
 
 void Spell::SendChannelUpdate(uint32 time)
 {
-    if(time == 0)
+    if (time == 0)
     {
+            // Reset farsight for some possessing auras of possessed summoned (as they might work with different aura types)
+            if (m_spellInfo->HasAttribute(SPELL_ATTR_EX_FARSIGHT) && m_caster->GetTypeId() == TYPEID_PLAYER && m_caster->GetCharmGuid()
+               && !IsSpellHaveAura(m_spellInfo, SPELL_AURA_MOD_POSSESS) && !IsSpellHaveAura(m_spellInfo, SPELL_AURA_MOD_POSSESS_PET))
+            {
+                Player* player = (Player*)m_caster;
+                // These Auras are applied to self, so get the possessed first
+                Unit* possessed = player->GetCharm();
+
+                player->SetCharm(NULL);
+                if (possessed)
+                    player->SetClientControl(possessed, 0);
+                player->SetMover(NULL);
+                player->GetCamera().ResetView();
+                player->RemovePetActionBar();
+
+                if (possessed)
+                {
+                    possessed->clearUnitState(UNIT_STAT_CONTROLLED);
+                    possessed->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PLAYER_CONTROLLED);
+                    possessed->SetCharmerGuid(ObjectGuid());
+                    // TODO - Requires more specials for target?
+
+                    // Some possessed might want to despawn?
+                    if (possessed->GetUInt32Value(UNIT_CREATED_BY_SPELL) == m_spellInfo->Id && possessed->GetTypeId() == TYPEID_UNIT)
+                        ((Creature*)possessed)->ForcedDespawn();
+                }
+            }
+
+
+
         m_caster->RemoveAurasByCasterSpell(m_spellInfo->Id, m_caster->GetObjectGuid());
 
         ObjectGuid target_guid = m_caster->GetChannelObjectGuid();
