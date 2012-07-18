@@ -89,7 +89,7 @@ int AiFactory::GetPlayerSpecTab(Player* player)
 void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 {
     int tab = GetPlayerSpecTab(player);
-    
+
     engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", "potions", "cast time", "conserve mana", NULL);
 
     switch (player->getClass())
@@ -186,7 +186,10 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 
     AddDefaultNonCombatStrategies(player, nonCombatEngine);
     if (facade->IsOpposing(facade->GetMaster()))
+    {
         nonCombatEngine->addStrategy("grind");
+        nonCombatEngine->removeStrategy("loot");
+    }
 	return nonCombatEngine;
 }
 
