@@ -492,7 +492,8 @@ void PlayerbotAI::RandomTeleport()
 
 void PlayerbotAI::DoPvpAttack()
 {
-    PlayerbotFactory factory(bot, GetMaster()->getLevel());
+    uint32 level = GetMaster()->getLevel();
+    PlayerbotFactory factory(bot, urand(level - 2, level + 2));
     factory.Randomize();
 
     WorldLocation loc;
@@ -517,6 +518,7 @@ void PlayerbotAI::OnBotLogin()
 
     bot->DurabilityRepairAll(false, 1.0f, false);
     bot->SetHealthPercent(100);
+    bot->SetPvP(true);
 
     if (bot->GetMaxPower(POWER_MANA) > 0)
         bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
