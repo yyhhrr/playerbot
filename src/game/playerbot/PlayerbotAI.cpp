@@ -13,6 +13,7 @@
 #include "LootObjectStack.h"
 #include "PlayerbotAIConfig.h"
 #include "PlayerbotAI.h"
+#include "PlayerbotFactory.h"
 
 using namespace ai;
 using namespace std;
@@ -454,6 +455,7 @@ void PlayerbotAI::DoNextAction()
         Reset();
         OnBotLogin();
         DoPvpAttack();
+        OnBotLogin();
     }
 
     if (urand(0, 1000) > 995 && !bot->isInCombat())
@@ -461,6 +463,7 @@ void PlayerbotAI::DoNextAction()
         Reset();
         OnBotLogin();
         RandomTeleport();
+        OnBotLogin();
     }
 }
 
@@ -474,6 +477,10 @@ void PlayerbotAI::RandomTeleport()
         GameTele const* tele = &itr->second;
         if (i++ == index)
         {
+            MapEntry const* entry = sMapStore.LookupEntry(tele->mapId);
+            if (entry->map_type != MAP_COMMON)
+                continue;
+
             bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
             break;
         }
@@ -482,6 +489,9 @@ void PlayerbotAI::RandomTeleport()
 
 void PlayerbotAI::DoPvpAttack()
 {
+    PlayerbotFactory factory(bot, GetMaster()->getLevel());
+    factory.Randomize();
+
     WorldLocation loc;
     GetMaster()->GetPosition(loc);
     loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
