@@ -452,18 +452,12 @@ void PlayerbotAI::DoNextAction()
     if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
             !master->GetInstanceId() && master->IsAllowedDamageInArea(bot))
     {
-        Reset();
-        OnBotLogin();
         DoPvpAttack();
-        OnBotLogin();
     }
 
     if (urand(0, 1000) > 995 && !bot->isInCombat())
     {
-        Reset();
-        OnBotLogin();
         RandomTeleport();
-        OnBotLogin();
     }
 }
 
@@ -484,6 +478,9 @@ void PlayerbotAI::RandomTeleport()
             PlayerbotFactory factory(bot, GetMaster()->getLevel());
             factory.RandomizeForZone(tele->mapId);
 
+            OnBotLogin();
+            Reset();
+
             bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
             break;
         }
@@ -496,12 +493,15 @@ void PlayerbotAI::DoPvpAttack()
     PlayerbotFactory factory(bot, urand(level - 2, level + 2));
     factory.Randomize();
 
+    OnBotLogin();
+    Reset();
+
     WorldLocation loc;
     GetMaster()->GetPosition(loc);
     loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
     loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-    loc.coord_z += 5;
     bot->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
+    loc.coord_z += 0.5f;
     bot->TeleportTo(loc);
 }
 

@@ -180,6 +180,16 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
         if (session->GetSecurity() >= SEC_GAMEMASTER || sPlayerbotAIConfig.IsInRandomAccountList(account))
             mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
     }
+    else if (cmdStr == "pvp")
+    {
+        Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
+        if (!bot)
+            return false;
+
+        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
+        if (session->GetSecurity() >= SEC_GAMEMASTER || sPlayerbotAIConfig.IsInRandomAccountList(account))
+            bot->GetPlayerbotAI()->DoPvpAttack();
+    }
 
     return true;
 }
@@ -247,7 +257,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         mgr = new PlayerbotMgr(player);
         player->SetPlayerbotMgr(mgr);
     }
-    
+
     if (charnameStr == "?" && cmdStr == "add")
     {
         PSendSysMessage("Processing random bot...");
