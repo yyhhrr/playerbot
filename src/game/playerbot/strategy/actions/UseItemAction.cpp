@@ -34,7 +34,7 @@ bool UseItemAction::Execute(Event event)
             return UseItemOnGameObject(*items.begin(), *gos.begin());
     }
 
-    ai->TellMaster(LOG_LVL_DEBUG, "Nothing to use");
+    ai->TellMaster("No items (or game objects) available");
     return false;
 }
 
@@ -99,6 +99,15 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 
     bool targetSelected = false;
     ostringstream out; out << "Using " << chat->formatItem(item->GetProto());
+    if (item->GetProto()->Stackable)
+    {
+        uint32 count = item->GetCount();
+        if (count > 1)
+            out << " (" << count << " available) ";
+        else
+            out << " (the last one!)";
+    }
+
     if (goGuid)
     {
         GameObject* go = ai->GetGameObject(goGuid);
@@ -216,7 +225,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
         }
         break;
     }
-    
+
     if (!targetSelected)
         return false;
 
