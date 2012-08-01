@@ -509,30 +509,40 @@ ObjectGuid PlayerbotFactory::GetRandomBot()
 
 void PlayerbotFactory::InitQuests()
 {
-    QueryResult *results = WorldDatabase.PQuery("SELECT entry FROM udb.quest_template where QuestLevel = -1 and RequiredClasses = '%u' and MinLevel <= '%u'",
-            bot->getClass(), bot->getLevel());
+    QueryResult *results = WorldDatabase.PQuery("SELECT entry, RequiredClasses, RequiredRaces FROM udb.quest_template where QuestLevel = -1 and MinLevel <= '%u'",
+            bot->getLevel());
     if (!results)
         return;
 
+    list<uint32> ids;
     do
     {
         Field* fields = results->Fetch();
         uint32 questId = fields[0].GetUInt32();
-        Quest const *quest = sObjectMgr.GetQuestTemplate(questId);
-
-        if (bot->GetQuestStatus(questId) == QUEST_STATUS_COMPLETE)
-            continue;
-
-        bot->SetQuestStatus(questId, QUEST_STATUS_NONE);
-
-        if (!bot->SatisfyQuestClass(quest, false) ||
-                !bot->SatisfyQuestRace(quest, false) ||
-                !bot->SatisfyQuestStatus(quest, false))
-            continue;
-
-        bot->SetQuestStatus(questId, QUEST_STATUS_COMPLETE);
-
+        uint32 requiredClasses = fields[1].GetUInt32();
+        uint32 requiredRaces = fields[2].GetUInt32();
+        if ((requiredClasses & bot->getClassMask()) && (requiredRaces & bot->getRaceMask()))
+            ids.push_back(questId);
     } while (results->NextRow());
 
     delete results;
+
+    for (int i = 0; i < 15; i++)
+    {
+        for (list<uint32>::iterator i = ids.begin(); i != ids.end(); ++i)
+        {
+			uint32 questId = *i;
+            Quest const *quest = sObjectMgr.GetQuestTemplate(questId);
+
+            bot->SetQuestStatus(questId, QUEST_STATUS_NONE);
+
+            if (!bot->SatisfyQuestClass(quest, false) ||
+                    !bot->SatisfyQuestRace(quest, false) ||
+                    !bot->SatisfyQuestStatus(quest, false))
+                continue;
+
+            bot->SetQuestStatus(questId, QUEST_STATUS_COMPLETE);
+            bot->RewardQuest(quest, 0, bot, false);
+        }
+    }
 }
