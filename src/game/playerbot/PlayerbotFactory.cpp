@@ -21,6 +21,8 @@ void PlayerbotFactory::Randomize()
     InitSkills();
     InitEquipment();
     InitPet();
+	// quest rewards boost bot level, so reduce back
+    bot->SetLevel(level);
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId)
