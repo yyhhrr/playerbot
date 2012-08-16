@@ -77,16 +77,16 @@ ConfVersion=2010102201
 #    Default 45
 #
 #    AiPlayerbot.MediumHealth
-#        Health level when healing is nice (in percents). 
+#        Health level when healing is nice (in percents).
 #        Takes effect if health is between AiPlayerbot.MediumHealth and AiPlayerbot.LowHealth
 #    Default 65
 #
 #    AiPlayerbot.AlmostFullHealth
-#        Health level when healing over time is nice (in percents) 
+#        Health level when healing over time is nice (in percents)
 #    Default 85
 #
 #    AiPlayerbot.LowMana
-#        Mana level when drink is required 
+#        Mana level when drink is required
 #    Default 15
 #
 #    AiPlayerbot.MediumMana
@@ -120,14 +120,14 @@ AiPlayerbot.TeleportDelay=10000
 
 AiPlayerbot.IterationsPerTick=10
 
-AiPlayerbot.SightDistance=35
+AiPlayerbot.SightDistance=50
 AiPlayerbot.SpellDistance=25
-AiPlayerbot.MeleeDistance=1.5
+AiPlayerbot.MeleeDistance=2
 AiPlayerbot.FollowDistance=2.0
 AiPlayerbot.ReactDistance=100
-AiPlayerbot.GrindDistance=50
+AiPlayerbot.GrindDistance=75
 AiPlayerbot.FleeDistance=15
-AiPlayerbot.TooCloseDistance=10
+AiPlayerbot.TooCloseDistance=7
 
 AiPlayerbot.CriticalHealth=25
 AiPlayerbot.LowHealth=45
