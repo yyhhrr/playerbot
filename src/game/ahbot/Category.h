@@ -139,8 +139,7 @@ namespace ahbot
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
-            return (proto->Class == ITEM_CLASS_PERMANENT ||
-                proto->Class == ITEM_CLASS_GLYPH) && proto->ItemLevel > 1;
+            return proto->Class == ITEM_CLASS_PERMANENT && proto->ItemLevel > 1;
         }
         virtual string GetName() { return "enchant"; }
 
