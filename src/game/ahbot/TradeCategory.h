@@ -111,18 +111,32 @@ namespace ahbot
         virtual string GetName() { return "Disenchants"; }
     };
 
-    class Jems : public Trade
+    class SimpleGems : public Trade
     {
     public:
-        Jems() : Trade() {}
+        SimpleGems() : Trade() {}
 
     public:
         virtual bool Contains(ItemPrototype const* proto)
         {
-            return proto->Class == ITEM_CLASS_GEM;
+            return proto->Class == ITEM_CLASS_GEM && proto->SubClass == ITEM_SUBCLASS_GEM_SIMPLE;
         }
 
-        virtual string GetName() { return "Jems"; }
+        virtual string GetName() { return "SimpleGems"; }
+    };
+
+    class SocketGems : public Trade
+    {
+    public:
+        SocketGems() : Trade() {}
+
+    public:
+        virtual bool Contains(ItemPrototype const* proto)
+        {
+            return proto->Class == ITEM_CLASS_GEM && proto->SubClass != ITEM_SUBCLASS_GEM_SIMPLE;
+        }
+
+        virtual string GetName() { return "SocketGems"; }
     };
 
     class Engineering : public Trade

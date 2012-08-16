@@ -55,7 +55,7 @@ ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
     tradeSubClasses["elemental"] = ITEM_SUBCLASS_ELEMENTAL;
     tradeSubClasses["disenchants"] = ITEM_SUBCLASS_ENCHANTING;
     tradeSubClasses["enchanting"] = ITEM_SUBCLASS_ENCHANTING;
-    tradeSubClasses["jems"] = ITEM_SUBCLASS_JEWELCRAFTING;
+    tradeSubClasses["gems"] = ITEM_SUBCLASS_JEWELCRAFTING;
     tradeSubClasses["jewels"] = ITEM_SUBCLASS_JEWELCRAFTING;
     tradeSubClasses["jewelcrafting"] = ITEM_SUBCLASS_JEWELCRAFTING;
 

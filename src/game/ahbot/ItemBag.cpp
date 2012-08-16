@@ -38,7 +38,8 @@ CategoryList::CategoryList()
     Add(new Disenchants());
     Add(new Meat());
     Add(new Engineering());
-    Add(new Jems());
+    Add(new SimpleGems());
+    Add(new SocketGems());
     Add(new Elemental());
 
     Add(new Glyph());
