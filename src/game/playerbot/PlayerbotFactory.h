@@ -1,15 +1,18 @@
 #pragma once
 
+#include "strategy/actions/InventoryAction.h"
+
 class Player;
 class PlayerbotMgr;
 class ChatHandler;
 
 using namespace std;
+using ai::InventoryAction;
 
-class PlayerbotFactory
+class PlayerbotFactory : public InventoryAction
 {
 public:
-    PlayerbotFactory(Player* bot, uint32 level) : bot(bot), level(level) {}
+    PlayerbotFactory(Player* bot, uint32 level) : bot(bot), level(level), InventoryAction(bot->GetPlayerbotAI(), "factory") {}
 
     static ObjectGuid GetRandomBot();
     void Randomize();
@@ -27,6 +30,7 @@ private:
     void InitTalents(uint32 specNo);
     void InitQuests();
     void InitPet();
+    void ClearInventory();
 
 private:
     Player* bot;

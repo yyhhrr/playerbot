@@ -23,6 +23,7 @@ void PlayerbotFactory::Randomize()
     InitPet();
 	// quest rewards boost bot level, so reduce back
     bot->SetLevel(level);
+    ClearInventory();
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId)
@@ -545,6 +546,32 @@ void PlayerbotFactory::InitQuests()
 
             bot->SetQuestStatus(questId, QUEST_STATUS_COMPLETE);
             bot->RewardQuest(quest, 0, bot, false);
+            ClearInventory();
         }
     }
+}
+
+class DestroyItemsVisitor : public IterateItemsVisitor
+{
+public:
+    DestroyItemsVisitor(Player* bot) : IterateItemsVisitor(), bot(bot) {}
+
+    Player* bot;
+
+    virtual bool Visit(Item* item)
+    {
+        uint32 id = item->GetProto()->ItemId;
+        ItemPrototype const* proto = sItemStorage.LookupEntry<ItemPrototype>(id);
+        if (proto->Class == ITEM_CLASS_MISC && (proto->SubClass == ITEM_SUBCLASS_JUNK_REAGENT || proto->SubClass == ITEM_SUBCLASS_JUNK))
+            return true;
+
+        bot->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+        return true;
+    }
+};
+
+void PlayerbotFactory::ClearInventory()
+{
+    DestroyItemsVisitor visitor(bot);
+    IterateItems(&visitor);
 }
