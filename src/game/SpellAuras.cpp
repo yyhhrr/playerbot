@@ -38,6 +38,7 @@
 #include "Creature.h"
 #include "Formulas.h"
 #include "BattleGround.h"
+#include "OutdoorPvP/OutdoorPvP.h"
 #include "CreatureAI.h"
 #include "ScriptMgr.h"
 #include "Util.h"
@@ -5105,8 +5106,11 @@ void Aura::HandleAuraModEffectImmunity(bool apply, bool /*Real*/)
     if (!apply && target->GetTypeId() == TYPEID_PLAYER
             && (GetSpellProto()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION))
     {
-        if (BattleGround* bg = ((Player*)target)->GetBattleGround())
-            bg->EventPlayerDroppedFlag(((Player*)target));
+        Player* player = (Player*)target;
+        if (BattleGround* bg = player->GetBattleGround())
+            bg->EventPlayerDroppedFlag(player);
+        else if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(player->GetCachedZoneId()))
+            outdoorPvP->HandleDropFlag(player, GetSpellProto()->Id);
     }
 
     target->ApplySpellImmune(GetId(), IMMUNITY_EFFECT, m_modifier.m_miscvalue, apply);
@@ -8036,6 +8040,15 @@ void Aura::PeriodicDummyTick()
                     target->CastSpell(target, 62591, true);
                     target->CastSpell(target, 62592, true);
                     target->CastSpell(target, 62593, true);
+                    return;
+                }
+                case 64217:                                 // Overcharged
+                {
+                    if (GetHolder()->GetStackAmount() >= 10)
+                    {
+                        target->CastSpell(target, 64219, true);
+                        target->DealDamage(target, target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    }
                     return;
                 }
                 case 66118:                                 // Leeching Swarm
