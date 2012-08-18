@@ -48,7 +48,53 @@ void PlayerbotFactory::InitPet()
 {
     Pet* pet = bot->GetPet();
     if (!pet)
-        return;
+    {
+        if (bot->getClass() != CLASS_HUNTER)
+            return;
+
+        Map* map = bot->GetMap();
+        if (!map)
+            return;
+
+        pet = new Pet(HUNTER_PET);
+
+		vector<uint32> ids;
+        for (uint32 id = 0; id < sCreatureStorage.MaxEntry; ++id)
+        {
+            CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(id);
+            if (!co || !co->isTameable(false))
+                continue;
+
+			ids.push_back(id);
+		}
+
+		for (int i = 0; i < 100; i++) 
+		{
+			int index = urand(0, ids.size());
+			CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(ids[index]);
+
+            uint32 guid = map->GenerateLocalLowGuid(HIGHGUID_PET);
+            CreatureCreatePos pos(map, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), bot->GetOrientation(), bot->GetPhaseMask());
+            if (!pet->Create(guid, pos, co, 0))
+                continue;
+
+            pet->SetOwnerGuid(bot->GetObjectGuid());
+            pet->SetCreatorGuid(bot->GetObjectGuid());
+            pet->setFaction(bot->getFaction());
+            pet->InitStatsForLevel(bot->getLevel());
+            pet->GetCharmInfo()->SetPetNumber(sObjectMgr.GeneratePetNumber(), true);
+            pet->AIM_Initialize();
+            pet->InitPetCreateSpells();
+            pet->InitLevelupSpellsForLevel();
+            pet->InitTalentForLevel();
+            pet->SetHealth(pet->GetMaxHealth());
+            pet->SetLevel(bot->getLevel());
+            bot->SetPet(pet);
+            pet->SavePetToDB(PET_SAVE_AS_CURRENT);
+            bot->PetSpellInitialize();
+            break;
+        }
+    }
 
     for (PetSpellMap::const_iterator itr = pet->m_spells.begin(); itr != pet->m_spells.end(); ++itr)
     {
