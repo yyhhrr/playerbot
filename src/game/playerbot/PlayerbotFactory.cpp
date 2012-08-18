@@ -24,6 +24,7 @@ void PlayerbotFactory::Randomize()
 	// quest rewards boost bot level, so reduce back
     bot->SetLevel(level);
     ClearInventory();
+    InitAmmo();
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId)
@@ -591,4 +592,45 @@ void PlayerbotFactory::ClearInventory()
 {
     DestroyItemsVisitor visitor(bot);
     IterateItems(&visitor);
+}
+
+void PlayerbotFactory::InitAmmo()
+{
+    if (bot->getClass() != CLASS_HUNTER && bot->getClass() != CLASS_ROGUE && bot->getClass() != CLASS_WARRIOR)
+        return;
+
+    Item* const pItem = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_RANGED);
+    if (!pItem)
+        return;
+
+    uint32 subClass = 0;
+    switch (pItem->GetProto()->SubClass)
+    {
+    case ITEM_SUBCLASS_WEAPON_GUN:
+        subClass = ITEM_SUBCLASS_BULLET;
+        break;
+    case ITEM_SUBCLASS_WEAPON_BOW:
+    case ITEM_SUBCLASS_WEAPON_CROSSBOW:
+        subClass = ITEM_SUBCLASS_ARROW;
+        break;
+    }
+
+    if (!subClass)
+        return;
+
+    QueryResult *results = WorldDatabase.PQuery("select max(entry), max(RequiredLevel) from udb.item_template where class = '%u' and subclass = '%u' and RequiredLevel <= '%u'",
+            ITEM_CLASS_PROJECTILE, subClass, bot->getLevel());
+    if (!results)
+        return;
+
+    Field* fields = results->Fetch();
+    if (fields)
+    {
+        uint32 entry = fields[0].GetUInt32();
+        for (int i = 0; i < 5; i++)
+            bot->StoreNewItemInInventorySlot(entry, 1000);
+        bot->SetAmmo(entry);
+    }
+
+    delete results;
 }
