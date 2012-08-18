@@ -262,6 +262,16 @@ bool PlayerbotFactory::EquipItem(uint8 slot, uint32 desiredQuality)
                     continue;
                 break;
             case CLASS_WARRIOR:
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE2 &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD2 &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_GUN &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_CROSSBOW &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_BOW &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_THROWN)
+                    continue;
+                break;
             case CLASS_PALADIN:
                 if (proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE2 &&
                         proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD2 &&
@@ -280,11 +290,18 @@ bool PlayerbotFactory::EquipItem(uint8 slot, uint32 desiredQuality)
                 break;
             case CLASS_HUNTER:
                 if (proto->SubClass != ITEM_SUBCLASS_WEAPON_AXE2 &&
-                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD2)
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD2 &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_GUN &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_CROSSBOW &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_BOW)
                     continue;
                 break;
             case CLASS_ROGUE:
-                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_DAGGER)
+                if (proto->SubClass != ITEM_SUBCLASS_WEAPON_DAGGER &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_GUN &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_CROSSBOW &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_BOW &&
+                        proto->SubClass != ITEM_SUBCLASS_WEAPON_THROWN)
                     continue;
                 break;
             }
