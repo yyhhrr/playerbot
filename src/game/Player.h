@@ -57,6 +57,7 @@ class Item;
 // Playerbot mod
 class PlayerbotAI;
 class PlayerbotMgr;
+class RandomPlayerbotMgr;
 
 typedef std::deque<Mail*> PlayerMails;
 
@@ -2368,7 +2369,9 @@ class MANGOS_DLL_SPEC Player : public Unit
         void SetPlayerbotAI(PlayerbotAI* ai) { assert(!m_playerbotAI && !m_playerbotMgr); m_playerbotAI=ai; }
         PlayerbotAI* GetPlayerbotAI() { return m_playerbotAI; }
         void SetPlayerbotMgr(PlayerbotMgr* mgr) { assert(!m_playerbotAI && !m_playerbotMgr); m_playerbotMgr=mgr; }
+        void SetRandomPlayerbotMgr(RandomPlayerbotMgr* mgr) { assert(!m_playerbotAI && !m_randomPlayerbotMgr); m_randomPlayerbotMgr=mgr; }
         PlayerbotMgr* GetPlayerbotMgr() { return m_playerbotMgr; }
+        RandomPlayerbotMgr* GetRandomPlayerbotMgr() { return m_randomPlayerbotMgr; }
         void SetBotDeathTimer() { m_deathTimer = 0; }
         PlayerTalentMap& GetTalentMap(uint8 spec) { return m_talents[spec]; }
 
@@ -2650,6 +2653,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         // Playerbot mod:
         PlayerbotAI* m_playerbotAI;
         PlayerbotMgr* m_playerbotMgr;
+        RandomPlayerbotMgr* m_randomPlayerbotMgr;
 
         // Homebind coordinates
         uint32 m_homebindMapId;

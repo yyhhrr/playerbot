@@ -249,14 +249,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     }
 
     Player* player = m_session->GetPlayer();
-
-    // create the playerbot manager if it doesn't already exist
     PlayerbotMgr* mgr = player->GetPlayerbotMgr();
-    if (!mgr)
-    {
-        mgr = new PlayerbotMgr(player);
-        player->SetPlayerbotMgr(mgr);
-    }
 
     if (charnameStr == "?" && cmdStr == "add")
     {

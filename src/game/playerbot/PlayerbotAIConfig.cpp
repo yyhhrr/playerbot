@@ -46,7 +46,8 @@ bool PlayerbotAIConfig::Initialize()
     lowMana = config.GetIntDefault("AiPlayerbot.LowMana", 15);
     mediumMana = config.GetIntDefault("AiPlayerbot.MediumMana", 40);
 
-    pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 10);
+    pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 1);
+    randomTeleportChance = config.GetIntDefault("AiPlayerbot.RandomTeleportChance", 1);
     randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);
 
     iterationsPerTick = config.GetIntDefault("AiPlayerbot.IterationsPerTick", 10);
@@ -61,6 +62,14 @@ bool PlayerbotAIConfig::Initialize()
             continue;
         randomBotAccounts.push_back(id);
     }
+
+    randomBotAutologin = config.GetBoolDefault("AiPlayerbot.RandomBotAutologin", false);
+    minRandomBots = config.GetIntDefault("AiPlayerbot.MinRandomBots", 1);
+    maxRandomBots = config.GetIntDefault("AiPlayerbot.MaxRandomBots", 10);
+    randomBotUpdateInterval = config.GetIntDefault("AiPlayerbot.RandomBotUpdateInterval", 60);
+    randomBotCountChangeInterval = config.GetIntDefault("AiPlayerbot.RandomBotCountChangeInterval", 7200);
+    minRandomBotInWorldTime = config.GetIntDefault("AiPlayerbot.MinRandomBotInWorldTime", 7200);
+    maxRandomBotInWorldTime = config.GetIntDefault("AiPlayerbot.MaxRandomBotInWorldTime", 36000);
 
     splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);
 

@@ -1236,6 +1236,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\TellTargetAction.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\RandomPlayerbotMgr.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -2581,6 +2584,9 @@
       <Filter>playerbot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\TellTargetAction.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\RandomPlayerbotMgr.h">
       <Filter>playerbot</Filter>
     </ClInclude>
   </ItemGroup>

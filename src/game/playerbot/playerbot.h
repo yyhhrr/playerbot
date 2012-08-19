@@ -23,5 +23,6 @@ int strcmpi(std::string s1, std::string s2);
 #include "playerbotDefs.h"
 #include "PlayerbotAIAware.h"
 #include "PlayerbotMgr.h"
+#include "RandomPlayerbotMgr.h"
 #include "ChatHelper.h"
 #include "PlayerbotAI.h"

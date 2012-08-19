@@ -445,20 +445,6 @@ void PlayerbotAI::DoNextAction()
         bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
     }
-
-    if (!IsOpposing(master))
-        return;
-
-    if (urand(0, 100000) > (100000 - sPlayerbotAIConfig.pvpChance) &&
-            !master->GetInstanceId() && master->IsAllowedDamageInArea(bot))
-    {
-        DoPvpAttack();
-    }
-
-    if (urand(0, 1000) > 995 && !bot->isInCombat())
-    {
-        RandomTeleport();
-    }
 }
 
 void PlayerbotAI::RandomTeleport()

@@ -386,6 +386,7 @@ Player::Player(WorldSession* session): Unit(), m_mover(this), m_camera(this), m_
     // Playerbot mod:
     m_playerbotAI = 0;
     m_playerbotMgr = 0;
+    m_randomPlayerbotMgr = 0;
 
     m_transport = 0;
 
@@ -615,6 +616,10 @@ Player::~Player()
     if (m_playerbotMgr) {
         delete m_playerbotMgr;
         m_playerbotMgr = 0;
+    }
+    if (m_randomPlayerbotMgr) {
+        delete m_randomPlayerbotMgr;
+        m_randomPlayerbotMgr = 0;
     }
 }
 
@@ -1410,8 +1415,10 @@ void Player::Update(uint32 update_diff, uint32 p_time)
     // Playerbot mod
     if (m_playerbotAI)
        m_playerbotAI->UpdateAI(p_time);
-    else if (m_playerbotMgr)
+    if (m_playerbotMgr)
        m_playerbotMgr->UpdateAI(p_time);
+    if (m_randomPlayerbotMgr)
+        m_randomPlayerbotMgr->UpdateAI(p_time);
 }
 
 void Player::SetDeathState(DeathState s)

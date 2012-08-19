@@ -71,7 +71,7 @@ private:
     uint32 m_masterAccountId;
 
 public:
-    PlayerbotLoginQueryHolder(uint32 masterAccount, uint32 accountId, ObjectGuid guid) 
+    PlayerbotLoginQueryHolder(uint32 masterAccount, uint32 accountId, ObjectGuid guid)
         : LoginQueryHolder(accountId, guid), m_masterAccountId(masterAccount) { }
 
 public:
@@ -151,6 +151,15 @@ class CharacterHandler
                 return;
             }
             session->HandlePlayerLogin((LoginQueryHolder*)holder);
+
+            // playerbot mod
+            ObjectGuid guid = ((LoginQueryHolder*)holder)->GetGuid();
+            Player* player = sObjectMgr.GetPlayer(guid, true);
+            if (player && !player->GetPlayerbotAI())
+            {
+                player->SetPlayerbotMgr(new PlayerbotMgr(player));
+                player->SetRandomPlayerbotMgr(new RandomPlayerbotMgr(player));
+            }
         }
 		// Playerbot mod: is different from the normal HandlePlayerLoginCallback in that it
         // sets up the bot's world session and also stores the pointer to the bot player in the master's
@@ -179,7 +188,7 @@ class CharacterHandler
             Player* bot = botSession->GetPlayer();
             if (!bot)
                 return;
-            
+
             Player* master = masterSession->GetPlayer();
             PlayerbotMgr* mgr = master->GetPlayerbotMgr();
 
