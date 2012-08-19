@@ -30,9 +30,9 @@ void PlayerbotFactory::Randomize()
 void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ)
 {
     QueryResult *results = WorldDatabase.PQuery("select avg(t.minlevel) minlevel, avg(t.maxlevel) maxlevel from creature c "
-            "inner join creature_template t on c.guid = t.entry "
-            "where map = '%u' and abs(position_x - '%f') < 300 and abs(position_y - '%f') < 300",
-            mapId, teleX, teleY);
+            "inner join creature_template t on c.id = t.entry "
+            "where map = '%u' and minlevel > 1 and abs(position_x - '%f') < '%u' and abs(position_y - '%f') < '%u'",
+            mapId, teleX, sPlayerbotAIConfig.randomBotTeleportDistance / 2, teleY, sPlayerbotAIConfig.randomBotTeleportDistance / 2);
 
     if (results)
     {
@@ -41,12 +41,14 @@ void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, 
         uint32 maxLevel = fields[1].GetUInt32();
         level = urand(minLevel, maxLevel);
         if (level < 10)
-            level = urand(10, master->getLevel());
+            level = urand(master->getLevel() - 5, master->getLevel());
+        if (level > 80)
+            level = 80;
         delete results;
     }
     else
     {
-        level = urand(10, master->getLevel());
+        level = urand(master->getLevel() - 5, master->getLevel());
     }
 
     Randomize();

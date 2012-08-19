@@ -455,8 +455,8 @@ void PlayerbotAI::RandomTeleport(uint32 mapId, float teleX, float teleY, float t
     Reset();
 
     vector<WorldLocation> locs;
-    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%f') < 300 and abs(position_y - '%f') < 300",
-            mapId, teleX, teleY);
+    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%f') < '%u' and abs(position_y - '%f') < '%u'",
+            mapId, teleX, sPlayerbotAIConfig.randomBotTeleportDistance / 2, teleY, sPlayerbotAIConfig.randomBotTeleportDistance / 2);
     if (results)
     {
         do
@@ -471,43 +471,46 @@ void PlayerbotAI::RandomTeleport(uint32 mapId, float teleX, float teleY, float t
         delete results;
     }
 
+    Map* map = sMapMgr.FindMap(mapId);
+    if (!map)
+        map = sMapMgr.CreateMap(mapId, bot);
+
     if (locs.size() > 0)
     {
         int index = urand(0, locs.size() - 1);
         WorldLocation loc = locs[index];
         loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
         loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-        bot->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
-        loc.coord_z += 0.5f;
+        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 0, true, MAX_HEIGHT);
         bot->TeleportTo(loc);
     }
     else
     {
+        teleZ = 0.05f + map->GetTerrain()->GetHeight(teleX, teleY, 0, true, MAX_HEIGHT);
         bot->TeleportTo(mapId, teleX, teleY, teleZ, 0);
     }
 }
 
 void PlayerbotAI::Randomize()
 {
+    int index = urand(0, sPlayerbotAIConfig.randomBotMaps.size() - 1);
+    uint32 mapId = sPlayerbotAIConfig.randomBotMaps[index];
+
+    vector<GameTele const*> locs;
     GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
-    uint32 index = urand(0, teleMap.size() - 1);
-    uint32 i = 0;
     for(GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
     {
         GameTele const* tele = &itr->second;
-        if (i++ == index)
-        {
-            MapEntry const* entry = sMapStore.LookupEntry(tele->mapId);
-            if (entry->map_type != MAP_COMMON)
-                continue;
-
-            PlayerbotFactory factory(bot, GetMaster()->getLevel());
-            factory.RandomizeForZone(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
-
-            RandomTeleport(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
-            break;
-        }
+        if (tele->mapId == mapId)
+            locs.push_back(tele);
     }
+
+    index = urand(0, locs.size() - 1);
+    GameTele const* tele = locs[index];
+    PlayerbotFactory factory(bot, GetMaster()->getLevel());
+    factory.RandomizeForZone(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
+
+    RandomTeleport(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
 }
 
 void PlayerbotAI::DoPvpAttack()
@@ -523,7 +526,7 @@ void PlayerbotAI::DoPvpAttack()
     GetMaster()->GetPosition(loc);
     loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
     loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-    bot->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
+    GetMaster()->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
     loc.coord_z += 0.5f;
     bot->TeleportTo(loc);
 }

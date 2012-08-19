@@ -22,8 +22,8 @@ bool PlayerbotAIConfig::Initialize()
     }
 
     enabled = config.GetBoolDefault("AiPlayerbot.Enabled", true);
-	if (!enabled)
-		sLog.outString("AI Playerbot is Disabled in aiplayerbot.conf");
+    if (!enabled)
+        sLog.outString("AI Playerbot is Disabled in aiplayerbot.conf");
 
     globalCoolDown = (uint32) config.GetIntDefault("AiPlayerbot.GlobalCooldown", 500);
     teleportDelay = config.GetIntDefault("AiPlayerbot.TeleportDelay", 10000);
@@ -61,6 +61,16 @@ bool PlayerbotAIConfig::Initialize()
         randomBotAccounts.push_back(id);
     }
 
+    string mapStr = config.GetStringDefault("AiPlayerbot.RandomBotMaps", "0,1,530,571");
+    vector<string> maps = split(mapStr, ',');
+    for (vector<string>::iterator i = maps.begin(); i != maps.end(); i++)
+    {
+        uint32 id = atoi((*i).c_str());
+        if (!id)
+            continue;
+        randomBotMaps.push_back(id);
+    }
+
     randomBotAutologin = config.GetBoolDefault("AiPlayerbot.RandomBotAutologin", false);
     minRandomBots = config.GetIntDefault("AiPlayerbot.MinRandomBots", 1);
     maxRandomBots = config.GetIntDefault("AiPlayerbot.MaxRandomBots", 10);
@@ -72,6 +82,7 @@ bool PlayerbotAIConfig::Initialize()
     maxRandomRandomizeTime = config.GetIntDefault("AiPlayerbot.MaxRandomRandomizeTime", 36000);
     minRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MinRandomBotPvpTime", 180);
     maxRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MaxRandomBotPvpTime", 7200);
+    randomBotTeleportDistance = config.GetIntDefault("AiPlayerbot.RandomBotTeleportDistance", 400);
 
     splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);
 
