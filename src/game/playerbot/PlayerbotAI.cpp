@@ -455,7 +455,7 @@ void PlayerbotAI::RandomTeleport(uint32 mapId, float teleX, float teleY, float t
     Reset();
 
     vector<WorldLocation> locs;
-    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%u') < 300 and abs(position_y - '%u') < 300",
+    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%f') < 300 and abs(position_y - '%f') < 300",
             mapId, teleX, teleY);
     if (results)
     {
@@ -502,7 +502,7 @@ void PlayerbotAI::Randomize()
                 continue;
 
             PlayerbotFactory factory(bot, GetMaster()->getLevel());
-            factory.RandomizeForZone(tele->mapId);
+            factory.RandomizeForZone(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
 
             RandomTeleport(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
             break;

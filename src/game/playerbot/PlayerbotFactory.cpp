@@ -27,18 +27,26 @@ void PlayerbotFactory::Randomize()
     InitAmmo();
 }
 
-void PlayerbotFactory::RandomizeForZone(uint32 mapId)
+void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ)
 {
-    QueryResult *results = WorldDatabase.PQuery("SELECT avg(t.minlevel) minlevel, avg(t.maxlevel) maxlevel FROM creature c "
+    QueryResult *results = WorldDatabase.PQuery("select avg(t.minlevel) minlevel, avg(t.maxlevel) maxlevel from creature c "
             "inner join creature_template t on c.guid = t.entry "
-            "where c.map = '%u'", mapId);
+            "where map = '%u' and abs(position_x - '%f') < 300 and abs(position_y - '%f') < 300",
+            mapId, teleX, teleY);
+
     if (results)
     {
         Field* fields = results->Fetch();
         uint32 minLevel = fields[0].GetUInt32();
         uint32 maxLevel = fields[1].GetUInt32();
-        this->level = urand(minLevel, maxLevel);
+        level = urand(minLevel, maxLevel);
+        if (level < 10)
+            level = urand(10, master->getLevel());
         delete results;
+    }
+    else
+    {
+        level = urand(10, master->getLevel());
     }
 
     Randomize();
@@ -68,7 +76,7 @@ void PlayerbotFactory::InitPet()
 			ids.push_back(id);
 		}
 
-		for (int i = 0; i < 100; i++) 
+		for (int i = 0; i < 100; i++)
 		{
 			int index = urand(0, ids.size());
 			CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(ids[index]);
