@@ -46,8 +46,6 @@ bool PlayerbotAIConfig::Initialize()
     lowMana = config.GetIntDefault("AiPlayerbot.LowMana", 15);
     mediumMana = config.GetIntDefault("AiPlayerbot.MediumMana", 40);
 
-    pvpChance = config.GetIntDefault("AiPlayerbot.PvpChance", 1);
-    randomTeleportChance = config.GetIntDefault("AiPlayerbot.RandomTeleportChance", 1);
     randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);
 
     iterationsPerTick = config.GetIntDefault("AiPlayerbot.IterationsPerTick", 10);
@@ -70,6 +68,10 @@ bool PlayerbotAIConfig::Initialize()
     randomBotCountChangeInterval = config.GetIntDefault("AiPlayerbot.RandomBotCountChangeInterval", 7200);
     minRandomBotInWorldTime = config.GetIntDefault("AiPlayerbot.MinRandomBotInWorldTime", 7200);
     maxRandomBotInWorldTime = config.GetIntDefault("AiPlayerbot.MaxRandomBotInWorldTime", 36000);
+    minRandomBotRandomizeTime = config.GetIntDefault("AiPlayerbot.MinRandomBotRandomizeTime", 7200);
+    maxRandomRandomizeTime = config.GetIntDefault("AiPlayerbot.MaxRandomRandomizeTime", 36000);
+    minRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MinRandomBotPvpTime", 180);
+    maxRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MaxRandomBotPvpTime", 7200);
 
     splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);
 
@@ -118,8 +120,6 @@ string PlayerbotAIConfig::GetValue(string name)
     else if (name == "LowMana")
         out << lowMana;
 
-    else if (name == "PvpChance")
-        out << pvpChance;
 
     else if (name == "RandomGearQuality")
         out << randomGearQuality;
@@ -163,9 +163,6 @@ void PlayerbotAIConfig::SetValue(string name, string value)
         out >> almostFullHealth;
     else if (name == "LowMana")
         out >> lowMana;
-
-    else if (name == "PvpChance")
-        out >> pvpChance;
 
     else if (name == "RandomGearQuality")
         out >> randomGearQuality;

@@ -21,7 +21,6 @@ public:
     float sightDistance, spellDistance, reactDistance, grindDistance, lootDistance, fleeDistance, tooCloseDistance, meleeDistance, followDistance;
     uint32 criticalHealth, lowHealth, mediumHealth, almostFullHealth;
     uint32 lowMana, mediumMana;
-    uint32 pvpChance, randomTeleportChance;
 
     bool randomBotAutologin;
     std::list<uint32> randomBotAccounts;
@@ -29,6 +28,8 @@ public:
     uint32 minRandomBots, maxRandomBots;
     uint32 randomBotUpdateInterval, randomBotCountChangeInterval;
     uint32 minRandomBotInWorldTime, maxRandomBotInWorldTime;
+    uint32 minRandomBotRandomizeTime, maxRandomRandomizeTime;
+    uint32 minRandomBotPvpTime, maxRandomBotPvpTime;
 
     uint32 iterationsPerTick;
     bool splineFacing;

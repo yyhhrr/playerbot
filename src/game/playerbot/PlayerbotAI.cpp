@@ -64,6 +64,8 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
 	this->mgr = mgr;
 	this->bot = bot;
 
+	accountId = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
+
     aiObjectContext = AiFactory::createAiObjectContext(bot, this);
     aiObjectContext->AddShared(sharedValues);
 
@@ -447,7 +449,45 @@ void PlayerbotAI::DoNextAction()
     }
 }
 
-void PlayerbotAI::RandomTeleport()
+void PlayerbotAI::RandomTeleport(uint32 mapId, float teleX, float teleY, float teleZ)
+{
+    OnBotLogin();
+    Reset();
+
+    vector<WorldLocation> locs;
+    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%u') < 300 and abs(position_y - '%u') < 300",
+            mapId, teleX, teleY);
+    if (results)
+    {
+        do
+        {
+            Field* fields = results->Fetch();
+            float x = fields[0].GetFloat();
+            float y = fields[1].GetFloat();
+            float z = fields[2].GetFloat();
+            WorldLocation loc(mapId, x, y, z, 0);
+            locs.push_back(loc);
+        } while (results->NextRow());
+        delete results;
+    }
+
+    if (locs.size() > 0)
+    {
+        int index = urand(0, locs.size() - 1);
+        WorldLocation loc = locs[index];
+        loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        bot->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
+        loc.coord_z += 0.5f;
+        bot->TeleportTo(loc);
+    }
+    else
+    {
+        bot->TeleportTo(mapId, teleX, teleY, teleZ, 0);
+    }
+}
+
+void PlayerbotAI::Randomize()
 {
     GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
     uint32 index = urand(0, teleMap.size() - 1);
@@ -464,10 +504,7 @@ void PlayerbotAI::RandomTeleport()
             PlayerbotFactory factory(bot, GetMaster()->getLevel());
             factory.RandomizeForZone(tele->mapId);
 
-            OnBotLogin();
-            Reset();
-
-            bot->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
+            RandomTeleport(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
             break;
         }
     }
@@ -493,9 +530,6 @@ void PlayerbotAI::DoPvpAttack()
 
 void PlayerbotAI::OnBotLogin()
 {
-    if (!IsOpposing(GetMaster()))
-        return;
-
     if (!bot->isAlive())
     {
         PlayerbotChatHandler ch(GetMaster());
@@ -734,6 +768,9 @@ void PlayerbotAI::TellMaster(string text)
 {
     LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
     if (IsOpposing(GetMaster()) && logLevel != LOG_LVL_DEBUG)
+        return;
+
+    if (sPlayerbotAIConfig.IsInRandomAccountList(accountId) && logLevel != LOG_LVL_DEBUG && !bot->GetGroup())
         return;
 
     WorldPacket data(SMSG_MESSAGECHAT, 1024);

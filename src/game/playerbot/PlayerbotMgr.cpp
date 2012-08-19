@@ -98,10 +98,9 @@ void PlayerbotMgr::LogoutAllBots()
     }
 }
 
-// Playerbot mod: logs out a Playerbot.
 void PlayerbotMgr::LogoutPlayerBot(uint64 guid)
 {
-    Player* bot= GetPlayerBot(guid);
+    Player* bot = GetPlayerBot(guid);
     if (bot)
     {
         bot->GetPlayerbotAI()->TellMaster("Goodbue!");
@@ -165,7 +164,7 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
     }
     else if (cmdStr == "remove" || cmdStr == "logout")
     {
-        if (! mgr->GetPlayerBot(guid.GetRawValue()))
+        if (!mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
 
         mgr->LogoutPlayerBot(guid.GetRawValue());
@@ -177,7 +176,7 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
             return false;
 
         uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-        if (session->GetSecurity() >= SEC_GAMEMASTER || sPlayerbotAIConfig.IsInRandomAccountList(account))
+        if (session->GetSecurity() >= SEC_GAMEMASTER)
             mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
     }
     else if (cmdStr == "pvp")
@@ -187,7 +186,7 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
             return false;
 
         uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-        if (session->GetSecurity() >= SEC_GAMEMASTER || sPlayerbotAIConfig.IsInRandomAccountList(account))
+        if (session->GetSecurity() >= SEC_GAMEMASTER)
             bot->GetPlayerbotAI()->DoPvpAttack();
     }
 

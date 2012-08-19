@@ -52,6 +52,7 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
         ProcessBot(bot);
     }
 
+    sLog.outString("Random bot processing finished. Next check in %d seconds", sPlayerbotAIConfig.randomBotUpdateInterval);
 }
 
 uint32 RandomPlayerbotMgr::AddRandomBot()
@@ -63,6 +64,8 @@ uint32 RandomPlayerbotMgr::AddRandomBot()
     int index = urand(0, bots.size() - 1);
     uint32 bot = bots[index];
     SetEventValue(bot, "add", 1, urand(sPlayerbotAIConfig.minRandomBotInWorldTime, sPlayerbotAIConfig.maxRandomBotInWorldTime));
+    SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
+    SetEventValue(bot, "randomize", 0, 0);
     sLog.outBasic("Bot %d added for account %d", bot, account);
     return bot;
 }
@@ -101,18 +104,39 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
     if (!ai)
         return;
 
-    if (ai->IsOpposing(master) && urand(0, 100) <= sPlayerbotAIConfig.pvpChance &&
-            !master->GetInstanceId() && master->IsAllowedDamageInArea(player))
+    if (player->GetGroup())
     {
-        ai->DoPvpAttack();
+        sLog.outBasic("Skipping bot %d for account %d as it is in group", bot, account);
+        return;
     }
 
-	if (!player->GetGroup() && urand(0, 100) <= sPlayerbotAIConfig.randomTeleportChance && !player->isInCombat())
+    uint32 randomize = GetEventValue(bot, "randomize");
+    if (!randomize)
     {
-        ai->RandomTeleport();
+        ai->Randomize();
+        SetEventValue(bot, "randomize", 1, urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime));
+        mgr->LogoutPlayerBot(bot);
+        sLog.outBasic("Randomizing bot %d for account %d", bot, account);
+        return;
     }
 
-    sLog.outBasic("Bot %d processed in for account %d", bot, account);
+    if (player->isDead())
+    {
+        sLog.outBasic("Random teleporting dead bot %d for account %d", bot, account);
+        ai->RandomTeleport(player->GetMapId(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
+    }
+
+    if (ai->IsOpposing(master) &&
+            !master->GetInstanceId() && master->IsAllowedDamageInArea(player) && master->IsPvP())
+    {
+        uint32 pvp = GetEventValue(bot, "pvp");
+        if (!pvp)
+        {
+            sLog.outBasic("Starting PVP attack with bot %d for account %d", bot, account);
+            SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
+            ai->DoPvpAttack();
+        }
+    }
 }
 
 

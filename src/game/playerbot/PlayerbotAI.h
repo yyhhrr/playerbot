@@ -23,10 +23,10 @@ public:
     void sysmessage(string str) { SendSysMessage(str.c_str()); }
     bool dropQuest(string str) { return HandleQuestRemoveCommand((char*)str.c_str()); }
     uint32 extractQuestId(string str);
-    uint32 extractSpellId(string str) 
-    { 
+    uint32 extractSpellId(string str)
+    {
         char* source = (char*)str.c_str();
-        return ExtractSpellIdFromLink(&source); 
+        return ExtractSpellIdFromLink(&source);
     }
 };
 
@@ -101,7 +101,8 @@ public:
     void Reset();
     void OnBotLogin();
     void DoPvpAttack();
-    void RandomTeleport();
+    void RandomTeleport(uint32 mapId, float teleX, float teleY, float teleZ);
+    void Randomize();
     bool IsTank(Player* player);
     bool IsHeal(Player* player);
     Creature* GetCreature(ObjectGuid guid);
@@ -140,6 +141,7 @@ public:
 protected:
 	Player* bot;
 	PlayerbotMgr* mgr;
+	uint32 accountId;
     AiObjectContext* aiObjectContext;
     Engine* currentEngine;
     Engine* engines[BOT_STATE_MAX];
