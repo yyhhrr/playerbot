@@ -4,6 +4,10 @@
 
 using namespace ai;
 
+#ifndef WIN32
+int strcmpi(std::string s1, std::string s2);
+#endif
+
 Item* ItemForSpellValue::Calculate()
 {
     uint32 spellid = atoi(qualifier.c_str());
