@@ -14,7 +14,8 @@ namespace ai
     protected:
         Unit* GetTarget()
         {
-            return AiObject::context->GetValue<Unit*>(qualifier)->Get();
+            AiObjectContext* ctx = AiObject::context;
+            return ctx->GetValue<Unit*>(qualifier)->Get();
         }
     };
 

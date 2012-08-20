@@ -1044,7 +1044,7 @@ bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)
 }
 
 #ifndef WIN32
-int strcmpi(const char* s1, const char* s2)
+inline int strcmpi(const char* s1, const char* s2)
 {
     for (; *s1 && *s2 && (toupper(*s1) == toupper(*s2)); ++s1, ++s2);
     return *s1 - *s2;

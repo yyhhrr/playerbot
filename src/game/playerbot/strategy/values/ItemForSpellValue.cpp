@@ -5,7 +5,11 @@
 using namespace ai;
 
 #ifndef WIN32
-int strcmpi(std::string s1, std::string s2);
+inline int strcmpi(const char* s1, const char* s2)
+{
+    for (; *s1 && *s2 && (toupper(*s1) == toupper(*s2)); ++s1, ++s2);
+    return *s1 - *s2;
+}
 #endif
 
 Item* ItemForSpellValue::Calculate()
