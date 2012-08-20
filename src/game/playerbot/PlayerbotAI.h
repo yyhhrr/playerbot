@@ -99,10 +99,6 @@ public:
     void ResetStrategies();
     void ReInitCurrentEngine();
     void Reset();
-    void OnBotLogin();
-    void DoPvpAttack();
-    void RandomTeleport(uint32 mapId, float teleX, float teleY, float teleZ);
-    void Randomize();
     bool IsTank(Player* player);
     bool IsHeal(Player* player);
     Creature* GetCreature(ObjectGuid guid);

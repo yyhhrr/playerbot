@@ -154,9 +154,14 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
 	Engine* engine = new Engine(facade, AiObjectContext);
     AddDefaultCombatStrategies(player, engine);
-    if (facade->IsOpposing(facade->GetMaster()))
+
+    Player* master = facade->GetMaster();
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
+    {
         engine->addStrategies("grind", "dps", NULL);
-	return engine;
+    }
+
+    return engine;
 }
 
 void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
@@ -185,11 +190,14 @@ Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const faca
 	Engine* nonCombatEngine = new Engine(facade, AiObjectContext);
 
     AddDefaultNonCombatStrategies(player, nonCombatEngine);
-    if (facade->IsOpposing(facade->GetMaster()))
+
+    Player* master = facade->GetMaster();
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
     {
         nonCombatEngine->addStrategy("grind");
         nonCombatEngine->removeStrategy("loot");
     }
+
 	return nonCombatEngine;
 }
 
@@ -201,7 +209,9 @@ void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
     Engine* deadEngine = new Engine(facade, AiObjectContext);
     AddDefaultDeadStrategies(deadEngine);
-    if (facade->IsOpposing(facade->GetMaster()))
+
+    Player* master = facade->GetMaster();
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
     {
         deadEngine->removeStrategy("follow master");
     }

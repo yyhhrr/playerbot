@@ -144,7 +144,6 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
         ! m_master->GetGroup()->IsLeader(masterGuid))
         m_master->GetGroup()->ChangeLeader(masterGuid);
 
-    ai->OnBotLogin();
     ai->TellMaster("Hello!");
 }
 
@@ -187,7 +186,17 @@ bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
 
         uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
         if (session->GetSecurity() >= SEC_GAMEMASTER)
-            bot->GetPlayerbotAI()->DoPvpAttack();
+            mgr->GetMaster()->GetRandomPlayerbotMgr()->DoPvpAttack(bot);
+    }
+    else if (cmdStr == "random")
+    {
+        Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
+        if (!bot)
+            return false;
+
+        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
+        if (session->GetSecurity() >= SEC_GAMEMASTER)
+            mgr->GetMaster()->GetRandomPlayerbotMgr()->Randomize(bot);
     }
 
     return true;

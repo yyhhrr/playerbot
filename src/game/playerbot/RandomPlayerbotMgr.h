@@ -20,6 +20,12 @@ class MANGOS_DLL_SPEC RandomPlayerbotMgr : public PlayerbotAIBase
 
         virtual void UpdateAIInternal(uint32 elapsed);
 
+	public:
+        bool IsRandomBot(Player* bot);
+        bool IsRandomBot(uint32 bot);
+        void DoPvpAttack(Player* bot);
+        void Randomize(Player* bot);
+
     private:
         uint32 GetEventValue(uint32 bot, string event);
         uint32 SetEventValue(uint32 bot, string event, uint32 value, uint32 validIn);
@@ -27,6 +33,8 @@ class MANGOS_DLL_SPEC RandomPlayerbotMgr : public PlayerbotAIBase
         vector<uint32> GetFreeBots();
         uint32 AddRandomBot();
         void ProcessBot(uint32 bot);
+        void RandomTeleport(Player* bot, uint32 mapId, float teleX, float teleY, float teleZ);
+        void Refresh(Player* bot);
 
     private:
         Player* const master;

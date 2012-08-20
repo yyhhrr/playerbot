@@ -113,7 +113,7 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
     uint32 randomize = GetEventValue(bot, "randomize");
     if (!randomize)
     {
-        ai->Randomize();
+        Randomize(player);
         SetEventValue(bot, "randomize", 1, urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime));
         mgr->LogoutPlayerBot(bot);
         sLog.outBasic("Randomizing bot %d for account %d", bot, account);
@@ -123,7 +123,7 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
     if (player->isDead())
     {
         sLog.outBasic("Random teleporting dead bot %d for account %d", bot, account);
-        ai->RandomTeleport(player->GetMapId(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
+        RandomTeleport(player, player->GetMapId(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
     }
 
     if (ai->IsOpposing(master) &&
@@ -134,11 +134,124 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
         {
             sLog.outBasic("Starting PVP attack with bot %d for account %d", bot, account);
             SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
-            ai->DoPvpAttack();
+            DoPvpAttack(player);
         }
     }
 }
 
+
+void RandomPlayerbotMgr::RandomTeleport(Player* bot, uint32 mapId, float teleX, float teleY, float teleZ)
+{
+    Refresh(bot);
+
+    vector<WorldLocation> locs;
+    QueryResult* results = WorldDatabase.PQuery("select position_x, position_y, position_z from creature where map = '%u' and abs(position_x - '%f') < '%u' and abs(position_y - '%f') < '%u'",
+            mapId, teleX, sPlayerbotAIConfig.randomBotTeleportDistance / 2, teleY, sPlayerbotAIConfig.randomBotTeleportDistance / 2);
+    if (results)
+    {
+        do
+        {
+            Field* fields = results->Fetch();
+            float x = fields[0].GetFloat();
+            float y = fields[1].GetFloat();
+            float z = fields[2].GetFloat();
+            WorldLocation loc(mapId, x, y, z, 0);
+            locs.push_back(loc);
+        } while (results->NextRow());
+        delete results;
+    }
+
+    Map* map = sMapMgr.FindMap(mapId);
+    if (!map)
+        map = sMapMgr.CreateMap(mapId, bot);
+
+    if (locs.size() > 0)
+    {
+        int index = urand(0, locs.size() - 1);
+        WorldLocation loc = locs[index];
+        loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 0, true, MAX_HEIGHT);
+        bot->TeleportTo(loc);
+    }
+    else
+    {
+        teleZ = 0.05f + map->GetTerrain()->GetHeight(teleX, teleY, 0, true, MAX_HEIGHT);
+        bot->TeleportTo(mapId, teleX, teleY, teleZ, 0);
+    }
+}
+
+void RandomPlayerbotMgr::Randomize(Player* bot)
+{
+    int index = urand(0, sPlayerbotAIConfig.randomBotMaps.size() - 1);
+    uint32 mapId = sPlayerbotAIConfig.randomBotMaps[index];
+
+    vector<GameTele const*> locs;
+    GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
+    for(GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
+    {
+        GameTele const* tele = &itr->second;
+        if (tele->mapId == mapId)
+            locs.push_back(tele);
+    }
+
+    index = urand(0, locs.size() - 1);
+    GameTele const* tele = locs[index];
+	PlayerbotFactory factory(bot, bot->GetPlayerbotAI()->GetMaster()->getLevel());
+    factory.RandomizeForZone(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
+
+    RandomTeleport(bot, tele->mapId, tele->position_x, tele->position_y, tele->position_z);
+}
+
+void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
+{
+	Player* master = bot->GetPlayerbotAI()->GetMaster();
+    uint32 level = master->getLevel();
+    PlayerbotFactory factory(bot, urand(level - 2, level + 2));
+    factory.Randomize();
+
+    Refresh(bot);
+
+    WorldLocation loc;
+    master->GetPosition(loc);
+    loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+    loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+    master->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
+    loc.coord_z += 0.5f;
+    bot->TeleportTo(loc);
+}
+
+void RandomPlayerbotMgr::Refresh(Player* bot)
+{
+    if (!bot->isAlive())
+    {
+        PlayerbotChatHandler ch(bot->GetPlayerbotAI()->GetMaster());
+        ch.revive(*bot);
+    }
+
+    bot->DurabilityRepairAll(false, 1.0f, false);
+    bot->SetHealthPercent(100);
+    bot->SetPvP(true);
+
+    if (bot->GetMaxPower(POWER_MANA) > 0)
+        bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
+
+    if (bot->GetMaxPower(POWER_ENERGY) > 0)
+        bot->SetPower(POWER_ENERGY, bot->GetMaxPower(POWER_ENERGY));
+
+    bot->GetPlayerbotAI()->Reset();
+}
+
+
+bool RandomPlayerbotMgr::IsRandomBot(Player* bot)
+{
+    return IsRandomBot(bot->GetObjectGuid());
+}
+
+bool RandomPlayerbotMgr::IsRandomBot(uint32 bot)
+{
+    return GetEventValue(bot, "add");
+}
 
 list<uint32> RandomPlayerbotMgr::GetBots()
 {
