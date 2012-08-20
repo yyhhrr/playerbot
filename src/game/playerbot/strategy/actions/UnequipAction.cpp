@@ -12,7 +12,10 @@ bool UnequipAction::Execute(Event event)
 
     ItemIds ids = chat->parseItems(text);
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
-        UnequipItem(&FindItemByIdVisitor(*i));
+    {
+        FindItemByIdVisitor visitor(*i);
+        UnequipItem(&visitor);
+    }
 
     return true;
 }

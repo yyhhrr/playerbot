@@ -12,7 +12,10 @@ bool DestroyItemAction::Execute(Event event)
     ItemIds ids = chat->parseItems(text);
 
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
-        DestroyItem(&FindItemByIdVisitor(*i));
+    {
+        FindItemByIdVisitor visitor(*i);
+        DestroyItem(&visitor);
+    }
 
     return true;
 }

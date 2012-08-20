@@ -8,7 +8,7 @@ using namespace ai;
 class SellItemsVisitor : public IterateItemsVisitor
 {
 public:
-    SellItemsVisitor(SellAction* action) : IterateItemsVisitor() 
+    SellItemsVisitor(SellAction* action) : IterateItemsVisitor()
     {
         this->action = action;
     }
@@ -44,14 +44,18 @@ bool SellAction::Execute(Event event)
 
     if (text == "gray" || text == "*")
     {
-        IterateItems(&SellGrayItemsVisitor(this));
+        SellGrayItemsVisitor visitor(this);
+        IterateItems(&visitor);
         return true;
     }
 
     ItemIds ids = chat->parseItems(text);
 
     for (ItemIds::iterator i =ids.begin(); i != ids.end(); i++)
-        Sell(&FindItemByIdVisitor(*i));
+    {
+        FindItemByIdVisitor visitor(*i);
+        Sell(&visitor);
+    }
 
     return true;
 }

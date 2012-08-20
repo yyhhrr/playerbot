@@ -1,6 +1,8 @@
 #pragma once
 #include "../Value.h"
 
+class Unit;
+
 namespace ai
 {
     template<class T>
@@ -12,7 +14,7 @@ namespace ai
     protected:
         Unit* GetTarget()
         {
-            return AiObject::context->GetValue<Unit *>(qualifier)->Get();
+            return AiObject::context->GetValue<Unit*>(qualifier)->Get();
         }
     };
 

@@ -17,7 +17,7 @@ bool IsDeadValue::Calculate()
     Unit* target = GetTarget();
     if (!target)
         return false;
-    return target->getDeathState() != ALIVE; 
+    return target->getDeathState() != ALIVE;
 }
 
 
@@ -54,7 +54,7 @@ bool HasManaValue::Calculate()
 }
 
 
-uint8 ComboPointsValue::Calculate() 
+uint8 ComboPointsValue::Calculate()
 {
     Unit *target = GetTarget();
     if (!target || target->GetObjectGuid() != bot->GetComboTargetGuid())
@@ -65,7 +65,7 @@ uint8 ComboPointsValue::Calculate()
 
 bool IsMountedValue::Calculate()
 {
-    
+
     return bot->IsMounted();
 }
 
