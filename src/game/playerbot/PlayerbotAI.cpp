@@ -518,9 +518,9 @@ void PlayerbotAI::ResetStrategies()
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
         engines[i]->removeAllStrategies();
 
-    AiFactory::AddDefaultCombatStrategies(bot, engines[BOT_STATE_COMBAT]);
-    AiFactory::AddDefaultNonCombatStrategies(bot, engines[BOT_STATE_NON_COMBAT]);
-    AiFactory::AddDefaultDeadStrategies(engines[BOT_STATE_DEAD]);
+    AiFactory::AddDefaultCombatStrategies(bot, this, engines[BOT_STATE_COMBAT]);
+    AiFactory::AddDefaultNonCombatStrategies(bot, this, engines[BOT_STATE_NON_COMBAT]);
+    AiFactory::AddDefaultDeadStrategies(bot, this, engines[BOT_STATE_DEAD]);
 }
 
 bool PlayerbotAI::IsTank(Player* player)

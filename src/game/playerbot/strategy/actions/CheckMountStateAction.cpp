@@ -12,7 +12,7 @@ bool CheckMountStateAction::Execute(Event event)
     p.rpos(0);
     uint64 guid = extractGuid(p);
 
-    if ((ai->IsOpposing(master) && bot->isInCombat()) || !bot->GetGroup())
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(bot) || !bot->GetGroup())
         return false;
 
     if (master->IsMounted() && !bot->IsMounted())
@@ -41,7 +41,7 @@ bool CheckMountStateAction::Execute(Event event)
 void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
 {
     ai->RemoveShapeshift();
-    
+
     uint32 spellMount = 0;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
     {
@@ -76,7 +76,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
         else if((pSpellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
             && (pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED))
         {
-            if((pSpellInfo->EffectBasePoints[2] == master_speed2) 
+            if((pSpellInfo->EffectBasePoints[2] == master_speed2)
                 && (pSpellInfo->EffectBasePoints[1] == master_speed1) && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
@@ -85,6 +85,6 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
         }
     }
 
-    if(spellMount > 0) 
+    if(spellMount > 0)
         ai->CastSpell(spellMount, bot);
 }

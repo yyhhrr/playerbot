@@ -86,7 +86,7 @@ int AiFactory::GetPlayerSpecTab(Player* player)
     return tab;
 }
 
-void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
+void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const facade, Engine* engine)
 {
     int tab = GetPlayerSpecTab(player);
 
@@ -149,22 +149,21 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, Engine* engine)
                 engine->addStrategies("dps", "threat", NULL);
             break;
     }
+
+    Player* master = facade->GetMaster();
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
+    {
+        engine->addStrategies("grind", "dps", NULL);
+    }
 }
 
 Engine* AiFactory::createCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
 	Engine* engine = new Engine(facade, AiObjectContext);
-    AddDefaultCombatStrategies(player, engine);
-
-    Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
-    {
-        engine->addStrategies("grind", "dps", NULL);
-    }
-
+    AddDefaultCombatStrategies(player, facade, engine);
     return engine;
 }
 
-void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatEngine)
+void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const facade, Engine* nonCombatEngine)
 {
     int tab = GetPlayerSpecTab(player);
 
@@ -184,36 +183,35 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, Engine* nonCombatE
     }
     nonCombatEngine->addStrategies("nc", "attack weak", "food", "stay", "chat",
             "default", "quest", "loot", "gather", "duel", "emote", NULL);
-}
-
-Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
-	Engine* nonCombatEngine = new Engine(facade, AiObjectContext);
-
-    AddDefaultNonCombatStrategies(player, nonCombatEngine);
 
     Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
     {
         nonCombatEngine->addStrategy("grind");
         nonCombatEngine->removeStrategy("loot");
     }
 
+}
+
+Engine* AiFactory::createNonCombatEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
+	Engine* nonCombatEngine = new Engine(facade, AiObjectContext);
+
+    AddDefaultNonCombatStrategies(player, facade, nonCombatEngine);
 	return nonCombatEngine;
 }
 
-void AiFactory::AddDefaultDeadStrategies(Engine* deadEngine)
+void AiFactory::AddDefaultDeadStrategies(Player* player, PlayerbotAI* const facade, Engine* deadEngine)
 {
     deadEngine->addStrategies("dead", "stay", "chat", "default", "follow master", NULL);
+    Player* master = facade->GetMaster();
+    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
+    {
+        deadEngine->removeStrategy("follow master");
+    }
 }
 
 Engine* AiFactory::createDeadEngine(Player* player, PlayerbotAI* const facade, AiObjectContext* AiObjectContext) {
     Engine* deadEngine = new Engine(facade, AiObjectContext);
-    AddDefaultDeadStrategies(deadEngine);
-
-    Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player))
-    {
-        deadEngine->removeStrategy("follow master");
-    }
+    AddDefaultDeadStrategies(player, facade, deadEngine);
     return deadEngine;
 }

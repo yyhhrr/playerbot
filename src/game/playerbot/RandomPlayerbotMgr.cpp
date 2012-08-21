@@ -41,9 +41,7 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
     {
         uint32 bot = AddRandomBot();
         if (bot)
-        {
             bots.push_back(bot);
-        }
     }
 
     for (list<uint32>::iterator i = bots.begin(); i != bots.end(); ++i)
@@ -65,9 +63,16 @@ uint32 RandomPlayerbotMgr::AddRandomBot()
     uint32 bot = bots[index];
     SetEventValue(bot, "add", 1, urand(sPlayerbotAIConfig.minRandomBotInWorldTime, sPlayerbotAIConfig.maxRandomBotInWorldTime));
     SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
-    SetEventValue(bot, "randomize", 0, 0);
+    uint32 randomTime = 30 + urand(sPlayerbotAIConfig.randomBotUpdateInterval, sPlayerbotAIConfig.randomBotUpdateInterval * 3);
+    ScheduleRandomize(bot, randomTime);
     sLog.outBasic("Bot %d added for account %d", bot, account);
     return bot;
+}
+
+void RandomPlayerbotMgr::ScheduleRandomize(uint32 bot, uint32 time)
+{
+    SetEventValue(bot, "randomize", 1, time);
+    SetEventValue(bot, "logout", 1, time + 30 + urand(sPlayerbotAIConfig.randomBotUpdateInterval, sPlayerbotAIConfig.randomBotUpdateInterval * 3));
 }
 
 void RandomPlayerbotMgr::ProcessBot(uint32 bot)
@@ -113,10 +118,19 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
     uint32 randomize = GetEventValue(bot, "randomize");
     if (!randomize)
     {
-        Randomize(player);
-        SetEventValue(bot, "randomize", 1, urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime));
-        mgr->LogoutPlayerBot(bot);
         sLog.outBasic("Randomizing bot %d for account %d", bot, account);
+        Randomize(player);
+        uint32 randomTime = urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime);
+        ScheduleRandomize(bot, randomTime);
+        return;
+    }
+
+    uint32 logout = GetEventValue(bot, "logout");
+    if (!logout)
+    {
+        sLog.outBasic("Logging out bot %d for account %d", bot, account);
+        master->GetPlayerbotMgr()->LogoutPlayerBot(bot);
+        SetEventValue(bot, "logout", 1, sPlayerbotAIConfig.maxRandomBotInWorldTime);
         return;
     }
 
