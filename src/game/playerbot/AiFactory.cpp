@@ -189,6 +189,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
     {
         nonCombatEngine->addStrategy("grind");
         nonCombatEngine->removeStrategy("loot");
+        nonCombatEngine->removeStrategy("gather");
     }
 
 }
