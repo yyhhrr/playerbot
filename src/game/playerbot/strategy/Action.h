@@ -34,9 +34,9 @@ namespace ai
         float relevance;
         std::string name;
     };
-    
+
     //---------------------------------------------------------------------------------------------------------------------
-    
+
     class ActionBasket;
 
     enum ActionThreatType
@@ -61,6 +61,7 @@ namespace ai
         virtual NextAction** getContinuers() { return NULL; }
         virtual ActionThreatType getThreatType() { return ACTION_THREAT_NONE; }
         void Update() {}
+        void Reset() {}
         virtual Unit* GetTarget();
         virtual Value<Unit*>* GetTargetValue();
         virtual string GetTargetName() { return "self target"; }
@@ -71,17 +72,17 @@ namespace ai
     public:
         ActionNode(string name, NextAction** prerequisites = NULL, NextAction** alternatives = NULL, NextAction** continuers = NULL)
         {
-            this->action = NULL; 
+            this->action = NULL;
             this->name = name;
             this->prerequisites = prerequisites;
             this->alternatives = alternatives;
             this->continuers = continuers;
         }
-        virtual ~ActionNode() 
-        { 
-            NextAction::destroy(prerequisites); 
-            NextAction::destroy(alternatives); 
-            NextAction::destroy(continuers); 
+        virtual ~ActionNode()
+        {
+            NextAction::destroy(prerequisites);
+            NextAction::destroy(alternatives);
+            NextAction::destroy(continuers);
         }
 
     public:
@@ -107,7 +108,7 @@ namespace ai
 	class ActionBasket
 	{
 	public:
-        ActionBasket(ActionNode* action, float relevance, bool skipPrerequisites, Event event) : 
+        ActionBasket(ActionNode* action, float relevance, bool skipPrerequisites, Event event) :
           action(action), relevance(relevance), skipPrerequisites(skipPrerequisites), event(event) {}
         virtual ~ActionBasket(void) {}
 	public:
@@ -126,7 +127,7 @@ namespace ai
 
     //---------------------------------------------------------------------------------------------------------------------
 
-   
+
 }
 
 #define AI_VALUE(type, name) context->GetValue<type>(name)->Get()

@@ -44,6 +44,7 @@ namespace ai
 		virtual StrategyType GetType() { return STRATEGY_TYPE_GENERIC; }
         virtual ActionNode* GetAction(string name);
         void Update() {}
+        void Reset() {}
 
     protected:
         NamedObjectFactoryList<ActionNode> actionNodeFactories;

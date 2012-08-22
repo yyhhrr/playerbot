@@ -38,3 +38,11 @@ void AiObjectContext::Update()
     actionContexts.Update();
     valueContexts.Update();
 }
+
+void AiObjectContext::Reset()
+{
+    strategyContexts.Reset();
+    triggerContexts.Reset();
+    actionContexts.Reset();
+    valueContexts.Reset();
+}

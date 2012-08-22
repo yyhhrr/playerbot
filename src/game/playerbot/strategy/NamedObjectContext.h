@@ -97,6 +97,15 @@ namespace ai
             }
         }
 
+        void Reset()
+        {
+            for (typename map<string, T*>::iterator i = created.begin(); i != created.end(); i++)
+            {
+                if (i->second)
+                    i->second->Reset();
+            }
+        }
+
         bool IsShared() { return shared; }
         bool IsSupportsSiblings() { return supportsSiblings; }
 
@@ -140,6 +149,14 @@ namespace ai
             {
                 if (!(*i)->IsShared())
                     (*i)->Update();
+            }
+        }
+
+        void Reset()
+        {
+            for (typename list<NamedObjectContext<T>*>::iterator i = contexts.begin(); i != contexts.end(); i++)
+            {
+                (*i)->Reset();
             }
         }
 

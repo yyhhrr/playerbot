@@ -11,8 +11,9 @@ namespace ai
     public:
         UntypedValue(PlayerbotAI* ai, string name) : AiNamedObject(ai, name) {}
         virtual void Update() {}
+        virtual void Reset() {}
     };
-    
+
     template<class T>
     class Value
     {
@@ -21,13 +22,13 @@ namespace ai
         virtual void Set(T value) = 0;
         operator T() { return Get(); }
     };
-    
+
     template<class T>
     class CalculatedValue : public UntypedValue, public Value<T>
 	{
 	public:
         CalculatedValue(PlayerbotAI* ai, string name = "value", int checkInterval = 1) : UntypedValue(ai, name),
-            checkInterval(checkInterval), ticksElapsed(checkInterval) 
+            checkInterval(checkInterval), ticksElapsed(checkInterval)
         { }
         virtual ~CalculatedValue() {}
 
@@ -38,7 +39,7 @@ namespace ai
                 ticksElapsed = 0;
                 value = Calculate();
             }
-            return value; 
+            return value;
         }
         virtual void Set(T value) { this->value = value; }
         virtual void Update()
@@ -61,16 +62,18 @@ namespace ai
     class ManualSetValue : public UntypedValue, public Value<T>
     {
     public:
-        ManualSetValue(PlayerbotAI* ai, T defaultValue, string name = "value") : 
-            UntypedValue(ai, name), value(defaultValue) {}
+        ManualSetValue(PlayerbotAI* ai, T defaultValue, string name = "value") :
+            UntypedValue(ai, name), value(defaultValue), defaultValue(defaultValue) {}
         virtual ~ManualSetValue() {}
 
     public:
         virtual T Get() { return value; }
         virtual void Set(T value) { this->value = value; }
         virtual void Update() { }
+        virtual void Reset() { value = defaultValue; }
 
     protected:
         T value;
+        T defaultValue;
     };
 }
