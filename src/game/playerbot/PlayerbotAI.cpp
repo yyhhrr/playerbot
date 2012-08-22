@@ -174,7 +174,6 @@ void PlayerbotAI::Reset()
             engines[i]->Init();
     currentEngine = engines[BOT_STATE_NON_COMBAT];
     nextAICheckDelay = 0;
-    aiObjectContext->Reset();
     aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
     aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
     LastSpellCast & lastSpell = aiObjectContext->GetValue<LastSpellCast& >("last spell cast")->Get();
