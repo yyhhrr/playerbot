@@ -438,7 +438,7 @@ uint32 Creature::ChooseDisplayId(const CreatureInfo* cinfo, const CreatureData* 
         // Where it's expected to select one of two, model must have a alternative model defined (alternative model is normally the same as defined in ModelId1).
         // Same pattern is used in the above model selection, but the result may be ModelId3 and not ModelId2 as here.
         uint32 modelid_tmp = sObjectMgr.GetCreatureModelAlternativeModel(cinfo->ModelId[1]);
-        display_id = modelid_tmp ? modelid_tmp : cinfo->ModelId[1];
+        display_id = modelid_tmp ? cinfo->ModelId[urand(0, 1)] : cinfo->ModelId[1];
     }
     else if (cinfo->ModelId[0])
     {
@@ -2538,7 +2538,32 @@ void Creature::SetLevitate(bool enable)
         m_movementInfo.AddMovementFlag(MOVEFLAG_LEVITATING);
     else
         m_movementInfo.RemoveMovementFlag(MOVEFLAG_LEVITATING);
+
     WorldPacket data(enable ? SMSG_SPLINE_MOVE_GRAVITY_DISABLE : SMSG_SPLINE_MOVE_GRAVITY_ENABLE, 9);
+    data << GetPackGUID();
+    SendMessageToSet(&data, true);
+}
+
+void Creature::SetRoot(bool enable)
+{
+    if (enable)
+        m_movementInfo.AddMovementFlag(MOVEFLAG_ROOT);
+    else
+        m_movementInfo.RemoveMovementFlag(MOVEFLAG_ROOT);
+
+    WorldPacket data(enable ? SMSG_SPLINE_MOVE_ROOT : SMSG_SPLINE_MOVE_UNROOT, 9);
+    data << GetPackGUID();
+    SendMessageToSet(&data, true);
+}
+
+void Creature::SetWaterWalk(bool enable)
+{
+    if (enable)
+        m_movementInfo.AddMovementFlag(MOVEFLAG_WATERWALKING);
+    else
+        m_movementInfo.RemoveMovementFlag(MOVEFLAG_WATERWALKING);
+
+    WorldPacket data(enable ? SMSG_SPLINE_MOVE_WATER_WALK : SMSG_SPLINE_MOVE_LAND_WALK, 9);
     data << GetPackGUID();
     SendMessageToSet(&data, true);
 }

@@ -1015,6 +1015,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\TransportSystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\TransportSystem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\UnitAuraProcHandler.cpp"
 				>
 			</File>
@@ -1024,6 +1032,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\game\UpdateData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\VehicleHandler.cpp"
 				>
 			</File>
 			<File

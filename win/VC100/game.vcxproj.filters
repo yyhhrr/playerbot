@@ -249,6 +249,9 @@
     <ClCompile Include="..\..\src\game\UpdateData.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\VehicleHandler.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\game\VoiceChatHandler.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
@@ -1095,6 +1098,8 @@
     <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\TransportSystem.cpp">
+      <Filter>Object</Filter>
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\RtiValue.cpp">
       <Filter>playerbot</Filter>
     </ClCompile>
@@ -2588,6 +2593,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\playerbot\RandomPlayerbotMgr.h">
       <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\TransportSystem.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

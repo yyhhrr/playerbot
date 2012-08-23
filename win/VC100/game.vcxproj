@@ -723,6 +723,7 @@
     <ClCompile Include="..\..\src\game\Spell.cpp" />
     <ClCompile Include="..\..\src\game\SpellAuras.cpp" />
     <ClCompile Include="..\..\src\game\SQLStorages.cpp" />
+    <ClCompile Include="..\..\src\game\TransportSystem.cpp" />
     <ClCompile Include="..\..\src\game\UnitAuraProcHandler.cpp" />
     <ClCompile Include="..\..\src\game\SpellEffects.cpp" />
     <ClCompile Include="..\..\src\game\SpellHandler.cpp" />
@@ -739,6 +740,7 @@
     <ClCompile Include="..\..\src\game\Unit.cpp" />
     <ClCompile Include="..\..\src\game\UpdateData.cpp" />
     <ClCompile Include="..\..\src\game\Vehicle.cpp" />
+    <ClCompile Include="..\..\src\game\VehicleHandler.cpp" />
     <ClCompile Include="..\..\src\game\VoiceChatHandler.cpp" />
     <ClCompile Include="..\..\src\game\WaypointManager.cpp" />
     <ClCompile Include="..\..\src\game\WaypointMovementGenerator.cpp" />
@@ -1189,6 +1191,7 @@
     <ClInclude Include="..\..\src\game\Totem.h" />
     <ClInclude Include="..\..\src\game\TotemAI.h" />
     <ClInclude Include="..\..\src\game\Transports.h" />
+    <ClInclude Include="..\..\src\game\TransportSystem.h" />
     <ClInclude Include="..\..\src\game\Unit.h" />
     <ClInclude Include="..\..\src\game\UnitEvents.h" />
     <ClInclude Include="..\..\src\game\UpdateData.h" />
