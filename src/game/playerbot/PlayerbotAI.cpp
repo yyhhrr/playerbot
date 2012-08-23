@@ -170,19 +170,27 @@ void PlayerbotAI::HandleTeleportAck()
 
 void PlayerbotAI::Reset()
 {
-    for (int i = 0 ; i < BOT_STATE_MAX; i++)
-            engines[i]->Init();
     currentEngine = engines[BOT_STATE_NON_COMBAT];
     nextAICheckDelay = 0;
+
+    aiObjectContext->GetValue<Unit*>("old target")->Set(NULL);
     aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
     aiObjectContext->GetValue<LootObject>("loot target")->Set(LootObject());
+
     LastSpellCast & lastSpell = aiObjectContext->GetValue<LastSpellCast& >("last spell cast")->Get();
     lastSpell.Reset();
+
     LastMovement & lastMovement = aiObjectContext->GetValue<LastMovement& >("last movement")->Get();
     lastMovement.Set(NULL);
+
     bot->GetMotionMaster()->Clear();
     bot->m_taxi.ClearTaxiDestinations();
     ResetStrategies();
+
+    for (int i = 0 ; i < BOT_STATE_MAX; i++)
+    {
+        engines[i]->Init();
+    }
 }
 
 void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPlayer)
