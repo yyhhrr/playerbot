@@ -428,11 +428,8 @@ void PlayerbotAI::DoNextAction()
         return;
 
     Player* master = GetMaster();
-    if (bot->GetMapId() == master->GetMapId())
-    {
-        bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
-        bot->CheckAreaExploreAndOutdoor();
-    }
+    bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+    bot->CheckAreaExploreAndOutdoor();
 
     currentEngine->DoNextAction(NULL);
 
@@ -611,9 +608,6 @@ Unit* PlayerbotAI::GetUnit(ObjectGuid guid)
     if (!guid)
         return NULL;
 
-    if (bot->GetMapId() != GetMaster()->GetMapId())
-        return NULL;
-
     list<Unit*> targets;
 
     MaNGOS::UnitByGuidInRangeCheck u_check(bot, guid, sPlayerbotAIConfig.sightDistance);
@@ -630,9 +624,6 @@ Unit* PlayerbotAI::GetUnit(ObjectGuid guid)
 Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
 {
     if (!guid)
-        return NULL;
-
-    if (bot->GetMapId() != GetMaster()->GetMapId())
         return NULL;
 
     list<Unit *> targets;
@@ -654,9 +645,6 @@ Creature* PlayerbotAI::GetCreature(ObjectGuid guid)
 GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 {
     if (!guid)
-        return NULL;
-
-    if (bot->GetMapId() != GetMaster()->GetMapId())
         return NULL;
 
     list<GameObject*> targets;
