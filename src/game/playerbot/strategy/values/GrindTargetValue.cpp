@@ -50,7 +50,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(int assistCount)
 		if (master->GetDistance(unit) >= sPlayerbotAIConfig.grindDistance && !master->GetRandomPlayerbotMgr()->IsRandomBot(bot))
             continue;
 
-		if (unit->getLevel() - bot->getLevel() > 7)
+		if ((int)unit->getLevel() - (int)bot->getLevel() > 7)
 		    continue;
 
         if (group)

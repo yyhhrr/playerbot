@@ -7,13 +7,14 @@ using namespace ai;
 
 NextAction** GrindingStrategy::getDefaultActions()
 {
-    return NextAction::array(0, new NextAction("add all loot", 5.0f), NULL);
+    return NULL;
 }
 
 void GrindingStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
 {
     triggers.push_back(new TriggerNode(
         "no target",
-        NextAction::array(0, new NextAction("attack anything", 5.0f), NULL)));
+        NextAction::array(0,
+        new NextAction("attack anything", 5.0f), new NextAction("add all loot", 5.0f), NULL)));
 }
 
