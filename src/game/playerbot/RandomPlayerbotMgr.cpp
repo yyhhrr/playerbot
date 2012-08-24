@@ -249,21 +249,22 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
 {
     bot->GetPlayerbotAI()->Reset();
 
-    if (!bot->GetCorpse())
+    if (bot->isDead())
     {
-        bot->SetBotDeathTimer();
-        bot->BuildPlayerRepop();
-        Corpse *corpse = bot->GetCorpse();
-        WorldLocation loc;
-        corpse->GetPosition( loc );
-        bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
-        return;
-    }
-
-    if (!bot->isAlive())
-    {
-        PlayerbotChatHandler ch(bot->GetPlayerbotAI()->GetMaster());
-        ch.revive(*bot);
+        if (!bot->GetCorpse())
+        {
+            bot->SetBotDeathTimer();
+            bot->BuildPlayerRepop();
+            Corpse *corpse = bot->GetCorpse();
+            WorldLocation loc;
+            corpse->GetPosition( loc );
+            bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
+        }
+        else
+        {
+            PlayerbotChatHandler ch(bot->GetPlayerbotAI()->GetMaster());
+            ch.revive(*bot);
+        }
     }
 
     bot->DurabilityRepairAll(false, 1.0f, false);
