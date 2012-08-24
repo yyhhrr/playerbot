@@ -37,11 +37,22 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
 
     list<uint32> bots = GetBots();
     int botCount = bots.size();
-    while (botCount++ < maxAllowedBotCount)
+    int maxEnemyBots = maxAllowedBotCount * sPlayerbotAIConfig.randomBotEnemyPercent / 100;
+    while (botCount++ < maxEnemyBots)
     {
-        uint32 bot = AddRandomBot();
+        uint32 bot = AddRandomBot(true);
         if (bot)
             bots.push_back(bot);
+        else
+            break;
+    }
+    while (botCount++ < maxAllowedBotCount)
+    {
+        uint32 bot = AddRandomBot(false);
+        if (bot)
+            bots.push_back(bot);
+        else
+            break;
     }
 
     int botProcessed = 0;
@@ -58,9 +69,9 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
     sLog.outString("Random bot processing finished. Next check in %d seconds", sPlayerbotAIConfig.randomBotUpdateInterval);
 }
 
-uint32 RandomPlayerbotMgr::AddRandomBot()
+uint32 RandomPlayerbotMgr::AddRandomBot(bool opposing)
 {
-    vector<uint32> bots = GetFreeBots();
+    vector<uint32> bots = GetFreeBots(opposing);
     if (bots.size() == 0)
         return 0;
 
@@ -310,8 +321,9 @@ list<uint32> RandomPlayerbotMgr::GetBots()
     return bots;
 }
 
-vector<uint32> RandomPlayerbotMgr::GetFreeBots()
+vector<uint32> RandomPlayerbotMgr::GetFreeBots(bool opposing)
 {
+    uint8 mastersRace = master->getRace();
     set<uint32> bots;
 
     QueryResult* results = CharacterDatabase.PQuery(
@@ -335,7 +347,7 @@ vector<uint32> RandomPlayerbotMgr::GetFreeBots()
         if (!sAccountMgr.GetCharactersCount(accountId))
             continue;
 
-        QueryResult *result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account = '%u'", accountId);
+        QueryResult *result = CharacterDatabase.PQuery("SELECT guid, race FROM characters WHERE account = '%u'", accountId);
         if (!result)
             continue;
 
@@ -343,7 +355,10 @@ vector<uint32> RandomPlayerbotMgr::GetFreeBots()
         {
             Field* fields = result->Fetch();
             uint32 guid = fields[0].GetUInt32();
-            if (bots.find(guid) == bots.end())
+            uint32 race = fields[1].GetUInt32();
+            if ((opposing && PlayerbotAI::IsOpposing(race, mastersRace) ||
+                    (!opposing && !PlayerbotAI::IsOpposing(race, mastersRace)) &&
+                    bots.find(guid) == bots.end()))
                 guids.push_back(guid);
         } while (result->NextRow());
         delete result;

@@ -30,8 +30,8 @@ class MANGOS_DLL_SPEC RandomPlayerbotMgr : public PlayerbotAIBase
         uint32 GetEventValue(uint32 bot, string event);
         uint32 SetEventValue(uint32 bot, string event, uint32 value, uint32 validIn);
         list<uint32> GetBots();
-        vector<uint32> GetFreeBots();
-        uint32 AddRandomBot();
+        vector<uint32> GetFreeBots(bool opposing);
+        uint32 AddRandomBot(bool opposing);
         bool ProcessBot(uint32 bot);
         void ScheduleRandomize(uint32 bot, uint32 time);
         void RandomTeleport(Player* bot, uint32 mapId, float teleX, float teleY, float teleZ);

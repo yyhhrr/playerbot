@@ -133,6 +133,7 @@ public:
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
     ChatHelper* GetChatHelper() { return &chatHelper; }
     bool IsOpposing(Player* player);
+    static bool IsOpposing(uint8 race1, uint8 race2);
 
 protected:
 	Player* bot;

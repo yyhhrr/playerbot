@@ -1059,10 +1059,12 @@ inline bool IsAlliance(uint8 race)
 
 bool PlayerbotAI::IsOpposing(Player* player)
 {
-    if (IsAlliance(player->getRace()))
-        return !IsAlliance(bot->getRace());
+    return IsOpposing(player->getRace(), bot->getRace());
+}
 
-    return IsAlliance(bot->getRace());
+bool PlayerbotAI::IsOpposing(uint8 race1, uint8 race2)
+{
+    return (IsAlliance(race1) && !IsAlliance(race2)) || (!IsAlliance(race1) && IsAlliance(race2));
 }
 
 void PlayerbotAI::RemoveShapeshift()

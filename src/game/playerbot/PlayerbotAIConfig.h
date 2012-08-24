@@ -33,6 +33,7 @@ public:
     uint32 minRandomBotRandomizeTime, maxRandomRandomizeTime;
     uint32 minRandomBotPvpTime, maxRandomBotPvpTime;
     uint32 randomBotsPerInterval;
+    uint32 randomBotEnemyPercent;
 
     uint32 iterationsPerTick;
     bool splineFacing;
