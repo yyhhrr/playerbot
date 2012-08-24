@@ -187,7 +187,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
     Player* master = facade->GetMaster();
     if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
     {
-        nonCombatEngine->addStrategy("grind");
+        nonCombatEngine->addStrategies("grind", "move random", NULL);
         nonCombatEngine->removeStrategy("loot");
         nonCombatEngine->removeStrategy("gather");
     }

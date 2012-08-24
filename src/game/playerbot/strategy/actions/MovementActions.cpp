@@ -235,7 +235,7 @@ bool MoveRandomAction::Execute(Event event)
 {
     WorldObject* target = NULL;
 
-    if (rand() % 2)
+    if (!(rand() % 3))
     {
         list<ObjectGuid> npcs = AI_VALUE(list<ObjectGuid>, "nearest npcs");
         if (!npcs.empty())
@@ -255,7 +255,7 @@ bool MoveRandomAction::Execute(Event event)
         }
     }
 
-    if (!target)
+    if (!target || !(rand() % 3))
     {
         list<ObjectGuid> gos = AI_VALUE(list<ObjectGuid>, "nearest game objects");
         if (!gos.empty())
@@ -276,10 +276,19 @@ bool MoveRandomAction::Execute(Event event)
         }
     }
 
-    if (!target)
-        return false;
-
     float distance = (rand() % 15) / 10.0f;
+
+    if (!target || !(rand() % 3))
+    {
+        float x = bot->GetPositionX();
+        float y = bot->GetPositionY();
+        float z = bot->GetPositionZ();
+        x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        bot->UpdateGroundPositionZ(x, y, z);
+        return MoveNear(bot->GetMapId(), x, y, z, distance);
+    }
+
     return MoveNear(target);
 }
 

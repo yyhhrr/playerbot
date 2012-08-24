@@ -18,3 +18,10 @@ void FollowMasterRandomStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
         "target in sight",
         NextAction::array(0, new NextAction("stay combat",3.0f), NULL)));
 }
+
+void MoveRandomStrategy::InitTriggers(std::list<TriggerNode*> &triggers)
+{
+    triggers.push_back(new TriggerNode(
+        "random",
+        NextAction::array(0, new NextAction("move random", 5.0f), NULL)));
+}

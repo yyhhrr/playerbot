@@ -98,9 +98,11 @@ namespace ai
             creators["stay combat"] = &MovementStrategyContext::stay_combat;
             creators["stay line"] = &MovementStrategyContext::stay_line;
             creators["guard"] = &MovementStrategyContext::guard;
+            creators["move random"] = &MovementStrategyContext::move_random;
         }
 
     private:
+        static Strategy* move_random(PlayerbotAI* ai) { return new MoveRandomStrategy(ai); }
         static Strategy* guard(PlayerbotAI* ai) { return new GuardStrategy(ai); }
         static Strategy* follow_master_random(PlayerbotAI* ai) { return new FollowMasterRandomStrategy(ai); }
         static Strategy* follow_master(PlayerbotAI* ai) { return new FollowMasterStrategy(ai); }
