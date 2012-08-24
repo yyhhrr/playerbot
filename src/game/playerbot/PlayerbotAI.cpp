@@ -364,16 +364,6 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
     if (!bot->isAlive())
     {
         ChangeEngine(BOT_STATE_DEAD);
-
-        if (!bot->IsFriendlyTo(master) && !bot->GetCorpse())
-        {
-            bot->SetBotDeathTimer();
-            bot->BuildPlayerRepop();
-            Corpse *corpse = bot->GetCorpse();
-            WorldLocation loc;
-            corpse->GetPosition( loc );
-            bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
-        }
         return;
     }
 
@@ -382,11 +372,11 @@ void PlayerbotAI::ChangeActiveEngineIfNecessary()
         aiObjectContext->GetValue<Unit*>("old target")->Set(target);
 
         Player* target = bot->duel->opponent;
-        aiObjectContext->GetValue<Unit*>("old target")->Set(target);
+        aiObjectContext->GetValue<Unit*>("current target")->Set(target);
         bot->SetSelectionGuid(target->GetObjectGuid());
         ChangeEngine(BOT_STATE_COMBAT);
     }
-    else if (target && target->isAlive() && target->IsHostileTo(bot))
+    else if (target && target->isAlive() && !target->IsFriendlyTo(bot))
     {
         ChangeEngine(BOT_STATE_COMBAT);
     }

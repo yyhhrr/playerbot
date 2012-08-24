@@ -44,10 +44,15 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
             bots.push_back(bot);
     }
 
+    int botProcessed = 0;
     for (list<uint32>::iterator i = bots.begin(); i != bots.end(); ++i)
     {
         uint32 bot = *i;
-        ProcessBot(bot);
+        if (ProcessBot(bot))
+            botProcessed++;
+
+        if (botProcessed > sPlayerbotAIConfig.randomBotsPerInterval)
+            break;
     }
 
     sLog.outString("Random bot processing finished. Next check in %d seconds", sPlayerbotAIConfig.randomBotUpdateInterval);
@@ -75,7 +80,7 @@ void RandomPlayerbotMgr::ScheduleRandomize(uint32 bot, uint32 time)
     SetEventValue(bot, "logout", 1, time + 30 + urand(sPlayerbotAIConfig.randomBotUpdateInterval, sPlayerbotAIConfig.randomBotUpdateInterval * 3));
 }
 
-void RandomPlayerbotMgr::ProcessBot(uint32 bot)
+bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 {
     PlayerbotMgr* mgr = master->GetPlayerbotMgr();
 
@@ -91,28 +96,28 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
 			sLog.outBasic("Bot %d expired for account %d", bot, account);
 			SetEventValue(bot, "add", 0, 0);
 		}
-        return;
+        return true;
     }
 
     if (!mgr->GetPlayerBot(bot))
     {
         sLog.outBasic("Bot %d logged in for account %d", bot, account);
         mgr->AddPlayerBot(bot, master->GetSession());
-        return;
+        return true;
     }
 
     Player* player = mgr->GetPlayerBot(bot);
     if (!player)
-        return;
+        return false;
 
     PlayerbotAI* ai = player->GetPlayerbotAI();
     if (!ai)
-        return;
+        return false;
 
     if (player->GetGroup())
     {
         sLog.outBasic("Skipping bot %d for account %d as it is in group", bot, account);
-        return;
+        return false;
     }
 
     uint32 randomize = GetEventValue(bot, "randomize");
@@ -122,7 +127,7 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
         Randomize(player);
         uint32 randomTime = urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime);
         ScheduleRandomize(bot, randomTime);
-        return;
+        return true;
     }
 
     uint32 logout = GetEventValue(bot, "logout");
@@ -131,17 +136,19 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
         sLog.outBasic("Logging out bot %d for account %d", bot, account);
         master->GetPlayerbotMgr()->LogoutPlayerBot(bot);
         SetEventValue(bot, "logout", 1, sPlayerbotAIConfig.maxRandomBotInWorldTime);
-        return;
+        return true;
     }
 
     if (player->isDead())
     {
         sLog.outBasic("Random teleporting dead bot %d for account %d", bot, account);
         RandomTeleport(player, player->GetMapId(), player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
+        return true;
     }
 
     if (ai->IsOpposing(master) &&
-            !master->GetInstanceId() && master->IsAllowedDamageInArea(player) && master->IsPvP())
+            !master->GetInstanceId() && master->IsAllowedDamageInArea(player) && master->IsPvP() &&
+            !master->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
     {
         uint32 pvp = GetEventValue(bot, "pvp");
         if (!pvp)
@@ -149,8 +156,11 @@ void RandomPlayerbotMgr::ProcessBot(uint32 bot)
             sLog.outBasic("Starting PVP attack with bot %d for account %d", bot, account);
             SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
             DoPvpAttack(player);
+            return true;
         }
     }
+
+    return false;
 }
 
 
@@ -237,6 +247,19 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
 
 void RandomPlayerbotMgr::Refresh(Player* bot)
 {
+    bot->GetPlayerbotAI()->Reset();
+
+    if (!bot->GetCorpse())
+    {
+        bot->SetBotDeathTimer();
+        bot->BuildPlayerRepop();
+        Corpse *corpse = bot->GetCorpse();
+        WorldLocation loc;
+        corpse->GetPosition( loc );
+        bot->TeleportTo( loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, bot->GetOrientation() );
+        return;
+    }
+
     if (!bot->isAlive())
     {
         PlayerbotChatHandler ch(bot->GetPlayerbotAI()->GetMaster());
@@ -252,8 +275,6 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
 
     if (bot->GetMaxPower(POWER_ENERGY) > 0)
         bot->SetPower(POWER_ENERGY, bot->GetMaxPower(POWER_ENERGY));
-
-    bot->GetPlayerbotAI()->Reset();
 }
 
 

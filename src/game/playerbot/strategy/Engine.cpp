@@ -188,6 +188,9 @@ bool Engine::DoNextAction(Unit* unit, int depth)
         LogAction("too long execution");
     }
 
+    if (!actionExecuted)
+        LogAction("no actions executed");
+
     return actionExecuted;
 }
 
