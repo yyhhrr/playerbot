@@ -83,7 +83,8 @@ bool PlayerbotAIConfig::Initialize()
     minRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MinRandomBotPvpTime", 120);
     maxRandomBotPvpTime = config.GetIntDefault("AiPlayerbot.MaxRandomBotPvpTime", 3 * 3600);
     randomBotTeleportDistance = config.GetIntDefault("AiPlayerbot.RandomBotTeleportDistance", 400);
-    randomBotsPerInterval = config.GetIntDefault("AiPlayerbot.RandomBotsPerInterval", 3);
+    minRandomBotsPerInterval = config.GetIntDefault("AiPlayerbot.MinRandomBotsPerInterval", 1);
+    maxRandomBotsPerInterval = config.GetIntDefault("AiPlayerbot.MaxRandomBotsPerInterval", 5);
     randomBotEnemyPercent = config.GetIntDefault("AiPlayerbot.RandomBotEnemyPercent", 30);
 
     splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);

@@ -56,13 +56,14 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
     }
 
     int botProcessed = 0;
+    int randomBotsPerInterval = urand(sPlayerbotAIConfig.minRandomBotsPerInterval, sPlayerbotAIConfig.maxRandomBotsPerInterval);
     for (list<uint32>::iterator i = bots.begin(); i != bots.end(); ++i)
     {
         uint32 bot = *i;
         if (ProcessBot(bot))
             botProcessed++;
 
-        if (botProcessed > sPlayerbotAIConfig.randomBotsPerInterval)
+        if (botProcessed > randomBotsPerInterval)
             break;
     }
 
@@ -204,8 +205,8 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, uint32 mapId, float teleX, 
     {
         int index = urand(0, locs.size() - 1);
         WorldLocation loc = locs[index];
-        loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-        loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+        loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
+        loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
         loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 0, true, MAX_HEIGHT);
         bot->TeleportTo(loc);
     }
@@ -249,8 +250,8 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
 
     WorldLocation loc;
     master->GetPosition(loc);
-    loc.coord_x += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
-    loc.coord_y += urand(0, sPlayerbotAIConfig.sightDistance) - sPlayerbotAIConfig.sightDistance / 2;
+    loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
+    loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
     master->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
     loc.coord_z += 0.5f;
     bot->TeleportTo(loc);

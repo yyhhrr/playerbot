@@ -99,6 +99,8 @@ void PlayerbotFactory::InitPet()
             pet->InitTalentForLevel();
             pet->SetHealth(pet->GetMaxHealth());
             pet->SetLevel(bot->getLevel());
+            Map* map = bot->GetMap();
+            if (map) map->Add((Creature*)pet);
             bot->SetPet(pet);
             pet->SavePetToDB(PET_SAVE_AS_CURRENT);
             bot->PetSpellInitialize();
