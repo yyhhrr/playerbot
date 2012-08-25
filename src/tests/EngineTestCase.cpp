@@ -96,7 +96,7 @@ private:
 class TestMultiplier : public Multiplier
 {
 public:
-    TestMultiplier(PlayerbotAI* const ai) : Multiplier(ai) { asked = 0; }
+    TestMultiplier(PlayerbotAI* const ai) : Multiplier(ai, "test") { asked = 0; }
     float GetValue(Action* action) { return asked = 5.0f; }
 
     static int asked;

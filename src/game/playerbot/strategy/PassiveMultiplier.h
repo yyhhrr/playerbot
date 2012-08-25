@@ -2,7 +2,7 @@
 #include "Action.h"
 #include "Multiplier.h"
 
-namespace ai 
+namespace ai
 {
     class PassiveMultiplier : public Multiplier
     {

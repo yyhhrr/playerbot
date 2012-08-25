@@ -5,7 +5,7 @@ namespace ai
     class ConserveManaMultiplier : public Multiplier
     {
     public:
-        ConserveManaMultiplier(PlayerbotAI* ai) : Multiplier(ai) {}
+        ConserveManaMultiplier(PlayerbotAI* ai) : Multiplier(ai, "conserve mana") {}
 
     public:
         virtual float GetValue(Action* action);

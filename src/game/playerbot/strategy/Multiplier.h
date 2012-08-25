@@ -1,12 +1,12 @@
 #pragma once
 #include "Action.h"
 
-namespace ai 
+namespace ai
 {
-    class Multiplier : public AiObject
+    class Multiplier : public AiNamedObject
     {
     public:
-        Multiplier(PlayerbotAI* ai) : AiObject(ai) {}
+        Multiplier(PlayerbotAI* ai, string name) : AiNamedObject(ai, name) {}
         virtual ~Multiplier() {}
 
     public:

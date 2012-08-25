@@ -227,6 +227,10 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
                 {
                     Multiplier* multiplier = *i;
                     k *= multiplier->GetValue(action->getAction());
+                    if (!k)
+                    {
+                        LogAction("Multiplier %s made action %s useless", multiplier->getName().c_str(), action->getName().c_str());
+                    }
                 }
 
                 if (forceRelevance > 0.0f)

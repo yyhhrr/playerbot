@@ -6,7 +6,7 @@ namespace ai
     class CastTimeMultiplier : public Multiplier
     {
     public:
-        CastTimeMultiplier(PlayerbotAI* ai) : Multiplier(ai) {}
+        CastTimeMultiplier(PlayerbotAI* ai) : Multiplier(ai, "cast time") {}
 
     public:
         virtual float GetValue(Action* action);

@@ -5,7 +5,7 @@ namespace ai
     class ThreatMultiplier : public Multiplier
     {
     public:
-        ThreatMultiplier(PlayerbotAI* ai) : Multiplier(ai) {}
+        ThreatMultiplier(PlayerbotAI* ai) : Multiplier(ai, "threat") {}
 
     public:
         virtual float GetValue(Action* action);
