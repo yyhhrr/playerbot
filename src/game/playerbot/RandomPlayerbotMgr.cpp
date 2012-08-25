@@ -159,7 +159,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 
     if (ai->IsOpposing(master) &&
             !master->GetInstanceId() && master->IsAllowedDamageInArea(player) && master->IsPvP() &&
-            !master->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
+            !master->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING) && !master->isInCombat())
     {
         uint32 pvp = GetEventValue(bot, "pvp");
         if (!pvp)
