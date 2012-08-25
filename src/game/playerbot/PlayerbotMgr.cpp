@@ -278,9 +278,9 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-			Player* player = sObjectMgr.GetPlayer(member, false);
-			if (player)
-			    bots.insert(player->GetName());
+			string bot;
+			if (sObjectMgr.GetPlayerNameByGUID(member, bot))
+			    bots.insert(bot);
         }
     }
 
