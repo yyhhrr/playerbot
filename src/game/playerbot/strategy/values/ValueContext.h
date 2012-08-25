@@ -116,9 +116,15 @@ namespace ai
             creators["rti"] = &ValueContext::rti;
             creators["position"] = &ValueContext::position;
             creators["threat"] = &ValueContext::threat;
+
+            creators["balance"] = &ValueContext::balance;
+            creators["attackers"] = &ValueContext::attackers;
         }
 
     private:
+        static UntypedValue* balance(PlayerbotAI* ai) { return new BalancePercentValue(ai); }
+        static UntypedValue* attackers(PlayerbotAI* ai) { return new AttackersValue(ai); }
+
         static UntypedValue* position(PlayerbotAI* ai) { return new PositionValue(ai); }
         static UntypedValue* rti(PlayerbotAI* ai) { return new RtiValue(ai); }
 

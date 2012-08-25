@@ -16,7 +16,7 @@ float ThreatMultiplier::GetValue(Action* action)
     if (threat >= 90)
         return 0.0f;
 
-    if (threat >= 50 && action->getThreatType() == ACTION_THREAT_AOE)
+    if (threat >= 75 && action->getThreatType() == ACTION_THREAT_AOE)
         return 0.0f;
 
     return 1.0f;
