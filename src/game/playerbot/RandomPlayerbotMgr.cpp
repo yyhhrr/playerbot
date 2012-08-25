@@ -63,7 +63,7 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
         if (ProcessBot(bot))
             botProcessed++;
 
-        if (botProcessed > randomBotsPerInterval)
+        if (botProcessed >= randomBotsPerInterval)
             break;
     }
 

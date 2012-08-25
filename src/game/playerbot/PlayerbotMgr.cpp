@@ -147,59 +147,59 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     ai->TellMaster("Hello!");
 }
 
-bool processBotCommand(WorldSession* session, string cmdStr, ObjectGuid guid)
+bool processBotCommand(WorldSession* session, string cmd, ObjectGuid guid)
 {
     if (!sPlayerbotAIConfig.enabled || guid.IsEmpty() || (guid == session->GetPlayer()->GetObjectGuid()))
         return false;
 
     PlayerbotMgr* mgr = session->GetPlayer()->GetPlayerbotMgr();
+    bool isRandomBot = mgr->GetMaster()->GetRandomPlayerbotMgr()->IsRandomBot(guid);
+    bool isRandomAccount = sPlayerbotAIConfig.IsInRandomAccountList(sObjectMgr.GetPlayerAccountIdByGUID(guid));
 
-    if (cmdStr == "add" || cmdStr == "login")
+    if (isRandomAccount && !isRandomBot && session->GetSecurity() < SEC_GAMEMASTER)
+        return false;
+
+    if (cmd == "add" || cmd == "login")
     {
-        if (mgr->GetPlayerBot(guid.GetRawValue()))
+        if (sObjectMgr.GetPlayer(guid, true))
             return false;
 
         mgr->AddPlayerBot(guid.GetRawValue(), session);
+        return true;
     }
-    else if (cmdStr == "remove" || cmdStr == "logout")
+    else if (cmd == "remove" || cmd == "logout" || cmd == "rm")
     {
         if (!mgr->GetPlayerBot(guid.GetRawValue()))
             return false;
 
         mgr->LogoutPlayerBot(guid.GetRawValue());
+        return true;
     }
-    else if (cmdStr == "init")
+
+    if (session->GetSecurity() >= SEC_GAMEMASTER)
     {
         Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
         if (!bot)
             return false;
 
-        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-        if (session->GetSecurity() >= SEC_GAMEMASTER)
+        if (cmd == "init")
+        {
             mgr->RandomizePlayerBot(guid.GetRawValue(), session->GetPlayer()->getLevel());
-    }
-    else if (cmdStr == "pvp")
-    {
-        Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
-        if (!bot)
-            return false;
-
-        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-        if (session->GetSecurity() >= SEC_GAMEMASTER)
+            return true;
+        }
+        else if (cmd == "pvp")
+        {
             mgr->GetMaster()->GetRandomPlayerbotMgr()->DoPvpAttack(bot);
-    }
-    else if (cmdStr == "random")
-    {
-        Player* bot = mgr->GetPlayerBot(guid.GetRawValue());
-        if (!bot)
-            return false;
-
-        uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(bot->GetObjectGuid());
-        if (session->GetSecurity() >= SEC_GAMEMASTER)
+            return true;
+        }
+        else if (cmd == "random")
+        {
             mgr->GetMaster()->GetRandomPlayerbotMgr()->Randomize(bot);
+            return true;
+        }
     }
 
-    return true;
+    return false;
 }
 
 bool ChatHandler::HandlePlayerbotCommand(char* args)
@@ -259,18 +259,8 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     Player* player = m_session->GetPlayer();
     PlayerbotMgr* mgr = player->GetPlayerbotMgr();
 
-    if (charnameStr == "?" && cmdStr == "add")
-    {
-        PSendSysMessage("Processing random bot...");
-        ObjectGuid guid = PlayerbotFactory::GetRandomBot();
-        if (guid)
-            mgr->AddPlayerBot(guid, m_session);
-        else
-            PSendSysMessage("No allowed random bots found");
-
-        PSendSysMessage("Command %s processed", cmdStr.c_str());
-    }
-    else if (charnameStr == "*")
+    set<string> bots;
+    if (charnameStr == "*")
     {
         Group* group = player->GetGroup();
         if (!group)
@@ -280,7 +270,6 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
             return false;
         }
 
-        bool res = true;
         Group::MemberSlotList slots = group->GetMemberSlots();
         for (Group::member_citerator i = slots.begin(); i != slots.end(); i++)
         {
@@ -289,61 +278,56 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 			if (member == m_session->GetPlayer()->GetObjectGuid())
 				continue;
 
-            PSendSysMessage("Processing bot %s...", i->name.c_str());
-            if (!processBotCommand(m_session, cmdStr, member))
-            {
-                PSendSysMessage("Error processing bot command for %s", i->name.c_str());
-                SetSentErrorMessage(true);
-                res = false;
-            }
+			Player* player = sObjectMgr.GetPlayer(member, false);
+			if (player)
+			    bots.insert(player->GetName());
         }
-        PSendSysMessage("Command %s processed", cmdStr.c_str());
-        return res;
     }
 
-    bool res = true;
     vector<string> chars = split(charnameStr, ',');
     for (vector<string>::iterator i = chars.begin(); i != chars.end(); i++)
     {
         string s = *i;
-        PSendSysMessage("Processing bot %s...", s.c_str());
 
         uint32 accountId = mgr->GetAccountId(s);
-        if (accountId)
+        if (!accountId)
         {
-            QueryResult* results = CharacterDatabase.PQuery(
-                "SELECT name FROM characters WHERE account = '%u'",
-                accountId);
-            if (results)
-            {
-                do
-                {
-                    Field* fields = results->Fetch();
-                    string charName = fields[0].GetCppString();
-					if (!mgr->ProcessBot(charName, cmdStr))
-					{
-					    res = false;
-						PSendSysMessage("Error processing bot command for %s", charName.c_str());
-						SetSentErrorMessage(true);
-					}
-
-                } while (results->NextRow());
-
-                delete results;
-            }
+            bots.insert(s);
+            continue;
         }
-        else
+
+        QueryResult* results = CharacterDatabase.PQuery(
+            "SELECT name FROM characters WHERE account = '%u'",
+            accountId);
+        if (results)
         {
-            if (!mgr->ProcessBot(s, cmdStr))
+            do
             {
-                PSendSysMessage("Error processing bot command for %s", s.c_str());
-                SetSentErrorMessage(true);
-                res = false;
-            }
+                Field* fields = results->Fetch();
+                string charName = fields[0].GetCppString();
+                bots.insert(charName);
+            } while (results->NextRow());
+
+            delete results;
         }
 	}
 
-    PSendSysMessage("Command %s processed", cmdStr.c_str());
+    bool res = false;
+    for (set<string>::iterator i = bots.begin(); i != bots.end(); ++i)
+    {
+        string bot = *i;
+        if (mgr->ProcessBot(bot, cmdStr))
+        {
+            PSendSysMessage("%s: %s - ok", cmdStr.c_str(), bot.c_str());
+            res = true;
+        }
+        else
+        {
+            PSendSysMessage("%s: %s - now allowed", cmdStr.c_str(), bot.c_str());
+        }
+    }
+
+    SetSentErrorMessage(true);
     return res;
 }
 
