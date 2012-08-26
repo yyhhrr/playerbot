@@ -243,18 +243,26 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
 {
 	Player* master = bot->GetPlayerbotAI()->GetMaster();
     uint32 level = master->getLevel();
-    PlayerbotFactory factory(bot, urand(level - 2, level + 2));
-    factory.Randomize();
-
-    Refresh(bot);
 
     WorldLocation loc;
     master->GetPosition(loc);
-    loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
-    loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
-    master->UpdateGroundPositionZ(loc.coord_x, loc.coord_y, loc.coord_z);
-    loc.coord_z += 0.5f;
-    bot->TeleportTo(loc);
+    float followAngle = frand(0, 2 * M_PI);
+    float distance = sPlayerbotAIConfig.grindDistance - frand(sPlayerbotAIConfig.grindDistance / 10, sPlayerbotAIConfig.grindDistance / 5);
+    for (float angle = followAngle - M_PI; angle <= followAngle + M_PI; angle += M_PI / 4)
+    {
+        float x = loc.coord_x + cos(angle) * distance;
+        float y = loc.coord_y + sin(angle) * distance;
+        float z = loc.coord_z;
+        master->UpdateGroundPositionZ(x, y, z);
+        if (master->IsWithinLOS(x, y, z))
+        {
+            PlayerbotFactory factory(bot, urand(level - 2, level + 2));
+            factory.Randomize();
+            Refresh(bot);
+            bot->TeleportTo(master->GetMapId(), x, y, z, 0);
+            break;
+        }
+    }
 }
 
 void RandomPlayerbotMgr::Refresh(Player* bot)
