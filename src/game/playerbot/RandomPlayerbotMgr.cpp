@@ -115,6 +115,11 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
     {
         sLog.outBasic("Bot %d logged in for account %d", bot, account);
         mgr->AddPlayerBot(bot, master->GetSession());
+        if (!GetEventValue(bot, "online"))
+        {
+            SetEventValue(bot, "pvp", 1, urand(sPlayerbotAIConfig.minRandomBotPvpTime, sPlayerbotAIConfig.maxRandomBotPvpTime));
+            SetEventValue(bot, "online", 1, sPlayerbotAIConfig.minRandomBotInWorldTime);
+        }
         return true;
     }
 
