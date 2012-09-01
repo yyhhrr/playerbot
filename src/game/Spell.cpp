@@ -3172,6 +3172,11 @@ void Spell::finish(bool ok)
     // Stop Attack for some spells
     if (m_spellInfo->HasAttribute(SPELL_ATTR_STOP_ATTACK_TARGET))
         m_caster->AttackStop();
+    // Playerbot mob
+    if (!m_caster->GetMapId())
+        return;
+    // end of playerbot mod
+
 }
 
 void Spell::SendCastResult(SpellCastResult result)
