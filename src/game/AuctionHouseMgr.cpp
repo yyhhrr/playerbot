@@ -35,6 +35,7 @@
 #include "Mail.h"
 
 #include "Policies/Singleton.h"
+#include "ahbot/AhBot.h"
 
 INSTANTIATE_SINGLETON_1(AuctionHouseMgr);
 
@@ -576,6 +577,7 @@ void AuctionHouseObject::Update()
             if (curTime > itr->second->moneyDeliveryTime)
             {
                 sAuctionMgr.SendAuctionSuccessfulMail(itr->second);
+                auctionbot.Won(itr->second);
 
                 itr->second->DeleteFromDB();
                 MANGOS_ASSERT(!itr->second->itemGuidLow);   // already removed or send in mail at won
@@ -595,6 +597,7 @@ void AuctionHouseObject::Update()
                 else
                 {
                     sAuctionMgr.SendAuctionExpiredMail(itr->second);
+                    auctionbot.Expired(itr->second);
 
                     itr->second->DeleteFromDB();
                     delete itr->second;
@@ -994,6 +997,7 @@ void AuctionEntry::AuctionBidWinning(Player* newbidder)
     CharacterDatabase.CommitTransaction();
 
     sAuctionMgr.SendAuctionWonMail(this);
+    auctionbot.Won(this);
 }
 
 bool AuctionEntry::UpdateBid(uint32 newbid, Player* newbidder /*=NULL*/)

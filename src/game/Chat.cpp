@@ -737,7 +737,6 @@ ChatCommand* ChatHandler::getCommandTable()
         { "account",        SEC_PLAYER,         true,  NULL,                                           "", accountCommandTable  },
         { "achievement",    SEC_ADMINISTRATOR,  true,  NULL,                                           "", achievementCommandTable },
         { "auction",        SEC_ADMINISTRATOR,  false, NULL,                                           "", auctionCommandTable  },
-        { "ahbot",          SEC_ADMINISTRATOR,  true,  NULL,                                           "", ahbotCommandTable    },
         { "cast",           SEC_ADMINISTRATOR,  false, NULL,                                           "", castCommandTable     },
         { "character",      SEC_GAMEMASTER,     true,  NULL,                                           "", characterCommandTable},
         { "debug",          SEC_MODERATOR,      true,  NULL,                                           "", debugCommandTable    },
@@ -826,6 +825,9 @@ ChatCommand* ChatHandler::getCommandTable()
         { "quit",           SEC_CONSOLE,        true,  &ChatHandler::HandleQuitCommand,                "", NULL },
         { "gearscore",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowGearScoreCommand,       "", NULL },
         { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
+        // Playerbot mod
+        { "bot",            SEC_PLAYER,         false, &ChatHandler::HandlePlayerbotCommand,           "", NULL },
+        { "ahbot",          SEC_GAMEMASTER,     true, &ChatHandler::HandleAhBotCommand,               "", NULL },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
