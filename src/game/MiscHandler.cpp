@@ -37,7 +37,7 @@
 #include <zlib/zlib.h>
 #include "ObjectAccessor.h"
 #include "Object.h"
-#include "BattleGround.h"
+#include "BattleGround/BattleGround.h"
 #include "OutdoorPvP/OutdoorPvP.h"
 #include "Pet.h"
 #include "SocialMgr.h"
@@ -738,14 +738,12 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket& recv_data)
         return;
     }
 
-    if (pl->InBattleGround())
+    if (BattleGround* bg = pl->GetBattleGround())
     {
-        if (BattleGround* bg = pl->GetBattleGround())
-            bg->HandleAreaTrigger(pl, Trigger_ID);
+        bg->HandleAreaTrigger(pl, Trigger_ID);
         return;
     }
-
-    if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(pl->GetCachedZoneId()))
+    else if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(pl->GetCachedZoneId()))
     {
         if (outdoorPvP->HandleAreaTrigger(pl, Trigger_ID))
             return;
