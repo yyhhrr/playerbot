@@ -32,6 +32,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "World.h"
+#include "ahbot/AhBot.h"
 
 /**
  * Creates a new MailSender object.
@@ -227,8 +228,9 @@ void MailDraft::SendReturnToSender(uint32 sender_acc, ObjectGuid sender_guid, Ob
     uint32 deliver_delay = needItemDelay ? sWorld.getConfig(CONFIG_UINT32_MAIL_DELIVERY_DELAY) : 0;
 
     // will delete item or place to receiver mail list
-    SendMailTo(MailReceiver(receiver, receiver_guid), MailSender(MAIL_NORMAL, sender_guid.GetCounter()), MAIL_CHECK_MASK_RETURNED, deliver_delay);
+    SendMailTo(MailReceiver(receiver, receiver_guid), MailSender(sender_guid.GetRawValue() == auctionbot.GetAHBplayerGUID() ? MAIL_CREATURE : MAIL_NORMAL, sender_guid.GetCounter()), MAIL_CHECK_MASK_RETURNED, deliver_delay);
 }
+
 /**
  * Sends a mail.
  *
@@ -245,7 +247,7 @@ void MailDraft::SendMailTo(MailReceiver const& receiver, MailSender const& sende
     if (!pReceiver)
         pReceiverAccount = sObjectMgr.GetPlayerAccountIdByGUID(receiver.GetPlayerGuid());
 
-    if (!pReceiver && !pReceiverAccount)                    // receiver not exist
+    if ((!pReceiver && !pReceiverAccount) || receiver.GetPlayerGuid() == auctionbot.GetAHBplayerGUID())                    // receiver not exist
     {
         deleteIncludedItems(true);
         return;

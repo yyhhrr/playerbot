@@ -365,6 +365,10 @@ class MANGOS_DLL_SPEC Group
         InstanceGroupBind* GetBoundInstance(Map* aMap, Difficulty difficulty);
         BoundInstancesMap& GetBoundInstances(Difficulty difficulty) { return m_boundInstances[difficulty]; }
 
+        // ai playerbot mod
+        ObjectGuid GetTargetIcon(int index) { return m_targetIcons[index]; }
+        // end
+
     protected:
         bool _addMember(ObjectGuid guid, const char* name, bool isAssistant = false);
         bool _addMember(ObjectGuid guid, const char* name, bool isAssistant, uint8 group);
