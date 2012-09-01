@@ -56,6 +56,11 @@ class Item;
 
 struct AreaTrigger;
 
+// Playerbot mod
+class PlayerbotAI;
+class PlayerbotMgr;
+class RandomPlayerbotMgr;
+
 typedef std::deque<Mail*> PlayerMails;
 
 #define PLAYER_MAX_SKILLS           127
@@ -906,6 +911,22 @@ class TradeData
         ObjectGuid m_items[TRADE_SLOT_COUNT];               // traded itmes from m_player side including non-traded slot
 };
 
+// wow armory begin
+struct WowarmoryFeedEntry {
+    uint32 guid;         // Player GUID
+    time_t date;         // Log date
+    uint32 type;         // TYPE_ACHIEVEMENT_FEED, TYPE_ITEM_FEED, TYPE_BOSS_FEED
+    uint32 data;         // TYPE_ITEM_FEED: item_entry, TYPE_BOSS_FEED: creature_entry
+    uint32 item_guid;    // Can be 0
+    uint32 item_quality; // Can be 0
+    uint8  difficulty;   // Can be 0
+    int    counter;      // Can be 0
+};
+
+typedef std::vector<WowarmoryFeedEntry> WowarmoryFeeds;
+// wow armory end
+
+
 class MANGOS_DLL_SPEC Player : public Unit
 {
         friend class WorldSession;
@@ -1323,6 +1344,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         /*********************************************************/
 
         bool LoadFromDB(ObjectGuid guid, SqlQueryHolder* holder);
+        bool MinimalLoadFromDB(QueryResult *result, uint32 guid);
 
         static uint32 GetZoneIdFromDB(ObjectGuid guid);
         static uint32 GetLevelFromDB(ObjectGuid guid);
@@ -2087,6 +2109,12 @@ class MANGOS_DLL_SPEC Player : public Unit
 
         void SendCinematicStart(uint32 CinematicSequenceId);
 
+        // wow armory begin
+        void CreateWowarmoryFeed(uint32 type, uint32 data, uint32 item_guid, uint32 item_quality);
+        void InitWowarmoryFeeds();
+        WowarmoryFeeds m_wowarmory_feeds;
+        // wow armory end
+
         /*********************************************************/
         /***                 INSTANCE SYSTEM                   ***/
         /*********************************************************/
@@ -2146,6 +2174,18 @@ class MANGOS_DLL_SPEC Player : public Unit
         bool HasTitle(uint32 bitIndex) const;
         bool HasTitle(CharTitlesEntry const* title) const { return HasTitle(title->bit_index); }
         void SetTitle(CharTitlesEntry const* title, bool lost = false);
+
+
+        // Playerbot mod:
+        // A Player can either have a playerbotMgr (to manage its bots), or have playerbotAI (if it is a bot), or
+        // neither. Code that enables bots must create the playerbotMgr and set it using SetPlayerbotMgr.
+        void SetPlayerbotAI(PlayerbotAI* ai) { assert(!m_playerbotAI && !m_playerbotMgr); m_playerbotAI=ai; }
+        PlayerbotAI* GetPlayerbotAI() { return m_playerbotAI; }
+        void SetPlayerbotMgr(PlayerbotMgr* mgr) { assert(!m_playerbotAI && !m_playerbotMgr); m_playerbotMgr=mgr; }
+        void SetRandomPlayerbotMgr(RandomPlayerbotMgr* mgr) { assert(!m_playerbotAI && !m_randomPlayerbotMgr); m_randomPlayerbotMgr=mgr; }
+        PlayerbotMgr* GetPlayerbotMgr() { return m_playerbotMgr; }
+        RandomPlayerbotMgr* GetRandomPlayerbotMgr() { return m_randomPlayerbotMgr; }
+        void SetBotDeathTimer() { m_deathTimer = 0; }
 
     protected:
 
@@ -2387,6 +2427,11 @@ class MANGOS_DLL_SPEC Player : public Unit
 
         GridReference<Player> m_gridRef;
         MapReference m_mapRef;
+
+        // Playerbot mod:
+        PlayerbotAI* m_playerbotAI;
+        PlayerbotMgr* m_playerbotMgr;
+        RandomPlayerbotMgr* m_randomPlayerbotMgr;
 
         // Homebind coordinates
         uint32 m_homebindMapId;
