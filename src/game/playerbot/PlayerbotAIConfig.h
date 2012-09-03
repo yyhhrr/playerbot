@@ -42,6 +42,9 @@ public:
     void SetValue(std::string name, std::string value);
 
 private:
+    void DumpSpells();
+
+private:
     Config config;
 };
 
