@@ -2,6 +2,7 @@
 #include "PlayerbotAIConfig.h"
 #include "Policies/SingletonImp.h"
 #include "playerbot.h"
+#include "../../shared/Database/DBCStore.h"
 
 using namespace std;
 
@@ -90,9 +91,42 @@ bool PlayerbotAIConfig::Initialize()
     splineFacing = config.GetBoolDefault("AiPlayerbot.SplineFacing", true);
 
     sLog.outString("AI Playerbot configuration loaded");
+
+    if (config.GetBoolDefault("AiPlayerbot.SpellDump", false))
+        DumpSpells();
+
     return true;
 }
 
+void replace(std::string& str, const std::string& oldStr, const std::string& newStr)
+{
+  size_t pos = 0;
+  while((pos = str.find(oldStr, pos)) != std::string::npos)
+  {
+     str.replace(pos, oldStr.length(), newStr);
+     pos += newStr.length();
+  }
+}
+
+void PlayerbotAIConfig::DumpSpells()
+{
+    sLog.outString("Dumping spells to database...");
+    CharacterDatabase.PExecute("DELETE FROM ai_playerbot_spells");
+
+    for (uint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+    {
+        SpellEntry const *spellInfo = sSpellStore.LookupEntry(i);
+        if (!spellInfo)
+            continue;
+
+        string name = spellInfo->SpellName[0];
+        replace(name, "'", "''");
+        replace(name, "\\", "\\\\");
+        CharacterDatabase.PExecute("INSERT INTO ai_playerbot_spells (id, name, level) VALUES ('%u', '%s', '%u')",
+                spellInfo->Id, name.c_str(), spellInfo->spellLevel);
+    }
+    sLog.outString("Dump finished");
+}
 
 bool PlayerbotAIConfig::IsInRandomAccountList(uint32 id)
 {
