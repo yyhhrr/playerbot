@@ -14,3 +14,12 @@ CREATE TABLE `ai_playerbot_random_bots` (
   KEY `bot` (`bot`),
   KEY `event` (`event`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ai_playerbot_spells`;
+
+CREATE TABLE `ai_playerbot_spells` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `level` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
