@@ -541,7 +541,7 @@ ObjectGuid PlayerbotFactory::GetRandomBot()
 
 void PlayerbotFactory::InitQuests()
 {
-    QueryResult *results = WorldDatabase.PQuery("SELECT entry, RequiredClasses, RequiredRaces FROM udb.quest_template where QuestLevel = -1 and MinLevel <= '%u'",
+    QueryResult *results = WorldDatabase.PQuery("SELECT entry, RequiredClasses, RequiredRaces FROM quest_template where QuestLevel = -1 and MinLevel <= '%u'",
             bot->getLevel());
     if (!results)
         return;
@@ -628,7 +628,7 @@ void PlayerbotFactory::InitAmmo()
     if (!subClass)
         return;
 
-    QueryResult *results = WorldDatabase.PQuery("select max(entry), max(RequiredLevel) from udb.item_template where class = '%u' and subclass = '%u' and RequiredLevel <= '%u'",
+    QueryResult *results = WorldDatabase.PQuery("select max(entry), max(RequiredLevel) from item_template where class = '%u' and subclass = '%u' and RequiredLevel <= '%u'",
             ITEM_CLASS_PROJECTILE, subClass, bot->getLevel());
     if (!results)
         return;
