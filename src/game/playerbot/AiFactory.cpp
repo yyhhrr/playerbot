@@ -50,9 +50,49 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
     return NULL;
 }
 
-int AiFactory::GetPlayerSpecTab(Player* player)
+int AiFactory::GetPlayerSpecTab(Player* bot)
 {
-	return 0;
+    map<uint32, int32> tabs;
+    for (uint32 i = 0; i < uint32(3); i++)
+        tabs[i] = 0;
+
+    uint32 classMask = bot->getClassMask();
+    for (uint32 i = 0; i < sTalentStore.GetNumRows() && bot->GetFreeTalentPoints(); ++i)
+    {
+        TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
+        if (!talentInfo)
+            continue;
+
+        TalentTabEntry const *talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
+        if (!talentTabInfo)
+            continue;
+
+        if ((classMask & talentTabInfo->ClassMask) == 0)
+            continue;
+
+        for (int rank = MAX_TALENT_RANK - 1; rank >= 0; --rank)
+        {
+            if (!talentInfo->RankID[rank])
+                continue;
+
+            uint32 spellid = talentInfo->RankID[rank];
+            if (spellid && bot->HasSpell(spellid))
+                tabs[talentTabInfo->tabpage]++;
+
+        }
+    }
+
+    int tab = -1, max = 0;
+    for (uint32 i = 0; i < uint32(3); i++)
+    {
+        if (tab == -1 || max < tabs[i])
+        {
+            tab = i;
+            max = tabs[i];
+        }
+    }
+
+    return tab;
 }
 
 void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const facade, Engine* engine)
