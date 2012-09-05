@@ -185,7 +185,6 @@ void PlayerbotAI::Reset()
 
     bot->GetMotionMaster()->Clear();
     bot->m_taxi.ClearTaxiDestinations();
-    ResetStrategies();
 
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
     {

@@ -212,12 +212,12 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, uint32 mapId, float teleX, 
         WorldLocation loc = locs[index];
         loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
         loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
-        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 0, true, MAX_HEIGHT);
+        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, loc.coord_z, true, MAX_HEIGHT);
         bot->TeleportTo(loc);
     }
     else
     {
-        teleZ = 0.05f + map->GetTerrain()->GetHeight(teleX, teleY, 0, true, MAX_HEIGHT);
+        teleZ = 0.05f + map->GetTerrain()->GetHeight(teleX, teleY, teleZ, true, MAX_HEIGHT);
         bot->TeleportTo(mapId, teleX, teleY, teleZ, 0);
     }
 }
@@ -264,7 +264,7 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
             PlayerbotFactory factory(bot, urand(level - 2, level + 2));
             factory.Randomize();
             Refresh(bot);
-            bot->TeleportTo(master->GetMapId(), x, y, z, 0);
+            bot->TeleportTo(master->GetMapId(), x, y, z + 0.05f, 0);
             break;
         }
     }
