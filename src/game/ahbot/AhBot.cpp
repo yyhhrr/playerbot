@@ -222,14 +222,14 @@ void AhBot::Answer(int auction, Category* category, ItemBag* inAuctionItems)
             entry->bid = entry->buyout;
             entry->AuctionBidWinning(NULL);
 
-            sLog.outString("AhBot %d won %s in auction %d for %d", bidder, item->GetProto()->Name1, auctionIds[auction], entry->buyout);
+            sLog.outDetail("AhBot %d won %s in auction %d for %d", bidder, item->GetProto()->Name1, auctionIds[auction], entry->buyout);
         }
         else
         {
             CharacterDatabase.PExecute("UPDATE auction SET buyguid = '%u',lastbid = '%u' WHERE id = '%u'",
                 entry->bidder, entry->bid, entry->Id);
 
-            sLog.outString("AhBot %d placed bid %d for %s in auction %d", bidder, entry->bid, item->GetProto()->Name1, auctionIds[auction]);
+            sLog.outDetail("AhBot %d placed bid %d for %s in auction %d", bidder, entry->bid, item->GetProto()->Name1, auctionIds[auction]);
         }
    }
 }
@@ -323,7 +323,7 @@ void AhBot::AddAuction(int auction, Category* category, ItemPrototype const* pro
     auctionHouse->AddAuction(auctionEntry);
     auctionEntry->SaveToDB();
 
-    sLog.outString("AhBot %d added %d of %s to auction %d for %d..%d", owner, stackCount, proto->Name1, auctionIds[auction], bidPrice, buyoutPrice);
+    sLog.outDetail("AhBot %d added %d of %s to auction %d for %d..%d", owner, stackCount, proto->Name1, auctionIds[auction], bidPrice, buyoutPrice);
 }
 
 void AhBot::HandleCommand(string command)
@@ -409,7 +409,7 @@ void AhBot::Expire(int auction)
     }
 
     CharacterDatabase.PExecute("DELETE FROM ahbot_category");
-    sLog.outDetail("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
+    sLog.outString("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
 }
 
 void AhBot::AddToHistory(AuctionEntry* entry)
