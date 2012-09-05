@@ -50,6 +50,7 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
         bot->CastStop();
 
         MotionMaster &mm = *bot->GetMotionMaster();
+        mm.Clear();
         mm.MovePoint(mapId, x, y, z);
     }
 
