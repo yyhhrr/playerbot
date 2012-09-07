@@ -26,7 +26,7 @@ public:
     std::list<uint32> randomBotAccounts;
     std::vector<uint32> randomBotMaps;
     uint32 randomBotTeleportDistance;
-    uint32 randomGearQuality;
+    float randomGearLoweringChance;
     uint32 minRandomBots, maxRandomBots;
     uint32 randomBotUpdateInterval, randomBotCountChangeInterval;
     uint32 minRandomBotInWorldTime, maxRandomBotInWorldTime;

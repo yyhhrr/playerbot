@@ -47,7 +47,7 @@ bool PlayerbotAIConfig::Initialize()
     lowMana = config.GetIntDefault("AiPlayerbot.LowMana", 15);
     mediumMana = config.GetIntDefault("AiPlayerbot.MediumMana", 40);
 
-    randomGearQuality = config.GetIntDefault("AiPlayerbot.RandomGearQuality", ITEM_QUALITY_RARE);
+    randomGearLoweringChance = config.GetFloatDefault("AiPlayerbot.RandomGearLoweringChance", 0.15);
 
     iterationsPerTick = config.GetIntDefault("AiPlayerbot.IterationsPerTick", 10);
 
@@ -168,9 +168,6 @@ string PlayerbotAIConfig::GetValue(string name)
     else if (name == "LowMana")
         out << lowMana;
 
-
-    else if (name == "RandomGearQuality")
-        out << randomGearQuality;
     else if (name == "IterationsPerTick")
         out << iterationsPerTick;
 
@@ -212,8 +209,6 @@ void PlayerbotAIConfig::SetValue(string name, string value)
     else if (name == "LowMana")
         out >> lowMana;
 
-    else if (name == "RandomGearQuality")
-        out >> randomGearQuality;
     else if (name == "IterationsPerTick")
         out >> iterationsPerTick;
 }
