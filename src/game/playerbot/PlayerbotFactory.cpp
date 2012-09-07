@@ -25,6 +25,7 @@ void PlayerbotFactory::Randomize()
     bot->SetLevel(level);
     ClearInventory();
     InitAmmo();
+    InitMounts();
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ)
@@ -691,4 +692,42 @@ void PlayerbotFactory::InitAmmo()
     }
 
     delete results;
+}
+
+void PlayerbotFactory::InitMounts()
+{
+    map<int32, vector<uint32> > spells;
+    set<int32> effects;
+    for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); ++spellId)
+    {
+        SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
+        if (!spellInfo || spellInfo->EffectApplyAuraName[0] != SPELL_AURA_MOUNTED)
+            continue;
+
+        int32 effect = 0;
+        if (spellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)
+            effect = spellInfo->EffectBasePoints[2];
+        else if (spellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)
+            effect = spellInfo->EffectBasePoints[1];
+        else if (spellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
+            effect = spellInfo->EffectBasePoints[2];
+        else if (spellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
+            effect = spellInfo->EffectBasePoints[1];
+        else
+            continue;
+
+        spells[effect].push_back(spellId);
+        effects.insert(effect);
+    }
+
+    for (set<int32>::iterator i = effects.begin(); i != effects.end(); ++i)
+    {
+        int32 effect = *i;
+        vector<uint32>& ids = spells[effect];
+        uint32 index = urand(0, ids.size() - 1);
+        if (index >= ids.size())
+            continue;
+
+        bot->learnSpell(ids[index], false);
+    }
 }
