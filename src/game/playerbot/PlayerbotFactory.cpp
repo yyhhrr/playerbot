@@ -26,6 +26,7 @@ void PlayerbotFactory::Randomize()
     ClearInventory();
     InitAmmo();
     InitMounts();
+    InitPotions();
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ)
@@ -730,4 +731,60 @@ void PlayerbotFactory::InitMounts()
 
         bot->learnSpell(ids[index], false);
     }
+}
+
+void PlayerbotFactory::InitPotions()
+{
+    map<uint32, vector<uint32> > items;
+    for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+    {
+        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
+        if (!proto)
+            continue;
+
+        if (proto->Class != ITEM_CLASS_CONSUMABLE ||
+            proto->SubClass != ITEM_SUBCLASS_POTION ||
+            proto->Spells[0].SpellCategory != 4 ||
+            proto->Bonding != NO_BIND)
+            continue;
+
+        if (proto->RequiredLevel > bot->getLevel() || proto->RequiredLevel < bot->getLevel() - 10)
+            continue;
+
+        if (proto->RequiredSkill && !bot->HasSkill(proto->RequiredSkill))
+            continue;
+
+        if (proto->Area || proto->Map || proto->RequiredCityRank || proto->RequiredHonorRank)
+            continue;
+
+        for (int j = 0; j < MAX_ITEM_PROTO_SPELLS; j++)
+        {
+            const SpellEntry* const spellInfo = sSpellStore.LookupEntry(proto->Spells[j].SpellId);
+            if (!spellInfo)
+                continue;
+
+            for (int i = 0 ; i < 3; i++)
+            {
+                if (spellInfo->Effect[i] == SPELL_EFFECT_HEAL || spellInfo->Effect[i] == SPELL_EFFECT_ENERGIZE)
+                {
+                    items[spellInfo->Effect[i]].push_back(itemId);
+                    break;
+                }
+            }
+        }
+    }
+
+    uint32 effects[] = { SPELL_EFFECT_HEAL, SPELL_EFFECT_ENERGIZE };
+    for (int i = 0; i < sizeof(effects) / sizeof(uint32); ++i)
+    {
+        uint32 effect = effects[i];
+        vector<uint32>& ids = items[effect];
+        uint32 index = urand(0, ids.size() - 1);
+        if (index >= ids.size())
+            continue;
+
+        uint32 itemId = ids[index];
+        ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
+        bot->StoreNewItemInInventorySlot(itemId, urand(1, proto->GetMaxStackSize()));
+   }
 }

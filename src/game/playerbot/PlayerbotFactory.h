@@ -33,6 +33,7 @@ private:
     void ClearInventory();
     void InitAmmo();
     void InitMounts();
+    void InitPotions();
 
 private:
     Player* bot;
