@@ -43,6 +43,7 @@ public:
 
 private:
     void DumpSpells();
+    void CreateRandomBots();
 
 private:
     Config config;

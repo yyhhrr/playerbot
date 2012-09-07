@@ -3,6 +3,8 @@
 #include "Policies/SingletonImp.h"
 #include "playerbot.h"
 #include "../../shared/Database/DBCStore.h"
+#include "RandomPlayerbotFactory.h"
+#include "../AccountMgr.h"
 
 using namespace std;
 
@@ -94,6 +96,9 @@ bool PlayerbotAIConfig::Initialize()
 
     if (config.GetBoolDefault("AiPlayerbot.SpellDump", false))
         DumpSpells();
+
+    if (config.GetBoolDefault("AiPlayerbot.RandomBotAutoCreate", true))
+        CreateRandomBots();
 
     return true;
 }
@@ -211,4 +216,22 @@ void PlayerbotAIConfig::SetValue(string name, string value)
 
     else if (name == "IterationsPerTick")
         out >> iterationsPerTick;
+}
+
+
+void PlayerbotAIConfig::CreateRandomBots()
+{
+    for (list<uint32>::iterator i = sPlayerbotAIConfig.randomBotAccounts.begin(); i != sPlayerbotAIConfig.randomBotAccounts.end(); i++)
+    {
+        uint32 accountId = *i;
+        int count = sAccountMgr.GetCharactersCount(accountId);
+        if (count >= 10)
+            continue;
+
+        RandomPlayerbotFactory factory(accountId);
+        while (count++ < 10)
+        {
+            factory.CreateRandomBot();
+        }
+    }
 }
