@@ -12,7 +12,8 @@ using ai::InventoryAction;
 class PlayerbotFactory : public InventoryAction
 {
 public:
-    PlayerbotFactory(Player* bot, uint32 level) : bot(bot), level(level), InventoryAction(bot->GetPlayerbotAI(), "factory") {}
+    PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality) :
+        bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") {}
 
     static ObjectGuid GetRandomBot();
     void Randomize();
@@ -21,7 +22,6 @@ public:
 private:
     void InitEquipment();
     bool CanEquipUnseenItem(uint8 slot, uint16 &dest, uint32 item);
-    bool EquipItem(uint8 slot, uint32 desiredQuality);
     void InitSkills();
     void SetRandomSkill(uint16 id);
     void InitSpells();
@@ -34,8 +34,11 @@ private:
     void InitAmmo();
     void InitMounts();
     void InitPotions();
+    bool CanEquipArmor(ItemPrototype const* proto, uint8 slot);
+    bool CanEquipWeapon(ItemPrototype const* proto, uint8 slot);
 
 private:
     Player* bot;
     uint32 level;
+    uint32 itemQuality;
 };

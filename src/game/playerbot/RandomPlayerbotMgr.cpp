@@ -238,7 +238,7 @@ void RandomPlayerbotMgr::Randomize(Player* bot)
 
     index = urand(0, locs.size() - 1);
     GameTele const* tele = locs[index];
-	PlayerbotFactory factory(bot, bot->GetPlayerbotAI()->GetMaster()->getLevel());
+	PlayerbotFactory factory(bot, bot->GetPlayerbotAI()->GetMaster()->getLevel(), urand(ITEM_QUALITY_UNCOMMON, ITEM_QUALITY_EPIC));
     factory.RandomizeForZone(tele->mapId, tele->position_x, tele->position_y, tele->position_z);
 
     RandomTeleport(bot, tele->mapId, tele->position_x, tele->position_y, tele->position_z);
@@ -261,7 +261,7 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
         master->UpdateGroundPositionZ(x, y, z);
         if (master->IsWithinLOS(x, y, z))
         {
-            PlayerbotFactory factory(bot, urand(level - 2, level + 2));
+            PlayerbotFactory factory(bot, urand(level - 2, level + 2), urand(ITEM_QUALITY_RARE, ITEM_QUALITY_EPIC));
             factory.Randomize();
             Refresh(bot);
             bot->TeleportTo(master->GetMapId(), x, y, z + 0.05f, 0);
