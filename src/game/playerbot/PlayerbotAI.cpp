@@ -655,11 +655,14 @@ GameObject* PlayerbotAI::GetGameObject(ObjectGuid guid)
 void PlayerbotAI::TellMaster(string text)
 {
     LogLevel logLevel = *aiObjectContext->GetValue<LogLevel>("log level");
-    if (IsOpposing(GetMaster()) && logLevel != LOG_LVL_DEBUG)
-        return;
+    if (GetMaster()->GetSession()->GetSecurity() < SEC_GAMEMASTER)
+    {
+        if (IsOpposing(GetMaster()) && logLevel != LOG_LVL_DEBUG)
+            return;
 
-    if (sPlayerbotAIConfig.IsInRandomAccountList(accountId) && logLevel != LOG_LVL_DEBUG && !bot->GetGroup())
-        return;
+        if (sPlayerbotAIConfig.IsInRandomAccountList(accountId) && logLevel != LOG_LVL_DEBUG && !bot->GetGroup())
+            return;
+    }
 
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
