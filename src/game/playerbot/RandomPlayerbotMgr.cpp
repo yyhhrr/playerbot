@@ -212,7 +212,7 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, uint32 mapId, float teleX, 
         WorldLocation loc = locs[index];
         loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
         loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
-        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, loc.coord_z, true, MAX_HEIGHT);
+        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 10 + loc.coord_z, true, MAX_HEIGHT);
         bot->TeleportTo(loc);
     }
     else
@@ -246,6 +246,9 @@ void RandomPlayerbotMgr::Randomize(Player* bot)
 
 void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
 {
+    if (master->IsBeingTeleported())
+        return;
+
 	Player* master = bot->GetPlayerbotAI()->GetMaster();
     uint32 level = master->getLevel();
 
@@ -257,8 +260,8 @@ void RandomPlayerbotMgr::DoPvpAttack(Player* bot)
     {
         float x = loc.coord_x + cos(angle) * distance;
         float y = loc.coord_y + sin(angle) * distance;
-        float z = loc.coord_z;
-        master->UpdateGroundPositionZ(x, y, z);
+        float z = loc.coord_z + 10;
+        master->UpdateAllowedPositionZ(x, y, z);
         if (master->IsWithinLOS(x, y, z))
         {
             PlayerbotFactory factory(bot, urand(level - 2, level + 2), urand(ITEM_QUALITY_RARE, ITEM_QUALITY_EPIC));
