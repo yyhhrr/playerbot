@@ -32,6 +32,7 @@ private:
     void InitPet();
     void ClearInventory();
     void InitAmmo();
+    void InitMounts();
 
 private:
     Player* bot;

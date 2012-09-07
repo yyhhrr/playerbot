@@ -12,7 +12,7 @@ bool CheckMountStateAction::Execute(Event event)
     p.rpos(0);
     uint64 guid = extractGuid(p);
 
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(bot) || !bot->GetGroup())
+    if (!bot->GetGroup())
         return false;
 
     if (master->IsMounted() && !bot->IsMounted())
@@ -57,7 +57,7 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
 
         if(pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
         {
-            if(pSpellInfo->EffectBasePoints[1] == master_speed1 && ai->CanCastSpell(spellId, bot))
+            if(pSpellInfo->EffectBasePoints[1] >= master_speed1 && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
@@ -66,8 +66,8 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
         else if((pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
             && (pSpellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED))
         {
-            if((pSpellInfo->EffectBasePoints[1] == master_speed1)
-                && (pSpellInfo->EffectBasePoints[2] == master_speed2) && ai->CanCastSpell(spellId, bot))
+            if((pSpellInfo->EffectBasePoints[1] >= master_speed1)
+                && (pSpellInfo->EffectBasePoints[2] >= master_speed2) && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
@@ -76,8 +76,8 @@ void CheckMountStateAction::Mount(int32 master_speed1, int32 master_speed2)
         else if((pSpellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
             && (pSpellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED))
         {
-            if((pSpellInfo->EffectBasePoints[2] == master_speed2)
-                && (pSpellInfo->EffectBasePoints[1] == master_speed1) && ai->CanCastSpell(spellId, bot))
+            if((pSpellInfo->EffectBasePoints[2] >= master_speed2)
+                && (pSpellInfo->EffectBasePoints[1] >= master_speed1) && ai->CanCastSpell(spellId, bot))
             {
                 spellMount = spellId;
                 break;
