@@ -713,39 +713,39 @@ void PlayerbotFactory::InitAmmo()
 
 void PlayerbotFactory::InitMounts()
 {
-    map<int32, vector<uint32> > spells;
-    set<int32> effects;
+    map<uint32, map<int32, vector<uint32> > > allSpells;
+
     for (uint32 spellId = 0; spellId < sSpellStore.GetNumRows(); ++spellId)
     {
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
         if (!spellInfo || spellInfo->EffectApplyAuraName[0] != SPELL_AURA_MOUNTED)
             continue;
 
-        int32 effect = 0;
-        if (spellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)
-            effect = spellInfo->EffectBasePoints[2];
-        else if (spellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)
-            effect = spellInfo->EffectBasePoints[1];
-        else if (spellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
-            effect = spellInfo->EffectBasePoints[2];
-        else if (spellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED)
-            effect = spellInfo->EffectBasePoints[1];
-        else
+        if (GetSpellCastTime(spellInfo) < 500 || GetSpellDuration(spellInfo) != -1)
             continue;
 
-        spells[effect].push_back(spellId);
-        effects.insert(effect);
+        int32 effect = max(spellInfo->EffectBasePoints[1], spellInfo->EffectBasePoints[2]);
+        if (effect < 50)
+            continue;
+
+        uint32 index = (spellInfo->EffectApplyAuraName[1] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED ||
+                spellInfo->EffectApplyAuraName[2] == SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED) ? 1 : 0;
+        allSpells[index][effect].push_back(spellId);
     }
 
-    for (set<int32>::iterator i = effects.begin(); i != effects.end(); ++i)
+    for (uint32 type = 0; type < 2; ++type)
     {
-        int32 effect = *i;
-        vector<uint32>& ids = spells[effect];
-        uint32 index = urand(0, ids.size() - 1);
-        if (index >= ids.size())
-            continue;
+        map<int32, vector<uint32> >& spells = allSpells[type];
+        for (map<int32, vector<uint32> >::iterator i = spells.begin(); i != spells.end(); ++i)
+        {
+            int32 effect = i->first;
+            vector<uint32>& ids = i->second;
+            uint32 index = urand(0, ids.size() - 1);
+            if (index >= ids.size())
+                continue;
 
-        bot->learnSpell(ids[index], false);
+            bot->learnSpell(ids[index], false);
+        }
     }
 }
 
