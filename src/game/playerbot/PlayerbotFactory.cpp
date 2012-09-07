@@ -11,6 +11,7 @@ using namespace std;
 
 void PlayerbotFactory::Randomize()
 {
+    bot->ClearInCombat();
     bot->SetLevel(level);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
@@ -360,52 +361,50 @@ void PlayerbotFactory::InitEquipment()
             desiredQuality--;
         }
 
-        for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+        do
         {
-            ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
-            if (!proto)
-                continue;
-
-            if (proto->Class != ITEM_CLASS_WEAPON &&
-                proto->Class != ITEM_CLASS_ARMOR &&
-                proto->Class != ITEM_CLASS_CONTAINER &&
-                proto->Class != ITEM_CLASS_PROJECTILE)
-                continue;
-
-            if (proto->Duration & 0x80000000)
-                continue;
-
-            if (proto->Quality != desiredQuality)
-                continue;
-
-            uint32 requiredLevel = proto->RequiredLevel;
-            if (desiredQuality > ITEM_QUALITY_NORMAL && !requiredLevel && (requiredLevel > level || requiredLevel < level - 10))
-                continue;
-
-            if (proto->Class == ITEM_CLASS_ARMOR && (
-                slot == EQUIPMENT_SLOT_HEAD ||
-                slot == EQUIPMENT_SLOT_SHOULDERS ||
-                slot == EQUIPMENT_SLOT_CHEST ||
-                slot == EQUIPMENT_SLOT_WAIST ||
-                slot == EQUIPMENT_SLOT_LEGS ||
-                slot == EQUIPMENT_SLOT_FEET ||
-                slot == EQUIPMENT_SLOT_WRISTS ||
-                slot == EQUIPMENT_SLOT_HANDS))
+            for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
             {
-                if (!CanEquipArmor(proto, slot))
+                ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
+                if (!proto)
                     continue;
-            }
 
-            if (proto->Class == ITEM_CLASS_WEAPON)
-            {
-                if (!CanEquipWeapon(proto, slot))
+                if (proto->Class != ITEM_CLASS_WEAPON &&
+                    proto->Class != ITEM_CLASS_ARMOR &&
+                    proto->Class != ITEM_CLASS_CONTAINER &&
+                    proto->Class != ITEM_CLASS_PROJECTILE)
                     continue;
-            }
 
-            uint16 dest = 0;
-            if (CanEquipUnseenItem(slot, dest, itemId))
-                items[slot].push_back(itemId);
-        }
+                if (proto->Duration & 0x80000000)
+                    continue;
+
+                if (proto->Quality != desiredQuality)
+                    continue;
+
+                uint32 requiredLevel = proto->RequiredLevel;
+                if (desiredQuality > ITEM_QUALITY_NORMAL &&
+                        (!requiredLevel || requiredLevel > level || requiredLevel < level - 10))
+                    continue;
+
+                if (proto->Class == ITEM_CLASS_ARMOR && (
+                    slot == EQUIPMENT_SLOT_HEAD ||
+                    slot == EQUIPMENT_SLOT_SHOULDERS ||
+                    slot == EQUIPMENT_SLOT_CHEST ||
+                    slot == EQUIPMENT_SLOT_WAIST ||
+                    slot == EQUIPMENT_SLOT_LEGS ||
+                    slot == EQUIPMENT_SLOT_FEET ||
+                    slot == EQUIPMENT_SLOT_WRISTS ||
+                    slot == EQUIPMENT_SLOT_HANDS) && !CanEquipArmor(proto, slot))
+                        continue;
+
+                if (proto->Class == ITEM_CLASS_WEAPON && !CanEquipWeapon(proto, slot))
+                    continue;
+
+                uint16 dest = 0;
+                if (CanEquipUnseenItem(slot, dest, itemId))
+                    items[slot].push_back(itemId);
+            }
+        } while (items[slot].empty() && desiredQuality-- > ITEM_QUALITY_NORMAL);
     }
 
     for(uint8 slot = 0; slot < EQUIPMENT_SLOT_END; ++slot)
@@ -429,9 +428,10 @@ void PlayerbotFactory::InitEquipment()
             if (!CanEquipUnseenItem(slot, dest, newItemId))
                 continue;
 
-            Item* newItem = bot->EquipNewItem(dest, newItemId, true);
+            Item* newItem = bot->EquipNewItem(dest, newItemId, false);
             if (newItem)
             {
+                newItem->AddToWorld();
                 bot->AutoUnequipOffhandIfNeed();
                 break;
             }
@@ -445,7 +445,7 @@ bool PlayerbotFactory::CanEquipUnseenItem(uint8 slot, uint16 &dest, uint32 item)
     Item *pItem = Item::CreateItem(item, 1, bot);
     if (pItem)
     {
-        InventoryResult result = bot->CanEquipItem(slot, dest, pItem, true );
+        InventoryResult result = bot->CanEquipItem(slot, dest, pItem, true, false);
         pItem->RemoveFromUpdateQueueOf(bot);
         delete pItem;
         return result == EQUIP_ERR_OK;
