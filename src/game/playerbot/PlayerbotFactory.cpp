@@ -17,9 +17,10 @@ void PlayerbotFactory::Randomize()
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 
     InitTalents();
-    InitQuests();
     InitSpells();
     InitSkills();
+    InitQuests();
+    InitAvailableSpells();
     InitEquipment();
     InitPet();
 	// quest rewards boost bot level, so reduce back
