@@ -28,6 +28,7 @@ void PlayerbotFactory::Randomize()
     InitAmmo();
     InitMounts();
     InitPotions();
+    InitSecondEquipmentSet();
 }
 
 void PlayerbotFactory::RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ)
@@ -175,6 +176,9 @@ public:
 
 bool PlayerbotFactory::CanEquipArmor(ItemPrototype const* proto, uint8 slot)
 {
+    if (bot->HasSkill(SKILL_SHIELD) && proto->SubClass == ITEM_SUBCLASS_ARMOR_SHIELD)
+        return true;
+
     if (bot->HasSkill(SKILL_PLATE_MAIL))
     {
         if (proto->SubClass != ITEM_SUBCLASS_ARMOR_PLATE)
@@ -345,6 +349,22 @@ bool PlayerbotFactory::CanEquipWeapon(ItemPrototype const* proto, uint8 slot)
     return true;
 }
 
+bool PlayerbotFactory::CanEquipItem(ItemPrototype const* proto, uint32 desiredQuality)
+{
+    if (proto->Duration & 0x80000000)
+        return false;
+
+    if (proto->Quality != desiredQuality)
+        return false;
+
+    uint32 requiredLevel = proto->RequiredLevel;
+    if (desiredQuality > ITEM_QUALITY_NORMAL &&
+            (!requiredLevel || requiredLevel > level || requiredLevel < level - 10))
+        return false;
+
+    return true;
+}
+
 void PlayerbotFactory::InitEquipment()
 {
     DestroyItemsVisitor visitor(bot);
@@ -375,15 +395,7 @@ void PlayerbotFactory::InitEquipment()
                     proto->Class != ITEM_CLASS_PROJECTILE)
                     continue;
 
-                if (proto->Duration & 0x80000000)
-                    continue;
-
-                if (proto->Quality != desiredQuality)
-                    continue;
-
-                uint32 requiredLevel = proto->RequiredLevel;
-                if (desiredQuality > ITEM_QUALITY_NORMAL &&
-                        (!requiredLevel || requiredLevel > level || requiredLevel < level - 10))
+                if (!CanEquipItem(proto, desiredQuality))
                     continue;
 
                 if (proto->Class == ITEM_CLASS_ARMOR && (
@@ -433,6 +445,98 @@ void PlayerbotFactory::InitEquipment()
             {
                 newItem->AddToWorld();
                 bot->AutoUnequipOffhandIfNeed();
+                break;
+            }
+        }
+    }
+}
+
+void PlayerbotFactory::InitSecondEquipmentSet()
+{
+    if (bot->getClass() != CLASS_WARRIOR && bot->getClass() != CLASS_PALADIN && bot->getClass() != CLASS_SHAMAN)
+        return;
+
+    map<uint32, vector<uint32> > items;
+
+    uint32 desiredQuality = itemQuality;
+    while (urand(0, 100) < 100 * sPlayerbotAIConfig.randomGearLoweringChance && desiredQuality > ITEM_QUALITY_NORMAL) {
+        desiredQuality--;
+    }
+
+    do
+    {
+        for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+        {
+            ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
+            if (!proto)
+                continue;
+
+            if (!CanEquipItem(proto, desiredQuality))
+                continue;
+
+            if (proto->Class == ITEM_CLASS_WEAPON)
+            {
+                if (!CanEquipWeapon(proto, EQUIPMENT_SLOT_MAINHAND))
+                    continue;
+
+                Item* existingItem = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND);
+                if (existingItem)
+                {
+                    switch (existingItem->GetProto()->SubClass)
+                    {
+                    case ITEM_SUBCLASS_WEAPON_AXE:
+                    case ITEM_SUBCLASS_WEAPON_DAGGER:
+                    case ITEM_SUBCLASS_WEAPON_FIST:
+                    case ITEM_SUBCLASS_WEAPON_MACE:
+                    case ITEM_SUBCLASS_WEAPON_SWORD:
+                        if (proto->SubClass == ITEM_SUBCLASS_WEAPON_AXE || proto->SubClass == ITEM_SUBCLASS_WEAPON_DAGGER ||
+                            proto->SubClass == ITEM_SUBCLASS_WEAPON_FIST || proto->SubClass == ITEM_SUBCLASS_WEAPON_MACE ||
+                            proto->SubClass == ITEM_SUBCLASS_WEAPON_SWORD)
+                            continue;
+                        break;
+                    default:
+                        if (proto->SubClass != ITEM_SUBCLASS_WEAPON_AXE && proto->SubClass != ITEM_SUBCLASS_WEAPON_DAGGER &&
+                            proto->SubClass != ITEM_SUBCLASS_WEAPON_FIST && proto->SubClass != ITEM_SUBCLASS_WEAPON_MACE &&
+                            proto->SubClass != ITEM_SUBCLASS_WEAPON_SWORD)
+                            continue;
+                        break;
+                    }
+                }
+            }
+            else if (proto->Class == ITEM_CLASS_ARMOR && proto->SubClass == ITEM_SUBCLASS_ARMOR_SHIELD)
+            {
+                if (!CanEquipArmor(proto, EQUIPMENT_SLOT_OFFHAND))
+                    continue;
+
+                Item* existingItem = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_OFFHAND);
+                if (existingItem && existingItem->GetProto()->SubClass == ITEM_SUBCLASS_ARMOR_SHIELD)
+                    continue;
+            }
+            else
+                continue;
+
+            items[proto->Class].push_back(itemId);
+        }
+    } while (items[ITEM_CLASS_ARMOR].empty() && items[ITEM_CLASS_WEAPON].empty() && desiredQuality-- > ITEM_QUALITY_NORMAL);
+
+    for (map<uint32, vector<uint32> >::iterator i = items.begin(); i != items.end(); ++i)
+    {
+        vector<uint32>& ids = i->second;
+        if (ids.empty())
+        {
+            sLog.outError("%s: no items to make second equipment set for slot %d", bot->GetName(), i->first);
+            continue;
+        }
+
+        for (int attempts = 0; attempts < 15; attempts++)
+        {
+            uint32 index = urand(0, ids.size() - 1);
+            uint32 newItemId = ids[index];
+
+            Item* newItem = bot->StoreNewItemInInventorySlot(newItemId, 1);
+            if (newItem)
+            {
+                newItem->AddToWorld();
                 break;
             }
         }

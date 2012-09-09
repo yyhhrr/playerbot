@@ -20,7 +20,9 @@ public:
     void RandomizeForZone(uint32 mapId, float teleX, float teleY, float teleZ);
 
 private:
+    void InitSecondEquipmentSet();
     void InitEquipment();
+    bool CanEquipItem(ItemPrototype const* proto, uint32 desiredQuality);
     bool CanEquipUnseenItem(uint8 slot, uint16 &dest, uint32 item);
     void InitSkills();
     void SetRandomSkill(uint16 id);
