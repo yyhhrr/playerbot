@@ -482,14 +482,33 @@ void PlayerbotAI::DoSpecificAction(string name)
 {
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
     {
-        if (engines[i]->ExecuteAction(name))
+        ostringstream out;
+        ActionResult res = engines[i]->ExecuteAction(name);
+        switch (res)
+        {
+        case ACTION_RESULT_UNKNOWN:
+            continue;
+        case ACTION_RESULT_OK:
+            out << name << ": done";
+            TellMaster(out);
             return;
+        case ACTION_RESULT_IMPOSSIBLE:
+            out << name << ": impossible";
+            TellMaster(out);
+            return;
+        case ACTION_RESULT_USELESS:
+            out << name << ": useless";
+            TellMaster(out);
+            return;
+        case ACTION_RESULT_FAILED:
+            out << name << ": failed";
+            TellMaster(out);
+            return;
+        }
     }
-
     ostringstream out;
-    out << "I cannot do ";
-    out << name;
-    TellMaster(out.str());
+    out << name << ": unknown action";
+    TellMaster(out);
 }
 
 bool PlayerbotAI::ContainsStrategy(StrategyType type)
@@ -681,6 +700,12 @@ void PlayerbotAI::TellMaster(LogLevel level, string text)
     ostringstream out;
     out << LogLevelAction::logLevel2string(level) << ": " << text;
     TellMaster(out.str());
+}
+
+void PlayerbotAI::TellMaster(bool verbose, string text)
+{
+    if (verbose)
+        TellMaster(text);
 }
 
 

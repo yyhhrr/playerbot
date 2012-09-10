@@ -253,22 +253,29 @@ bool Engine::MultiplyAndPush(NextAction** actions, float forceRelevance, bool sk
     return pushed;
 }
 
-bool Engine::ExecuteAction(string name)
+ActionResult Engine::ExecuteAction(string name)
 {
 	bool result = false;
 
     ActionNode *actionNode = CreateActionNode(name);
     if (!actionNode)
-        return false;
+        return ACTION_RESULT_UNKNOWN;
 
     Action* action = InitializeAction(actionNode);
-    if (action && action->isPossible() && action->isUseful())
-    {
-    	Event emptyEvent;
-        result = ListenAndExecute(action, emptyEvent);
-        MultiplyAndPush(action->getContinuers(), 0.0f, false, emptyEvent);
-    }
-	return result;
+    if (!action)
+        return ACTION_RESULT_UNKNOWN;
+
+    if (!action->isPossible())
+        return ACTION_RESULT_IMPOSSIBLE;
+
+    if (!action->isUseful())
+        return ACTION_RESULT_USELESS;
+
+    action->MakeVerbose();
+    Event emptyEvent;
+    result = ListenAndExecute(action, emptyEvent);
+    MultiplyAndPush(action->getContinuers(), 0.0f, false, emptyEvent);
+	return result ? ACTION_RESULT_OK : ACTION_RESULT_FAILED;
 }
 
 void Engine::addStrategy(string name)

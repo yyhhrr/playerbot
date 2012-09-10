@@ -107,6 +107,7 @@ public:
     void TellMaster(ostringstream &stream) { TellMaster(stream.str()); }
     void TellMaster(string text);
     void TellMaster(LogLevel level, string text);
+    void TellMaster(bool verbose, string text);
     void SpellInterrupted(uint32 spellid);
     int32 CalculateGlobalCooldown(uint32 spellid);
     void InterruptSpell();
