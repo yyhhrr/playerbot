@@ -162,8 +162,7 @@ void PlayerbotFactory::InitTalents()
 {
     bot->resetTalents(true, true);
     uint32 specNo = urand(0, 2);
-    for (int i = 0; i < 5; i++)
-        InitTalents(specNo);
+    InitTalents(specNo);
 }
 
 
@@ -765,8 +764,8 @@ void PlayerbotFactory::InitTalents(uint32 specNo)
 {
     uint32 classMask = bot->getClassMask();
 
-    uint32 lastRow = 999;
-    for (uint32 i = 0; i < sTalentStore.GetNumRows() && bot->GetFreeTalentPoints(); ++i)
+    map<uint32, vector<uint32> > spells;
+    for (uint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
     {
         TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
         if(!talentInfo)
@@ -794,18 +793,37 @@ void PlayerbotFactory::InitTalents(uint32 specNo)
         if(!spellid)                                        // ??? none spells in talent
             continue;
 
-        if (talentInfo->Row == lastRow)
-            continue;
-
         SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellid);
-        if(!spellInfo || !SpellMgr::IsSpellValid(spellInfo, bot, false))
+        if(!spellInfo)
             continue;
 
         if (bot->HasSpell(spellid))
             continue;
 
-        bot->learnSpellHighRank(spellid);
-        lastRow = talentInfo->Row;
+        spells[talentInfo->Row].push_back(spellid);
+    }
+
+    uint32 freePoints = bot->GetFreeTalentPoints();
+    for (map<uint32, vector<uint32> >::iterator i = spells.begin(); i != spells.end(); ++i)
+    {
+        vector<uint32> &ids = i->second;
+        if (ids.empty())
+        {
+            sLog.outError("%s: No spells for talent row %d", bot->GetName(), i->first);
+            continue;
+        }
+
+        int attemptCount = 0;
+        while (!ids.empty() && freePoints - bot->GetFreeTalentPoints() < 5 && attemptCount++ < 3)
+        {
+            int index = urand(0, ids.size() - 1);
+            uint32 spellId = ids[index];
+            ids.erase(ids.begin() + index);
+            bot->learnSpell(spellId, true);
+            bot->UpdateFreeTalentPoints(false);
+        }
+
+        freePoints = bot->GetFreeTalentPoints();
     }
 }
 
