@@ -31,6 +31,7 @@ void PlayerbotFactory::Randomize()
     // quest rewards boost bot level, so reduce back
     bot->SetLevel(level);
     ClearInventory();
+    bot->SetUInt32Value(PLAYER_XP, 0);
 
     InitAmmo();
     InitMounts();
