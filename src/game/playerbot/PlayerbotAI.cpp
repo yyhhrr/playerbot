@@ -193,8 +193,23 @@ void PlayerbotAI::Reset()
 
 void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPlayer)
 {
-    if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid() || fromPlayer.GetPlayerbotAI())
+    if (fromPlayer.GetPlayerbotAI())
         return;
+
+    if (text.empty() ||
+        text.find("X-Perl") != wstring::npos ||
+        text.find("HealBot") != wstring::npos ||
+        text.find("LOOT_OPENED") != wstring::npos ||
+        text.find("CTRA") != wstring::npos)
+        return;
+
+    if (fromPlayer.GetObjectGuid() != GetMaster()->GetObjectGuid())
+    {
+        WorldPacket data(SMSG_MESSAGECHAT, 1024);
+        bot->BuildPlayerChat(&data, CHAT_MSG_WHISPER, "I speak to my master only", LANG_UNIVERSAL);
+        GetMaster()->GetSession()->SendPacket(&data);
+        return;
+    }
 
     for (string::const_iterator i = text.begin(); i != text.end(); i++)
     {
@@ -203,19 +218,20 @@ void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPla
             return;
     }
 
+
+    if (sPlayerbotAIConfig.IsInRandomAccountList(accountId) && !bot->GetGroup())
+    {
+        WorldPacket data(SMSG_MESSAGECHAT, 1024);
+        bot->BuildPlayerChat(&data, CHAT_MSG_WHISPER, "Invite me to your group first", LANG_UNIVERSAL);
+        GetMaster()->GetSession()->SendPacket(&data);
+        return;
+    }
+
     if (type == CHAT_MSG_RAID_WARNING && text.find(bot->GetName()) != string::npos && text.find("award") == string::npos)
     {
         chatCommands.push("warning");
         return;
     }
-
-	// ignore any messages from Addons
-	if (text.empty() ||
-		text.find("X-Perl") != wstring::npos ||
-		text.find("HealBot") != wstring::npos ||
-		text.find("LOOT_OPENED") != wstring::npos ||
-		text.find("CTRA") != wstring::npos)
-		return;
 
 	string filtered = chatFilter.Filter(trim((string&)text));
 	if (filtered.empty())
