@@ -78,15 +78,14 @@ PlayerbotAI::PlayerbotAI(PlayerbotMgr* mgr, Player* bot, NamedObjectContext<Unty
     masterIncomingPacketHandlers.AddHandler(CMSG_AREATRIGGER, "area trigger");
     masterIncomingPacketHandlers.AddHandler(CMSG_GAMEOBJ_USE, "use game object");
     masterIncomingPacketHandlers.AddHandler(CMSG_LOOT_ROLL, "loot roll");
-
     masterIncomingPacketHandlers.AddHandler(CMSG_GOSSIP_HELLO, "gossip hello");
     masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_HELLO, "gossip hello");
     masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_COMPLETE_QUEST, "complete quest");
     masterIncomingPacketHandlers.AddHandler(CMSG_QUESTGIVER_ACCEPT_QUEST, "accept quest");
-
     masterIncomingPacketHandlers.AddHandler(CMSG_ACTIVATETAXI, "activate taxi");
     masterIncomingPacketHandlers.AddHandler(CMSG_ACTIVATETAXIEXPRESS, "activate taxi");
     masterIncomingPacketHandlers.AddHandler(CMSG_MOVE_SPLINE_DONE, "taxi done");
+    masterIncomingPacketHandlers.AddHandler(CMSG_GROUP_UNINVITE_GUID, "uninvite");
 
     botOutgoingPacketHandlers.AddHandler(SMSG_QUESTGIVER_QUEST_DETAILS, "quest share");
     botOutgoingPacketHandlers.AddHandler(SMSG_GROUP_INVITE, "group invite");
@@ -194,8 +193,23 @@ void PlayerbotAI::Reset()
 
 void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPlayer)
 {
-    if (fromPlayer.GetObjectGuid() != bot->GetPlayerbotAI()->GetMaster()->GetObjectGuid() || fromPlayer.GetPlayerbotAI())
+    if (fromPlayer.GetPlayerbotAI())
         return;
+
+    if (text.empty() ||
+        text.find("X-Perl") != wstring::npos ||
+        text.find("HealBot") != wstring::npos ||
+        text.find("LOOT_OPENED") != wstring::npos ||
+        text.find("CTRA") != wstring::npos)
+        return;
+
+    if (fromPlayer.GetObjectGuid() != GetMaster()->GetObjectGuid())
+    {
+        WorldPacket data(SMSG_MESSAGECHAT, 1024);
+        bot->BuildPlayerChat(&data, CHAT_MSG_WHISPER, "I speak to my master only", LANG_UNIVERSAL);
+        GetMaster()->GetSession()->SendPacket(&data);
+        return;
+    }
 
     for (string::const_iterator i = text.begin(); i != text.end(); i++)
     {
@@ -204,19 +218,20 @@ void PlayerbotAI::HandleCommand(uint32 type, const string& text, Player& fromPla
             return;
     }
 
+
+    if (sPlayerbotAIConfig.IsInRandomAccountList(accountId) && !bot->GetGroup())
+    {
+        WorldPacket data(SMSG_MESSAGECHAT, 1024);
+        bot->BuildPlayerChat(&data, CHAT_MSG_WHISPER, "Invite me to your group first", LANG_UNIVERSAL);
+        GetMaster()->GetSession()->SendPacket(&data);
+        return;
+    }
+
     if (type == CHAT_MSG_RAID_WARNING && text.find(bot->GetName()) != string::npos && text.find("award") == string::npos)
     {
         chatCommands.push("warning");
         return;
     }
-
-	// ignore any messages from Addons
-	if (text.empty() ||
-		text.find("X-Perl") != wstring::npos ||
-		text.find("HealBot") != wstring::npos ||
-		text.find("LOOT_OPENED") != wstring::npos ||
-		text.find("CTRA") != wstring::npos)
-		return;
 
 	string filtered = chatFilter.Filter(trim((string&)text));
 	if (filtered.empty())
@@ -441,14 +456,33 @@ void PlayerbotAI::DoSpecificAction(string name)
 {
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
     {
-        if (engines[i]->ExecuteAction(name))
+        ostringstream out;
+        ActionResult res = engines[i]->ExecuteAction(name);
+        switch (res)
+        {
+        case ACTION_RESULT_UNKNOWN:
+            continue;
+        case ACTION_RESULT_OK:
+            out << name << ": done";
+            TellMaster(out);
             return;
+        case ACTION_RESULT_IMPOSSIBLE:
+            out << name << ": impossible";
+            TellMaster(out);
+            return;
+        case ACTION_RESULT_USELESS:
+            out << name << ": useless";
+            TellMaster(out);
+            return;
+        case ACTION_RESULT_FAILED:
+            out << name << ": failed";
+            TellMaster(out);
+            return;
+        }
     }
-
     ostringstream out;
-    out << "I cannot do ";
-    out << name;
-    TellMaster(out.str());
+    out << name << ": unknown action";
+    TellMaster(out);
 }
 
 bool PlayerbotAI::ContainsStrategy(StrategyType type)
@@ -639,6 +673,12 @@ void PlayerbotAI::TellMaster(LogLevel level, string text)
     ostringstream out;
     out << LogLevelAction::logLevel2string(level) << ": " << text;
     TellMaster(out.str());
+}
+
+void PlayerbotAI::TellMaster(bool verbose, string text)
+{
+    if (verbose)
+        TellMaster(text);
 }
 
 
