@@ -32,6 +32,7 @@ void PlayerbotFactory::Randomize()
     bot->SetLevel(level);
     ClearInventory();
     bot->SetUInt32Value(PLAYER_XP, 0);
+    CancelAuras();
 
     InitAmmo();
     InitMounts();
@@ -1019,4 +1020,10 @@ void PlayerbotFactory::InitPotions()
         ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
         bot->StoreNewItemInInventorySlot(itemId, urand(1, proto->GetMaxStackSize()));
    }
+}
+
+
+void PlayerbotFactory::CancelAuras()
+{
+    bot->RemoveAllAuras();
 }

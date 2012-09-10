@@ -42,6 +42,7 @@ private:
     void EnchantItem(Item* item);
     void AddItemStats(uint32 mod, uint8 &sp, uint8 &ap, uint8 &tank);
     bool CheckItemStats(uint8 sp, uint8 ap, uint8 tank);
+    void CancelAuras();
 
 private:
     Player* bot;
