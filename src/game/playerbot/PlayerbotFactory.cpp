@@ -585,6 +585,9 @@ void PlayerbotFactory::InitSecondEquipmentSet()
 
 void PlayerbotFactory::EnchantItem(Item* item)
 {
+    if (urand(0, 100) < 100 * sPlayerbotAIConfig.randomGearLoweringChance)
+        return;
+
     vector<uint32> ids;
     for (int id = 0; id < sSpellStore.GetNumRows(); ++id)
     {
