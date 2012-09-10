@@ -27,6 +27,7 @@ private:
     void InitSkills();
     void SetRandomSkill(uint16 id);
     void InitSpells();
+    void ClearSpells();
     void InitAvailableSpells();
     void InitTalents();
     void InitTalents(uint32 specNo);
@@ -38,6 +39,9 @@ private:
     void InitPotions();
     bool CanEquipArmor(ItemPrototype const* proto, uint8 slot);
     bool CanEquipWeapon(ItemPrototype const* proto, uint8 slot);
+    void EnchantItem(Item* item);
+    void AddItemStats(uint32 mod, uint8 &sp, uint8 &ap, uint8 &tank);
+    bool CheckItemStats(uint8 sp, uint8 ap, uint8 tank);
 
 private:
     Player* bot;
