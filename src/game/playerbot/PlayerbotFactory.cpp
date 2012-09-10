@@ -5,6 +5,7 @@
 #include "../ItemPrototype.h"
 #include "PlayerbotAIConfig.h"
 #include "../AccountMgr.h"
+#include "../../shared/Database/DBCStore.h"
 
 using namespace ai;
 using namespace std;
@@ -16,6 +17,9 @@ void PlayerbotFactory::Randomize()
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 
+    ClearSpells();
+    ClearInventory();
+
     InitTalents();
     InitSpells();
     InitSkills();
@@ -23,9 +27,11 @@ void PlayerbotFactory::Randomize()
     InitAvailableSpells();
     InitEquipment();
     InitPet();
-	// quest rewards boost bot level, so reduce back
+
+    // quest rewards boost bot level, so reduce back
     bot->SetLevel(level);
     ClearInventory();
+
     InitAmmo();
     InitMounts();
     InitPotions();
@@ -126,7 +132,7 @@ void PlayerbotFactory::InitPet()
     }
 }
 
-void PlayerbotFactory::InitSpells()
+void PlayerbotFactory::ClearSpells()
 {
     list<uint32> spells;
     for(PlayerSpellMap::iterator itr = bot->GetSpellMap().begin(); itr != bot->GetSpellMap().end(); ++itr)
@@ -142,7 +148,10 @@ void PlayerbotFactory::InitSpells()
     {
         bot->removeSpell(*i);
     }
+}
 
+void PlayerbotFactory::InitSpells()
+{
     for (int i = 0; i < 15; i++)
         InitAvailableSpells();
 }
@@ -206,83 +215,111 @@ bool PlayerbotFactory::CanEquipArmor(ItemPrototype const* proto, uint8 slot)
         if(!proto->ItemStat[j].ItemStatValue)
             continue;
 
-        switch (proto->ItemStat[j].ItemStatType)
-        {
-        case ITEM_MOD_MANA:
-        case ITEM_MOD_INTELLECT:
-        case ITEM_MOD_SPIRIT:
-        case ITEM_MOD_MANA_REGENERATION:
-        case ITEM_MOD_SPELL_POWER:
-        case ITEM_MOD_SPELL_PENETRATION:
-            sp++;
-            break;
-
-        case ITEM_MOD_HEALTH:
-        case ITEM_MOD_STAMINA:
-        case ITEM_MOD_HEALTH_REGEN:
-        case ITEM_MOD_DEFENSE_SKILL_RATING:
-        case ITEM_MOD_DODGE_RATING:
-        case ITEM_MOD_PARRY_RATING:
-        case ITEM_MOD_BLOCK_RATING:
-        case ITEM_MOD_HIT_TAKEN_MELEE_RATING:
-        case ITEM_MOD_HIT_TAKEN_RANGED_RATING:
-        case ITEM_MOD_HIT_TAKEN_SPELL_RATING:
-        case ITEM_MOD_CRIT_TAKEN_MELEE_RATING:
-        case ITEM_MOD_CRIT_TAKEN_RANGED_RATING:
-        case ITEM_MOD_CRIT_TAKEN_SPELL_RATING:
-        case ITEM_MOD_HIT_TAKEN_RATING:
-        case ITEM_MOD_CRIT_TAKEN_RATING:
-        case ITEM_MOD_RESILIENCE_RATING:
-        case ITEM_MOD_BLOCK_VALUE:
-            tank++;
-            break;
-
-        case ITEM_MOD_AGILITY:
-        case ITEM_MOD_STRENGTH:
-        case ITEM_MOD_HIT_MELEE_RATING:
-        case ITEM_MOD_HIT_RANGED_RATING:
-        case ITEM_MOD_HIT_SPELL_RATING:
-        case ITEM_MOD_CRIT_MELEE_RATING:
-        case ITEM_MOD_CRIT_RANGED_RATING:
-        case ITEM_MOD_CRIT_SPELL_RATING:
-        case ITEM_MOD_HASTE_MELEE_RATING:
-        case ITEM_MOD_HASTE_RANGED_RATING:
-        case ITEM_MOD_HASTE_SPELL_RATING:
-        case ITEM_MOD_HIT_RATING:
-        case ITEM_MOD_CRIT_RATING:
-        case ITEM_MOD_HASTE_RATING:
-        case ITEM_MOD_EXPERTISE_RATING:
-        case ITEM_MOD_ATTACK_POWER:
-        case ITEM_MOD_RANGED_ATTACK_POWER:
-        case ITEM_MOD_ARMOR_PENETRATION_RATING:
-            ap++;
-            break;
-        }
+        AddItemStats(proto->ItemStat[j].ItemStatType, sp, ap, tank);
     }
 
+    return CheckItemStats(sp, ap, tank);
+}
 
+bool PlayerbotFactory::CheckItemStats(uint8 sp, uint8 ap, uint8 tank)
+{
     switch (bot->getClass())
     {
     case CLASS_PRIEST:
     case CLASS_MAGE:
     case CLASS_WARLOCK:
-        if (!sp || sp < ap)
+        if (!sp || ap > sp || tank > sp)
             return false;
         break;
     case CLASS_PALADIN:
     case CLASS_WARRIOR:
-        if (!tank || tank < sp)
+        if ((!ap && !tank) || sp > ap || sp > tank)
             return false;
         break;
     case CLASS_HUNTER:
     case CLASS_ROGUE:
-    case CLASS_DRUID:
-        if (!ap || ap < sp)
+        if (!ap || sp > ap || sp > tank)
             return false;
         break;
     }
 
-    return true;
+    return sp || ap || tank;
+}
+
+void PlayerbotFactory::AddItemStats(uint32 mod, uint8 &sp, uint8 &ap, uint8 &tank)
+{
+    switch (mod)
+    {
+    case ITEM_MOD_HIT_RATING:
+    case ITEM_MOD_CRIT_RATING:
+    case ITEM_MOD_HASTE_RATING:
+    case ITEM_MOD_HEALTH:
+    case ITEM_MOD_STAMINA:
+    case ITEM_MOD_HEALTH_REGEN:
+    case ITEM_MOD_MANA:
+    case ITEM_MOD_INTELLECT:
+    case ITEM_MOD_SPIRIT:
+    case ITEM_MOD_MANA_REGENERATION:
+    case ITEM_MOD_SPELL_POWER:
+    case ITEM_MOD_SPELL_PENETRATION:
+    case ITEM_MOD_HIT_SPELL_RATING:
+    case ITEM_MOD_CRIT_SPELL_RATING:
+    case ITEM_MOD_HASTE_SPELL_RATING:
+        sp++;
+        break;
+    }
+
+    switch (mod)
+    {
+    case ITEM_MOD_HIT_RATING:
+    case ITEM_MOD_CRIT_RATING:
+    case ITEM_MOD_HASTE_RATING:
+    case ITEM_MOD_AGILITY:
+    case ITEM_MOD_STRENGTH:
+    case ITEM_MOD_HEALTH:
+    case ITEM_MOD_STAMINA:
+    case ITEM_MOD_HEALTH_REGEN:
+    case ITEM_MOD_DEFENSE_SKILL_RATING:
+    case ITEM_MOD_DODGE_RATING:
+    case ITEM_MOD_PARRY_RATING:
+    case ITEM_MOD_BLOCK_RATING:
+    case ITEM_MOD_HIT_TAKEN_MELEE_RATING:
+    case ITEM_MOD_HIT_TAKEN_RANGED_RATING:
+    case ITEM_MOD_HIT_TAKEN_SPELL_RATING:
+    case ITEM_MOD_CRIT_TAKEN_MELEE_RATING:
+    case ITEM_MOD_CRIT_TAKEN_RANGED_RATING:
+    case ITEM_MOD_CRIT_TAKEN_SPELL_RATING:
+    case ITEM_MOD_HIT_TAKEN_RATING:
+    case ITEM_MOD_CRIT_TAKEN_RATING:
+    case ITEM_MOD_RESILIENCE_RATING:
+    case ITEM_MOD_BLOCK_VALUE:
+        tank++;
+        break;
+    }
+
+    switch (mod)
+    {
+    case ITEM_MOD_HEALTH:
+    case ITEM_MOD_STAMINA:
+    case ITEM_MOD_HEALTH_REGEN:
+    case ITEM_MOD_AGILITY:
+    case ITEM_MOD_STRENGTH:
+    case ITEM_MOD_HIT_MELEE_RATING:
+    case ITEM_MOD_HIT_RANGED_RATING:
+    case ITEM_MOD_CRIT_MELEE_RATING:
+    case ITEM_MOD_CRIT_RANGED_RATING:
+    case ITEM_MOD_HASTE_MELEE_RATING:
+    case ITEM_MOD_HASTE_RANGED_RATING:
+    case ITEM_MOD_HIT_RATING:
+    case ITEM_MOD_CRIT_RATING:
+    case ITEM_MOD_HASTE_RATING:
+    case ITEM_MOD_EXPERTISE_RATING:
+    case ITEM_MOD_ATTACK_POWER:
+    case ITEM_MOD_RANGED_ATTACK_POWER:
+    case ITEM_MOD_ARMOR_PENETRATION_RATING:
+        ap++;
+        break;
+    }
 }
 
 bool PlayerbotFactory::CanEquipWeapon(ItemPrototype const* proto, uint8 slot)
@@ -446,6 +483,7 @@ void PlayerbotFactory::InitEquipment()
             {
                 newItem->AddToWorld();
                 bot->AutoUnequipOffhandIfNeed();
+                EnchantItem(newItem);
                 break;
             }
         }
@@ -537,11 +575,80 @@ void PlayerbotFactory::InitSecondEquipmentSet()
             Item* newItem = bot->StoreNewItemInInventorySlot(newItemId, 1);
             if (newItem)
             {
+                EnchantItem(newItem);
                 newItem->AddToWorld();
                 break;
             }
         }
     }
+}
+
+void PlayerbotFactory::EnchantItem(Item* item)
+{
+    vector<uint32> ids;
+    for (int id = 0; id < sSpellStore.GetNumRows(); ++id)
+    {
+        SpellEntry const *entry = sSpellStore.LookupEntry(id);
+        if (!entry)
+            continue;
+
+        uint32 requiredLevel = entry->baseLevel;
+        if (requiredLevel && (requiredLevel > item->GetProto()->ItemLevel || requiredLevel < item->GetProto()->ItemLevel - 35))
+            continue;
+
+        if (entry->maxLevel && level > entry->maxLevel)
+            continue;
+
+        uint32 spellLevel = entry->spellLevel;
+        if (spellLevel && (spellLevel > level || spellLevel < level - 10))
+            continue;
+
+        for (int j = 0; j < 3; ++j)
+        {
+            if (entry->Effect[j] != SPELL_EFFECT_ENCHANT_ITEM)
+                continue;
+
+            uint32 enchant_id = entry->EffectMiscValue[j];
+            if (!enchant_id)
+                continue;
+
+            SpellItemEnchantmentEntry const* enchant = sSpellItemEnchantmentStore.LookupEntry(enchant_id);
+            if (!enchant || enchant->slot != PERM_ENCHANTMENT_SLOT)
+                continue;
+
+            uint8 sp = 0, ap = 0, tank = 0;
+            for (int i = 0; i < 3; ++i)
+            {
+                if (enchant->type[i] != ITEM_ENCHANTMENT_TYPE_STAT)
+                    continue;
+
+                AddItemStats(enchant->spellid[i], sp, ap, tank);
+            }
+
+            if (!CheckItemStats(sp, ap, tank))
+                continue;
+
+            if (enchant->EnchantmentCondition && !bot->EnchantmentFitsRequirements(enchant->EnchantmentCondition, -1))
+                continue;
+
+            if (!item->IsFitToSpellRequirements(entry))
+                continue;
+
+            ids.push_back(enchant_id);
+        }
+    }
+
+    if (ids.empty())
+    {
+        sLog.outDetail("%s: no enchantments found for item %d", bot->GetName(), item->GetProto()->ItemId);
+        return;
+    }
+
+    int index = urand(0, ids.size() - 1);
+    uint32 id = ids[index];
+    bot->ApplyEnchantment(item, PERM_ENCHANTMENT_SLOT, false);
+    item->SetEnchantment(PERM_ENCHANTMENT_SLOT, id, 0, 0);
+    bot->ApplyEnchantment(item, PERM_ENCHANTMENT_SLOT, true);
 }
 
 bool PlayerbotFactory::CanEquipUnseenItem(uint8 slot, uint16 &dest, uint32 item)
