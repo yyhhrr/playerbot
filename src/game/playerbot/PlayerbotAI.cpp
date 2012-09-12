@@ -52,7 +52,7 @@ void PacketHandlingHelper::AddPacket(const WorldPacket& packet)
 
 
 PlayerbotAI::PlayerbotAI() : PlayerbotAIBase(), bot(NULL), mgr(NULL), aiObjectContext(NULL),
-    currentEngine(NULL), chatHelper(this), chatFilter(this)
+    currentEngine(NULL), chatHelper(this), chatFilter(this), accountId(0)
 {
     for (int i = 0 ; i < BOT_STATE_MAX; i++)
         engines[i] = NULL;
@@ -120,18 +120,11 @@ PlayerbotAI::~PlayerbotAI()
         delete aiObjectContext;
 }
 
-void PlayerbotAI::UpdateAI(uint32 elapsed)
+void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
 {
     if (bot->IsBeingTeleported())
         return;
 
-    ChangeActiveEngineIfNecessary();
-
-    PlayerbotAIBase::UpdateAI(elapsed);
-}
-
-void PlayerbotAI::UpdateAIInternal(uint32 elapsed)
-{
     ExternalEventHelper helper(aiObjectContext);
     while (!chatCommands.empty())
     {
@@ -372,36 +365,6 @@ void PlayerbotAI::HandleMasterOutgoingPacket(const WorldPacket& packet)
     masterOutgoingPacketHandlers.AddPacket(packet);
 }
 
-void PlayerbotAI::ChangeActiveEngineIfNecessary()
-{
-	Player* master = GetMaster();
-    if (!bot->isAlive())
-    {
-        ChangeEngine(BOT_STATE_DEAD);
-        return;
-    }
-
-    Unit* target = aiObjectContext->GetValue<Unit*>("current target")->Get();
-    if (bot->duel && !target) {
-        aiObjectContext->GetValue<Unit*>("old target")->Set(target);
-
-        Player* target = bot->duel->opponent;
-        aiObjectContext->GetValue<Unit*>("current target")->Set(target);
-        bot->SetSelectionGuid(target->GetObjectGuid());
-        ChangeEngine(BOT_STATE_COMBAT);
-    }
-    else if (target && target->isAlive() && !target->IsFriendlyTo(bot))
-    {
-        ChangeEngine(BOT_STATE_COMBAT);
-    }
-    else
-    {
-        aiObjectContext->GetValue<Unit*>("current target")->Set(NULL);
-        bot->SetSelectionGuid(ObjectGuid());
-        ChangeEngine(BOT_STATE_NON_COMBAT);
-    }
-}
-
 void PlayerbotAI::ChangeEngine(BotState type)
 {
     Engine* engine = engines[type];
@@ -456,6 +419,11 @@ void PlayerbotAI::DoNextAction()
 
         bot->SetSpeedRate(MOVE_RUN, 1.0f, true);
         bot->SetSpeedRate(MOVE_RUN, GetMaster()->GetSpeedRate(MOVE_FLIGHT), true);
+    }
+
+    if (currentEngine != engines[BOT_STATE_DEAD] && !bot->isAlive())
+    {
+        ChangeEngine(BOT_STATE_DEAD);
     }
 }
 
@@ -943,7 +911,7 @@ bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target)
         }
         else
         {
-            Creature* creature = GetCreature(loot.guid);
+            Unit* creature = GetUnit(loot.guid);
             if (creature)
             {
                 targets.setUnitTarget(creature);
