@@ -651,7 +651,9 @@
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\CurrentCcTargetValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\CurrentTargetValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\DpsTargetValue.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\DuelTargetValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\GrindTargetValue.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\values\InvalidTargetValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\ItemCountValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\ItemForSpellValue.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\values\LeastHpTargetValue.cpp" />
@@ -1103,9 +1105,11 @@
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\CurrentTargetValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\DistanceValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\DpsTargetValue.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\DuelTargetValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\GrindTargetValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\HasAvailableLootValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\HasTotemValue.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\values\InvalidTargetValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\IsBehindValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\IsMovingValue.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\values\ItemCountValue.h" />

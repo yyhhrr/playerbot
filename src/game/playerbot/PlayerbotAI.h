@@ -82,14 +82,12 @@ public:
 	virtual ~PlayerbotAI();
 
 public:
-	virtual void UpdateAI(uint32 elapsed);
 	virtual void UpdateAIInternal(uint32 elapsed);
     void HandleCommand(uint32 type, const string& text, Player& fromPlayer);
 	void HandleBotOutgoingPacket(const WorldPacket& packet);
     void HandleMasterIncomingPacket(const WorldPacket& packet);
     void HandleMasterOutgoingPacket(const WorldPacket& packet);
 	void HandleTeleportAck();
-    void ChangeActiveEngineIfNecessary();
     void ChangeEngine(BotState type);
     void DoNextAction();
     void DoSpecificAction(string name);

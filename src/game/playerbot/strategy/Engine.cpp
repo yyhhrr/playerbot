@@ -108,6 +108,8 @@ void Engine::Init()
 
 bool Engine::DoNextAction(Unit* unit, int depth)
 {
+    LogAction("--- AI Tick ---");
+
     bool actionExecuted = false;
     ActionBasket* basket = NULL;
 
