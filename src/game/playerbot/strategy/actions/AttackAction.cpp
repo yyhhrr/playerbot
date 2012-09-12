@@ -26,7 +26,7 @@ bool AttackMyTargetAction::Execute(Event event)
         return false;
     }
 
-    return Attack(ai->GetCreature(guid));
+    return Attack(ai->GetUnit(guid));
 }
 
 bool AttackAction::Attack(Unit* target)
@@ -83,5 +83,16 @@ bool AttackAction::Attack(Unit* target)
     }
 
     bot->Attack(target, true);
+    ai->ChangeEngine(BOT_STATE_COMBAT);
     return true;
+}
+
+bool AttackDuelOpponentAction::isUseful()
+{
+    return AI_VALUE(Unit*, "duel target");
+}
+
+bool AttackDuelOpponentAction::Execute(Event event)
+{
+    return Attack(AI_VALUE(Unit*, "duel target"));
 }
