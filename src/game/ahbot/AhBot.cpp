@@ -399,16 +399,20 @@ void AhBot::Expire(int auction)
     AuctionHouseObject::AuctionEntryMap const& auctions = auctionHouse->GetAuctions();
     AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions.begin();
 
+    int count = 0;
     while (itr != auctions.end())
     {
-        if (itr->second->owner == sAhBotConfig.guid)
+        if (IsBotAuction(itr->second->owner))
+        {
             itr->second->expireTime = sWorld.GetGameTime();
+            count++;
+        }
 
         ++itr;
     }
 
     CharacterDatabase.PExecute("DELETE FROM ahbot_category");
-    sLog.outString("AhBot's auctions marked as expired in auction %d", auctionIds[auction]);
+    sLog.outString("%d auctions marked as expired in auction %d", count, auctionIds[auction]);
 }
 
 void AhBot::AddToHistory(AuctionEntry* entry)
