@@ -686,7 +686,14 @@ void PlayerbotFactory::InitAvailableSpells()
         if (!co ||co->trainer_type != TRAINER_TYPE_CLASS || co->trainer_class != bot->getClass())
             continue;
 
-		TrainerSpellData const* trainer_spells = sObjectMgr.GetNpcTrainerTemplateSpells(co->trainerId);
+        uint32 trainerId = co->trainerId;
+        if (!trainerId)
+            trainerId = co->Entry;
+
+		TrainerSpellData const* trainer_spells = sObjectMgr.GetNpcTrainerTemplateSpells(trainerId);
+        if (!trainer_spells)
+            trainer_spells = sObjectMgr.GetNpcTrainerSpells(trainerId);
+
         if (!trainer_spells)
             continue;
 
@@ -698,6 +705,8 @@ void PlayerbotFactory::InitAvailableSpells()
                 continue;
 
 			bot->CastSpell(bot, tSpell->spell, true);
+            else
+                ai->CastSpell(tSpell->spell, bot);
         }
     }
 }
