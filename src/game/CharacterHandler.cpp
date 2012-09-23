@@ -140,11 +140,13 @@ class CharacterHandler
                 delete holder;
                 return;
             }
-            session->HandlePlayerLogin((LoginQueryHolder*)holder);
 
             // playerbot mod
             ObjectGuid guid = ((LoginQueryHolder*)holder)->GetGuid();
-            Player* player = sObjectMgr.GetPlayer(guid);
+
+            session->HandlePlayerLogin((LoginQueryHolder*)holder); // this deletes holder
+
+            Player* player = sObjectMgr.GetPlayer(guid, true);
             if (player && !player->GetPlayerbotAI())
             {
                 player->SetPlayerbotMgr(new PlayerbotMgr(player));
