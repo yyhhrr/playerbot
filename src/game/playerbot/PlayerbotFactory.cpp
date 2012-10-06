@@ -82,7 +82,7 @@ void PlayerbotFactory::InitPet()
         pet = new Pet(HUNTER_PET);
 
 		vector<uint32> ids;
-        for (uint32 id = 0; id < sCreatureStorage.MaxEntry; ++id)
+        for (uint32 id = 0; id < sCreatureStorage.GetMaxEntry(); ++id)
         {
             CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(id);
             if (!co || !co->isTameable())
@@ -399,7 +399,7 @@ void PlayerbotFactory::InitEquipment()
 
         do
         {
-            for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+            for (uint32 itemId = 0; itemId < sItemStorage.GetMaxEntry(); ++itemId)
             {
                 ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
                 if (!proto)
@@ -482,7 +482,7 @@ void PlayerbotFactory::InitSecondEquipmentSet()
 
     do
     {
-        for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+        for (uint32 itemId = 0; itemId < sItemStorage.GetMaxEntry(); ++itemId)
         {
             ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
             if (!proto)
@@ -701,7 +701,7 @@ void PlayerbotFactory::InitAvailableSpells()
 {
     bot->learnDefaultSpells();
 
-    for (uint32 id = 0; id < sCreatureStorage.MaxEntry; ++id)
+    for (uint32 id = 0; id < sCreatureStorage.GetMaxEntry(); ++id)
     {
         CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(id);
         if (!co ||co->trainer_type != TRAINER_TYPE_CLASS || co->trainer_class != bot->getClass())
@@ -955,7 +955,7 @@ void PlayerbotFactory::InitMounts()
 void PlayerbotFactory::InitPotions()
 {
     map<uint32, vector<uint32> > items;
-    for (uint32 itemId = 0; itemId < sItemStorage.MaxEntry; ++itemId)
+    for (uint32 itemId = 0; itemId < sItemStorage.GetMaxEntry(); ++itemId)
     {
         ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemId);
         if (!proto)
