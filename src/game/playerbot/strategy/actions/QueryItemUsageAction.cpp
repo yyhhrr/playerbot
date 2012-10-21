@@ -126,7 +126,7 @@ void QueryItemUsageAction::QueryQuestItem(uint32 itemId)
         QuestStatus status = bot->GetQuestStatus(questId);
         if (status == QUEST_STATUS_INCOMPLETE || (status == QUEST_STATE_COMPLETE && !bot->GetQuestRewardStatus(questId)))
         {
-            QuestStatusData const& questStatus = i->second;
+            QuestStatusData& questStatus = i->second;
             QueryQuestItem(itemId, questTemplate, &questStatus);
         }
     }

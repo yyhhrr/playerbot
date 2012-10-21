@@ -671,7 +671,7 @@ void PlayerbotAI::TellMaster(string text)
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
     master->GetSession()->SendPacket(&data);
 
-    if (!bot->isMoving() && !bot->IsInCombat() && bot->GetMapId() == master->GetMapId())
+    if (!bot->isMoving() && !bot->isInCombat() && bot->GetMapId() == master->GetMapId())
     {
         if (!bot->isInFront(master, sPlayerbotAIConfig.reactDistance, M_PI / 2))
             bot->SetFacingTo(bot->GetAngle(master));
@@ -818,7 +818,7 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target, bool checkHasSpell)
     if (!spellInfo)
         return false;
 
-    if (target->IsImmuneToSpell(spellInfo))
+    if (target->IsImmuneToSpell(spellInfo, target == bot))
         return false;
 
     ObjectGuid oldSel = bot->GetSelectionGuid();
@@ -1003,7 +1003,7 @@ bool PlayerbotAI::IsInterruptableSpellCasting(Unit* target, string spell)
     if (!spellInfo)
         return false;
 
-    if (target->IsImmuneToSpell(spellInfo))
+    if (target->IsImmuneToSpell(spellInfo, false))
         return false;
 
     for (int32 i = EFFECT_INDEX_0; i <= EFFECT_INDEX_2; i++)
@@ -1012,7 +1012,7 @@ bool PlayerbotAI::IsInterruptableSpellCasting(Unit* target, string spell)
             return true;
 
         if ((spellInfo->Effect[i] == SPELL_EFFECT_CANCEL_AURA || spellInfo->Effect[i] == SPELL_EFFECT_INTERRUPT_CAST) &&
-                !target->IsImmuneToSpellEffect(spellInfo, (SpellEffectIndex)i))
+                !target->IsImmuneToSpellEffect(spellInfo, (SpellEffectIndex)i, false))
             return true;
     }
 
