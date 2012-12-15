@@ -212,12 +212,12 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, uint32 mapId, float teleX, 
         WorldLocation loc = locs[index];
         loc.coord_x += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
         loc.coord_y += urand(0, sPlayerbotAIConfig.grindDistance) - sPlayerbotAIConfig.grindDistance / 2;
-        loc.coord_z = 0.05f + map->GetTerrain()->GetHeight(loc.coord_x, loc.coord_y, 10 + loc.coord_z, true, MAX_HEIGHT);
+        loc.coord_z = 0.05f + map->GetTerrain()->GetHeightStatic(loc.coord_x, loc.coord_y, 10 + loc.coord_z, true, MAX_HEIGHT);
         bot->TeleportTo(loc);
     }
     else
     {
-        teleZ = 0.05f + map->GetTerrain()->GetHeight(teleX, teleY, teleZ, true, MAX_HEIGHT);
+        teleZ = 0.05f + map->GetTerrain()->GetHeightStatic(teleX, teleY, teleZ, true, MAX_HEIGHT);
         bot->TeleportTo(mapId, teleX, teleY, teleZ, 0);
     }
 }
