@@ -17,8 +17,6 @@
  */
 
 #include "MotionMaster.h"
-#include "CreatureAISelector.h"
-#include "Creature.h"
 #include "ConfusedMovementGenerator.h"
 #include "FleeingMovementGenerator.h"
 #include "HomeMovementGenerator.h"
@@ -29,7 +27,11 @@
 #include "RandomMovementGenerator.h"
 #include "movement/MoveSpline.h"
 #include "movement/MoveSplineInit.h"
+#include "Map.h"
+#include "CreatureAISelector.h"
+#include "Creature.h"
 #include "CreatureLinkingMgr.h"
+#include "Pet.h"
 #include "DBCStores.h"
 
 #include <cassert>
@@ -486,7 +488,7 @@ void MotionMaster::MoveJump(float x, float y, float z, float horizontalSpeed, fl
 void MotionMaster::MoveFall()
 {
     // use larger distance for vmap height search than in most other cases
-    float tz = m_owner->GetTerrain()->GetHeight(m_owner->GetPositionX(), m_owner->GetPositionY(), m_owner->GetPositionZ(), true, MAX_FALL_DISTANCE);
+    float tz = m_owner->GetMap()->GetHeight(m_owner->GetPhaseMask(), m_owner->GetPositionX(), m_owner->GetPositionY(), m_owner->GetPositionZ());
     if (tz <= INVALID_HEIGHT)
     {
         DEBUG_LOG("MotionMaster::MoveFall: unable retrive a proper height at map %u (x: %f, y: %f, z: %f).",

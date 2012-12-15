@@ -408,15 +408,19 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadCreatureQuestRelationsCommand(char* args);
         bool HandleReloadCreatureQuestInvRelationsCommand(char* args);
         bool HandleReloadDbScriptStringCommand(char* args);
-        bool HandleReloadEventScriptsCommand(char* args);
+        bool HandleReloadDBScriptsOnEventCommand(char* args);
+        bool HandleReloadDBScriptsOnGossipCommand(char* args);
+        bool HandleReloadDBScriptsOnGoUseCommand(char* args);
+        bool HandleReloadDBScriptsOnQuestEndCommand(char* args);
+        bool HandleReloadDBScriptsOnQuestStartCommand(char* args);
+        bool HandleReloadDBScriptsOnSpellCommand(char* args);
+
         bool HandleReloadEventAITextsCommand(char* args);
         bool HandleReloadEventAISummonsCommand(char* args);
         bool HandleReloadEventAIScriptsCommand(char* args);
         bool HandleReloadGameGraveyardZoneCommand(char* args);
-        bool HandleReloadGameObjectScriptsCommand(char* args);
         bool HandleReloadGameTeleCommand(char* args);
         bool HandleReloadGossipMenuCommand(char* args);
-        bool HandleReloadGossipScriptsCommand(char* args);
         bool HandleReloadGOQuestRelationsCommand(char* args);
         bool HandleReloadGOQuestInvRelationsCommand(char* args);
         bool HandleReloadItemConvertCommand(char* args);
@@ -453,9 +457,7 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadPointsOfInterestCommand(char* args);
         bool HandleReloadSpellClickSpellsCommand(char* args);
         bool HandleReloadQuestAreaTriggersCommand(char* args);
-        bool HandleReloadQuestEndScriptsCommand(char* args);
         bool HandleReloadQuestPOICommand(char* args);
-        bool HandleReloadQuestStartScriptsCommand(char* args);
         bool HandleReloadQuestTemplateCommand(char* args);
         bool HandleReloadReservedNameCommand(char* args);
         bool HandleReloadReputationRewardRateCommand(char* args);
@@ -471,7 +473,6 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadSpellProcItemEnchantCommand(char* args);
         bool HandleReloadSpellBonusesCommand(char* args);
         bool HandleReloadSpellScriptTargetCommand(char* args);
-        bool HandleReloadSpellScriptsCommand(char* args);
         bool HandleReloadSpellTargetPositionCommand(char* args);
         bool HandleReloadSpellThreatsCommand(char* args);
         bool HandleReloadSpellPetAurasCommand(char* args);
@@ -739,8 +740,5 @@ class CliHandler : public ChatHandler
         void* m_callbackArg;
         Print* m_print;
 };
-
-
-
 
 #endif

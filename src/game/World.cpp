@@ -71,6 +71,8 @@
 
 INSTANTIATE_SINGLETON_1(World);
 
+extern void LoadGameObjectModelList();
+
 volatile bool World::m_stopEvent = false;
 uint8 World::m_ExitCode = SHUTDOWN_EXIT_CODE;
 volatile uint32 World::m_worldLoopCounter = 0;
@@ -1010,6 +1012,9 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading Game Object Templates...");     // must be after LoadPageTexts
     sObjectMgr.LoadGameobjectInfo();
 
+    sLog.outString("Loading GameObject models...");
+    LoadGameObjectModelList();
+
     sLog.outString("Loading Spell Chain Data...");
     sSpellMgr.LoadSpellChains();
 
@@ -1322,10 +1327,10 @@ void World::SetInitialWorldSettings()
     sScriptMgr.LoadDbScriptStrings();
 
     sLog.outString("Loading CreatureEventAI Texts...");
-    sEventAIMgr.LoadCreatureEventAI_Texts(false);       // false, will checked in LoadCreatureEventAI_Scripts
+    sEventAIMgr.LoadCreatureEventAI_Texts(false);           // false, will checked in LoadCreatureEventAI_Scripts
 
     sLog.outString("Loading CreatureEventAI Summons...");
-    sEventAIMgr.LoadCreatureEventAI_Summons(false);     // false, will checked in LoadCreatureEventAI_Scripts
+    sEventAIMgr.LoadCreatureEventAI_Summons(false);         // false, will checked in LoadCreatureEventAI_Scripts
 
     sLog.outString("Loading CreatureEventAI Scripts...");
     sEventAIMgr.LoadCreatureEventAI_Scripts();
