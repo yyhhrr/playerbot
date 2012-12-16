@@ -392,7 +392,7 @@ void PlayerbotAI::ChangeEngine(BotState type)
 
 void PlayerbotAI::DoNextAction()
 {
-    if (bot->IsBeingTeleported())
+    if (bot->IsBeingTeleported() || GetMaster()->IsBeingTeleported())
         return;
 
     Player* master = GetMaster();
