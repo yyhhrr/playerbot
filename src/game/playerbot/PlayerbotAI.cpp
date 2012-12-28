@@ -706,6 +706,9 @@ bool PlayerbotAI::HasAura(string name, Unit* unit)
         for (Unit::AuraList::iterator i = auras.begin(); i != auras.end(); i++)
         {
             Aura* aura = *i;
+            if (!aura)
+                continue;
+
             const string auraName = aura->GetSpellProto()->SpellName[0];
             if (auraName.empty() || auraName.length() != wnamepart.length() || !Utf8FitTo(auraName, wnamepart))
                 continue;
