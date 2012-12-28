@@ -52,6 +52,8 @@ patches-*
 # VS binaries output
 #
 bin/*
+*x64_Debug*
+*x64_Release*
 
 #
 # VS temporary files
