@@ -5,7 +5,6 @@
 #include "../../shared/Database/DBCStore.h"
 #include "RandomPlayerbotFactory.h"
 #include "../AccountMgr.h"
-#include "../../shared/SystemConfig.h"
 
 using namespace std;
 
@@ -269,7 +268,7 @@ void PlayerbotAIConfig::CreateRandomBots()
         sLog.outDetail("Account %s created for random bots", accountName.c_str());
     }
 
-    LoginDatabase.PExecute("UPDATE account SET expansion = '%u'", MAX_EXPANSION);
+    LoginDatabase.PExecute("UPDATE account SET expansion = '%u'", 2);
 
     int totalRandomBotChars = 0;
     for (int accountNumber = 0; accountNumber < randomBotAccountCount; ++accountNumber)
