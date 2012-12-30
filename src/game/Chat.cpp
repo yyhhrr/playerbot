@@ -826,7 +826,8 @@ ChatCommand* ChatHandler::getCommandTable()
         { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
         // Playerbot mod
         { "bot",            SEC_PLAYER,         false, &ChatHandler::HandlePlayerbotCommand,           "", NULL },
-        { "ahbot",          SEC_GAMEMASTER,     true, &ChatHandler::HandleAhBotCommand,               "", NULL },
+        { "rndbot",         SEC_CONSOLE,        true, &ChatHandler::HandlePlayerbotConsoleCommand,     "", NULL },
+        { "ahbot",          SEC_GAMEMASTER,     true, &ChatHandler::HandleAhBotCommand,                "", NULL },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
