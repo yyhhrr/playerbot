@@ -422,6 +422,7 @@
     <ClCompile Include="..\..\src\game\SkillExtraItems.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\strategy\actions\WhoAction.cpp" />
     <ClCompile Include="..\..\src\game\playerbot\PlayerbotSecurity.cpp" />
+    <ClCompile Include="..\..\src\game\playerbot\strategy\actions\LfgUpdateAction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\ahbot\AhBot.h" />
@@ -891,5 +892,6 @@
     <ClInclude Include="..\..\src\game\SkillExtraItems.h" />
     <ClInclude Include="..\..\src\game\playerbot\strategy\actions\WhoAction.h" />
     <ClInclude Include="..\..\src\game\playerbot\PlayerbotSecurity.h" />
+    <ClInclude Include="..\..\src\game\playerbot\strategy\actions\LfgUpdateAction.h" />
   </ItemGroup>
 </Project>
