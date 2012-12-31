@@ -320,6 +320,7 @@ class MANGOS_DLL_SPEC Group
 
         // ai playerbot mod
         ObjectGuid GetTargetIcon(int index) { return m_targetIcons[index]; }
+        std::vector<Roll*>& GetRolls() { return RollId; }
         // end
 
     protected:
