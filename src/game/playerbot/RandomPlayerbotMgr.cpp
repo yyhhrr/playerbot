@@ -541,7 +541,7 @@ bool ChatHandler::HandlePlayerbotConsoleCommand(char* args)
 
     if (!args || !*args)
     {
-        sLog.outError("Usage: rndbot reset");
+        sLog.outError("Usage: rndbot reset/init/update");
         return false;
     }
 
@@ -554,7 +554,7 @@ bool ChatHandler::HandlePlayerbotConsoleCommand(char* args)
         return true;
     }
 
-    if (cmd == "init")
+    if (cmd == "init" || cmd == "update")
     {
 		RandomPlayerbotMgr mgr(NULL);
 		sLog.outString("Randomizing bots for %d accounts", sPlayerbotAIConfig.randomBotAccounts.size());
@@ -573,8 +573,17 @@ bool ChatHandler::HandlePlayerbotConsoleCommand(char* args)
                     if (!bot || bot->GetGroup())
                         continue;
 
-                    sLog.outDetail("Randomizing bot %s for account %u", bot->GetName(), account);
-                    mgr.RandomizeFirst(bot);
+                    if (cmd == "init")
+                    {
+                        sLog.outDetail("Randomizing bot %s for account %u", bot->GetName(), account);
+                        mgr.RandomizeFirst(bot);
+                    }
+                    else
+                    {
+                        sLog.outDetail("Updating bot %s for account %u", bot->GetName(), account);
+                        bot->SetLevel(bot->getLevel() - 1);
+                        mgr.IncreaseLevel(bot);
+                    }
                     uint32 randomTime = urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomRandomizeTime);
                     CharacterDatabase.PExecute("update ai_playerbot_random_bots set validIn = '%u' where event = 'randomize' and bot = '%u'",
                             randomTime, bot->GetGUIDLow());
