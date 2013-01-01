@@ -96,6 +96,7 @@ int AiFactory::GetPlayerSpecTab(Player* bot)
     return tab;
 }
 
+
 void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const facade, Engine* engine)
 {
     int tab = GetPlayerSpecTab(player);
