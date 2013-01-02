@@ -92,7 +92,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
 {
     int tab = GetPlayerSpecTab(player);
 
-    engine->addStrategies("flee", "attack weak", "racials", "chat", "default", "aoe", "potions", "cast time", "conserve mana", "duel", NULL);
+    engine->addStrategies("attack weak", "racials", "chat", "default", "aoe", "potions", "cast time", "conserve mana", "duel", NULL);
 
     switch (player->getClass())
     {
@@ -101,6 +101,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
                 engine->addStrategies("dps", "threat", NULL);
             else
                 engine->addStrategy("heal");
+
+            engine->addStrategy("flee");
             break;
         case CLASS_MAGE:
             if (tab == 0)
@@ -109,6 +111,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
                 engine->addStrategies("fire", "fire aoe", "threat", NULL);
             else
                 engine->addStrategies("frost", "frost aoe", "threat", NULL);
+
+            engine->addStrategy("flee");
             break;
         case CLASS_WARRIOR:
             if (tab == 2)
@@ -149,6 +153,8 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
                 engine->addStrategies("tank", "threat", NULL);
             else
                 engine->addStrategies("dps", "threat", NULL);
+
+            engine->addStrategy("flee");
             break;
     }
 
