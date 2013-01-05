@@ -125,7 +125,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
         targetSelected = true;
     }
 
-    if (!targetSelected && item->GetProto()->Class != ITEM_CLASS_CONSUMABLE)
+    if (!targetSelected && item->GetProto()->Class != ITEM_CLASS_CONSUMABLE && master)
     {
         ObjectGuid masterSelection = master->GetSelectionGuid();
         if (masterSelection)

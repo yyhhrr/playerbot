@@ -356,10 +356,9 @@ void PlayerbotAI::ChangeEngine(BotState type)
 
 void PlayerbotAI::DoNextAction()
 {
-    if (bot->IsBeingTeleported() || GetMaster()->IsBeingTeleported())
+    if (bot->IsBeingTeleported() || (GetMaster() && GetMaster()->IsBeingTeleported()))
         return;
 
-    Player* master = GetMaster();
     bot->UpdateUnderwaterState(bot->GetMap(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
     bot->CheckAreaExploreAndOutdoor();
 
@@ -603,6 +602,9 @@ void PlayerbotAI::TellMaster(string text, PlayerbotSecurityLevel securityLevel)
         return;
 
     Player* master = GetMaster();
+
+    if (!master)
+        return;
 
     WorldPacket data(SMSG_MESSAGECHAT, 1024);
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
