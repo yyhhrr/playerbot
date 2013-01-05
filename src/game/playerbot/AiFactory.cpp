@@ -159,7 +159,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
     }
 
     Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
+    if (master && master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
     {
         engine->addStrategy("dps");
         if (sPlayerbotAIConfig.randomBotGrinding)
@@ -195,7 +195,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
             "default", "quest", "loot", "gather", "duel", "emote", NULL);
 
     Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
+    if (master && master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
     {
         nonCombatEngine->addStrategies("grind", "move random", NULL);
         nonCombatEngine->removeStrategy("loot");
@@ -215,7 +215,7 @@ void AiFactory::AddDefaultDeadStrategies(Player* player, PlayerbotAI* const faca
 {
     deadEngine->addStrategies("dead", "stay", "chat", "default", "follow master", NULL);
     Player* master = facade->GetMaster();
-    if (master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
+    if (master && master->GetRandomPlayerbotMgr()->IsRandomBot(player) && !player->GetGroup())
     {
         deadEngine->removeStrategy("follow master");
     }

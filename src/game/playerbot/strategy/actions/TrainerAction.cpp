@@ -4,7 +4,7 @@
 
 using namespace ai;
 
-void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream& msg) 
+void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream& msg)
 {
     if (bot->GetMoney() < cost)
         return;
@@ -14,7 +14,7 @@ void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, ostringstream
     msg << " - learned";
 }
 
-void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds& spells) 
+void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds& spells)
 {
     TellHeader(creature);
 
@@ -48,7 +48,7 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds
         uint32 cost = uint32(floor(tSpell->spellCost *  fDiscountMod));
         totalCost += cost;
 
-        ostringstream out; 
+        ostringstream out;
         out << chat->formatSpell(pSpellInfo) << chat->formatMoney(cost);
 
         if (action && (spells.empty() || spells.find(tSpell->spell) != spells.end()))
@@ -64,7 +64,10 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds
 bool TrainerAction::Execute(Event event)
 {
     string text = event.getParam();
-    
+
+    if (!master)
+        return false;
+
     Creature *creature = ai->GetCreature(master->GetSelectionGuid());
     if (!creature)
         return false;
@@ -85,7 +88,7 @@ bool TrainerAction::Execute(Event event)
     }
 
     uint32 spell = chat->parseSpell(text);
-    SpellIds spells; 
+    SpellIds spells;
     if (spell)
         spells.insert(spell);
 
@@ -97,7 +100,7 @@ bool TrainerAction::Execute(Event event)
     return true;
 }
 
-void TrainerAction::TellHeader(Creature* creature) 
+void TrainerAction::TellHeader(Creature* creature)
 {
     ostringstream out; out << "--- can learn from " << creature->GetName() << " ---";
     ai->TellMaster(out);
