@@ -69,6 +69,7 @@
 #include "Calendar.h"
 #include "ahbot/AhBot.h"
 #include "playerbot/PlayerbotAIConfig.h"
+#include "playerbot/RandomPlayerbotMgr.h"
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -1543,6 +1544,10 @@ void World::Update(uint32 diff)
         sAuctionBot.Update();
         m_timers[WUPDATE_AHBOT].Reset();
     }
+
+    // playerbot mod
+    sRandomPlayerbotMgr.UpdateAI(diff);
+    // end of playerbot mod
 
     /// <li> Handle session updates
     UpdateSessions(diff);
