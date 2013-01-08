@@ -163,7 +163,9 @@ class CharacterHandler
             if (player && !player->GetPlayerbotAI())
             {
                 player->SetPlayerbotMgr(new PlayerbotMgr(player));
+                sRandomPlayerbotMgr.OnPlayerLogin(player);
             }
+            // end of playerbot mod
         }
 		// Playerbot mod: is different from the normal HandlePlayerLoginCallback in that it
         // sets up the bot's world session and also stores the pointer to the bot player in the master's
@@ -913,10 +915,6 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     pCurrChar->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ON_LOGIN, 1);
 
     delete holder;
-
-    // playerbot mod
-    sRandomPlayerbotMgr.OnPlayerLogin(pCurrChar);
-    // end of playerbot mod
 }
 
 void WorldSession::HandleSetFactionAtWarOpcode(WorldPacket& recv_data)
