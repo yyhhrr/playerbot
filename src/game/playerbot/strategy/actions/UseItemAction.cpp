@@ -135,6 +135,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
         }
     }
 
+    Player* master = GetMaster();
     if (!targetSelected && item->GetProto()->Class != ITEM_CLASS_CONSUMABLE && master)
     {
         ObjectGuid masterSelection = master->GetSelectionGuid();
