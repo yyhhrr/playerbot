@@ -161,9 +161,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
 
     if (sRandomPlayerbotMgr.IsRandomBot(player) && !player->GetGroup())
     {
-        engine->addStrategy("dps");
-        if (sPlayerbotAIConfig.randomBotGrinding)
-            engine->addStrategy("grind");
+        engine->ChangeStrategy(sPlayerbotAIConfig.randomBotCombatStrategies);
     }
 }
 
@@ -196,9 +194,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
 
     if (sRandomPlayerbotMgr.IsRandomBot(player) && !player->GetGroup())
     {
-        nonCombatEngine->addStrategies("grind", "move random", NULL);
-        nonCombatEngine->removeStrategy("loot");
-        nonCombatEngine->removeStrategy("gather");
+        nonCombatEngine->ChangeStrategy(sPlayerbotAIConfig.randomBotNonCombatStrategies);
     }
 
 }
