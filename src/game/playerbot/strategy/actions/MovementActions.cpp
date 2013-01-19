@@ -58,11 +58,6 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z)
     return true;
 }
 
-bool MovementAction::MoveTo(WorldObject* target)
-{
-    return MoveTo(target->GetMapId(), target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
-}
-
 bool MovementAction::MoveTo(Unit* target, float distance)
 {
     if (!IsMovingAllowed(target))
@@ -198,7 +193,12 @@ void MovementAction::WaitForReach(float distance)
 {
     float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN) + sPlayerbotAIConfig.reactDelay;
 
-    if (delay > sPlayerbotAIConfig.globalCoolDown)
+    if (delay > sPlayerbotAIConfig.maxWaitForMove)
+        delay = sPlayerbotAIConfig.maxWaitForMove;
+
+    Unit* target = *ai->GetAiObjectContext()->GetValue<Unit*>("current target");
+    Unit* player = *ai->GetAiObjectContext()->GetValue<Unit*>("enemy player target");
+    if ((player || target) && delay > sPlayerbotAIConfig.globalCoolDown)
         delay = sPlayerbotAIConfig.globalCoolDown;
 
     ai->SetNextCheckDelay((uint32)delay);
