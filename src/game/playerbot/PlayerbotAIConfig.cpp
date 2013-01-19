@@ -77,7 +77,6 @@ bool PlayerbotAIConfig::Initialize()
     LoadList<list<uint32> >(config.GetStringDefault("AiPlayerbot.RandomBotSpellIds", "54197"), randomBotSpellIds);
 
     randomBotAutologin = config.GetBoolDefault("AiPlayerbot.RandomBotAutologin", true);
-    randomBotGrinding = config.GetBoolDefault("AiPlayerbot.RandomBotGrinding", true);
     minRandomBots = config.GetIntDefault("AiPlayerbot.MinRandomBots", 50);
     maxRandomBots = config.GetIntDefault("AiPlayerbot.MaxRandomBots", 200);
     randomBotUpdateInterval = config.GetIntDefault("AiPlayerbot.RandomBotUpdateInterval", 60);
@@ -94,6 +93,9 @@ bool PlayerbotAIConfig::Initialize()
     randomBotJoinLfg = config.GetBoolDefault("AiPlayerbot.RandomBotJoinLfg", false);
     logInGroupOnly = config.GetBoolDefault("AiPlayerbot.LogInGroupOnly", true);
     fleeingEnabled = config.GetBoolDefault("AiPlayerbot.FleeingEnabled", true);
+
+    randomBotCombatStrategies = config.GetStringDefault("AiPlayerbot.RandomBotCombatStrategies", "+dps,+attack weak");
+    randomBotNonCombatStrategies = config.GetStringDefault("AiPlayerbot.RandomBotNonCombatStrategies", "+grind,+move random");
 
 
     if (config.GetBoolDefault("AiPlayerbot.SpellDump", false))
