@@ -23613,3 +23613,30 @@ AreaLockStatus Player::GetAreaTriggerLockStatus(AreaTrigger const* at, Difficult
 
     return AREA_LOCKSTATUS_OK;
 };
+
+uint8 Player::GetTalentsCount(uint8 tab)
+{
+    if (tab > 2)
+        return 0;
+
+    uint8 talentCount = 0;
+
+    uint32 const* talentTabIds = GetTalentTabPages(getClass());
+
+    uint32 talentTabId = talentTabIds[tab];
+
+    for (PlayerTalentMap::iterator iter = m_talents[m_activeSpec].begin(); iter != m_talents[m_activeSpec].end(); ++iter)
+    {
+        PlayerTalent talent = (*iter).second;
+
+        if (talent.state == PLAYERSPELL_REMOVED)
+            continue;
+
+        // skip another tab talents
+        if (talent.talentEntry->TalentTab != talentTabId)
+            continue;
+
+        talentCount += talent.currentRank + 1;
+    }
+    return talentCount;
+}

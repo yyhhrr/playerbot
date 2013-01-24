@@ -82,7 +82,7 @@ void PlayerbotHolder::OnBotLogin(Player * const bot)
         for (Group::MemberSlotList::const_iterator i = slots.begin(); i != slots.end(); ++i)
         {
             ObjectGuid member = i->guid;
-            uint32 account = sAccountMgr.GetPlayerAccountIdByGUID(member);
+            uint32 account = sObjectMgr.GetPlayerAccountIdByGUID(member);
             if (!sPlayerbotAIConfig.IsInRandomAccountList(account))
             {
                 groupValid = true;

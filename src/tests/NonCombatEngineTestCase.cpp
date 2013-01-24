@@ -305,6 +305,7 @@ protected:
         tickWithNoTarget();
 
         assertActions(">S:stay>Grind:attack anything");
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( NonCombatEngineTestCase );

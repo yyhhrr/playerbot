@@ -136,7 +136,7 @@ void PlayerbotFactory::InitPet()
             uint32 guid = map->GenerateLocalLowGuid(HIGHGUID_PET);
             CreatureCreatePos pos(map, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), bot->GetOrientation(), bot->GetPhaseMask());
             pet = new Pet(HUNTER_PET);
-            if (!pet->Create(guid, pos, co, 0, bot))
+            if (!pet->Create(guid, pos, co, 0))
             {
                 delete pet;
                 pet = NULL;
@@ -150,7 +150,21 @@ void PlayerbotFactory::InitPet()
             bot->SetPet(pet);
 
             sLog.outDetail("Bot %s: assign pet %d (%d level)", bot->GetName(), co->Entry, bot->getLevel());
-            pet->Summon();
+            
+            pet->SetSheath(SHEATH_STATE_MELEE);
+            pet->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
+            pet->SetUInt32Value(UNIT_FIELD_BYTES_0, 0x02020100);
+            pet->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP | UNIT_BYTE2_FLAG_SANCTUARY | UNIT_BYTE2_FLAG_PVP);
+            pet->SetByteFlag(UNIT_FIELD_BYTES_2, 2, UNIT_CAN_BE_RENAMED | UNIT_CAN_BE_ABANDONED);
+            pet->SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, 0);
+            pet->SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, sObjectMgr.GetXPForPetLevel(bot->getLevel()));
+            pet->SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, time(NULL));
+            pet->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+            pet->SetMaxPower(POWER_HAPPINESS, pet->GetCreatePowers(POWER_HAPPINESS));
+            pet->SetPower(POWER_HAPPINESS, HAPPINESS_LEVEL_SIZE);
+            bot->SetPet(pet);
+            pet->setFaction(bot->getFaction());            
+            
             pet->SavePetToDB(PET_SAVE_AS_CURRENT);
             break;
         }
@@ -764,9 +778,6 @@ void PlayerbotFactory::EnchantItem(Item* item)
 
             SpellItemEnchantmentEntry const* enchant = sSpellItemEnchantmentStore.LookupEntry(enchant_id);
             if (!enchant || enchant->slot != PERM_ENCHANTMENT_SLOT)
-                continue;
-
-            if (enchant->requiredLevel && enchant->requiredLevel > level)
                 continue;
 
             uint8 sp = 0, ap = 0, tank = 0;
