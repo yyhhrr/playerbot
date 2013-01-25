@@ -67,7 +67,8 @@ bool ChatHandler::HandleAhBotCommand(char* args)
 
 INSTANTIATE_SINGLETON_1( ahbot::AhBot );
 
-uint32 AhBot::auctionIds[MAX_AUCTIONS] = {2,6,7};
+uint32 AhBot::auctionIds[MAX_AUCTIONS] = {1,2,3,4,5,6,7};
+map<uint32, uint32> AhBot::factions;
 
 void AhBot::Init()
 {
@@ -76,7 +77,15 @@ void AhBot::Init()
     if (!sAhBotConfig.Initialize())
         return;
 
-    session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, 0, LOCALE_enUS);
+    factions[1] = 1;
+    factions[2] = 1;
+    factions[3] = 1;
+    factions[4] = 2;
+    factions[5] = 2;
+    factions[6] = 2;
+    factions[7] = 3;
+
+    session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
     player = new Player(session);
     if (!player->MinimalLoadFromDB(NULL, GetAHBplayerGUID()))
     {
@@ -479,7 +488,8 @@ void AhBot::HandleCommand(string command)
                 << "\n";
             for (int auction = 0; auction < MAX_AUCTIONS; auction++)
             {
-                out << "--- auction house " << auctionIds[auction] <<  "(money: "
+                const AuctionHouseEntry* ahEntry = sAuctionHouseStore.LookupEntry(auctionIds[auction]);
+                out << "--- auction house " << auctionIds[auction] << "(faction: " << factions[auctionIds[auction]] << ", money: "
                     << GetAvailableMoney(auctionIds[auction])
                     << ") ---\n";
 
@@ -564,7 +574,7 @@ void AhBot::AddToHistory(AuctionEntry* entry, uint32 won)
     CharacterDatabase.PExecute("INSERT INTO ahbot_history (buytime, item, bid, buyout, category, won, auction_house) "
         "VALUES ('%u', '%u', '%u', '%u', '%s', '%u', '%u')",
         now, entry->itemTemplate, entry->bid ? entry->bid : entry->startbid, entry->buyout,
-        category.c_str(), won, entry->auctionHouseEntry->houseId);
+        category.c_str(), won, factions[entry->auctionHouseEntry->houseId]);
 }
 
 uint32 AhBot::GetAnswerCount(uint32 itemId, uint32 auctionHouse, uint32 withinTime)
@@ -573,7 +583,7 @@ uint32 AhBot::GetAnswerCount(uint32 itemId, uint32 auctionHouse, uint32 withinTi
 
     QueryResult* results = CharacterDatabase.PQuery("SELECT COUNT(*) FROM ahbot_history WHERE "
         "item = '%u' AND won in (2, 3) AND auction_house = '%u' AND buytime > '%u'",
-        itemId, auctionHouse, time(0) - withinTime);
+        itemId, factions[auctionHouse], time(0) - withinTime);
     if (results)
     {
         do
@@ -602,9 +612,10 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
     data[AHBOT_WON_PLAYER] = 0;
     data[AHBOT_WON_SELF] = 0;
 
+    const AuctionHouseEntry* ahEntry = sAuctionHouseStore.LookupEntry(auctionHouse);
     QueryResult* results = CharacterDatabase.PQuery(
         "SELECT won, SUM(bid) FROM ahbot_history WHERE auction_house = '%u' GROUP BY won HAVING won > 0 ORDER BY won",
-        auctionHouse);
+        factions[auctionHouse]);
     if (results)
     {
         do
@@ -619,7 +630,7 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
 
     results = CharacterDatabase.PQuery(
         "SELECT max(buytime) FROM ahbot_history WHERE auction_house = '%u' AND won = '2'",
-        auctionHouse);
+        factions[auctionHouse]);
     if (results)
     {
         Field* fields = results->Fetch();
@@ -630,10 +641,6 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
 
         delete results;
     }
-
-    AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(auctionHouse);
-    if(!ahEntry)
-        return result;
 
     AuctionHouseObject::AuctionEntryMap * auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
     for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
