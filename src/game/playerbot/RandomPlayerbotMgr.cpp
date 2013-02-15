@@ -357,6 +357,7 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
     {
         PlayerbotChatHandler ch(bot);
         ch.revive(*bot);
+        bot->GetPlayerbotAI()->ResetStrategies();
     }
 
     bot->DurabilityRepairAll(false, 1.0f);
