@@ -20976,7 +20976,6 @@ AreaLockStatus Player::GetAreaTriggerLockStatus(AreaTrigger const* at, uint32& m
     return AREA_LOCKSTATUS_OK;
 };
 
-
 void Player::InitWowarmoryFeeds() {
     // Clear feeds
     m_wowarmory_feeds.clear();
@@ -21016,3 +21015,4 @@ void Player::CreateWowarmoryFeed(uint32 type, uint32 data, uint32 item_guid, uin
     sLog.outDebug("[Wowarmory]: create wowarmory feed (GUID: %u, type: %d, data: %u).", feed.guid, feed.type, feed.data);
     m_wowarmory_feeds.push_back(feed);
 }
+

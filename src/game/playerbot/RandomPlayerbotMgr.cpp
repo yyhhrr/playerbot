@@ -8,6 +8,7 @@
 #include "../../shared/Database/DatabaseEnv.h"
 #include "PlayerbotAI.h"
 #include "../Player.h"
+#include "RandomPlayerbotMgr.h"
 
 INSTANTIATE_SINGLETON_1(RandomPlayerbotMgr);
 
@@ -200,7 +201,6 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, vector<WorldLocation> &locs
 
         const TerrainInfo * terrain = map->GetTerrain();
         if (!terrain->IsOutdoors(x, y, z) ||
-                terrain->IsAboveWater(x, y, z) ||
                 terrain->IsUnderWater(x, y, z) ||
                 terrain->IsInWater(x, y, z))
             continue;
@@ -665,3 +665,4 @@ void RandomPlayerbotMgr::PrintStats()
         sLog.outString("%d..%d: %d alliance, %d horde", from, to, alliance[i], horde[i]);
     }
 }
+

@@ -52,34 +52,15 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
     return new AiObjectContext(ai);
 }
 
-int AiFactory::GetPlayerSpecTab(Player* player)
+int AiFactory::GetPlayerSpecTab(Player* bot)
 {
-    map<uint32,int32> tabs;
-    for(uint32 i = 0;i < uint32(3);i++)
-        tabs[i] = 0;
+    map<uint32, int32> tabs = GetPlayerSpecTabs(bot);
 
-    uint8 activeSpec = player->GetActiveSpec();
-    PlayerTalentMap talents = player->GetTalentMap(activeSpec);
-    for(PlayerTalentMap::iterator iter = talents.begin();iter != talents.end();++iter){
-        if(iter->second.state == PLAYERSPELL_REMOVED)
-            continue;
-
-        const TalentEntry *talentInfo = iter->second.talentEntry;
-        if(!talentInfo)
-            continue;
-
-        const TalentTabEntry *talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
-        if(!talentTabInfo)
-            continue;
-
-        if((player->getClassMask() & talentTabInfo->ClassMask) == 0)
-            continue;
-
-        tabs[talentTabInfo->tabpage]++;
-    }
     int tab = -1, max = 0;
-    for(uint32 i = 0;i < uint32(3);i++){
-        if(tab == -1 || max < tabs[i]){
+    for (uint32 i = 0; i < uint32(3); i++)
+    {
+        if (tab == -1 || max < tabs[i])
+        {
             tab = i;
             max = tabs[i];
         }
@@ -88,6 +69,40 @@ int AiFactory::GetPlayerSpecTab(Player* player)
     return tab;
 }
 
+map<uint32, int32> AiFactory::GetPlayerSpecTabs(Player* bot)
+{
+    map<uint32, int32> tabs;
+    for (uint32 i = 0; i < uint32(3); i++)
+        tabs[i] = 0;
+
+    uint32 classMask = bot->getClassMask();
+    for (uint32 i = 0; i < sTalentStore.GetNumRows() && bot->GetFreeTalentPoints(); ++i)
+    {
+        TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
+        if (!talentInfo)
+            continue;
+
+        TalentTabEntry const *talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
+        if (!talentTabInfo)
+            continue;
+
+        if ((classMask & talentTabInfo->ClassMask) == 0)
+            continue;
+
+        for (int rank = MAX_TALENT_RANK - 1; rank >= 0; --rank)
+        {
+            if (!talentInfo->RankID[rank])
+                continue;
+
+            uint32 spellid = talentInfo->RankID[rank];
+            if (spellid && bot->HasSpell(spellid))
+                tabs[talentTabInfo->tabpage]++;
+
+        }
+    }
+
+    return tabs;
+}
 
 void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const facade, Engine* engine)
 {
