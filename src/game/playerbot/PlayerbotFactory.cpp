@@ -16,8 +16,6 @@ uint32 PlayerbotFactory::tradeSkills[] =
     SKILL_ALCHEMY,
     SKILL_ENCHANTING,
     SKILL_SKINNING,
-    SKILL_JEWELCRAFTING,
-    SKILL_INSCRIPTION,
     SKILL_TAILORING,
     SKILL_LEATHERWORKING,
     SKILL_ENGINEERING,
@@ -53,7 +51,7 @@ void PlayerbotFactory::Randomize(bool incremental)
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
     bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 
-    bot->resetTalents(true, true);
+    bot->resetTalents(true);
     ClearSpells();
     ClearInventory();
     bot->SaveToDB();
@@ -136,7 +134,7 @@ void PlayerbotFactory::InitPet()
             uint32 guid = map->GenerateLocalLowGuid(HIGHGUID_PET);
             CreatureCreatePos pos(map, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), bot->GetOrientation());
             pet = new Pet(HUNTER_PET);
-            if (!pet->Create(guid, pos, co, 0, bot))
+            if (!pet->Create(guid, pos, co, 0))
             {
                 delete pet;
                 pet = NULL;
@@ -150,7 +148,6 @@ void PlayerbotFactory::InitPet()
             bot->SetPet(pet);
 
             sLog.outDetail("Bot %s: assign pet %d (%d level)", bot->GetName(), co->Entry, bot->getLevel());
-            pet->Summon();
             pet->SavePetToDB(PET_SAVE_AS_CURRENT);
             break;
         }
@@ -237,7 +234,7 @@ private:
             return true;
 
         ItemPrototype const* proto = sItemStorage.LookupEntry<ItemPrototype>(id);
-        if (proto->Class == ITEM_CLASS_JUNK || proto->Class == ITEM_CLASS_REAGENT)
+        if (proto->Class == ITEM_CLASS_REAGENT)
             return true;
 
         return false;
@@ -521,7 +518,7 @@ void PlayerbotFactory::InitEquipment(bool incremental)
             if (oldItem)
             {
                 bot->RemoveItem(INVENTORY_SLOT_BAG_0, slot, true);
-                oldItem->DestroyForPlayer(bot, false);
+                oldItem->DestroyForPlayer(bot);
             }
 
             Item* newItem = bot->EquipNewItem(dest, newItemId, true);
@@ -724,9 +721,6 @@ void PlayerbotFactory::EnchantItem(Item* item)
             if (!enchant || enchant->slot != PERM_ENCHANTMENT_SLOT)
                 continue;
 
-            if (enchant->requiredLevel && enchant->requiredLevel > level)
-                continue;
-
             uint8 sp = 0, ap = 0, tank = 0;
             for (int i = 0; i < 3; ++i)
             {
@@ -812,21 +806,13 @@ void PlayerbotFactory::InitTradeSkills()
     SetRandomSkill(SKILL_FISHING);
     SetRandomSkill(SKILL_COOKING);
 
-    switch (urand(0, 3))
+    switch (urand(0, 1))
     {
     case 0:
         SetRandomSkill(SKILL_HERBALISM);
         SetRandomSkill(SKILL_ALCHEMY);
         break;
     case 1:
-        SetRandomSkill(SKILL_HERBALISM);
-        SetRandomSkill(SKILL_INSCRIPTION);
-        break;
-    case 2:
-        SetRandomSkill(SKILL_MINING);
-        SetRandomSkill(SKILL_JEWELCRAFTING);
-        break;
-    case 3:
         SetRandomSkill(firstSkills[urand(0, firstSkills.size() - 1)]);
         SetRandomSkill(secondSkills[urand(0, secondSkills.size() - 1)]);
         break;
@@ -929,8 +915,6 @@ void PlayerbotFactory::InitAvailableSpells()
                 continue;
 
 			bot->CastSpell(bot, tSpell->spell, true);
-            else
-                ai->CastSpell(tSpell->spell, bot);
         }
     }
 }
@@ -992,15 +976,6 @@ void PlayerbotFactory::InitTalents(uint32 specNo)
         }
 
         freePoints = bot->GetFreeTalentPoints();
-    }
-
-    for (uint32 i = 0; i < MAX_TALENT_SPEC_COUNT; ++i)
-    {
-        for (PlayerTalentMap::iterator itr = bot->GetTalentMap(i).begin(); itr != bot->GetTalentMap(i).end(); ++itr)
-        {
-            if (itr->second.state != PLAYERSPELL_REMOVED)
-                itr->second.state = PLAYERSPELL_CHANGED;
-        }
     }
 }
 
@@ -1071,7 +1046,7 @@ void PlayerbotFactory::InitQuests()
                     !bot->SatisfyQuestStatus(quest, false))
                 continue;
 
-            if (quest->IsDailyOrWeekly() || quest->IsRepeatable() || quest->IsMonthly())
+            if (quest->IsRepeatable())
                 continue;
 
             bot->SetQuestStatus(questId, QUEST_STATUS_COMPLETE);

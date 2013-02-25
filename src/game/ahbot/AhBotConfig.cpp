@@ -1,6 +1,6 @@
 #include "../pchdef.h"
 #include "AhBotConfig.h"
-#include "Policies/SingletonImp.h"
+#include "Policies/Singleton.h"
 #include "SystemConfig.h"
 
 using namespace std;

@@ -351,7 +351,7 @@ bool WorldSession::Update(PacketFilter& updater)
             WorldSession* const pBotWorldSession = botPlayer->GetSession();
             while (pBotWorldSession->_recvQueue.next(packet))
             {
-                OpcodeHandler& opHandle = opcodeTable[packet->GetOpcode()];
+                OpcodeHandler const& opHandle = opcodeTable[packet->GetOpcode()];
                 (pBotWorldSession->*opHandle.handler)(*packet);
                 delete packet;
             }

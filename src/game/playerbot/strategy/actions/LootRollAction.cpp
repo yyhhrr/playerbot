@@ -38,8 +38,6 @@ bool LootRollAction::Execute(Event event)
             case ITEM_CLASS_ARMOR:
                 if (QueryItemUsage(proto))
                     vote = ROLL_NEED;
-                else if (bot->HasSkill(SKILL_ENCHANTING))
-                    vote = ROLL_DISENCHANT;
                 break;
             default:
                 if (IsLootAllowed(itemId))

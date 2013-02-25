@@ -156,7 +156,7 @@ void QueryItemUsageAction::QueryQuestItem(uint32 itemId)
 }
 
 
-void QueryItemUsageAction::QueryQuestItem(uint32 itemId, const Quest *questTemplate, QuestStatusData *questStatus)
+void QueryItemUsageAction::QueryQuestItem(uint32 itemId, const Quest *questTemplate, const QuestStatusData *questStatus)
 {
     for (int i = 0; i < QUEST_OBJECTIVES_COUNT; i++)
     {

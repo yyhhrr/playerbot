@@ -537,13 +537,16 @@ void AuctionHouseObject::Update()
         if (curTime > itr->second->expireTime)
         {
             ///- perform the transaction if there was bidder
+            if (itr->second->bid)
+            {
                 auctionbot.Won(itr->second);
                 itr->second->AuctionBidWinning();
+            }
             ///- cancel the auction if there was no bidder and clear the auction
             else
             {
                 sAuctionMgr.SendAuctionExpiredMail(itr->second);
-                    auctionbot.Expired(itr->second);
+                auctionbot.Expired(itr->second);
 
                 itr->second->DeleteFromDB();
                 sAuctionMgr.RemoveAItem(itr->second->itemGuidLow);

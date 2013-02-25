@@ -37,7 +37,7 @@ void TrainerAction::List(Creature* creature, TrainerSpellAction action, SpellIds
 
         uint32 reqLevel = 0;
 
-        TrainerSpellState state = bot->GetTrainerSpellState(tSpell);
+        TrainerSpellState state = bot->GetTrainerSpellState(tSpell, bot->getLevel());
         if (state != TRAINER_SPELL_GREEN)
             continue;
 

@@ -2,7 +2,7 @@
 #include "ItemBag.h"
 #include "AhBot.h"
 #include "../World.h"
-#include "Policies/SingletonImp.h"
+#include "Policies/Singleton.h"
 #include "Config/Config.h"
 #include "../Chat.h"
 #include "AhBotConfig.h"
@@ -85,7 +85,7 @@ void AhBot::Init()
     factions[6] = 2;
     factions[7] = 3;
 
-    session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, true, 0, LOCALE_enUS);
+    session = new WorldSession(sAhBotConfig.account, NULL, SEC_PLAYER, 0, LOCALE_enUS);
     player = new Player(session);
     if (!player->MinimalLoadFromDB(NULL, GetAHBplayerGUID()))
     {
@@ -568,11 +568,11 @@ void AhBot::Expire(int auction)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr.GetAuctionsMap(ahEntry);
 
-    AuctionHouseObject::AuctionEntryMap * auctions = auctionHouse->GetAuctions();
-    AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions->begin();
+    AuctionHouseObject::AuctionEntryMap const& auctions = auctionHouse->GetAuctions();
+    AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctions.begin();
 
     int count = 0;
-    while (itr != auctions->end())
+    while (itr != auctions.end())
     {
         if (IsBotAuction(itr->second->owner))
         {
@@ -707,8 +707,8 @@ uint32 AhBot::GetAvailableMoney(uint32 auctionHouse)
         delete results;
     }
 
-    AuctionHouseObject::AuctionEntryMap * auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
-    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap->begin(); itr != auctionEntryMap->end(); ++itr)
+    AuctionHouseObject::AuctionEntryMap const& auctionEntryMap = sAuctionMgr.GetAuctionsMap(ahEntry)->GetAuctions();
+    for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionEntryMap.begin(); itr != auctionEntryMap.end(); ++itr)
     {
         AuctionEntry *entry = itr->second;
         if (!IsBotAuction(entry->bidder))

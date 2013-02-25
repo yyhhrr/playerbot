@@ -54,6 +54,23 @@ AiObjectContext* AiFactory::createAiObjectContext(Player* player, PlayerbotAI* a
 
 int AiFactory::GetPlayerSpecTab(Player* bot)
 {
+    map<uint32, int32> tabs = GetPlayerSpecTabs(bot);
+
+    int tab = -1, max = 0;
+    for (uint32 i = 0; i < uint32(3); i++)
+    {
+        if (tab == -1 || max < tabs[i])
+        {
+            tab = i;
+            max = tabs[i];
+        }
+    }
+
+    return tab;
+}
+
+map<uint32, int32> AiFactory::GetPlayerSpecTabs(Player* bot)
+{
     map<uint32, int32> tabs;
     for (uint32 i = 0; i < uint32(3); i++)
         tabs[i] = 0;
@@ -84,17 +101,7 @@ int AiFactory::GetPlayerSpecTab(Player* bot)
         }
     }
 
-    int tab = -1, max = 0;
-    for (uint32 i = 0; i < uint32(3); i++)
-    {
-        if (tab == -1 || max < tabs[i])
-        {
-            tab = i;
-            max = tabs[i];
-        }
-    }
-
-    return tab;
+    return tabs;
 }
 
 

@@ -1,6 +1,7 @@
 #include "../pchdef.h"
 #include "playerbot.h"
 #include "ChatHelper.h"
+#include "AiFactory.h"
 
 using namespace ai;
 using namespace std;
@@ -396,9 +397,10 @@ string ChatHelper::formatClass(Player* player, int spec)
     ostringstream out;
     out << specs[cls][spec] << " (";
 
-    int c0 = (int)player->GetTalentsCount(0);
-    int c1 = (int)player->GetTalentsCount(1);
-    int c2 = (int)player->GetTalentsCount(2);
+    map<uint32, int32> tabs = AiFactory::GetPlayerSpecTabs(player);
+    int c0 = (int)tabs[0];
+    int c1 = (int)tabs[1];
+    int c2 = (int)tabs[2];
 
     out << (c0 ? "|h|cff00ff00" : "") << c0 << "|h|cffffffff/";
     out << (c1 ? "|h|cff00ff00" : "") << c1 << "|h|cffffffff/";

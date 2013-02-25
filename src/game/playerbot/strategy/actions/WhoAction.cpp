@@ -46,7 +46,7 @@ bool WhoAction::Execute(Event event)
 
     if (needSlash)
     {
-        out << " gear (|h|cff00ff00" << bot->GetEquipGearScore(false, false) << "|h|cffffffff GS)";
+        out << " gear";
     }
 
     if (skills.empty())
@@ -54,8 +54,6 @@ bool WhoAction::Execute(Event event)
         skills[SKILL_ALCHEMY] = "Alchemy";
         skills[SKILL_ENCHANTING] = "Enchanting";
         skills[SKILL_SKINNING] = "Skinning";
-        skills[SKILL_JEWELCRAFTING] = "Jewelcrafting";
-        skills[SKILL_INSCRIPTION] = "Inscription";
         skills[SKILL_TAILORING] = "Tailoring";
         skills[SKILL_LEATHERWORKING] = "Leatherworking";
         skills[SKILL_ENGINEERING] = "Engineering";
