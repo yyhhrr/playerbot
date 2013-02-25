@@ -9,7 +9,6 @@
 #include "PlayerbotAI.h"
 #include "../Player.h"
 #include "RandomPlayerbotMgr.h"
-#include "Policies/SingletonImp.h"
 
 INSTANTIATE_SINGLETON_1(RandomPlayerbotMgr);
 

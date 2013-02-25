@@ -1,6 +1,5 @@
 #include "../pchdef.h"
 #include "PlayerbotAIConfig.h"
-#include "Policies/SingletonImp.h"
 #include "playerbot.h"
 #include "../../shared/Database/DBCStore.h"
 #include "RandomPlayerbotFactory.h"
