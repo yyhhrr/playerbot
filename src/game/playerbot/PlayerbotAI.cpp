@@ -666,7 +666,7 @@ void PlayerbotAI::TellMaster(string text, PlayerbotSecurityLevel securityLevel)
     bot->BuildPlayerChat(&data, *aiObjectContext->GetValue<ChatMsg>("chat"), text, LANG_UNIVERSAL);
     master->GetSession()->SendPacket(&data);
 
-    if (!bot->isMoving() && !bot->IsInCombat() && bot->GetMapId() == master->GetMapId())
+    if (!bot->isMoving() && !bot->isInCombat() && bot->GetMapId() == master->GetMapId())
     {
         if (!bot->isInFront(master, sPlayerbotAIConfig.sightDistance, M_PI / 2))
             bot->SetFacingTo(bot->GetAngle(master));
@@ -729,7 +729,7 @@ bool PlayerbotAI::HasAura(string name, Unit* unit)
 
     for (uint32 auraType = SPELL_AURA_BIND_SIGHT; auraType < TOTAL_AURAS; auraType++)
     {
-        Unit::AuraList& auras = unit->GetAurasByType((AuraType)auraType);
+        Unit::AuraList auras = unit->GetAurasByType((AuraType)auraType);
         for (Unit::AuraList::iterator i = auras.begin(); i != auras.end(); i++)
         {
             Aura* aura = *i;
@@ -816,7 +816,7 @@ bool PlayerbotAI::CanCastSpell(uint32 spellid, Unit* target, bool checkHasSpell)
     if (!spellInfo)
         return false;
 
-    if (target->IsImmuneToSpell(spellInfo))
+    if (target->IsImmuneToSpell(spellInfo, target == bot))
         return false;
 
     ObjectGuid oldSel = bot->GetSelectionGuid();
@@ -1004,7 +1004,7 @@ bool PlayerbotAI::IsInterruptableSpellCasting(Unit* target, string spell)
     if (!spellInfo)
         return false;
 
-    if (target->IsImmuneToSpell(spellInfo))
+    if (target->IsImmuneToSpell(spellInfo, false))
         return false;
 
     for (int32 i = EFFECT_INDEX_0; i <= EFFECT_INDEX_2; i++)
@@ -1013,7 +1013,7 @@ bool PlayerbotAI::IsInterruptableSpellCasting(Unit* target, string spell)
             return true;
 
         if ((spellInfo->Effect[i] == SPELL_EFFECT_CANCEL_AURA || spellInfo->Effect[i] == SPELL_EFFECT_INTERRUPT_CAST) &&
-                !target->IsImmuneToSpellEffect(spellInfo, (SpellEffectIndex)i))
+                !target->IsImmuneToSpellEffect(spellInfo, (SpellEffectIndex)i, false))
             return true;
     }
 
@@ -1024,7 +1024,7 @@ bool PlayerbotAI::HasAuraToDispel(Unit* target, uint32 dispelType)
 {
     for (uint32 type = SPELL_AURA_NONE; type < TOTAL_AURAS; ++type)
     {
-        Unit::AuraList& auras = target->GetAurasByType((AuraType)type);
+        Unit::AuraList const& auras = target->GetAurasByType((AuraType)type);
         for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
         {
             Aura* aura = *itr;

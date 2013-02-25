@@ -2291,6 +2291,8 @@ class MANGOS_DLL_SPEC Player : public Unit
         AreaLockStatus GetAreaTriggerLockStatus(AreaTrigger const* at, Difficulty difficulty, uint32& miscRequirement);
         void SendTransferAbortedByLockStatus(MapEntry const* mapEntry, AreaLockStatus lockStatus, uint32 miscRequirement = 0);
 
+        uint8 GetTalentsCount(uint8 tab);
+
         /*********************************************************/
         /***                   GROUP SYSTEM                    ***/
         /*********************************************************/

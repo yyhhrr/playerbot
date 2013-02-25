@@ -9,10 +9,6 @@ namespace ai
     public:
         LfgJoinAction(PlayerbotAI* ai, string name = "lfg join") : InventoryAction(ai, name) {}
         virtual bool Execute(Event event);
-
-    protected:
-        bool JoinProposal();
-        bool SetRoles();
     };
 
     class LfgAcceptAction : public LfgJoinAction {
