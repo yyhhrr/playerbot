@@ -838,15 +838,14 @@ uint32 Unit::DealDamage(Unit* pVictim, uint32 damage, CleanDamage const* cleanDa
 
             if (player_tap)                                 // PvP kill
             {
-                if (playerVictim->InBattleGround())
+                if (BattleGround* bg = playerVictim->GetBattleGround())
                 {
-                    if (BattleGround* bg = playerVictim->GetBattleGround())
-                        bg->HandleKillPlayer(playerVictim, player_tap);
+                    bg->HandleKillPlayer(playerVictim, player_tap);
                 }
                 else if (pVictim != this)
                 {
                     // selfkills are not handled in outdoor pvp scripts
-                    if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(player_tap->GetCachedZoneId()))
+                    if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(playerVictim->GetCachedZoneId()))
                         outdoorPvP->HandlePlayerKill(player_tap, playerVictim);
                 }
             }
@@ -1070,6 +1069,9 @@ void Unit::JustKilledCreature(Creature* victim, Player* responsiblePlayer)
     // Notify the outdoor pvp script
     if (OutdoorPvP* outdoorPvP = sOutdoorPvPMgr.GetScript(responsiblePlayer ? responsiblePlayer->GetCachedZoneId() : GetZoneId()))
         outdoorPvP->HandleCreatureDeath(victim);
+
+    // Start creature death script
+    GetMap()->ScriptsStart(sCreatureDeathScripts, victim->GetEntry(), victim, responsiblePlayer ? responsiblePlayer : this);
 
     if (victim->IsLinkingEventTrigger())
         victim->GetMap()->GetCreatureLinkingHolder()->DoCreatureLinkingEvent(LINKING_EVENT_DIE, victim);

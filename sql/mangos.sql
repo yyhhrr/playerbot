@@ -24,7 +24,7 @@ CREATE TABLE `db_version` (
   `version` varchar(120) default NULL,
   `creature_ai_version` varchar(120) default NULL,
   `cache_id` int(10) default '0',
-  `required_12344_01_mangos_command` bit(1) default NULL
+  `required_12363_02_mangos_npc_vendor_template` bit(1) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Used DB version notes';
 
 --
@@ -1433,7 +1433,7 @@ CREATE TABLE `dbscripts_on_creature_movement` (
 --
 -- Table structure of `dbscripts_on_event`, `dbscripts_on_go_use`, `dbscripts_on_go_template_use`,
 --                    `dbscripts_on_gossip`, `dbscripts_on_quest_end`, `dbscripts_on_quest_start`,
---                    `dbscripts_on_spell`
+--                    `dbscripts_on_spell`, `dbscripts_on_creature_death`
 DROP TABLE IF EXISTS dbscripts_on_event;
 CREATE TABLE dbscripts_on_event LIKE dbscripts_on_creature_movement;
 DROP TABLE IF EXISTS dbscripts_on_go_use;
@@ -1448,6 +1448,8 @@ DROP TABLE IF EXISTS dbscripts_on_quest_start;
 CREATE TABLE dbscripts_on_quest_start LIKE dbscripts_on_creature_movement;
 DROP TABLE IF EXISTS dbscripts_on_spell;
 CREATE TABLE dbscripts_on_spell LIKE dbscripts_on_creature_movement;
+DROP TABLE IF EXISTS dbscripts_on_creature_death;
+CREATE TABLE dbscripts_on_creature_death LIKE dbscripts_on_creature_movement;
 
 
 --
@@ -4208,6 +4210,7 @@ CREATE TABLE `npc_vendor` (
   `maxcount` tinyint(3) unsigned NOT NULL default '0',
   `incrtime` int(10) unsigned NOT NULL default '0',
   `ExtendedCost` mediumint(8) unsigned NOT NULL default '0',
+  `condition_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`entry`,`item`,`ExtendedCost`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Npc System';
 
@@ -4231,6 +4234,7 @@ CREATE TABLE `npc_vendor_template` (
   `maxcount` tinyint(3) unsigned NOT NULL default '0',
   `incrtime` int(10) unsigned NOT NULL default '0',
   `ExtendedCost` mediumint(8) unsigned NOT NULL default '0',
+  `condition_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`entry`,`item`,`ExtendedCost`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Npc System';
 
@@ -17742,6 +17746,7 @@ CREATE TABLE `spell_script_target` (
   `entry` mediumint(8) unsigned NOT NULL,
   `type` tinyint(3) unsigned NOT NULL default '0',
   `targetEntry` mediumint(8) unsigned NOT NULL default '0',
+  `inverseEffectMask` mediumint(8) unsigned NOT NULL default '0',
   UNIQUE KEY `entry_type_target` (`entry`,`type`,`targetEntry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Spell System';
 
