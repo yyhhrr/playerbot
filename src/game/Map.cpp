@@ -62,11 +62,10 @@ Map::~Map()
 
 void Map::LoadMapAndVMap(int gx, int gy)
 {
-    if (m_bLoadedGrids[gx][gx])
+    if (m_bLoadedGrids[gx][gy])
         return;
 
-    GridMap* pInfo = m_TerrainData->Load(gx, gy);
-    if (pInfo)
+    if (m_TerrainData->Load(gx, gy))
         m_bLoadedGrids[gx][gy] = true;
 }
 
@@ -784,7 +783,7 @@ bool Map::UnloadGrid(const uint32& x, const uint32& y, bool pForce)
         if (!pForce && ActiveObjectsNearGrid(x, y))
             return false;
 
-        DEBUG_LOG("Unloading grid[%u,%u] for map %u", x, y, i_id);
+        DEBUG_FILTER_LOG(LOG_FILTER_MAP_LOADING, "Unloading grid[%u,%u] for map %u", x, y, i_id);
         ObjectGridUnloader unloader(*grid);
 
         // Finish remove and delete all creatures with delayed remove before moving to respawn grids
@@ -813,7 +812,7 @@ bool Map::UnloadGrid(const uint32& x, const uint32& y, bool pForce)
         m_TerrainData->Unload(gx, gy);
     }
 
-    DEBUG_LOG("Unloading grid[%u,%u] for map %u finished", x, y, i_id);
+    DEBUG_FILTER_LOG(LOG_FILTER_MAP_LOADING, "Unloading grid[%u,%u] for map %u finished", x, y, i_id);
     return true;
 }
 
@@ -1602,8 +1601,8 @@ bool Map::ScriptsStart(ScriptMapMapName const& scripts, uint32 id, Object* sourc
         for (ScriptScheduleMap::const_iterator searchItr = m_scriptSchedule.begin(); searchItr != m_scriptSchedule.end(); ++searchItr)
         {
             if (searchItr->second.IsSameScript(scripts.first, id,
-                    execParams & SCRIPT_EXEC_PARAM_UNIQUE_BY_SOURCE ? sourceGuid : ObjectGuid(),
-                    execParams & SCRIPT_EXEC_PARAM_UNIQUE_BY_TARGET ? targetGuid : ObjectGuid(), ownerGuid))
+                                               execParams & SCRIPT_EXEC_PARAM_UNIQUE_BY_SOURCE ? sourceGuid : ObjectGuid(),
+                                               execParams & SCRIPT_EXEC_PARAM_UNIQUE_BY_TARGET ? targetGuid : ObjectGuid(), ownerGuid))
             {
                 DEBUG_LOG("DB-SCRIPTS: Process table `%s` id %u. Skip script as script already started for source %s, target %s - ScriptsStartParams %u", scripts.first, id, sourceGuid.GetString().c_str(), targetGuid.GetString().c_str(), execParams);
                 return true;

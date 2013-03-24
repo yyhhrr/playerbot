@@ -1478,11 +1478,14 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                 }
                 case 42631:                                 // Fire Bomb (explode)
                 {
-                    if (!unitTarget)
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
                         return;
 
                     unitTarget->RemoveAurasDueToSpell(42629);
                     unitTarget->CastSpell(unitTarget, 42630, true);
+
+                    // despawn the bomb after exploding
+                    ((Creature*)unitTarget)->ForcedDespawn(3000);
                     return;
                 }
                 case 42793:                                 // Burn Body
@@ -2767,6 +2770,7 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                         return;
 
                     m_caster->CastSpell(unitTarget, 74453, true);
+                    m_caster->CastSpell(unitTarget, 74454, true, NULL, NULL, m_caster->GetObjectGuid(), m_spellInfo);
                     return;
                 }
             }
@@ -4106,7 +4110,8 @@ void Spell::EffectUnlearnSpecialization(SpellEffectIndex eff_idx)
 
     _player->removeSpell(spellToUnlearn);
 
-    DEBUG_LOG("Spell: Player %u has unlearned spell %u from NpcGUID: %u", _player->GetGUIDLow(), spellToUnlearn, m_caster->GetGUIDLow());
+    if (WorldObject const* caster = GetCastingObject())
+        DEBUG_LOG("Spell: %s has unlearned spell %u at %s", _player->GetGuidStr().c_str(), spellToUnlearn, caster->GetGuidStr().c_str());
 }
 
 void Spell::EffectPowerDrain(SpellEffectIndex eff_idx)
@@ -5501,7 +5506,7 @@ bool Spell::DoSummonVehicle(CreatureSummonPositions& list, SummonPropertiesEntry
     }
 
     Creature* spawnCreature = m_caster->SummonCreature(creatureEntry, list[0].x, list[0].y, list[0].z, m_caster->GetOrientation(),
-            (m_duration == 0) ? TEMPSUMMON_CORPSE_DESPAWN : TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, m_duration);
+                              (m_duration == 0) ? TEMPSUMMON_CORPSE_DESPAWN : TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, m_duration);
 
     if (!spawnCreature)
     {
@@ -5555,7 +5560,8 @@ void Spell::EffectLearnSpell(SpellEffectIndex eff_idx)
     uint32 spellToLearn = ((m_spellInfo->Id == SPELL_ID_GENERIC_LEARN) || (m_spellInfo->Id == SPELL_ID_GENERIC_LEARN_PET)) ? damage : m_spellInfo->EffectTriggerSpell[eff_idx];
     player->learnSpell(spellToLearn, false);
 
-    DEBUG_LOG("Spell: Player %u has learned spell %u from NpcGUID=%u", player->GetGUIDLow(), spellToLearn, m_caster->GetGUIDLow());
+    if (WorldObject const* caster = GetCastingObject())
+        DEBUG_LOG("Spell: %s has learned spell %u from %s", player->GetGuidStr().c_str(), spellToLearn, caster->GetGuidStr().c_str());
 }
 
 void Spell::EffectDispel(SpellEffectIndex eff_idx)
@@ -5802,6 +5808,9 @@ void Spell::EffectLearnSkill(SpellEffectIndex eff_idx)
     uint32 skillid =  m_spellInfo->EffectMiscValue[eff_idx];
     uint16 skillval = ((Player*)unitTarget)->GetPureSkillValue(skillid);
     ((Player*)unitTarget)->SetSkill(skillid, skillval ? skillval : 1, damage * 75, damage);
+
+    if (WorldObject const* caster = GetCastingObject())
+        DEBUG_LOG("Spell: %s has learned skill %u (to maxlevel %u) from %s", unitTarget->GetGuidStr().c_str(), skillid, damage * 75, caster->GetGuidStr().c_str());
 }
 
 void Spell::EffectAddHonor(SpellEffectIndex /*eff_idx*/)
@@ -6296,6 +6305,9 @@ void Spell::EffectLearnPetSpell(SpellEffectIndex eff_idx)
 
     pet->SavePetToDB(PET_SAVE_AS_CURRENT);
     _player->PetSpellInitialize();
+
+    if (WorldObject const* caster = GetCastingObject())
+        DEBUG_LOG("Spell: %s has learned spell %u from %s", pet->GetGuidStr().c_str(), learn_spellproto->Id, caster->GetGuidStr().c_str());
 }
 
 void Spell::EffectTaunt(SpellEffectIndex /*eff_idx*/)
@@ -7640,6 +7652,18 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     m_caster->CastSpell(m_caster, 50239, true);
                     return;
                 }
+                case 47958:                                 // Crystal Spikes
+                case 57083:                                 // Crystal Spikes (h2)
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 47954, true);
+                    unitTarget->CastSpell(unitTarget, 47955, true);
+                    unitTarget->CastSpell(unitTarget, 47956, true);
+                    unitTarget->CastSpell(unitTarget, 47957, true);
+                    return;
+                }
                 case 48590:                                 // Avenging Spirits
                 {
                     if (!unitTarget)
@@ -7848,6 +7872,28 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         return;
 
                     ((Player*)caster)->RemoveSpellCategoryCooldown(82, true);
+                    return;
+                }
+                case 50742:                                 // Ooze Combine
+                {
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
+                        return;
+
+                    m_caster->CastSpell(unitTarget, 50747, true);
+                    ((Creature*)m_caster)->ForcedDespawn();
+                    return;
+                }
+                case 50810:                                 // Shatter
+                case 61546:                                 // Shatter (h)
+                {
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    if (!unitTarget->HasAura(50812))
+                        return;
+
+                    unitTarget->RemoveAurasDueToSpell(50812);
+                    unitTarget->CastSpell(unitTarget, m_spellInfo->Id == 50810 ? 50811 : 61547 , true, NULL, NULL, m_caster->GetObjectGuid());
                     return;
                 }
                 case 50894:                                 // Zul'Drak Rat
@@ -8083,6 +8129,17 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
 
                     unitTarget->RemoveAurasDueToSpell(m_spellInfo->CalculateSimpleValue(eff_idx));
                     break;
+                }
+                 case 57082:                                 // Crystal Spikes (h1)
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 57077, true);
+                    unitTarget->CastSpell(unitTarget, 57078, true);
+                    unitTarget->CastSpell(unitTarget, 57080, true);
+                    unitTarget->CastSpell(unitTarget, 57081, true);
+                    return;
                 }
                 case 57337:                                 // Great Feast
                 {
@@ -8803,6 +8860,14 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
     // normal DB scripted effect
     if (!unitTarget)
         return;
+
+    // Script based implementation. Must be used only for not good for implementation in core spell effects
+    // So called only for not processed cases
+    if (unitTarget->GetTypeId() == TYPEID_UNIT)
+    {
+        if (sScriptMgr.OnEffectScriptEffect(m_caster, m_spellInfo->Id, eff_idx, (Creature*)unitTarget))
+            return;
+    }
 
     // Previous effect might have started script
     if (!ScriptMgr::CanSpellEffectStartDBScript(m_spellInfo, eff_idx))
@@ -9947,7 +10012,7 @@ void Spell::EffectWMOChange(SpellEffectIndex effIdx)
         return;
     }
 
-    DEBUG_LOG("Spell::EffectWMOChange, spell Id %u, object %u, misc-value %u", m_spellInfo->Id,gameObjTarget->GetEntry(), m_spellInfo->EffectMiscValue[effIdx]);
+    DEBUG_LOG("Spell::EffectWMOChange, spell Id %u, object %u, misc-value %u", m_spellInfo->Id, gameObjTarget->GetEntry(), m_spellInfo->EffectMiscValue[effIdx]);
 
     Unit* caster = GetAffectiveCaster();
     if (!caster)
@@ -9968,7 +10033,7 @@ void Spell::EffectWMOChange(SpellEffectIndex effIdx)
             gameObjTarget->ForceGameObjectHealth(0, caster);
             break;
         default:
-            sLog.outError("Spell::EffectWMOChange, spell Id %u with undefined change value %u", m_spellInfo->Id,m_spellInfo->EffectMiscValue[effIdx]);
+            sLog.outError("Spell::EffectWMOChange, spell Id %u with undefined change value %u", m_spellInfo->Id, m_spellInfo->EffectMiscValue[effIdx]);
             break;
     }
 }
